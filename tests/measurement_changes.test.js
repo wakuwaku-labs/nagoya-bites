@@ -57,6 +57,44 @@ test('本番の台帳に I-08・I-21・I-14b の計測変更（2026-10-12・ga4�
   }
 });
 
+test('本番の台帳に I-24 の計測変更（今日の話題店の静的化・ga4）が載っている', () => {
+  const b = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data/measurement_changes.json'), 'utf8'));
+  const c = b.changes.find((x) => x.id === 'I-24');
+  assert.ok(c && c.affects.includes('ga4'), 'I-24 が台帳に無い（modal_open の減りと page_view の増えが効果として読まれてしまう）');
+  assert.match(c.summary, /trend_today/);
+});
+
+test('本番の台帳に I-19 の計測変更（店のカードの短縮・ga4）が載っている', () => {
+  const b = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data/measurement_changes.json'), 'utf8'));
+  const c = b.changes.find((x) => x.id === 'I-19');
+  assert.ok(c && c.affects.includes('ga4'), 'I-19 が台帳に無い（スマホのカードの cta_click の減りが効果として読まれてしまう）');
+  assert.match(c.summary, /card_media/);
+});
+
+test('本番の台帳に I-20 の計測変更（絞り込みシート・ga4）が載っている', () => {
+  const b = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data/measurement_changes.json'), 'utf8'));
+  const c = b.changes.find((x) => x.id === 'I-20');
+  assert.ok(c && c.affects.includes('ga4'), 'I-20 が台帳に無い（sort_distance の停止と filter_apply の新設が効果として読まれてしまう）');
+  assert.match(c.summary, /filter_apply/);
+  assert.match(c.summary, /zero_result/);
+});
+
+test('本番の台帳に I-22 の計測変更（クイックビュー・ga4）が載っている', () => {
+  const b = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data/measurement_changes.json'), 'utf8'));
+  const c = b.changes.find((x) => x.id === 'I-22');
+  assert.ok(c && c.affects.includes('ga4'), 'I-22 が台帳に無い（cta_click の増えと modal_nav の新設が効果として読まれてしまう）');
+  assert.match(c.summary, /modal_nav/);
+  assert.match(c.summary, /quick_view/);
+});
+
+test('本番の台帳に I-25 の計測変更（トップの全店の索引の置き換え・ga4）が載っている', () => {
+  const b = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data/measurement_changes.json'), 'utf8'));
+  const c = b.changes.find((x) => x.id === 'I-25');
+  assert.ok(c && c.affects.includes('ga4'), 'I-25 が台帳に無い（旧索引のカードの modal_open・cta_click の減りが効果として読まれてしまう）');
+  assert.match(c.summary, /card_media/);
+  assert.match(c.summary, /245/);
+});
+
 test('台帳のどの項目も、日付・id・affects・summary・evidence を持つ（後から第三者が確かめられる）', () => {
   const b = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data/measurement_changes.json'), 'utf8'));
   assert.ok(Array.isArray(b.changes) && b.changes.length > 0);

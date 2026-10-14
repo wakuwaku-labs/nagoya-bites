@@ -5,8 +5,7 @@
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
 <script>
-window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
-function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}function nbInternal(){try{return localStorage.getItem('nb_internal')==='1';}catch(e){return false;}}(function(){try{var p=new URLSearchParams(location.search);if(p.get('nb_owner')==='1'){localStorage.setItem('nb_internal','1');history.replaceState(null,'',location.pathname);}}catch(e){}gtag('js',new Date());if(nbInternal()){gtag('config','G-3LCZNGZPWJ',{traffic_type:'internal'});}else{gtag('config','G-3LCZNGZPWJ');}})();function trackEvent(name,params){if(nbInternal())return;if(typeof gtag==='function')gtag('event',name,params||{});}
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +16,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta property="og:description" content="鶴舞駅から徒歩2分のフランス料理。ミシュラン星を獲得しながらも。予約・地図・口コミを1ページで確認できます。">
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="https://nagoya-bites.com/stores/la-vagabonde-2.html">
-<meta property="og:image" content="/assets/store-figures/_fallback.svg">
+<meta property="og:image" content="https://lh3.googleusercontent.com/grass-cs/AABkmLfun9c3-8NV40IYiZvPFEAijucs5Pa0Q0kpfcDgqcdXuftM6t28NMKK3dACv9sEMkPp85fcgMXVNF6LASfjADdF4Tx-dN2t_8wqCLbBKYHs_8wEmCNelrqVKQ_OvuOqWTO-nvML=s1600-w1200">
 <meta property="og:image:alt" content="LA VAGABONDE -ラ・ヴァガボンド- の店舗写真">
 <meta name="twitter:image:alt" content="LA VAGABONDE -ラ・ヴァガボンド- の店舗写真">
 <meta property="og:site_name" content="NAGOYA BITES">
@@ -25,9 +24,10 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="LA VAGABONDE -ラ・ヴァガボンド-（名古屋市中区千代田・フランス料理）| NAGOYA BITES">
 <meta name="twitter:description" content="鶴舞駅から徒歩2分のフランス料理。ミシュラン星を獲得しながらも。予約・地図・口コミを1ページで確認できます。">
-<meta name="twitter:image" content="/assets/store-figures/_fallback.svg">
+<meta name="twitter:image" content="https://lh3.googleusercontent.com/grass-cs/AABkmLfun9c3-8NV40IYiZvPFEAijucs5Pa0Q0kpfcDgqcdXuftM6t28NMKK3dACv9sEMkPp85fcgMXVNF6LASfjADdF4Tx-dN2t_8wqCLbBKYHs_8wEmCNelrqVKQ_OvuOqWTO-nvML=s1600-w1200">
 <link rel="manifest" href="../manifest.json">
 <meta name="theme-color" content="#7a5c10">
+<link rel="stylesheet" href="../assets/css/nb.css">
 <script type="application/ld+json">[
   {
     "@context": "https://schema.org",
@@ -40,11 +40,12 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       "addressCountry": "JP",
       "addressLocality": "名古屋市中区千代田"
     },
-    "image": "/assets/store-figures/_fallback.svg",
+    "image": "https://lh3.googleusercontent.com/grass-cs/AABkmLfun9c3-8NV40IYiZvPFEAijucs5Pa0Q0kpfcDgqcdXuftM6t28NMKK3dACv9sEMkPp85fcgMXVNF6LASfjADdF4Tx-dN2t_8wqCLbBKYHs_8wEmCNelrqVKQ_OvuOqWTO-nvML=s1600-w1200",
     "url": "https://nagoya-bites.com/stores/la-vagabonde-2.html",
     "description": "ミシュラン星を獲得しながらも、常に予約困難な名古屋屈指のフレンチ。一見カフェのようなオープンテラスの店構えからは想像できない、繊細で独創的な料理が魅力です。厳選されたワインペアリングも充実しており、料理とのマリアージュを存分に楽しめます。特別なデートや、食通を唸らせる接待にも最適な一軒です。",
     "sameAs": [
-      "https://www.instagram.com/la_vagabonde_nagoya/"
+      "https://www.instagram.com/la_vagabonde_nagoya/",
+      "https://tabelog.com/aichi/A2301/A230105/23040370/"
     ]
   },
   {
@@ -66,12 +67,6 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       {
         "@type": "ListItem",
         "position": 3,
-        "name": "名古屋市中区千代田エリア",
-        "item": "https://nagoya-bites.com/#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%8D%83%E4%BB%A3%E7%94%B0"
-      },
-      {
-        "@type": "ListItem",
-        "position": 4,
         "name": "LA VAGABONDE -ラ・ヴァガボンド-",
         "item": "https://nagoya-bites.com/stores/la-vagabonde-2.html"
       }
@@ -79,99 +74,147 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   }
 ]</script>
 <style>
-:root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--border-h:rgba(0,0,0,0.28);--text:#1c1c1a;--muted:rgba(28,28,26,0.6);--dim:rgba(28,28,26,0.38);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans','Noto Sans CJK JP','Yu Gothic','YuGothic','Meiryo',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh;}
-header{position:sticky;top:0;z-index:100;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,245,241,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
-.logo{font-family:'Hiragino Mincho ProN','Hiragino Mincho Pro','Yu Mincho','YuMincho','Noto Serif CJK JP','MS PMincho',serif;font-weight:300;font-size:1.1rem;letter-spacing:.3em;color:var(--white);text-decoration:none;text-transform:uppercase;}
-.logo em{font-style:italic;color:var(--gold);}
-.back-link{font-family:ui-monospace,'SF Mono',Menlo,Consolas,'Courier New',monospace;font-size:.6rem;letter-spacing:.14em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
-.back-link:hover{color:var(--gold);}
+body{min-height:100vh;}
 .hero-img{width:100%;height:260px;object-fit:cover;filter:brightness(.88) saturate(.85);display:block;}
 @media(min-width:768px){.hero-img{height:380px;}}
+.hero-wrap{position:relative;}
+.photo-credit{position:absolute;right:12px;bottom:12px;z-index:1;max-width:calc(100% - 24px);padding:3px 8px;border-radius:3px;background:rgba(10,10,8,.62);color:rgba(255,255,255,.92);font-family:var(--font-body);font-size:var(--fs-xs);line-height:1.4;letter-spacing:.02em;overflow-wrap:anywhere;pointer-events:none;}
 .container{max-width:720px;margin:0 auto;padding:2rem 1.5rem 4rem;}
-.breadcrumb{font-family:ui-monospace,'SF Mono',Menlo,Consolas,'Courier New',monospace;font-size:.55rem;letter-spacing:.1em;color:var(--dim);margin-bottom:1.6rem;display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;}
-.breadcrumb a{color:var(--dim);text-decoration:none;transition:color .2s;}
+.breadcrumb{margin-bottom:1.6rem;display:flex;gap:.4rem;align-items:center;flex-wrap:nowrap;}
 .breadcrumb a:hover{color:var(--gold);}
 .breadcrumb span{color:var(--dim);opacity:.5;}
-.genre-badge{display:inline-block;font-family:ui-monospace,'SF Mono',Menlo,Consolas,'Courier New',monospace;font-size:.54rem;letter-spacing:.14em;color:var(--gold);border:1px solid rgba(201,169,110,.4);padding:.2rem .55rem;text-transform:uppercase;background:rgba(122,92,16,.06);margin-bottom:.9rem;}
-h1{font-family:'Hiragino Mincho ProN','Hiragino Mincho Pro','Yu Mincho','YuMincho','Noto Serif CJK JP','MS PMincho',serif;font-weight:300;font-size:clamp(1.8rem,5vw,2.8rem);line-height:1.15;color:var(--white);margin-bottom:.6rem;}
-.score{display:inline-flex;align-items:center;gap:.3rem;font-size:.85rem;font-weight:600;color:#d4a017;margin-bottom:1.2rem;}
+.genre-badge{display:inline-block;font-family:var(--font-body);font-size:var(--fs-xs);font-weight:500;letter-spacing:0;color:var(--gold);border:1px solid rgba(201,169,110,.4);padding:.3rem .7rem;background:rgba(122,92,16,.06);margin-bottom:.9rem;}
+h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.8rem);line-height:var(--lh-display);color:var(--ink);margin-bottom:.6rem;}
+.score{display:inline-flex;align-items:center;gap:.3rem;font-size:var(--fs-sm);font-weight:600;color:#d4a017;margin-bottom:1.2rem;}
 .score svg{width:14px;height:14px;fill:#d4a017;}
-.ccs-badge{display:inline-block;font-family:ui-monospace,'SF Mono',Menlo,Consolas,'Courier New',monospace;font-size:.56rem;letter-spacing:.12em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.18rem .6rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;margin-left:.6rem;}
+.store-glance{margin-bottom:1.2rem;}
+.store-glance-row{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;}
+.score-note{font-size:var(--fs-xs);color:var(--muted);}
+.store-facts{margin:.6rem 0 0;font-size:var(--fs-sm);line-height:var(--lh-ui);color:var(--text);}
+.store-chips{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0;padding:0;}
+.store-chips li{font-size:var(--fs-xs);letter-spacing:0;color:var(--muted);border:1px solid var(--border);padding:.3rem .7rem;border-radius:2px;background:var(--surface);}
+.ccs-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.25rem .7rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;margin-left:.6rem;}
 .ccs-badge.ccs-badge-pending{color:#767676;border-color:rgba(120,120,120,.35);background:rgba(120,120,120,.06);}
-.ccs-badge .ccs-tier{font-weight:800;font-size:.7rem;margin-left:.25rem;letter-spacing:0;}
+.ccs-badge .ccs-tier{font-weight:700;font-size:var(--fs-xs);margin-left:.25rem;letter-spacing:0;}
 .cc-tier-SS{color:#1b5e20;}.cc-tier-A{color:#2e7d32;}.cc-tier-B{color:#46752a;}.cc-tier-C{color:#5f6b63;}.cc-tier-D{color:#767676;}.cc-tier-NA{color:#767676;font-style:italic;}
 .point-box{background:rgba(122,92,16,.07);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:.9rem 1.1rem;margin-bottom:1.6rem;}
-.point-box p{font-size:.85rem;line-height:1.9;color:var(--text);}
+.point-box p{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--text);}
+.editor-reason{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:.9rem 1.1rem;margin-bottom:1.6rem;}
+.editor-reason h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.5rem;}
+.editor-reason p{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--text);}
+.editor-reason .editor-reason-meta{font-size:var(--fs-xs);line-height:var(--lh-ui);color:var(--muted);margin-top:.6rem;}
 .info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.6rem;padding:1.2rem;background:var(--bg2);border:1px solid var(--border);}
 @media(max-width:480px){.info-grid{grid-template-columns:1fr;}}
-.info-cell label{font-family:ui-monospace,'SF Mono',Menlo,Consolas,'Courier New',monospace;font-size:.5rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;display:block;margin-bottom:.3rem;}
-.info-cell span{font-size:.8rem;color:var(--text);line-height:1.5;}
+.info-cell label{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:500;letter-spacing:0;color:var(--dim);display:block;margin-bottom:.3rem;}
+.info-cell span{font-size:var(--fs-md);color:var(--text);line-height:1.6;}
 .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.6rem;}
-.tag{font-size:.62rem;letter-spacing:.06em;color:var(--muted);border:1px solid var(--border);padding:.2rem .55rem;border-radius:2px;background:var(--surface);}
+.tag{font-size:var(--fs-xs);letter-spacing:0;color:var(--muted);border:1px solid var(--border);padding:.3rem .7rem;border-radius:2px;background:var(--surface);}
 .links-section{margin-bottom:2rem;}
-.links-section h2{font-family:ui-monospace,'SF Mono',Menlo,Consolas,'Courier New',monospace;font-size:.56rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
+.links-section h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .ig-photos{margin:0 0 2rem;}
-.ig-photos h2{font-family:ui-monospace,'SF Mono',Menlo,Consolas,'Courier New',monospace;font-size:.56rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
-.link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.65rem 1.1rem;font-size:.72rem;letter-spacing:.05em;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;}
+.ig-photos h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
+.ig-carousel{position:relative;max-width:420px;margin:0 auto;}
+.ig-carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.ig-carousel-track::-webkit-scrollbar{display:none;}
+.ig-embed-box{flex:0 0 100%;width:100%;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;scroll-snap-align:center;}
+.ig-embed-box iframe{width:100%;height:560px;border:0;display:block;}
+.ig-embed-box a{display:block;padding:1rem;color:var(--text);font-size:var(--fs-sm);text-decoration:underline;}
+.ig-carousel-nav{position:absolute;top:50%;transform:translateY(-50%);width:2.2rem;height:2.2rem;border-radius:50%;background:rgba(255,255,255,.92);border:1px solid var(--border);color:var(--text);font-size:1.3rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;padding:0;}
+.ig-carousel-prev{left:.4rem;}
+.ig-carousel-next{right:.4rem;}
+.ig-carousel-dots{display:flex;justify-content:center;gap:.4rem;margin-top:.7rem;}
+.ig-carousel-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .2s;}
+.ig-carousel-dot.active{background:var(--gold);}
+.link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
+button.link-btn{font:inherit;cursor:pointer;}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
-.link-btn.hp{background:#e6002d;color:#fff;border-color:#e6002d;}
-.link-btn.hp:hover{background:#c0001f;border-color:#c0001f;}
+.link-btn.hp{background:var(--gold);color:var(--bg);border-color:var(--gold);}
+.link-btn.hp:hover{background:var(--gold2);border-color:var(--gold2);}
 .trust-breakdown{margin:1.6rem 0;padding:1.2rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
-.trust-breakdown h2{font-size:.92rem;margin:0 0 .5rem;}
-.trust-breakdown-intro{font-size:.76rem;line-height:1.7;color:var(--muted);margin-bottom:.9rem;}
+.trust-breakdown h2{font-size:var(--fs-lg);margin:0 0 .5rem;}
+.trust-breakdown-intro{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);margin-bottom:.9rem;}
 .trust-breakdown-intro a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.3);}
-.trust-axis-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem;padding:.4rem 0;border-top:1px solid var(--border);font-size:.78rem;}
+.trust-axis-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem;padding:.5rem 0;border-top:1px solid var(--border);font-size:var(--fs-sm);}
 .trust-axis-row:first-of-type{border-top:none;}
 .trust-axis-name{font-weight:600;min-width:9.5rem;}
-.trust-axis-score{font-family:ui-monospace,'SF Mono',Menlo,Consolas,'Courier New',monospace;font-size:.68rem;color:var(--gold);white-space:nowrap;}
+.trust-axis-score{font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--gold);white-space:nowrap;}
 .trust-axis-reason{color:var(--muted);flex:1 1 14rem;}
 .trust-axis-unobserved .trust-axis-score,.trust-axis-unobserved .trust-axis-reason{color:var(--dim);}
 .trust-axis-meta .trust-axis-score{color:var(--dim);}
-.trust-headline{font-size:.9rem;line-height:1.7;margin:.2rem 0 .1rem;}
-.trust-headline .trust-tier{font-family:ui-monospace,'SF Mono',Menlo,Consolas,'Courier New',monospace;font-weight:800;font-size:1.35rem;margin-right:.4rem;vertical-align:-.05em;}
-.trust-headline .trust-score{font-family:ui-monospace,'SF Mono',Menlo,Consolas,'Courier New',monospace;font-size:.8rem;color:var(--muted);margin-right:.2rem;}
-.trust-meta-line{font-family:ui-monospace,'SF Mono',Menlo,Consolas,'Courier New',monospace;font-size:.62rem;letter-spacing:.06em;color:var(--dim);margin:0 0 .6rem;}
-.trust-meta-heading{font-size:.7rem;font-weight:600;color:var(--dim);margin:.9rem 0 .1rem;}
+.trust-headline{font-size:var(--fs-md);line-height:var(--lh-body);margin:.2rem 0 .1rem;}
+.trust-headline .trust-tier{font-family:var(--font-mono);font-weight:700;font-size:var(--fs-xl);margin-right:.4rem;vertical-align:-.05em;}
+.trust-headline .trust-score{font-family:var(--font-mono);font-size:var(--fs-sm);color:var(--muted);margin-right:.2rem;}
+.trust-meta-line{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin:0 0 .6rem;}
+.trust-meta-heading{font-size:var(--fs-xs);font-weight:600;color:var(--dim);margin:.9rem 0 .1rem;}
+.trust-details{margin-top:.6rem;border-top:1px solid var(--border);}
+.trust-details summary{cursor:pointer;display:flex;align-items:center;gap:.5rem;min-height:var(--tap-min);padding:.4rem 0;font-size:var(--fs-sm);font-weight:600;color:var(--text);list-style:none;}
+.trust-details summary::-webkit-details-marker{display:none;}
+.trust-details summary::before{content:'＋';color:var(--gold);font-weight:600;}
+.trust-details[open] summary::before{content:'－';}
 .related-features,.related-stores{margin:2rem 0 1.8rem;padding:1.3rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
-.related-features h2,.related-stores h2{font-family:ui-monospace,'SF Mono',Menlo,Consolas,'Courier New',monospace;font-size:.58rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
+.related-features h2,.related-stores h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .related-features ul,.related-stores ul{list-style:none;padding:0;margin:0;}
 .related-features li,.related-stores li{margin:.5rem 0;}
-.related-features a,.related-stores a{font-size:.82rem;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.25);padding-bottom:2px;transition:color .2s;}
+.related-features a,.related-stores a{font-size:var(--fs-sm);color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.25);padding-bottom:2px;transition:color .2s;}
 .related-features a:hover,.related-stores a:hover{color:var(--gold2);border-bottom-color:var(--gold2);}
+.related-features .listed-kind{font-size:var(--fs-xs);color:var(--dim);margin-left:.6em;}
+.related-stores h2{margin-bottom:.35rem;}
+.related-stores .related-note{font-size:var(--fs-xs);color:var(--dim);margin:0 0 .9rem;}
+.related-stores .related-reason{font-size:var(--fs-xs);color:var(--dim);margin-left:.6em;}
 .back-section{border-top:1px solid var(--border);padding-top:1.8rem;text-align:center;}
-.back-section a{font-family:ui-monospace,'SF Mono',Menlo,Consolas,'Courier New',monospace;font-size:.6rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.back-section a{font-family:var(--font-body);font-size:var(--fs-sm);font-weight:500;letter-spacing:0;color:var(--muted);text-decoration:none;transition:color .2s;min-height:var(--tap-min);display:inline-flex;align-items:center;}
 .back-section a:hover{color:var(--gold);}
-footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
-.fc{font-family:ui-monospace,'SF Mono',Menlo,Consolas,'Courier New',monospace;font-size:.54rem;letter-spacing:.1em;color:var(--dim);}
 </style>
 </head>
 <body>
+<!-- NB-CHROME:HEADER:START -->
+<a href="#main-content" class="skip-link">本文へスキップ</a>
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
-  <a class="logo" href="../">Nagoya <em>Bites</em></a>
-  <a class="back-link" href="../">← 店舗一覧に戻る</a>
+  <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html" aria-current="page">店舗を探す</a>
+    <a href="../features/index.html">特集</a>
+    <a href="../journal/index.html">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
+  </nav>
 </header>
+<main id="main-content">
+<!-- NB-CHROME:HEADER:END -->
 
-<img class="hero-img" src="/assets/store-figures/_fallback.svg" alt="LA VAGABONDE -ラ・ヴァガボンド-" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="this.onerror=null;this.src='/assets/store-figures/_fallback.svg'">
+<div class="hero-wrap"><img class="hero-img" src="https://lh3.googleusercontent.com/grass-cs/AABkmLfun9c3-8NV40IYiZvPFEAijucs5Pa0Q0kpfcDgqcdXuftM6t28NMKK3dACv9sEMkPp85fcgMXVNF6LASfjADdF4Tx-dN2t_8wqCLbBKYHs_8wEmCNelrqVKQ_OvuOqWTO-nvML=s1600-w1200" alt="LA VAGABONDE -ラ・ヴァガボンド-" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="this.onerror=null;this.src='/assets/store-figures/_fallback.svg'"><span class="photo-credit" title="Google マップの利用者が投稿した写真です">📷 チワワちゃん</span></div>
 
 <div class="container">
-  <nav class="breadcrumb" aria-label="パンくずリスト">
-    <a href="../">NAGOYA BITES</a>
-    <span>›</span><a href="../#genre=%E3%83%95%E3%83%A9%E3%83%B3%E3%82%B9%E6%96%99%E7%90%86">フランス料理</a>
-    <span>›</span><a href="../#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%8D%83%E4%BB%A3%E7%94%B0">名古屋市中区千代田</a>
+  <!-- NB-CHROME:BREADCRUMB:START -->
+<nav aria-label="パンくずリスト">
+  <div class="breadcrumb">
+    <a href="../index.html">トップ</a>
     <span>›</span>
-    <span>LA VAGABONDE -ラ・ヴァガボンド-</span>
-  </nav>
+    <a href="../#genre=%E3%83%95%E3%83%A9%E3%83%B3%E3%82%B9%E6%96%99%E7%90%86">フランス料理</a>
+    <span>›</span>
+    LA VAGABONDE -ラ・ヴァガボンド-
+  </div>
+</nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
   <div class="genre-badge">フランス料理</div>
   <h1>LA VAGABONDE -ラ・ヴァガボンド-</h1>
-  <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
-    <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>4.4</div>
+  <div class="store-glance">
+  <div class="store-glance-row">
+    <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>4.4</div><span class="score-note">（Google）</span>
     <span class="ccs-badge ccs-badge-pending" title="口コミ信頼度 —：判定材料不足（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）">口コミ信頼度<span class="ccs-tier cc-tier-NA">—</span></span>
+  </div>
+    <p class="store-facts">鶴舞駅から徒歩2分</p>
   </div>
 
   <div class="point-box"><p>ミシュラン星を獲得しながらも、常に予約困難な名古屋屈指のフレンチ。一見カフェのようなオープンテラスの店構えからは想像できない、繊細で独創的な料理が魅力です。厳選されたワインペアリングも充実しており、料理とのマリアージュを存分に楽しめます。特別なデートや、食通を唸らせる接待にも最適な一軒です。</p></div>
+  
 
   <div class="info-grid">
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市中区千代田</span></div>
@@ -179,16 +222,18 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     
     
     
-    <div class="info-cell"><label>アクセス・特徴</label><span>JR中央本線 鶴舞駅より徒歩約2分（117m）。</span></div>
+    <div class="info-cell"><label>アクセス・特徴</label><span>名古屋市中区千代田 JR中央本線 鶴舞駅より徒歩約2分（117m）。</span></div>
   </div>
 
   
 
   <div class="trust-breakdown">
-    <h2>口コミ信頼度の内訳</h2>
+    <h2>口コミ信頼度</h2>
     <p class="trust-headline"><span class="trust-tier cc-tier-NA">—</span><span class="trust-score">— / 100</span> — Googleの★と件数が取得できていないため、判定材料が足りません。</p>
-    <p class="trust-meta-line">検証 0/9項目 ・ Google口コミ取得日 2026-09-02</p>
-    <p class="trust-breakdown-intro">口コミ信頼度は「この店のGoogle★と件数は、そのまま信じてよいか」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
+    <p class="trust-meta-line">検証 0/9項目 ・ Google口コミ取得日 2026-10-14</p>
+    <details class="trust-details">
+      <summary>内訳を見る（9つの検証項目）</summary>
+      <p class="trust-breakdown-intro">口コミ信頼度は「この店のGoogle★と件数は、そのまま信じてよいか」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
       <div class="trust-axis-row trust-axis-unobserved">
         <span class="trust-axis-name">件数は十分か</span>
         <span class="trust-axis-score">—</span>
@@ -224,11 +269,11 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
         <span class="trust-axis-score">—</span>
         <span class="trust-axis-reason">メディア掲載情報なし（多くの正当な店舗も同様）（判定保留・採点に含めません）</span>
       </div>
-    <p class="trust-meta-heading">掲載データの充実度（口コミ信頼度には含めません）</p>
+      <p class="trust-meta-heading">掲載データの充実度（口コミ信頼度には含めません）</p>
       <div class="trust-axis-row trust-axis-meta">
         <span class="trust-axis-name">掲載情報の充実</span>
-        <span class="trust-axis-score">9/15点</span>
-        <span class="trust-axis-reason">IG解決・食べログ解決・推薦文 あり</span>
+        <span class="trust-axis-score">12/15点</span>
+        <span class="trust-axis-reason">IG解決・食べログ解決・推薦文・写真 あり</span>
       </div>
       <div class="trust-axis-row trust-axis-meta">
         <span class="trust-axis-name">営業確認</span>
@@ -240,16 +285,19 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
         <span class="trust-axis-score">7/10点</span>
         <span class="trust-axis-reason">公式アカウント あり</span>
       </div>
+    </details>
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
     <a class="link-btn gm" href="https://www.google.com/maps/search/LA%20VAGABONDE%20-%E3%83%A9%E3%83%BB%E3%83%B4%E3%82%A1%E3%82%AC%E3%83%9C%E3%83%B3%E3%83%89-%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%8D%83%E4%BB%A3%E7%94%B0" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/la_vagabonde_nagoya/" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230105/23040370/" target="_blank" rel="noopener noreferrer" onclick="nbReserveExit('cta_click',{store_name:'LA VAGABONDE -ラ・ヴァガボンド-',store_id:'',link_domain:'tabelog.com',location:'store_page'})">食べログ</a>
   </div>
 
   
+  
   <div class="related-features">
-    <h2>この店舗が登場する特集</h2>
+    <h2>あわせて読みたい特集</h2>
     <ul>
       <li><a href="../features/nagoya-french-guide.html">名古屋のフレンチ8選【2026年版】</a></li>
       <li><a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a></li>
@@ -258,13 +306,148 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   
 
   <div class="back-section">
-    <a href="../?area=%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%8D%83%E4%BB%A3%E7%94%B0&genre=%E3%83%95%E3%83%A9%E3%83%B3%E3%82%B9%E6%96%99%E7%90%86">← 名古屋市中区千代田のフランス料理をもっと見る</a>
+    <a href="../index.html#genre=%E3%83%95%E3%83%A9%E3%83%B3%E3%82%B9%E6%96%99%E7%90%86">← フランス料理をもっと見る</a>
   </div>
 </div>
 
-<footer>
-  <p class="fc">© <span id="yr"></span> NAGOYA BITES — 現役飲食店マネージャー監修 名古屋グルメガイド</p>
+<!-- NB-CHROME:FOOTER:START -->
+</main>
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。店舗の選定にはAIによる情報収集・分析を活用しています。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/area/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">ジャーナル</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<!-- NB-CHROME:FOOTER:END -->
+<div class="nb-action-bar" role="region" aria-label="LA VAGABONDE -ラ・ヴァガボンド-の予約・地図">
+  <a class="nb-bar-btn nb-bar-primary nb-bar-reserve" href="https://tabelog.com/aichi/A2301/A230105/23040370/" target="_blank" rel="noopener noreferrer" onclick="nbReserveExit('cta_click',{store_name:'LA VAGABONDE -ラ・ヴァガボンド-',store_id:'',link_domain:'tabelog.com',location:'store_page_bar'})">食べログで予約・確認</a>
+  <a class="nb-bar-btn nb-bar-sub nb-bar-map" href="https://www.google.com/maps/search/LA%20VAGABONDE%20-%E3%83%A9%E3%83%BB%E3%83%B4%E3%82%A1%E3%82%AC%E3%83%9C%E3%83%B3%E3%83%89-%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%8D%83%E4%BB%A3%E7%94%B0" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href,store_name:'LA VAGABONDE -ラ・ヴァガボンド-',location:'store_page_bar'})" aria-label="LA VAGABONDE -ラ・ヴァガボンド-の地図をGoogleマップで開く"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span>地図</span></a>
+</div>
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
+<script class="nb-reserve-ask-js">(function nbReserveAskMain() {
+  var KEY = 'nb_reserve_pending';
+  var MIN_AWAY = 20 * 1000;        // これより早く戻った人にはまだ聞かない
+  var MAX_AWAY = 30 * 60 * 1000;   // これより後は予約導線との対応が薄いので聞かない
+  var SHOW_MS = 20 * 1000;
+  function internal() { try { return localStorage.getItem('nb_internal') === '1'; } catch (e) { return false; } }
+  function send(name, p) { try { if (typeof trackEvent === 'function') trackEvent(name, p); } catch (e) {} }
+  window.nbReserveExit = function (name, p) {
+    p = p || {};
+    send(name, p);
+    if (internal()) return;
+    try {
+      sessionStorage.setItem(KEY, JSON.stringify({
+        n: String(p.store_name || ''), i: String(p.store_id || ''),
+        d: String(p.link_domain || ''), l: String(p.location || ''), t: Date.now()
+      }));
+    } catch (e) {}
+  };
+  function today() { var d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+  function hide(el) { if (el && el.parentNode) el.parentNode.removeChild(el); }
+  function show(p) {
+    var el = document.createElement('div');
+    el.className = 'nb-reserve-ask';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-live', 'polite');
+    el.setAttribute('aria-label', '予約できたかの確認');
+    var q = document.createElement('p');
+    q.className = 'nb-reserve-ask-q';
+    q.textContent = (p.n ? '「' + p.n + '」の' : '') + '予約はできましたか？';
+    var note = document.createElement('p');
+    note.className = 'nb-reserve-ask-note';
+    note.textContent = '匿名で数えるだけです。掲載順位には使いません';
+    var row = document.createElement('div');
+    row.className = 'nb-reserve-ask-actions';
+    var params = { store_name: p.n, store_id: p.i, link_domain: p.d, location: p.l };
+    function btn(label, cls, ev) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'nb-reserve-ask-btn ' + cls;
+      b.textContent = label;
+      b.onclick = function () {
+        send(ev, params);
+        row.parentNode.removeChild(row);
+        note.parentNode.removeChild(note);
+        q.textContent = 'ありがとうございます';
+        setTimeout(function () { hide(el); }, 1800);
+      };
+      return b;
+    }
+    row.appendChild(btn('予約した', 'is-yes', 'reserve_report_yes'));
+    row.appendChild(btn('していない', 'is-no', 'reserve_report_no'));
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'nb-reserve-ask-close';
+    close.setAttribute('aria-label', '閉じる');
+    close.textContent = '×';
+    close.onclick = function () { hide(el); };
+    el.appendChild(close); el.appendChild(q); el.appendChild(note); el.appendChild(row);
+    document.body.appendChild(el);
+    setTimeout(function () { hide(el); }, SHOW_MS);
+  }
+  function check() {
+    if (document.visibilityState === 'hidden' || internal()) return;
+    var raw, p;
+    try { raw = sessionStorage.getItem(KEY); } catch (e) { return; }
+    if (!raw) return;
+    try { p = JSON.parse(raw); } catch (e) { p = null; }
+    var away = p ? Date.now() - (p.t || 0) : -1;
+    if (!p || away > MAX_AWAY || away < 0) { try { sessionStorage.removeItem(KEY); } catch (e) {} return; }
+    if (away < MIN_AWAY) return;
+    try { sessionStorage.removeItem(KEY); } catch (e) {}
+    var asked = 'nb_reserve_asked_' + (p.i || p.n) + '_' + today();
+    try { if (localStorage.getItem(asked)) return; localStorage.setItem(asked, '1'); } catch (e) {}
+    show(p);
+  }
+  document.addEventListener('visibilitychange', check);
+  window.addEventListener('pageshow', check);
+  window.addEventListener('focus', check);
+})();</script>
 </body>
 </html>

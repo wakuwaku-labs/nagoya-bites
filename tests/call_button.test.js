@@ -408,11 +408,11 @@ test('トップ: 電話確認のある店にだけボタンと結果の行を出
   assert.equal(h.nbCallStatusHtml(verified), '<p class="nb-call-status" role="status"></p>');
 });
 
-test('トップ: クイックビューの行と追従バーが、同じ判定（nbCanCall）で電話を並べ、結果の行を添える', () => {
+test('トップ: クイックビューの行動バーが、同じ判定（nbCanCall）で電話を並べ、結果の行を添える（I-22 で本文の行を廃し、バーだけにした）', () => {
   const open = INDEX_HTML.slice(INDEX_HTML.indexOf('function openM(i, source) {'));
   assert.match(open, /var callStatusHtml = nbCallStatusHtml\(r\);/);
-  assert.match(open, /ctaRow\.innerHTML = hpBtnHtml \+ callBtnHtml \+ mapBtnHtml \+ callStatusHtml;/);
-  assert.match(open, /: nbCanCall\(r\) \? \(callBtnHtml \+ mapBtnHtml\)\n\s+: mapBtnHtml\) \+ callStatusHtml;/);
+  assert.ok(!/modal-cta-row|ctaRow/.test(open), '本文の中の行（modal-cta-row）は廃した。バーは1つ');
+  assert.match(open, /: nbCanCall\(r\) \? \(callBtnHtml \+ mapBtnHtml\)\n\s+: mapOnlyBtnHtml\) \+ callStatusHtml;/);
   assert.ok(!/: r\.placeId \? \(callBtnHtml/.test(open), 'placeId だけで電話を並べない');
 });
 

@@ -1,4 +1,23 @@
-status: blocked
+status: archived
+
+# 2026-10-13 自律実行ラン（solve-next）
+
+**結果: 実装0件**。全 ready タスクが以下のいずれかに該当し、安全フィルタで除外された:
+- **future-dated**: SEO-125（10-15）、SEO-126（11-15）、SEO-128/130（11-20）、SEO-140（11-15）、SEO-141（11-30）、SEO-148（11-06）、SEO-118（10-20・ポスト修正データ 4日分のみ・7日必要）、ISSUE-183（10-17・ポスト修正データ 4日分のみ・8日必要）
+- **owner-gated**: SEO-132（about.html 運営者プロフィール確認待ち）、SEO-142（Organization sameAs URL提供待ち）、SEO-129（editorReason 承認待ち）、ISSUE-133（22店舗の閉店確認・手動）、SEO-098（X プロフ/ストーリーズ変更・オーナー操作）
+- **API-key-gated**: ISSUE-116（GOOGLE_MAPS_API_KEY/HOTPEPPER_API_KEY・ローカルのみ）、ISSUE-110（npm 脆弱性修正・実APIキーで検証必要）
+
+**次のエージェントアクション**:
+- 2026-10-15: SEO-125 — `data/gsc_metrics.json` の `pageTypes.area_hub` 表示回数を `docs/kpi-weekly.md` に基線として記録
+- 2026-10-17: ISSUE-183 — `node scripts/hotpepper_fetch_report.js --churn --days 8` で HotPepper 出入り検証
+- 2026-10-20: SEO-118 — GA4 基線再取得（修正から7日以上経過後）
+
+**次のオーナーアクション**:
+- SNS-002: `docs/x-api-setup.md` の手順で X API キーを GitHub Secrets に登録 → X 自動投稿 live 化
+- SEO-132: `about.html` に記載する運営者プロフィール（業界経験・肩書）を確認
+- SEO-142: Organization JSON-LD の sameAs に入れる公式アカウント URL（Twitter/Instagram/etc）を提供
+
+---
 
 # 目的
 オーナーの依頼（2026-10-12）「日次ジャーナルをもとに X へ毎日の発信を投稿まで全自動にしたい」。計画書を作った後、「今から寝るので進める分は進めて」（同日夜）を受けて、X に送らない試運転の形で実装した。

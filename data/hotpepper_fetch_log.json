@@ -2,7 +2,7 @@
   "_doc": "HotPepper グルメサーチの取得の記録（ISSUE-143）。build.js が回ごとに足す（直近30回）。available は API の件数（results_available）、fetched は取れた店の数、smallAreas は上限（1,000件）を超えたため小エリアごとに取り直した数。確認は node scripts/hotpepper_fetch_report.js",
   "runs": [
     {
-      "at": "2026-10-12T04:17:05.632Z",
+      "at": "2026-10-13T09:27:26.377Z",
       "total": 5837,
       "areas": [
         {
@@ -128,7 +128,7 @@
       ]
     },
     {
-      "at": "2026-10-12T04:36:49.987Z",
+      "at": "2026-10-13T09:40:59.824Z",
       "total": 5837,
       "areas": [
         {
@@ -254,7 +254,7 @@
       ]
     },
     {
-      "at": "2026-10-12T04:57:39.545Z",
+      "at": "2026-10-13T10:02:12.081Z",
       "total": 5837,
       "areas": [
         {
@@ -380,7 +380,7 @@
       ]
     },
     {
-      "at": "2026-10-12T05:17:08.565Z",
+      "at": "2026-10-13T10:53:51.919Z",
       "total": 5837,
       "areas": [
         {
@@ -506,7 +506,7 @@
       ]
     },
     {
-      "at": "2026-10-12T05:35:57.591Z",
+      "at": "2026-10-13T12:20:10.130Z",
       "total": 5837,
       "areas": [
         {
@@ -632,7 +632,7 @@
       ]
     },
     {
-      "at": "2026-10-12T05:54:36.613Z",
+      "at": "2026-10-13T12:38:34.378Z",
       "total": 5837,
       "areas": [
         {
@@ -758,7 +758,7 @@
       ]
     },
     {
-      "at": "2026-10-12T06:13:46.414Z",
+      "at": "2026-10-13T13:04:19.062Z",
       "total": 5837,
       "areas": [
         {
@@ -884,7 +884,7 @@
       ]
     },
     {
-      "at": "2026-10-12T06:34:05.175Z",
+      "at": "2026-10-13T13:33:12.162Z",
       "total": 5837,
       "areas": [
         {
@@ -1010,7 +1010,7 @@
       ]
     },
     {
-      "at": "2026-10-12T07:16:07.112Z",
+      "at": "2026-10-13T14:01:28.330Z",
       "total": 5837,
       "areas": [
         {
@@ -1136,7 +1136,7 @@
       ]
     },
     {
-      "at": "2026-10-12T11:13:42.357Z",
+      "at": "2026-10-13T14:57:18.434Z",
       "total": 5837,
       "areas": [
         {
@@ -1262,7 +1262,7 @@
       ]
     },
     {
-      "at": "2026-10-12T11:30:36.883Z",
+      "at": "2026-10-13T15:53:44.212Z",
       "total": 5837,
       "areas": [
         {
@@ -1388,7 +1388,7 @@
       ]
     },
     {
-      "at": "2026-10-12T11:46:39.442Z",
+      "at": "2026-10-13T17:44:15.755Z",
       "total": 5837,
       "areas": [
         {
@@ -1514,7 +1514,7 @@
       ]
     },
     {
-      "at": "2026-10-12T12:02:41.882Z",
+      "at": "2026-10-13T19:22:35.743Z",
       "total": 5837,
       "areas": [
         {
@@ -1640,7 +1640,7 @@
       ]
     },
     {
-      "at": "2026-10-12T12:20:46.107Z",
+      "at": "2026-10-13T20:07:40.809Z",
       "total": 5837,
       "areas": [
         {
@@ -1766,7 +1766,7 @@
       ]
     },
     {
-      "at": "2026-10-12T12:40:48.758Z",
+      "at": "2026-10-13T20:37:12.263Z",
       "total": 5837,
       "areas": [
         {
@@ -1892,7 +1892,7 @@
       ]
     },
     {
-      "at": "2026-10-12T12:58:39.424Z",
+      "at": "2026-10-13T22:21:46.800Z",
       "total": 5837,
       "areas": [
         {
@@ -2018,7 +2018,7 @@
       ]
     },
     {
-      "at": "2026-10-12T13:17:18.052Z",
+      "at": "2026-10-14T00:11:51.282Z",
       "total": 5837,
       "areas": [
         {
@@ -2144,8 +2144,8 @@
       ]
     },
     {
-      "at": "2026-10-12T13:41:20.943Z",
-      "total": 5837,
+      "at": "2026-10-14T07:10:08.992Z",
+      "total": 5835,
       "areas": [
         {
           "code": "Y200",
@@ -2160,11 +2160,11 @@
         {
           "code": "Y205",
           "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "available": 887,
-          "viaMiddleArea": 887,
+          "available": 886,
+          "viaMiddleArea": 886,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 887,
+          "fetched": 886,
           "missing": 0
         },
         {
@@ -2220,11 +2220,11 @@
         {
           "code": "Y222",
           "name": "本山・覚王山・藤が丘",
-          "available": 259,
-          "viaMiddleArea": 259,
+          "available": 258,
+          "viaMiddleArea": 258,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 259,
+          "fetched": 258,
           "missing": 0
         },
         {
@@ -2270,8 +2270,8 @@
       ]
     },
     {
-      "at": "2026-10-12T14:01:13.136Z",
-      "total": 5837,
+      "at": "2026-10-14T07:24:53.209Z",
+      "total": 5835,
       "areas": [
         {
           "code": "Y200",
@@ -2286,11 +2286,11 @@
         {
           "code": "Y205",
           "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "available": 887,
-          "viaMiddleArea": 887,
+          "available": 886,
+          "viaMiddleArea": 886,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 887,
+          "fetched": 886,
           "missing": 0
         },
         {
@@ -2346,11 +2346,11 @@
         {
           "code": "Y222",
           "name": "本山・覚王山・藤が丘",
-          "available": 259,
-          "viaMiddleArea": 259,
+          "available": 258,
+          "viaMiddleArea": 258,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 259,
+          "fetched": 258,
           "missing": 0
         },
         {
@@ -2396,8 +2396,8 @@
       ]
     },
     {
-      "at": "2026-10-12T14:21:39.509Z",
-      "total": 5837,
+      "at": "2026-10-14T07:39:02.725Z",
+      "total": 5835,
       "areas": [
         {
           "code": "Y200",
@@ -2412,11 +2412,11 @@
         {
           "code": "Y205",
           "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "available": 887,
-          "viaMiddleArea": 887,
+          "available": 886,
+          "viaMiddleArea": 886,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 887,
+          "fetched": 886,
           "missing": 0
         },
         {
@@ -2472,11 +2472,11 @@
         {
           "code": "Y222",
           "name": "本山・覚王山・藤が丘",
-          "available": 259,
-          "viaMiddleArea": 259,
+          "available": 258,
+          "viaMiddleArea": 258,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 259,
+          "fetched": 258,
           "missing": 0
         },
         {
@@ -2522,8 +2522,8 @@
       ]
     },
     {
-      "at": "2026-10-12T14:41:02.306Z",
-      "total": 5837,
+      "at": "2026-10-14T07:54:51.180Z",
+      "total": 5835,
       "areas": [
         {
           "code": "Y200",
@@ -2538,11 +2538,11 @@
         {
           "code": "Y205",
           "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "available": 887,
-          "viaMiddleArea": 887,
+          "available": 886,
+          "viaMiddleArea": 886,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 887,
+          "fetched": 886,
           "missing": 0
         },
         {
@@ -2598,11 +2598,11 @@
         {
           "code": "Y222",
           "name": "本山・覚王山・藤が丘",
-          "available": 259,
-          "viaMiddleArea": 259,
+          "available": 258,
+          "viaMiddleArea": 258,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 259,
+          "fetched": 258,
           "missing": 0
         },
         {
@@ -2648,8 +2648,8 @@
       ]
     },
     {
-      "at": "2026-10-12T15:06:26.839Z",
-      "total": 5837,
+      "at": "2026-10-14T08:38:47.910Z",
+      "total": 5835,
       "areas": [
         {
           "code": "Y200",
@@ -2664,11 +2664,11 @@
         {
           "code": "Y205",
           "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "available": 887,
-          "viaMiddleArea": 887,
+          "available": 886,
+          "viaMiddleArea": 886,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 887,
+          "fetched": 886,
           "missing": 0
         },
         {
@@ -2724,11 +2724,11 @@
         {
           "code": "Y222",
           "name": "本山・覚王山・藤が丘",
-          "available": 259,
-          "viaMiddleArea": 259,
+          "available": 258,
+          "viaMiddleArea": 258,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 259,
+          "fetched": 258,
           "missing": 0
         },
         {
@@ -2774,8 +2774,8 @@
       ]
     },
     {
-      "at": "2026-10-12T17:34:32.969Z",
-      "total": 5837,
+      "at": "2026-10-14T08:57:00.179Z",
+      "total": 5835,
       "areas": [
         {
           "code": "Y200",
@@ -2790,11 +2790,11 @@
         {
           "code": "Y205",
           "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "available": 887,
-          "viaMiddleArea": 887,
+          "available": 886,
+          "viaMiddleArea": 886,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 887,
+          "fetched": 886,
           "missing": 0
         },
         {
@@ -2850,11 +2850,11 @@
         {
           "code": "Y222",
           "name": "本山・覚王山・藤が丘",
-          "available": 259,
-          "viaMiddleArea": 259,
+          "available": 258,
+          "viaMiddleArea": 258,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 259,
+          "fetched": 258,
           "missing": 0
         },
         {
@@ -2900,8 +2900,8 @@
       ]
     },
     {
-      "at": "2026-10-12T18:02:49.205Z",
-      "total": 5837,
+      "at": "2026-10-14T09:14:01.318Z",
+      "total": 5835,
       "areas": [
         {
           "code": "Y200",
@@ -2916,11 +2916,11 @@
         {
           "code": "Y205",
           "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "available": 887,
-          "viaMiddleArea": 887,
+          "available": 886,
+          "viaMiddleArea": 886,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 887,
+          "fetched": 886,
           "missing": 0
         },
         {
@@ -2976,11 +2976,11 @@
         {
           "code": "Y222",
           "name": "本山・覚王山・藤が丘",
-          "available": 259,
-          "viaMiddleArea": 259,
+          "available": 258,
+          "viaMiddleArea": 258,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 259,
+          "fetched": 258,
           "missing": 0
         },
         {
@@ -3026,8 +3026,8 @@
       ]
     },
     {
-      "at": "2026-10-12T18:20:51.863Z",
-      "total": 5837,
+      "at": "2026-10-14T10:54:36.095Z",
+      "total": 5835,
       "areas": [
         {
           "code": "Y200",
@@ -3042,11 +3042,11 @@
         {
           "code": "Y205",
           "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "available": 887,
-          "viaMiddleArea": 887,
+          "available": 886,
+          "viaMiddleArea": 886,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 887,
+          "fetched": 886,
           "missing": 0
         },
         {
@@ -3102,11 +3102,11 @@
         {
           "code": "Y222",
           "name": "本山・覚王山・藤が丘",
-          "available": 259,
-          "viaMiddleArea": 259,
+          "available": 258,
+          "viaMiddleArea": 258,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 259,
+          "fetched": 258,
           "missing": 0
         },
         {
@@ -3152,8 +3152,8 @@
       ]
     },
     {
-      "at": "2026-10-12T18:42:46.474Z",
-      "total": 5837,
+      "at": "2026-10-14T11:10:26.419Z",
+      "total": 5835,
       "areas": [
         {
           "code": "Y200",
@@ -3168,11 +3168,11 @@
         {
           "code": "Y205",
           "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "available": 887,
-          "viaMiddleArea": 887,
+          "available": 886,
+          "viaMiddleArea": 886,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 887,
+          "fetched": 886,
           "missing": 0
         },
         {
@@ -3228,11 +3228,11 @@
         {
           "code": "Y222",
           "name": "本山・覚王山・藤が丘",
-          "available": 259,
-          "viaMiddleArea": 259,
+          "available": 258,
+          "viaMiddleArea": 258,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 259,
+          "fetched": 258,
           "missing": 0
         },
         {
@@ -3278,8 +3278,8 @@
       ]
     },
     {
-      "at": "2026-10-12T19:05:17.928Z",
-      "total": 5837,
+      "at": "2026-10-14T11:31:13.003Z",
+      "total": 5835,
       "areas": [
         {
           "code": "Y200",
@@ -3294,11 +3294,11 @@
         {
           "code": "Y205",
           "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "available": 887,
-          "viaMiddleArea": 887,
+          "available": 886,
+          "viaMiddleArea": 886,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 887,
+          "fetched": 886,
           "missing": 0
         },
         {
@@ -3354,11 +3354,11 @@
         {
           "code": "Y222",
           "name": "本山・覚王山・藤が丘",
-          "available": 259,
-          "viaMiddleArea": 259,
+          "available": 258,
+          "viaMiddleArea": 258,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 259,
+          "fetched": 258,
           "missing": 0
         },
         {
@@ -3404,8 +3404,8 @@
       ]
     },
     {
-      "at": "2026-10-12T19:21:46.043Z",
-      "total": 5837,
+      "at": "2026-10-14T11:46:35.541Z",
+      "total": 5835,
       "areas": [
         {
           "code": "Y200",
@@ -3420,11 +3420,11 @@
         {
           "code": "Y205",
           "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "available": 887,
-          "viaMiddleArea": 887,
+          "available": 886,
+          "viaMiddleArea": 886,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 887,
+          "fetched": 886,
           "missing": 0
         },
         {
@@ -3480,11 +3480,11 @@
         {
           "code": "Y222",
           "name": "本山・覚王山・藤が丘",
-          "available": 259,
-          "viaMiddleArea": 259,
+          "available": 258,
+          "viaMiddleArea": 258,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 259,
+          "fetched": 258,
           "missing": 0
         },
         {
@@ -3530,8 +3530,8 @@
       ]
     },
     {
-      "at": "2026-10-12T19:38:31.061Z",
-      "total": 5837,
+      "at": "2026-10-14T12:02:07.710Z",
+      "total": 5835,
       "areas": [
         {
           "code": "Y200",
@@ -3546,11 +3546,11 @@
         {
           "code": "Y205",
           "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "available": 887,
-          "viaMiddleArea": 887,
+          "available": 886,
+          "viaMiddleArea": 886,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 887,
+          "fetched": 886,
           "missing": 0
         },
         {
@@ -3606,11 +3606,11 @@
         {
           "code": "Y222",
           "name": "本山・覚王山・藤が丘",
-          "available": 259,
-          "viaMiddleArea": 259,
+          "available": 258,
+          "viaMiddleArea": 258,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 259,
+          "fetched": 258,
           "missing": 0
         },
         {
@@ -3656,8 +3656,8 @@
       ]
     },
     {
-      "at": "2026-10-12T20:16:49.633Z",
-      "total": 5837,
+      "at": "2026-10-14T12:17:55.864Z",
+      "total": 5835,
       "areas": [
         {
           "code": "Y200",
@@ -3672,11 +3672,11 @@
         {
           "code": "Y205",
           "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "available": 887,
-          "viaMiddleArea": 887,
+          "available": 886,
+          "viaMiddleArea": 886,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 887,
+          "fetched": 886,
           "missing": 0
         },
         {
@@ -3732,11 +3732,11 @@
         {
           "code": "Y222",
           "name": "本山・覚王山・藤が丘",
-          "available": 259,
-          "viaMiddleArea": 259,
+          "available": 258,
+          "viaMiddleArea": 258,
           "smallAreas": 0,
           "errors": [],
-          "fetched": 259,
+          "fetched": 258,
           "missing": 0
         },
         {

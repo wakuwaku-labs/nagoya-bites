@@ -2,17 +2,18 @@
   "_comment": "画像の配信元の方針の正本。scripts/audit_image_sources.js が読む。閾値・一覧の変更はこのファイルで行いスクリプトは触らない（CLAUDE.md 制約10）。",
   "version": 1,
   "decidedAt": "2026-10-12",
-  "plan": "docs/uiux-overhaul-plan-2026-10.md の I-09・I-35 ③。外部の変換サービスを使うかどうかはオーナーの決定待ち（4.4 節 #5）。決まるまでは、使っている件数を数えるだけ（夜間QA の soft）。決定後に blockedHosts を 0 件にして hard に上げる。",
+  "plan": "docs/uiux-overhaul-plan-2026-10.md の I-09・I-35 ③。外部の変換サービスを使うかどうかは、オーナーが 2026-10-13 に「続ける」と決めた（P-237 #5・docs/decisions/0028-image-resizer-kept.md）。そのため blockedHosts は「直す対象」ではなく「使っている件数を見張る一覧」で、0 件にするのが目標ではない。夜間QA の soft のまま赤で件数を見張り、hard には上げない。リクルートの規約の読み方は確かめていない。リクルートから回答があった・サービスが止まった／規約が変わった・初めて見られる店の店舗ページの LCP が目標に届かない状態が続く、のどれかのときは見直す。",
+  "ownerAnswer": { "date": "2026-10-13", "answer": "続ける", "issue": "P-237 #5", "adr": "docs/decisions/0028-image-resizer-kept.md" },
   "blockedHosts": [
     {
       "host": "wsrv.nl",
       "why": "外部の画像変換サービス。店の写真（HotPepper・Google）をここ経由で配ると、リクルートの利用規約（加工・複製保存・再配信の禁止）に反する疑いがある。サービスが止まると写真が全部消える。初めて見られる店の店舗ページの LCP も遅くなる（計画 U-84）。",
-      "ownerDecision": "P-237 #5 / I-09"
+      "ownerDecision": "P-237 #5（続ける・2026-10-13）/ docs/decisions/0028-image-resizer-kept.md"
     },
     {
       "host": "images.weserv.nl",
       "why": "wsrv.nl と同じサービスの旧ドメイン。",
-      "ownerDecision": "P-237 #5 / I-09"
+      "ownerDecision": "P-237 #5（続ける・2026-10-13）/ docs/decisions/0028-image-resizer-kept.md"
     }
   ],
   "allowedHosts": [

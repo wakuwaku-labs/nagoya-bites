@@ -25,7 +25,7 @@ const ANCHOR = '<div class="art-body">';
 function buildIntroHtml(countLabel) {
   return `<p class="${MARKER}">` +
     `この記事は<a href="../index.html">NAGOYA BITES</a>` +
-    ` — 名古屋の厳選${countLabel}店を業界視点で紹介するグルメガイドの一部です。</p>`;
+    ` — 名古屋の${countLabel}店を、公開情報をもとに紹介するグルメガイドの一部です。</p>`;
 }
 
 const files = process.argv.slice(2).filter(f => f && f.endsWith('.html'));

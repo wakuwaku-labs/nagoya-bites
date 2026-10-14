@@ -533,7 +533,7 @@ function buildDescription(s) {
   // 旧説明文は「個室経営効率を重視した店舗設計」のような “経営者向けの分析” が
   // 先頭に来ており、店名で検索した消費者が知りたい「場所・予算・評価」が
   // SERP の可視領域（モバイル約120字）から押し出されていた。
-  // よって「どこ・いくら・評価」を先に置き、業界視点のコメントは後ろに回す。
+  // よって「どこ・いくら・評価」を先に置き、店のポイントの文は後ろに回す。
   // SEO-095: GSC28日実測で navigational（店名指名検索）は表示19,958（全体70.5%）に対し
   // CTR0.35%。店名を知っている読者が最後にためらう「今夜営業しているか／評価は信じてよいか」
   // を埋めるため、口コミ信頼度・深夜営業の有無を事実ベースで追加する（推測・煽り文言は禁止）。
@@ -571,7 +571,7 @@ function buildDescription(s) {
   const usefulTags = ['個室', '貸切', '飲み放題', '食べ放題', '女子会', '接待', 'テラス'].filter(t => tags.includes(t));
   if (usefulTags.length) parts.push(usefulTags.slice(0, 2).join('・') + '対応');
 
-  // Part5: 業界視点のひとこと（他媒体に無い差別化要因。長い場合は文単位で切る）
+  // Part5: この店のポイントのひとこと（長い場合は文単位で切る）
   if (point) parts.push(point.length > 60 ? point.split(/[。、]/)[0] : point);
 
   // Part6: 複数媒体を1ページで見比べられる価値（尺が余ったときだけ）
@@ -595,7 +595,7 @@ function buildDescription(s) {
 // ================================================================
 // HTML テンプレート
 // ================================================================
-// SEO-143: 編集部の選定理由（editorReason）を店舗ページの本文に出す。
+// SEO-143: 選定理由（editorReason）を店舗ページの本文に出す。
 // トップのカードとモーダルでは出しているのに、店舗ページは「おすすめポイント」しか出しておらず、
 // editorReason を持つ店の大半でこの文がどの URL の本文にも無かった（検索・AI から読めない）。
 // おすすめポイントと同じ文なら二重に出さない。選定の根拠（visitStatus）はモーダルと同じ語で添える。
@@ -605,7 +605,7 @@ function buildEditorReason(s) {
   if (!reason) return '';
   const label = visitStatusLabel(s);
   return `<section class="editor-reason">
-    <h2>編集部の選定理由</h2>
+    <h2>選定理由</h2>
     <p>${escapeHtml(reason)}</p>${label ? `
     <p class="editor-reason-meta">選定の根拠：${escapeHtml(label)}</p>` : ''}
   </section>`;
@@ -996,8 +996,8 @@ ${(() => {
   if (hasCustomOg) {
     const ogPng = `https://wsrv.nl/?url=${encodeURIComponent('https://nagoya-bites.com/assets/og/' + slug + '.svg')}&output=png&w=1200&h=630`;
     return `<meta property="og:image" content="${ogPng}">
-<meta property="og:image:alt" content="${nameHtml} | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
-<meta name="twitter:image:alt" content="${nameHtml} | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
+<meta property="og:image:alt" content="${nameHtml} | NAGOYA BITES（名古屋グルメガイド）">
+<meta name="twitter:image:alt" content="${nameHtml} | NAGOYA BITES（名古屋グルメガイド）">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 `;

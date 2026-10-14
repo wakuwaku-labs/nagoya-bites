@@ -34,6 +34,19 @@
  * 採点に使う値はすべて sources 配列・published.json・候補本文から機械的に導出される。
  * エージェントが「数字を大きく書く」ことで点を上げる経路は残っていない。
  *
+ * ============================================================================
+ * 2026-10-13 改訂（P-333）— 「語を入れると点が上がる」加点の廃止
+ * ============================================================================
+ * brand_fit には、候補の angle・リード・タイトルに特定の語（運営の立場や「誰の目線か」を名乗る10語。
+ * 語の一覧は判断の記録 0030）が1語でも入っていれば +3、という加点があった。次の2点で、ISSUE-077 で是正した
+ * 「盛れば通る」と同じ形だった。
+ *   - 点を上げるために書き手がその語を入れる動機になる（語が入っているかは、中身の検証ではない）
+ *   - 2026-10-11 のオーナー指示（人の飲食業界関係者が店を選んでいるような表現を使わない）の語を、
+ *     書く前の段階で報酬にしてしまう（直近の候補の約半数は、この加点を語の有無だけで得ていた）
+ * そこで加点をやめ、同じ3点をベースへ畳み込んだ（ベース 8 → 11）。語を入れても入れなくても同じ点になる。
+ * 畳み込みなので、これまで語を入れていた候補の点は変わらず、入れていなかった候補だけが +3 になる。
+ * 実測と判断は docs/decisions/0030-journal-scoring-no-wording-bonus.md。
+ *
  * 入力スキーマ（候補配列）:
  *   [
  *     {
@@ -41,7 +54,7 @@
  *       "theme": "today_one | industry_insider | weekly_digest | seasonal | flexible",
  *       "title_draft": "...",
  *       "lead_draft": "150字程度",
- *       "angle": "業界人視点の切り口を1行",
+ *       "angle": "切り口を1行（価格帯・席・予約・シーンなど、何を読み解くかを具体に書く）",
  *       "main_store": { "name": "...", "id": "", "area": "...", "genre": "..." },
  *       "sources": [{ "label": "...", "url": "...", "date": "2026-05-15" }],
  *       "column_id": "COL-XXX-NNN"
@@ -133,7 +146,6 @@ const UNIQUENESS_KEYWORDS = {
 };
 
 const STRATEGIC_SKIP_KEYWORDS = ['食べログランキング', '食べログ百名店', 'クーポン', '割引', '飲み放題特典', '印刷雑誌', '雑誌連動'];
-const BRAND_FIT_BONUS_KEYWORDS = ['業界人', '編集部', '現役', '匿名', 'editorReason', 'mediaFeatures', 'insiderNote', 'オペ', '裏側', '目利き'];
 
 // 匿名運営違反検出: 固有名 + 役職パターンを簡易検出
 const ANONYMITY_VIOLATION_PATTERNS = [
@@ -359,7 +371,8 @@ function scoreTopicality(candidate, saturated = []) {
 }
 
 /**
- * 独自性: テーマ別の業界人語彙が angle にいくつ入っているか。
+ * 独自性: テーマ別の語彙（価格帯・席・予約・原価など、angle が何を読み解くかを具体に示す語）が angle にいくつ入っているか。
+ * 自分たちの視点を名乗る語（誰が選んだか・誰の目線か）は数えない。
  * 旧版は today_one 以外を angle の文字数で判定していたため、テーマによって
  * 構造的に上限15点になっていた（メモ journal-95-gate-theme-cap の偏り）。
  */
@@ -376,24 +389,20 @@ function scoreUniqueness(candidate) {
 }
 
 /**
- * ブランド整合: 業界人視点であること + **一次情報源を押さえているか**（信頼性）。
+ * ブランド整合: ブランドに反する要素が無いこと + **一次情報源を押さえているか**（信頼性）。
  * 一次情報源加点は、旧 buzz_score の 5点分を「検証できる事実」に置き換えたもの。
+ * 2026-10-13（P-333）: 特定の語（運営の立場や「誰の目線か」を名乗る語）が入っていれば +3、という加点をやめた。語の有無は
+ * 中身の検証ではなく、書き手に語を書かせる動機になるため。同じ3点はベースへ畳み込んだ（8 → 11）。
  */
 function scoreBrandFit(candidate) {
   const text = `${candidate.angle || ''} ${candidate.lead_draft || ''} ${candidate.title_draft || ''}`;
-  let score = 8; // ベース8
-  const reasons = ['ベース8'];
+  let score = 11; // ベース11（Strategic Skip・匿名運営違反に当たらなければ満たす）
+  const reasons = ['ベース11'];
 
   const skips = STRATEGIC_SKIP_KEYWORDS.filter(k => text.includes(k));
   if (skips.length) {
     score -= skips.length * 5;
     reasons.push(`Strategic Skip 該当 ${skips.length}件 (${skips.join(',')}) → -${skips.length * 5}`);
-  }
-
-  const bonus = BRAND_FIT_BONUS_KEYWORDS.filter(k => text.includes(k));
-  if (bonus.length) {
-    score += 3;
-    reasons.push(`業界人視点キーワード ${bonus.length}件 → +3`);
   }
 
   const primaryCount = (candidate.sources || []).map(s => hostOf(s.url)).filter(isPrimarySource).length;
@@ -645,8 +654,8 @@ function cmdCalibrate() {
       c: {
         id: 'fx-strong', theme: 'today_one',
         title_draft: '名駅の割烹を接待で使う——38,000円コースの席と予約の読み方',
-        lead_draft: '採点キャリブレーション専用の合成リードです。カウンター席と個室の構成、コースのみで夜は38,000円からという価格設定、開業直後という条件を仮定し、価格帯・席構成・接待での使い方を業界人目線で読む想定の文章として十分な長さを確保しています。',
-        angle: 'コースのみ38,000円という価格帯設計、カウンターと個室の席構成、予約導線、接待シーンでの使い方を業界人の目利きで裏側から読む',
+        lead_draft: '採点キャリブレーション専用の合成リードです。カウンター席と個室の構成、コースのみで夜は38,000円からという価格設定、開業直後という条件を仮定し、価格帯・席構成・接待での使い方を運営の面から読む想定の文章として十分な長さを確保しています。',
+        angle: 'コースのみ38,000円という価格帯設計、カウンターと個室の席構成、予約導線、接待シーンでの使い方を運営の面から読む',
         main_store: { name: '__calibrate_only__', id: '', area: '名駅', genre: '日本料理' },
         sources: [
           { label: '公式プレスリリース', url: 'https://prtimes.jp/main/html/rd/p/x.html', date: '2026-07-24' },
@@ -663,8 +672,8 @@ function cmdCalibrate() {
       c: {
         id: 'fx-strong-nokw', theme: 'today_one',
         title_draft: '照明の色温度から客単価設計を読む——検証用の合成見出し',
-        lead_draft: '採点キャリブレーション専用の合成リードです。カウンター席と個室の構成、コースのみで夜は38,000円からという価格設定、開業直後という条件を仮定し、価格帯・席構成・接待での使い方を業界人目線で読む想定の文章として十分な長さを確保しています。',
-        angle: 'コースのみ38,000円という価格帯設計、カウンターと個室の席構成、予約導線、接待シーンでの使い方を業界人の目利きで裏側から読む',
+        lead_draft: '採点キャリブレーション専用の合成リードです。カウンター席と個室の構成、コースのみで夜は38,000円からという価格設定、開業直後という条件を仮定し、価格帯・席構成・接待での使い方を運営の面から読む想定の文章として十分な長さを確保しています。',
+        angle: 'コースのみ38,000円という価格帯設計、カウンターと個室の席構成、予約導線、接待シーンでの使い方を運営の面から読む',
         main_store: { name: '__calibrate_only3__', id: '', area: '名駅', genre: '日本料理' },
         sources: [
           { label: '公式プレスリリース', url: 'https://prtimes.jp/main/html/rd/p/y.html', date: '2026-07-24' },
@@ -680,7 +689,7 @@ function cmdCalibrate() {
         id: 'fx-mid', theme: 'today_one',
         title_draft: '架空検証用アングルBの見出し文字列',
         lead_draft: '採点キャリブレーション専用の合成リードです。価格帯の読み方、繁忙時間帯の避け方、どのシーンに向くかを整理する想定で、予算は3,000円台という条件を仮定しています。二次媒体のみで一次発表を押さえていない場合の着地点を確認します。',
-        angle: '価格帯の読み方とアラカルトの頼み方、繁忙の回転、一人飲みに向くシーン設計を業界人目線で読む',
+        angle: '価格帯の読み方とアラカルトの頼み方、繁忙の回転、一人飲みに向くシーン設計を運営の面から読む',
         main_store: { name: '__calibrate_only2__', id: '', area: '栄', genre: '焼肉' },
         sources: [
           { label: 'まとめ媒体', url: 'https://jouhou.nagoya/x/', date: '2026-07-26' },
@@ -822,4 +831,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { scoreAll, scoreOne, loadGatePolicy, WEIGHTS, PASS_THRESHOLD };
+module.exports = { scoreAll, scoreOne, scoreBrandFit, loadGatePolicy, WEIGHTS, PASS_THRESHOLD };

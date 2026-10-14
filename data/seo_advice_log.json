@@ -3830,6 +3830,66 @@
       "brand_reason": "重複（10-05 週次で却下・10-06/10-09/10-10 に重複判定済み）。受け皿の features/date.html（名古屋 デートディナーおすすめ10選）が既存で、同KWの新規特集は自己カニバリで順位を割る。date.html の1ページ目押上げは SEO-122（P1）で起票済み。順位10.6位は前日10.8位からの単日変動で根拠にしない（制約10）",
       "category": null,
       "fingerprint": "51d29dce01424cea"
+    },
+    {
+      "id": null,
+      "date": "2026-10-13",
+      "source": "line-daily",
+      "advice": "🟡 訪問者29人に対し予約ボタンクリック0回。👉 index.html・journal/・stores/で予約ボタンの文言や色を調整し視認性を高める",
+      "verdict": "duplicate",
+      "brand_reason": "重複（10-02/10-03/10-05週次/10-07〜10-11に同主旨を判定済み）。母数29人・単日0回は根拠にならない（制約10）。ボタン色はデザインシステム（DSN-001）のトークンで統一され、予約導線は既に各ページ実装済み。",
+      "category": null,
+      "fingerprint": "b0c8a9470e84d6c7"
+    },
+    {
+      "id": null,
+      "date": "2026-10-13",
+      "source": "line-daily",
+      "advice": "🟡 1訪問1.2ページで回遊が少ない。👉 journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first に features/・stores/ への導線を複数設置",
+      "verdict": "rejected",
+      "brand_reason": "却下（既に充足）。当該記事は特集6本・店舗ページ3件・他ジャーナル5件へ既にリンク済みで、関連記事選定の構造改善は SEO-113/114 で実施済み。1記事への手書き追記は増分が小さく、三層編集の自動導線（refresh_journal_related.js）に集約済み。",
+      "category": null,
+      "fingerprint": "654ea0d2aef4e87d"
+    },
+    {
+      "id": null,
+      "date": "2026-10-13",
+      "source": "line-daily",
+      "advice": "🟡 検索流入89%・Google51%。👉 features/ に「名古屋 デート ディナー」特集を新規作成しindex.htmlから導線",
+      "verdict": "duplicate",
+      "brand_reason": "重複（10-05週次/10-06/10-09/10-10/10-11に判定済み）。受け皿の features/date.html が既存で、同KWの新規特集は自己カニバリで順位を割る。date.html の1ページ目押上げは SEO-122（P1）で起票済み。",
+      "category": null,
+      "fingerprint": "1b43aec8d6c7a59c"
+    },
+    {
+      "id": null,
+      "date": "2026-10-13",
+      "source": "line-weekly",
+      "advice": "🟢 予約クリック率5.7%と好調。👉 index.htmlのファーストビューにシーン別特集への導線を強化し予約を促す店舗を目立たせる",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-17/10-06にトップFV導線の同主旨を判定済み）。FVは日替わり「今日の話題店」TOP5が担い、シーン特集への入口は常時表示「シーンで探す」が既存。週次は前週比+35%で好調、欠陥の指摘ではない。予約数は母数24件で根拠が薄い（制約10）。",
+      "category": null,
+      "fingerprint": "38fd2748c297c7f1"
+    },
+    {
+      "id": null,
+      "date": "2026-10-13",
+      "source": "line-weekly",
+      "advice": "🟡 1訪問1.2ページ。👉 nagoya-solo-dining 特集内に関連の日次ジャーナル・他特集への内部リンクを複数設置",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-26に却下、SEO-108/109/087で対応済みの主旨）。当該特集は既に関連特集リンク群とジャーナル4本へのリンクを持つ。",
+      "category": null,
+      "fingerprint": "62e3d37b00b1899a"
+    },
+    {
+      "id": null,
+      "date": "2026-10-13",
+      "source": "line-weekly",
+      "advice": "🟡 「青ノ月」が検索平均8.4位。👉 stores/の青ノ月静的ページに写真追加・予約ボタンを大きく配置",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-29/10-02/10-10に判定済み）。単一店名のナビゲーショナルクエリは公式サイト・Googleマップに譲る Strategic Skip の面。店舗ページの写真は photo_policy の品質ゲートに従い手動追加しない（実写優先順）。",
+      "category": null,
+      "fingerprint": "483278ede573fdbf"
     }
   ]
 }

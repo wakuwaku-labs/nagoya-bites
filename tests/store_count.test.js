@@ -171,11 +171,19 @@ test('トップへの導線: 特集では「全N店舗を検索する」を雛�
   assert.doesNotMatch(tpl, /トップページで全[\d,]/);
 });
 
-test('ジャーナル: 記事の冒頭の紹介文（nb-site-intro）の中だけ。本文の数は触らない', () => {
+test('ジャーナル: 記事の冒頭の紹介文（nb-site-intro）の中だけ。本文の数は触らない（既存の記事の言い方）', () => {
   const intro = '<p class="nb-site-intro">この記事は<a href="../index.html">NAGOYA BITES</a> — 名古屋の厳選1,100店超を業界視点で紹介するグルメガイドの一部です。</p>';
   const body = '<p>掲載1,100店のうち、朝営業は172店。</p>';
   const r = sync(`${intro}\n${body}`, 'journal');
   assert.equal(r.text, `${intro.replace('1,100店超', '約5,000店')}\n${body}`);
+  assert.equal(r.changes.length, 1);
+  assert.equal(sync(r.text, 'journal').changes.length, 0);
+});
+
+test('ジャーナル: 新しい言い方の紹介文（P-326）も、同じ形で数字だけがそろう', () => {
+  const intro = '<p class="nb-site-intro">この記事は<a href="../index.html">NAGOYA BITES</a> — 名古屋の約4,500店を、公開情報をもとに紹介するグルメガイドの一部です。</p>';
+  const r = sync(intro, 'journal');
+  assert.equal(r.text, intro.replace('約4,500店', '約5,000店'));
   assert.equal(r.changes.length, 1);
   assert.equal(sync(r.text, 'journal').changes.length, 0);
 });
@@ -216,7 +224,7 @@ test('ジャーナルの紹介文を作るスクリプトは、固定の数字�
   assert.match(out, /modified=1/);
   const html = fs.readFileSync(file, 'utf8');
   const label = siteStoreCount().label;
-  assert.ok(html.includes(`名古屋の厳選${label}店を業界視点で紹介するグルメガイドの一部です。`), html);
+  assert.ok(html.includes(`名古屋の${label}店を、公開情報をもとに紹介するグルメガイドの一部です。`), html);
   assert.doesNotMatch(html, /1,100/);
   // 紹介文は同期の対象と同じ形（同期が追随できる）
   assert.equal(syncStoreCountText(html, SCOPES.journal, siteStoreCount()).changes.length, 0);

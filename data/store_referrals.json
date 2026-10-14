@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T20:14:06.653Z",
+  "generatedAt": "2026-10-14T12:10:38.631Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -8,11 +8,11 @@
   },
   "totals": {
     "exits": {
-      "hotpepper": 50,
+      "hotpepper": 57,
       "tabelog": 3,
-      "tel": 2,
+      "tel": 4,
       "other": 0,
-      "total": 55
+      "total": 64
     },
     "reports": {
       "yes": 0,
@@ -24,11 +24,11 @@
     "start": "2026-10-01",
     "totals": {
       "exits": {
-        "hotpepper": 22,
+        "hotpepper": 29,
         "tabelog": 3,
-        "tel": 0,
+        "tel": 2,
         "other": 0,
-        "total": 25
+        "total": 34
       },
       "reports": {
         "yes": 0,
@@ -56,6 +56,24 @@
       }
     },
     {
+      "store_name": "旬彩倶楽部 鱗",
+      "exits": {
+        "hotpepper": 4,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 4
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 3,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "日本料理 旬彩",
       "exits": {
         "hotpepper": 4,
@@ -70,24 +88,6 @@
       },
       "thisMonth": {
         "exits": 1,
-        "reportsYes": 0
-      }
-    },
-    {
-      "store_name": "旬彩倶楽部 鱗",
-      "exits": {
-        "hotpepper": 3,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 3
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 2,
         "reportsYes": 0
       }
     },
@@ -128,10 +128,64 @@
       }
     },
     {
+      "store_name": "BARNABAS ドッグラン＆BBQ場",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "Cellarr（セラー）",
       "exits": {
         "hotpepper": 0,
         "tabelog": 1,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "GURU 神宮前駅前店",
+      "exits": {
+        "hotpepper": 0,
+        "tabelog": 0,
+        "tel": 1,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "Shisha Cafe Lounge Neom シーシャカフェラウンジネオン",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
         "tel": 0,
         "other": 0,
         "total": 1
@@ -218,6 +272,42 @@
       }
     },
     {
+      "store_name": "サラマンジェドゥカジノ",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "ステーキハウス キッチンリボン",
+      "exits": {
+        "hotpepper": 0,
+        "tabelog": 0,
+        "tel": 1,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "ちゃんこ九重",
       "exits": {
         "hotpepper": 1,
@@ -254,6 +344,24 @@
       }
     },
     {
+      "store_name": "ゆたかうどん",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "ル・タンブル Le Timbre",
       "exits": {
         "hotpepper": 1,
@@ -286,6 +394,24 @@
       },
       "thisMonth": {
         "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "居酒屋 権兵衛 名駅店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
         "reportsYes": 0
       }
     },
@@ -340,6 +466,24 @@
       },
       "thisMonth": {
         "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "鳥心 名駅本店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
         "reportsYes": 0
       }
     },

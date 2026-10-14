@@ -185,6 +185,18 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/audit_stub_links.js', '--check']],
 });
+// 公開ページの内部リンクのリンク先が、リポジトリの中のファイルとして実在するか（P-383・SOFT で開始）。
+// 一度も公開されていない記事へのリンクが 5 か月 404 のまま公開されていた（P-382）のに、実在を数える検査が無かった。
+// 日次で増える特集・ジャーナルの本数を npm test の合否にしない（判断の記録 0033）ため、実ページの確認はここで行う。
+// 0件が続いたら hard に上げる
+checks.push({
+  id: 'internal-links',
+  title: '公開ページの内部リンクのリンク先が実在する（P-383）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_internal_links.js', '--check']],
+});
 // サイト全体の掲載店数の表記が、1つの値（営業中の店を 500 件単位に丸めた「約5,000」）にそろっているか（I-06・SOFT で開始）。
 // トップ・stores/index.html・faq.html・特集は build.yml が日次でそろえる。journal/ の冒頭の紹介文だけは CI が触らない
 // （書き手を1つにするため）ので、丸めた値が変わった日にここで知らせる。0件が続いたら hard に上げる
@@ -212,7 +224,7 @@ checks.push({
 // （hard にしない＝毎晩 Issue を起票しない）。対応する直しが入って 0 件になった検査から hard に上げる。
 //   selection-wording      … オーナーの指示（2026-10-11）。直すのは P-237 #2 の決定のあと
 //   inline-style-font-size … 直すのは I-26b（特集の style 属性の小さな文字）
-//   image-sources          … 直すのは I-09（wsrv.nl をやめるか・P-237 #5）
+//   image-sources          … P-237 #5 はオーナーが「続ける」と決めた（2026-10-13・判断の記録 0028）。直さず、赤のまま件数を見張る
 //   page-weight            … 今は緑。ページが気づかないうちに重くなるのを止める
 checks.push({
   id: 'selection-wording',
@@ -232,7 +244,7 @@ checks.push({
 });
 checks.push({
   id: 'image-sources',
-  title: '画像を外部の変換サービス（wsrv.nl）経由で配っていない（I-35 ③・I-09）',
+  title: '画像を外部の変換サービス（wsrv.nl）経由で配っていない（I-35 ③。オーナーは続けると決定＝赤のまま件数を見張る・判断の記録 0028）',
   hard: false,
   alwaysShow: true,
   trigger: '常時',

@@ -203,7 +203,7 @@ ${main ? `${MAIN_CLOSE}\n` : ''}<footer class="nb-footer">
   <div class="nb-footer-inner">
     <div class="nb-footer-brand">
       <a class="logo" href="${p}index.html">Nagoya <em>Bites</em></a>
-      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+      <p class="nb-footer-tagline">広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。店舗の選定にはAIによる情報収集・分析を活用しています。</p>
     </div>
 ${groups}
   </div>
