@@ -85,6 +85,30 @@ function updateHistory(history, date, groups) {
   return h.filter((x) => x.date >= cutoff);
 }
 
+/** 履歴の 1 日分で、引けた（取得失敗でない）URL の数 */
+function totalInspected(groups) {
+  return Object.values(groups || {}).reduce((n, g) => n + ((g && g.inspected) || 0), 0);
+}
+
+/**
+ * その日の観測が済んでいるか。見本の数（expected）の COMPLETE_RATIO 以上を引けていれば済み。
+ * 日次ビルドはマージのたびにも走る。毎回引き直すと URL 検査 API の 1 日の上限（2,000 件）を使い切り、
+ * 上限に当たった回の少ない結果が、同じ日の全件の結果を置き換えていた（2026-10-14 の行は 251 件中 15 件）
+ */
+const COMPLETE_RATIO = 0.9;
+function isDayComplete(history, date, expected) {
+  const row = (history || []).find((x) => x && x.date === date);
+  if (!row || !(expected > 0)) return false;
+  return totalInspected(row.groups) >= Math.ceil(expected * COMPLETE_RATIO);
+}
+
+/** 同じ日の行を置き換えてよいか。前より多く引けたときだけ（上限に当たった回が全件の行を消さない） */
+function shouldReplaceDay(history, date, groups) {
+  const row = (history || []).find((x) => x && x.date === date);
+  if (!row) return true;
+  return totalInspected(groups) > totalInspected(row.groups);
+}
+
 /**
  * 面（group）を順番に 1 件ずつ回す順にする。時間切れで途中までしか引けなくても、
  * 全部の面から同じ割合で引けているようにする（先頭の面だけが引かれて他が空になるのを防ぐ）。
@@ -101,4 +125,4 @@ function interleave(groups) {
   return out;
 }
 
-module.exports = { interleave, HISTORY_DAYS, CRAWL_RECENT_DAYS, stableOrder, pickSample, summarizeInspection, isIndexed, isCrawledRecently, summarizeGroups, updateHistory };
+module.exports = { interleave, HISTORY_DAYS, CRAWL_RECENT_DAYS, stableOrder, pickSample, summarizeInspection, isIndexed, isCrawledRecently, summarizeGroups, updateHistory, totalInspected, isDayComplete, shouldReplaceDay, COMPLETE_RATIO };

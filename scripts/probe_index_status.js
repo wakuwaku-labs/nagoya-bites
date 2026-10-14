@@ -11,6 +11,7 @@
  *
  * 使い方:
  *   GA4_SERVICE_ACCOUNT_KEY=... node scripts/probe_index_status.js          # 引いて data/index_probe.json を更新
+ *   GA4_SERVICE_ACCOUNT_KEY=... node scripts/probe_index_status.js --force  # 今日の分が済んでいても引き直す
  *   node scripts/probe_index_status.js --report                              # 保存済みの履歴を読んで表示（通信なし）
  *   node scripts/probe_index_status.js --build-urls --unreachable-file <audit_store_reachability.js --list --json の出力>
  *                                                                            # 見本 URL の一覧を作り直す（普段は不要）
@@ -76,17 +77,21 @@ function report() {
   }
 }
 
-async function probe() {
+async function probe(force) {
   const raw = process.env.GA4_SERVICE_ACCOUNT_KEY;
   if (!raw) { console.log('GA4_SERVICE_ACCOUNT_KEY が無いのでスキップ（観測しない）'); return; }
   const urlsDoc = readJson(URLS_PATH, null);
   if (!urlsDoc || !urlsDoc.groups) { console.log('data/index_probe_urls.json が無いのでスキップ'); return; }
+  const prev = readJson(OUT_PATH, {});
+  const date = new Date().toISOString().slice(0, 10);
+  const expected = Object.values(urlsDoc.groups).reduce((n, u) => n + (u || []).length, 0);
+  // 日次ビルドはマージのたびにも走る。今日の分を引き終えていれば API を呼ばない（1 日の上限 2,000 件を使い切らない）
+  if (!force && lib.isDayComplete(prev.history, date, expected)) { console.log(`${date} の観測は済み（${expected} 件の ${Math.round(lib.COMPLETE_RATIO * 100)}% 以上）なので引かない。引き直すときは --force`); return; }
   const { google } = require('googleapis');
   const cred = JSON.parse(raw);
   const auth = new google.auth.JWT({ email: cred.client_email, key: cred.private_key, scopes: ['https://www.googleapis.com/auth/webmasters.readonly'] });
   await auth.authorize();
   const sc = google.searchconsole({ version: 'v1', auth });
-  const prev = readJson(OUT_PATH, {});
   const siteUrl = process.env.GSC_SITE_URL || (readJson(path.join(ROOT, 'data', 'gsc_metrics.json'), {}).siteUrl) || 'sc-domain:nagoya-bites.com';
   const now = Date.now();
   const rows = {};
@@ -124,8 +129,8 @@ async function probe() {
   if (skipped) console.log(`時間切れ（${Math.round(BUDGET_MS / 1000)} 秒）: ${skipped} 件は引かずに終了`);
   const ok = Object.values(rows).filter((r) => !r.error).length;
   if (!ok) { console.log('1 件も引けなかったので data/index_probe.json は更新しない（原因は上のログ）'); return; }
-  const date = new Date(now).toISOString().slice(0, 10);
   const groups = lib.summarizeGroups(rows, now);
+  if (!lib.shouldReplaceDay(prev.history, date, groups)) { console.log(`${date} の行は前の回の方が多く引けているので残す（今回 ${ok} 件）`); return; }
   const out = { generatedAt: new Date(now).toISOString(), siteUrl, urls: rows, history: lib.updateHistory(prev.history, date, groups) };
   fs.writeFileSync(OUT_PATH, JSON.stringify(out, null, 1) + '\n');
   for (const [g, v] of Object.entries(groups)) console.log(`${g}: 登録 ${v.indexed}/${v.inspected}・最近クロール ${v.crawledRecently}・取得失敗 ${v.errors}`);
@@ -134,7 +139,7 @@ async function probe() {
 if (require.main === module) {
   const a = process.argv.slice(2);
   const run = a.includes('--build-urls') ? async () => buildUrls(a[a.indexOf('--unreachable-file') + 1])
-    : a.includes('--report') ? async () => report() : probe;
+    : a.includes('--report') ? async () => report() : () => probe(a.includes('--force'));
   run().catch((e) => { console.error('probe_index_status:', e.message || e); process.exit(0); });
 }
 module.exports = { buildUrls };
