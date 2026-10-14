@@ -43,8 +43,6 @@ function monoSelectors(html) {
 const ALLOWED_MONO = new Map([
   ['.back-to-magazine .btm-arrow', '矢印「←」'],
   ['.cmeta .cc-cell', '口コミ信頼度の段階の英字（S〜D）'],
-  ['.trend-rank-card .rank-num', '順位の数字'],
-  ['.rank-num', '順位の数字'],
   ['.card-rating .gs-src', '「Google」（欧文1語）'],
   ['.dist-badge', '距離の数字と km'],
   ['.m-gval .num', '数字'],
@@ -58,7 +56,7 @@ const ALLOWED_MONO = new Map([
 test('index.html の CSS から、等幅書体の規則を読めている（読めなければこのテストが空振りする）', () => {
   const found = monoSelectors(INDEX);
   assert.ok(found.length >= 6, `等幅の規則が ${found.length} 件しか読めなかった`);
-  for (const k of ['.rank-num', '.dist-badge']) assert.ok(found.includes(k), `${k} が読めていない`);
+  for (const k of ['.cmeta .cc-cell', '.dist-badge']) assert.ok(found.includes(k), `${k} が読めていない`);
 });
 
 test('等幅書体（DM Mono）の規則は、数字・記号・欧文だけを出す表のセレクターだけ（日本語の文字には使わない）', () => {
