@@ -1,4 +1,4 @@
-# 0046 書いた後に取り直さない面（ジャーナル・特集・sitemap-images.xml）に、Google Places の写真 URL を書かない
+# 0045 書いた後に取り直さない面（ジャーナル・特集・sitemap-images.xml）に、Google Places の写真 URL を書かない
 
 - 日付: 2026-10-15
 - 状態: 採用（オーナーが 2026-10-15 に「案 1」を選んだ）

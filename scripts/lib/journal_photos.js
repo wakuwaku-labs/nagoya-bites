@@ -276,7 +276,7 @@ async function collectStoreCandidates(store, opts = {}) {
     }
   }
 
-  // 2. Google Places は使わない（P-29・docs/decisions/0046）。
+  // 2. Google Places は使わない（P-29・docs/decisions/0045）。
   //    日次ジャーナルは書いた後に取り直さない面で、Places の写真 URL は期限切れになる
   //    （photo name は失効しうる・キャッシュ不可）。HotPepper しか候補が無い店は、その1枚か写真なしにする。
   //    他店の写真は借りない・取り繕わない。

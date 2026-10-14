@@ -250,7 +250,7 @@ function checkJournal(htmlPath, mdPath) {
     });
   }
 
-  // 15d. Google Places の写真 URL を書いていないこと（HARD FAIL・P-29・docs/decisions/0046）
+  // 15d. Google Places の写真 URL を書いていないこと（HARD FAIL・P-29・docs/decisions/0045）
   //      記事は書いた後に取り直さない面。Places の photo name は期限切れになりうる・キャッシュ不可で、
   //      書いた URL は失効して写真が出なくなる（2026-10-15 実測: 過去記事 18 本）。
   //      ヒーロー・本文写真・og:image に HotPepper / プレスリリース / 記事固有の図を使う。

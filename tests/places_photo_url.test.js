@@ -1,5 +1,5 @@
 'use strict';
-// 書いた後に取り直さない面へ Places の写真 URL を書かない（P-29・ADR 0046）。fixture のみ。
+// 書いた後に取り直さない面へ Places の写真 URL を書かない（P-29・ADR 0045）。fixture のみ。
 const test = require('node:test');
 const assert = require('node:assert');
 const fs = require('fs');

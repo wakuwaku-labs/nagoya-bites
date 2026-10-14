@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Google Places の写真 URL かどうかの判定と、「書いた後に取り直さない面」へ書く前の除去（P-29・ADR 0046）。
+ * Google Places の写真 URL かどうかの判定と、「書いた後に取り直さない面」へ書く前の除去（P-29・ADR 0045）。
  *
  * Places の photo name は期限切れになりうる・キャッシュ不可（Place Photos の公式説明）。
  * 日次ジャーナル・特集・sitemap-images.xml は、HTML に書いたあとで取り直さないため、

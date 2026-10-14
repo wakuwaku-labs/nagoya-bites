@@ -1,5 +1,5 @@
 {
-  "_note": "書いた後に取り直さない面の Places 写真 URL の件数の上限（P-29・docs/decisions/0046）。増やす方向には書かない。残りは repair_expired_place_photos.js が失効分を片付ける。",
+  "_note": "書いた後に取り直さない面の Places 写真 URL の件数の上限（P-29・docs/decisions/0045）。増やす方向には書かない。残りは repair_expired_place_photos.js が失効分を片付ける。",
   "updatedFrom": "scripts/audit_static_places_urls.js --update-baseline",
   "files": {
     "journal/2026-06-02-sumiyaki-unafuji-nagoya-station.html": 1,

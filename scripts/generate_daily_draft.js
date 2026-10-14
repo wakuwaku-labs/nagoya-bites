@@ -444,7 +444,7 @@ async function fetchPhotoForArticle(input) {
     };
   }
 
-  // 2. Google Maps（Places）写真は使わない（P-29・docs/decisions/0046）。
+  // 2. Google Maps（Places）写真は使わない（P-29・docs/decisions/0045）。
   //    ジャーナルは書いた後に取り直さない面で、Places の写真 URL は期限切れになる。
   //    HotPepper → プレスリリース（手動指定）→ 記事固有の図、の順に倒す。
 
@@ -865,7 +865,7 @@ async function main() {
     input.og_image = input.og_image || input.hero_image_url;
   }
 
-  // --- Places の写真 URL は記事に書かない（P-29・docs/decisions/0046）---
+  // --- Places の写真 URL は記事に書かない（P-29・docs/decisions/0045）---
   // 書いた後に取り直さない面なので、URL が失効して写真が出なくなる。手書きの hero_image_url / og_image に
   // 入っていても外し、写真なし（または記事固有の図）に倒す。他店の写真で埋めない。
   for (const k of ['hero_image_url', 'og_image']) {

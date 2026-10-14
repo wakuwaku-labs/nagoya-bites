@@ -483,7 +483,7 @@ function getPhotoUrl(store) {
   if (hp && hp.startsWith('/assets/')) return hp;
   // 汎用ストック写真（Unsplash/Pexels等）は使わない（CLAUDE.md 制約 #9）
   if (hp && /unsplash|pexels|loremflickr|pixabay/i.test(hp)) return '/assets/store-figures/_fallback.svg';
-  // Places の写真 URL は書いた後に取り直さず失効するので書かない（P-29・docs/decisions/0046）
+  // Places の写真 URL は書いた後に取り直さず失効するので書かない（P-29・docs/decisions/0045）
   if (hp && hp.startsWith('http') && !isPlacesPhotoUrl(hp)) return hp;
   return '';
 }

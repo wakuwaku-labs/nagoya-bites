@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * 書いた後に取り直さない面（journal/・features/・sitemap-images.xml）に、Google Places の写真 URL
- * （lh3.googleusercontent.com・places.googleapis.com など）が「新しく増えていないか」を数える（P-29・ADR 0046）。
+ * （lh3.googleusercontent.com・places.googleapis.com など）が「新しく増えていないか」を数える（P-29・ADR 0045）。
  *
  * Places の photo name は期限切れになりうる・キャッシュ不可。書いた URL は失効して写真が出なくなる。
  * 生成器（generate_daily_draft.js・journal_photos.js・refresh_feature_rosters.js・build_features.js）は
@@ -58,7 +58,7 @@ function main() {
     const next = {};
     for (const [f, n] of Object.entries(counts)) next[f] = Math.min(n, base[f] == null ? n : base[f]);
     const doc = {
-      _note: '書いた後に取り直さない面の Places 写真 URL の件数の上限（P-29・docs/decisions/0046）。増やす方向には書かない。残りは repair_expired_place_photos.js が失効分を片付ける。',
+      _note: '書いた後に取り直さない面の Places 写真 URL の件数の上限（P-29・docs/decisions/0045）。増やす方向には書かない。残りは repair_expired_place_photos.js が失効分を片付ける。',
       updatedFrom: 'scripts/audit_static_places_urls.js --update-baseline',
       files: next,
     };
@@ -72,7 +72,7 @@ function main() {
   if (!grew.length) { console.log('✅ 基準を超えて増えたファイルはありません'); return; }
   console.error('\n❌ 新しく Places の写真 URL が書かれました（失効する URL は書かない・P-29）:');
   for (const [f, n] of grew) console.error(`   ${f}: ${n} 件（基準 ${base[f] || 0}）`);
-  console.error('   → HotPepper の公式写真 → プレスリリース → 記事固有の図、の順に替えてください（docs/decisions/0046）。');
+  console.error('   → HotPepper の公式写真 → プレスリリース → 記事固有の図、の順に替えてください（docs/decisions/0045）。');
   if (argv.includes('--check')) process.exit(1);
 }
 

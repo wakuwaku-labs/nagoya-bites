@@ -163,7 +163,7 @@ function buildPool(stores, cfg, closed) {
         const st = s['営業ステータス'];
         if (st && st !== 'OPERATIONAL') continue;
       }
-      // Places の写真は書いた後に取り直さず失効するので「写真あり」と数えない（P-29・docs/decisions/0046）
+      // Places の写真は書いた後に取り直さず失効するので「写真あり」と数えない（P-29・docs/decisions/0045）
       if (G.requirePhoto && !staticPhotoUrl(s['写真URL'])) continue;
       if (G.requireNagoya && !isNagoya(s)) continue;
 
