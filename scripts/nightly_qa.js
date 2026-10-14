@@ -185,6 +185,18 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/audit_stub_links.js', '--check']],
 });
+// 公開ページの内部リンクのリンク先が、リポジトリの中のファイルとして実在するか（P-383・SOFT で開始）。
+// 一度も公開されていない記事へのリンクが 5 か月 404 のまま公開されていた（P-382）のに、実在を数える検査が無かった。
+// 日次で増える特集・ジャーナルの本数を npm test の合否にしない（判断の記録 0033）ため、実ページの確認はここで行う。
+// 0件が続いたら hard に上げる
+checks.push({
+  id: 'internal-links',
+  title: '公開ページの内部リンクのリンク先が実在する（P-383）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_internal_links.js', '--check']],
+});
 // サイト全体の掲載店数の表記が、1つの値（営業中の店を 500 件単位に丸めた「約5,000」）にそろっているか（I-06・SOFT で開始）。
 // トップ・stores/index.html・faq.html・特集は build.yml が日次でそろえる。journal/ の冒頭の紹介文だけは CI が触らない
 // （書き手を1つにするため）ので、丸めた値が変わった日にここで知らせる。0件が続いたら hard に上げる

@@ -1,4 +1,4 @@
-status: blocked
+status: archived
 
 # 2026-10-13 自律実行ラン（solve-next）
 

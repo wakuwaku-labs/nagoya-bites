@@ -28,6 +28,27 @@
       "affects": ["ga4"],
       "summary": "スマホ（幅 768px 以下）の店舗ページに、画面の下に貼り付く行動バー（予約・電話・地図）を足した。バーの中のクリックは location=store_page_bar で送られ（予約は cta_click、電話は cta_call_click と call_lookup、地図は cta_gmap_click）、本文のリンク欄（store_page）と分けて数える。バーの電話は予約先のある店にも出る（本文の電話ボタンは従来どおり予約先の無い店だけ）ので、電話の送客 cta_call_click と電話番号の確認 call_lookup は、この日から使われ方の変化ではなく計測の段差として増える。PC のクリックは従来どおり store_page。location の値が1つ増えたので、GA4 のカスタムディメンション location を登録するときは store_page_bar も含める",
       "evidence": "PR #519（2014a4e1b5）・build.yml の自動コミット 75da709e80・docs/reservation-measurement.md・本番の店舗ページ80ページの抜き取りで帯が全ページに1つずつ（電話ボタン付きは68ページ）・本番で帯の電話ボタンを押すと cta_call_click と call_lookup が location=store_page_bar で dataLayer に積まれること（2026-10-12 に確認）"
+    },
+    {
+      "date": "2026-10-14",
+      "id": "I-24",
+      "affects": ["ga4"],
+      "summary": "トップの「今日の話題店」を、JS で組み立てる代わりに、毎日のビルドで静的な HTML に書くようにした（店の行は本物のリンク）。ふつうのクリックは従来どおり店の詳細を開き modal_open の source は trend_today / ranking のまま。新しいタブで開く・修飾キー付き・中クリックは店舗ページへ移るため、その分は page_view が増え modal_open が減る（使われ方の変化ではなく計測の段差）。「よく見られている店」は直近 30 日に 10 回以上見られた店が 5 店以上そろう日だけ出すので、ranking の modal_open は下限に届くまで 0 に近い。「この条件で通知」のボタンは（押すと準備中と出るだけで計測が無かったため）外した。今月の特集は hero の直後へ移動した（専用のイベントなし）",
+      "evidence": "PR #556・docs/decisions/0035-top-picks-static-generation.md・scripts/build_top_picks.js・data/ranking_display_policy.json・Linear P-399 のコメント（本番での確認結果）"
+    },
+    {
+      "date": "2026-10-14",
+      "id": "I-19",
+      "affects": ["ga4"],
+      "summary": "店のカードを短くし、スマホ（幅 768px 以下）の既定の表示をリストにした。スマホではカードの中の予約・電話などのボタン（cta_click の location=card・card_media）が出なくなり、店の詳細（modal_open の source=grid は従来どおり）から押す形になるため、スマホのカードからの cta_click は使われ方の変化ではなく計測の段差として減る。新しいタブで開く・修飾キー付きクリックは店舗ページへ移り（page_view が増え modal_open が減る）、カードで Enter を押したときの二重の計上は解消した",
+      "evidence": "PR #557・docs/decisions/0036-compact-store-card.md・tests/index_card_compact.test.js・Linear P-400 のコメント（本番での確認結果）"
+    },
+    {
+      "date": "2026-10-14",
+      "id": "I-20",
+      "affects": ["ga4"],
+      "summary": "トップの絞り込みを、1 つの「絞り込みシート」にまとめた（エリアはハブの 10 群・予算は 3 区分・人数・シーン・こだわり）。search は検索欄で Enter を押したときも送られるようになった。「近い順」と県のタブは外したため、sort_distance_granted / sort_distance_denied は届かなくなる。sort_change の source は chips から select（並べ替えの選択欄）に変わる。シートで条件を確定すると filter_apply、0 軒のときは zero_result が新しく届く（どちらも変更前は無かったイベント）。絞り込みの結果が変わる設計なので、変更の前後で search・sort_change の件数をそのまま比べない",
+      "evidence": "PR #562・docs/decisions/0037-filter-sheet.md・tests/index_filter_sheet.test.js・tests/index_filter_core.test.js・tests/filter_policy.test.js・Linear P-401 のコメント（本番での確認結果）"
     }
   ]
 }
