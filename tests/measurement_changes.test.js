@@ -64,6 +64,13 @@ test('本番の台帳に I-24 の計測変更（今日の話題店の静的化�
   assert.match(c.summary, /trend_today/);
 });
 
+test('本番の台帳に I-19 の計測変更（店のカードの短縮・ga4）が載っている', () => {
+  const b = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data/measurement_changes.json'), 'utf8'));
+  const c = b.changes.find((x) => x.id === 'I-19');
+  assert.ok(c && c.affects.includes('ga4'), 'I-19 が台帳に無い（スマホのカードの cta_click の減りが効果として読まれてしまう）');
+  assert.match(c.summary, /card_media/);
+});
+
 test('台帳のどの項目も、日付・id・affects・summary・evidence を持つ（後から第三者が確かめられる）', () => {
   const b = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data/measurement_changes.json'), 'utf8'));
   assert.ok(Array.isArray(b.changes) && b.changes.length > 0);
