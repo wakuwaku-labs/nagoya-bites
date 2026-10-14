@@ -61,6 +61,9 @@ const CLEAN_SOURCES = [
   'data/editor_picks.json',
   'data/manual_stores.json',
   'data/recommendations.json',
+  // データの文の「業界基準・標準・水準・評価・的」（P-367）。stores.json は build.js が作る（題に P-334 の語が残る）ので足さない
+  'data/pending_stores.json',
+  'data/editorreason_drafts/manual_麺屋まつり名古屋店.json',
 ];
 
 function hits(text) {
