@@ -35,7 +35,8 @@ status: archived
 - Linear: P-293（親）・P-294（オーナーの鍵の登録）・P-295（スクリプト・done）・P-296（試運転→本番）・P-297（見張り・partial）
 
 # 次にやること
-- オーナーが docs/x-api-setup.md の手順で鍵を登録（P-294）し、計画書 11 章 #1（外の仕組みとの二重投稿）・#3（費用）に答える
+- 計画書 11 章 #1 は回答済み（2026-10-14: 外の仕組みは X に投稿していない＝二重投稿の心配なし）
+- オーナーが docs/x-api-setup.md の手順で鍵を登録（P-294）。開発者の画面は console.x.com（前払いクレジット・カード登録で 20 ドル無料・上限 10 ドル・自動の買い足しはオフ）
 - 試運転の Summary を一緒に見る → Actions の Run workflow（force_live）で初回投稿 → policy の mode=live・liveSince=当日
 - 本番に切り替えるとき social-watchdog.yml の「自動投稿はスコープ外」の文言を直す（P-297）
 

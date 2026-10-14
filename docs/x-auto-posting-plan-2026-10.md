@@ -42,7 +42,7 @@
 | 公開が終わった確かな印 | `data/journal_published.json` に今日の `date` のエントリがあり、`journal/<slug>.html` がある | `run_journal_local.sh:645-651`。エントリは slug / date / title / description / store_ids / published_at |
 | 公開の状態の記録 | `data/journal_health.json`（ok / hold / die / hang と理由）が Mac の外へ push される | `run_journal_local.sh:122-147` |
 | SNS 原稿の自動生成 | **2026-09-05 から停止中**（オーナー指示「SNS原稿はサイト外の別の仕組みで作る」）。`docs/daily-posts/` の最新は 2026-09-05 | `data/journal_sns_draft_policy.json` |
-| 「SNS はサイトの外の仕組みで運用中」 | 2026-09-14 にオーナー確認済み。**今の仕組みが X に投稿しているかは未確認** → 確認事項 #1 | メモリ `sns-posting-outside-repo-utm` |
+| 「SNS はサイトの外の仕組みで運用中」 | 2026-09-14 にオーナー確認済み。**外の仕組みは X には投稿していない**（2026-10-14 オーナー回答・確認事項 #1） | メモリ `sns-posting-outside-repo-utm` |
 | 過去の方針 | 「外部への発信は自動化しない・投稿はオーナー操作」（SEO-055 の達成条件④、SEO-098）。`social-watchdog.yml` も「自動投稿はスコープ外」と書いている | `agent-backlog.md:2862`・`:5978`、`.github/workflows/social-watchdog.yml:103` |
 | UTM の決まり | X は `utm_source=x`、`utm_medium=social`、`utm_campaign=<記事のファイル名から .html を除いたもの>` | `docs/sns-utm-convention.md` |
 | 記事のリンクカード | 全記事が `twitter:card=summary_large_image`。`og:image` は HotPepper 写真・Google の店舗写真の URL・図解の PNG（SVG はカードに出ないため PNG に差し替え済み・ISSUE-095） | `journal/_template.html:17`、`scripts/normalize_og_images.js` |
@@ -58,7 +58,7 @@
 | 料金の形 | **月額のプランは無く、使った分だけの従量課金**。2026-02 頃に移行。新しく無料枠を使う道は事実上無い（公益目的のアプリなど例外のみ。二次情報） | https://docs.x.com/x-api/getting-started/pricing |
 | 投稿の単価 | 投稿（リンクなし）**0.015 ドル**／**リンク付きの投稿 0.20 ドル** | 同上（「Post: Create」「Post: Create (with URL)」の行） |
 | 使いすぎ防止 | 請求期間ごとの上限額を設定でき、上限に達すると API が止まる | 同上 |
-| 初回の特典 | 支払いカードを初めて登録すると 20 ドル分のクレジット | 同上 |
+| 初回の特典 | 支払いカードを初めて登録すると 20 ドル分のクレジット（前払いのクレジットから引かれる方式。開発者の画面は console.x.com） | 同上 |
 | 回数の上限 | アプリ全体で1日 10,000 件・1人 15分 100 件（1日1件には関係ない） | https://docs.x.com/x-api/fundamentals/rate-limits |
 | 文字数 | 280（日本語は1文字=2なので全角140字）。URL は長さに関係なく23 | https://docs.x.com/resources/fundamentals/counting-characters |
 | リンクカード | `summary_large_image`。**SVG は出ない**（PNG/JPG） | 二次情報（既存の ISSUE-095 の判断と一致） |
@@ -215,7 +215,7 @@ https://nagoya-bites.com/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.h
 
 | # | 決めること | 推奨 | なぜ今決めるか |
 |---|---|---|---|
-| 1 | 今「サイトの外の別の仕組み」で X に投稿しているか | X はこの新しい仕組みに一本化し、外の仕組みは X への投稿を止める | 両方動くと同じ記事が2回出る（X の重複禁止にも当たる） |
+| 1 | 今「サイトの外の別の仕組み」で X に投稿しているか | **回答済み（2026-10-14）: 投稿していない**。X はこの仕組みだけが投稿する（止める作業は無い） | 両方動くと同じ記事が2回出る（X の重複禁止にも当たる） |
 | 2 | 使う X アカウント（@名前）と、そのアカウントに「自動化アカウント」のラベルを付けてよいか | NAGOYA BITES の公式アカウントで、ラベルを付ける | X のルールで自動投稿には表示が求められる。付けないと凍結の恐れ |
 | 3 | 費用（月 約6ドル・上限10ドル）の承認 | 承認する（最初の約3か月は特典の20ドルでまかなえる） | 課金はオーナーのカードでしか始められない |
 | 4 | 投稿する時刻 | 公開の直後（だいたい 9:30〜10:30） | GitHub の定時実行は数時間遅れることがあり、12時ちょうどは約束できない。昼・夜にそろえたい場合は、Actions の中で待つ形にできる |
