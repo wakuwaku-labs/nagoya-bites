@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-14T17:06:07.443Z",
+  "generatedAt": "2026-10-14T17:18:57.029Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1546,
-    "pageViews": 2166,
-    "sessions": 1736,
-    "avgSessionDuration": 124,
-    "bounceRate": 0.285,
+    "activeUsers": 1547,
+    "pageViews": 2167,
+    "sessions": 1737,
+    "avgSessionDuration": 123.9,
+    "bounceRate": 0.284,
     "pagesPerSession": 1.25
   },
   "dailyReference": {
@@ -18,7 +18,7 @@
   "channels": {
     "sessions": {
       "organic": 1268,
-      "direct": 340,
+      "direct": 341,
       "social": 5,
       "ai_assistant": 103,
       "referral": 32,
@@ -27,7 +27,7 @@
     },
     "pct": {
       "organic": 72.5,
-      "direct": 19.4,
+      "direct": 19.5,
       "social": 0.3,
       "ai_assistant": 5.9,
       "referral": 1.8,
@@ -49,7 +49,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 250
+      "sessions": 251
     },
     {
       "source": "yahoo",
@@ -215,7 +215,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 163,
+    "outboundClicks": 164,
     "ctaClickRate": 9.4,
     "byDomain": [
       {
@@ -224,7 +224,7 @@
       },
       {
         "domain": "tabelog.com",
-        "clicks": 30
+        "clicks": 31
       },
       {
         "domain": "maps.google.com",
@@ -286,7 +286,7 @@
     "note": null,
     "byChannel": {
       "organic": 91,
-      "direct": 52,
+      "direct": 53,
       "social": 0,
       "ai_assistant": 19,
       "referral": 1,
@@ -294,7 +294,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 7.2,
-    "ctaClickRate_direct": 15.3,
+    "ctaClickRate_direct": 15.5,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -366,6 +366,10 @@
         "clicks": 3
       },
       {
+        "path": "/stores/J001203914.html",
+        "clicks": 3
+      },
+      {
         "path": "/features/birthday.html",
         "clicks": 2
       },
@@ -399,10 +403,6 @@
       },
       {
         "path": "/stores/J000431352.html",
-        "clicks": 2
-      },
-      {
-        "path": "/stores/J001203914.html",
         "clicks": 2
       },
       {
@@ -562,6 +562,11 @@
       {
         "path": "/stores/J000431352.html",
         "domain": "www.hotpepper.jp",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/J001203914.html",
+        "domain": "tabelog.com",
         "clicks": 2
       },
       {
@@ -731,11 +736,6 @@
       },
       {
         "path": "/stores/J001203914.html",
-        "domain": "tabelog.com",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001203914.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
       },
@@ -871,6 +871,10 @@
         "clicks": 4
       },
       {
+        "path": "/stores/J001203914.html",
+        "clicks": 3
+      },
+      {
         "path": "/features/birthday.html",
         "clicks": 2
       },
@@ -888,10 +892,6 @@
       },
       {
         "path": "/stores/J000431352.html",
-        "clicks": 2
-      },
-      {
-        "path": "/stores/J001203914.html",
         "clicks": 2
       },
       {
@@ -987,14 +987,14 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 85,
+    "reservationClicks": 86,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
-      "ctaEvents": 23,
-      "reservationOutbound": 25,
-      "naiveSum": 48,
-      "deduped": 28,
-      "overlap": 20,
+      "ctaEvents": 24,
+      "reservationOutbound": 26,
+      "naiveSum": 50,
+      "deduped": 29,
+      "overlap": 21,
       "bySite": [
         {
           "site": "hotpepper.jp",
@@ -1004,16 +1004,16 @@
         },
         {
           "site": "tabelog.com",
-          "cta": 5,
-          "outbound": 8,
-          "deduped": 8
+          "cta": 6,
+          "outbound": 9,
+          "deduped": 9
         }
       ]
     }
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1546,
+    "value": 1547,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

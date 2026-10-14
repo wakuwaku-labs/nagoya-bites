@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-14T17:06:01.756Z",
+  "generatedAt": "2026-10-14T17:18:53.556Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -9,10 +9,10 @@
   "totals": {
     "exits": {
       "hotpepper": 60,
-      "tabelog": 5,
+      "tabelog": 6,
       "tel": 2,
       "other": 0,
-      "total": 67
+      "total": 68
     },
     "reports": {
       "yes": 0,
@@ -25,10 +25,10 @@
     "totals": {
       "exits": {
         "hotpepper": 33,
-        "tabelog": 5,
+        "tabelog": 6,
         "tel": 2,
         "other": 0,
-        "total": 40
+        "total": 41
       },
       "reports": {
         "yes": 0,
@@ -92,6 +92,24 @@
       }
     },
     {
+      "store_name": "完全個室×本格肉バル &Blue アンドブルー 栄店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 2,
+        "tel": 0,
+        "other": 0,
+        "total": 3
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 3,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "BRIANZA NAGOYA ブリアンツァナゴヤ",
       "exits": {
         "hotpepper": 2,
@@ -150,24 +168,6 @@
       "exits": {
         "hotpepper": 2,
         "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 2
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 2,
-        "reportsYes": 0
-      }
-    },
-    {
-      "store_name": "完全個室×本格肉バル &Blue アンドブルー 栄店",
-      "exits": {
-        "hotpepper": 1,
-        "tabelog": 1,
         "tel": 0,
         "other": 0,
         "total": 2
