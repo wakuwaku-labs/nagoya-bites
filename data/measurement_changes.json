@@ -49,6 +49,13 @@
       "affects": ["ga4"],
       "summary": "トップの絞り込みを、1 つの「絞り込みシート」にまとめた（エリアはハブの 10 群・予算は 3 区分・人数・シーン・こだわり）。search は検索欄で Enter を押したときも送られるようになった。「近い順」と県のタブは外したため、sort_distance_granted / sort_distance_denied は届かなくなる。sort_change の source は chips から select（並べ替えの選択欄）に変わる。シートで条件を確定すると filter_apply、0 軒のときは zero_result が新しく届く（どちらも変更前は無かったイベント）。絞り込みの結果が変わる設計なので、変更の前後で search・sort_change の件数をそのまま比べない",
       "evidence": "PR #562・docs/decisions/0037-filter-sheet.md・tests/index_filter_sheet.test.js・tests/index_filter_core.test.js・tests/filter_policy.test.js・Linear P-401 のコメント（本番での確認結果）"
+    },
+    {
+      "date": "2026-10-14",
+      "id": "I-22",
+      "affects": ["ga4"],
+      "summary": "店のモーダルをクイックビューに置き換えた。画面の下に行動バー（予約・電話・地図）が常に見えるようになったので、cta_click（location=modal）は使われ方の変化ではなく計測の段差として増えうる。予約ボタンの文言は「この店を予約する」から「HotPepperで予約」に変わった。前の店・次の店へ移ると modal_open が新しい source=modal_nav で 1 回ごとに届く（グリッドなど他の source の件数とは別に数える）。クイックビュー内の「この店のページを見る」「ほかの情報」のリンクは internal_link_click（block=quick_view）として新しく届く",
+      "evidence": "PR #563・docs/decisions/0038-quick-view.md・tests（クイックビュー関連）・Linear P-402 のコメント（本番での確認結果）"
     }
   ]
 }
