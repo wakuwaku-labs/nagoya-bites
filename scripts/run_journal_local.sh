@@ -146,12 +146,18 @@ record_health() {
   ' "$HEALTH_FILE" "${TODAY_JST:-unknown}" "$status" "$reason" "$places_key" 2>>"$LOG" || return 0
 }
 
+# ローカル実行で使った Places の月次回数。書き手はこのジャーナルの実行だけ（CI が書く
+# data/photo_pipeline_health.json とは別ファイル＝pull で衝突しない・P-436 / docs/decisions/0041）。
+PLACES_LOCAL_USAGE_FILE="data/photo_pipeline_health_local.json"
+
 # 状態ファイルだけを surgical に push する。記事本体の commit/push とは独立させ、
 # 失敗しても本処理を止めない（監視は published.json 側でも成立するため）。
 # data/journal_stash_alert.json も一緒に出す（SEO-104: out-of-band 通知経路）。
 push_health() {
   git add data/journal_health.json >>"$LOG" 2>&1 || return 0
   [ -e "data/journal_stash_alert.json" ] && git add data/journal_stash_alert.json >>"$LOG" 2>&1
+  # 失敗・HOLD の日に使った Places の回数も main の集計へ届ける（P-436）
+  [ -e "$PLACES_LOCAL_USAGE_FILE" ] && git add "$PLACES_LOCAL_USAGE_FILE" >>"$LOG" 2>&1
   git diff --staged --quiet && return 0
   git -c user.name="NAGOYA BITES Daily" -c user.email="daily@nagoya-bites" \
       commit -m "chore(journal): ローカル実行状態を記録 ${TODAY_JST:-unknown} [skip actions]" \
@@ -385,6 +391,9 @@ JOURNAL_DEBRIS=()
 OTHER_DIRTY_FILES=()
 while IFS= read -r line; do
   f="${line:3}"
+  # Places の回数の台帳は前回の失敗実行の分が残っていても退避しない（消すと回数が欠ける）。
+  # 書き手は自分だけで pull と衝突しないので、そのまま持ち越して次のコミットに同乗させる（P-436）
+  [ "$f" = "$PLACES_LOCAL_USAGE_FILE" ] && continue
   if [[ "$f" =~ $_JOURNAL_OWNED_RE ]]; then
     JOURNAL_DEBRIS+=("$f")
   else
@@ -819,6 +828,7 @@ TRACKED_UPDATES=(
   data/pending_stores.json
   data/editorial_column_backlog.json
   data/journal_stash_alert.json
+  "$PLACES_LOCAL_USAGE_FILE"
   index.html
   journal/feed.xml
   journal/feed.atom
