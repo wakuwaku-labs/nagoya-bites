@@ -44,9 +44,9 @@ const ALLOWED_MONO = new Map([
   ['.back-to-magazine .btm-arrow', '矢印「←」'],
   ['.cmeta .cc-cell', '口コミ信頼度の段階の英字（S〜D）'],
   ['.card-rating .gs-src', '「Google」（欧文1語）'],
-  ['.dist-badge', '距離の数字と km'],
-  ['.m-gval .num', '数字'],
-  ['.m-gval .cc-tier', '段階の英字（S〜D）'],
+  ['.m-rate .num', '数字'],
+  ['.m-trust-link .cc-tier', '段階の英字（SS〜D）'],
+  ['.m-pg-pos', '「2 / 120」の数字と斜線（読み上げ用の「件」は見えない）'],
   ['.m-info-row .v .num', '数字'],
   ['.cross-check-box .cc-tier-badge', '段階の英字（S〜D）'],
   ['.cross-check-box .cc-score', '点数の数字'],
@@ -56,7 +56,7 @@ const ALLOWED_MONO = new Map([
 test('index.html の CSS から、等幅書体の規則を読めている（読めなければこのテストが空振りする）', () => {
   const found = monoSelectors(INDEX);
   assert.ok(found.length >= 6, `等幅の規則が ${found.length} 件しか読めなかった`);
-  for (const k of ['.cmeta .cc-cell', '.dist-badge']) assert.ok(found.includes(k), `${k} が読めていない`);
+  for (const k of ['.cmeta .cc-cell']) assert.ok(found.includes(k), `${k} が読めていない`);
 });
 
 test('等幅書体（DM Mono）の規則は、数字・記号・欧文だけを出す表のセレクターだけ（日本語の文字には使わない）', () => {
