@@ -474,8 +474,9 @@ ${faqs.map(f => `      <div class="faq-item"><p class="faq-q">${esc(f.q)}</p><p 
     isCondition ? `<a class="related-link" href="${page.genre.slug}.html">${esc(page.area.label)}の${esc(page.genre.label)}すべて見る</a>` : '',
   ].filter(Boolean).join('\n      ');
 
-  const wardParam = page.area.ward ? `&ward=${encodeURIComponent(page.area.ward)}` : '';
-  const genreParam = policyGenreIndexName(page.genre);
+  // トップの絞り込みへは、このハブと同じ群（area=）と条件（cond=）のまま渡す（P-429）。
+  // 旧 ward= は区全体（中区なら錦・大須・栄をまとめて）に広がり、ハブの件数と食い違っていた。
+  const topFilterHash = `#genre=${encodeURIComponent(policyGenreIndexName(page.genre))}&area=${encodeURIComponent(page.area.slug)}${isCondition ? `&cond=${encodeURIComponent(page.cond.slug)}` : ''}`;
 
   const priceStat = priceModeStat(page.stores);
   const stations = topStations(page.stores, 3);
@@ -549,7 +550,7 @@ ${faqHtml}
     <p class="related-title">絞り込む・関連情報</p>
     <div class="related-links">
       ${relatedLinks}
-      <a class="related-link" href="${siteChrome.prefix(3)}index.html#genre=${encodeURIComponent(genreParam)}${wardParam}">もっと絞る（全店検索）</a>
+      <a class="related-link" href="${siteChrome.prefix(3)}index.html${topFilterHash}">もっと絞る（全店検索）</a>
     </div>
   </div>
   <p class="hub-method source-note">データ更新日 ${new Date().toISOString().slice(0, 10)}・出典 HotPepper グルメ / Google Places・掲載料ゼロ。<a href="${siteChrome.prefix(3)}features/integrity-method.html">算定方法</a></p>
