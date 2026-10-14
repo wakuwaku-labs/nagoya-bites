@@ -5074,7 +5074,7 @@ function nbTodayClosedState(r, dayName) {
 //   ・営業時間は、曜日つきの群（月～金: … 土、日、祝日: …）のうち今日を含む群がちょうど 1 つのときだけ採る。
 //     読み残した文字（L.O. の括弧は除く）が 1 字でもあれば採らない
 //   ・今日が休みでないと分かる店（定休日が読めて今日を含まない）だけ「本日」、読めない店は「営業時間」と書く
-//   ・祝日だけ別の時間の群があれば「（祝日は別）」と添える
+//   ・祝日だけ別の時間の群がある店は「本日」と言わず「営業時間 月曜 …（祝日は別）」と曜日の時刻だと明示する（祝日の判定は持たない・P-442）
 function nbTodayHours(r, now) {
   now = now || new Date();
   var DAYS = ['日','月','火','水','木','金','土'];
@@ -5134,7 +5134,10 @@ function nbTodayHours(r, now) {
   }
   var text = chosen.bands.join(' / ');
   var diffHol = groups.some(function(g) { return g !== chosen && g.hol && !chosen.hol && g.bands.join('/') !== chosen.bands.join('/'); });
-  return {kind: 'open', text: (closed === false ? '本日 ' : '営業時間 ') + text + (diffHol ? '（祝日は別）' : '')};
+  // 祝日だけ別の時間がある店は、今日が祝日かどうかを確かめる手段がない（祝日カレンダーを持たない）ため「本日」と断定しない。
+  // 「営業時間 月曜 …（祝日は別）」と、曜日の時刻であることを明示する（P-442）
+  if (diffHol) return {kind: 'open', text: '営業時間 ' + day + '曜 ' + text + '（祝日は別）'};
+  return {kind: 'open', text: (closed === false ? '本日 ' : '営業時間 ') + text};
 }
 // クイックビューの「要点」: 評価と口コミ信頼度 / 最寄駅・価格帯 / 本日（値がある行だけ作る）。
 // 最寄駅の徒歩の分数は一覧のカードと同じ nbNearText（同じ駅だと確かめられたときだけ分数・P-404）
