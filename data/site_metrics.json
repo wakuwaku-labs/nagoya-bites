@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-14T14:10:15.082Z",
+  "generatedAt": "2026-10-14T14:28:14.558Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1569,
-    "pageViews": 2215,
-    "sessions": 1774,
-    "avgSessionDuration": 124.9,
-    "bounceRate": 0.286,
+    "activeUsers": 1575,
+    "pageViews": 2224,
+    "sessions": 1781,
+    "avgSessionDuration": 125.1,
+    "bounceRate": 0.285,
     "pagesPerSession": 1.25
   },
   "dailyReference": {
@@ -17,7 +17,7 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1282,
+      "organic": 1289,
       "direct": 357,
       "social": 5,
       "ai_assistant": 107,
@@ -26,8 +26,8 @@
       "other": 0
     },
     "pct": {
-      "organic": 71.9,
-      "direct": 20,
+      "organic": 72,
+      "direct": 19.9,
       "social": 0.3,
       "ai_assistant": 6,
       "referral": 1.8,
@@ -39,12 +39,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 565
+      "sessions": 568
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 485
+      "sessions": 489
     },
     {
       "source": "(direct)",
@@ -190,8 +190,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 333,
-      "sessions": 318
+      "pageViews": 335,
+      "sessions": 320
     },
     {
       "path": "/",
@@ -215,12 +215,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 168,
-    "ctaClickRate": 9.5,
+    "outboundClicks": 172,
+    "ctaClickRate": 9.7,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 53
+        "clicks": 56
       },
       {
         "domain": "maps.google.com",
@@ -228,7 +228,7 @@
       },
       {
         "domain": "tabelog.com",
-        "clicks": 29
+        "clicks": 30
       },
       {
         "domain": "www.instagram.com",
@@ -285,7 +285,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 85,
+      "organic": 89,
       "direct": 63,
       "social": 0,
       "ai_assistant": 19,
@@ -293,7 +293,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 6.6,
+    "ctaClickRate_organic": 6.9,
     "ctaClickRate_direct": 17.6,
     "ctaClickRate_social": 0,
     "byPage": [
@@ -398,6 +398,14 @@
         "clicks": 2
       },
       {
+        "path": "/stores/J000431352.html",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/J001239080.html",
+        "clicks": 2
+      },
+      {
         "path": "/stores/J003828115.html",
         "clicks": 2
       },
@@ -407,14 +415,6 @@
       },
       {
         "path": "/features/kospa-insider.html",
-        "clicks": 1
-      },
-      {
-        "path": "/features/nagoya-cafe.html",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
         "clicks": 1
       }
     ],
@@ -567,6 +567,11 @@
       {
         "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
         "domain": "chihirosweets.myshopify.com",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/J000431352.html",
+        "domain": "www.hotpepper.jp",
         "clicks": 2
       },
       {
@@ -730,12 +735,17 @@
         "clicks": 1
       },
       {
-        "path": "/stores/J000431352.html",
+        "path": "/stores/J000661748.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
       },
       {
-        "path": "/stores/J000661748.html",
+        "path": "/stores/J001239080.html",
+        "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J001239080.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
       },
@@ -796,6 +806,11 @@
       },
       {
         "path": "/stores/J004613182.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J004699048.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
       },
@@ -867,6 +882,14 @@
         "clicks": 2
       },
       {
+        "path": "/stores/J000431352.html",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/J001239080.html",
+        "clicks": 2
+      },
+      {
         "path": "/stores/J004402690.html",
         "clicks": 2
       },
@@ -907,10 +930,6 @@
         "clicks": 1
       },
       {
-        "path": "/stores/J000431352.html",
-        "clicks": 1
-      },
-      {
         "path": "/stores/J000661748.html",
         "clicks": 1
       },
@@ -939,6 +958,10 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J004699048.html",
+        "clicks": 1
+      },
+      {
         "path": "/stores/area/kanayama/izakaya.html",
         "clicks": 1
       },
@@ -955,7 +978,7 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 82,
+    "reservationClicks": 86,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 17,
@@ -981,7 +1004,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1569,
+    "value": 1575,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
