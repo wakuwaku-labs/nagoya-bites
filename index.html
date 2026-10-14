@@ -74,13 +74,17 @@ var NB_STORE_INDEX = null, NB_STORE_INDEX_SRC = null;
 function nbStoreByName(n){
   if(!n)return null;
   // ALL_STORES は TOP50 → 全件ロードで差し替わるので、配列の参照が変わったら作り直す
-  if(NB_STORE_INDEX_SRC!==(typeof ALL_STORES!=="undefined"?ALL_STORES:null)){
-    NB_STORE_INDEX={};
+  // 全店データ（ALL_STORES）の到着前に呼ばれることがある（静的に出した話題店の写真が先に失敗した場合・P-440）。
+  // この時点では索引が無い（NB_STORE_INDEX===null）ので、配列が無い・空なら何も引かずに null を返す
+  var src=(typeof ALL_STORES!=="undefined"&&ALL_STORES&&ALL_STORES.length)?ALL_STORES:null;
+  if(!src)return null;
+  if(!NB_STORE_INDEX||NB_STORE_INDEX_SRC!==src){
+    var idx={};
     try{
-      NB_STORE_INDEX_SRC=ALL_STORES;
-      for(var i=0;i<ALL_STORES.length;i++){var s=ALL_STORES[i];
-        if(s&&s["店名"]&&!NB_STORE_INDEX[s["店名"]])NB_STORE_INDEX[s["店名"]]=s;}
+      for(var i=0;i<src.length;i++){var s=src[i];
+        if(s&&s["店名"]&&!idx[s["店名"]])idx[s["店名"]]=s;}
     }catch(e){return null;}
+    NB_STORE_INDEX=idx;NB_STORE_INDEX_SRC=src;
   }
   return NB_STORE_INDEX[n]||null;
 }
