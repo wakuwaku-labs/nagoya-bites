@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-14T07:52:14.498Z",
+  "generatedAt": "2026-10-14T08:30:55.448Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1532,
-    "pageViews": 2168,
-    "sessions": 1732,
-    "avgSessionDuration": 126.1,
+    "activeUsers": 1535,
+    "pageViews": 2174,
+    "sessions": 1736,
+    "avgSessionDuration": 126,
     "bounceRate": 0.285,
     "pagesPerSession": 1.25
   },
@@ -17,7 +17,7 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1242,
+      "organic": 1246,
       "direct": 354,
       "social": 5,
       "ai_assistant": 106,
@@ -39,12 +39,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 553
+      "sessions": 554
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 467
+      "sessions": 469
     },
     {
       "source": "(direct)",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 202
+      "sessions": 203
     },
     {
       "source": "chatgpt.com",
@@ -190,8 +190,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 328,
-      "sessions": 313
+      "pageViews": 329,
+      "sessions": 314
     },
     {
       "path": "/",
@@ -967,7 +967,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1532,
+    "value": 1535,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
