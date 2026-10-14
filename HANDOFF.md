@@ -1,4 +1,4 @@
-status: done
+status: blocked
 
 # 目的
 P-300 のCodex事後レビュー（オーナー依頼・2026-10-14）を完了。対象は #519 → #523 → #521 → #520 → #555 → #556 → #557 → #560 → #562 → #563。結果はオーナーがLinear P-300へ記録するため、こちらから外部へ送信していない。レビュー役としてサイトの実装修正はしていない。
@@ -261,3 +261,5 @@ P-300 のCodex事後レビュー（オーナー依頼・2026-10-14）を完了�
 - `scripts/gen_area_genre_pages.js`・`scripts/refresh_feature_rosters.js`・`scripts/add_feature_tracking.js`・`scripts/lib/feature_tracking.js`・`scripts/add_journal_engagement_tracking.js`・`journal/_template.html`・`index.html`
 - `data/measurement_changes.json`・`scripts/lib/reservation_exits.js`・`docs/reservation-measurement.md`
 - Linear P-235（親）・P-236（Codexレビュー・Done）・P-237（オーナーの決定）・P-223（ISSUE-188）・P-239/P-240（I-08・GA4 登録）・P-241/P-242/P-243（I-02・GA4 実測・充電器で測り直し）・P-253（I-37・パンくずを1行に・未実装）
+
+（自動合流が衝突しました。main への合流は人の確認が必要です）
