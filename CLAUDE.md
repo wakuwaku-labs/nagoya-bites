@@ -221,6 +221,7 @@ Linear課題を指定されたら、[初心者向けLinearガイド](docs/linear
        ⚠️ 規約を確認していない配信元（digitalpr.jp 等）の画像を「報道だから使える」と
           推定して使わないこと。対応配信元は fetch_press_release_photo.js の SUPPORTED が正本。
 優先4: Google Maps Places API 写真（GOOGLE_MAPS_API_KEY 設定時）
+       書いた後に取り直さない面（ジャーナル・特集・sitemap-images.xml）では使わない（URL が失効するため・P-29・docs/decisions/0045）。
        ⚠️ 日次ジャーナルは launchd のローカル実行で生成されるため、GitHub Secrets の
           キーは届かない。`~/.config/nagoya-bites/journal.env` に置く（docs/journal-photo-sources-setup.md）。
           2026-08-17 まで未配線で、この優先順は**一度も発火したことがなかった**（ISSUE-091）。

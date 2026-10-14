@@ -624,6 +624,14 @@ jobs:
         run: node scripts/audit_ogp_image_liveness.js --check
         continue-on-error: true
 
+      - name: 書いた後に取り直さない面へ Places の写真 URL が増えていないか（P-29・当面 soft）
+        # ジャーナル・特集・sitemap-images.xml に Places の URL を新しく書くと、失効して写真が出なくなる
+        # （docs/decisions/0045）。件数の基準は data/static_places_url_baseline.json。
+        # デプロイの後に置くので、落ちると後ろの IndexNow 送信まで止まる。CI で緑が続くのを確かめてから blocking に上げる。
+        # 新しい記事は公開前の validate_journal_draft.js 15d（HARD FAIL）が止める。
+        run: node scripts/audit_static_places_urls.js --check
+        continue-on-error: true
+
       - name: 失効した Places 写真の検知（P-29・soft）
         # Places の写真 URL は期限切れになりうる（photo name は失効・キャッシュ不可）。
         # データ（stores.json）は毎日取り直すが、書き込み済みの過去記事・特集・孤児店舗ページは取り直されない。
