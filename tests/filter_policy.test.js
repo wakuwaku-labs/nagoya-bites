@@ -39,7 +39,7 @@ const [START, END] = FP.REGION;
 // 小さなポリシー（本物と同じ欄を持つが、件数・中身は自由に動かせる）
 const MINI = {
   areas: [
-    { slug: 'aa', label: 'エリアA', ward: '中区', feature: 'features/a.html', match: ['甲', '乙'] },
+    { slug: 'aa', label: 'エリアA', ward: '中区', feature: 'features/a.html', match: ['甲', '乙'], addressMatch: ['中区甲'] },
     { slug: 'bb', label: 'エリアB', ward: null, feature: 'features/b.html', match: ['丙'] },
   ],
   conditions: [
@@ -49,8 +49,8 @@ const MINI = {
 };
 const MINI_TABLE = {
   areas: [
-    { slug: 'aa', label: 'エリアA', ward: '中区', match: ['甲', '乙'] },
-    { slug: 'bb', label: 'エリアB', ward: '', match: ['丙'] },
+    { slug: 'aa', label: 'エリアA', ward: '中区', match: ['甲', '乙'], addressMatch: ['中区甲'] },
+    { slug: 'bb', label: 'エリアB', ward: '', match: ['丙'], addressMatch: [] },
   ],
   conds: [
     { slug: 'c1', label: '条件1', rule: 'koshitsu' },
@@ -97,12 +97,13 @@ test('buildFilterPolicy: 実物のポリシーから、ページが使う欄だ�
   assert.ok(out.areas.length > 0 && out.conds.length > 0, '空ではない');
   out.areas.forEach((a, i) => {
     const src = POLICY.areas[i];
-    assert.deepStrictEqual(Object.keys(a), ['slug', 'label', 'ward', 'match'], `エリア ${src.slug} の欄`);
+    assert.deepStrictEqual(Object.keys(a), ['slug', 'label', 'ward', 'match', 'addressMatch'], `エリア ${src.slug} の欄`);
     assert.strictEqual(a.slug, src.slug, '並びはポリシーのまま');
     assert.strictEqual(a.label, src.label);
     assert.strictEqual(a.ward, src.ward || '', '区の無い群は空文字');
     assert.deepStrictEqual(a.match, src.match);
     assert.notStrictEqual(a.match, src.match, '配列は入力と共有しない');
+    assert.deepStrictEqual(a.addressMatch, src.addressMatch || [], '住所で所属する語（無い群は空）');
   });
   out.conds.forEach((c, i) => {
     const src = POLICY.conditions[i];
@@ -126,7 +127,7 @@ test('buildFilterPolicy: ポリシーを増減・並べ替えれば表も追随�
   const t = FP.buildFilterPolicy(more);
   assert.deepStrictEqual(t.areas.map((a) => a.slug), ['aa', 'bb', 'cc']);
   assert.deepStrictEqual(t.conds.map((c) => c.slug), ['c1', 'c2', 'c3']);
-  assert.deepStrictEqual(t.areas[2], { slug: 'cc', label: 'エリアC', ward: '熱田区', match: ['丁'] });
+  assert.deepStrictEqual(t.areas[2], { slug: 'cc', label: 'エリアC', ward: '熱田区', match: ['丁'], addressMatch: [] });
   // 消す・並べ替える
   const less = clone(MINI);
   less.areas.shift();
@@ -147,8 +148,8 @@ test('buildFilterPolicy: 欠けた値・数の値でも落ちず、文字列に�
     areas: [{ slug: 1, label: 2, match: [3, 'x'] }, { slug: 'b', label: 'B', ward: null }, { slug: 'c', label: 'C', ward: '', match: null }, { slug: 'd', label: 'D', ward: 0 }],
     conditions: [{ slug: 'k', label: 4, rule: 5 }],
   });
-  assert.deepStrictEqual(t.areas[0], { slug: '1', label: '2', ward: '', match: ['3', 'x'] }, '数は文字列にそろえる');
-  assert.deepStrictEqual(t.areas[1], { slug: 'b', label: 'B', ward: '', match: [] }, 'ward が null・match が無い');
+  assert.deepStrictEqual(t.areas[0], { slug: '1', label: '2', ward: '', match: ['3', 'x'], addressMatch: [] }, '数は文字列にそろえる');
+  assert.deepStrictEqual(t.areas[1], { slug: 'b', label: 'B', ward: '', match: [], addressMatch: [] }, 'ward が null・match が無い');
   assert.deepStrictEqual(t.areas[2].match, [], 'match が null');
   assert.strictEqual(t.areas[3].ward, '');
   assert.deepStrictEqual(t.conds[0], { slug: 'k', label: '4', rule: '5' });

@@ -2434,7 +2434,7 @@ var FILTERED = [];
 var NB_FILTER = { genre: 'All', areas: [], conds: [], tags: [], cap: 0 };
 // ハブ（stores/area/）と同じ、エリア 10 群と条件 13 軸の表。ビルドが data/area_genre_pages_policy.json から書く（scripts/build_filter_policy.js）。手で編集しない
 /* NB-FILTER-POLICY:START */
-var NB_FILTER_POLICY = {"areas":[{"slug":"meieki","label":"名駅（名古屋駅）","ward":"中村区","match":["名古屋（名古屋駅/西区/中村区）","名古屋駅","名駅","名古屋市中村区","名古屋市西区","名古屋市中村区名駅","名古屋（中村区・名駅）","西区"]},{"slug":"nishiki-fushimi","label":"錦・伏見・丸の内","ward":"中区","match":["栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄","丸の内","名古屋市中区錦","錦","東桜"]},{"slug":"yabacho-osu","label":"矢場町・大須・上前津","ward":"中区","match":["栄(ミナミ)/矢場町/大須/上前津","大須"]},{"slug":"sakae","label":"栄","ward":"中区","match":["栄","名古屋市中区","名古屋市中区栄"]},{"slug":"chikusa-imaike","label":"千種・今池・大曽根","ward":"千種区","match":["大曽根･千種･今池･池下･守山区","名古屋市千種区","名古屋市千種区覚王山","名古屋市東区","東区","名古屋市東区筒井"]},{"slug":"midori-tempaku","label":"緑区・南区・天白区・瑞穂区","ward":"","match":["緑区・南区・天白区・瑞穂区","名古屋市南区"]},{"slug":"kanayama","label":"金山・熱田","ward":"熱田区","match":["金山・神宮前・熱田区","金山","熱田"]},{"slug":"kakuozan","label":"覚王山・本山・藤が丘","ward":"","match":["本山・覚王山・藤が丘","覚王山"]},{"slug":"nakagawa-minato","label":"中川区・港区","ward":"中川区","match":["中川区・港区","名古屋（中川区）","中川区"]},{"slug":"tsurumai-yagoto","label":"鶴舞・八事・御器所","ward":"","match":["鶴舞・八事・御器所","鶴舞","名古屋市昭和区","昭和区"]}],"conds":[{"slug":"koshitsu","label":"個室あり","rule":"koshitsu"},{"slug":"late-night","label":"深夜営業（翌1時以降）","rule":"lateNight"},{"slug":"sunday","label":"日曜営業","rule":"sunday"},{"slug":"smoking-ok","label":"喫煙できる店","rule":"smokingOk"},{"slug":"non-smoking","label":"全席禁煙","rule":"nonSmoking"},{"slug":"nomihodai","label":"飲み放題あり","rule":"nomihodai"},{"slug":"tabehodai","label":"食べ放題あり","rule":"tabehodai"},{"slug":"group-30","label":"30名以上の宴会可","rule":"group30"},{"slug":"walk-3","label":"駅徒歩3分以内","rule":"walk3"},{"slug":"lunch","label":"ランチ営業あり","rule":"lunch"},{"slug":"budget-3000","label":"予算3,000円以下","rule":"budget3000"},{"slug":"budget-5000-plus","label":"予算5,001円以上","rule":"budget5000plus"},{"slug":"parking","label":"駐車場あり","rule":"parking"}]};
+var NB_FILTER_POLICY = {"areas":[{"slug":"meieki","label":"名駅（名古屋駅）","ward":"中村区","match":["名古屋（名古屋駅/西区/中村区）","名古屋駅","名駅","名古屋市中村区","名古屋市西区","名古屋市中村区名駅","名古屋（中村区・名駅）","西区"],"addressMatch":[]},{"slug":"nishiki-fushimi","label":"錦・伏見・丸の内","ward":"中区","match":["栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄","丸の内","名古屋市中区錦","錦","東桜"],"addressMatch":[]},{"slug":"yabacho-osu","label":"矢場町・大須・上前津","ward":"中区","match":["栄(ミナミ)/矢場町/大須/上前津","大須"],"addressMatch":[]},{"slug":"sakae","label":"栄","ward":"中区","match":["栄","名古屋市中区","名古屋市中区栄"],"addressMatch":["中区栄"]},{"slug":"chikusa-imaike","label":"千種・今池・大曽根","ward":"千種区","match":["大曽根･千種･今池･池下･守山区","名古屋市千種区","名古屋市千種区覚王山","名古屋市東区","東区","名古屋市東区筒井"],"addressMatch":[]},{"slug":"midori-tempaku","label":"緑区・南区・天白区・瑞穂区","ward":"","match":["緑区・南区・天白区・瑞穂区","名古屋市南区"],"addressMatch":[]},{"slug":"kanayama","label":"金山・熱田","ward":"熱田区","match":["金山・神宮前・熱田区","金山","熱田"],"addressMatch":[]},{"slug":"kakuozan","label":"覚王山・本山・藤が丘","ward":"","match":["本山・覚王山・藤が丘","覚王山"],"addressMatch":[]},{"slug":"nakagawa-minato","label":"中川区・港区","ward":"中川区","match":["中川区・港区","名古屋（中川区）","中川区"],"addressMatch":[]},{"slug":"tsurumai-yagoto","label":"鶴舞・八事・御器所","ward":"","match":["鶴舞・八事・御器所","鶴舞","名古屋市昭和区","昭和区"],"addressMatch":[]}],"conds":[{"slug":"koshitsu","label":"個室あり","rule":"koshitsu"},{"slug":"late-night","label":"深夜営業（翌1時以降）","rule":"lateNight"},{"slug":"sunday","label":"日曜営業","rule":"sunday"},{"slug":"smoking-ok","label":"喫煙できる店","rule":"smokingOk"},{"slug":"non-smoking","label":"全席禁煙","rule":"nonSmoking"},{"slug":"nomihodai","label":"飲み放題あり","rule":"nomihodai"},{"slug":"tabehodai","label":"食べ放題あり","rule":"tabehodai"},{"slug":"group-30","label":"30名以上の宴会可","rule":"group30"},{"slug":"walk-3","label":"駅徒歩3分以内","rule":"walk3"},{"slug":"lunch","label":"ランチ営業あり","rule":"lunch"},{"slug":"budget-3000","label":"予算3,000円以下","rule":"budget3000"},{"slug":"budget-5000-plus","label":"予算5,001円以上","rule":"budget5000plus"},{"slug":"parking","label":"駐車場あり","rule":"parking"}]};
 /* NB-FILTER-POLICY:END */
 // 保存済み（お気に入り）だけを表示するか。エリア・ジャンルなどと同じ「絞り込み条件」の1つとして
 // applyFilters が見る（I-23）。保存した店はこの端末だけの情報なので URL のハッシュには載せない。
@@ -2716,6 +2716,20 @@ function nbAreaSlug(raw) {
   }
   return NB_AREA_INDEX[String(raw == null ? '' : raw).trim()] || '';
 }
+// 店が所属する群（原文の群に加えて、住所に addressMatch の語を含む群。ハブの areaSlugsOf と同じ・P-430）。複数あり、群に入らなければ空
+function nbAreaSlugsOf(s) {
+  var out = [], base = nbAreaSlug(s['エリア']);
+  if (base) out.push(base);
+  var addr = typeof s['住所'] === 'string' ? s['住所'] : '';
+  if (addr) {
+    NB_FILTER_POLICY.areas.forEach(function(a) {
+      if (out.indexOf(a.slug) !== -1) return;
+      var w = a.addressMatch || [];
+      for (var i = 0; i < w.length; i++) if (w[i] && addr.indexOf(w[i]) !== -1) { out.push(a.slug); return; }
+    });
+  }
+  return out;
+}
 function nbAreaLabel(slug) {
   var list = NB_FILTER_POLICY.areas;
   for (var i = 0; i < list.length; i++) if (list[i].slug === slug) return list[i].label;
@@ -2824,7 +2838,11 @@ function nbCompileFilter(f) {
   var tags = f.tags, cap = f.cap, genre = f.genre;
   return function(s) {
     if (genre !== 'All' && nbGenreOf(s) !== genre) return false;
-    if (areaSet && !areaSet[nbAreaSlug(s['エリア'])]) return false;
+    if (areaSet) {
+      var as = nbAreaSlugsOf(s), hit = false;
+      for (var k = 0; k < as.length; k++) if (areaSet[as[k]]) { hit = true; break; }
+      if (!hit) return false;
+    }
     for (var i = 0; i < condFns.length; i++) if (!condFns[i](s)) return false;
     if (cap > 0 && !nbCapOk(s, cap)) return false;
     if (tags.length) {

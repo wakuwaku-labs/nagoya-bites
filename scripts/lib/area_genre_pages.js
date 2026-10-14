@@ -40,6 +40,25 @@ function normalizeArea(rawArea, policy) {
   return idx.get(a) || null;
 }
 
+/**
+ * 店が所属するエリアの群（0 個以上）。原文で決まる群（normalizeArea）に加えて、policy の areas[].addressMatch の語を
+ * 店の「住所」に含む群にも入る（P-430）。ハブの一覧とトップの絞り込みは、この判定を共有する。
+ * 店ごとに 1 つの名前を出す場所（店舗ページのエリア表示など）は、これではなく normalizeArea を使う。
+ */
+function areaSlugsOf(store, policy) {
+  const out = [];
+  const base = normalizeArea(store['エリア'], policy);
+  if (base) out.push(base.slug);
+  const addr = typeof store['住所'] === 'string' ? store['住所'] : '';
+  if (addr) {
+    for (const a of policy.areas) {
+      if (out.indexOf(a.slug) !== -1) continue;
+      if ((a.addressMatch || []).some(w => w && addr.indexOf(w) !== -1)) out.push(a.slug);
+    }
+  }
+  return out;
+}
+
 /** stores.json の「ジャンル」原文 → policy の genre エントリ（無ければ null） */
 function normalizeGenre(rawGenre, policy) {
   const idx = policy.__genreIndex || (policy.__genreIndex = buildMatchIndex(policy.genres));
@@ -184,15 +203,15 @@ function planPages(stores, policy) {
   const byArea = new Map(); // key: areaSlug -> stores[]（全ジャンル込み・エリアハブ用）
 
   for (const s of open) {
-    const area = normalizeArea(s['エリア'], policy);
     const genre = normalizeGenre(s['ジャンル'], policy);
-    if (!area) continue;
-    if (!byArea.has(area.slug)) byArea.set(area.slug, []);
-    byArea.get(area.slug).push(s);
-    if (!genre) continue;
-    const key = `${area.slug}::${genre.slug}`;
-    if (!byCell.has(key)) byCell.set(key, []);
-    byCell.get(key).push(s);
+    for (const areaSlug of areaSlugsOf(s, policy)) {
+      if (!byArea.has(areaSlug)) byArea.set(areaSlug, []);
+      byArea.get(areaSlug).push(s);
+      if (!genre) continue;
+      const key = `${areaSlug}::${genre.slug}`;
+      if (!byCell.has(key)) byCell.set(key, []);
+      byCell.get(key).push(s);
+    }
   }
 
   const pages = [];
@@ -239,6 +258,7 @@ function planPages(stores, policy) {
 module.exports = {
   loadPolicy,
   normalizeArea,
+  areaSlugsOf,
   normalizeGenre,
   storeMatchesCondition,
   CONDITION_RULES,

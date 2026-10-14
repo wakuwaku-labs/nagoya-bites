@@ -1,5 +1,5 @@
 {
-  "_README": "エリア×ジャンル×条件 静的一覧ページ（stores/area/配下）の唯一の情報源。scripts/gen_area_genre_pages.js が data/stores.json からこのポリシーに沿って決定的にページを生成する。閾値・マッピングの変更はこのファイルで行い、スクリプト側は触らない（CLAUDE.md 制約10）。areas[].match / genres[].match は data/stores.json の「エリア」「ジャンル」の原文と完全一致するものだけを対象にする（曖昧一致はしない）。 genres[].guide / conditions[].guide は一覧ページの「編集部の見分け方」の短文（Editor が書く・推測の数値は書かない・SEO-124）。editorPicks.max は選定理由がある店を一覧の上に別枠で出す上限、tables.stationTop は最寄り駅の表の行数。",
+  "_README": "エリア×ジャンル×条件 静的一覧ページ（stores/area/配下）の唯一の情報源。scripts/gen_area_genre_pages.js が data/stores.json からこのポリシーに沿って決定的にページを生成する。閾値・マッピングの変更はこのファイルで行い、スクリプト側は触らない（CLAUDE.md 制約10）。areas[].match / genres[].match は data/stores.json の「エリア」「ジャンル」の原文と完全一致するものだけを対象にする（曖昧一致はしない）。areas[].addressMatch は、店の「住所」にその語を含む店を、原文の群に加えてその群にも所属させる（P-430。ホットペッパーの「栄」の店は原文が別の群の名前で、群「栄」が手動登録店だけになっていたため。住所は掲載データの事実で、推測はしない。店ごとの単一の群の名前＝店舗ページのエリア表示などは normalizeArea のまま変えない）。 genres[].guide / conditions[].guide は一覧ページの「編集部の見分け方」の短文（Editor が書く・推測の数値は書かない・SEO-124）。editorPicks.max は選定理由がある店を一覧の上に別枠で出す上限、tables.stationTop は最寄り駅の表の行数。",
   "version": 1,
   "baseDir": "stores/area",
   "hubMinStores": 10,
@@ -18,7 +18,8 @@
     { "slug": "yabacho-osu", "label": "矢場町・大須・上前津", "ward": "中区", "feature": "features/osu-food-walk.html",
       "match": ["栄(ミナミ)/矢場町/大須/上前津", "大須"] },
     { "slug": "sakae", "label": "栄", "ward": "中区", "feature": "features/sakae.html",
-      "match": ["栄", "名古屋市中区", "名古屋市中区栄"] },
+      "match": ["栄", "名古屋市中区", "名古屋市中区栄"],
+      "addressMatch": ["中区栄"] },
     { "slug": "chikusa-imaike", "label": "千種・今池・大曽根", "ward": "千種区", "feature": "features/nagoya-kakuozan.html",
       "match": ["大曽根･千種･今池･池下･守山区", "名古屋市千種区", "名古屋市千種区覚王山", "名古屋市東区", "東区", "名古屋市東区筒井"] },
     { "slug": "midori-tempaku", "label": "緑区・南区・天白区・瑞穂区", "ward": null, "feature": null,

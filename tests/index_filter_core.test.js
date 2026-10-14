@@ -189,13 +189,13 @@ test('ハブとの一致: エリアの群のどの slug も、全店でハブ（
   assert.ok(POLICY.areas.length > 0);
   POLICY.areas.forEach((a) => {
     const got = C.nbFilterStores(F({ areas: [a.slug] }), STORES);
-    const want = STORES.filter((s) => { const x = HUB.normalizeArea(s['エリア'], POLICY); return !!x && x.slug === a.slug; });
+    const want = STORES.filter((s) => HUB.areaSlugsOf(s, POLICY).indexOf(a.slug) !== -1);
     const n = sameSet(got, want, `エリア ${a.slug}`);
     assert.ok(n > 0, `エリア ${a.slug}: 比べる店が 1 軒も無い（検査が空振りしている）`);
   });
   // 群の外の店は、どの群を選んでも出ない（全群を選んでも、ハブが群に入れた店と同じ）
   const all = C.nbFilterStores(F({ areas: AREAS }), STORES);
-  sameSet(all, STORES.filter((s) => !!HUB.normalizeArea(s['エリア'], POLICY)), '全群を選んだとき');
+  sameSet(all, STORES.filter((s) => HUB.areaSlugsOf(s, POLICY).length > 0), '全群を選んだとき');
 });
 
 test('ハブとの一致: 条件のどの slug も、全店でハブ（storeMatchesCondition）と同じ店を通す。ポリシーの全 rule にページの述語がある', () => {
@@ -946,8 +946,12 @@ test('絞り込みの意味: エリアの群の中は OR・そのほか（ジャ
   const set = (f) => C.nbFilterStores(f, STORES);
   const a0 = set(F({ areas: [AREAS[0]] }));
   const a3 = set(F({ areas: [AREAS[3]] }));
-  sameSet(set(F({ areas: [AREAS[3], AREAS[0]] })), a0.concat(a3), 'エリア 2 つは和集合');
-  assert.ok(a0.length > 0 && a3.length > 0 && a0.filter((s) => a3.includes(s)).length === 0, '群は重ならない');
+  sameSet(set(F({ areas: [AREAS[3], AREAS[0]] })), [...new Set(a0.concat(a3))], 'エリア 2 つは和集合（両方に入る店は 1 回だけ）');
+  assert.ok(a0.length > 0 && a3.length > 0, '比べる店がある');
+  // 群が重なるのは、住所で所属する店（addressMatch）だけ。重なる店は、両方の群を選んだときも 1 軒として数える
+  a0.filter((s) => a3.includes(s)).forEach((s) => {
+    assert.ok(HUB.areaSlugsOf(s, POLICY).length >= 2, '重なる店は、ハブの判定でも 2 つ以上の群に入る: ' + s['店名']);
+  });
   const k = new Set(set(F({ conds: ['koshitsu'] })));
   const l = new Set(set(F({ conds: ['lunch'] })));
   const both = set(F({ conds: ['koshitsu', 'lunch'] }));
