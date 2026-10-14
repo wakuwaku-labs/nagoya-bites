@@ -3719,7 +3719,7 @@ function applyFilters() {
   // シートの外からの条件の変更は結果まで自動スクロール（操作の手応えを出す）
   // - シートを開いている間は動かさない（「N軒を見る」で閉じたあとに 1 回だけ移る）
   // - 既に結果ブロックより十分下にいる場合（ページネーション操作中など）も省略
-  if (hasActiveFilter && !NB_SHEET.open) {
+  if (hasActiveFilter && !NB_SHEET.open && !NB_RESTORING) {
     var resultsBlock = document.getElementById('results-block');
     if (resultsBlock) {
       var blockTop = resultsBlock.getBoundingClientRect().top + window.pageYOffset;
@@ -3739,6 +3739,7 @@ function applyFilters() {
 // - 同じ条件の並びが続く間（再描画・全店のデータの到着）は 1 回だけ
 var NB_ZERO_SENT = '';
 function nbTrackZeroResult(q) {
+  if (NB_RESTORING) return;   // 「戻る」「進む」で読み直しているだけ（新しい検索ではない）
   if (FILTERED.length > 0) { NB_ZERO_SENT = ''; return; }
   if (!FULL_CATALOG_LOADED && !FULL_CATALOG_FAILED) return;
   if (SHOW_FAVS_ONLY && getFavs().length === 0) return;
@@ -3769,6 +3770,10 @@ function nbTrackZeroResult(q) {
 // - 店のモーダルを開くと履歴を1つ足し、URL に store=ID を載せる。足した履歴には印 {nbM:1} を付ける
 // - ×・背景・Esc・下スワイプのどれで閉じても、足した履歴を1つ戻して消す（「戻る」と同じ結果になる）
 // - 共有リンク・再読み込み・「進む」で開いたときは、URL にすでに store= があるので足さない
+// - 検索を実行したとき（Enter・「検索」ボタン・候補の選択。nbSubmitSearch）だけ履歴を1つ足す（印 {nbQ:1}）。1文字ごとの入力・チップの切り替えは今までどおり置き換える。
+//   足す前に、いまの履歴を「検索前の条件＋前に実行した検索語」に書き直す＝「戻る」で検索前の一覧・条件・検索欄に戻る（判断の記録 0041）
+// - 「戻る」「進む」（popstate）でハッシュの条件・検索語が今の画面と違えば、画面を読み直す。履歴は足さず、search・zero_result の計測は送らない（NB_RESTORING）。
+//   読み直しの中の pushHash は同じ値の置き換えにしかならない＝循環しない
 // - ハッシュの名前（q・genre・tag・ward・pref・cap・store）は変えず、読み続ける（すでに共有されたリンクが動き続ける）。I-20 で area・cond を足した。
 //   ward は、その区に属するエリアの群すべてに広げて読む（判断の記録 0037）。pref は読むが使わない（掲載の店はすべて愛知県）
 var NB_PENDING_STORE = '';   // #store= で指定され、まだモーダルを開けていない店の ID
@@ -3803,9 +3808,9 @@ function nbFindByData(selector, attr, value) {
 
 // いまの絞り込みの状態 → ハッシュ。storeId を渡すと store= を末尾に足す
 // 並びは genre・area・cond・tag・cap（NB-FILTER 区画の nbFilterParams）→ q → store
-function nbBuildHash(storeId) {
+function nbBuildHash(storeId, qOverride) {
   var siEl = document.getElementById('si');
-  var q = siEl ? siEl.value.trim() : '';
+  var q = typeof qOverride === 'string' ? qOverride : (siEl ? siEl.value.trim() : '');
   var params = nbFilterParams(NB_FILTER);
   if (q)       params.push('q='     + encodeURIComponent(q));
   if (storeId) params.push('store=' + encodeURIComponent(storeId));
@@ -3832,6 +3837,7 @@ function readHash() {
       var siEl = document.getElementById('si');
       if (siEl) siEl.value = params.q;
     }
+    NB_COMMITTED_Q = (params.q || '').trim();
   } catch (e) { NB_FILTER = nbEmptyFilter(); console.error('readHash failed', e); }
   // 店舗ページ・共有リンク → モーダルカード表示（#store=HOTPEPPER_ID）。
   // 最初に載っている50店の中に無い店は、全店のデータを読み終えてから探す（nbOpenPendingStore が再度呼ばれる）
@@ -3915,6 +3921,43 @@ function nbSyncModalWithUrl() {
   }
 }
 window.addEventListener('popstate', nbSyncModalWithUrl);
+
+var NB_COMMITTED_Q = '';   // 最後に実行した（または復元した）検索語。検索前の履歴に書き戻す語
+var NB_RESTORING = 0;      // 「戻る」「進む」で画面を読み直している間は 1（履歴を足さない・計測を送らない・スクロールしない）
+// 検索の実行: 履歴を1つ足す。モーダル・絞り込みシートが開いている間と、検索語が変わらないときは足さない
+function nbSearchHistoryCommit(q) {
+  q = String(q || '').trim();
+  if (q === NB_COMMITTED_Q) return;
+  var prev = NB_COMMITTED_Q;
+  NB_COMMITTED_Q = q;
+  try {
+    if (nbModalIsOpen() || (typeof NB_SHEET !== 'undefined' && NB_SHEET.open)) return;
+    var base = nbBuildHash('', prev);
+    history.replaceState(history.state, '', base === '#' ? location.pathname : base);
+    history.pushState({ nbQ: 1 }, '', location.href);
+  } catch (e) { /* 履歴を触れない環境でも検索はできる */ }
+}
+// 「戻る」「進む」: ハッシュの条件・検索語が今の画面と違えば画面を合わせる
+function nbSyncFilterWithUrl() {
+  if (typeof NB_SHEET !== 'undefined' && NB_SHEET.leaving) return;   // シートを閉じた直後の書き直し（そちらが処理する）
+  var params = nbParseHash(location.hash);
+  var q = (params.q || '').trim();
+  var siEl = document.getElementById('si');
+  var f;
+  try { f = nbFilterFromParams(params); } catch (e) { return; }
+  var same = nbFilterParams(f).join('&') === nbFilterParams(NB_FILTER).join('&') && q === (siEl ? siEl.value.trim() : '');
+  NB_COMMITTED_Q = q;
+  if (same) return;
+  if (typeof NB_SEARCH_DEBOUNCE !== 'undefined' && NB_SEARCH_DEBOUNCE) { clearTimeout(NB_SEARCH_DEBOUNCE); NB_SEARCH_DEBOUNCE = null; }
+  NB_FILTER = f;
+  var si2 = document.getElementById('si2');
+  if (siEl) siEl.value = q;
+  if (si2) si2.value = q;
+  NB_RESTORING = 1;
+  try { applyFilters(); } catch (e) { console.error('restore failed', e); }
+  NB_RESTORING = 0;
+}
+window.addEventListener('popstate', nbSyncFilterWithUrl);
 // NB-HISTORY:END
 
 // Share current URL button helper (copy to clipboard)
@@ -3939,6 +3982,7 @@ function nbSubmitSearch() {
   if (si && si.value !== q) si.value = q;
   if (si2 && si2.value !== q) si2.value = q;
   if (q) trackEvent('search', { search_term: q });
+  nbSearchHistoryCommit(q);
   applyFilters();
   // 送信したら検索欄のフォーカスを外す。フォーカスが残ると、あとでどこかを押した瞬間に検索欄の候補（「人気:」の行）が閉じて、
   // 結果の上にある行が縮み、押そうとしたボタンが動いて最初のクリックが空振りする（スマホでは入力用のキーボードも閉じる）
