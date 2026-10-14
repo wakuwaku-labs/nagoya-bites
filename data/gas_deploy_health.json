@@ -2,8 +2,8 @@
   "version": 1,
   "_comment": "GAS 反映状況の痕跡。triage ルーチンが毎回（レポートが無い日も）書き、コミットで Mac の外＝GitHub へ出す。gas-deploy-watchdog.yml がこれを読み、旧コードのままの状態が続いたら Issue を起票する（＝オーナーにメール）。判定は data/gas_deploy_policy.json の痕跡だけで行い、自己申告は使わない（CLAUDE.md 制約10）。",
   "last_run": {
-    "date": "2026-10-13",
-    "recorded_at": "2026-10-14T18:46:26.320Z",
+    "date": "2026-10-14",
+    "recorded_at": "2026-10-14T23:46:58.164Z",
     "status": "ok",
     "reason": null,
     "verdict": "deployed",
@@ -1227,6 +1227,39 @@
       "numeric_reference": null,
       "numeric_reference_skipped": "参照値の日付 2026-10-13 が レポートが名乗る対象日 2026-10-12 と一致しないため数値判定をしない",
       "recorded_at": "2026-10-14T18:46:26.310Z"
+    },
+    {
+      "date": "2026-10-14",
+      "kind": "daily",
+      "verdict": "deployed",
+      "missing_fixes": [],
+      "evidence": [
+        {
+          "key": "settled_slice_label",
+          "fix_id": "SEO-076",
+          "verdict": "deployed",
+          "line": "【読まれ方（確定値・2026-10-13）】"
+        },
+        {
+          "key": "reserve_cta_dedup_label",
+          "fix_id": "ISSUE-152",
+          "verdict": "deployed",
+          "line": "予約ボタン押した: 9回（予約サイトへのリンクを含む・同じクリックは1回）"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "deployed",
+          "line": "レポート 25% vs GA4実測 25.2%（差 0.2pt / 許容 15pt）"
+        }
+      ],
+      "numeric_reference": {
+        "date": "2026-10-13",
+        "bounceRate": 0.252,
+        "sessions": 123
+      },
+      "numeric_reference_skipped": null,
+      "recorded_at": "2026-10-14T23:46:58.159Z"
     }
   ],
   "deploys": [
