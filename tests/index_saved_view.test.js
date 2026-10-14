@@ -64,6 +64,7 @@ const SOURCE = [
   region('// NB-FILTER:START', '// NB-FILTER:END'),
   region('var NB_SHEET = {', '\n];'),
   ZERO_SENT_DECL,
+  'var NB_RESTORING = 0;',   // 「戻る」「進む」の読み直し中の印（NB-HISTORY 区画。ここでは常に 0）
   ['normalizeGenre', 'nbEscHtml', 'getFavs', 'nbSyncFavNav', 'applyFilters', 'nbTrackZeroResult', 'nbActiveConditions', 'nbSetBadge',
     'updateFilterUI', 'nbZeroIsProvisional', 'nbEmptySuggestHtml', 'nbDropCondition', 'clearAllFilters', 'showFavs',
     'scrollToMagazine', 'scrollToActiveConditions', 'exitSearchMode', 'renderSkeletons', 'renderGrid', 'nbSheetQuery',

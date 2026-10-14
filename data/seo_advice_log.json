@@ -3890,6 +3890,36 @@
       "brand_reason": "重複（09-29/10-02/10-10に判定済み）。単一店名のナビゲーショナルクエリは公式サイト・Googleマップに譲る Strategic Skip の面。店舗ページの写真は photo_policy の品質ゲートに従い手動追加しない（実写優先順）。",
       "category": null,
       "fingerprint": "483278ede573fdbf"
+    },
+    {
+      "id": null,
+      "date": "2026-10-14",
+      "source": "line-daily",
+      "advice": "🟡 予約クリック率が1.8%と目標3%を下回っています。👉 トップページ(index.html)の予約ボタン（cta_click）の視認性を高め、ファーストビューで目立つように色やサイズを調整しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（10-03/10-05週次/10-07/10-08 に同旨を却下済み）。前提は112訪問中2クリックの単日値で、前週の週次は5.7%・日々大きく振れるため施策の根拠にならない（制約10）。ボタンの色・サイズの個別変更はデザインシステム（制約12・DSN-001）の管理下で、トップのカード・導線は UI・UX 改修計画（I-19 等）で進行中。予約・電話導線は SEO-105（done）で整備済み。（日次レポート 2026-10-13 分）",
+      "category": null,
+      "fingerprint": "ebd81aa7477f9efd"
+    },
+    {
+      "id": null,
+      "date": "2026-10-14",
+      "source": "line-daily",
+      "advice": "🟡 検索で伸びしろがあるKW「青ノ月」が平均8.4位と上位表示まであと一歩です。👉 journal/ の日次記事で「青ノ月」をテーマにした記事を新たに作成し、店舗詳細への予約導線(cta_reserve)を設置しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-29/10-02/10-10/10-13 に同旨を判定済み）。単一店名のナビゲーショナルクエリは公式サイト・Googleマップに譲る Strategic Skip の面で、器を店舗ページから日次ジャーナルに替えても同じ。日次ジャーナルの題材は出典のある話題（data/journal_gate_policy.json の検証できる事実）で選ぶもので、店名KWの順位を取りに行くための記事は編集独立性と採点ゲートの趣旨に反する。（日次レポート 2026-10-13 分）",
+      "category": null,
+      "fingerprint": "b507dea64cd2b476"
+    },
+    {
+      "id": null,
+      "date": "2026-10-14",
+      "source": "line-daily",
+      "advice": "🟡 検索流入比率が84%と非常に高い反面、SNS流入比率は0%です。👉 人気ページの「2026-10-10-shinsakae-chihiro-kashiten-nagoya-first」の見出しと写真を使い、Instagramで店舗の魅力を発信する投稿をしましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-25/09-26/10-11 に同旨を判定済み）。SNS投稿はリポジトリ外の運用でUTMで計測する方針で、サイト/SEOの実装課題ではない。日次ジャーナルの X 投稿は SNS-001（data/x_post_policy.json）で別に進行中。記事の写真（HotPepper・Places）をInstagramへ転載するのは規約上の加工・再配信にあたり写真ポリシーにも反する。（日次レポート 2026-10-13 分）",
+      "category": null,
+      "fingerprint": "5640327e76fe0793"
     }
   ]
 }

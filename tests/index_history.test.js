@@ -81,9 +81,9 @@ const FILTER_SOURCE = [
 const FAKE_OPEN_M = [
   'function openM(i, source) {',
   '  var r = ALL_STORES[i];',
-  "  opened.push({ id: r['ホットペッパーID'], source: source });",
+  "  opened.push({ id: nbStoreKey(r), source: source });",
   "  document.getElementById('ov').classList.add('open');",
-  "  nbModalHistoryOpen(r['ホットペッパーID'] || '', source);",
+  "  nbModalHistoryOpen(nbStoreKey(r), source);",
   '}',
 ].join('\n');
 
@@ -739,6 +739,44 @@ test('閉じたモーダルをもう一度閉じても（背景を続けて押�
   assert.strictEqual(env.br.index, 0, 'サイトの外へ出ない');
 });
 
+test('店舗ID（ホットペッパーIDの無い編集部の店）: 共有リンクで開く・開くと URL に載る・「戻る」で閉じて「進む」で開き直す', () => {
+  const ids = []; for (let i = 1; i <= 50; i++) ids.push('J' + String(i).padStart(3, '0'));
+  // 共有リンクで開く（新しいタブ）
+  const a = makeEnv({ entries: [{ hash: '#store=E0123456789', state: null }] });
+  a.setStores(51, ids.concat(['']));
+  a.ctx.ALL_STORES[50]['店舗ID'] = 'E0123456789';
+  a.ctx.FULL_CATALOG_LOADED = true;
+  a.run('readHash()'); a.fire();
+  assert.strictEqual(a.isOpen(), true);
+  assert.deepStrictEqual(a.json(a.opened), [{ id: 'E0123456789', source: 'deeplink' }]);
+  assert.strictEqual(a.br.hash, '#store=E0123456789');
+  // 一覧から開く → URL に載る → 戻るで閉じる → 進むで開き直す
+  const b = makeEnv();
+  b.setStores(51, ids.concat(['']));
+  b.ctx.ALL_STORES[50]['店舗ID'] = 'E0123456789';
+  b.run("openM(50, 'grid')");
+  assert.strictEqual(b.br.hash, '#store=E0123456789');
+  assert.strictEqual(b.br.history.length, 2);
+  b.br.history.back();
+  assert.strictEqual(b.isOpen(), false);
+  b.br.history.forward();
+  b.fire();
+  assert.strictEqual(b.isOpen(), true, '進むで開き直す');
+  assert.deepStrictEqual(b.json(b.opened).map((o) => o.source), ['grid', 'popstate']);
+  assert.strictEqual(b.br.history.length, 2, '履歴は足さない');
+});
+
+test('店舗ID: ホットペッパーIDが先。既存の #store=ホットペッパーID のリンクは、店舗IDを持つ店が混ざっても同じ店を開く', () => {
+  const env = makeEnv({ entries: [{ hash: '#store=J002', state: null }] });
+  env.setStores(3, ['', 'J002', 'J003']);
+  env.ctx.ALL_STORES[0]['店舗ID'] = 'E0123456789';
+  env.ctx.ALL_STORES[1]['店舗ID'] = 'Eshouldnotuse'; // 万一両方あっても、ホットペッパーIDで指す
+  env.ctx.FULL_CATALOG_LOADED = true;
+  env.run('readHash()'); env.fire();
+  assert.deepStrictEqual(env.json(env.opened), [{ id: 'J002', source: 'deeplink' }]);
+  assert.strictEqual(env.br.hash, '#store=J002');
+});
+
 test('ID が無い店: URL は変えず履歴だけ足す。「戻る」で閉じる', () => {
   const env = makeEnv();
   env.setStores(3, ['', 'J002', 'J003']);
@@ -832,7 +870,7 @@ test('静的: openM は開いた直後に nbModalHistoryOpen を呼び、source=
   const src = INDEX.slice(a, b);
   assert.ok(/if \(source !== 'popstate'\) trackEvent\('modal_open'/.test(src), 'popstate では数えない');
   const iOpen = src.indexOf("document.getElementById('ov').classList.add('open');");
-  const iHook = src.indexOf("nbModalHistoryOpen(r['ホットペッパーID'] || '', source);");
+  const iHook = src.indexOf("nbModalHistoryOpen(nbStoreKey(r), source);");
   const iLock = src.indexOf("document.body.style.overflow = 'hidden';");
   assert.ok(iOpen >= 0 && iHook > iOpen && iLock > iHook, '開く → 履歴 → スクロール固定 の順');
   // 似たお店のカードの描画は NB-MODAL-RELATED の nbRelatedHtml（I-16b）。openM はそれを呼び、カードは swap で切り替える
@@ -894,4 +932,49 @@ test('openM を包む処理（閲覧履歴の記録）は source を元の openM
   ctx.openM(0);
   assert.deepStrictEqual(calls, [{ i: 1, source: 'deeplink' }, { i: 0, source: undefined }], '2つ目の引数をそのまま渡す');
   assert.deepStrictEqual(added, ['B店', 'A店'], '閲覧履歴の記録は今までどおり');
+});
+
+// ── P-245（I-21b）検索の実行で履歴を1つ足し、「戻る」「進む」で画面を読み直す ──────────────
+test('検索の履歴: 実行で1つ足し、足す前の履歴は「検索前の条件＋前の検索語」に直す。同じ語・モーダル中は足さない', () => {
+  const env = makeEnv({ entries: [{ hash: '#genre=' + enc(GENRE), state: null }] });
+  env.run('readHash()');
+  env.registry.si.value = '個室';
+  env.run("nbSearchHistoryCommit('個室')");
+  assert.strictEqual(env.br.entries.length, 2, '履歴は1つ足される');
+  assert.deepStrictEqual(env.json(env.br.entries[1].state), { nbQ: 1 });
+  assert.strictEqual(env.br.entries[0].hash, '#genre=' + enc(GENRE), '足す前の履歴に検索語は載らない（入力の途中の語で汚れない）');
+  env.run("nbSearchHistoryCommit('個室')");
+  assert.strictEqual(env.br.entries.length, 2, '同じ語では足さない');
+  env.registry.ov = makeEl();
+  env.registry.ov.classList.add('open');
+  env.run("nbSearchHistoryCommit('焼肉')");
+  assert.strictEqual(env.br.entries.length, 2, 'モーダルを開いている間は足さない');
+});
+
+test('検索の履歴: 「戻る」で条件と検索欄を読み直し、履歴は足さず、「進む」で検索結果に戻る', () => {
+  const env = makeEnv({ entries: [{ hash: '#genre=' + enc(GENRE), state: null }] });
+  let applied = 0;
+  env.ctx.applyFilters = () => { applied++; assert.strictEqual(env.ctx.NB_RESTORING, 1, '読み直し中の印が立っている'); };
+  env.run('readHash()');
+  env.registry.si.value = '個室';
+  env.run("nbSearchHistoryCommit('個室')");
+  env.br.entries[1].hash = '#genre=' + enc(GENRE) + '&q=' + enc('個室');
+  const pushes = env.br.calls.push;
+  env.br.go(-1);
+  assert.strictEqual(applied, 1);
+  assert.strictEqual(env.registry.si.value, '', '検索欄は検索前の内容に戻る');
+  assert.strictEqual(env.filter().genre, GENRE);
+  env.br.go(1);
+  assert.strictEqual(applied, 2);
+  assert.strictEqual(env.registry.si.value, '個室');
+  assert.strictEqual(env.br.calls.push, pushes, '読み直しで履歴を足さない');
+  assert.strictEqual(env.ctx.NB_RESTORING, 0);
+});
+
+test('検索の履歴: 読み直しは計測を送らない（search は nbSubmitSearch だけ・zero_result は読み直し中は送らない）', () => {
+  const m = /function nbSyncFilterWithUrl\(\) \{[\s\S]*?\n\}\n/.exec(BLOCK);
+  assert.ok(m, 'nbSyncFilterWithUrl が見つからない');
+  assert.ok(!/trackEvent|gtag|page_view/.test(m[0]));
+  assert.ok(/NB_RESTORING = 1/.test(m[0]) && /NB_RESTORING = 0/.test(m[0]));
+  assert.ok(/if \(NB_RESTORING\) return;/.test(topFunction(INDEX, 'nbTrackZeroResult')), '読み直しでは zero_result を送らない');
 });

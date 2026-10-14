@@ -18,7 +18,11 @@ const { google } = require('googleapis');
 // ================================================================
 // 設定（ここを自分の環境に合わせて変更してください）
 // ================================================================
-const HOTPEPPER_KEY   = 'c4b06501b849309a';
+const HOTPEPPER_KEY = process.env.HOTPEPPER_API_KEY || '';
+if (!HOTPEPPER_KEY) {
+  console.error('HOTPEPPER_API_KEY 環境変数が未設定です（build.js と同じ名前。~/.config/nagoya-bites/ の env を読み込んでから実行してください）');
+  process.exit(1);
+}
 const SPREADSHEET_ID  = 'YOUR_SPREADSHEET_ID';  // ← スプレッドシートのIDに変更
 const SHEET_NAME      = 'シート1';               // ← シート名に変更（例：Sheet1）
 const CREDENTIALS_FILE = './credentials.json';  // サービスアカウントのJSONファイル

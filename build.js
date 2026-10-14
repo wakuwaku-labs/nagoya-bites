@@ -1417,6 +1417,8 @@ async function main() {
   // placesKey()（店名+エリア）でキャッシュを引けるようにした（fetch_places.js と同じキー）。
   const placesPath = path.join(__dirname, 'data', 'places_resolved.json');
   let placesApplied = 0, placesClosed = 0, placesNoMatch = 0, placesRejected = 0;
+  // 紐付けを却下した店のキー。口コミの時系列・指紋（places_history）も別の店のものなので使わない（P-142）
+  const placesRejectedKeys = new Set();
   if (fs.existsSync(placesPath)) {
     try {
       const placesCache = JSON.parse(fs.readFileSync(placesPath, 'utf8'));
@@ -1428,7 +1430,7 @@ async function main() {
         const entry = placesCache[id];
         if (!entry) { placesNoMatch++; continue; }
         if (entry.notFound || entry.error) { placesNoMatch++; continue; }
-        if (entry.rejected) { placesRejected++; continue; }
+        if (entry.rejected) { placesRejected++; placesRejectedKeys.add(id); continue; }
         // 閉店確定店は LOCAL_STORES から除外
         if (entry.business_status === 'CLOSED_PERMANENTLY') {
           console.log(`  [Places] ${s['店名']}（${id}）: business_status=CLOSED_PERMANENTLY のため除外`);
@@ -1608,7 +1610,7 @@ async function main() {
   for (const s of stores) {
     // 2026-08-20（ISSUE-104）: ホットペッパーID非保有店も placesKey() で履歴を引く
     const key = s['店名'] ? placesKey(s) : '';
-    const historyEntry = key && placesHistory[key] ? placesHistory[key] : null;
+    const historyEntry = key && !placesRejectedKeys.has(key) && placesHistory[key] ? placesHistory[key] : null;
     const fingerprintResult = key ? evaluateStoreFingerprint(key, historyEntry, fingerprintIndex) : null;
     const result = computeCrossCheckScore(s, historyEntry, fingerprintResult);
     s['crossCheckScore'] = result.crossCheckScore;
@@ -1972,6 +1974,11 @@ async function main() {
     v += (parseFloat(s['トレンドスコア']) || 0) * 1000;
     v += (parseFloat(s['Google評価']) || 0);
     return v;
+  }
+  // P-246（I-21c）: ホットペッパーIDの無い店に共有リンク用の安定 ID（店舗ID）を付ける（判断の記録 0043）
+  {
+    const r = require('./scripts/lib/store_ids').assignStoreShareIds(slimStores);
+    console.log(`店舗ID（共有リンク用）: ${r.assigned}店に付与${r.collisions ? `（同名同エリアの区別 ${r.collisions}件）` : ''}`);
   }
   slimStores.sort((a, b) => _p2PriorityScore(b) - _p2PriorityScore(a));
   const TOP_N_INLINE = 50;

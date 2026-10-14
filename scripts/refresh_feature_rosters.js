@@ -35,6 +35,7 @@
 const fs = require('fs');
 const path = require('path');
 const { loadStores } = require('./lib/load_stores');
+const { staticPhotoUrl } = require('./lib/places_photo_url');
 const { withReserveAsk, featureStoreOnclick } = require('./lib/feature_tracking');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -162,7 +163,8 @@ function buildPool(stores, cfg, closed) {
         const st = s['営業ステータス'];
         if (st && st !== 'OPERATIONAL') continue;
       }
-      if (G.requirePhoto && !s['写真URL']) continue;
+      // Places の写真は書いた後に取り直さず失効するので「写真あり」と数えない（P-29・docs/decisions/0045）
+      if (G.requirePhoto && !staticPhotoUrl(s['写真URL'])) continue;
       if (G.requireNagoya && !isNagoya(s)) continue;
 
       const sm = sceneMatch(s, featCfg.scene);
@@ -310,7 +312,7 @@ function renderStoreCard(entry, num, featureSlug) {
   const s = entry.store;
   const id = esc(s['ホットペッパーID']);
   const name = esc(s['店名']);
-  const photo = esc(s['写真URL']);
+  const photo = esc(staticPhotoUrl(s['写真URL']));
   const area = esc(s['エリア'] || '');
   const genre = genreShort(s);
   const price = esc(s['価格帯'] || '');
@@ -326,8 +328,7 @@ function renderStoreCard(entry, num, featureSlug) {
   const trackCta = `onclick="(window.nbReserveExit||trackEvent)('cta_click',{store_name:'${nameAttr}',store_id:'${id}',link_domain:'www.hotpepper.jp',location:'feature',feature:'${featureSlug}'})"`;
   return `      <div class="store-card">
         <div class="store-num">${nn}</div>
-        <div class="store-photo"><img src="${photo}" alt="${name}" loading="lazy" width="160" height="120" decoding="async"></div>
-        <div class="store-info">
+${photo ? `        <div class="store-photo"><img src="${photo}" alt="${name}" loading="lazy" width="160" height="120" decoding="async"></div>\n` : ''}        <div class="store-info">
           <h3 class="store-name"><a href="https://nagoya-bites.com/stores/${id}.html" ${track}>${name}</a>${isNew}</h3>
           <div class="store-meta">${meta}</div>
           <p class="store-desc">${descOf(s, 110)}</p>
@@ -344,7 +345,7 @@ function renderShopCard(entry, num, featureSlug) {
   const s = entry.store;
   const id = esc(s['ホットペッパーID']);
   const name = esc(s['店名']);
-  const photo = esc(s['写真URL']);
+  const photo = esc(staticPhotoUrl(s['写真URL']));
   const area = esc(s['エリア'] || '');
   const genre = genreShort(s);
   const sb = scoreBadge(s);
@@ -356,8 +357,7 @@ function renderShopCard(entry, num, featureSlug) {
   // 店の値は店名ではなく ID（I-08。集計で店名の表記ゆれと重複が出ないように、ほかの特集の部品と同じ featureStoreOnclick を使う）
   const track = `onclick="${featureStoreOnclick(s['ホットペッパーID'], featureSlug)}"`;
   return `    <div class="shop-card">
-      <img class="shop-card-photo" src="${photo}" alt="${name}" loading="lazy" decoding="async">
-      <div class="shop-num">${nn}</div>
+${photo ? `      <img class="shop-card-photo" src="${photo}" alt="${name}" loading="lazy" decoding="async">\n` : ''}      <div class="shop-num">${nn}</div>
       <h3 class="shop-name">${name}${isNew}</h3>
       <div class="shop-area">${area}${genre ? ' / ' + genre : ''}</div>
       <p class="shop-desc">${descOf(s, 150)}</p>

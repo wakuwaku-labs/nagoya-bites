@@ -98,7 +98,9 @@ function findStoreRecord(store) {
  * 「枠の内側にいるつもりで超える」状態を作ってしまう（CLAUDE.md 制約10 の趣旨）。
  * ──────────────────────────────────────────────────────────────── */
 const HEALTH_PATH = path.join(ROOT, 'data', 'photo_pipeline_health.json');
-const SKU_ZERO = { textsearch: 0, details: 0, photo: 0 };
+// ローカル実行分は別ファイル（書き手を分ける。CI が書く HEALTH_PATH を汚さない・P-436）
+const localUsage = require('./places_usage_local');
+const SKU_ZERO = localUsage.SKU_ZERO;
 
 /** 無料枠のリセット境界は太平洋時間（JST 16:00） */
 function ptMonth() {
@@ -113,13 +115,15 @@ function readLedger() {
   let root = {};
   try { root = JSON.parse(fs.readFileSync(HEALTH_PATH, 'utf8')); } catch (_) { root = {}; }
   const places = root.places || {};
-  const journal = root.journal_photos || {};
   const month = ptMonth();
+  // 共有の使用量 = CI 分（places）＋ローカル分。本文写真の取り分 = ローカル分＋旧形式（journal_photos・移行前の分）
+  const legacy = root.journal_photos || {};
+  const legacyMine = legacy.sku_month === month ? { ...SKU_ZERO, ...(legacy.sku_calls_month || {}) } : { ...SKU_ZERO };
   _skuLedger = {
     month,
-    shared: places.sku_month === month ? { ...SKU_ZERO, ...(places.sku_calls_month || {}) } : { ...SKU_ZERO },
+    shared: localUsage.totalMonth(root, month),
     sharedBudget: places.sku_monthly_budget || { textsearch: 4000, details: 4000, photo: 800 },
-    mine: journal.sku_month === month ? { ...SKU_ZERO, ...(journal.sku_calls_month || {}) } : { ...SKU_ZERO },
+    mine: localUsage.add(localUsage.readLocalMonth(month), legacyMine),
   };
   return _skuLedger;
 }
@@ -149,32 +153,9 @@ function noteSku(kind) { _skuUsed[kind]++; }
 function flushSkuUsage() {
   const total = _skuUsed.textsearch + _skuUsed.details + _skuUsed.photo;
   if (!total) return null;
-  let root = {};
-  try { root = JSON.parse(fs.readFileSync(HEALTH_PATH, 'utf8')); } catch (_) { root = {}; }
   const led = readLedger();
-  const month = led.month;
-  const places = root.places || {};
-  const sharedNow = places.sku_month === month ? { ...SKU_ZERO, ...(places.sku_calls_month || {}) } : { ...SKU_ZERO };
-  root.places = {
-    ...places,
-    sku_month: month,
-    sku_calls_month: {
-      textsearch: sharedNow.textsearch + _skuUsed.textsearch,
-      details: sharedNow.details + _skuUsed.details,
-      photo: sharedNow.photo + _skuUsed.photo,
-    },
-  };
-  root.journal_photos = {
-    sku_month: month,
-    sku_calls_month: {
-      textsearch: led.mine.textsearch + _skuUsed.textsearch,
-      details: led.mine.details + _skuUsed.details,
-      photo: led.mine.photo + _skuUsed.photo,
-    },
-    sku_monthly_budget: bodyPolicy().skuBudget,
-    last_run: new Date().toISOString(),
-  };
-  fs.writeFileSync(HEALTH_PATH, JSON.stringify(root, null, 2) + '\n', 'utf8');
+  // photo_pipeline_health.json（CI が書く）には触らない。ローカル台帳へ足すだけ（P-436）
+  localUsage.addLocalUsage(_skuUsed, led.month, { sku_monthly_budget: bodyPolicy().skuBudget });
   const used = { ..._skuUsed };
   _skuUsed = { ...SKU_ZERO };
   _skuLedger = null;
@@ -276,46 +257,10 @@ async function collectStoreCandidates(store, opts = {}) {
     }
   }
 
-  // 2. Google Places（オーナー投稿を優先。判定は data/photo_policy.json が持つ）
-  const key = process.env.GOOGLE_MAPS_API_KEY;
-  // 一度クォータ切れ・認証エラーを踏んだら、その実行では叩き続けない（無駄打ちを増やさない）
-  if (key && opts.places !== false && !_placesError) {
-    let placeId = (rec && (rec['placeId'] || rec['GooglePlaceID'])) || '';
-    if (!placeId) {
-      if (!skuAllow('textsearch')) return out;
-      noteSku('textsearch');
-      const q = encodeURIComponent(`${name} ${store.area || rec?.['エリア'] || ''} 名古屋`);
-      const find = await getJson(
-        `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${q}&inputtype=textquery&fields=place_id&key=${key}`
-      );
-      if (!notePlacesStatus(find)) return out;
-      placeId = find?.candidates?.[0]?.place_id || '';
-    }
-    if (placeId) {
-      if (!skuAllow('details')) return out;
-      noteSku('details');
-      const detail = await getJson(
-        `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=photos,name&language=ja&key=${key}`
-      );
-      if (!notePlacesStatus(detail)) return out;
-      const photos = (detail?.result?.photos || []).slice(0, pol.placesCandidatesPerStore);
-      const cands = photos.map(ph => ({ photo: ph, attribution: attributionName(ph) || 'Google Maps' }));
-      const { picked } = pickPhotos(cands, { '店名': name }, opts.limit || pol.maxPerStore + 1);
-      const mapsUrl = `https://www.google.com/maps/place/?q=place_id:${placeId}`;
-      for (const p of picked) {
-        if (!skuAllow('photo')) break;
-        noteSku('photo');
-        const cdn = await resolveCdnUrl(
-          `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=${p.photo.photo_reference}&key=${key}`
-        );
-        if (!cdn) continue;
-        out.push({
-          url: cdn, source: 'places', storeName: name, area,
-          creditName: p.attribution || 'Google Maps', creditUrl: mapsUrl, tier: p.tier,
-        });
-      }
-    }
-  }
+  // 2. Google Places は使わない（P-29・docs/decisions/0045）。
+  //    日次ジャーナルは書いた後に取り直さない面で、Places の写真 URL は期限切れになる
+  //    （photo name は失効しうる・キャッシュ不可）。HotPepper しか候補が無い店は、その1枚か写真なしにする。
+  //    他店の写真は借りない・取り繕わない。
 
   return out;
 }

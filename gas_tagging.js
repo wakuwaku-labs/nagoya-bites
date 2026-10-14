@@ -1,4 +1,5 @@
-var HOTPEPPER_KEY = 'c4b06501b849309a';
+// 設定: GAS エディタの「プロジェクトの設定 > スクリプト プロパティ」に HOTPEPPER_API_KEY を登録する（コードに鍵を書かない）。
+var HOTPEPPER_KEY = PropertiesService.getScriptProperties().getProperty('HOTPEPPER_API_KEY');
 var SHEET_NAME = '店舗データ';
 var BATCH_SIZE = 10;
 

@@ -173,6 +173,12 @@ function judgePhoto(article) {
   // ゲートは正直な最良の成果物が余裕を持って通る位置に置く（CLAUDE.md 品質ゲート原則3）。
   const enforce = !policy.enforceFrom || !article.date || article.date >= policy.enforceFrom;
 
+  if (!url && article.heroExpired) {
+    // 公開後に Google 側で写真 URL が失効し、scripts/repair_expired_place_photos.js が外した記事。
+    // 他店の写真で埋めず写真なしで残すのが正しい（取り繕わない）ので、警告に留める。
+    add('warn', 'hero_expired', `${R}は取得元の写真 URL が失効したため外してあります（NB-HERO-EXPIRED）`);
+    return finish(findings);
+  }
   if (!url) {
     add(enforce ? 'fail' : 'warn', 'hero_missing',
       `${R}がありません（写真の自動取得が失敗した可能性）`);
@@ -384,6 +390,7 @@ function extractHeroFromHtml(html, slug, date) {
     caption,
     storeNames,
     isInstagramEmbed: isIg,
+    heroExpired: !heroUrl && /NB-HERO-EXPIRED/.test(html),
     html, // 報道用画像の「リリースを引用しているか」照合に使う
   };
 }

@@ -101,7 +101,7 @@ function makeSelect(values) {
 
 function load(names, extra) {
   const events = [];
-  const calls = { sortAndRender: 0, scroll: 0, applyFilters: 0, cleared: [], toasts: [] };
+  const calls = { sortAndRender: 0, scroll: 0, applyFilters: 0, historyCommit: [], cleared: [], toasts: [] };
   const sel = makeSelect(['recommend', 'view-desc', 'trend-desc']);
   const bodyClasses = new Set();
   const el = { si: { value: '' }, si2: { value: '' } };
@@ -117,6 +117,7 @@ function load(names, extra) {
     sortAndRender: () => { calls.sortAndRender++; },
     scrollToResultsIfAbove: () => { calls.scroll++; },
     applyFilters: () => { calls.applyFilters++; },
+    nbSearchHistoryCommit: (q) => { calls.historyCommit.push(q); },
     clearTimeout: (t) => { calls.cleared.push(t); },
     showToast: (m) => { calls.toasts.push(m); },
     SORT_MODE: 'recommend', SORT_USER_PINNED: false, NB_SEARCH_DEBOUNCE: null,
@@ -194,6 +195,7 @@ test('nbSubmitSearch: デバウンスを取り消し、2 つの欄をそろえ�
   assert.strictEqual(c.el.si.value, '個室 栄');
   assert.strictEqual(c.el.si2.value, '個室 栄');
   assert.strictEqual(c.calls.applyFilters, 1);
+  assert.deepStrictEqual(c.calls.historyCommit, ['個室 栄'], '履歴を足す判断は検索語を渡して1回（P-245）');
   assert.deepStrictEqual(c.events, [['search', { search_term: '個室 栄' }]]);
 });
 

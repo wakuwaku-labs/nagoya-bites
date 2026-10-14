@@ -19,6 +19,7 @@ const { checkText, checkTitleFront } = require('./journal_seo_kw');
 // ヒーロー写真の帰属判定は scripts/lib/hero_photo_gate.js に一元化（2026-08-17 の事故）
 const { judgeHero, judgePhoto, findReuse, extractHeroFromHtml, extractBodyPhotosFromHtml } = require('./lib/hero_photo_gate');
 const { bodyPolicy } = require('./lib/journal_photos');
+const { findPlacesPhotoUrls } = require('./lib/places_photo_url');
 
 const ROOT = path.join(__dirname, '..');
 const PUBLISHED = path.join(ROOT, 'data', 'journal_published.json');
@@ -247,6 +248,20 @@ function checkJournal(htmlPath, mdPath) {
         ? `⚠️ WARNING: ${warns.map(w => `[${w.code}] ${w.msg}`).join(' / ')}`
         : `ヒーロー写真の帰属OK（${heroArticle.heroSource || 'figure'}）`
     });
+  }
+
+  // 15d. Google Places の写真 URL を書いていないこと（HARD FAIL・P-29・docs/decisions/0045）
+  //      記事は書いた後に取り直さない面。Places の photo name は期限切れになりうる・キャッシュ不可で、
+  //      書いた URL は失効して写真が出なくなる（2026-10-15 実測: 過去記事 18 本）。
+  //      ヒーロー・本文写真・og:image に HotPepper / プレスリリース / 記事固有の図を使う。
+  const placesInDraft = findPlacesPhotoUrls(html);
+  if (placesInDraft.length) {
+    pass('15d_no_places_photo_url', false,
+      `❌ Google Places の写真 URL が ${placesInDraft.length} 件書かれています（失効する URL は書かない）。\n` +
+      `     ${placesInDraft[0].slice(0, 90)}...\n` +
+      `     → HotPepper の公式写真 → プレスリリース → 記事固有のイメージ図、の順に替えてください。`);
+  } else {
+    results.push({ id: '15d_no_places_photo_url', ok: true, msg: 'Places の写真 URL なし' });
   }
 
   // 15c. 本文写真（art-body-img）も同じ帰属の判定を通す（HARD FAIL）

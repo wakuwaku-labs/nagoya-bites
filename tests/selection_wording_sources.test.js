@@ -61,6 +61,14 @@ const CLEAN_SOURCES = [
   'data/editor_picks.json',
   'data/manual_stores.json',
   'data/recommendations.json',
+  // データの文の「業界基準・標準・水準・評価・的」（P-367）。stores.json は build.js が作る（題に P-334 の語が残る）ので足さない
+  'data/pending_stores.json',
+  'data/editorreason_drafts/manual_麺屋まつり名古屋店.json',
+  // エージェントの手引き（P-320・判断の記録 0041）: 語が 1 件も無い手引きだけ足す。
+  //   editor.md・orchestrator.md・marketer.md・strategist.md は、検索で狙う語（業界人 推薦 など）の台帳や、
+  //   「語を使わない」と書くための引用が残るので足さない（理由は 0041）。
+  'agents/builder.md',
+  'agents/inspector.md',
 ];
 
 function hits(text) {
@@ -235,13 +243,26 @@ test('店舗一覧: 店を指さない一覧ページに、レビュー投稿の
   assert.ok(html.includes(OWNER_SENTENCE), 'オーナーの文');
 });
 
-test('運営者の識別情報（確認者の名前・ハンドル）を、この 4 ページに書かない（P-329）', () => {
+test('運営者の識別情報（確認者の名前・ハンドル）を、この 4 ページと、データ・作業メモに書かない（P-329・P-368）', () => {
+  // 名前の文字列はリポジトリに書かない。実行している人のアカウント名と git の設定を、実行時に読んで検査する
+  const os = require('node:os');
+  const handles = new Set();
+  const add = (v) => { v = String(v || '').trim(); if (v.length >= 3) handles.add(v); };
+  try { add(os.userInfo().username); } catch (_) { /* 取れない環境では環境変数に任せる */ }
+  add(process.env.USER);
+  add(process.env.LOGNAME);
+  for (const key of ['user.name', 'user.email']) {
+    try { add(execFileSync('git', ['config', key], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).split('@')[0]); } catch (_) { /* 未設定 */ }
+  }
+  // 公開リポジトリの機械的な共通名は検査から外す（これらは個人を特定しない）
+  for (const g of ['root', 'runner', 'owner', 'github-actions', 'unknown', 'wakuwaku-labs']) handles.delete(g);
   const picks = JSON.parse(readRel('data/editor_picks.json')).stores;
-  const handles = [...new Set(picks.map((p) => p && p.automation && p.automation.reviewed_by).filter(Boolean))];
-  assert.ok(handles.length >= 1, '確認者の記録が読める（このテストが空振りしない）');
-  for (const rel of ['about.html', 'faq.html', 'features/editorial-policy.html', 'stores/index.html']) {
-    const html = readRel(rel);
-    for (const h of handles) assert.ok(!html.includes(h), `${rel} に運営者の識別情報が出ている`);
+  const reviewers = [...new Set(picks.map((p) => p && p.automation && p.automation.reviewed_by).filter(Boolean))];
+  assert.ok(reviewers.length >= 1, '確認者の記録が読める（このテストが空振りしない）');
+  for (const r of reviewers) assert.equal(r, 'owner', '確認者は個人を特定しない表記（owner）にする');
+  for (const rel of ['about.html', 'faq.html', 'features/editorial-policy.html', 'stores/index.html', 'data/editor_picks.json', 'agent-backlog.md']) {
+    const text = readRel(rel);
+    for (const h of handles) assert.ok(!text.includes(h), rel + ' に運営者の識別情報が出ている');
   }
 });
 
