@@ -5173,7 +5173,8 @@ function nbQvRememberOpener() {
   var a = document.activeElement;
   NB_QV_OPENER = (a && a !== document.body && a !== document.documentElement) ? a : null;
 }
-// シートが開いている間は、後ろのページを操作できなくする（焦点・読み上げ・クリックとも）。#toast は除く
+// シートが開いている間は、後ろのページを操作できなくする（焦点・読み上げ・クリックとも）。#toast と、body 直下に出る
+// 予約確認プロンプト（.nb-reserve-ask・P-439: 見えているのに inert で押せなかった）は除く
 function nbQvSetInert(on) {
   if (!on) {
     NB_QV_INERT.forEach(function(el) { el.removeAttribute('inert'); });
@@ -5186,7 +5187,7 @@ function nbQvSetInert(on) {
     var sibs = node.parentNode.children;
     for (var i = 0; i < sibs.length; i++) {
       var el = sibs[i];
-      if (el === node || el.id === 'toast' || /^(SCRIPT|STYLE|LINK|NOSCRIPT)$/.test(el.tagName) || el.hasAttribute('inert')) continue;
+      if (el === node || el.id === 'toast' || (el.classList && el.classList.contains('nb-reserve-ask')) || /^(SCRIPT|STYLE|LINK|NOSCRIPT)$/.test(el.tagName) || el.hasAttribute('inert')) continue;
       el.setAttribute('inert', '');
       NB_QV_INERT.push(el);
     }
