@@ -624,6 +624,13 @@ jobs:
         run: node scripts/audit_ogp_image_liveness.js --check
         continue-on-error: true
 
+      - name: 失効した Places 写真の検知（P-29・soft）
+        # Places の写真 URL は期限切れになりうる（photo name は失効・キャッシュ不可）。
+        # データ（stores.json）は毎日取り直すが、書き込み済みの過去記事・特集・孤児店舗ページは取り直されない。
+        # 失効が残っていれば警告にする（直すのは node scripts/repair_expired_place_photos.js・API は呼ばない）。
+        run: node scripts/repair_expired_place_photos.js --check
+        continue-on-error: true
+
       - name: IndexNow 送信（Bing への更新通知・SEO-071）
         # なぜここに置くか: push & deploy「後」に置くこと。push 前に送信すると
         # Bing クローラが来た時点でページが存在しない可能性がある。
