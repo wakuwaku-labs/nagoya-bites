@@ -2134,6 +2134,14 @@ async function main() {
   } catch (e) {
     console.warn(`⚠️ build_top_picks 失敗: ${e.message} — トップの今日の話題店が古いまま残る可能性があります`);
   }
+
+  // 絞り込みシートのエリア・条件の表（NB-FILTER-POLICY 区画）は、data/area_genre_pages_policy.json（ハブの判定基準の唯一の情報源）から書く（I-20・ADR 0037）。
+  // daily-trending5.yml も build.js を回すため、ここで呼べば両方のワークフローで効く。失敗しても build は止めない（表が古いまま残るだけ）
+  try {
+    require('./scripts/build_filter_policy.js').main();
+  } catch (e) {
+    console.warn(`⚠️ build_filter_policy 失敗: ${e.message} — トップの絞り込みのエリア・条件の表が古いまま残る可能性があります`);
+  }
 }
 
 // tests/ から射影関数を単体テストできるように export する（require 時は main() を走らせない）
