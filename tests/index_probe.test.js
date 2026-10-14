@@ -80,3 +80,24 @@ test('interleave: 面を順番に 1 件ずつ回し、途中で打ち切って�
   assert.deepStrictEqual(lib.interleave({}), []);
   assert.deepStrictEqual(lib.interleave(null), []);
 });
+
+test('isDayComplete: 今日の行が見本の 9 割以上を引けていれば済み・少ない行や別の日は済みでない', () => {
+  const g = (n) => ({ a: { inspected: n, errors: 0, indexed: 0, crawledRecently: 0, byState: {} } });
+  const h = [{ date: '2026-10-14', groups: g(15) }, { date: '2026-10-15', groups: g(226) }];
+  assert.strictEqual(lib.isDayComplete(h, '2026-10-15', 251), true);
+  assert.strictEqual(lib.isDayComplete(h, '2026-10-14', 251), false);
+  assert.strictEqual(lib.isDayComplete(h, '2026-10-16', 251), false);
+  assert.strictEqual(lib.isDayComplete([{ date: '2026-10-15', groups: g(225) }], '2026-10-15', 251), false);
+  assert.strictEqual(lib.isDayComplete(h, '2026-10-15', 0), false);
+  assert.strictEqual(lib.isDayComplete(undefined, '2026-10-15', 251), false);
+});
+
+test('shouldReplaceDay: 同じ日の行は前より多く引けたときだけ置き換える（上限に当たった回が全件の行を消さない）', () => {
+  const g = (n) => ({ a: { inspected: n, errors: 0, indexed: 0, crawledRecently: 0, byState: {} } });
+  const h = [{ date: '2026-10-15', groups: g(240) }];
+  assert.strictEqual(lib.shouldReplaceDay(h, '2026-10-15', g(15)), false);
+  assert.strictEqual(lib.shouldReplaceDay(h, '2026-10-15', g(240)), false);
+  assert.strictEqual(lib.shouldReplaceDay(h, '2026-10-15', g(241)), true);
+  assert.strictEqual(lib.shouldReplaceDay(h, '2026-10-16', g(1)), true);
+  assert.strictEqual(lib.shouldReplaceDay([], '2026-10-15', g(1)), true);
+});
