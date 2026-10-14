@@ -67,6 +67,7 @@ jobs:
         continue-on-error: true
 
       - name: 検索エンジンへの登録状況を見本の URL で観測 → data/index_probe.json（P-437）
+        timeout-minutes: 10
         run: node scripts/probe_index_status.js
         env:
           GA4_SERVICE_ACCOUNT_KEY: ${{ secrets.GA4_SERVICE_ACCOUNT_KEY }}

@@ -26,6 +26,16 @@ const OUT_PATH = path.join(ROOT, 'data', 'index_probe.json');
 const SITE = 'https://nagoya-bites.com';
 const SAMPLE = { unreachable_after_i25: 100, control_store: 100, area_hub: 30, journal: 20 };
 const PACE_MS = parseInt(process.env.INDEX_PROBE_PACE_MS || '150', 10);
+// 日次ビルドを止めないための時間の上限（全体）と、1 回の呼び出しの上限
+const BUDGET_MS = parseInt(process.env.INDEX_PROBE_BUDGET_MS || '400000', 10);
+const CONCURRENCY = Math.max(1, parseInt(process.env.INDEX_PROBE_CONCURRENCY || '6', 10));
+const CALL_TIMEOUT_MS = parseInt(process.env.INDEX_PROBE_CALL_TIMEOUT_MS || '20000', 10);
+
+function withTimeout(promise, ms) {
+  let t;
+  const timer = new Promise((_, rej) => { t = setTimeout(() => rej(new Error(`応答が ${ms}ms で返らない`)), ms); });
+  return Promise.race([promise, timer]).finally(() => clearTimeout(t));
+}
 
 function readJson(p, fallback) {
   try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch (_) { return fallback; }
@@ -81,12 +91,22 @@ async function probe() {
   const now = Date.now();
   const rows = {};
   let consecutiveFail = 0;
-  outer:
-  for (const [group, list] of Object.entries(urlsDoc.groups)) {
-    for (const url of list) {
+  let aborted = false;
+  let skipped = 0;
+  const started = Date.now();
+  const queue = lib.interleave(urlsDoc.groups);
+  let next = 0;
+  // 1 回の呼び出しが 6〜7 秒かかる（実測）ので、並べて引く。クォータは 1 分 600 件で、6 並列でも余裕がある
+  async function worker() {
+    while (!aborted) {
+      const i = next++;
+      if (i >= queue.length) return;
+      const { group, url } = queue[i];
+      // 時間切れ: 日次ビルドを止めないため、残りは引かずに終える（引けなかったのではなく引かなかったので記録しない）
+      if (Date.now() - started > BUDGET_MS) { skipped += 1; continue; }
       const inspectedAt = new Date().toISOString();
       try {
-        const res = await sc.urlInspection.index.inspect({ requestBody: { inspectionUrl: url, siteUrl, languageCode: 'ja' } });
+        const res = await withTimeout(sc.urlInspection.index.inspect({ requestBody: { inspectionUrl: url, siteUrl, languageCode: 'ja' } }), CALL_TIMEOUT_MS);
         const s = lib.summarizeInspection(res.data);
         rows[url] = s ? { group, ...s, inspectedAt } : { group, error: '応答に indexStatusResult が無い', inspectedAt };
         consecutiveFail = 0;
@@ -95,11 +115,13 @@ async function probe() {
         rows[url] = { group, error: msg, inspectedAt };
         consecutiveFail += 1;
         // 権限なし・クォータ切れ・API 未有効化は全 URL で同じように失敗する。5 回続いたら打ち切って、理由を残す
-        if (consecutiveFail >= 5) { console.log(`連続 5 回失敗したので打ち切り: ${msg}`); break outer; }
+        if (consecutiveFail >= 5) { aborted = true; console.log(`連続 5 回失敗したので打ち切り: ${msg}`); }
       }
       await new Promise((r) => setTimeout(r, PACE_MS));
     }
   }
+  await Promise.all(Array.from({ length: CONCURRENCY }, () => worker()));
+  if (skipped) console.log(`時間切れ（${Math.round(BUDGET_MS / 1000)} 秒）: ${skipped} 件は引かずに終了`);
   const ok = Object.values(rows).filter((r) => !r.error).length;
   if (!ok) { console.log('1 件も引けなかったので data/index_probe.json は更新しない（原因は上のログ）'); return; }
   const date = new Date(now).toISOString().slice(0, 10);
