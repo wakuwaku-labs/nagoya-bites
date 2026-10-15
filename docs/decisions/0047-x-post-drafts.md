@@ -30,7 +30,8 @@
    - 書き手（Mac）と投稿（CI）は同じ検査を通す。書き手は落ちた理由を返して1回だけ書き直させる
 4. 1行目の札「【今日の名古屋ジャーナル】」をやめる（`header` を空にする）
 5. 作り方ごとの反応を比べるため、リンクに `utm_content` を付ける（型の名前か `point`。題名だけの定型には付けない）。台帳には `text_mode` を残す
-6. 切り替えは `data/x_post_policy.json` で行う
+6. 保存した文面が黙って使われなくなるのを見逃さない。見張り役（`scripts/check_x_post_health.js`・x-post-watchdog.yml）は、送った投稿が `draft.alertAfterDays`（3）回続けて保存した文面を使っていなければ Issue を出す（理由は台帳の `draft_reason`）。1回でも使われれば自動で閉じる
+7. 切り替えは `data/x_post_policy.json` で行う
    - `draft.generate`: Mac 側で書くか
    - `draft.useInPost`: 投稿で使うか
    - `template.points`: ポイント入りの定型を使うか

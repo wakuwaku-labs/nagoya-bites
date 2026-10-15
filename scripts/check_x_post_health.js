@@ -10,6 +10,8 @@
  *   - missing_post … 記事の公開（published_at）から graceHours を過ぎても投稿が台帳に無い
  *   - human_action … 鍵が無効・権限が無い・残高切れなど、人が直すしかない失敗が最後の結果に残っている（猶予を待たない）
  *   - blocked      … 文面の検査に落ちて送っていない（題名に使わない言い方が残っている等）
+ *   - draft_unused … 保存した文面（Mac 側の Claude が書くもの・P-476）が draft.alertAfterDays 回続けて使われず、
+ *                    定型で送っている（Mac で書けていない・検査に落ちている。投稿そのものは続いている）
  * 鳴らさないとき: mode が live でない / ジャーナルが休みの日（それは journal-watchdog.yml の役目）
  *
  * 使い方: node scripts/check_x_post_health.js [--json]   （問題があれば exit 1）
@@ -58,7 +60,29 @@ function check({ root = X.ROOT, now = new Date() } = {}) {
       }
     }
   }
+  const du = draftUnused(policy, log, liveSince);
+  if (du) problems.push(du);
   return { ok: problems.length === 0, status: problems.length ? 'problem' : 'ok', mode: policy.mode, today, last_run: health, problems };
+}
+
+/** 送った投稿が直近 alertAfterDays 回続けて保存した文面を使っていなければ、その問題を返す。 */
+function draftUnused(policy, log, liveSince) {
+  const d = policy.draft || {};
+  const n = Number(d.alertAfterDays) || 0;
+  if (!d.generate || !d.useInPost || n <= 0) return null;
+  const since = d.since || liveSince;
+  const sent = (log.posts || [])
+    .filter((p) => (p.status === 'posted' || p.status === 'duplicate') && p.date >= since)
+    .sort((a, b) => String(a.date).localeCompare(String(b.date)));
+  const lastN = sent.slice(-n);
+  // 作り方を記録していない行（P-476 より前）は数えない
+  if (lastN.length < n || !lastN.every((p) => p.text_mode && p.text_mode !== 'draft')) return null;
+  const last = lastN[lastN.length - 1];
+  return {
+    kind: 'draft_unused', date: last.date, slug: last.slug,
+    title: `保存した文面が ${n} 回続けて使われていない`,
+    reason: lastN.map((p) => `${p.date}: ${p.text_mode}${p.draft_reason ? `（${p.draft_reason}）` : ''}`).join(' / '),
+  };
 }
 
 const FIX = {
@@ -74,7 +98,8 @@ function issueBody(r) {
     lines.push(`- 種類: \`${p.kind}\``);
     if (p.error_class) lines.push(`- 失敗の分類: \`${p.error_class}\``);
     if (p.reason) lines.push(`- 理由: ${String(p.reason).slice(0, 300)}`);
-    if (p.kind === 'blocked') lines.push('- 対処: 文面の検査に落ちたため送っていません。題名に使わない言い方（data/selection_wording_policy.json）が残っていないか確かめ、必要なら data/x_post_policy.json の titleRewrites に置き換えを足してください。');
+    if (p.kind === 'draft_unused') lines.push('- 対処: 投稿は題名＋記事のポイントの定型で続いています。理由が draft_missing なら Mac 側で書けていません（~/nagoya-bites/.local-logs/ の「X 用の文面」の行を確認。Claude の認証切れ・利用上限・時間切れ・claude の --safe-mode / --tools の変更）。それ以外なら検査に落ちているので docs/x-post-prompt.md を直してください（docs/decisions/0047-x-post-drafts.md）。');
+    else if (p.kind === 'blocked') lines.push('- 対処: 文面の検査に落ちたため送っていません。題名に使わない言い方（data/selection_wording_policy.json）が残っていないか確かめ、必要なら data/x_post_policy.json の titleRewrites に置き換えを足してください。');
     else if (FIX[p.error_class]) lines.push(`- 対処: ${FIX[p.error_class]}`);
     else lines.push('- 対処: Actions の「X 自動投稿」の最新の実行の要約を見てください。X 側の一時的な不調なら次の起動で自動で投稿されます。直したあと手動で実行する場合は Actions → X 自動投稿 → Run workflow。');
     lines.push('');
@@ -92,4 +117,4 @@ if (require.main === module) {
   process.exitCode = r.ok ? 0 : 1;
 }
 
-module.exports = { check, issueBody };
+module.exports = { check, issueBody, draftUnused };

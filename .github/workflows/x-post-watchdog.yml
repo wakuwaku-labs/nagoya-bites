@@ -57,7 +57,10 @@ jobs:
               return;
             }
             const kinds = [...new Set(r.problems.map(p => p.error_class || p.kind))].join('・');
-            const title = `🔴 X 自動投稿が止まっています（${kinds}・最新 ${r.problems[0].date}）`;
+            const onlyDraft = r.problems.every(p => p.kind === 'draft_unused');
+            const title = onlyDraft
+              ? `🔴 X 自動投稿: 保存した文面が使われていません（定型で投稿中・最新 ${r.problems[0].date}）`
+              : `🔴 X 自動投稿が止まっています（${kinds}・最新 ${r.problems[0].date}）`;
             if (existing) {
               await github.rest.issues.update({ owner, repo, issue_number: existing.number, title, body: r.issue_body });
               core.info(`Issue #${existing.number} の本文を更新しました`);
