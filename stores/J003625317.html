@@ -128,7 +128,7 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .ig-carousel-dots{display:flex;justify-content:center;gap:.4rem;margin-top:.7rem;}
 .ig-carousel-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .2s;}
 .ig-carousel-dot.active{background:var(--gold);}
-.link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
+.link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:border-color var(--dur-fast) var(--ease-out),background-color var(--dur-fast) var(--ease-out);margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
 button.link-btn{font:inherit;cursor:pointer;}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:var(--gold);color:var(--bg);border-color:var(--gold);}
@@ -383,9 +383,11 @@ document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=
   var nextBtn=carousel.querySelector('.ig-carousel-next');
   var dots=carousel.querySelectorAll('.ig-carousel-dot');
   if(!track||slides.length<2)return;
+  // 動きを減らす設定なら即時にスクロールする（動きの計画 F2・判断の記録 0049）
+  function nbScrollBehavior(){try{return window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';}catch(e){return 'smooth';}}
   function goTo(i){
     i=Math.max(0,Math.min(slides.length-1,i));
-    track.scrollTo({left:slides[i].offsetLeft,behavior:'smooth'});
+    track.scrollTo({left:slides[i].offsetLeft,behavior:nbScrollBehavior()});
   }
   function currentIndex(){
     var best=0,bestDist=Infinity;

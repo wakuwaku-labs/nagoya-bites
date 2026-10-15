@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-15T17:35:37.955Z",
+  "generatedAt": "2026-10-15T18:48:39.422Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1618,
-    "pageViews": 2245,
-    "sessions": 1807,
-    "avgSessionDuration": 122,
+    "activeUsers": 1621,
+    "pageViews": 2257,
+    "sessions": 1812,
+    "avgSessionDuration": 121.7,
     "bounceRate": 0.284,
-    "pagesPerSession": 1.24
+    "pagesPerSession": 1.25
   },
   "dailyReference": {
     "date": "2026-10-14",
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1334,
-      "direct": 348,
+      "organic": 1335,
+      "direct": 351,
       "social": 6,
-      "ai_assistant": 102,
+      "ai_assistant": 103,
       "referral": 31,
       "paid": 0,
       "other": 1
     },
     "pct": {
-      "organic": 73.2,
-      "direct": 19.1,
+      "organic": 73.1,
+      "direct": 19.2,
       "social": 0.3,
       "ai_assistant": 5.6,
       "referral": 1.7,
@@ -44,12 +44,12 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 496
+      "sessions": 497
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 262
+      "sessions": 265
     },
     {
       "source": "yahoo",
@@ -74,7 +74,7 @@
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 23
+      "sessions": 24
     },
     {
       "source": "duckduckgo",
@@ -190,13 +190,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 326,
-      "sessions": 313
+      "pageViews": 330,
+      "sessions": 314
     },
     {
       "path": "/",
-      "pageViews": 112,
-      "sessions": 102
+      "pageViews": 113,
+      "sessions": 103
     },
     {
       "path": "/index.html",
@@ -216,7 +216,7 @@
   ],
   "cta": {
     "outboundClicks": 182,
-    "ctaClickRate": 10.1,
+    "ctaClickRate": 10,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -294,7 +294,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 8.3,
-    "ctaClickRate_direct": 14.7,
+    "ctaClickRate_direct": 14.5,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -1109,7 +1109,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1618,
+    "value": 1621,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
