@@ -4612,6 +4612,8 @@ function renderSkeletons() {
   }).join('');
 }
 
+// NB-MAP-EMBED:START（scripts/lib/map_link.js が書く。ここを直接直さない: node scripts/lib/map_link.js --apply index.html）
+// NB-MAP-CORE:START
 // エリアから1つ目の地名のみを抽出（"栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄" → "栄"）
 // Hotpepperの middle_area.name は複数エリアがスラッシュ区切り＋半角カナで連結されており
 // 外部検索（Instagram/食べログ/TikTok/X/Google）にそのまま渡すと一致しなくなるため整形する
@@ -4620,7 +4622,7 @@ function cleanArea(area) {
   // 半角カナ・記号で先に分割が壊れないよう、まず "/" で分割
   var first = String(area).split('/')[0] || '';
   // 半角カナ（ｱ-ﾝ等）を除去（例: "栄ｷﾀ" → "栄"）
-  first = first.replace(/[\uFF61-\uFF9F]+/g, '').trim();
+  first = first.replace(/[｡-ﾟ]+/g, '').trim();
   return first;
 }
 // 店名から読み仮名やパレン括り読み・装飾を取り除く（外部サービス検索クエリ用）
@@ -4630,16 +4632,16 @@ function cleanStoreName(name) {
   if (!name) return '';
   var s = String(name);
   // 1) パレン括り読み: （ひらがな/カタカナ/長音）/ (ひらがな/カタカナ/長音)
-  s = s.replace(/[（(]\s*[\u3040-\u309F\u30A0-\u30FFー]+\s*[）)]/g, ' ');
+  s = s.replace(/[（(]\s*[぀-ゟ゠-ヿー]+\s*[）)]/g, ' ');
   // 2) ダッシュ括り読み: -ひらがな- や - ひらがな - 等
-  s = s.replace(/[\-－‐‑–—]\s*[\u3040-\u309F\u30A0-\u30FFー]+\s*[\-－‐‑–—]/g, ' ');
+  s = s.replace(/[\-－‐‑–—]\s*[぀-ゟ゠-ヿー]+\s*[\-－‐‑–—]/g, ' ');
   // 3) 装飾ブラケット: 【...】
   s = s.replace(/【[^】]*】/g, ' ');
   // 4) 末尾の読み仮名トークン剥がし
   //    直前トークンが純粋漢字(1〜5字)で、ひらがな長 ≥ 漢字長 × 1.5 の場合のみ剥がす
-  var tokens = s.split(/[\s\u3000]+/).filter(Boolean);
-  var isHira = function(t){ return /^[\u3040-\u309Fー]+$/.test(t); };
-  var isKanji = function(t){ return /^[\u4E00-\u9FFF々]+$/.test(t); };
+  var tokens = s.split(/[\s　]+/).filter(Boolean);
+  var isHira = function(t){ return /^[぀-ゟー]+$/.test(t); };
+  var isKanji = function(t){ return /^[一-鿿々]+$/.test(t); };
   while (tokens.length >= 2) {
     var last = tokens[tokens.length - 1];
     var prev = tokens[tokens.length - 2];
@@ -4651,6 +4653,26 @@ function cleanStoreName(name) {
   }
   return tokens.join(' ').replace(/\s+/g, ' ').trim();
 }
+var NB_MAP_BASE = 'https://www.google.com/maps/search/?api=1';
+var NB_MAP_FIELD = '地図確認';
+// 地図の検索に渡す住所: 掲載の住所 → アクセスの中の住所（手動の店は末尾の括弧に持つことが多い）→ 空
+function nbMapAddress(store) {
+  var addr = String((store && store['住所']) || '').replace(/\s+/g, ' ').trim();
+  if (addr) return addr;
+  var m = String((store && store['アクセス']) || '').match(/(?:愛知県)?(名古屋市[^\s（）()【】「」]+)/);
+  return m ? m[1] : '';
+}
+// 店の地図リンク（公式の形）。place_id は「地図確認」の欄がある店だけに付ける
+function nbMapUrl(store) {
+  var s = store || {};
+  var name = cleanStoreName(s['店名']) || String(s['店名'] || '').trim();
+  var where = nbMapAddress(s) || cleanArea(s['エリア']) || '名古屋';
+  var url = NB_MAP_BASE + '&query=' + encodeURIComponent((name + ' ' + where).trim());
+  if (s[NB_MAP_FIELD] && s.placeId) url += '&query_place_id=' + encodeURIComponent(s.placeId);
+  return url;
+}
+// NB-MAP-CORE:END
+// NB-MAP-EMBED:END
 // 外部サービス（Instagram/食べログ/TikTok/X）の検索クエリは「クリーン店名 + 名古屋」を使う。
 // Hotpepperのエリア名は複数地名が連結されているため検索クエリに含めず、汎用ワード「名古屋」で位置補完。
 function searchKeyword(name) {
@@ -4709,19 +4731,12 @@ function tiktokSearchUrl(r) {
 function xSearchUrl(r) {
   return 'https://x.com/search?q=' + encodeURIComponent(searchKeyword(r['店名']));
 }
-// Google Maps 検索: アクセス欄に住所（名古屋市XX区...）が含まれる場合は店名+住所、
-// 無い場合は店名+エリア+「名古屋」でフォールバック。manual_stores 追加店は住所を
-// アクセス欄末尾の括弧内に持つことが多いため、Maps のヒット率が大幅に上がる。
+// Google マップの地図リンク（MEO-005 の B2）。作り方は上の NB-MAP-EMBED（scripts/lib/map_link.js）の nbMapUrl の1本で、
+// 店舗ページと同じ公式の形（api=1・店名＋住所。place_id は紐付けが確認済みの店だけ）。
+// 呼び出し元は店のレコードを渡す。文字列しか無いときは、店名・エリア・アクセスから組み立てる
 function gmap(name, area, accessOrFullRecord) {
-  var base = cleanStoreName(name);
-  var record = (accessOrFullRecord && typeof accessOrFullRecord === 'object') ? accessOrFullRecord : null;
-  var access = record ? (record['アクセス'] || '') : (typeof accessOrFullRecord === 'string' ? accessOrFullRecord : '');
-  // アクセス文字列から住所部分（名古屋市XX区XX）を抽出
-  var addrMatch = String(access).match(/(?:愛知県)?(名古屋市[^\s（）()【】「」]+)/);
-  if (addrMatch) {
-    return 'https://maps.google.com/search?q=' + encodeURIComponent(base + ' ' + addrMatch[1]);
-  }
-  return 'https://maps.google.com/search?q=' + encodeURIComponent(base + ' ' + (cleanArea(area) || '名古屋'));
+  if (accessOrFullRecord && typeof accessOrFullRecord === 'object') return nbMapUrl(accessOrFullRecord);
+  return nbMapUrl({ '店名': name, 'エリア': area, 'アクセス': accessOrFullRecord || '' });
 }
 
 // ================================================================

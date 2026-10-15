@@ -138,12 +138,12 @@ function allowedFor(feature, binding, policy) {
 /**
  * build.js の関門と同じ決め方で、その機能を出してよいか（評価・口コミ信頼度は、紐付けの無い店を止めない）。
  * applyRatingGate と、出している店を数え直す監査（scripts/audit_places_binding.js --states --check）が同じ判定を使う。
- * 電話は allowedFor と同じ（紐付けの無い店は出さない）。
+ * 電話と地図リンクの place_id は allowedFor と同じ（紐付けの無い店には使わない）。
  * @returns {{ok:boolean, reason:string}}
  */
 function gateFor(feature, binding, policy) {
   const r = allowedFor(feature, binding, policy);
-  if (feature !== 'phone' && binding.state === 'none' && r.reason !== 'switched-off') return { ok: true, reason: 'no-binding' };
+  if ((feature === 'rating' || feature === 'trust') && binding.state === 'none' && r.reason !== 'switched-off') return { ok: true, reason: 'no-binding' };
   return r;
 }
 

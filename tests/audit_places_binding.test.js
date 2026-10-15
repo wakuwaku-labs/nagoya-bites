@@ -109,14 +109,14 @@ test('states: 状態ごとの店の数と、電話・評価・口コミ信頼度
   assert.equal(r.byState['mismatch:address-different'], 1, '別館は住所が別の場所');
   assert.equal(r.byState['none:no-place-id'], 1);
   assert.deepEqual(r.features.phone, { confirmed: 1, 'review:sim-lt-0.3': 1 });
-  assert.deepEqual(r.notConfirmed, { phone: 1, rating: 1, trust: 1 }, '評価が 0 の店と段階「—」は数えない');
+  assert.deepEqual(r.notConfirmed, { phone: 1, rating: 1, trust: 1, map: 0 }, '評価が 0 の店と段階「—」は数えない');
   assert.equal(r.staleRating, 1, '取得日が 90 日より古い評価（2026-05-22）');
 });
 
 test('states: 設定が許していない状態で出している店を数える（夜間 QA の --check・MEO-005）。紐付けの無い店の評価は別に数える', () => {
   const allow = ['sim-0.3-0.6', 'sim-ge-0.6', 'branch-conflict'];
-  const policy = { features: { phone: { show: true, allowReviewBands: allow }, rating: { show: true, allowReviewBands: allow }, trust: { show: true, allowReviewBands: allow } } };
-  const shown = { '電話確認': '住所', 'Google評価': '4.1', reviewTrust: { t: 'A', d: '2026-10-01' } };
+  const policy = { features: { phone: { show: true, allowReviewBands: allow }, rating: { show: true, allowReviewBands: allow }, trust: { show: true, allowReviewBands: allow }, map: { show: true, allowReviewBands: [] } } };
+  const shown = { '電話確認': '住所', 'Google評価': '4.1', reviewTrust: { t: 'A', d: '2026-10-01' }, '地図確認': true };
   const stores = [
     bound('麺屋えび蔵', '錦２-13-24', 'J1', '麺屋えび蔵', shown),
     bound('咲夜島 さくやじま 丸の内 伏見', '錦３丁目14-3', 'J2', '咲夜島', shown),
@@ -133,9 +133,10 @@ test('states: 設定が許していない状態で出している店を数える
   assert.deepEqual(keys('phone'), ['J2'], '一致率 0.3 未満の帯の電話');
   assert.deepEqual(keys('rating'), ['J2', 'J3'], '一致率 0.3 未満の帯と、住所が別の場所（不一致）の評価');
   assert.deepEqual(keys('trust'), ['J2', 'J3']);
+  assert.deepEqual(keys('map'), ['J2'], '地図リンクの place_id は確認済みだけ（要確認の帯も許さない）');
   assert.equal(r.violations.rating[1].reason, 'binding-mismatch');
   assert.deepEqual(r.noBinding, { rating: 1, trust: 0 }, '紐付けの無い店の評価は関門の対象外として別に数える');
-  assert.deepEqual(r.switches, { phone: true, rating: true, trust: true });
+  assert.deepEqual(r.switches, { phone: true, rating: true, trust: true, map: true });
 
   // スイッチを切れば、確認済みの店と紐付けの無い店の評価も、出していれば数える（切ったビルドでは 0 になるはず）
   const off = { features: { ...policy.features, rating: { show: false } } };

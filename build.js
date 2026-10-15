@@ -1562,6 +1562,19 @@ async function main() {
     console.error(`電話ボタンの判定をスキップ（data/places_resolved.json を読めません）: ${e.message}`);
   }
 
+  // ─── 地図リンクに place_id を付けてよい店の判定（MEO-005 の B2）─────
+  // 地図リンクは Google の公式の形（api=1・店名＋住所）で、トップと店舗ページが scripts/lib/map_link.js の nbMapUrl を使う。
+  // place_id を付けると Google はその店を開くので、紐付けが確認済みの店（data/place_binding_policy.json の features.map）
+  // にだけ「地図確認」の欄を持たせる。欄が無い店も、地図リンクは店名＋住所の検索で出す
+  try {
+    const placesForMap = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'places_resolved.json'), 'utf8'));
+    const mapCounts = require('./scripts/lib/map_link').annotateMapLinks(stores, placesForMap);
+    const rest = Object.entries(mapCounts).filter(([k]) => k !== 'ok').map(([k, v]) => `${k} ${v}`).join('・') || 'なし';
+    console.log(`地図リンクの place_id（MEO-005）: 付ける ${mapCounts.ok}店 / 付けない（店名＋住所の検索） ${rest}`);
+  } catch (e) {
+    console.error(`地図リンクの place_id の判定をスキップ（data/places_resolved.json を読めません）: ${e.message}`);
+  }
+
   // ─── Google の評価・口コミ信頼度を出してよい店の判定（MEO-003・オーナーの判断 3=A・2026-10-15）─────
   // 紐付けた Google の店舗情報が別の店かもしれない店では、評価・口コミ数・口コミ信頼度が別の店の数字になる。
   // 紐付けの状態が不一致か、data/place_binding_policy.json の rating / trust が許していない要確認の帯の店は、

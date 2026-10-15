@@ -24,6 +24,7 @@ const { editorReasonOf, visitStatusLabel } = require('./scripts/lib/editor_reaso
 const { renderPhotoCredit, PHOTO_CREDIT_CSS } = require('./scripts/lib/photo_credit');
 const { isDeadPhotoUrl } = require('./scripts/lib/dead_photo_urls');
 const { canShowCallButton } = require('./scripts/lib/phone_link');
+const { nbMapUrl } = require('./scripts/lib/map_link');
 const { CALL_SCRIPT } = require('./scripts/lib/call_button_snippet');
 const IG_MAX_POSTS_PER_STORE = (loadIgPostPolicy().thresholds && loadIgPostPolicy().thresholds.maxPostsPerStore) || 1;
 
@@ -742,7 +743,8 @@ function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals)
   const tbUrl    = s['食べログURL'] || '';
   const tkUrl    = s['TikTok検索'] || '';
   const xUrl     = s['X検索'] || '';
-  const gmUrl    = `https://www.google.com/maps/search/${encodeURIComponent(name + ' ' + area)}`;
+  // 地図リンクはトップと同じ公式の形（api=1・店名＋住所。place_id は紐付けが確認済みの店だけ・MEO-005 の B2）
+  const gmUrl    = nbMapUrl(s);
   const placeId  = s.placeId || '';
   // 電話を出せる店: Google の紐付け先の住所・店名が掲載の店と合うと build.js が確かめた店（「電話確認」の欄）だけ。
   // 別の店の番号にかからないようにする（I-36）。行動バー（I-14b）は予約先のある店にも電話を並べる（計画 7.3 節）
@@ -965,7 +967,7 @@ ${igAllUrls.map((_, i) => `        <span class="ig-carousel-dot${i === 0 ? ' act
   const tagPills = tags.map(t => `<span class="tag">${t}</span>`).join('');
   const linksHtml = [
     hpUrl && `<a class="link-btn hp" href="${hpUrl}" target="_blank" rel="noopener noreferrer" onclick="${reserveExitAttr('cta_click', name, hpId, 'www.hotpepper.jp')}">ホットペッパーで予約</a>`,
-    gmUrl && `<a class="link-btn gm" href="${gmUrl}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>`,
+    gmUrl && `<a class="link-btn gm" href="${escapeHtml(gmUrl)}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>`,
     igUrl && `<a class="link-btn ig" href="${igUrl}" target="_blank" rel="noopener noreferrer">Instagram</a>`,
     tbUrl && `<a class="link-btn tb" href="${tbUrl}" target="_blank" rel="noopener noreferrer" onclick="${reserveExitAttr('cta_click', name, hpId || placeId, 'tabelog.com')}">食べログ</a>`,
     tkUrl && tkUrl !== '#' && `<a class="link-btn tk" href="${tkUrl}" target="_blank" rel="noopener noreferrer">TikTok</a>`,
