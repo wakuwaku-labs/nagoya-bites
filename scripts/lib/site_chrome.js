@@ -216,6 +216,9 @@ ${groups}
 ${MARK('FOOTER', 'END')}`;
 }
 
+// 最後の行の空の touchstart: iPhone の Safari は touch のリスナーが無いと押した見た目（:active）を出さないので、
+// document に付けて、どこを押しても沈む・濃くなるようにする（passive なのでスクロールを止めない・動きの計画 段階 3a）。
+// 説明はページに書き出さない（店舗ページ約 5,000 本の重さに足されるため）。
 function chromeScript() {
   return `${MARK('SCRIPT', 'START')}
 <script>
@@ -233,7 +236,6 @@ window.closeNav = window.closeNav || function(){
   if(btn)btn.setAttribute('aria-expanded','false');
 };
 document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
-// iPhone の Safari は touch のリスナーが無いと押した見た目（:active）を出さない。空の touchstart で、どこを押しても沈む・濃くなるようにする（passive なのでスクロールを止めない・動きの計画 段階 3a）
 document.addEventListener('touchstart',function(){},{passive:true});
 </script>
 ${MARK('SCRIPT', 'END')}`;
