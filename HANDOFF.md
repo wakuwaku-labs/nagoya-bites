@@ -27,7 +27,9 @@ status: in_progress
 - 段階 1 を別の木 `../motion-stage1`（ブランチ wakuwaku-labs/motion-stage1・2dd047cdb9 から）で実装しコミット（5544ba4310・未 push）。F1〜F8・店舗ページの雛形・motion.enforce=true。npm test 1801 件通過・audit --check 通過・店舗ページ 40 本を再生成して動きの違反 0・構文エラー 0（再生成分は戻した）。node_modules は coffinfish へのシンボリックリンク（コミットしない）
 - 段階 0 は #619 でマージ（bf80020b3b）・P-488 Done。段階 1 に F9（クイックビューの背景のぼかしを外す・620191a1a2）を足し、origin/main を取り込んだ（80ebc9955b・衝突は段階 1 の側を採った）。npm test 1801 件通過・audit --check 通過
 - 直した後の e2e_motion: 「動きを減らす」のスクロールは 6 回中 6 回合格（前は 0 回）。押してから変わるまでは録画と同時に測ったので比べない（測り直す）
-- 担当 C（rec_motion.js）は 02:07 から止まっていたので止め、自分で引き取った。前＝coffinfish を origin/main（bf80020b3b）に切り離して置いた木、後＝motion-stage1 で撮影中
+- 担当 C（rec_motion.js）は 02:07 から止まっていたので止め、自分で引き取った。前＝coffinfish を origin/main（bf80020b3b）に切り離して置いた木、後＝motion-stage1 で 22 本撮った。PC の「上へ戻る」が 1 回だけ時間切れ（撮り直し 2 回とも成功＝段階 1 の不具合ではない）→ 場面ごとに 1 回撮り直すようにした。スマホの読み込みの場面が左上に小さく写る（about:blank が幅 980）→ 幅を合わせた白紙から始めるようにした（293b3e37d3）
+- 確認ページ: scratchpad の motion-rec/compare.html（前後 22 本を並べた。Chrome で開いた）
+- 03:0x〜: taps を前後交互に測り直し・measure_typography の前後・画面写真（375/768/1280）を scratchpad/qa1 に出力中（バッテリー駆動）
 
 ## 次にやること
 1. 前後の動画を並べた HTML を作って開く → 段階 1 を push して PR（rec_motion.js も入れる）
