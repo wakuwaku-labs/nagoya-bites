@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-15T11:39:57.757Z",
+  "generatedAt": "2026-10-15T12:04:53.802Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1628,
-    "pageViews": 2268,
-    "sessions": 1827,
-    "avgSessionDuration": 122.4,
-    "bounceRate": 0.285,
+    "activeUsers": 1630,
+    "pageViews": 2272,
+    "sessions": 1828,
+    "avgSessionDuration": 122.5,
+    "bounceRate": 0.284,
     "pagesPerSession": 1.24
   },
   "dailyReference": {
@@ -17,9 +17,9 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1344,
+      "organic": 1345,
       "direct": 354,
-      "social": 5,
+      "social": 6,
       "ai_assistant": 104,
       "referral": 32,
       "paid": 0,
@@ -29,7 +29,7 @@
       "organic": 73,
       "direct": 19.2,
       "social": 0.3,
-      "ai_assistant": 5.7,
+      "ai_assistant": 5.6,
       "referral": 1.7,
       "paid": 0,
       "other": 0.1
@@ -44,7 +44,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 505
+      "sessions": 506
     },
     {
       "source": "(direct)",
@@ -185,6 +185,11 @@
       "source": "us.search.yahoo.com",
       "medium": "referral",
       "sessions": 1
+    },
+    {
+      "source": "x",
+      "medium": "social",
+      "sessions": 1
     }
   ],
   "topPages": [
@@ -215,8 +220,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 176,
-    "ctaClickRate": 9.6,
+    "outboundClicks": 178,
+    "ctaClickRate": 9.7,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -224,7 +229,7 @@
       },
       {
         "domain": "tabelog.com",
-        "clicks": 32
+        "clicks": 34
       },
       {
         "domain": "maps.google.com",
@@ -285,7 +290,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 103,
+      "organic": 105,
       "direct": 53,
       "social": 0,
       "ai_assistant": 19,
@@ -293,7 +298,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.7,
+    "ctaClickRate_organic": 7.8,
     "ctaClickRate_direct": 15,
     "ctaClickRate_social": 0,
     "byPage": [
@@ -406,15 +411,15 @@
         "clicks": 2
       },
       {
+        "path": "/stores/J000661748.html",
+        "clicks": 2
+      },
+      {
         "path": "/stores/J001239080.html",
         "clicks": 2
       },
       {
         "path": "/stores/J003828115.html",
-        "clicks": 2
-      },
-      {
-        "path": "/stores/J004402690.html",
         "clicks": 2
       }
     ],
@@ -736,6 +741,11 @@
       },
       {
         "path": "/stores/J000661748.html",
+        "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J000661748.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
       },
@@ -752,6 +762,11 @@
       {
         "path": "/stores/J001147583.html",
         "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J001192240.html",
+        "domain": "tabelog.com",
         "clicks": 1
       },
       {
@@ -930,6 +945,10 @@
         "clicks": 2
       },
       {
+        "path": "/stores/J000661748.html",
+        "clicks": 2
+      },
+      {
         "path": "/stores/J001239080.html",
         "clicks": 2
       },
@@ -974,10 +993,6 @@
         "clicks": 1
       },
       {
-        "path": "/stores/J000661748.html",
-        "clicks": 1
-      },
-      {
         "path": "/stores/J001026238.html",
         "clicks": 1
       },
@@ -987,6 +1002,10 @@
       },
       {
         "path": "/stores/J001147583.html",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J001192240.html",
         "clicks": 1
       },
       {
@@ -1042,7 +1061,7 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 91,
+    "reservationClicks": 93,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 24,
@@ -1068,7 +1087,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1628,
+    "value": 1630,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
