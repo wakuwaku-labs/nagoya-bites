@@ -1,7 +1,7 @@
 # 0027 X への投稿に限って、外部発信を自動化する
 
 - 日付: 2026-10-13
-- 状態: 採用
+- 状態: 採用（「決めたこと 3」の文面の作り方は 0047 で置き換え）
 - 関連: Linear P-293〜P-297 / backlog SNS-001〜005 / `docs/x-auto-posting-plan-2026-10.md` / `scripts/post_journal_to_x.js` / `data/x_post_policy.json`
 
 ## 背景

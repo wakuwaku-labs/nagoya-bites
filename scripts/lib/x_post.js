@@ -4,7 +4,11 @@
  * 投稿（scripts/post_journal_to_x.js）と見張り役（scripts/check_x_post_health.js）が同じ判定を使う。
  * 計画書: docs/x-auto-posting-plan-2026-10.md の 5 章。
  *
- * - 文面は記事の題名をそのまま使う（記事と同じ文なので事実の食い違いが起きない）
+ * - 文面の候補は上から順に試し、検査を通った最初のものを使う（postCandidates）:
+ *   1. 保存した文面（data/x_post_drafts/<date>.json）… ジャーナルを作る Mac 側で Claude が書き、
+ *      本文の数字がすべて「記事の原文の引用（evidence）」にあることを確かめたもの（P-476・docs/decisions/0047）
+ *   2. 題名＋記事の「知っておきたいポイント」の1項目（記事の文をそのまま使う）
+ *   3. 題名だけの定型
  * - 検査は検証できる事実だけで行う（CLAUDE.md 制約10）:
  *   X の数え方の文字数・文面の数字が記事の本文にあるか・使わない言い方・UTM・過去の投稿との重複
  * - npm 依存を足さない。OAuth 1.0a の署名は Node 標準の crypto で書く
@@ -58,11 +62,13 @@ function articleUrl(entry, policy) {
   return `${base}/journal/${entry.slug}.html`;
 }
 
-function utmUrl(entry, policy) {
+/** content を渡すと utm_content も付ける（文面の作り方ごとの反応を比べるため。定型は付けない）。 */
+function utmUrl(entry, policy, content) {
   const u = new URL(articleUrl(entry, policy));
   u.searchParams.set('utm_source', policy.utm.source);
   u.searchParams.set('utm_medium', policy.utm.medium);
   u.searchParams.set('utm_campaign', entry.slug);
+  if (content) u.searchParams.set('utm_content', content);
   return u.toString();
 }
 
@@ -115,6 +121,134 @@ function buildTemplatePost(entry, policy) {
     if (weighted <= max) return { ok: true, text, url, hashtags: c.hashtags, weighted };
   }
   return { ok: false, reason: 'too_long', weighted: weightedLength(compose({ header: '', title, url, hashtags: [] })) };
+}
+
+/** 本文の下に空行・URL・ハッシュタグを付ける。280 を超えるときはハッシュタグから削る。 */
+function withLink(body, url, tags, max) {
+  for (let n = tags.length; n >= 0; n--) {
+    const lines = [body, '', url];
+    if (n) lines.push(tags.slice(0, n).join(' '));
+    const text = lines.join('\n');
+    const weighted = weightedLength(text);
+    if (weighted <= max) return { text, weighted, hashtags: tags.slice(0, n) };
+  }
+  return null;
+}
+
+// ── ポイント入りの定型（保存した文面が使えない日の代わり）────────────────────
+/** 記事の「知っておきたいポイント」（insider-box の箇条書き）を、読める文字にして返す。 */
+function insiderPoints(html) {
+  const m = String(html || '').match(/class="insider-box"[\s\S]*?<\/ul>/);
+  if (!m) return [];
+  return [...m[0].matchAll(/<li[^>]*>([\s\S]*?)<\/li>/g)].map((x) => htmlToText(x[1]).trim()).filter(Boolean);
+}
+
+/**
+ * 題名＋ポイント1項目の文面。ポイントは記事の文をそのまま使い、途中で切らない。
+ * 280 に収まるポイントごとに1つずつ、記事の順で返す（収まるものが無ければ空の配列）。
+ */
+function buildPointPosts(entry, policy, html) {
+  if (!entry || !entry.slug || !entry.title) return [];
+  const title = rewriteTitle(entry.title, policy);
+  const url = utmUrl(entry, policy, 'point');
+  const max = policy.maxWeightedLength || 280;
+  const out = [];
+  insiderPoints(html).forEach((point, i) => {
+    const body = [policy.header, title, '', point].filter((x, j) => j > 0 || x).join('\n');
+    const r = withLink(body, url, hashtagsFor(entry, policy), max);
+    if (r) out.push({ ok: true, mode: 'template-point', point: i, url, ...r });
+  });
+  return out;
+}
+
+// ── 保存した文面（Mac 側の Claude が書く）──────────────────────────────────
+const DRAFT_DIR = 'data/x_post_drafts';
+
+function draftPath(date, root = ROOT) {
+  return path.join(root, DRAFT_DIR, `${date}.json`);
+}
+
+/** 返り値: { draft } か { draft: null, reason }。 */
+function loadDraft(date, root = ROOT) {
+  const p = draftPath(date, root);
+  if (!fs.existsSync(p)) return { draft: null, reason: 'draft_missing' };
+  try {
+    return { draft: JSON.parse(fs.readFileSync(p, 'utf8')) };
+  } catch (_) {
+    return { draft: null, reason: 'draft_bad_json' };
+  }
+}
+
+/** 引用と記事を突き合わせるための形（空白を除き、全角を半角に、桁区切りを外す）。 */
+function compactForQuote(s) {
+  return normalizeDigits(String(s || '').normalize('NFKC')).replace(/\s+/g, '');
+}
+
+/**
+ * 保存した文面の検査。返り値は落ちた理由の配列（空なら通過）。
+ * 本文の数字は「記事のどこかにある」では足りず、すべて引用（evidence）の中になければならない。
+ * 引用は記事の原文そのまま（空白と全角・半角の違いだけ許す）。数字を別の品に付け替える誤りを防ぐ。
+ */
+function checkDraft(draft, { entry, policy, articleText }) {
+  const cfg = policy.draft || {};
+  if (!draft || typeof draft !== 'object') return ['draft_missing'];
+  const f = [];
+  if (!entry || draft.slug !== entry.slug) f.push('draft_slug_mismatch');
+  const types = Object.keys(cfg.types || {});
+  if (!types.includes(draft.type)) f.push(`draft_type_unknown:${draft.type}`);
+  const body = typeof draft.body === 'string' ? draft.body.trim() : '';
+  if (!body) f.push('draft_body_empty');
+  if (/https?:\/\//i.test(body)) f.push('draft_body_has_url');
+  if (/(^|\s)[#＃][^\s#＃]/.test(body)) f.push('draft_body_has_hashtag');
+  const w = weightedLength(body);
+  if (w > (cfg.maxBodyWeighted || 230)) f.push(`draft_body_too_long:${w}`);
+  const ev = Array.isArray(draft.evidence) ? draft.evidence.filter((x) => typeof x === 'string' && x.trim()) : [];
+  const maxItems = cfg.evidenceMaxItems || 6;
+  if (!ev.length || ev.length > maxItems || ev.length !== (draft.evidence || []).length) f.push(`draft_evidence_count:${ev.length}`);
+  const article = compactForQuote(articleText);
+  ev.forEach((e, i) => {
+    const len = [...e.trim()].length;
+    if (len < (cfg.evidenceMinChars || 10) || len > (cfg.evidenceMaxChars || 160)) f.push(`draft_evidence_length:${i}`);
+    else if (!article.includes(compactForQuote(e))) f.push(`draft_evidence_not_in_article:${i}`);
+  });
+  if (body) {
+    const missing = numbersMissingFromArticle(body, ev.join(' \n '));
+    if (missing.length) f.push(`draft_numbers_not_in_evidence:${missing.join(',')}`);
+  }
+  return f;
+}
+
+/** 保存した文面＋URL（utm_content=型）＋ハッシュタグ。 */
+function buildDraftPost(draft, entry, policy) {
+  const url = utmUrl(entry, policy, draft.type);
+  const r = withLink(String(draft.body || '').trim(), url, hashtagsFor(entry, policy), policy.maxWeightedLength || 280);
+  if (!r) return { ok: false, mode: 'draft', reason: 'too_long' };
+  return { ok: true, mode: 'draft', type: draft.type, url, ...r };
+}
+
+/**
+ * 文面の候補を、使いたい順に返す。各候補は { mode, text, weighted, ... } か、作れなかったときは { mode, failures }。
+ * 送る前の検査（validatePost）は呼び出し側で行い、通った最初の候補を使う。
+ */
+function postCandidates({ entry, policy, date, html, root = ROOT }) {
+  const out = [];
+  const cfg = policy.draft || {};
+  if (cfg.useInPost) {
+    const { draft, reason } = loadDraft(date, root);
+    if (!draft) out.push({ mode: 'draft', failures: [reason] });
+    else {
+      const failures = checkDraft(draft, { entry, policy, articleText: htmlToText(html) });
+      if (failures.length) out.push({ mode: 'draft', failures });
+      else {
+        const b = buildDraftPost(draft, entry, policy);
+        out.push(b.ok ? b : { mode: 'draft', failures: [b.reason] });
+      }
+    }
+  }
+  if ((policy.template || {}).points) out.push(...buildPointPosts(entry, policy, html));
+  const t = buildTemplatePost(entry, policy);
+  out.push(t.ok ? { ...t, mode: 'template' } : { mode: 'template', failures: [t.reason] });
+  return out;
 }
 
 // ── 検査 ────────────────────────────────────────────────────────────────
@@ -255,6 +389,7 @@ const HUMAN_ACTION_ERRORS = new Set(['auth', 'forbidden', 'payment']);
 module.exports = {
   ROOT, LOG_REL, HEALTH_REL, HUMAN_ACTION_ERRORS,
   weightedLength, loadPolicy, articleUrl, utmUrl, areaHashtag, hashtagsFor, rewriteTitle, buildTemplatePost,
+  DRAFT_DIR, draftPath, loadDraft, checkDraft, buildDraftPost, insiderPoints, buildPointPosts, postCandidates,
   htmlToText, normalizeDigits, numbersMissingFromArticle, wordingViolations, validatePost,
   readLog, writeJson, alreadyPosted, recentTexts, oauthHeader, classifyError, pct,
 };

@@ -131,6 +131,11 @@ https://nagoya-bites.com/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.h
 
 ### 5.2 段階2: AI の一言を足す（任意・段階1が安定してから）
 
+> **2026-10-15 に形を変えて実装した（P-476・`docs/decisions/0047-x-post-drafts.md`）。** 下の当初案と違う点:
+> 一言ではなく本文全体（全角110字まで・型3つ）を書かせる／保存先は `data/x_post_drafts/<date>.json`／
+> **別に push せず記事と同じコミットに入れる**（別に push すると x-post.yml が先に動いて定型が出るため）／
+> 本文の数字はすべて記事の原文の引用（evidence）に無ければ使わない。下は当初案の記録として残す。
+
 - ジャーナルを作る Mac 側で、公開の後に `claude --print` を1回だけ呼び、「記事の本文だけを根拠に、X 用の一言（全角60字以内）」を JSON で出させ、`data/x_post_queue.json` に書いて push する
 - ジャーナル本体の公開は終わった後なので、ここが失敗してもジャーナルには影響しない。失敗した日は段階1の定型で投稿する
 - `.claude/commands/journal-today.md` は Claude が編集できない（自己改変ブロック）ため、指示は `docs/x-post-prompt.md` に置き、`run_journal_local.sh` から読む

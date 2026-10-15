@@ -798,6 +798,16 @@ log "OGP画像を正規化（render_og_figures.js → normalize_og_images.js）"
 node scripts/render_og_figures.js --only "$TODAY_JST" >>"$LOG" 2>&1 || log "⚠️ render_og_figures.js 失敗（非ブロッキング）"
 node scripts/normalize_og_images.js --only "$TODAY_JST" >>"$LOG" 2>&1 || log "⚠️ normalize_og_images.js 失敗（非ブロッキング）"
 
+# ---- 5i. X 用の文面を書く（P-476・docs/decisions/0047-x-post-drafts.md）----
+# Claude（ツールなし・フックなし）に docs/x-post-prompt.md と今日の記事を渡し、投稿のときと同じ検査を
+# 通った文面だけを data/x_post_drafts/<date>.json に保存する。下のコミットに同乗させるのは必須
+# （x-post.yml は journal_published.json の push で動くので、別に push すると先に定型の投稿が出る）。
+# 書けなくても公開は止めない（投稿は題名＋ポイントの定型に戻る）。打ち切りは write_x_draft.js の
+# draft.timeoutSec × attempts と、ここの run_with_timeout（360秒）の二重にする。
+log "X 用の文面を作成（write_x_draft.js）"
+run_with_timeout 360 caffeinate -s -i -d -u node scripts/write_x_draft.js --date "$TODAY_JST" --claude-bin "$CLAUDE_BIN" \
+  || log "⚠️ write_x_draft.js 失敗（非ブロッキング・X は定型で投稿）"
+
 # ---- 6. ラッパーが commit & push を確実に実行 ----
 # claude (journal-today.md Step 10) は「ユーザー承認後のみ push」と定義されているため
 # ヘッドレスでは承認者が居らず未 push 終了になる。それを補うため、ここで強制 commit/push する。
@@ -815,7 +825,8 @@ for p in \
   "docs/daily-posts/${TODAY_JST}.md" \
   "data/journal_candidates/${TODAY_JST}.json" \
   "assets/journal-figures/${TODAY_JST}"-*.svg \
-  "assets/journal-figures/${TODAY_JST}"-*.png ; do
+  "assets/journal-figures/${TODAY_JST}"-*.png \
+  "data/x_post_drafts/${TODAY_JST}.json" ; do
   for f in $p; do
     [ -e "$f" ] && TODAY_FILES+=("$f")
   done
