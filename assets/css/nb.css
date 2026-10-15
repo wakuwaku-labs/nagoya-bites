@@ -400,8 +400,8 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 /* 押した見た目（動きの計画 2 章 A1・段階 3a の A-2・A-3）: 押した物が沈み、色が濃くなる。押し込み 50ms（--dur-instant）・戻り 200ms（--dur-base）。
    色は内側の影で濃くする（filter は動かさない・暗さ .16）。縮みはボタン .96・小さい部品 .94。
    iPhone の Safari は touch のリスナーが無いと :active を出さないので、全ページの共通の <script>（scripts/lib/site_chrome.js の chromeScript）と
-   トップの頭の <script> で document に空の touchstart（passive）を付けている。「動きを減らす」設定では時間が 0 になり、色の変化だけが残る */
-.nb-btn,.store-link,.link-btn,.nb-bar-btn,.related-link,.nb-conclusion-hubs a,.hamburger{transition-property:color,background-color,border-color,box-shadow,transform,opacity;transition-duration:var(--dur-base);transition-timing-function:var(--ease-out);}
+   トップの頭の <script> で document に空の touchstart（passive）を付けている。自前で押した見た目を出すので、ブラウザが付ける押した光（Android の Chrome では青い膜）は消す。「動きを減らす」設定では時間が 0 になり、色の変化だけが残る */
+.nb-btn,.store-link,.link-btn,.nb-bar-btn,.related-link,.nb-conclusion-hubs a,.hamburger{transition-property:color,background-color,border-color,box-shadow,transform,opacity;transition-duration:var(--dur-base);transition-timing-function:var(--ease-out);-webkit-tap-highlight-color:transparent;}
 .nb-btn:active:not(:disabled),.store-link:active:not(:disabled),.link-btn:active:not(:disabled),.nb-bar-btn:active:not(:disabled),.related-link:active,.nb-conclusion-hubs a:active{transform:scale(.96);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16);transition-duration:var(--dur-instant);}
 .hamburger{border-radius:50%;}
 .hamburger:active{transform:scale(.94);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16);transition-duration:var(--dur-instant);}

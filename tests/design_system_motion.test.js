@@ -331,6 +331,22 @@ test('段階 3a A-1: iPhone で押した見た目を出す空の touchstart（pa
   }
 });
 
+test('段階 3a: 押した見た目を自前で出す部品では、ブラウザの押した光（Android の青い膜）を消している', () => {
+  // :active で沈む・濃くなる部品のどれにも、transition を書いた同じ規則で -webkit-tap-highlight-color:transparent を付ける
+  const flatIndex = INDEX.replace(/\/\*[\s\S]*?\*\//g, '');
+  const nbcss = fs.readFileSync(path.join(ROOT, 'assets', 'css', 'nb.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  for (const [name, css, first] of [['index.html', flatIndex, '.search-wrap button,.sticky-search-btn'], ['nb.css', nbcss, '.nb-btn,.store-link,.link-btn']]) {
+    const i = css.indexOf(first);
+    assert.ok(i >= 0, name + ': 押す相手の規則が見つからない');
+    const rule = css.slice(i, css.indexOf('}', i) + 1);
+    assert.match(rule, /transition-property:[^;]*transform/, name);
+    assert.match(rule, /-webkit-tap-highlight-color:transparent/, name + ': 押した光を消していない');
+    for (const sel of rule.slice(0, rule.indexOf('{')).split(',')) {
+      assert.ok(new RegExp(sel.trim().replace(/[.*+?^${}()|[\]\\#]/g, '\\$&') + '[^,{]*:active').test(css), name + ': ' + sel + ' に :active が無い');
+    }
+  }
+});
+
 test('段階 3a: ハブのカードと店舗ページの関連リンクにも押した見た目がある', () => {
   const hub = fs.readFileSync(path.join(ROOT, 'scripts', 'gen_area_genre_pages.js'), 'utf8');
   assert.match(hub, /\.hub-grid a:active\{transform:scale\(\.985\);box-shadow:inset 0 0 0 100vmax rgba\(0,0,0,\.16\);transition-duration:var\(--dur-instant\);\}/);

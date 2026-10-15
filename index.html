@@ -1442,16 +1442,15 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
    縮みは大きさで 3 段: ボタン .96・小さい部品（♡・×・チップ・条件の札・ページ番号・上へ戻る・写真の左右）.94・カード .985。
    カードはスクロールし始めた指で一瞬暗くならないよう、押し込みだけ --dur-instant（50ms）遅らせる（押してから最初の変化まで 50ms・沈み切るまで 100ms）。
    iPhone の Safari は touch のリスナーが無いと :active を出さないので、頭のスクリプトで document に空の touchstart（passive）を付けている。
+   押した見た目を自前で出すので、ブラウザが付ける押した光（Android の Chrome では青い膜）は消す（-webkit-tap-highlight-color）。
    「動きを減らす」設定では時間と遅れが 0 になり、色の変化だけが残る（nb.css の一括の規則） */
-.search-wrap button,.sticky-search-btn,.fs-go,.modal-cta-btn,.card-cta a,.m-pg-btn,.empty-state-reset,.filter-toggle-btn,.scene-tile,.scene-chip,.mobile-cta-bar .cta-filter,.tb-filter,.view-toggle button,.geo-btn,.sbtn,.share-btn,.clear-all-btn,.fs-reset,.fs-suggest-btn,.suggest-pill,.fold-toggle,.fav-btn,.m-fav,.mcl,.fs-close,.fs-chip,.chip,.pg-btn,#scroll-top,.mhi-nav,.card,.tp-card,.feature-card,.latest-journal-card,.hist-card,.modal-rsc{transition-property:color,background-color,border-color,box-shadow,transform,opacity;transition-duration:var(--dur-base);transition-timing-function:var(--ease-out);}
+.search-wrap button,.sticky-search-btn,.fs-go,.modal-cta-btn,.card-cta a,.m-pg-btn,.empty-state-reset,.filter-toggle-btn,.scene-tile,.scene-chip,.mobile-cta-bar .cta-filter,.tb-filter,.view-toggle button,.geo-btn,.sbtn,.share-btn,.clear-all-btn,.fs-reset,.fs-suggest-btn,.suggest-pill,.fold-toggle,.fav-btn,.m-fav,.mcl,.fs-close,.fs-chip,.chip,.pg-btn,#scroll-top,.mhi-nav,.card,.tp-card,.feature-card,.latest-journal-card,.hist-card,.modal-rsc{transition-property:color,background-color,border-color,box-shadow,transform,opacity;transition-duration:var(--dur-base);transition-timing-function:var(--ease-out);-webkit-tap-highlight-color:transparent;}
 .search-wrap button:active,.sticky-search-btn:active,.fs-go:active:not(:disabled),.modal-cta-btn:active:not(:disabled),.card-cta a:active,.m-pg-btn:active:not(:disabled),.empty-state-reset:active,.filter-toggle-btn:active,.scene-tile:active,.scene-chip:active,.mobile-cta-bar .cta-filter:active,.tb-filter:active,.view-toggle button:active,.geo-btn:active:not(:disabled),.sbtn:active,.share-btn:active,.clear-all-btn:active,.fs-reset:active:not(:disabled),.fs-suggest-btn:active,.suggest-pill:active,.fold-toggle:active{transform:scale(.96);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16);transition-duration:var(--dur-instant);}
 .fav-btn:active,.m-fav:active,.mcl:active,.fs-close:active,.fs-chip:active,.chip:active,.pg-btn:active:not(:disabled):not(.active),#scroll-top:active,.mhi-nav:active:not(:disabled){transform:scale(.94);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16);transition-duration:var(--dur-instant);}
 .fav-btn:active,.mhi-nav:active:not(:disabled){box-shadow:inset 0 0 0 100vmax rgba(255,255,255,.16);}
 .grid.list-mode .fav-btn:active{box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16);}
 .mhi-nav:active:not(:disabled){transform:translateY(-50%) scale(.94);}
 /* カードの中の ♡・予約・地図・動画を押したときは、カードごとは沈ませない（押した物だけが沈む） */
-/* カード類は押した見た目（上と下の規則）を自前で出すので、ブラウザが付ける押した光（Android の Chrome では青い膜・カード全体）を消す。♡ やカードの中のボタンを押しても、カード全体が光らない */
-.card,.tp-card,.feature-card,.latest-journal-card,.hist-card,.modal-rsc{-webkit-tap-highlight-color:transparent;}
 .card:active:not(:has(.fav-btn:active,.card-cta a:active,.reel-play:active)),.tp-card:active,.feature-card:active,.latest-journal-card:active,.hist-card:active,.modal-rsc:active{transform:scale(.985);transition-duration:var(--dur-instant);transition-delay:var(--dur-instant);}
 /* カードは写真が大きく、内側の影では写真の上が暗くならない（影は中身の下に描かれる）ので、写真の上まで覆う透明な膜を暗くする。
    店のカードはカード全体を覆う題名のリンクの膜（.cn-link::after）を使い、ほかのカードは自分の ::after を膜にする（押せる物の邪魔をしない: pointer-events:none） */
