@@ -564,7 +564,7 @@ body.search-query-active .card-why{display:flex;}
 /* ── MODAL（店舗詳細シート・2026-09 再設計）──
    方針: 写真が最初・店名が最大・指標は1つ・言葉を先に・空は描かない・色は塗らない。
    角丸などページ固有トークンは :root を触らず .ov スコープに --page- 接頭辞で定義（DSN-001）。 */
-.ov{display:none;position:fixed;inset:0;z-index:500;background:rgba(5,5,4,.78);backdrop-filter:blur(14px);align-items:flex-end;justify-content:center;padding:0;--page-r-sheet:20px;--page-r-card:12px;--page-r-chip:999px;}
+.ov{display:none;position:fixed;inset:0;z-index:500;background:rgba(5,5,4,.78);align-items:flex-end;justify-content:center;padding:0;--page-r-sheet:20px;--page-r-card:12px;--page-r-chip:999px;}
 .ov.open{display:flex;}
 .modal{position:relative;background:var(--bg);border:0;max-width:640px;width:100%;max-height:92vh;max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;border-radius:var(--page-r-sheet) var(--page-r-sheet) 0 0;box-shadow:0 -8px 40px rgba(0,0,0,.35);animation:min .2s cubic-bezier(.22,.61,.36,1);outline:none;}
 @keyframes min{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:none;}}
