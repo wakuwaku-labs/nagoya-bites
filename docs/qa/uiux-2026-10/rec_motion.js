@@ -94,6 +94,20 @@ async function centerOf(page, sel, within) {
     return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
   }, sel, within || '');
 }
+// 録画の間、右下の 1px を毎フレーム描き直す（見た目はほぼ変わらない）。page.screencast は画面が変わったときにしか
+// コマを送らず、動きの最後のコマ（例: 閉じたシートが消えた画面）が届かないまま、途中のコマが最後まで残ることがあった（段階 3b）
+async function keepPainting(page) {
+  await page.evaluate(() => {
+    const d = document.createElement('div');
+    d.id = '__rec_tick';
+    d.setAttribute('aria-hidden', 'true');
+    d.style.cssText = 'position:fixed;right:0;bottom:0;width:1px;height:1px;pointer-events:none;z-index:2147483647;background:rgb(250,250,250);';
+    document.documentElement.appendChild(d);
+    let on = false;
+    const f = () => { if (!d.isConnected) return; on = !on; d.style.backgroundColor = on ? 'rgb(251,251,251)' : 'rgb(250,250,250)'; requestAnimationFrame(f); };
+    requestAnimationFrame(f);
+  });
+}
 async function tap(page, vp, pt) {
   if (vp.hasTouch) await page.touchscreen.tap(pt.x, pt.y); else { await page.mouse.move(pt.x, pt.y, { steps: 12 }); await sleep(150); await page.mouse.click(pt.x, pt.y); }
 }
@@ -439,6 +453,7 @@ function convert(webm, mp4, gif, gifW) {
           try {
             await sc.setup(page, vp, base);
             const recorder = await page.screencast({ path: webm });
+            await keepPainting(page).catch(() => {});
             await sleep(300);
             try { await sc.run(page, vp, base, { skipped: rec.skipped }); } finally { await sleep(600); await recorder.stop(); }
             const mp4 = path.join(OUT, base_name + '.mp4'), gif = path.join(OUT, base_name + '.gif');
