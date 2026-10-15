@@ -11,7 +11,7 @@
  *
  * 【判定は検証できる事実だけで行う（CLAUDE.md 制約10）】
  *   使う入力:
- *     - 画像URL（HotPepper画像は data/stores.json の 写真URL から所有店名を一意に逆引きできる）
+ *     - 画像URL（HotPepper画像は data/stores.json の 写真URL から所有店名とホットペッパーIDを逆引きできる）
  *     - 記事HTMLに刻まれた data-hero-store / data-hero-source（成果物自身が持つ証跡）
  *     - 過去記事の hero URL（data/journal_published.json + journal/*.html）
  *   使わない入力:
@@ -65,6 +65,7 @@ function namesMatch(a, b, threshold) {
  * HotPepper 画像URL → 所有店名の逆引き（検算可能）
  * ──────────────────────────────────────────────────────────────── */
 let _ownerIndex = null;
+let _ownerIdIndex = null; // photoId -> Set(ホットペッパーID)
 function hotpepperPhotoId(url) {
   // https://imgfp.hotp.jp/IMGH/50/38/P050945038/P050945038.jpg → P050945038
   const m = String(url || '').match(/\/(P\d{6,})(?:_\d+)?\.jpe?g/i);
@@ -74,14 +75,22 @@ function hotpepperPhotoId(url) {
 function buildOwnerIndex() {
   if (_ownerIndex) return _ownerIndex;
   const idx = new Map(); // photoId -> Set(店名)
-  const add = (name, url) => {
+  const ids = new Map();
+  const add = (name, url, hpId) => {
     const id = hotpepperPhotoId(url);
-    if (!id || !name) return;
-    if (!idx.has(id)) idx.set(id, new Set());
-    idx.get(id).add(String(name).trim());
+    if (!id) return;
+    if (name) {
+      if (!idx.has(id)) idx.set(id, new Set());
+      idx.get(id).add(String(name).trim());
+    }
+    if (hpId) {
+      if (!ids.has(id)) ids.set(id, new Set());
+      ids.get(id).add(String(hpId).trim());
+    }
   };
+  _ownerIdIndex = ids;
   try {
-    for (const s of loadStores()) add(s['店名'] || s.name, s['写真URL'] || s.photo_url);
+    for (const s of loadStores()) add(s['店名'] || s.name, s['写真URL'] || s.photo_url, s['ホットペッパーID']);
   } catch (_) { /* stores.json が読めない環境では逆引き不能 → unverifiable 扱い */ }
   for (const f of ['manual_stores.json', 'pending_stores.json']) {
     const p = path.join(ROOT, 'data', f);
@@ -89,7 +98,7 @@ function buildOwnerIndex() {
     try {
       const j = JSON.parse(fs.readFileSync(p, 'utf8'));
       const arr = j.stores || j.pending || (Array.isArray(j) ? j : []);
-      for (const s of arr) add(s['店名'] || s.name, s['写真URL'] || s.photo_url);
+      for (const s of arr) add(s['店名'] || s.name, s['写真URL'] || s.photo_url, s['ホットペッパーID']);
     } catch (_) { /* 壊れたJSONで判定器ごと落ちないようにする */ }
   }
   _ownerIndex = idx;
@@ -101,6 +110,19 @@ function hotpepperOwners(url) {
   const id = hotpepperPhotoId(url);
   if (!id) return [];
   return Array.from(buildOwnerIndex().get(id) || []);
+}
+
+/** HotPepper 画像の所有店のホットペッパーID（店名が変わっても変わらない） */
+function hotpepperOwnerIds(url) {
+  const id = hotpepperPhotoId(url);
+  if (!id) return [];
+  buildOwnerIndex();
+  return Array.from(_ownerIdIndex.get(id) || []);
+}
+
+/** 記事の店カード（store-card）の data-store-id。店名と同じく「記事が主役として扱う店」を表す */
+function articleStoreIds(html) {
+  return Array.from(String(html || '').matchAll(/class="store-card"[^>]*\sdata-store-id="([^"]+)"/g)).map(m => m[1].trim());
 }
 
 /* ────────────────────────────────────────────────────────────────
@@ -152,6 +174,7 @@ function isStockHost(url, policy) {
  *   heroStore,               // 記事HTMLの data-hero-store（あれば）
  *   caption,                 // figcaption のテキスト
  *   storeNames: [],          // 記事が主役として扱う店名（store-card / stores[]）
+ *   storeIds: [],            // 記事の店カードの data-store-id（任意。HotPepper 画像の照合で店名と並べて使う）
  *   instagramAccounts: {},   // 店名 -> 公式Instagram URL（任意）
  * }
  * 戻り値 { ok, level: 'fail'|'warn'|'ok', findings: [{code, level, msg}] }
@@ -227,7 +250,14 @@ function judgePhoto(article) {
       add('warn', 'hotpepper_owner_unknown',
         `HotPepper画像の所有店をデータから逆引きできませんでした: ${url.slice(0, 70)}（stores.json に無い画像）`);
     } else {
-      const matched = owners.find(o => names.some(n => namesMatch(o, n, th)));
+      // 店名か、ホットペッパーIDのどちらかが合えば記事の店の写真。
+      // HotPepper は掲載中の店の名前を変えることがあり（例: 2026-10 に「天ぷらとおでん　海鮮　…　天串（TENGUSHI）錦店」が
+      // 「天串 TENGUSHI 錦店」になった）、店名だけで照らすと、公開後に同じ店の写真が別の店の写真と判定される。
+      // ID は記事の店カードとデータの両方にあり、名前が変わっても変わらない（検算できる事実・制約10）。
+      const storeIds = (article.storeIds || []).filter(Boolean);
+      const ownerIds = storeIds.length ? hotpepperOwnerIds(url) : [];
+      const matched = owners.find(o => names.some(n => namesMatch(o, n, th))) ||
+                      ownerIds.find(id => storeIds.includes(id));
       if (!matched) {
         add('fail', 'hero_store_mismatch',
           `${R}が記事の店の写真ではありません。\n` +
@@ -389,6 +419,7 @@ function extractHeroFromHtml(html, slug, date) {
     heroStore,
     caption,
     storeNames,
+    storeIds: articleStoreIds(html),
     isInstagramEmbed: isIg,
     heroExpired: !heroUrl && /NB-HERO-EXPIRED/.test(html),
     html, // 報道用画像の「リリースを引用しているか」照合に使う
@@ -404,6 +435,7 @@ function extractHeroFromHtml(html, slug, date) {
  * ──────────────────────────────────────────────────────────────── */
 function extractBodyPhotosFromHtml(html, slug, date) {
   const storeNames = Array.from(html.matchAll(/class="store-name">([^<]+)</g)).map(m => m[1].trim());
+  const storeIds = articleStoreIds(html);
   const out = [];
   for (const m of html.matchAll(/<figure class="art-body-img"([^>]*)>([\s\S]*?)<\/figure>/g)) {
     const attrs = m[1] || '';
@@ -417,6 +449,7 @@ function extractBodyPhotosFromHtml(html, slug, date) {
       caption: (inner.match(/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/) || ['', ''])[1]
         .replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
       storeNames,
+      storeIds,
       html,
     });
   }
@@ -434,6 +467,8 @@ module.exports = {
   pressReleaseIds,
   articleCitesRelease,
   hotpepperOwners,
+  hotpepperOwnerIds,
+  articleStoreIds,
   hotpepperPhotoId,
   namesMatch,
 };
