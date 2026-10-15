@@ -1,16 +1,16 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-10-15T13:27:03.568Z",
+  "generatedAt": "2026-10-15T13:57:02.912Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1851,
+  "total_sessions": 1853,
   "engines": [
     {
       "key": "google",
       "label": "Google",
       "sessions": 601,
-      "pct": 32.5,
+      "pct": 32.4,
       "sources": [
         {
           "source": "google",
@@ -22,13 +22,13 @@
     {
       "key": "bing",
       "label": "Bing",
-      "sessions": 510,
+      "sessions": 511,
       "pct": 27.6,
       "sources": [
         {
           "source": "bing",
           "medium": "organic",
-          "sessions": 508
+          "sessions": 509
         },
         {
           "source": "cn.bing.com",
@@ -58,13 +58,13 @@
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 226,
-      "pct": 12.2,
+      "sessions": 227,
+      "pct": 12.3,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 224
+          "sessions": 225
         },
         {
           "source": "hk.search.yahoo.com",
@@ -227,7 +227,7 @@
     }
   ],
   "search_only": {
-    "total": 1458,
+    "total": 1460,
     "share": [
       {
         "key": "google",
@@ -238,13 +238,13 @@
       {
         "key": "bing",
         "label": "Bing",
-        "sessions": 510,
+        "sessions": 511,
         "pct_of_search": 35
       },
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 226,
+        "sessions": 227,
         "pct_of_search": 15.5
       },
       {
@@ -278,7 +278,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 601 セッションのみ。Bing(510) + 生成AI(104) の 614 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 601 セッションのみ。Bing(511) + 生成AI(104) の 615 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],

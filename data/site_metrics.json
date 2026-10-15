@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-15T13:26:59.530Z",
+  "generatedAt": "2026-10-15T13:56:59.335Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1639,
-    "pageViews": 2281,
-    "sessions": 1837,
+    "activeUsers": 1641,
+    "pageViews": 2293,
+    "sessions": 1839,
     "avgSessionDuration": 123.1,
-    "bounceRate": 0.284,
-    "pagesPerSession": 1.24
+    "bounceRate": 0.283,
+    "pagesPerSession": 1.25
   },
   "dailyReference": {
     "date": "2026-10-13",
@@ -17,7 +17,7 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1353,
+      "organic": 1355,
       "direct": 355,
       "social": 6,
       "ai_assistant": 104,
@@ -44,7 +44,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 508
+      "sessions": 509
     },
     {
       "source": "(direct)",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 224
+      "sessions": 225
     },
     {
       "source": "chatgpt.com",
@@ -220,8 +220,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 178,
-    "ctaClickRate": 9.7,
+    "outboundClicks": 180,
+    "ctaClickRate": 9.8,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -229,7 +229,7 @@
       },
       {
         "domain": "tabelog.com",
-        "clicks": 34
+        "clicks": 36
       },
       {
         "domain": "maps.google.com",
@@ -290,7 +290,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 105,
+      "organic": 107,
       "direct": 53,
       "social": 0,
       "ai_assistant": 19,
@@ -298,7 +298,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.8,
+    "ctaClickRate_organic": 7.9,
     "ctaClickRate_direct": 14.9,
     "ctaClickRate_social": 0,
     "byPage": [
@@ -740,6 +740,11 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J000643944.html",
+        "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J000661748.html",
         "domain": "tabelog.com",
         "clicks": 1
@@ -772,6 +777,11 @@
       {
         "path": "/stores/J001194871.html",
         "domain": "www.google.com",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J001201577.html",
+        "domain": "tabelog.com",
         "clicks": 1
       },
       {
@@ -993,6 +1003,10 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J000643944.html",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J001026238.html",
         "clicks": 1
       },
@@ -1006,6 +1020,10 @@
       },
       {
         "path": "/stores/J001192240.html",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J001201577.html",
         "clicks": 1
       },
       {
@@ -1061,7 +1079,7 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 93,
+    "reservationClicks": 95,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 24,
@@ -1087,7 +1105,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1639,
+    "value": 1641,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

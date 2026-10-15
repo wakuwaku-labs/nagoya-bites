@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-15T13:26:52.055Z",
+  "generatedAt": "2026-10-15T13:56:50.862Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -9,10 +9,10 @@
   "totals": {
     "exits": {
       "hotpepper": 64,
-      "tabelog": 9,
+      "tabelog": 11,
       "tel": 2,
       "other": 0,
-      "total": 75
+      "total": 77
     },
     "reports": {
       "yes": 0,
@@ -25,10 +25,10 @@
     "totals": {
       "exits": {
         "hotpepper": 37,
-        "tabelog": 9,
+        "tabelog": 11,
         "tel": 2,
         "other": 0,
-        "total": 48
+        "total": 50
       },
       "reports": {
         "yes": 0,
@@ -308,10 +308,46 @@
       }
     },
     {
+      "store_name": "POPINO ポピーノ",
+      "exits": {
+        "hotpepper": 0,
+        "tabelog": 1,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "Shisha Cafe Lounge Neom シーシャカフェラウンジネオン",
       "exits": {
         "hotpepper": 1,
         "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "THE GATEHOUSE",
+      "exits": {
+        "hotpepper": 0,
+        "tabelog": 1,
         "tel": 0,
         "other": 0,
         "total": 1
@@ -639,10 +675,10 @@
     "geoSearch": "現在地: トップの「現在地」ボタンを押した回数と結果（granted・denied・unsupported・error）。位置・エリア名は送っていない"
   },
   "actions": {
-    "reserve": 73,
+    "reserve": 75,
     "reserveBySite": {
       "hotpepper": 64,
-      "tabelog": 9,
+      "tabelog": 11,
       "other": 0
     },
     "tel": 2,
@@ -694,20 +730,22 @@
         "count": 1
       }
     ],
-    "byLocation": null,
-    "byLinkKind": null
+    "byLocation": {
+      "(not set)": 36
+    },
+    "byLinkKind": {
+      "(not set)": 36
+    }
   },
   "callLookup": {
     "total": 2,
-    "byResult": null
+    "byResult": {
+      "(not set)": 2
+    }
   },
   "geoSearch": {
     "total": 0,
-    "byResult": null
+    "byResult": {}
   },
-  "missingDimensions": [
-    "location",
-    "link_kind",
-    "result"
-  ]
+  "missingDimensions": []
 }
