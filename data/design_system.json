@@ -52,8 +52,8 @@
   "motion": {
     "_comment": "動き（モーション）の決まりの正本（動きの計画 5 章）。判定は scripts/lib/motion_audit.js。閾値・例外・禁止プロパティの変更はここで行いスクリプトは触らない。enforce が false の間は audit_design_system.js が数えるだけで落とさない。true にすると enforceScopes のファイルの違反だけで --check が落ちる（手書きの特集などは落とす対象にしない）。",
     "maxDurationMs": 300,
-    "durationAllowlist": { "comment": "300ms を超えてよい選択子（待ちの表示）", "selectors": [".skel"] },
-    "infiniteAllowlist": { "comment": "止まらない繰り返しを許す選択子（読み込み中の表示だけ）", "selectors": [".skel"] },
+    "durationAllowlist": { "comment": "300ms を超えてよい選択子（待ちの表示: スケルトンと、1 秒を超えた操作の回る印 A7）", "selectors": [".skel", ".nb-wait-long"] },
+    "infiniteAllowlist": { "comment": "止まらない繰り返しを許す選択子（読み込み中の表示だけ: スケルトンと、1 秒を超えた操作の回る印 A7）", "selectors": [".skel", ".nb-wait-long"] },
     "forbiddenProperties": ["width", "height", "min-width", "min-height", "max-width", "max-height", "margin*", "padding*", "top", "left", "right", "bottom", "gap", "row-gap", "column-gap", "filter"],
     "scrollBehaviorFunction": "nbScrollBehavior",
     "enforce": true,

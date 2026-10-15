@@ -31,6 +31,14 @@ class El {
     this.text = '';
     this.disabled = false;
     this.className = '';
+    // 本物の要素と同じく className と同じものを指す（待ちの印 .nb-wait-long の付け外しに使う）
+    const self = this;
+    const names = () => self.className.split(/\s+/).filter(Boolean);
+    this.classList = {
+      add(...cs) { self.className = [...new Set([...names(), ...cs])].join(' '); },
+      remove(...cs) { self.className = names().filter((c) => !cs.includes(c)).join(' '); },
+      contains(c) { return names().includes(c); },
+    };
   }
   setAttribute(k, v) { this.attrs[k] = String(v); }
   getAttribute(k) { return Object.prototype.hasOwnProperty.call(this.attrs, k) ? this.attrs[k] : null; }
@@ -124,6 +132,7 @@ function makeEnv(opts = {}) {
     sandbox,
     log,
     fireTimers: () => { for (const t of timers.splice(0)) if (!t.cleared) t.fn(); },
+    fireTimersOf: (ms) => { for (const t of timers.filter((x) => x.ms === ms && !x.cleared)) { t.cleared = true; t.fn(); } },
     pendingTimers: () => timers.filter((t) => !t.cleared).length,
     storage,
     lookups: () => log.events.filter((e) => e.name === 'call_lookup').map((e) => e.params),
@@ -249,13 +258,33 @@ test('確かめている間: ボタンは押せず「確認中…」、目で見
   assert.equal(env.log.requests.length, 1);
 });
 
+test('待ちの印（動きの計画 A7）: 1 秒を超えたら .nb-wait-long を付け、結果が出たら外す。1 秒以内に終われば付けない', async () => {
+  const env = makeEnv({ never: true, respond: () => ({}) });
+  const row = makeRow();
+  await press(env, row);
+  assert.equal(row.btn.classList.contains('nb-wait-long'), false, '押した瞬間は文だけを変える');
+  env.fireTimersOf(1000);
+  assert.equal(row.btn.classList.contains('nb-wait-long'), true, '1 秒を超えたら印を付ける');
+  env.log.pendingCb({ international_phone_number: '+81 52-123-4567' }, STATUS.OK);
+  await flush();
+  assert.equal(row.btn.classList.contains('nb-wait-long'), false, '結果が出たら外す');
+  assert.equal(row.btn.disabled, false);
+
+  const fast = makeEnv({ respond: () => ({ place: { international_phone_number: '+81 52-123-4567' }, status: STATUS.OK }) });
+  const row2 = makeRow();
+  await press(fast, row2);
+  assert.equal(fast.pendingTimers(), 0, '1 秒以内に終われば、印のタイマーも消す');
+  assert.equal(row2.btn.classList.contains('nb-wait-long'), false);
+});
+
 test('Google から返事が来ないまま 12 秒たったら error。あとから届いた返事では発信も二重の計測もしない', async () => {
   const env = makeEnv({ never: true, respond: () => ({}) });
   const row = makeRow();
   await press(env, row);
-  assert.equal(env.pendingTimers(), 1);
+  assert.equal(env.pendingTimers(), 2, '時間切れと、1 秒後の待ちの印');
   assert.equal(row.btn.disabled, true);
   env.fireTimers();
+  assert.equal(row.btn.classList.contains('nb-wait-long'), false, '終わったら待ちの印を外す');
   assert.deepEqual(env.lookups().map((l) => l.result), ['error']);
   assert.equal(row.status.textContent, MSG.unavailable);
   assert.equal(row.btn.disabled, false);
