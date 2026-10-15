@@ -103,10 +103,22 @@ function runGeo(mode) {
   const end = html.indexOf('\n}\n', html.indexOf('function geoSearch()')) + 3;
   assert.ok(start > 0 && end > start, 'geoSearch が見つからない');
   const sent = [];
-  const el = () => ({ value: '', innerHTML: '', classList: { add() {}, remove() {} } });
+  const timers = [];
+  let asks = 0;
+  const el = () => {
+    const cls = new Set();
+    const attrs = {};
+    return {
+      value: '', innerHTML: '', disabled: false, cls, attrs,
+      classList: { add: (...c) => c.forEach((x) => cls.add(x)), remove: (...c) => c.forEach((x) => cls.delete(x)) },
+      setAttribute: (k, v) => { attrs[k] = String(v); }, removeAttribute: (k) => { delete attrs[k]; },
+    };
+  };
   const els = { 'geo-btn': el(), si: el(), si2: el() };
   const geo = {
     getCurrentPosition(ok, ng) {
+      asks++;
+      if (mode === 'pending') return;
       if (mode === 'granted') ok({ coords: { latitude: 35.1709, longitude: 136.8815 } });
       else if (mode === 'denied') ng({ code: 1 });
       else ng({ code: 3 });
@@ -119,10 +131,14 @@ function runGeo(mode) {
     showToast() {}, applyFilters() {},
     GEO_AREAS: { '名駅': { lat: 35.1709, lng: 136.8815 }, '栄': { lat: 35.1681, lng: 136.9086 } },
     NB_PIN_SVG: '',
+    setTimeout: (fn, ms) => { timers.push({ fn, ms, cleared: false }); return timers.length; },
+    clearTimeout: (id) => { if (timers[id - 1]) timers[id - 1].cleared = true; },
   };
   vm.createContext(ctx);
   vm.runInContext(html.slice(start, end) + '\ngeoSearch();', ctx);
-  return { sent, els };
+  const press = () => vm.runInContext('geoSearch();', ctx);
+  const fire = () => timers.forEach((t) => { if (!t.cleared) { t.cleared = true; t.fn(); } });
+  return { sent, els, press, fire, asks: () => asks, pendingTimers: () => timers.filter((t) => !t.cleared).length };
 }
 
 test('「現在地」: 押下ごとに geo_search を 1 回だけ、result だけを送る（緯度・経度・エリア名は送らない）', () => {
@@ -132,6 +148,28 @@ test('「現在地」: 押下ごとに geo_search を 1 回だけ、result だ�
     const text = JSON.stringify(sent);
     assert.doesNotMatch(text, /35\.|136\.|名駅|栄|lat|lng/, `${mode}: 位置・エリア名を送らない`);
     if (mode === 'granted') assert.equal(els.si.value, '名駅', '絞り込みは今までどおり');
+  }
+});
+
+test('「現在地」の待ち（動きの計画 A7）: 押した瞬間に文を変えて押せなくし、1 秒を超えたら回る印。終われば元に戻る', () => {
+  const p = runGeo('pending');
+  const btn = p.els['geo-btn'];
+  assert.equal(btn.disabled, true, '取得中は押せない');
+  assert.equal(btn.attrs['aria-busy'], 'true');
+  assert.match(btn.innerHTML, /取得中/);
+  assert.equal(btn.cls.has('nb-wait-long'), false, '押した瞬間は文だけ');
+  p.press();
+  assert.equal(p.asks(), 1, '取得中の押し直しで位置を二重に求めない');
+  p.fire();
+  assert.equal(btn.cls.has('nb-wait-long'), true, '1 秒を超えたら印');
+  for (const mode of ['granted', 'denied', 'timeout']) {
+    const r = runGeo(mode);
+    const b = r.els['geo-btn'];
+    assert.equal(b.disabled, false, `${mode}: 終われば押せる`);
+    assert.equal(b.attrs['aria-busy'], undefined, mode);
+    assert.equal(b.cls.has('nb-wait-long') || b.cls.has('loading'), false, mode);
+    assert.match(b.innerHTML, /現在地/, mode);
+    assert.equal(r.pendingTimers(), 0, `${mode}: 印のタイマーを消す`);
   }
 });
 

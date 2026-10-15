@@ -35,6 +35,7 @@
 function nbCallMain() {
   var TAP_LIMIT = 20;               // この端末で、1日に番号を確かめられる回数
   var LOOKUP_TIMEOUT_MS = 12000;    // Google から返事が無いまま、これを過ぎたら通信の失敗として扱う
+  var WAIT_MARK_MS = 1000;          // 確かめるのがこれより長くかかったら、ボタンに回る印を足す（A7）
   var MAP_HINT = 'Googleマップで確かめられます';
   var CHECKING = '電話番号を確かめています…';
   var UNAVAILABLE = 'いまは電話番号を確かめられません';
@@ -116,6 +117,8 @@ function nbCallMain() {
   }
 
   function finish(btn, ctx, out) {
+    clearTimeout(ctx.waitMark);
+    btn.classList.remove('nb-wait-long');
     btn.disabled = false;
     btn.removeAttribute('aria-busy');
     setLabel(btn, '電話する');
@@ -143,6 +146,8 @@ function nbCallMain() {
     btn.setAttribute('aria-busy', 'true');
     setLabel(btn, '確認中…');
     say(btn, CHECKING);
+    // 1 秒を超えたら、ボタンに小さな回る印を足す（動きの計画 2 章 A7・形は assets/css/nb.css の .nb-wait-long）
+    ctx.waitMark = setTimeout(function () { btn.classList.add('nb-wait-long'); }, WAIT_MARK_MS);
     var done = false;
     function settle(out) {
       if (done) return;

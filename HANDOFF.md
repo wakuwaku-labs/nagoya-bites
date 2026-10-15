@@ -32,11 +32,12 @@ status: in_progress
 - 03時台: taps を前後交互に測り直した（バッテリー駆動・前→後→前→後・各 5 回）。前後で同じ程度で悪化なし（クイックビューの最大は前 208/232ms・後 192/200ms）。measure_typography（375/768/1280）は前後で同じ値。画面写真ははみ出し 0px・崩れなし
 - PR #620 を作成（https://github.com/wakuwaku-labs/nagoya-bites/pull/620・Designer の QA-5 は承認）。P-489 に進み具合をコメント。前後の動画の確認ページは scratchpad の motion-rec/compare.html（Chrome で開いた）
 
+- 段階 2（P-490・In Progress）を別の木 `../motion-stage2`（ブランチ wakuwaku-labs/motion-stage2・motion-stage1 の 516900dfe5 から）で実装中（未コミット）: index.html と nb.css の時間の直書き 32 か所をトークンへ（scratchpad/s2/tokenize.py）・A1 押した瞬間（scale .98＋内側の影）・A2 ♡ の弾み（nbPop）と「保存しました」・知らせのタイマーの重なりを直し role=status・A3 チップのホバーを media の中へ・A6 件数（同じ数字なら動かさない）・A7 待ちの印 .nb-wait-long（電話の確認 call_button_snippet.js・現在地 geoSearch。押し直しを止める）。motion の例外に .nb-wait-long。店舗ページの雛形の .link-btn に transform/box-shadow の時間。テストの偽のボタンに classList を足し、段階 2 のテストを design_system_motion・call_button・store_actions に足した（関係の 3 本は通過）。docs/design-system.md 8 章に「部品」、計画書の状態、CLAUDE.md の表
+
 ## 次にやること
-1. オーナーが前後の動画（compare.html・PR #620）と実機（iOS・Android）を見て OK を出すのを待つ
-2. OK が出たら: 充電器につないで perf.js の前後を測る → Build & Deploy が走っていないことを確かめて #620 をマージ → 本番の nb.css・index.html を確かめる → P-489 Done
-3. 段階 2（P-490: A1 押した瞬間の見た目・A2 ♡ の弾み・A3 チップの ✓・A6 件数の切り替え・A7 待ちの表示・トークンへの置き換え）を motion-stage1 から新しいブランチで。段階 2 も前後の動画を見せてからマージ
-4. 全部終わったら status: done
+1. 段階 2: npm test 全件・audit --check → コミット → rec_motion.js に場面 press・wait・count を足し、前（motion-stage1）と後（motion-stage2）を撮る → e2e_motion（reduced・taps）→ push・PR（段階 1 の #620 の上に積む）
+2. オーナーが前後の動画（段階 1: scratchpad/motion-rec/compare.html・段階 2 も同じ形で作る）と実機を見て OK → 充電器で perf.js の前後 → ビルドが止まっている時に #620 → 段階 2 の順にマージ → P-489・P-490 Done
+3. 全部終わったら status: done
 
 ## 試したが駄目だったこと
 - なし（効果＝クリックの増減は規模が小さく見分けられないので測らない。計画書 8.1 節）

@@ -142,7 +142,7 @@ header{
 #main-nav{display:flex;gap:1.75rem;align-items:center;}
 nav a{
   font-family:var(--font-body);font-size:var(--fs-sm);font-weight:500;
-  letter-spacing:.02em;color:var(--muted);text-decoration:none;transition:color .2s;
+  letter-spacing:.02em;color:var(--muted);text-decoration:none;transition:color var(--dur-base) var(--ease-out);
 }
 nav a:hover,nav a.active{color:var(--text);}
 /* ヘッダーのナビは、押す所の高さを --tap-min にそろえる。透明な当たり判定を上下に足すだけで、字の位置も
@@ -166,7 +166,7 @@ nav a:hover,nav a.active{color:var(--text);}
     background:var(--bg);flex-direction:column;gap:0;padding:5rem 2rem 2rem;
     border-left:1px solid var(--border);box-shadow:-4px 0 24px rgba(0,0,0,.08);
     transform:translateX(100%);
-    transition:transform .3s ease,display .3s;transition-behavior:allow-discrete;
+    transition:transform var(--dur-slow) var(--ease-out),display var(--dur-slow) var(--ease-out);transition-behavior:allow-discrete;
     z-index:200;align-items:flex-start;
   }
   /* 閉じている間は表示しない。画面の右外に置いておくだけだと（right:-100% でも transform でも）、
@@ -280,7 +280,7 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 @media(hover:hover){.nb-more:hover::after{transform:scaleX(1.5);}}
 
 /* ── ボタン ── */
-.nb-btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:var(--tap-min);padding:0 var(--sp-5);font-family:var(--font-body);font-size:var(--fs-sm);font-weight:500;letter-spacing:0;border-radius:var(--r-sm);border:1px solid transparent;text-decoration:none;cursor:pointer;transition:background .15s,color .15s,border-color .15s;}
+.nb-btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:var(--tap-min);padding:0 var(--sp-5);font-family:var(--font-body);font-size:var(--fs-sm);font-weight:500;letter-spacing:0;border-radius:var(--r-sm);border:1px solid transparent;text-decoration:none;cursor:pointer;transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out);}
 .nb-btn--primary{background:var(--gold);color:var(--bg);}
 .nb-btn--primary:hover{background:var(--gold2);}
 .nb-btn--secondary{background:#fff;color:var(--gold);border-color:var(--gold);}
@@ -372,12 +372,21 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 @media(max-width:640px){.store-card{flex-direction:column;gap:var(--sp-2);}}
 
 /* CTA 統一（HotPepper赤・Google青は廃止し gold 系1系統に統一） */
-.store-link,.link-btn{display:inline-flex;align-items:center;gap:.35rem;min-height:var(--tap-min);background:#fff;color:var(--gold);border:1px solid var(--gold);padding:0 var(--sp-4);border-radius:var(--r-sm);font-size:var(--fs-sm);font-weight:500;text-decoration:none;transition:background .15s,transform .1s;}
+.store-link,.link-btn{display:inline-flex;align-items:center;gap:.35rem;min-height:var(--tap-min);background:#fff;color:var(--gold);border:1px solid var(--gold);padding:0 var(--sp-4);border-radius:var(--r-sm);font-size:var(--fs-sm);font-weight:500;text-decoration:none;transition:background var(--dur-fast) var(--ease-out),transform var(--dur-press) var(--ease-out);}
 .store-link:hover,.link-btn:hover{background:rgba(122,92,16,.08);}
 .store-link-reserve,.store-link[href*="hotpepper"],.link-btn.hp,.topcta .store-link:not([href*="hotpepper"]){background:var(--gold);color:var(--bg);border-color:var(--gold);}
-.store-link-reserve:hover,.store-link[href*="hotpepper"]:hover,.link-btn.hp:hover,.topcta .store-link:not([href*="hotpepper"]):hover{background:var(--gold2);transform:translateY(-1px);}
+@media(hover:hover){.store-link-reserve:hover,.store-link[href*="hotpepper"]:hover,.link-btn.hp:hover,.topcta .store-link:not([href*="hotpepper"]):hover{background:var(--gold2);transform:translateY(-1px);}}
 .store-link-map{background:#fff;color:var(--gold);border:1px solid var(--gold);}
 .store-link-map:hover{background:rgba(122,92,16,.08);}
+/* 押した瞬間（動きの計画 2 章 A1）: 色を濃くし、わずかに沈む。押す 100ms・離す 150ms。
+   色は内側の影で濃くする（filter は動かさない）。「動きを減らす」設定では時間が 0 になり、色の変化だけが残る */
+.nb-btn,.store-link,.link-btn,.nb-bar-btn{transition-property:color,background-color,border-color,box-shadow,transform,opacity;transition-duration:var(--dur-fast);transition-timing-function:var(--ease-out);}
+.nb-btn:active:not(:disabled),.store-link:active:not(:disabled),.link-btn:active:not(:disabled),.nb-bar-btn:active:not(:disabled){transform:scale(.98);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.08);transition-duration:var(--dur-press);}
+/* 待ちの印（動きの計画 2 章 A7）: 押してから 1 秒を超えた操作（電話番号の確認・現在地）にだけ、ボタンの文の後ろに小さな回る印を出す。
+   付け外しは JS（.nb-wait-long）。止まらない繰り返しはこの印とスケルトンだけ（data/design_system.json の motion の例外）。
+   「動きを減らす」設定では回らず、欠けた輪のまま止まって見える */
+.nb-wait-long::after{content:"";display:inline-block;flex:none;width:.9em;height:.9em;margin-left:.45em;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;vertical-align:-.12em;animation:nbSpin .8s linear infinite;}
+@keyframes nbSpin{to{transform:rotate(360deg);}}
 
 .related,.related-wrap{background:var(--bg2);border-top:1px solid var(--border);padding:var(--rhythm-sm) 1.5rem;text-align:center;}
 .related-title{font-family:var(--font-display);font-weight:500;font-size:var(--fs-xl);color:var(--ink);margin-bottom:var(--sp-4);}

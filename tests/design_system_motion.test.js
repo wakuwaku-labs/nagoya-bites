@@ -214,3 +214,94 @@ test('audit_design_system: enforce:true は enforceScopes の違反で --check �
   assert.ok(c.json.violations.some((v) => v.rule === 'transition-all' && v.file === 'assets/css/nb.css'));
   assert.equal(runAudit(dir, '--report').status, 0);
 });
+
+// ---------------------------------------------------------------- 段階 2（P-490・動きの計画 2 章 A1〜A7）
+
+const NB2 = fs.readFileSync(path.join(ROOT, DS.cssPath), 'utf8');
+const INDEX_CSS = (INDEX.match(/<style[^>]*>[\s\S]*?<\/style>/g) || []).join('\n');
+const outsideReduced = (css) => css.replace(/@media\s*\(\s*prefers-reduced-motion\s*:\s*reduce\s*\)\s*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}/g, '');
+
+test('段階 2: index.html と nb.css の transition・animation の時間はトークンだけ（例外は待ちの表示 .skel・.nb-wait-long）', () => {
+  const left = [];
+  for (const [name, css] of [['index.html', INDEX_CSS], ['nb.css', NB2]]) {
+    const re = /([^{}]*)\{([^{}]*)\}/g;
+    let r;
+    const body = outsideReduced(css);
+    while ((r = re.exec(body))) {
+      const sel = r[1].trim();
+      for (const d of r[2].split(';')) {
+        const mm = d.match(/^\s*(transition|animation)(-duration)?\s*:(.*)$/);
+        if (!mm || !/\d(ms|s)\b/.test(mm[3])) continue;
+        if (/(^|[\s,])\.(skel|nb-wait-long)(?![\w-])/.test(sel)) continue;
+        left.push(`${name}: ${sel.slice(-60)} { ${d.trim()} }`);
+      }
+    }
+  }
+  assert.deepEqual(left, [], '時間の直書きが残っている');
+});
+
+test('段階 2 A1: 押す相手のボタンは押した瞬間に沈み（scale .98）色が濃くなる。ホバーは @media(hover:hover) の中だけ', () => {
+  const pressIndex = ['.search-wrap button', '.sticky-search-btn', '.fs-go', '.modal-cta-btn', '.card-cta a', '.pg-btn', '.m-pg-btn', '.empty-state-reset', '.filter-toggle-btn', '.scene-tile', '.scene-chip'];
+  const pressNb = ['.nb-btn', '.store-link', '.link-btn', '.nb-bar-btn'];
+  const activeRule = (css) => {
+    const r = css.match(/([^{}]*:active[^{}]*)\{[^{}]*transform:scale\(\.98\);box-shadow:inset 0 0 0 100vmax rgba\(0,0,0,\.08\);transition-duration:var\(--dur-press\);\}/);
+    return r ? r[1] : '';
+  };
+  const ai = activeRule(INDEX_CSS);
+  for (const s of pressIndex) assert.ok(ai.includes(s + ':active'), `index.html: ${s} の押した瞬間が無い`);
+  const an = activeRule(NB2);
+  for (const s of pressNb) assert.ok(an.includes(s + ':active'), `nb.css: ${s} の押した瞬間が無い`);
+  // 押す相手と ♡・絞り込みのチップのホバーは、触った後に残らないよう @media(hover:hover) の中だけ
+  const hoverOutside = [];
+  for (const [name, css] of [['index.html', INDEX_CSS], ['nb.css', NB2]]) {
+    const flat = outsideReduced(css).replace(/@media\s*\(\s*hover\s*:\s*hover\s*\)\s*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}/g, '');
+    for (const s of [...pressIndex, ...pressNb, '.fs-chip', '.m-fav', '.geo-btn', '.modal-cta-gm', '.modal-cta-call', '.store-link-reserve']) {
+      const esc = s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      if (new RegExp('(^|[},\\s])' + esc + '(?![\\w-])[^{},]*:hover[^{}]*\\{[^{}]*transform').test(flat)) hoverOutside.push(`${name}: ${s}`);
+      if (['.fs-chip', '.m-fav', '.pg-btn', '.fs-go', '.scene-chip', '.scene-tile'].includes(s) && new RegExp('(^|[},\\s])' + esc + '(?![\\w-])[^{},]*:hover').test(flat)) hoverOutside.push(`${name}: ${s}`);
+    }
+  }
+  assert.deepEqual(hoverOutside, []);
+});
+
+test('段階 2 A2: ♡ は保存したときだけ 1 回弾み「保存しました」を知らせる。外したときは弾まず知らせない', () => {
+  const vm = require('vm');
+  const start = INDEX.indexOf('function toggleFav(');
+  const end = INDEX.indexOf('\n});\n', INDEX.indexOf("e.animationName === 'nbPop'")) + 5;
+  assert.ok(start > 0 && end > start, 'toggleFav・nbPop が見つからない');
+  const mkBtn = (name) => {
+    const cls = new Set();
+    return { cls, name, innerHTML: '', getAttribute: (k) => (k === 'data-name' ? name : null),
+      classList: { toggle: (c, on) => (on ? cls.add(c) : cls.delete(c)), add: (c) => cls.add(c), remove: (c) => cls.delete(c), contains: (c) => cls.has(c) },
+      get offsetWidth() { return 10; } };
+  };
+  const a = mkBtn('店A');
+  const b = mkBtn('店B');
+  let favs = [];
+  const toasts = [];
+  const listeners = [];
+  const ctx = {
+    getFavs: () => favs.slice(), saveFavs: (x) => { favs = x; }, trackEvent() {},
+    showToast: (m2) => toasts.push(m2),
+    document: { querySelectorAll: () => [a, b], addEventListener: (t, fn) => listeners.push([t, fn]) },
+  };
+  vm.createContext(ctx);
+  vm.runInContext(INDEX.slice(start, end), ctx);
+  ctx.toggleFav('店A');
+  assert.equal(a.cls.has('faved') && a.cls.has('is-pop'), true, '保存で塗りと弾み');
+  assert.equal(b.cls.has('is-pop'), false, 'ほかの店は弾まない');
+  assert.deepEqual(toasts, ['保存しました']);
+  // 弾みが終わったらクラスを外す（次に押したときにまた弾む）
+  const [, onEnd] = listeners.find(([t]) => t === 'animationend');
+  onEnd({ animationName: 'nbPop', target: a });
+  assert.equal(a.cls.has('is-pop'), false);
+  ctx.toggleFav('店A');
+  assert.equal(a.cls.has('faved') || a.cls.has('is-pop'), false, '外したときは弾まない');
+  assert.deepEqual(toasts, ['保存しました'], '外したときは知らせない');
+});
+
+test('段階 2 A2・A6: 知らせは読み上げられ、続けて出しても前のタイマーで早く消えない。件数は同じ数字なら動かさない', () => {
+  assert.match(INDEX, /<div class="toast" id="toast" role="status" aria-live="polite"><\/div>/);
+  assert.match(INDEX, /clearTimeout\(window\.__nbToastTimer\);\s*window\.__nbToastTimer = setTimeout/);
+  assert.match(INDEX, /if \(cntEl\.textContent === cntText\) \{/);
+});
