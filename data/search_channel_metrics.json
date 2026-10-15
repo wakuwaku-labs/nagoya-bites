@@ -1,21 +1,21 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-10-15T16:57:38.684Z",
+  "generatedAt": "2026-10-15T17:35:41.615Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1819,
+  "total_sessions": 1822,
   "engines": [
     {
       "key": "google",
       "label": "Google",
-      "sessions": 592,
+      "sessions": 593,
       "pct": 32.5,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 592
+          "sessions": 593
         }
       ]
     },
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 498,
-      "pct": 27.4,
+      "pct": 27.3,
       "sources": [
         {
           "source": "bing",
@@ -58,13 +58,13 @@
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 225,
-      "pct": 12.4,
+      "sessions": 227,
+      "pct": 12.5,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 223
+          "sessions": 225
         },
         {
           "source": "hk.search.yahoo.com",
@@ -222,12 +222,12 @@
     }
   ],
   "search_only": {
-    "total": 1434,
+    "total": 1437,
     "share": [
       {
         "key": "google",
         "label": "Google",
-        "sessions": 592,
+        "sessions": 593,
         "pct_of_search": 41.3
       },
       {
@@ -239,8 +239,8 @@
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 225,
-        "pct_of_search": 15.7
+        "sessions": 227,
+        "pct_of_search": 15.8
       },
       {
         "key": "ai_assistant",
@@ -273,7 +273,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 592 セッションのみ。Bing(498) + 生成AI(102) の 600 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 593 セッションのみ。Bing(498) + 生成AI(102) の 600 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
