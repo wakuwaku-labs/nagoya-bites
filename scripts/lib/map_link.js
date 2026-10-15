@@ -19,7 +19,7 @@ const fs = require('fs');
 const path = require('path');
 
 // NB-MAP-CORE:START
-// エリアから1つ目の地名のみを抽出（"栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄" → "栄"）
+// エリアから1つ目の区切りだけを取り、半角カナを外す（"名古屋駅ﾒｲｴｷ/栄" → "名古屋駅"。半角カナの後ろの漢字は残るので "栄ｷﾀ錦/伏見丸の内" は "栄錦"）
 // Hotpepperの middle_area.name は複数エリアがスラッシュ区切り＋半角カナで連結されており
 // 外部検索（Instagram/食べログ/TikTok/X/Google）にそのまま渡すと一致しなくなるため整形する
 function cleanArea(area) {

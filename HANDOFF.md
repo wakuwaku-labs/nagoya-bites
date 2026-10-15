@@ -1,4 +1,4 @@
-status: in_progress
+status: done
 
 # 店のデータの正しさ・検索流入・送客の計画（旧 MEO 計画）の実装（2026-10-15〜）
 
@@ -20,20 +20,16 @@ status: in_progress
 - 評価: 消した店 404・口コミ信頼度を付けない店 417・特集の★を外した 20 件
 - B2 の本番確認（run 38734163945 成功の後）: 地図リンクに place_id を付けた店 3,205（要確認 1,291・不一致 133 は検索の形）。実例 5 店の店舗ページは検索の形、朱寿は query_place_id つき。本番のデータで設定が許していない状態の店は電話 0・評価 0・信頼度 0・地図 0（紐付けの無い店の評価 30 は P-473）
 - 起票: ISSUE-191＝P-473、ISSUE-192＝P-474。P-467・P-468 Done
-- C1（MEO-006）作業中・ブランチ wakuwaku-labs/meo-c1-metrics（origin/main 4f80abd029 から・未コミット）:
-  - scripts/lib/map_link.js に nbMapLinkKind（place_id／search）。index.html の地図ボタン 6 か所に store_id（nbStoreKey）と link_kind。店舗ページ（本文・行動バー）は mapClickAttr で store_id（スラグ）・store_name・location・link_kind。ジャーナルの生成器 2 本も link_kind・store_id
-  - index.html の geoSearch に nbGeoTrack（geo_search {result}: granted・denied・unsupported・error）。位置・エリア名は送らない
-  - 新しい scripts/lib/store_actions.js（地図・call_lookup・geo_search の集計と fetchStoreActions。未登録のディメンションは getMetadata で確かめて問い合わせない・null と missingDimensions）。fetch_ga4_views.js が store_referrals.json に actions・map・callLookup・geoSearch を書く
-  - 新しい scripts/check_metrics_freshness.js と夜間 QA の soft metrics-freshness
-  - docs/kpi-weekly.md の表・docs/reservation-measurement.md の節・CLAUDE.md の行
-  - テスト: tests/store_actions.test.js（8 件）・行動バーとカードのテストを更新。e2e docs/qa/meo-2026-10/e2e_geo_search.js は 3 場面とも通過（許可のとき URL は #q=名古屋駅 になる＝既存の動き）
-  - npm test は直す前に 10 件失敗（カードのテストに nbStoreKey が無かった）→ 直した。全体の再実行がまだ
+- C1（MEO-006）: PR #606 をマージ（6d49e0404e）。地図ボタンの store_id・link_kind、「現在地」の geo_search {result}（位置・エリア名は送らない・e2e docs/qa/meo-2026-10/e2e_geo_search.js で 3 場面とも確認）、store_referrals.json の actions・map・callLookup・geoSearch（scripts/lib/store_actions.js）、夜間 QA の soft metrics-freshness、docs/kpi-weekly.md の行。npm test 1,759 通過
+- A3（MEO-002）: docs/seo-traffic-inventory-2026-10.md（PR #602）を SEO-116（P-111）へコメントで渡し済み・P-466 Done。backlog も done にそろえた（後片付けの PR）
+- Linear: P-465・P-469・P-470 を In Progress、P-469 に B3・B2 の本番確認をコメント
+- C1 の本番確認（run 38737377373 成功・公開 5e0e652e53 成功の後）: store_referrals.json に actions（予約 73・電話 2・地図 36）・map（14 店・店名なし 6）・callLookup・geoSearch・missingDimensions（location・link_kind・result）が入った。店舗ページの地図ボタン 2 つに store_id・link_kind（朱寿 place_id・ホシノシタ search）、トップに geo_search と link_kind:nbMapLinkKind 6 か所。P-470 にコメント（Done は GA4 の登録の後）
+- 後片付けの PR（ブランチ wakuwaku-labs/meo-wrapup）: backlog の MEO-001 in_progress・MEO-002 done、cleanArea の説明の例の直し、この HANDOFF
 
 ## 次にやること
-1. C1: npm test 全体・design・inline js → コミット → PR → マージ（ビルド中でないことを確かめる）→ 本番で店舗ページの onclick に store_id・link_kind、トップに geo_search があるか
-2. P-469（MEO-005）に B3・B2 の本番確認をコメント（項目 5 の閾値は 10-29 以降なので Done にしない）。P-470（MEO-006）に C1 の結果をコメント。backlog の MEO-006 を更新
-3. オーナーに頼むこと: GA4 にカスタムディメンション location・link_kind・result（イベントスコープ）を登録（内訳はその日から・非遡及）
-4. 最終報告に入れる: 297→278 店の電話停止・404 店の評価停止・417 店の信頼度停止（正しい店も含む）・強制 push 1 回・30 店（P-473）・取得日 90 日超 3,880 店・ジャーナルの★ 5 件は書き換えない・会席の特集の訂正（9 店で組む）・PR #603 の本番停止の直し・急な減りの閾値は 10-29 以降・公開済みのジャーナルの地図リンクは古い形のまま・cleanArea のコメントの例が実際と違う（直していない）・「現在地」で URL に #q=エリア名が書かれる（GA4 の自動の page_view が送るかは未確認）
+（このセッションの作業は終わり。残りは日付とオーナーの操作を待つものだけ）
+1. 2026-10-29 以降: 夜間 QA の状態ごとの数から「確認済みの急な減り」の閾値を決める（P-469 の受け入れ条件 5）
+2. オーナーが GA4 にカスタムディメンション location・link_kind・result を登録したら、次の日の store_referrals.json の byResult・byLocation・byLinkKind が埋まるか確かめ、P-470 を Done にする
 
 ## 試したが駄目だったこと
 - `orca linear save-issue` の作成時の `--parent-id` は効かない（作成後に付け直す）。書き込みは linear_write_unconfirmed でも反映されていることが多い。必ず読み戻す
