@@ -20,6 +20,11 @@
  *       （allowlist.selectors に載るセレクタは除外）
  *   (e) <header> 内に class="logo"、<footer> が存在する、viewport meta がある
  *   (f) font-weight が許可リスト（400/500/600/700）以外を使っていない
+ *   (g) 動き（動きの計画 5.3 節）: transition-all / motion-duration / motion-infinite / motion-layout-prop /
+ *       smooth-scroll-js。--report の motion に件数と一覧を出す。判定は scripts/lib/motion_audit.js、
+ *       閾値と例外は data/design_system.json の motion。motion.enforce が false の間は数えるだけで落とさない
+ *       （true なら enforceScopes のファイルの違反だけで --check が落ちる）。対象は nb.css と、上の (a)〜(f) と同じページの
+ *       インライン <style> と src の無い <script>
  *
  * 使い方:
  *   node scripts/audit_design_system.js --check    # 違反があれば exit 1（CI向け）
@@ -54,6 +59,10 @@ const ROOT = rootIdx >= 0 ? path.resolve(args[rootIdx + 1]) : path.join(__dirnam
 const DS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/design_system.json'), 'utf8'));
 const webFonts = require('./lib/web_fonts');
 const WEB_FONTS_POLICY = webFonts.loadWebFontsPolicy(ROOT);
+const motionAudit = require('./lib/motion_audit');
+const MOTION_POLICY = DS.motion || null;
+// --report の motion.violations に載せる最大件数（店舗ページの旧テンプレで数千件になり JSON が 1.7MB を超えるため）。件数は全数を byRule・byFile に出す
+const MOTION_MAX_LISTED = 300;
 
 const mode = args.includes('--check') ? 'check' : 'report';
 const sampleIdx = args.indexOf('--sample');
@@ -379,11 +388,39 @@ function main() {
     }
   });
 
+  // (g) 動き。数えるだけ（enforce が false の間）。nb.css と、(a)〜(f) と同じページのインライン <style>・<script>
+  let motion = null;
+  if (MOTION_POLICY) {
+    let mv = [];
+    const cssFile = path.join(ROOT, DS.cssPath);
+    if (fs.existsSync(cssFile)) mv = mv.concat(motionAudit.auditCss(fs.readFileSync(cssFile, 'utf8'), MOTION_POLICY, { file: DS.cssPath }));
+    allFiles.forEach(f => {
+      try {
+        mv = mv.concat(motionAudit.auditHtml(fs.readFileSync(f, 'utf8'), MOTION_POLICY, { file: path.relative(ROOT, f) }));
+      } catch (e) {
+        violations.push({ file: path.relative(ROOT, f), rule: 'audit-error', detail: 'motion: ' + e.message });
+      }
+    });
+    const sum = motionAudit.summarize(mv);
+    const enforced = motionAudit.enforcedViolations(mv, MOTION_POLICY);
+    enforced.forEach(v => violations.push({ file: v.file, rule: v.rule, detail: `line ${v.line} ${v.selector} { ${v.excerpt} }` }));
+    motion = {
+      enforce: MOTION_POLICY.enforce === true,
+      enforceScopes: MOTION_POLICY.enforceScopes || [],
+      total: sum.total,
+      byRule: sum.byRule,
+      byFile: sum.byFile,
+      violations: mv.slice(0, MOTION_MAX_LISTED),
+      violationsTruncated: Math.max(0, mv.length - MOTION_MAX_LISTED),
+    };
+  }
+
   const result = {
     ok: violations.length === 0,
     files_scanned: allFiles.length,
     breakdown: { root: rootFiles.length, features: featureFiles.length, journal: journalFiles.length, stores: storeFiles.length, hubs: hubFiles.length },
     violations,
+    motion,
   };
 
   console.log(JSON.stringify(result, null, 2));
