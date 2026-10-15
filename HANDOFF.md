@@ -25,13 +25,15 @@ status: in_progress
 
 - 2026-10-16 02時台: 段階 0 の担当 A の分をコミット（2dd047cdb9・ブランチ wakuwaku-labs/coffinfish・未 push）。0049 は main と重ならない（main の最新は 0048）
 - 段階 1 を別の木 `../motion-stage1`（ブランチ wakuwaku-labs/motion-stage1・2dd047cdb9 から）で実装しコミット（5544ba4310・未 push）。F1〜F8・店舗ページの雛形・motion.enforce=true。npm test 1801 件通過・audit --check 通過・店舗ページ 40 本を再生成して動きの違反 0・構文エラー 0（再生成分は戻した）。node_modules は coffinfish へのシンボリックリンク（コミットしない）
-- 並行: 担当 B（e2e_motion.js・基線の JSON）は自分の測定の完了待ち。担当 C（`docs/qa/uiux-2026-10/rec_motion.js`・前後の動画を撮る道具）を作成中
+- 段階 0 は #619 でマージ（bf80020b3b）・P-488 Done。段階 1 に F9（クイックビューの背景のぼかしを外す・620191a1a2）を足し、origin/main を取り込んだ（80ebc9955b・衝突は段階 1 の側を採った）。npm test 1801 件通過・audit --check 通過
+- 直した後の e2e_motion: 「動きを減らす」のスクロールは 6 回中 6 回合格（前は 0 回）。押してから変わるまでは録画と同時に測ったので比べない（測り直す）
+- 担当 C（rec_motion.js）は 02:07 から止まっていたので止め、自分で引き取った。前＝coffinfish を origin/main（bf80020b3b）に切り離して置いた木、後＝motion-stage1 で撮影中
 
 ## 次にやること
-1. 担当 B の結果を確かめる → e2e_motion.js と基線を段階 0 に足す → PR（coffinfish）→ ビルドが止まっている時にマージ → P-488 Done
-2. 担当 C の道具で、before（origin/main の木）と after（motion-stage1）を 390/1280 で撮る → オーナーに見せる。F9（クイックビューのぼかし）は CPU 4 倍でコマを測ってから決める
-3. 段階 1 は main を取り込み、マージする日に充電器で perf.js の前後を測ってから PR → オーナーの OK でマージ → P-489 Done
-4. 段階 2（P-490）
+1. 前後の動画を並べた HTML を作って開く → 段階 1 を push して PR（rec_motion.js も入れる）
+2. 押してから変わるまで（taps）を、ほかの処理を止めて前後交互に測り直す（同じ電源）
+3. オーナーが動画を見て OK → ビルドが止まっている時にマージ（マージする日に充電器で perf.js の前後）→ P-489 Done
+4. 段階 2（P-490: A1・A2・A3・A6・A7 とトークンへの置き換え）
 
 ## 試したが駄目だったこと
 - なし（効果＝クリックの増減は規模が小さく見分けられないので測らない。計画書 8.1 節）
