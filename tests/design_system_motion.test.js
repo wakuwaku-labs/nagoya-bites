@@ -305,3 +305,17 @@ test('段階 2 A2・A6: 知らせは読み上げられ、続けて出しても�
   assert.match(INDEX, /clearTimeout\(window\.__nbToastTimer\);\s*window\.__nbToastTimer = setTimeout/);
   assert.match(INDEX, /if \(cntEl\.textContent === cntText\) \{/);
 });
+
+test('段階 2 A7: 待ちの輪は先頭のアイコンをその場で回す（ボタンの幅を変えない）。印を付けるボタンはどれも先頭にアイコンを持つ', () => {
+  const css = fs.readFileSync(path.join(ROOT, 'assets', 'css', 'nb.css'), 'utf8');
+  // 文の後ろ・前に箱を足すと、ボタンが広がり横の検索欄が縮む（2026-10-16 の録画で「現在地」に出た）
+  assert.doesNotMatch(css, /\.nb-wait-long::?(after|before)/);
+  assert.match(css, /\.nb-wait-long>svg:first-child,\.nb-wait-long>\.nb-icon:first-child\{[^}]*animation:nbSpin/);
+  // 現在地（index.html）とクイックビューの電話
+  assert.match(INDEX, /btn\.innerHTML = NB_PIN_SVG \+ '取得中…';/);
+  assert.match(INDEX, /data-call-loc="modal" onclick="nbCallStore\([^"]*\)" aria-label="[^"]*">' \+ NB_CALL_ICON_SVG \+ label/);
+  // 店舗ページの電話（本文と下の行動バー）
+  const gen = fs.readFileSync(path.join(ROOT, 'gen-store-pages.js'), 'utf8');
+  assert.match(gen, /nb-bar-tel"[^`]*>\$\{BAR_PHONE_ICON\}<span>電話する<\/span><\/button>/);
+  assert.match(gen, /class="link-btn tel"[^`]*に電話する"><svg /);
+});
