@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-15T15:16:42.888Z",
+  "generatedAt": "2026-10-15T15:27:42.515Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1608,
-    "pageViews": 2227,
-    "sessions": 1798,
+    "activeUsers": 1610,
+    "pageViews": 2229,
+    "sessions": 1800,
     "avgSessionDuration": 122,
     "bounceRate": 0.285,
     "pagesPerSession": 1.24
@@ -17,10 +17,10 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1326,
+      "organic": 1327,
       "direct": 348,
       "social": 6,
-      "ai_assistant": 100,
+      "ai_assistant": 101,
       "referral": 31,
       "paid": 0,
       "other": 1
@@ -29,7 +29,7 @@
       "organic": 73.2,
       "direct": 19.2,
       "social": 0.3,
-      "ai_assistant": 5.5,
+      "ai_assistant": 5.6,
       "referral": 1.7,
       "paid": 0,
       "other": 0.1
@@ -44,7 +44,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 494
+      "sessions": 495
     },
     {
       "source": "(direct)",
@@ -59,7 +59,7 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 74
+      "sessions": 75
     },
     {
       "source": "unknown",
@@ -1100,7 +1100,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1608,
+    "value": 1610,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
