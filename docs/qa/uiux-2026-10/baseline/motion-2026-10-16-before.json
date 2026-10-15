@@ -1,0 +1,851 @@
+{
+  "tool": "e2e_motion.js",
+  "startedAt": "2026-10-15T17:04:58.730Z",
+  "base": "local-static-server",
+  "runs": 5,
+  "targetMs": 200,
+  "host": {
+    "power": "battery",
+    "lowPowerMode": 1,
+    "loadAvg1": 3.03,
+    "cpus": 10,
+    "node": "v25.9.0",
+    "powerAtEnd": "battery"
+  },
+  "browser": "HeadlessChrome/155.0.8059.39",
+  "throttle": {
+    "cpu": 4,
+    "network": "skeleton のみ 遅延150ms・下り1.6Mbps"
+  },
+  "taps": [
+    {
+      "viewport": "mobile-390",
+      "ops": [
+        {
+          "id": "fav",
+          "name": "店のカードの保存（♡）",
+          "runs": [
+            {
+              "method": "event",
+              "ms": 40,
+              "rafMs": 81,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 40,
+              "rafMs": 67.29999999701977,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 40,
+              "rafMs": 54.599999994039536,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 40,
+              "rafMs": 53.599999994039536,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 40,
+              "rafMs": 55.80000001192093,
+              "etSupported": true,
+              "worked": true
+            }
+          ],
+          "failed": 0,
+          "n": 5,
+          "medianMs": 40,
+          "maxMs": 40,
+          "methods": {
+            "event": 5,
+            "raf": 0
+          },
+          "rafMedianMs": 55.8,
+          "over": false,
+          "pass": true
+        },
+        {
+          "id": "sheet-open",
+          "name": "絞り込みシートを開く",
+          "runs": [
+            {
+              "method": "event",
+              "ms": 120,
+              "rafMs": 137.6000000089407,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 96,
+              "rafMs": 110.6000000089407,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 88,
+              "rafMs": 109.1000000089407,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 88,
+              "rafMs": 107.40000000596046,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 96,
+              "rafMs": 111.70000000298023,
+              "etSupported": true,
+              "worked": true
+            }
+          ],
+          "failed": 0,
+          "n": 5,
+          "medianMs": 96,
+          "maxMs": 120,
+          "methods": {
+            "event": 5,
+            "raf": 0
+          },
+          "rafMedianMs": 110.6,
+          "over": false,
+          "pass": true
+        },
+        {
+          "id": "chip",
+          "name": "シートの中のチップを選ぶ",
+          "runs": [
+            {
+              "method": "event",
+              "ms": 48,
+              "rafMs": 71.1000000089407,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 48,
+              "rafMs": 75.8999999910593,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 48,
+              "rafMs": 82.79999999701977,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 56,
+              "rafMs": 86,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 48,
+              "rafMs": 78.20000000298023,
+              "etSupported": true,
+              "worked": true
+            }
+          ],
+          "failed": 0,
+          "n": 5,
+          "medianMs": 48,
+          "maxMs": 56,
+          "methods": {
+            "event": 5,
+            "raf": 0
+          },
+          "rafMedianMs": 78.2,
+          "over": false,
+          "pass": true
+        },
+        {
+          "id": "quick-view",
+          "name": "店のカードを押してクイックビューを開く",
+          "runs": [
+            {
+              "method": "event",
+              "ms": 208,
+              "rafMs": 235.20000000298023,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 72,
+              "rafMs": 104.59999999403954,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 72,
+              "rafMs": 95.1000000089407,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 88,
+              "rafMs": 104.09999999403954,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 72,
+              "rafMs": 97,
+              "etSupported": true,
+              "worked": true
+            }
+          ],
+          "failed": 0,
+          "n": 5,
+          "medianMs": 72,
+          "maxMs": 208,
+          "methods": {
+            "event": 5,
+            "raf": 0
+          },
+          "rafMedianMs": 104.1,
+          "over": true,
+          "pass": true
+        }
+      ],
+      "notes": [],
+      "pageErrors": []
+    },
+    {
+      "viewport": "desktop-1280",
+      "ops": [
+        {
+          "id": "fav",
+          "name": "店のカードの保存（♡）",
+          "runs": [
+            {
+              "method": "event",
+              "ms": 80,
+              "rafMs": 79.90000000596046,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 40,
+              "rafMs": 41.599999994039536,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 32,
+              "rafMs": 39.20000000298023,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 32,
+              "rafMs": 36.400000005960464,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 32,
+              "rafMs": 36.599999994039536,
+              "etSupported": true,
+              "worked": true
+            }
+          ],
+          "failed": 0,
+          "n": 5,
+          "medianMs": 32,
+          "maxMs": 80,
+          "methods": {
+            "event": 5,
+            "raf": 0
+          },
+          "rafMedianMs": 39.2,
+          "over": false,
+          "pass": true
+        },
+        {
+          "id": "sheet-open",
+          "name": "絞り込みシートを開く",
+          "runs": [
+            {
+              "method": "event",
+              "ms": 136,
+              "rafMs": 121,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 112,
+              "rafMs": 103.09999999403954,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 120,
+              "rafMs": 105.90000000596046,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 120,
+              "rafMs": 107.29999999701977,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 104,
+              "rafMs": 93.59999999403954,
+              "etSupported": true,
+              "worked": true
+            }
+          ],
+          "failed": 0,
+          "n": 5,
+          "medianMs": 120,
+          "maxMs": 136,
+          "methods": {
+            "event": 5,
+            "raf": 0
+          },
+          "rafMedianMs": 105.9,
+          "over": false,
+          "pass": true
+        },
+        {
+          "id": "chip",
+          "name": "シートの中のチップを選ぶ",
+          "runs": [
+            {
+              "method": "event",
+              "ms": 40,
+              "rafMs": 58.20000000298023,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 32,
+              "rafMs": 50.400000005960464,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 32,
+              "rafMs": 58.1000000089407,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 32,
+              "rafMs": 60.900000005960464,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 32,
+              "rafMs": 69.09999999403954,
+              "etSupported": true,
+              "worked": true
+            }
+          ],
+          "failed": 0,
+          "n": 5,
+          "medianMs": 32,
+          "maxMs": 40,
+          "methods": {
+            "event": 5,
+            "raf": 0
+          },
+          "rafMedianMs": 58.2,
+          "over": false,
+          "pass": true
+        },
+        {
+          "id": "quick-view",
+          "name": "店のカードを押してクイックビューを開く",
+          "runs": [
+            {
+              "method": "event",
+              "ms": 224,
+              "rafMs": 191,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 104,
+              "rafMs": 53.400000005960464,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 88,
+              "rafMs": 90,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 88,
+              "rafMs": 84.20000000298023,
+              "etSupported": true,
+              "worked": true
+            },
+            {
+              "method": "event",
+              "ms": 88,
+              "rafMs": 89.90000000596046,
+              "etSupported": true,
+              "worked": true
+            }
+          ],
+          "failed": 0,
+          "n": 5,
+          "medianMs": 88,
+          "maxMs": 224,
+          "methods": {
+            "event": 5,
+            "raf": 0
+          },
+          "rafMedianMs": 89.9,
+          "over": true,
+          "pass": true
+        }
+      ],
+      "notes": [],
+      "pageErrors": []
+    }
+  ],
+  "reduced": [
+    {
+      "viewport": "mobile-390",
+      "running": {
+        "after-load": {
+          "count": 0,
+          "names": []
+        },
+        "sheet-open": {
+          "count": 0,
+          "names": []
+        },
+        "quick-view": {
+          "count": 0,
+          "names": []
+        }
+      },
+      "scroll": [
+        {
+          "y0": 1800,
+          "target": 0,
+          "yRightAfter": 1800,
+          "yAfter1Frame": 1800,
+          "id": "scroll-top（#scroll-top を押す）",
+          "vacuous": false,
+          "instant": false
+        },
+        {
+          "y0": 2500,
+          "target": 744,
+          "yRightAfter": 2500,
+          "yAfter1Frame": 2500,
+          "id": "scrollToMagazine（雑誌面の先頭へ戻る）",
+          "vacuous": false,
+          "instant": false
+        },
+        {
+          "y0": 5638,
+          "target": 5528,
+          "yRightAfter": 5638,
+          "yAfter1Frame": 5638,
+          "id": "scrollToResults（絞り込み確定後の結果へ）",
+          "vacuous": false,
+          "instant": false
+        }
+      ],
+      "notes": [],
+      "reducedMatches": true,
+      "pageErrors": [],
+      "animationsPass": true,
+      "scrollPass": false,
+      "pass": false
+    },
+    {
+      "viewport": "desktop-1280",
+      "running": {
+        "after-load": {
+          "count": 0,
+          "names": []
+        },
+        "sheet-open": {
+          "count": 0,
+          "names": []
+        },
+        "quick-view": {
+          "count": 0,
+          "names": []
+        }
+      },
+      "scroll": [
+        {
+          "y0": 1800,
+          "target": 0,
+          "yRightAfter": 1800,
+          "yAfter1Frame": 1800,
+          "id": "scroll-top（#scroll-top を押す）",
+          "vacuous": false,
+          "instant": false
+        },
+        {
+          "y0": 2500,
+          "target": 778,
+          "yRightAfter": 2500,
+          "yAfter1Frame": 2500,
+          "id": "scrollToMagazine（雑誌面の先頭へ戻る）",
+          "vacuous": false,
+          "instant": false
+        },
+        {
+          "y0": 4103,
+          "target": 3993,
+          "yRightAfter": 4103,
+          "yAfter1Frame": 4103,
+          "id": "scrollToResults（絞り込み確定後の結果へ）",
+          "vacuous": false,
+          "instant": false
+        }
+      ],
+      "notes": [],
+      "reducedMatches": true,
+      "pageErrors": [],
+      "animationsPass": true,
+      "scrollPass": false,
+      "pass": false
+    }
+  ],
+  "skeleton": [
+    {
+      "viewport": "mobile-390",
+      "scenario": "top",
+      "runs": [
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1144,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1156,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1296,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1148,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1156,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        }
+      ],
+      "domSeenRuns": 5,
+      "visibleSeenRuns": 0,
+      "visibleTotalMedianMs": null,
+      "visibleTotalMaxMs": null,
+      "domSpanMedianMs": 0
+    },
+    {
+      "viewport": "mobile-390",
+      "scenario": "with-query",
+      "runs": [
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1144,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1220,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1160,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1244,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1260,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        }
+      ],
+      "domSeenRuns": 5,
+      "visibleSeenRuns": 0,
+      "visibleTotalMedianMs": null,
+      "visibleTotalMaxMs": null,
+      "domSpanMedianMs": 0
+    },
+    {
+      "viewport": "desktop-1280",
+      "scenario": "top",
+      "runs": [
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1156,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1152,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1228,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1228,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1152,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        }
+      ],
+      "domSeenRuns": 5,
+      "visibleSeenRuns": 0,
+      "visibleTotalMedianMs": null,
+      "visibleTotalMaxMs": null,
+      "domSpanMedianMs": 0
+    },
+    {
+      "viewport": "desktop-1280",
+      "scenario": "with-query",
+      "runs": [
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1156,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1156,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1160,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1164,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        },
+        {
+          "domSeen": true,
+          "visibleSeen": false,
+          "fcpMs": 1256,
+          "domAddCount": 8,
+          "domSpanMs": 0,
+          "visibleTotalMs": 0,
+          "visibleSpanMs": 0,
+          "stillVisible": false,
+          "skelLeft": 0,
+          "catalogLoaded": true
+        }
+      ],
+      "domSeenRuns": 5,
+      "visibleSeenRuns": 0,
+      "visibleTotalMedianMs": null,
+      "visibleTotalMaxMs": null,
+      "domSpanMedianMs": 0
+    }
+  ],
+  "pass": false,
+  "fails": [
+    "reduced mobile-390",
+    "reduced desktop-1280"
+  ],
+  "reducedStartedAt": "2026-10-15T17:23:22.960Z",
+  "reducedNote": "reduced は scrollToResults が始めから目的の位置にいて確かめられていなかったため、開始位置を一番下に変えて同じ木で測り直した値に差し替えた（同じ日・同じ電源）"
+}

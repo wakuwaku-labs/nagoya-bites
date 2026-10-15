@@ -23,10 +23,15 @@ status: in_progress
 - 2026-10-16 01:5x: #617 をマージ（efdff51b89）。オーナーの答え: 判断 1＝A（入場の動きをやめる・ホバーは枠と影だけ）、判断 2＝A（段階 0〜2 を順に）。P-487 にコメント、P-488 を In Progress
 - 段階 0 を実装中: 計画書の状態と 10 章を更新、判断の記録 0049 を書いた。並列の担当2つ（A: トークン・design_system.json の motion・scripts/lib/motion_audit.js・監査の report・テスト・design-system.md・designer.md・CLAUDE.md の表／B: docs/qa/uiux-2026-10/e2e_motion.js と baseline/motion-2026-10-16-before.json）。どちらもコミットしない約束で同じ木を編集中
 
+- 2026-10-16 02時台: 段階 0 の担当 A の分をコミット（2dd047cdb9・ブランチ wakuwaku-labs/coffinfish・未 push）。0049 は main と重ならない（main の最新は 0048）
+- 段階 1 を別の木 `../motion-stage1`（ブランチ wakuwaku-labs/motion-stage1・2dd047cdb9 から）で実装しコミット（5544ba4310・未 push）。F1〜F8・店舗ページの雛形・motion.enforce=true。npm test 1801 件通過・audit --check 通過・店舗ページ 40 本を再生成して動きの違反 0・構文エラー 0（再生成分は戻した）。node_modules は coffinfish へのシンボリックリンク（コミットしない）
+- 並行: 担当 B（e2e_motion.js・基線の JSON）は自分の測定の完了待ち。担当 C（`docs/qa/uiux-2026-10/rec_motion.js`・前後の動画を撮る道具）を作成中
+
 ## 次にやること
-1. 担当 A・B の結果を照合（motion の件数が計画書の 16・10 と合うか）→ npm test・audit --check → コミット → PR → ビルドが止まっている時にマージ → P-488 Done
-2. 段階 1（P-489）: F1〜F9。マージする日に充電器につないで perf.js の前後を同じ日に測る。390/1280 の前後の動画をオーナーに見せてからマージ
-3. 段階 2（P-490）
+1. 担当 B の結果を確かめる → e2e_motion.js と基線を段階 0 に足す → PR（coffinfish）→ ビルドが止まっている時にマージ → P-488 Done
+2. 担当 C の道具で、before（origin/main の木）と after（motion-stage1）を 390/1280 で撮る → オーナーに見せる。F9（クイックビューのぼかし）は CPU 4 倍でコマを測ってから決める
+3. 段階 1 は main を取り込み、マージする日に充電器で perf.js の前後を測ってから PR → オーナーの OK でマージ → P-489 Done
+4. 段階 2（P-490）
 
 ## 試したが駄目だったこと
 - なし（効果＝クリックの増減は規模が小さく見分けられないので測らない。計画書 8.1 節）
@@ -36,6 +41,8 @@ status: in_progress
 - 制約12: 新しい UI 部品・テンプレート変更は Designer のレビューと audit_design_system.js --check が公開条件
 - 速さ（CLS・LCP・TBT）を悪くしない。前後は同じ日・同じ電源で測る
 - 0038（閉じる動きは付けない）を守る。UI・UX 計画書 1350 行の「出入り 200ms」より 0038 を優先
+- 判断 1＝A の読み方: カード（店・特集・話題店・最新ジャーナル）のホバーは枠と影だけ（持ち上げ・写真の拡大・色の強調・下線や矢印の伸びも外した）。文字のリンク（.nb-more・.nsl-arrow）は transform の小さな動きを残した。ボタンの 1px の持ち上げは残し、@media(hover:hover) の中へ入れた
+- ルート直下の about・faq・contact の 300ms 超（8 件）と手書きの特集（4 件）は落とす対象の外（計画 6 章と同じ扱い）
 
 ## 関連ファイル
 - assets/css/nb.css / data/design_system.json / docs/design-system.md / agents/designer.md

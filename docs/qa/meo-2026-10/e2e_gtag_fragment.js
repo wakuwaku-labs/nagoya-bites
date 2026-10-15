@@ -9,7 +9,7 @@
 //   - どの送信にも「q=<エリア名>」と「#」の後ろの文字列が無い
 //   - geo_search の値は result だけ
 // 店の詳細（modal_open）は店名・店のエリアを送る。これは店の情報で、利用者の位置ではないので数えない。
-// gtag.js は送信が成功したと読めないと別の口・別の宛先で同じ 1 件を送り直すので、_p と _s が同じものは 1 件に数える。
+// gtag.js は送信が成功したと読めないと別の口・別の宛先で同じ 1 件を送り直す。表示では _p と _s が同じものを 1 件に数えるが、判定はすべての送信で行う。
 // 使い方: node docs/qa/meo-2026-10/e2e_gtag_fragment.js [--json <出力先>]
 // 終了コード: 失敗があれば 1、なければ 0。判定できない（puppeteer が無い・gtag.js を読めない・送信が無い）ときは 2。
 'use strict';
@@ -130,21 +130,25 @@ function parseHit(url, body) {
 
   const area = (hash.match(/[#&]q=([^&]+)/) || [])[1] || '';
   const fragment = hash.replace(/^#/, '');
-  const seen = new Set();
+  // 漏れの判定はすべての送信で行う（送り直しも、1 回の送信に同じ名前のイベントが 2 件あるときも外さない）。送り直しを除くのは表示だけ
+  const all = [];
   const hits = [];
+  const seen = new Set();
   for (const r of raw) {
-    for (const ev of parseHit(r.url, r.body)) {
-      const key = `${ev._p || ''}/${ev._s || ''}/${ev.en || ''}`;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      hits.push({ phase: r.phase, how: r.how, ev });
-    }
+    let text = `${r.url}\n${r.body}`;
+    try { text = decodeURIComponent(text); } catch (e) { /* 壊れた符号はそのままの文字列で見る */ }
+    parseHit(r.url, r.body).forEach((ev, i) => {
+      const item = { phase: r.phase, how: r.how, ev, text };
+      all.push(item);
+      const key = `${ev._p || ''}/${ev._s || ''}/${i}/${ev.en || ''}`;
+      if (!seen.has(key)) { seen.add(key); hits.push(item); }
+    });
   }
-  const afterHash = hits.filter((h) => h.phase !== 'load');
-  const geo = hits.filter((h) => h.ev.en === 'geo_search');
-  const withHashInDl = hits.filter((h) => String(h.ev.dl || '').includes('#'));
-  const withFragment = hits.filter((h) => {
-    const text = JSON.stringify(h.ev);
+  const afterHash = all.filter((h) => h.phase !== 'load');
+  const geo = all.filter((h) => h.ev.en === 'geo_search');
+  const withHashInDl = all.filter((h) => String(h.ev.dl || '').includes('#'));
+  const withFragment = all.filter((h) => {
+    const text = JSON.stringify(h.ev) + h.text;
     return (area && text.includes(`q=${area}`)) || (fragment && text.includes(fragment));
   });
   const geoParams = geo.map((h) => Object.keys(h.ev).filter((k) => /^epn?\./.test(k)).sort().join(','));
