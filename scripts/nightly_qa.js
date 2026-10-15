@@ -219,6 +219,18 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/audit_phone_links.js', '--check']],
 });
+// 店と Google の紐付けの状態（確認済み・要確認・不一致）ごとの店の数と、設定（data/place_binding_policy.json）が
+// 許していない状態で電話・評価・口コミ信頼度を出している店（MEO-005 の B3・SOFT で開始・判断の記録 0046）。
+// 関門は build.js が日次でかけるので、ビルドの後は 0 になる。0 でなければ関門か欄の書き出しが壊れている。
+// 状態ごとの数は毎晩この報告に残り、「確認済みの急な減り」の閾値を 2 週間の揺れから決める材料になる。0 件が続いたら hard に上げる
+checks.push({
+  id: 'place-binding-states',
+  title: '紐付けの状態ごとの数と、設定が許していない状態で電話・評価を出す店が 0（MEO-005）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_places_binding.js', '--states', '--check']],
+});
 // ── UI・UX 改修の後戻りを止める検査 4 本（I-35・SOFT で開始）──────────────────────────
 // 直したものが、後の変更で戻らないように見張る。直す前は赤のままで、夜間QA の報告に件数が出る
 // （hard にしない＝毎晩 Issue を起票しない）。対応する直しが入って 0 件になった検査から hard に上げる。

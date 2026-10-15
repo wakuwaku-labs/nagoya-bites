@@ -113,6 +113,38 @@ test('states: 状態ごとの店の数と、電話・評価・口コミ信頼度
   assert.equal(r.staleRating, 1, '取得日が 90 日より古い評価（2026-05-22）');
 });
 
+test('states: 設定が許していない状態で出している店を数える（夜間 QA の --check・MEO-005）。紐付けの無い店の評価は別に数える', () => {
+  const allow = ['sim-0.3-0.6', 'sim-ge-0.6', 'branch-conflict'];
+  const policy = { features: { phone: { show: true, allowReviewBands: allow }, rating: { show: true, allowReviewBands: allow }, trust: { show: true, allowReviewBands: allow } } };
+  const shown = { '電話確認': '住所', 'Google評価': '4.1', reviewTrust: { t: 'A', d: '2026-10-01' } };
+  const stores = [
+    bound('麺屋えび蔵', '錦２-13-24', 'J1', '麺屋えび蔵', shown),
+    bound('咲夜島 さくやじま 丸の内 伏見', '錦３丁目14-3', 'J2', '咲夜島', shown),
+    bound('別館', '栄１-1-1', 'J3', '麺屋えび蔵', { 'Google評価': '3.5', reviewTrust: { t: 'B', d: '2026-10-01' } }),
+    { '店名': '紐付けなし', '住所': '愛知県名古屋市中区栄2-2-2', 'ホットペッパーID': 'J4', 'Google評価': '4.0' },
+  ];
+  const places = {
+    J1: entry('麺屋えび蔵', '錦２丁目１３−２４'),
+    J2: entry('咲夜島', '錦３丁目１４−３'),
+    J3: entry('麺屋えび蔵', '錦２丁目１３−２４'),
+  };
+  const r = states(stores, places, { policy, reviewed: { entries: [] } }, '2026-10-15');
+  const keys = (f) => r.violations[f].map((v) => v.key);
+  assert.deepEqual(keys('phone'), ['J2'], '一致率 0.3 未満の帯の電話');
+  assert.deepEqual(keys('rating'), ['J2', 'J3'], '一致率 0.3 未満の帯と、住所が別の場所（不一致）の評価');
+  assert.deepEqual(keys('trust'), ['J2', 'J3']);
+  assert.equal(r.violations.rating[1].reason, 'binding-mismatch');
+  assert.deepEqual(r.noBinding, { rating: 1, trust: 0 }, '紐付けの無い店の評価は関門の対象外として別に数える');
+  assert.deepEqual(r.switches, { phone: true, rating: true, trust: true });
+
+  // スイッチを切れば、確認済みの店と紐付けの無い店の評価も、出していれば数える（切ったビルドでは 0 になるはず）
+  const off = { features: { ...policy.features, rating: { show: false } } };
+  const r2 = states(stores, places, { policy: off, reviewed: { entries: [] } }, '2026-10-15');
+  assert.deepEqual(r2.violations.rating.map((v) => v.key), ['J1', 'J2', 'J3', 'J4']);
+  assert.equal(r2.violations.rating[0].reason, 'switched-off');
+  assert.equal(r2.switches.rating, false);
+});
+
 test('sample: 帯ごとに決まった種で選び、同じ種なら同じ標本。不一致・紐付けなしは選ばない', () => {
   const stores = [];
   const places = {};

@@ -24,8 +24,9 @@
  *   node scripts/audit_places_binding.js --check      # 外すべき紐付けが残っていれば exit 1
  *   node scripts/audit_places_binding.js --apply      # 外すべき紐付けを rejected にして書き戻す
  *   node scripts/audit_places_binding.js --impact     # 外す前後の口コミ信頼度の段階の分布（再計算・書き込みなし）
- *   node scripts/audit_places_binding.js --states [--json]   # 紐付けの状態（scripts/lib/place_binding.js）ごとの店の数と、
+ *   node scripts/audit_places_binding.js --states [--json] [--check]   # 紐付けの状態（scripts/lib/place_binding.js）ごとの店の数と、
  *                                                           # 電話・評価・口コミ信頼度がどの状態の紐付けを使っているか（MEO-003）
+ *                                                           # --check: 設定が許していない状態で出している店があれば exit 1（夜間 QA・MEO-005）
  *   node scripts/audit_places_binding.js --sample 30 [--seed N]  # 帯ごとに N 組を無作為に選ぶ（標本の確かめ・MEO-003 の A2）
  */
 
@@ -204,23 +205,46 @@ function states(stores, places, opts, today) {
   const now = new Date((today || new Date().toISOString().slice(0, 10)) + 'T00:00:00Z');
   const byState = {};
   const features = { phone: {}, rating: {}, trust: {} };
+  // 設定（data/place_binding_policy.json）が許していない状態で出している店。build.js の関門と同じ判定（gateFor）で数え直す。
+  // ビルドの直後は 0 になるはずなので、0 でなければ関門か欄の書き出しが壊れている（MEO-005 の B3・夜間 QA）
+  const violations = { phone: [], rating: [], trust: [] };
+  const noBinding = { rating: 0, trust: 0 };
   let staleRating = 0;
   for (const s of stores) {
     const b = pb.bindingOf(s, ctx);
     const label = stateLabel(b);
     byState[label] = (byState[label] || 0) + 1;
-    if (s[FIELD]) features.phone[label] = (features.phone[label] || 0) + 1;
+    const note = (f, reason) => violations[f].push({ key: s['ホットペッパーID'] || s['店名'], name: s['店名'], state: label, reason });
+    if (s[FIELD]) {
+      features.phone[label] = (features.phone[label] || 0) + 1;
+      const g = pb.gateFor('phone', b, ctx.policy);
+      if (!g.ok) note('phone', g.reason);
+    }
+    const rating = pb.gateFor('rating', b, ctx.policy);
     if (showsRating(s)) {
       features.rating[label] = (features.rating[label] || 0) + 1;
       const d = s.reviewTrust && s.reviewTrust.d ? new Date(s.reviewTrust.d + 'T00:00:00Z') : null;
       if (d && !isNaN(d) && (now - d) / 864e5 > 90) staleRating++;
+      if (!rating.ok) note('rating', rating.reason);
+      else if (rating.reason === 'no-binding') noBinding.rating++;
     }
-    if (showsTrust(s)) features.trust[label] = (features.trust[label] || 0) + 1;
+    if (showsTrust(s)) {
+      features.trust[label] = (features.trust[label] || 0) + 1;
+      const trust = pb.gateFor('trust', b, ctx.policy);
+      if (!rating.ok || !trust.ok) note('trust', trust.ok ? rating.reason : trust.reason);
+      else if (trust.reason === 'no-binding') noBinding.trust++;
+    }
   }
   const notConfirmed = (m) => Object.entries(m).filter(([k]) => k !== 'confirmed').reduce((a, [, v]) => a + v, 0);
+  const switches = {};
+  for (const f of Object.keys(features)) {
+    const c = ctx.policy && ctx.policy.features && ctx.policy.features[f];
+    switches[f] = c ? c.show !== false : null;
+  }
   return {
     total: stores.length, byState, features,
     notConfirmed: { phone: notConfirmed(features.phone), rating: notConfirmed(features.rating), trust: notConfirmed(features.trust) },
+    violations, noBinding, switches,
     staleRating,
   };
 }
@@ -289,7 +313,12 @@ function main() {
   }
   if (argv.includes('--states')) {
     const r = states(stores, places);
-    if (argv.includes('--json')) { console.log(JSON.stringify(r, null, 2)); return; }
+    const bad = r.violations.phone.length + r.violations.rating.length + r.violations.trust.length;
+    if (argv.includes('--json')) {
+      console.log(JSON.stringify(r, null, 2));
+      if (argv.includes('--check') && bad > 0) process.exit(1);
+      return;
+    }
     const keys = Object.keys(r.byState).sort();
     console.log(`店 ${r.total} 件の紐付けの状態（scripts/lib/place_binding.js）と、機能ごとに使っている状態`);
     console.log(`  ${'状態'.padEnd(34)} ${'店数'.padStart(6)} ${'電話'.padStart(6)} ${'評価'.padStart(6)} ${'信頼度'.padStart(6)}`);
@@ -299,6 +328,17 @@ function main() {
     }
     console.log(`確認済みでない紐付けで出している店: 電話 ${r.notConfirmed.phone} ／ 評価 ${r.notConfirmed.rating} ／ 口コミ信頼度 ${r.notConfirmed.trust}`);
     console.log(`取得日が 90 日より古い Google の評価を出している店: ${r.staleRating}`);
+    const sw = (v) => (v === null ? '設定なし' : v ? '出す' : '止めている');
+    console.log(`スイッチ（data/place_binding_policy.json）: 電話 ${sw(r.switches.phone)} ／ 評価 ${sw(r.switches.rating)} ／ 口コミ信頼度 ${sw(r.switches.trust)}`);
+    console.log(`紐付けの無い店で出している（関門の対象外・P-473）: 評価 ${r.noBinding.rating} ／ 口コミ信頼度 ${r.noBinding.trust}`);
+    console.log(`設定が許していない状態で出している店: 電話 ${r.violations.phone.length} ／ 評価 ${r.violations.rating.length} ／ 口コミ信頼度 ${r.violations.trust.length}`);
+    for (const f of ['phone', 'rating', 'trust']) {
+      for (const v of r.violations[f].slice(0, 5)) console.log(`  ${f}: ${v.name}（${v.key}）状態=${v.state} 理由=${v.reason}`);
+    }
+    if (argv.includes('--check') && bad > 0) {
+      console.error(`設定が許していない状態で出している店が ${bad} 件あります（build.js の関門か欄の書き出しを確かめる）`);
+      process.exit(1);
+    }
     return;
   }
   const si = argv.indexOf('--sample');

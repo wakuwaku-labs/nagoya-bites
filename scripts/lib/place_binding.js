@@ -136,6 +136,18 @@ function allowedFor(feature, binding, policy) {
 }
 
 /**
+ * build.js の関門と同じ決め方で、その機能を出してよいか（評価・口コミ信頼度は、紐付けの無い店を止めない）。
+ * applyRatingGate と、出している店を数え直す監査（scripts/audit_places_binding.js --states --check）が同じ判定を使う。
+ * 電話は allowedFor と同じ（紐付けの無い店は出さない）。
+ * @returns {{ok:boolean, reason:string}}
+ */
+function gateFor(feature, binding, policy) {
+  const r = allowedFor(feature, binding, policy);
+  if (feature !== 'phone' && binding.state === 'none' && r.reason !== 'switched-off') return { ok: true, reason: 'no-binding' };
+  return r;
+}
+
+/**
  * Google の評価・口コミ数・口コミ信頼度を出してよいかを店ごとに決め、出さない店の評価と口コミ数を消す
  * （MEO-003・オーナーの判断 3=A・2026-10-15・判断の記録 0046）。
  * 不一致の店と、policy の rating が許していない要確認の帯の店は、評価と口コミ数を消す（別の店の数字の可能性がある）。
@@ -155,10 +167,7 @@ function applyRatingGate(stores, places, opts) {
   const trustBlocked = new Set();
   const counts = { rating: {}, trust: {} };
   const bump = (m, k) => { m[k] = (m[k] || 0) + 1; };
-  const decide = (feature, b) => {
-    const r = allowedFor(feature, b, ctx.policy);
-    return (b.state === 'none' && r.reason !== 'switched-off') ? { ok: true, reason: 'no-binding' } : r;
-  };
+  const decide = (feature, b) => gateFor(feature, b, ctx.policy);
   for (const s of stores || []) {
     if (!s || !s['店名']) continue;
     const b = bindingOf(s, ctx);
@@ -181,5 +190,5 @@ function applyRatingGate(stores, places, opts) {
 
 module.exports = {
   STATES, BANDS, POLICY_PATH, REVIEWED_PATH,
-  bandOf, loadPolicy, loadReviewed, buildPlaceIndex, buildContext, bindingOf, allowedFor, applyRatingGate,
+  bandOf, loadPolicy, loadReviewed, buildPlaceIndex, buildContext, bindingOf, allowedFor, gateFor, applyRatingGate,
 };
