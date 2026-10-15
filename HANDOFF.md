@@ -1,4 +1,4 @@
-status: in_progress
+status: blocked
 
 # MEO（Google マップ・ローカル検索）実装計画（2026-10-15〜）
 
@@ -18,7 +18,7 @@ status: in_progress
 - 別件の不具合を起票: ISSUE-189=P-471（`sync_backlog_to_linear.js --apply` が Linear で完了・中止の 23 件を古い状態に戻す）
 
 ## 次にやること
-- オーナーの答え（計画書 8 章の判断 1〜4）を待つ → 判断1が OK なら MEO-001〜006 を ready にして段階1（M0→M1→M2→M3→M4）を実装
+- オーナーの答え（計画書 8 章の判断 1〜4。表示用ページ https://claude.ai/artifact/CzsAogSbKskKq4nb3QiUMc の「返事をつくる」から届く）を待つ → 判断1が OK なら MEO-001〜006 を ready にして段階1（M0→M1→M2→M3→M4）を実装
 - 段階2・3 は判断 2〜4 の答えを受けてから起票
 
 ## 試したが駄目だったこと

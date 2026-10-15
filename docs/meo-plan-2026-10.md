@@ -120,7 +120,7 @@ A の「ハブを Google に見つけてもらい、中身を濃くする」は 
 | 時期 | 内容 | 場所 |
 |---|---|---|
 | 2026-05-06 | Google マップは「避けて通れない競合」。勝つのではなく「マップの手前で選ぶ理由を作る」「マップと連動する」 | `docs/competitive-analysis-2026-05-06.md:44-48` |
-| 2026-05-27 | 全店にエリアの中心点を座標として入れる（有料 API を使わない）。店ごとの座標は OSM で取って `store_coordinates.json` で上書きする予定だったが、そのファイルは作られなかった。**ホットペッパーの座標を使う案は検討された記録が無い** | `build.js:1690-1731`・`data/area_centroids.json` |
+| 2026-05-27 | 全店にエリアの中心点を座標として入れる（有料 API を使わない）。店ごとの座標は OSM で取って `store_coordinates.json` で上書きする予定だったが、そのファイルは作られなかった。**ホットペッパーの座標を使う案は検討された記録が無い**。上書きの前（コミット 3a1c064b24 の 1 つ前）の `data/stores.json` では、4,074 店の緯度が 3,763 通りあり、店ごとの座標が入っていた | `build.js:1690-1731`・`data/area_centroids.json` |
 | 2026-09 | 店名検索の 1 位争いはしない（Strategic Skip）。追うのは発見型の検索 | `docs/kpi-weekly.md:186`・`docs/seo-strategy-2026-10.md:116` |
 | 2026-09〜10 | 地図ボタンを店舗ページ・クイックビュー・カードに置いた（SEO-037・SEO-049・I-14b） | `gen-store-pages.js:150`・`index.html` |
 | 2026-10-09 | 評価の集計（aggregateRating）を構造化データから外した | `docs/decisions/0009` |
@@ -314,4 +314,4 @@ A の「ハブを Google に見つけてもらい、中身を濃くする」は 
 | 2.3 登録 | `data/index_probe.json`（2026-10-14 の行） |
 | 2.4 店のデータ | `data/stores.json`（更新 2026-10-15 00:20Z）。営業中は「営業ステータス」が CLOSED_TEMPORARILY・CLOSED_PERMANENTLY でない店。紐付けは `node scripts/audit_places_binding.js --json` |
 | 2.5 構造化データ | `stores/*.html` から誘導ページを除いて無作為に 20 本（乱数の種 20261015） |
-| 座標の上書き | `build.js:625`（ホットペッパーの lat/lng を入れる）と `build.js:1713-1721`（エリアの中心点で上書き） |
+| 座標の上書き | `build.js:625`（ホットペッパーの lat/lng を入れる）と `build.js:1713-1721`（エリアの中心点で上書き） 。上書きの前の値は `git show 3a1c064b24^:data/stores.json` で数えた（緯度 3,763 通り／4,074 店） |
