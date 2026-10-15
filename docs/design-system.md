@@ -335,3 +335,47 @@ node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 
 閉じたドロワーは `display:none` にする。画面の外に置いておくだけ（`right:-100%` でも `transform` でも）だと、スマホのレイアウト幅がその分広がる。開くときのスライドは `@starting-style` と `transition-behavior:allow-discrete` で出す（未対応のブラウザでは即時に開閉する）。確かめるときは、幅 375px の `isMobile` 表示で `document.documentElement.scrollWidth` が 375 であることを見る。
 
 記事系ページ（journal・features）の本文組版は `assets/css/nb.css` の記事システム（`.art-hero` / `.art-title` / `.art-body` / `.store-card` / `.related` / `.topcta` 等）が所有する。ページ固有の `<style>` にはこれらのセレクタのトップレベル定義を書かない。journal は `journal/_template.html` の `<style>` を正本とし、既存記事へは冪等スイープで揃える。features は SEO-042 TOP-CTA（`add_feature_top_cta.js`）・SEASONAL_NOTE（`build_featured.js`）・新顔バッジ（`refresh_feature_rosters.js`）の注入 CSS をマーカー行のみにし、実装は nb.css 側に置く。
+
+---
+
+## 8. 動き（モーション）
+
+動きの計画（`docs/animation-plan-2026-10.md`）の 5 章の要約。どこに入れ、どこに入れないかは計画書の 2・3 章を見る。ここには「入れると決めた動きをどう書くか」だけを置く。
+
+### トークン（`assets/css/nb.css` の `:root`）
+
+| トークン | 値 | 使う所 |
+|---|---|---|
+| `--dur-press` | 100ms | 押した瞬間の反応 |
+| `--dur-fast` | 150ms | 色・枠・影の変化、消えるとき |
+| `--dur-base` | 200ms | シート・クイックビュー・知らせが出るとき |
+| `--dur-slow` | 250ms | 画面の端から出る大きな面（ドロワー） |
+| `--ease-out` | `cubic-bezier(.2,0,0,1)` | 出るとき・状態が変わるとき |
+| `--ease-in` | `cubic-bezier(.4,0,1,1)` | 消えるとき |
+
+時間は直書きせず、このトークンを使う。上限は 300ms（待ちの表示 `.skel` だけ例外）。
+
+### 書き方の決まり
+
+1. 動かしてよいのは `transform`・`opacity` と、色（`color`・`background-color`・`border-color`・`box-shadow`。150ms 以内）だけ。`width`・`height`・`margin`・`padding`・`top`・`left`・`gap`・`filter` は動かさない。
+2. `transition: all` は書かない。
+3. 止まらない繰り返しは、読み込み中の表示だけ。
+4. ホバーの動きは `@media (hover:hover)` の中だけ。
+5. 中身を `opacity:0` から始めない。開閉する面だけは、閉じている間 `display` で隠す。
+6. 「動きを減らす」設定を守る。CSS は `nb.css` の一括の規則で止め、JS のスクロールは `nbScrollBehavior()` を通す。
+7. 押した瞬間に見た目を変える。処理の後に動かさない。
+8. 新しい動きは Designer の確認（`agents/designer.md` の QA-5）を通す。
+
+### 検査
+
+`node scripts/audit_design_system.js --report` の `motion` に、次の 5 つの件数と一覧が出る。判定は `scripts/lib/motion_audit.js`、閾値と例外は `data/design_system.json` の `motion`（スクリプトは触らない）。
+
+| 検査 | 内容 |
+|---|---|
+| `transition-all` | `transition: all` / `transition-property: all` |
+| `motion-duration` | 300ms を超える時間（`var(--dur-*)` は可。例外は `.skel`） |
+| `motion-infinite` | `infinite` の繰り返し（例外は `.skel`） |
+| `motion-layout-prop` | 禁止プロパティの transition、`@keyframes` の中での変更 |
+| `smooth-scroll-js` | `nbScrollBehavior(` を通らない `behavior:'smooth'` |
+
+「動きを減らす」設定の中の規則は数えない。`motion.enforce` が `false` の間は数えるだけで、`--check` は落ちない。`true` にすると `motion.enforceScopes`（`assets/css/nb.css`・`index.html`）の違反で落ちる。手書きの特集などは落とす対象にしない。
