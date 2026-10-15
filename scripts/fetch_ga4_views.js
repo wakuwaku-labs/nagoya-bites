@@ -160,7 +160,7 @@ async function fetchStoreReferrals(analyticsdata) {
       return { ...s, thisMonth: { exits: m ? m.exits.total : 0, reportsYes: m ? m.reports.yes : 0 } };
     }),
   };
-  // 予約送客の数字は確定済み。地図などの取得に失敗しても、予約送客は書く（欄は null と理由を残す）
+  // 予約送客の数字は確定済み。地図などの取得に失敗しても、予約送客は書く（地図などの欄は書かず、理由を actionsError に残す）
   try {
     Object.assign(out, await storeActions.fetchStoreActions(analyticsdata, PROPERTY, `${LOOKBACK}daysAgo`, out.totals.exits));
   } catch (e) {
