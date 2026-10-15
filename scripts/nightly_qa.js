@@ -231,6 +231,16 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/audit_places_binding.js', '--states', '--check']],
 });
+// 毎日書き直されるはずの計測のファイル（GA4 の閲覧数・サイト全体・予約・電話・地図・Search Console）が
+// 2 日より古くなっていないか（MEO-006・SOFT で開始）。鍵が切れて取得が止まっても、レポートは古い数字のまま出続けるため
+checks.push({
+  id: 'metrics-freshness',
+  title: '計測のファイル（view_counts・site_metrics・store_referrals・gsc_metrics）が 2 日より古くない（MEO-006）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/check_metrics_freshness.js', '--check']],
+});
 // ── UI・UX 改修の後戻りを止める検査 4 本（I-35・SOFT で開始）──────────────────────────
 // 直したものが、後の変更で戻らないように見張る。直す前は赤のままで、夜間QA の報告に件数が出る
 // （hard にしない＝毎晩 Issue を起票しない）。対応する直しが入って 0 件になった検査から hard に上げる。

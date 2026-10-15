@@ -22,7 +22,7 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
-const { nbMapUrl } = require('./lib/map_link');
+const { nbMapUrl, nbMapLinkKind } = require('./lib/map_link');
 
 const ROOT = path.join(__dirname, '..');
 
@@ -73,7 +73,7 @@ function processHtml(html) {
       ? `<a class="store-link store-link-reserve" href="https://www.hotpepper.jp/str${esc(rec['ホットペッパーID'])}/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_reserve',{store_name:'${jsEsc(name)}'})">この店を予約する</a>`
       : '';
     const mapUrl = gmapSearchUrl(name, '', rec);
-    const mapHtml = `<a class="store-link store-link-map" href="${esc(mapUrl)}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{store_name:'${jsEsc(name)}',location:'journal_store_card'})">地図で確認する</a>`;
+    const mapHtml = `<a class="store-link store-link-map" href="${esc(mapUrl)}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{store_name:'${jsEsc(name)}',location:'journal_store_card',link_kind:'${nbMapLinkKind(mapUrl)}'${rec ? `,store_id:'${esc(rec['ホットペッパーID'] || '')}'` : ''}})">地図で確認する</a>`;
 
     const ctaRow = `          <div class="store-cta-row">${reserveHtml}${mapHtml}${existingLinkHtml}</div>`;
 

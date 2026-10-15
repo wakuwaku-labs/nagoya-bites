@@ -4671,6 +4671,10 @@ function nbMapUrl(store) {
   if (s[NB_MAP_FIELD] && s.placeId) url += '&query_place_id=' + encodeURIComponent(s.placeId);
   return url;
 }
+// 地図リンクの種類（計測の link_kind・MEO-006）: place_id つきなら 'place_id'、店名＋住所の検索だけなら 'search'
+function nbMapLinkKind(url) {
+  return /[?&]query_place_id=/.test(String(url || '')) ? 'place_id' : 'search';
+}
 // NB-MAP-CORE:END
 // NB-MAP-EMBED:END
 // 外部サービス（Instagram/食べログ/TikTok/X）の検索クエリは「クリーン店名 + 名古屋」を使う。
@@ -4987,7 +4991,7 @@ function buildCardHtml(r, ctx) {
       + tagHtml
       + featuredHtml
       + (r.editorReason ? '<div class="card-lead"><span class="card-lead-kicker">' + leadKicker + '</span>' + r.editorReason + '</div>' : r.insiderNote ? '<div class="card-lead"><span class="card-lead-kicker">' + leadKicker + '</span>' + r.insiderNote + '</div>' : r['おすすめポイント'] ? '<div class="card-lead"><span class="card-lead-kicker">' + leadKicker + '</span>' + r['おすすめポイント'] + '</div>' : '')
-      + '<div class="card-actions">' + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation();nbReserveExit(\'cta_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',store_id:\'' + r['ホットペッパーID'] + '\',link_domain:\'www.hotpepper.jp\',location:\'card\'})" aria-label="' + r['店名'] + 'をホットペッパーで予約" rel="noopener noreferrer"><span class="cta-long">ホットペッパーで</span>予約</a><a class="card-cta-map" href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\'})" aria-label="' + r['店名'] + 'の場所をGoogleマップで確認" title="Googleマップで場所を確認" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\'})" aria-label="' + r['店名'] + 'をGoogleマップで確認" class="card-cta-map-only" rel="noopener noreferrer"><svg class="ic" aria-hidden="true"><use href="#i-map-pin"/></svg>地図</a></div>')
+      + '<div class="card-actions">' + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation();nbReserveExit(\'cta_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',store_id:\'' + r['ホットペッパーID'] + '\',link_domain:\'www.hotpepper.jp\',location:\'card\'})" aria-label="' + r['店名'] + 'をホットペッパーで予約" rel="noopener noreferrer"><span class="cta-long">ホットペッパーで</span>予約</a><a class="card-cta-map" href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\',store_id:\'' + nbStoreKey(r).replace(/[^\w-]/g,'') + '\',link_kind:nbMapLinkKind(this.href)})" aria-label="' + r['店名'] + 'の場所をGoogleマップで確認" title="Googleマップで場所を確認" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\',store_id:\'' + nbStoreKey(r).replace(/[^\w-]/g,'') + '\',link_kind:nbMapLinkKind(this.href)})" aria-label="' + r['店名'] + 'をGoogleマップで確認" class="card-cta-map-only" rel="noopener noreferrer"><svg class="ic" aria-hidden="true"><use href="#i-map-pin"/></svg>地図</a></div>')
       + '<div class="mrow">' + mediaLinks + '</div></div>'
       + '</div>';
 }
@@ -5719,7 +5723,7 @@ function openM(i, source) {
   // ── 基本情報（値がある行だけ・上層 最大6行 / 下層は設備チップ）──
   var rows = [];
   var gmapUrl0 = gmap(r['店名'], r['エリア'], r);
-  if (r['住所']) rows.push(mInfoRow('住所', '<a href="' + mEsc(gmapUrl0) + '" target="_blank" rel="noopener noreferrer" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + mCtaEsc(r['店名']) + '\',location:\'modal_address\'})">' + mEsc(r['住所']) + '</a>'));
+  if (r['住所']) rows.push(mInfoRow('住所', '<a href="' + mEsc(gmapUrl0) + '" target="_blank" rel="noopener noreferrer" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + mCtaEsc(r['店名']) + '\',location:\'modal_address\',store_id:\'' + nbStoreKey(r).replace(/[^\w-]/g,'') + '\',link_kind:nbMapLinkKind(this.href)})">' + mEsc(r['住所']) + '</a>'));
   if (r['アクセス']) rows.push(mInfoRow('アクセス', mEsc(r['アクセス'])));
   if (r['営業時間']) rows.push(mInfoRow('営業時間', mEsc(r['営業時間'])));
   if (r['定休日']) rows.push(mInfoRow('定休日', mEsc(r['定休日'])));
@@ -5896,13 +5900,13 @@ function openM(i, source) {
   var ctaEsc = mCtaEsc;
   var stickyEl = document.getElementById('m-sticky-cta');
   var hpId2 = r['ホットペッパーID'] || '';
-  var mapBtnHtml = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_cta\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認"><svg class="ic" aria-hidden="true"><use href="#i-map"/></svg>地図</a>';
+  var mapBtnHtml = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_cta\',store_id:\'' + nbStoreKey(r).replace(/[^\w-]/g,'') + '\',link_kind:nbMapLinkKind(this.href)})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認"><svg class="ic" aria-hidden="true"><use href="#i-map"/></svg>地図</a>';
   var mapOnlyBtnHtml = mapBtnHtml.replace('</svg>地図</a>', '</svg>地図を開く</a>');
   var hpBtnHtml = hpId2 ? '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="nbReserveExit(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',store_id:\'' + ctaEsc(hpId2) + '\',link_domain:\'www.hotpepper.jp\',location:\'modal\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">HotPepperで予約</a>' : '';
   var callBtnHtml = nbCallBtnHtml(r, ctaEsc, false);
   var callStatusHtml = nbCallStatusHtml(r);
   if (stickyEl) {
-    var mapIconBtn = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm modal-cta-icon" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_sticky\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a>';
+    var mapIconBtn = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm modal-cta-icon" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_sticky\',store_id:\'' + nbStoreKey(r).replace(/[^\w-]/g,'') + '\',link_kind:nbMapLinkKind(this.href)})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a>';
     var callIconBtn = nbCallBtnHtml(r, ctaEsc, true);
     // 予約先ありは「主(帯)＋アイコン」で圧縮、予約先なしで電話ありは2導線とも文字ボタン、どちらも無ければ地図単独の帯ボタン
     stickyEl.innerHTML = (hpId2 ? (hpBtnHtml + callIconBtn + mapIconBtn)
@@ -5921,7 +5925,7 @@ function openM(i, source) {
   ];
   document.getElementById('mmg').innerHTML = items.map(function(m){
     // 予約送客（ISSUE-149）: その店の予約ページを指すリンクだけを数える（検索ページは数えない）
-    var onclickAttr = m.track ? (' onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'' + m.track + '\'})"')
+    var onclickAttr = m.track ? (' onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'' + m.track + '\',store_id:\'' + nbStoreKey(r).replace(/[^\w-]/g,'') + '\',link_kind:nbMapLinkKind(this.href)})"')
       : m.exit ? (' onclick="nbReserveExit(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',store_id:\'' + ctaEsc(hpId2) + '\',link_domain:\'' + m.exit + '\',location:\'modal_media\'})"') : '';
     return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '"' + onclickAttr + ' rel="noopener noreferrer"><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,18) + '</span><span class="mbl">' + m.label + '</span></a>';
   }).join('');
@@ -6824,12 +6828,17 @@ var GEO_AREAS = {
   '久屋大通': {lat: 35.1730, lng: 136.9080}
 };
 var NB_PIN_SVG = '<span class="nb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="2.8"/></svg></span>';
+// 押下の計測（MEO-006・計画書 docs/meo-plan-2026-10.md の 8.2 節）: 送るのは結果だけ。
+// granted（位置を取れた）・denied（許可されなかった）・unsupported（位置が使えない端末）・error（時間切れなど）。
+// 緯度・経度・選んだエリア名は送らない（位置の使いやすさを作るかを決める材料は「押された回数と結果」で足りる）
+function nbGeoTrack(result) { trackEvent('geo_search', { result: result }); }
 function geoSearch() {
   var btn = document.getElementById('geo-btn');
-  if (!navigator.geolocation) { showToast('このブラウザでは位置情報が利用できません'); return; }
+  if (!navigator.geolocation) { nbGeoTrack('unsupported'); showToast('このブラウザでは位置情報が利用できません'); return; }
   btn.classList.add('loading');
   btn.innerHTML = NB_PIN_SVG + '取得中...';
   navigator.geolocation.getCurrentPosition(function(pos) {
+    nbGeoTrack('granted');
     var lat = pos.coords.latitude;
     var lng = pos.coords.longitude;
     var nearest = null, minDist = Infinity;
@@ -6848,6 +6857,7 @@ function geoSearch() {
       showToast(nearest + 'エリアの店舗を表示中');
     }
   }, function(err) {
+    nbGeoTrack(err && err.code === 1 ? 'denied' : 'error');
     btn.classList.remove('loading');
     btn.innerHTML = NB_PIN_SVG + '現在地';
     showToast('位置情報の取得に失敗しました');

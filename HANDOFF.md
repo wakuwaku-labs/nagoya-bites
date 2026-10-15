@@ -15,19 +15,25 @@ status: in_progress
 - 各段階は PR で 1 本ずつ入れ、ビルドの後に本番で確かめる
 
 ## できていること
-- PR #602（電話の関門）・#603（写真の持ち主をホットペッパーIDでも照らす・本番停止の直し）・#604（評価・口コミ信頼度の関門＝判断 3=A・状態ごとの数・標本の記録・特集の★を外す sync_feature_scores.js）をマージ済み
-- 電話の本番確認（run 38728803531 の後）: 止めた店 297（不一致 33・一致率 0.3 未満 264）、audit_phone_links の古い欄 0・未反映 0、実例 5 店で店舗ページとデータに電話ボタンなし（とんかつ朱寿はあり）。店数 5,005→5,002 はホットペッパーの掲載の変化（3 店・閉店リストではない）
-- 起票: ISSUE-191＝P-473（紐付けの無い店の評価 30 店。26 はスプレッドシートの列・4 は手動の店）、ISSUE-192＝P-474（会席の特集の候補 9<10。入れ替えは 9 店で組み「N選」は sync_feature_counts が合わせる）。P-467（MEO-003）Done・P-468（MEO-004）In Progress。data/linear_sync_state.json に対応を足した
-- ブランチ wakuwaku-labs/meo-b3-switch（main a1eb3b2895 から・上流なし・push 済みの 1 コミット）:
-  - B3 済（コミット済み）: place_binding.js に gateFor（関門の決め方を 1 本に）、audit_places_binding.js --states に violations・noBinding・switches と --check、nightly_qa.js に soft の place-binding-states、ADR 0046 の 8、CLAUDE.md、backlog MEO-005 を in_progress。npm test 1,745 通過。全部のスイッチを切ると電話・評価・信頼度が全店で消えることを実データで確かめた
-  - B2 作業中（未コミット）: 新しい scripts/lib/map_link.js（NB-MAP-CORE: cleanArea・cleanStoreName を index.html から移した＋nbMapAddress・nbMapUrl＝api=1&query=店名 住所［&query_place_id は「地図確認」の欄がある店だけ］、annotateMapLinks、--apply/--check）。index.html は NB-MAP-EMBED に置き換え済み・gmap は nbMapUrl を呼ぶ。gen-store-pages.js は nbMapUrl(s)（属性は escapeHtml）
+- PR #602（電話の関門）・#603（写真の持ち主をホットペッパーIDでも照らす・本番停止の直し）・#604（評価・口コミ信頼度の関門）・#605（B3 スイッチと夜間 QA＋B2 地図リンクを公式の形に）をマージ済み・すべて本番で確かめた
+- 電話: 止めた店 297（後に A2 の keep で 278）。実例 5 店（ホシノシタ J004633161・bindi J001291877・BAR EVE J004634436・CCC J004403718・木村屋 錦 J001278470）は電話ボタンなし、朱寿 J004558109 はあり
+- 評価: 消した店 404・口コミ信頼度を付けない店 417・特集の★を外した 20 件
+- B2 の本番確認（run 38734163945 成功の後）: 地図リンクに place_id を付けた店 3,205（要確認 1,291・不一致 133 は検索の形）。実例 5 店の店舗ページは検索の形、朱寿は query_place_id つき。本番のデータで設定が許していない状態の店は電話 0・評価 0・信頼度 0・地図 0（紐付けの無い店の評価 30 は P-473）
+- 起票: ISSUE-191＝P-473、ISSUE-192＝P-474。P-467・P-468 Done
+- C1（MEO-006）作業中・ブランチ wakuwaku-labs/meo-c1-metrics（origin/main 4f80abd029 から・未コミット）:
+  - scripts/lib/map_link.js に nbMapLinkKind（place_id／search）。index.html の地図ボタン 6 か所に store_id（nbStoreKey）と link_kind。店舗ページ（本文・行動バー）は mapClickAttr で store_id（スラグ）・store_name・location・link_kind。ジャーナルの生成器 2 本も link_kind・store_id
+  - index.html の geoSearch に nbGeoTrack（geo_search {result}: granted・denied・unsupported・error）。位置・エリア名は送らない
+  - 新しい scripts/lib/store_actions.js（地図・call_lookup・geo_search の集計と fetchStoreActions。未登録のディメンションは getMetadata で確かめて問い合わせない・null と missingDimensions）。fetch_ga4_views.js が store_referrals.json に actions・map・callLookup・geoSearch を書く
+  - 新しい scripts/check_metrics_freshness.js と夜間 QA の soft metrics-freshness
+  - docs/kpi-weekly.md の表・docs/reservation-measurement.md の節・CLAUDE.md の行
+  - テスト: tests/store_actions.test.js（8 件）・行動バーとカードのテストを更新。e2e docs/qa/meo-2026-10/e2e_geo_search.js は 3 場面とも通過（許可のとき URL は #q=名古屋駅 になる＝既存の動き）
+  - npm test は直す前に 10 件失敗（カードのテストに nbStoreKey が無かった）→ 直した。全体の再実行がまだ
+
 ## 次にやること
-1. B2 の残り: policy に features.map（show:true・allowReviewBands: []＝確認済みだけ）／gateFor の「紐付けなしは止めない」を rating・trust だけにする（今は phone 以外すべて）／build.js で電話の直後に annotateMapLinks／states() に map を足す／tests/map_link.test.js（符号化 & # 空白 全角・place_id の有無・住所の優先順・index.html の埋め込みのずれ）／ジャーナルの生成器 2 本（generate_daily_draft.js:119・add_journal_store_cta.js:51）も nbMapUrl に／CLAUDE.md・ADR・計画書／npm test・audit_design_system・inline_js
-2. B3+B2 を 1 本の PR にしてもよい（B3 は push 済み）。PR #604 の本番ビルド run 38731812421 の成功（バックグラウンド buc64gl0g が待っている）を確かめてからマージ
-3. PR #604 の本番確認: audit_places_binding --states --check が 0、評価が消えた店（ホシノシタ J004633161 など）の店舗ページ・トップのカードで★と札なし、比べ用 とんかつ朱寿 J004558109 はあり、特集の★（sync_feature_scores --check が 0）、画面写し 390px と 1280px、audit_page_weight
-4. B2 の本番確認: 実例 5 店で地図リンクが正しい店を開く（place_id つきと無し）
-5. C1（MEO-006）: 予約・電話・地図を別々に毎日数える・地図ボタンの店名の欠け・「現在地」の押下（位置は送らない）
-6. 最終報告に入れる: 297 店の電話停止・404 店の評価停止（正しい店も含む）・強制 push 1 回・30 店（P-473）・取得日 90 日超 3,880 店・ジャーナルの★ 5 件は書き換えない・会席の特集の訂正（前に「飛ばして今の掲載を残す」と書いたのは誤り）・PR #603 の本番停止の直し・急な減りの閾値は 10-29 以降
+1. C1: npm test 全体・design・inline js → コミット → PR → マージ（ビルド中でないことを確かめる）→ 本番で店舗ページの onclick に store_id・link_kind、トップに geo_search があるか
+2. P-469（MEO-005）に B3・B2 の本番確認をコメント（項目 5 の閾値は 10-29 以降なので Done にしない）。P-470（MEO-006）に C1 の結果をコメント。backlog の MEO-006 を更新
+3. オーナーに頼むこと: GA4 にカスタムディメンション location・link_kind・result（イベントスコープ）を登録（内訳はその日から・非遡及）
+4. 最終報告に入れる: 297→278 店の電話停止・404 店の評価停止・417 店の信頼度停止（正しい店も含む）・強制 push 1 回・30 店（P-473）・取得日 90 日超 3,880 店・ジャーナルの★ 5 件は書き換えない・会席の特集の訂正（9 店で組む）・PR #603 の本番停止の直し・急な減りの閾値は 10-29 以降・公開済みのジャーナルの地図リンクは古い形のまま・cleanArea のコメントの例が実際と違う（直していない）・「現在地」で URL に #q=エリア名が書かれる（GA4 の自動の page_view が送るかは未確認）
 
 ## 試したが駄目だったこと
 - `orca linear save-issue` の作成時の `--parent-id` は効かない（作成後に付け直す）。書き込みは linear_write_unconfirmed でも反映されていることが多い。必ず読み戻す

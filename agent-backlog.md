@@ -99,13 +99,14 @@
 
 ### [MEO-006] 予約・電話・地図を分けて毎日数え、「現在地」ボタンの押下を数える（位置は送らない）
 
-- **priority**: P2 → **status**: blocked
+- **priority**: P2 → **status**: in_progress
 - **due**: 2026-10-29
 - **detected**: 2026-10-15
 - **category**: 計測
 - **owner**: Builder / Marketer
 - **source**: オーナーの改訂の指示（2026-10-15）「予約・電話・公式サイト・地図など店舗選択行動全体で評価」「位置情報をGA4へ送信しない」
 - **背景**: 地図ボタンの `cta_gmap_click` は毎日の集計（`scripts/fetch_ga4_views.js`）に入っていない（4 週で 22 回）。店舗ページの本文の地図ボタン（`gen-store-pages.js:968`）は店名を送らない。`outbound_click` はサイトが自分で送るイベントで、`cta_click`・`cta_gmap_click` と同時に必ず送られる（足すと 2 倍に数える）。「現在地」ボタン（`index.html:6812-6840`）は押下を数えておらず、位置の使いやすさ（近い順・近くの店）を作るかどうかを決める材料が無い。地図は予約送客に入れない（判断の記録 0009）。計画書 8.2 節
+- **進み具合（2026-10-15）**: 1〜4・6 はブランチ wakuwaku-labs/meo-c1-metrics で実装（`scripts/lib/store_actions.js`・`scripts/fetch_ga4_views.js`・`scripts/check_metrics_freshness.js`・夜間QA の soft `metrics-freshness`・`docs/kpi-weekly.md`）。地図ボタンはトップ・店舗ページ・ジャーナルで `store_id`・`link_kind` を送る。「現在地」は `geo_search {result}` だけを送り、e2e（`docs/qa/meo-2026-10/e2e_geo_search.js`）で 3 場面とも位置・エリア名を送らないことを確かめた。5 の結果ごとの回数と、地図の場所ごと・形ごとの内訳は、GA4 にカスタムディメンション `result`・`location`・`link_kind` が登録されるまで `null`（合計は入る）。登録はオーナーの操作
 - **blocked-by**: 対話セッションで進行中（2026-10-15〜・ブランチ wakuwaku-labs/eelgrass・HANDOFF.md）。自動の課題消化は触らない
 - **acceptance**:
   1. `data/store_referrals.json` に、予約（ホットペッパー・食べログ）・電話・地図が別々の欄で、30 日の合計と上位の店が毎日入る。`outbound_click` は足さない

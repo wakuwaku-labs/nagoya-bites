@@ -29,6 +29,7 @@ const NB_CSS = fs.readFileSync(path.join(ROOT, 'assets/css/nb.css'), 'utf8');
 
 const BASE_ARGS = {
   name: 'テスト酒場',
+  slug: 'J000000001',
   hpId: '',
   hpUrl: '',
   tbUrl: '',
@@ -111,9 +112,12 @@ test('計測: 予約は本文と同じ cta_click の語彙で、location だけ 
   assert.ok(!/tabelog\.com'/.test(withHp), 'ホットペッパーがあれば食べログは帯に出ない');
 });
 
-test('計測: 地図は cta_gmap_click（店名と location つき）、電話は data-call-loc=store_page_bar（cta_call_click・call_lookup の location になる）', () => {
+test('計測: 地図は cta_gmap_click（店の ID・店名・location・リンクの形つき）、電話は data-call-loc=store_page_bar（cta_call_click・call_lookup の location になる）', () => {
   const html = bar({ ...HP, callOk: true });
-  assert.match(html, /trackEvent\('cta_gmap_click',\{link_url:this\.href,store_name:'テスト酒場',location:'store_page_bar'\}\)/);
+  assert.match(html, /trackEvent\('cta_gmap_click',\{link_url:this\.href,store_id:'J000000001',store_name:'テスト酒場',location:'store_page_bar',link_kind:'search'\}\)/);
+  const withPlace = bar({ ...HP, gmUrl: 'https://www.google.com/maps/search/?api=1&query=x&query_place_id=ChIJ' });
+  assert.match(withPlace, /location:'store_page_bar',link_kind:'place_id'\}/, 'place_id つきのリンクは link_kind=place_id');
+  assert.match(bar({ ...HP, slug: undefined }), /store_id:'',store_name/, 'ID が無くても undefined を送らない');
   assert.match(html, /<button type="button" class="nb-bar-btn nb-bar-sub nb-bar-tel" data-call-loc="store_page_bar" onclick="nbCallStore\(event,'ChIJtestPlace','テスト酒場',this\)"/);
 });
 

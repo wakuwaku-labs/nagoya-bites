@@ -31,6 +31,21 @@
 
 GA4 に登録済みのカスタムディメンションは `store_name` と `link_domain` だけで、店舗×経路はこの2つで取れる。`store_id`・`location` は未登録でも送っておき、必要になったら登録する（登録は非遡及・`docs/ga4-view-counts-setup.md`）。
 
+## 予約送客に入れない行動（MEO-006・2026-10-15）
+
+店選びの後の行動のうち、予約ではないものは別の欄で数える（足し合わせない）。数え方の正本は `scripts/lib/store_actions.js`、計画は `docs/meo-plan-2026-10.md` の 8.1〜8.2 節。
+
+| イベント | 中身 | パラメータ | `data/store_referrals.json` の欄 |
+|---|---|---|---|
+| `cta_gmap_click` | 地図ボタン（トップのカード・クイックビュー・店舗ページ・行動バー・ジャーナル） | `store_name` `store_id` `location` `link_kind`（`place_id`＝確認済みの紐付けの place_id つき／`search`＝店名＋住所の検索だけ）。店舗ページは `link_url` も | `map`（合計・店名の無い分 `unattributed`・上位の店 `top`・場所ごと `byLocation`・形ごと `byLinkKind`） |
+| `call_lookup` | 電話ボタンを押した後に番号を取れたか（`scripts/lib/call_button_snippet.js`） | `result`（`ok`・`quota`・`not_found` など） | `callLookup`（合計・結果ごと `byResult`） |
+| `geo_search` | トップの「現在地」ボタン | `result` だけ（`granted`・`denied`・`unsupported`・`error`）。**緯度・経度・選んだエリア名は送らない**（`tests/store_actions.test.js` が確かめる） | `geoSearch`（合計・結果ごと `byResult`） |
+
+- `actions` は予約（ホットペッパー・食べログ・そのほかの予約サイト）・電話・地図を並べた 1 行（直近30日）。週次の表（`docs/kpi-weekly.md`）に写す。地図に伸ばす目標は置かない。
+- 地図は予約送客に入れない（判断の記録 0009）。同じ押下は `outbound_click` にも届くので、`outbound_click` は足さない。
+- `location`・`link_kind`・`result` は GA4 に未登録。未登録の名前で問い合わせるとレポートごと失敗するため、`fetch_ga4_views.js` は GA4 のメタデータで登録を確かめ、未登録の内訳は `null` にして名前を `missingDimensions` に残す（合計はイベント名だけで数えられる）。登録すると、その日から内訳が入る（非遡及）。
+- 4 つの計測のファイル（`view_counts.json`・`site_metrics.json`・`store_referrals.json`・`gsc_metrics.json`）の `generatedAt` が 2 日より古ければ、夜間QA の soft（`metrics-freshness`・`scripts/check_metrics_freshness.js`）が赤になる。
+
 ## 予約申告プロンプト（自分たち側だけで作る「出口」）
 
 - 実装は `scripts/lib/reservation_ask_snippet.js` の1本。予約導線の onclick で `nbReserveExit(イベント名, パラメータ)` を呼ぶと、GA4 に送ったうえで「どの店の導線を押したか」をそのタブの sessionStorage に覚える。

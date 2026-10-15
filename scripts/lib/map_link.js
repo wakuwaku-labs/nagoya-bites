@@ -76,6 +76,10 @@ function nbMapUrl(store) {
   if (s[NB_MAP_FIELD] && s.placeId) url += '&query_place_id=' + encodeURIComponent(s.placeId);
   return url;
 }
+// 地図リンクの種類（計測の link_kind・MEO-006）: place_id つきなら 'place_id'、店名＋住所の検索だけなら 'search'
+function nbMapLinkKind(url) {
+  return /[?&]query_place_id=/.test(String(url || '')) ? 'place_id' : 'search';
+}
 // NB-MAP-CORE:END
 
 const CORE_START = '// NB-MAP-CORE:START';
@@ -137,7 +141,7 @@ function applyToHtml(html) {
 
 module.exports = {
   FIELD, FEATURE, NB_MAP_BASE,
-  cleanArea, cleanStoreName, nbMapAddress, nbMapUrl,
+  cleanArea, cleanStoreName, nbMapAddress, nbMapUrl, nbMapLinkKind,
   annotateMapLinks, coreSource, renderEmbed, applyToHtml, EMBED_RE,
 };
 
