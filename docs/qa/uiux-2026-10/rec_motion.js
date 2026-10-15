@@ -1,6 +1,7 @@
 // 動きの前後を動画（mp4・GIF）に撮る道具（動きの計画 8.3 節）。
-// 使い方: node docs/qa/uiux-2026-10/rec_motion.js --root <配信するフォルダ> --label before|after --out-dir <出力先> [--only load,hover,sheet,quickview,fav,scroll]
+// 使い方: node docs/qa/uiux-2026-10/rec_motion.js --root <配信するフォルダ> --label before|after --out-dir <出力先> [--only load,hover,sheet,quickview,fav,scroll,press,wait,count]
 // 場面: load（読み込み直後 3 秒）/ hover（1280 のみ・カードにマウス）/ sheet（絞り込みシート）/ quickview / fav（♡）/ scroll（下へ→上へ戻るボタン）。
+// 段階 2 の場面（--only で選ぶ。既定には入れない）: press（ボタンを押したまま 0.7 秒→離す）/ wait（現在地。位置の返事を 2.5 秒遅らせる）/ count（検索語を替えて件数が変わる）。
 // 出力: <label>-<幅>-<場面>.{webm,mp4,gif} と index-<label>.json。外部の画像は読み込む。GA4 だけ中断。「動きを減らす」は付けない。
 // puppeteer の page.screencast（ffmpeg 要）で録画し、ffmpeg で mp4（H.264・yuv420p）と GIF（15fps・390 は幅 390・1280 は幅 800）にする。
 'use strict';
@@ -210,6 +211,61 @@ const SCENES = {
       await tap(page, vp, pt);
       await sleep(1000);
       await page.evaluate(() => { try { localStorage.clear(); } catch (e) { /* なし */ } });
+    },
+  },
+  // ── 段階 2（P-490）の場面 ──
+  press: {
+    vps: [0, 1],
+    async setup(page, vp, base) { await gotoTop(page, base); },
+    async run(page, vp, base, ctx) {
+      // 押したまま止めて「色が濃く・わずかに沈む」を見せ、ボタンの外で離す（クリックの処理は走らせない）
+      const hold = async (name, sel) => {
+        const pt = await centerOf(page, sel);
+        if (!pt) { ctx.skipped.push(name + ': 要素が見つからない（' + sel + '）'); return; }
+        await page.mouse.move(pt.x, pt.y, { steps: 8 });
+        await sleep(400);
+        await page.mouse.down();
+        await sleep(700);
+        await page.mouse.move(3, Math.round(vp.h / 2), { steps: 2 });
+        await page.mouse.up();
+        await sleep(800);
+      };
+      await hold('検索ボタン', '.search-wrap button');
+      await hold('シーンのタイル', '.scene-tile');
+      await gotoList(page, base);
+      await hold('カードの予約ボタン', '#grid .card-cta a');
+    },
+  },
+  wait: {
+    vps: [0, 1],
+    async setup(page, vp, base) {
+      await gotoList(page, base);
+      // 位置の返事を 2.5 秒遅らせる（録画のためだけの差し替え。サイトの動きは変えない）
+      await page.evaluate(() => {
+        Object.defineProperty(navigator, 'geolocation', { configurable: true, value: {
+          getCurrentPosition: (ok) => setTimeout(() => ok({ coords: { latitude: 35.1709, longitude: 136.8815 } }), 2500),
+        } });
+      });
+    },
+    async run(page, vp) {
+      const pt = await centerOf(page, '#geo-btn');
+      if (!pt) throw new Error('現在地のボタンが見つからない');
+      await sleep(600);
+      await tap(page, vp, pt);
+      await sleep(3800);
+    },
+  },
+  count: {
+    vps: [0, 1],
+    async setup(page, vp, base) { await gotoList(page, base); },
+    async run(page) {
+      const pt = await centerOf(page, '#cnt');
+      if (!pt) throw new Error('件数が見つからない');
+      await sleep(600);
+      for (const q of ['焼肉', '個室', '居酒屋']) {
+        await page.evaluate((w) => suggestSearch(w), q);
+        await sleep(1300);
+      }
     },
   },
   scroll: {
