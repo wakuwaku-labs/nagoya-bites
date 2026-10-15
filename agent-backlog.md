@@ -1311,9 +1311,10 @@
 
 ### [SEO-125] 10-15 時点の「表示が出たハブの数」を記録し、ハブ判定の基線にする
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **due**: 2026-10-15
+- **resolved**: 2026-10-15
 - **category**: SEO / 計測
 - **owner**: Marketer
 - **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §4 の 10-15）。親は [[SEO-123]]
@@ -1322,6 +1323,9 @@
 - **acceptance**:
   1. 10-15 の `gsc_metrics.json` から `pageTypes.area_hub` と、ハブごとの表示・クリックを `docs/kpi-weekly.md` に記録する
   2. 条件ページごとの公開日（manifest の `firstPublished`）と表示の有無の一覧を残す
+- **結果**（2026-10-15）:
+  1. `docs/kpi-weekly.md` の「ハブ判定の基線 — 2026-10-15」に記録。表示が出たハブ 31 本（2026-10-08 の 27 本から +4）、28日表示 95、クリック 1、平均順位 14.3。出典: `gsc_metrics.json`（生成 2026-10-14T21:19Z、期間 2026-09-16〜10-13）。
+  2. `docs/qa/hub-impressions-baseline-2026-10-15.json`（774 本）を生成。表示があったのはジャンル 97 本中 14 本・条件 667 本中 17 本・エリア 10 本中 0 本。全ページ公開日は 2026-09-14 または 2026-10-14 で、11-15 時点でまだ 60 日に達しないため「公開 60 日で表示 0」の判定は 11-13 以降に実施。
 
 ### [SEO-126] 11-15 に条件ページのインデックス対象を決め、外すものを noindex,follow にする
 
@@ -8656,6 +8660,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-10-15 | Marketer(routine) | SEO-125 実装完了 — `data/gsc_metrics.json`（2026-10-14T21:19Z・28日）から area_hub 31本・95表示・1クリック・平均順位14.3 を `docs/kpi-weekly.md` に記録。`docs/qa/hub-impressions-baseline-2026-10-15.json`（774本）を更新（ジャンル14本・条件17本・エリア0本に表示あり）。全条件ページは公開31〜60日未満のため11-15の noindex 判定は11-13以降に実施。status: ready → done | ✅ 本コミット |
 | 2026-10-04 | Orchestrator(routine) | SEO-112 done化: pagesFetched=3156・pageTypes/homeQueries実在確認（2026-10-03 GSC）。homeQueriesは指名検索→Strategic Skip | ✅ backlog更新 |
 | 2026-10-04 | Orchestrator(routine) | SEO-107 done化: ①CTR 0.89%→0.37%（改善なし・acceptance③記録して追わない）。⑤sampling 32/34件評価データなし・仮説否定（acceptance⑤記録して取り繕わない） | ✅ backlog更新 |
 | 2026-10-04 | Orchestrator(routine) | SEO-060 done化: discovery_share 2.2%→29.7%（目標10%大幅超過）・effect_ledger followup2追記。banquet.html=2026-10-30受動観測継続 | ✅ backlog+ledger更新 |
