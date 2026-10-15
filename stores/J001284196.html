@@ -166,8 +166,9 @@ button.link-btn{font:inherit;cursor:pointer;}
 .related-features h2,.related-stores h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .related-features ul,.related-stores ul{list-style:none;padding:0;margin:0;}
 .related-features li,.related-stores li{margin:.5rem 0;}
-.related-features a,.related-stores a{font-size:var(--fs-sm);color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.25);padding-bottom:2px;transition:color var(--dur-base) var(--ease-out);}
+.related-features a,.related-stores a{font-size:var(--fs-sm);color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.25);padding-bottom:2px;border-radius:2px;transition-property:color,background-color,border-color;transition-duration:var(--dur-base);transition-timing-function:var(--ease-out);-webkit-tap-highlight-color:transparent;}
 .related-features a:hover,.related-stores a:hover{color:var(--gold2);border-bottom-color:var(--gold2);}
+.related-features a:active,.related-stores a:active{color:var(--gold2);background-color:rgba(122,92,16,.16);transition-duration:var(--dur-instant);}
 .related-features .listed-kind{font-size:var(--fs-xs);color:var(--dim);margin-left:.6em;}
 .related-stores h2{margin-bottom:.35rem;}
 .related-stores .related-note{font-size:var(--fs-xs);color:var(--dim);margin:0 0 .9rem;}
@@ -393,6 +394,7 @@ window.closeNav = window.closeNav || function(){
   if(btn)btn.setAttribute('aria-expanded','false');
 };
 document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+document.addEventListener('touchstart',function(){},{passive:true});
 </script>
 <!-- NB-CHROME:SCRIPT:END -->
 <script>var NB_CALL_MAPS_KEY='AIzaSyBKD3MCHPdIPxHt-hZlh8EIv_8zMYDbgos';</script>
