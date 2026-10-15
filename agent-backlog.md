@@ -153,6 +153,20 @@
   2. 候補が足りないままなら、特集の選定の条件（`data/feature_rosters.json`）を本文・FAQ の約束を崩さずに見直すか、9 店のままにするかを決め、決めたことを課題のコメントに残す
 - **関連**: [[MEO-003]]／`data/feature_rosters.json`／判断の記録 0011
 
+### [ISSUE-193] 「現在地」で絞り込んだ後に GA4 がエリア名入りの URL（#q=）を受け取っているかを数え、扱いを決める
+
+- **priority**: P2 → **status**: ready
+- **due**: 2026-10-29
+- **detected**: 2026-10-15
+- **category**: 計測 / プライバシー
+- **owner**: Builder
+- **source**: [[MEO-006]] の最終チェック（2026-10-15）。Linear P-475
+- **背景**: 「現在地」ボタンは GA4 に結果（geo_search {result}）だけを送り、緯度・経度・エリア名は送らない（PR #606・e2e `docs/qa/meo-2026-10/e2e_geo_search.js` で確認済み）。ただし、位置から選んだエリアで絞り込むと、トップは URL の `#q=<エリア名>` を `history.replaceState` で書く（2026-05 の「ブックマークできる絞り込み URL」からある動きで、手入力の検索語と同じ）。GA4 の自動の page_view（拡張計測の履歴の変更）がこの URL を page_location として送るかは未確認。手元で本物の gtag.js を読ませ、送信を空の応答で受けて記録したが、押した後は geo_search も含め何も送られず判定できなかった
+- **acceptance**:
+  1. GA4 の pageLocation に `#q=` を含む page_view の件数（期間つき）が P-475 のコメントに残っている（CI の GA4 の鍵で数えるだけ・値はリポジトリに書かない）
+  2. 0 件でなければ、絞り込みの URL を GA4 に渡さない方法を比べた結果と判断が P-475 か `docs/decisions/` に残っている
+- **関連**: [[MEO-006]]／index.html の geoSearch・nbBuildHash／計画書 `docs/meo-plan-2026-10.md` 8.2 節
+
 ### [ISSUE-190] Google の店舗情報（店名・住所・評価・口コミ数）を公開リポジトリに保存していることが Places の規約に合うかを確かめる
 
 - **priority**: P2 → **status**: ready
