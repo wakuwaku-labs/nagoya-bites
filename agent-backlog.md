@@ -156,7 +156,7 @@
 
 ### [ISSUE-193] 「現在地」で絞り込んだ後に GA4 がエリア名入りの URL（#q=）を受け取っているかを数え、扱いを決める
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **due**: 2026-10-29
 - **detected**: 2026-10-15
 - **category**: 計測 / プライバシー
@@ -167,6 +167,7 @@
   1. GA4 の pageLocation に `#q=` を含む page_view の件数（期間つき）が P-475 のコメントに残っている（CI の GA4 の鍵で数えるだけ・値はリポジトリに書かない）
   2. 0 件でなければ、絞り込みの URL を GA4 に渡さない方法を比べた結果と判断が P-475 か `docs/decisions/` に残っている
 - **関連**: [[MEO-006]]／index.html の geoSearch・nbBuildHash／計画書 `docs/meo-plan-2026-10.md` 8.2 節
+- **進み具合（2026-10-15）**: 数える道具を作った。`scripts/ga4_fragment_counts.js`（件数だけを出す。URL・検索語・店の ID・プロパティ ID は出さない）を `.github/workflows/ga4-fragment-counts.yml`（手動・読み取りのみ・結果はジョブの要約）から動かす。q の値は「現在地」が選ぶエリア名（index.html の GEO_AREAS）かどうかだけで分ける。検索欄に同じ名前を打った分も入るので、エリア名の件数は「現在地」の分の上限。`store=` の件数が 0 なら、GA4 は # の後ろをそもそも受け取っていない
 
 ### [ISSUE-190] Google の店舗情報（店名・住所・評価・口コミ数）を公開リポジトリに保存していることが Places の規約に合うかを確かめる
 

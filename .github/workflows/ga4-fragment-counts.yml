@@ -1,0 +1,57 @@
+name: GA4 の URL の # の後ろを数える（手動・読み取りのみ）
+
+# P-475（ISSUE-193）。トップは絞り込みの状態を URL の # に書き（index.html の nbBuildHash）、
+# 「現在地」ボタンで選んだエリアも #q=<エリア名> に入る。GA4 がこの URL をどれだけ受け取っているかを数える。
+#
+# GA4 の鍵は GitHub Secrets にあり、この端末や作業者の手元には無い。だからここから実行する。
+#   - 読み取りのみ。リポジトリには何も書かない・push しない・サイトに触れない
+#   - 出すのは件数だけ（ジョブの要約）。URL・検索語・店の ID・プロパティ ID は出さない（公開リポジトリ）
+#   - スクリプトは scripts/ga4_fragment_counts.js
+#   - build.yml の concurrency グループには入れない（データを書かないので、デプロイを待たせない）
+
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: '開始日（YYYY-MM-DD か NdaysAgo）'
+        type: string
+        required: false
+        default: '30daysAgo'
+      end:
+        description: '終了日（YYYY-MM-DD か yesterday・today）'
+        type: string
+        required: false
+        default: 'yesterday'
+
+permissions:
+  contents: read
+
+jobs:
+  count:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 依存パッケージインストール（GA4 SDK）
+        # 要るのは googleapis だけ。puppeteer の Chromium は落とさない
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: 'true'
+        run: npm install --no-audit --no-fund --silent
+
+      - name: GA4 の件数を数えて要約に出す
+        # 入力は env 経由で渡す（run のシェルに直接埋め込まない）
+        env:
+          GA4_SERVICE_ACCOUNT_KEY: ${{ secrets.GA4_SERVICE_ACCOUNT_KEY }}
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          IN_START: ${{ inputs.start }}
+          IN_END: ${{ inputs.end }}
+        run: |
+          set -euo pipefail
+          node scripts/ga4_fragment_counts.js --start "${IN_START:-30daysAgo}" --end "${IN_END:-yesterday}" | tee -a "$GITHUB_STEP_SUMMARY"
