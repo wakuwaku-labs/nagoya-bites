@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-15T00:22:34.297Z",
+  "generatedAt": "2026-10-15T11:39:57.757Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1571,
-    "pageViews": 2194,
-    "sessions": 1763,
-    "avgSessionDuration": 123.1,
-    "bounceRate": 0.284,
+    "activeUsers": 1628,
+    "pageViews": 2268,
+    "sessions": 1827,
+    "avgSessionDuration": 122.4,
+    "bounceRate": 0.285,
     "pagesPerSession": 1.24
   },
   "dailyReference": {
@@ -17,20 +17,20 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1291,
-      "direct": 348,
+      "organic": 1344,
+      "direct": 354,
       "social": 5,
-      "ai_assistant": 103,
+      "ai_assistant": 104,
       "referral": 32,
       "paid": 0,
       "other": 1
     },
     "pct": {
-      "organic": 72.5,
-      "direct": 19.6,
+      "organic": 73,
+      "direct": 19.2,
       "social": 0.3,
-      "ai_assistant": 5.8,
-      "referral": 1.8,
+      "ai_assistant": 5.7,
+      "referral": 1.7,
       "paid": 0,
       "other": 0.1
     }
@@ -39,22 +39,22 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 575
+      "sessions": 599
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 484
+      "sessions": 505
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 253
+      "sessions": 262
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 212
+      "sessions": 220
     },
     {
       "source": "chatgpt.com",
@@ -69,12 +69,12 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 35
+      "sessions": 31
     },
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 21
+      "sessions": 22
     },
     {
       "source": "duckduckgo",
@@ -132,6 +132,11 @@
       "sessions": 2
     },
     {
+      "source": "ranking",
+      "medium": "(not set)",
+      "sessions": 2
+    },
+    {
       "source": "2881.com",
       "medium": "referral",
       "sessions": 1
@@ -143,7 +148,7 @@
     },
     {
       "source": "copilot.com",
-      "medium": "",
+      "medium": "(not set)",
       "sessions": 1
     },
     {
@@ -172,13 +177,8 @@
       "sessions": 1
     },
     {
-      "source": "ranking",
+      "source": "unknown",
       "medium": "",
-      "sessions": 1
-    },
-    {
-      "source": "ranking",
-      "medium": "(not set)",
       "sessions": 1
     },
     {
@@ -190,18 +190,18 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 331,
-      "sessions": 317
+      "pageViews": 339,
+      "sessions": 324
     },
     {
       "path": "/",
-      "pageViews": 115,
-      "sessions": 103
+      "pageViews": 119,
+      "sessions": 107
     },
     {
       "path": "/index.html",
-      "pageViews": 80,
-      "sessions": 69
+      "pageViews": 81,
+      "sessions": 70
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -210,25 +210,25 @@
     },
     {
       "path": "/features/nagoya-autumn-2026.html",
-      "pageViews": 74,
-      "sessions": 73
+      "pageViews": 75,
+      "sessions": 74
     }
   ],
   "cta": {
-    "outboundClicks": 165,
-    "ctaClickRate": 9.4,
+    "outboundClicks": 176,
+    "ctaClickRate": 9.6,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 55
+        "clicks": 59
       },
       {
         "domain": "tabelog.com",
-        "clicks": 31
+        "clicks": 32
       },
       {
         "domain": "maps.google.com",
-        "clicks": 27
+        "clicks": 31
       },
       {
         "domain": "www.instagram.com",
@@ -240,7 +240,7 @@
       },
       {
         "domain": "www.google.com",
-        "clicks": 9
+        "clicks": 10
       },
       {
         "domain": "jouhou.nagoya",
@@ -248,7 +248,7 @@
       },
       {
         "domain": "chihirosweets.myshopify.com",
-        "clicks": 2
+        "clicks": 3
       },
       {
         "domain": "nagoyato.com",
@@ -285,7 +285,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 92,
+      "organic": 103,
       "direct": 53,
       "social": 0,
       "ai_assistant": 19,
@@ -293,8 +293,8 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.1,
-    "ctaClickRate_direct": 15.2,
+    "ctaClickRate_organic": 7.7,
+    "ctaClickRate_direct": 15,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -306,19 +306,19 @@
         "clicks": 15
       },
       {
+        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
+        "clicks": 14
+      },
+      {
         "path": "/journal/2026-09-29-sakae-tsukemen-tou-counter12.html",
         "clicks": 10
       },
       {
-        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
-        "clicks": 10
+        "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
+        "clicks": 8
       },
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 7
-      },
-      {
-        "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
         "clicks": 7
       },
       {
@@ -425,6 +425,11 @@
         "clicks": 16
       },
       {
+        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
+        "domain": "maps.google.com",
+        "clicks": 9
+      },
+      {
         "path": "/features/nagoya-solo-dining.html",
         "domain": "www.hotpepper.jp",
         "clicks": 7
@@ -465,11 +470,6 @@
         "clicks": 5
       },
       {
-        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
-        "domain": "maps.google.com",
-        "clicks": 5
-      },
-      {
         "path": "/features/nagoya-miso-nikomi-udon.html",
         "domain": "www.hotpepper.jp",
         "clicks": 4
@@ -482,6 +482,11 @@
       {
         "path": "/",
         "domain": "www.google.com",
+        "clicks": 3
+      },
+      {
+        "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
+        "domain": "chihirosweets.myshopify.com",
         "clicks": 3
       },
       {
@@ -552,11 +557,6 @@
       {
         "path": "/journal/2026-10-08-sakae-mitsukoshi-miyakishimen-ihyoe.html",
         "domain": "www.miyakishimen.co.jp",
-        "clicks": 2
-      },
-      {
-        "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
-        "domain": "chihirosweets.myshopify.com",
         "clicks": 2
       },
       {
@@ -740,6 +740,26 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J001026238.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J001127221.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J001147583.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J001194871.html",
+        "domain": "www.google.com",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J001203914.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -820,6 +840,11 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J004660592.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J004699048.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -842,6 +867,11 @@
       {
         "path": "/stores/area/sakae/yakiniku-budget-5000-plus.html",
         "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/kimitote.html",
+        "domain": "tabelog.com",
         "clicks": 1
       },
       {
@@ -948,6 +978,18 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J001026238.html",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J001127221.html",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J001147583.html",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J001266833.html",
         "clicks": 1
       },
@@ -972,6 +1014,10 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J004660592.html",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J004699048.html",
         "clicks": 1
       },
@@ -990,9 +1036,13 @@
       {
         "path": "/stores/area/sakae/yakiniku-budget-5000-plus.html",
         "clicks": 1
+      },
+      {
+        "path": "/stores/kimitote.html",
+        "clicks": 1
       }
     ],
-    "reservationClicks": 86,
+    "reservationClicks": 91,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 24,
@@ -1018,7 +1068,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1571,
+    "value": 1628,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
