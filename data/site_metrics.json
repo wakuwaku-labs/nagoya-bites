@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-15T15:38:18.347Z",
+  "generatedAt": "2026-10-15T16:33:46.643Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1612,
-    "pageViews": 2234,
-    "sessions": 1802,
-    "avgSessionDuration": 121.9,
-    "bounceRate": 0.285,
+    "activeUsers": 1615,
+    "pageViews": 2242,
+    "sessions": 1805,
+    "avgSessionDuration": 122,
+    "bounceRate": 0.284,
     "pagesPerSession": 1.24
   },
   "dailyReference": {
@@ -17,7 +17,7 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1328,
+      "organic": 1331,
       "direct": 348,
       "social": 6,
       "ai_assistant": 102,
@@ -26,8 +26,8 @@
       "other": 1
     },
     "pct": {
-      "organic": 73.1,
-      "direct": 19.2,
+      "organic": 73.2,
+      "direct": 19.1,
       "social": 0.3,
       "ai_assistant": 5.6,
       "referral": 1.7,
@@ -39,7 +39,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 590
+      "sessions": 592
     },
     {
       "source": "bing",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 222
+      "sessions": 223
     },
     {
       "source": "chatgpt.com",
@@ -190,13 +190,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 323,
-      "sessions": 310
+      "pageViews": 325,
+      "sessions": 312
     },
     {
       "path": "/",
-      "pageViews": 111,
-      "sessions": 101
+      "pageViews": 112,
+      "sessions": 102
     },
     {
       "path": "/index.html",
@@ -215,12 +215,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 178,
-    "ctaClickRate": 9.9,
+    "outboundClicks": 180,
+    "ctaClickRate": 10,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 59
+        "clicks": 61
       },
       {
         "domain": "tabelog.com",
@@ -285,7 +285,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 107,
+      "organic": 109,
       "direct": 51,
       "social": 0,
       "ai_assistant": 19,
@@ -293,7 +293,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 8.1,
+    "ctaClickRate_organic": 8.2,
     "ctaClickRate_direct": 14.7,
     "ctaClickRate_social": 0,
     "byPage": [
@@ -402,6 +402,10 @@
         "clicks": 2
       },
       {
+        "path": "/stores/J000392719.html",
+        "clicks": 2
+      },
+      {
         "path": "/stores/J000431352.html",
         "clicks": 2
       },
@@ -411,10 +415,6 @@
       },
       {
         "path": "/stores/J001147583.html",
-        "clicks": 2
-      },
-      {
-        "path": "/stores/J001239080.html",
         "clicks": 2
       }
     ],
@@ -552,6 +552,11 @@
       {
         "path": "/journal/2026-10-08-sakae-mitsukoshi-miyakishimen-ihyoe.html",
         "domain": "www.miyakishimen.co.jp",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/J000392719.html",
+        "domain": "www.hotpepper.jp",
         "clicks": 2
       },
       {
@@ -735,11 +740,6 @@
         "clicks": 1
       },
       {
-        "path": "/stores/J000392719.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
         "path": "/stores/J000643944.html",
         "domain": "tabelog.com",
         "clicks": 1
@@ -812,6 +812,11 @@
       {
         "path": "/stores/J003624222.html",
         "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J003649439.html",
+        "domain": "www.hotpepper.jp",
         "clicks": 1
       },
       {
@@ -946,6 +951,10 @@
         "clicks": 2
       },
       {
+        "path": "/stores/J000392719.html",
+        "clicks": 2
+      },
+      {
         "path": "/stores/J000431352.html",
         "clicks": 2
       },
@@ -998,10 +1007,6 @@
         "clicks": 1
       },
       {
-        "path": "/stores/J000392719.html",
-        "clicks": 1
-      },
-      {
         "path": "/stores/J000643944.html",
         "clicks": 1
       },
@@ -1027,6 +1032,10 @@
       },
       {
         "path": "/stores/J003624222.html",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J003649439.html",
         "clicks": 1
       },
       {
@@ -1074,20 +1083,20 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 95,
+    "reservationClicks": 97,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
-      "ctaEvents": 33,
-      "reservationOutbound": 35,
-      "naiveSum": 68,
-      "deduped": 37,
-      "overlap": 31,
+      "ctaEvents": 35,
+      "reservationOutbound": 37,
+      "naiveSum": 72,
+      "deduped": 39,
+      "overlap": 33,
       "bySite": [
         {
           "site": "hotpepper.jp",
-          "cta": 22,
-          "outbound": 22,
-          "deduped": 24
+          "cta": 24,
+          "outbound": 24,
+          "deduped": 26
         },
         {
           "site": "tabelog.com",
@@ -1100,7 +1109,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1612,
+    "value": 1615,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
