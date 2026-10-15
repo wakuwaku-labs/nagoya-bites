@@ -173,13 +173,14 @@ async function sendTweet(text, cred, fetchImpl = fetch) {
 }
 
 /** 結果を台帳・心拍に書く（live のときだけ呼ぶ）。 */
-function record(root, { date, entry, result, reason, text, tweetId, errorClass, status }) {
+function record(root, { date, entry, result, reason, text, textMode, tweetId, errorClass, status }) {
   const now = new Date().toISOString();
   if (status) {
     const log = X.readLog(root);
     log.posts = log.posts || [];
     const row = {
       date, slug: entry.slug, status, text,
+      ...(textMode ? { text_mode: textMode } : {}),
       attempted_at: now,
       ...(tweetId ? { tweet_id: tweetId, tweet_url: `https://x.com/i/web/status/${tweetId}`, posted_at: now } : {}),
       ...(errorClass ? { error_class: errorClass } : {}),
@@ -229,26 +230,30 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
     if (mode === 'live') record(root, { date, entry, result: 'failed', reason: 'article_html_missing' });
     return { ...out, result: 'failed', reason: 'article_html_missing', exitCode: 1 };
   }
-  const articleText = X.htmlToText(fs.readFileSync(articlePath, 'utf8'));
+  const articleHtml = fs.readFileSync(articlePath, 'utf8');
+  const articleText = X.htmlToText(articleHtml);
 
-  const built = X.buildTemplatePost(entry, policy);
-  if (!built.ok) {
-    if (mode === 'live') record(root, { date, entry, result: 'blocked', reason: built.reason, status: 'blocked' });
-    return { ...out, result: 'blocked', reason: built.reason, exitCode: 1 };
+  // 文面の候補（保存した文面 → 題名＋ポイント → 題名だけ）を順に検査し、通った最初のものを使う。
+  // どれも同じ記事・同じファイルから作るので、やり直しの回でも同じ文面になる（X の重複拒否が効く）
+  const recent = X.recentTexts(log, date, policy.duplicateWindowDays || 30);
+  const rejected = [];
+  let built = null;
+  for (const c of X.postCandidates({ entry, policy, date, html: articleHtml, root })) {
+    const failures = c.failures || X.validatePost(c.text, { entry, policy, articleText, root, recentTexts: recent });
+    if (!failures.length) { built = c; break; }
+    rejected.push({ mode: c.mode, reason: failures.join(' / '), ...(c.text ? { text: c.text } : {}) });
+  }
+  if (rejected.length) out.rejected = rejected.map(({ mode: m, reason }) => ({ mode: m, reason }));
+  if (!built) {
+    // 最後の候補（題名だけの定型）が落ちた理由を書く
+    const last = rejected[rejected.length - 1] || { reason: 'no_candidate' };
+    if (mode === 'live') record(root, { date, entry, result: 'blocked', reason: last.reason, text: last.text, status: 'blocked' });
+    return { ...out, result: 'blocked', reason: last.reason, ...(last.text ? { text: last.text } : {}), exitCode: 1 };
   }
   out.text = built.text;
   out.weighted = built.weighted;
-  out.textMode = 'template';
-
-  const failures = X.validatePost(built.text, {
-    entry, policy, articleText, root,
-    recentTexts: X.recentTexts(log, date, policy.duplicateWindowDays || 30),
-  });
-  if (failures.length) {
-    const reason = failures.join(' / ');
-    if (mode === 'live') record(root, { date, entry, result: 'blocked', reason, text: built.text, status: 'blocked' });
-    return { ...out, result: 'blocked', reason, exitCode: 1 };
-  }
+  out.textMode = built.mode;
+  if (built.type) out.draftType = built.type;
 
   // 本番の記事が出ているか（出ていないページを貼るとリンクカードが壊れる）
   if (!args.skipLiveCheck) {
@@ -271,7 +276,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
 
   const cred = credentials(env);
   if (!cred) {
-    record(root, { date, entry, result: 'failed', reason: 'no_credentials', errorClass: 'auth', text: built.text, status: 'failed' });
+    record(root, { date, entry, result: 'failed', reason: 'no_credentials', errorClass: 'auth', text: built.text, textMode: built.mode, status: 'failed' });
     return { ...out, result: 'failed', reason: 'no_credentials', errorClass: 'auth', exitCode: 1 };
   }
 
@@ -280,12 +285,12 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
     res = await sendTweet(built.text, cred, fetchImpl);
   } catch (e) {
     const reason = `network:${e.message || e}`;
-    record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, status: 'failed' });
+    record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, status: 'failed' });
     return { ...out, result: 'failed', reason, errorClass: 'server', exitCode: 1 };
   }
   const id = res.body && res.body.data && res.body.data.id;
   if ((res.status === 201 || res.status === 200) && id) {
-    record(root, { date, entry, result: 'posted', text: built.text, tweetId: id, status: 'posted' });
+    record(root, { date, entry, result: 'posted', text: built.text, textMode: built.mode, tweetId: id, status: 'posted' });
     return { ...out, result: 'posted', tweetId: id, tweetUrl: `https://x.com/i/web/status/${id}`, exitCode: 0 };
   }
   const errorClass = X.classifyError(res.status, res.body);
@@ -293,10 +298,10 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   const reason = `http_${res.status}: ${detail}`;
   if (errorClass === 'duplicate') {
     // 同じ文面が既に X にある＝前の回で届いていた。もう送らない
-    record(root, { date, entry, result: 'duplicate', reason, errorClass, text: built.text, status: 'duplicate' });
+    record(root, { date, entry, result: 'duplicate', reason, errorClass, text: built.text, textMode: built.mode, status: 'duplicate' });
     return { ...out, result: 'duplicate', reason, errorClass, exitCode: 0 };
   }
-  record(root, { date, entry, result: 'failed', reason, errorClass, text: built.text, status: 'failed' });
+  record(root, { date, entry, result: 'failed', reason, errorClass, text: built.text, textMode: built.mode, status: 'failed' });
   return { ...out, result: 'failed', reason, errorClass, exitCode: 1 };
 }
 
@@ -306,10 +311,14 @@ const RESULT_JA = {
   dry_run_ok: '試運転: 文面の検査を通過（X には送っていない）', posted: '投稿した', duplicate: '同じ文面が既に X にある（前の回で届いていた）',
 };
 
+const TEXT_MODE_JA = { draft: '保存した文面（Mac 側の Claude が書いたもの）', 'template-point': '題名＋記事のポイント1項目', template: '題名だけの定型' };
+
 function summaryMarkdown(r) {
   const lines = [`## X 自動投稿 ${r.date}`, '', `- 結果: **${RESULT_JA[r.result] || r.result}**`, `- mode: \`${r.mode}\`（ポリシー: \`${r.policyMode}\`）`];
   if (r.slug) lines.push(`- 記事: \`${r.slug}\``);
   if (r.reason) lines.push(`- 理由: ${r.reason}`);
+  if (r.textMode) lines.push(`- 文面の作り方: ${TEXT_MODE_JA[r.textMode] || r.textMode}${r.draftType ? `（型: ${r.draftType}）` : ''}`);
+  for (const x of r.rejected || []) lines.push(`  - 使わなかった候補: ${TEXT_MODE_JA[x.mode] || x.mode} … ${x.reason}`);
   if (r.weighted) lines.push(`- 文字数（X の数え方）: ${r.weighted} / 280`);
   if (r.livePage) lines.push(`- 本番の記事: HTTP ${r.livePage.status}（${r.livePage.attempts} 回目）`);
   if (r.ogImage) lines.push(`- リンクカードの画像: ${r.ogImage.ok ? 'OK' : `出ない見込み（${r.ogImage.reason}）`}`);

@@ -10,7 +10,8 @@
     "source": "x",
     "medium": "social"
   },
-  "header": "【今日の名古屋ジャーナル】",
+  "header": "",
+  "headerHelp": "文面の1行目に付ける札。2026-10-16 に「【今日の名古屋ジャーナル】」をやめた（タイムラインでいちばん見られる1行目を自分たちの札に使っていた・P-476）。空なら付けない",
   "baseHashtags": [
     "#名古屋グルメ"
   ],
@@ -26,6 +27,27 @@
     }
   ],
   "titleRewritesHelp": "X の文面に限って、題名の言い方を置き換える（記事の題名は変えない）。2026-10-11 のオーナー指示「人が全店を選んだと読める言い方を使わない」に合わせる。直近60本の題名のうち17本が「〜を業界人が読む」で、そのままだと言い方の検査で毎回止まるため（2026-10-13 実測）。置き換えた後も言い方の検査は通す。上から順に1回ずつ当てる",
+  "draft": {
+    "generate": true,
+    "useInPost": true,
+    "help": "P-476・docs/decisions/0047。generate = ジャーナルを作る Mac 側（scripts/run_journal_local.sh の 5i → scripts/write_x_draft.js）で Claude に X 用の文面を書かせ、data/x_post_drafts/<date>.json に保存する。useInPost = 投稿でその文面を最初に試す（検査に落ちたら下の定型に戻る）。文面の書き方の指示は docs/x-post-prompt.md",
+    "types": {
+      "number": "損しない数字（計算・落とし穴で、読んだ人の財布と時間を守る）",
+      "mechanism": "意外な仕組み（人に話したくなる店の仕組み）",
+      "checklist": "行く前に知っておくこと（保存したくなる箇条書き）"
+    },
+    "maxBodyWeighted": 230,
+    "evidenceMinChars": 10,
+    "evidenceMaxChars": 160,
+    "evidenceMaxItems": 6,
+    "attempts": 2,
+    "timeoutSec": 150,
+    "limitsHelp": "maxBodyWeighted = 本文（URL とハッシュタグを除く）の X の数え方の上限。URL(23)＋改行＋ハッシュタグ2個で約45 を足して 280 に収まる値。evidence = 本文の数字の出どころとして記事の原文から写した引用（各 evidenceMinChars〜evidenceMaxChars 字・最大 evidenceMaxItems 個）。attempts = 検査に落ちたとき理由を返して書き直させる回数の上限。timeoutSec = Claude の1回の応答を待つ秒数"
+  },
+  "template": {
+    "points": true,
+    "help": "保存した文面が無い・検査に落ちた日は、題名＋記事の「知っておきたいポイント」（insider-box）の1項目を使う（記事の文をそのまま・途中で切らない・280 に収まる最初の項目）。それも駄目なら題名だけの定型"
+  },
   "areaHashtagWords": [
     "千種区",
     "東区",
