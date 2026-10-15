@@ -6,6 +6,123 @@
 
 ---
 
+### [MEO-001] Google マップ・ローカル検索で店を探す人に見つけてもらう土台を直す（MEO 計画の段階1）
+
+- **priority**: P2 → **status**: blocked
+- **due**: 2026-10-24
+- **detected**: 2026-10-15
+- **category**: SEO / データ
+- **owner**: Builder / DataKeeper / Marketer
+- **source**: オーナー依頼（2026-10-15）「MEO対策として、現状の数字や過去の調査をしっかりした上で、より向上するような実装計画をしてほしい。計画書ができたら見せて」
+- **brand-filter**: ✅ 適合 — 店の位置と地図リンクという事実を正すだけ。Google の店舗情報は place_id 以外を保存しない（規約）。評価の星は出さない（判断の記録 0009）
+- **背景**: 当サイトは店舗を持たないので Google ビジネスプロフィールに登録できない（https://support.google.com/business/answer/13763036 ）。そこで MEO を「Google マップ・ローカル検索で店を探す人に選ぶ理由を届け、地図・電話・予約へ運ぶこと」とした。2026-10-15 の調査で、(1) 全店の座標がエリアの中心点（39 通り）で店ごとの位置が 0 店（`build.js:1713-1721` がホットペッパーの店ごとの座標を上書き）、(2) 地図リンクが店名＋エリアの検索で place_id を使わない（`gen-store-pages.js:745`・`index.html` の `gmap()`）、(3) 地図のクリック（`cta_gmap_click`）が毎日の集計に無い、(4) GSC のクエリを上位 300 件しか保存せず地名つきの検索の全体を数えられない、が分かった。数字と根拠は `docs/meo-plan-2026-10.md`
+- **方針**: 計画書の 5 章 段階1（M0〜M4）。子課題: [[MEO-002]] [[MEO-003]] [[MEO-004]] [[MEO-005]] [[MEO-006]]
+- **blocked-by**: オーナーの確認（計画書 8 章の判断 1「MEO の範囲」）。答えが「この範囲でよい」なら子課題とも ready にする
+- **acceptance**:
+  1. 子課題がすべて done
+  2. 営業中の店のうち座標精度が `hotpepper` の店が 95% 以上（`data/stores.json`）
+  3. 店舗ページの地図リンクの place_id つきの割合が、「電話確認」の欄がある店の割合と一致する
+  4. `data/store_referrals.json` に地図のクリックの 30 日の合計が、`data/gsc_metrics.json` に地名つきの検索の合計が、毎日入る
+- **関連**: `docs/meo-plan-2026-10.md`／`docs/seo-strategy-2026-10.md`（ハブは T7 が担当）
+
+### [MEO-002] 地名を含む検索の表示とクリックを毎日数える
+
+- **priority**: P2 → **status**: blocked
+- **due**: 2026-10-24
+- **detected**: 2026-10-15
+- **category**: SEO / 計測
+- **owner**: Marketer → Builder
+- **source**: オーナー依頼（2026-10-15）「MEO対策として、現状の数字や過去の調査をしっかりした上で、より向上するような実装計画をしてほしい」
+- **背景**: `scripts/fetch_gsc_metrics.js` は全クエリを取得しているが、保存は上位 300 件だけ（`QUERY_STORE_LIMIT = 300`）。上位 300 件で数えた地名つきの検索は 62 件・表示 1,529・クリック 61（09-17〜10-14）で、全体は数えられない。計画書 M0
+- **blocked-by**: [[MEO-001]] の確認
+- **acceptance**:
+  1. `data/gsc_metrics.json` に、全クエリから数えた地名つき（エリア名・県内の駅名・近く・周辺・駅前）の検索の合計（表示・クリック・CTR・順位）が毎日入る
+  2. 地名の語は `scripts/lib/station_names.js` と `data/area_genre_pages_policy.json` から取る（新しい辞書を作らない）
+  3. 合計が、上位 300 件だけで数えた値以上になる。単体テストが `npm test` で通る
+- **関連**: [[MEO-001]]
+
+### [MEO-003] 店の位置にホットペッパーの店ごとの座標を使い、エリアの中心点で上書きしない
+
+- **priority**: P2 → **status**: blocked
+- **due**: 2026-10-24
+- **detected**: 2026-10-15
+- **category**: データ / SEO
+- **owner**: DataKeeper → Builder
+- **source**: オーナー依頼（2026-10-15）「MEO対策として、現状の数字や過去の調査をしっかりした上で、より向上するような実装計画をしてほしい」
+- **背景**: `build.js:625` でホットペッパーの API の店ごとの緯度・経度を入れているのに、`build.js:1713-1721` が全店にエリアの中心点（`data/area_centroids.json`）を上書きしている。結果、営業中 4,979 店の座標は 39 通りしかなく、店舗ページの geo は 0 本（`gen-store-pages.js:486-495` は座標精度 exact の店だけに出す）、トップの「現在地」は最寄りのエリアで絞るだけ。ホットペッパー ID を持つ営業中の店は 4,822 店（96.8%）。店ごとの座標を入れる予定だった `data/store_coordinates.json` は作られていない。計画書 M1
+- **blocked-by**: [[MEO-001]] の確認
+- **acceptance**:
+  1. 本番に入れる前に、標本 50 店でホットペッパーの座標と Google マップの店の位置の差を測り、結果（何店が 100m 以内か）を記録する。Google の位置は比べるだけで保存しない
+  2. エリアの中心点からの距離の分布を測ってから、外れた座標を弾く距離を決める（目安 5km）。弾いた店と愛知県の範囲の外の店は座標精度 `area` のまま
+  3. 営業中の店のうち座標精度が `hotpepper` の店が 95% 以上。ビルドの前後で店の数・店舗ページの数が変わらない
+  4. 「店の位置の正本はホットペッパーの座標」を `docs/decisions/` に記録する
+- **関連**: [[MEO-001]]／[[MEO-005]]（geo を出す）
+
+### [MEO-004] 地図リンクを Google の公式の形にそろえ、紐付けを確かめた店は place_id で店を指す
+
+- **priority**: P2 → **status**: blocked
+- **due**: 2026-10-24
+- **detected**: 2026-10-15
+- **category**: UX / SEO
+- **owner**: Builder
+- **source**: オーナー依頼（2026-10-15）「MEO対策として、現状の数字や過去の調査をしっかりした上で、より向上するような実装計画をしてほしい」
+- **背景**: 店舗ページの地図リンクは `google.com/maps/search/店名 エリア`（`gen-store-pages.js:745`）、トップは `maps.google.com/search?q=店名 住所`（`index.html` の `gmap()`）で、どちらも place_id を使わず、同じ名前の店やチェーンの別の支店が開くことがある。Google の公式の形は `https://www.google.com/maps/search/?api=1&query=…&query_place_id=…`（https://developers.google.com/maps/documentation/urls/get-started ）で、place_id は無期限に保存してよい。紐付けを今の店名の判定で照合すると不一致が 1,523 件あるので、place_id は「電話確認」の欄がある店（4,237 店・電話のボタンと同じ判定）だけに付ける。計画書 M2
+- **blocked-by**: [[MEO-001]] の確認
+- **acceptance**:
+  1. URL の作り方が `scripts/lib/maps_link.js` の 1 か所にあり、`gen-store-pages.js` と `index.html` が同じ作り方を使う（index.html へは `--apply` で写し、`--check` でずれを検査）
+  2. 店舗ページの地図リンクの place_id つきの割合が、電話確認の店の割合と一致する。電話確認の無い店に place_id が付かないことを単体テストで確かめる
+  3. 計測のイベント名 `cta_gmap_click` と送る値を変えない
+  4. `npm test` と `node scripts/audit_inline_js_syntax.js --check --only root` が通る
+- **関連**: [[MEO-001]]／`scripts/lib/phone_link.js`
+
+### [MEO-005] 店舗ページの構造化データに位置（geo）と地図（hasMap）を足す
+
+- **priority**: P3 → **status**: blocked
+- **due**: 2026-10-24
+- **detected**: 2026-10-15
+- **category**: SEO / 技術
+- **owner**: Builder
+- **source**: オーナー依頼（2026-10-15）「MEO対策として、現状の数字や過去の調査をしっかりした上で、より向上するような実装計画をしてほしい」
+- **背景**: 店舗ページ 20 本の標本で geo・hasMap は 0 本。Google の LocalBusiness の構造化データは geo を推奨している（https://developers.google.com/search/docs/appearance/structured-data/local-business ）。検索結果の見た目が変わるとは書かれていない。計画書 M3
+- **blocked-by**: [[MEO-003]]・[[MEO-004]]
+- **acceptance**:
+  1. 座標精度が `hotpepper` か `exact` の店だけに geo を出す。hasMap は [[MEO-004]] の URL
+  2. 標本 20 本で geo・hasMap が出ていて、`node scripts/audit_inline_js_syntax.js --check --only stores` が通る
+  3. `openingHours` は今の文字のまま（触らない）
+- **関連**: [[MEO-001]]
+
+### [MEO-006] 地図ボタンのクリックを店と場所ごとに毎日数える
+
+- **priority**: P2 → **status**: blocked
+- **due**: 2026-10-24
+- **detected**: 2026-10-15
+- **category**: 計測 / SEO
+- **owner**: Builder / Marketer
+- **source**: オーナー依頼（2026-10-15）「MEO対策として、現状の数字や過去の調査をしっかりした上で、より向上するような実装計画をしてほしい」
+- **背景**: 地図ボタンのイベント `cta_gmap_click` は店舗ページ・クイックビュー・カードから送っているが、`scripts/fetch_ga4_views.js` の毎日の集計（`data/store_referrals.json`）に入っていない。09-13〜10-10 の基線ファイルでは 22 回。地図は予約送客の定義の外で、混ぜない（判断の記録 0009）。計画書 M4
+- **blocked-by**: [[MEO-001]] の確認
+- **acceptance**:
+  1. `data/store_referrals.json` に、予約送客とは別の欄で、地図のクリックの 30 日の合計・場所ごとの内訳・上位の店が毎日入る
+  2. 予約送客の数（`scripts/lib/reservation_exits.js` の数え方）が変わらないことを単体テストで確かめる
+  3. `docs/kpi-weekly.md` の週次の表に地図のクリックの行を足す
+- **関連**: [[MEO-001]]／`docs/reservation-measurement.md`
+
+### [ISSUE-189] backlog から Linear への同期で、Linear で完了・中止にした課題を古い状態に戻さないようにする
+
+- **priority**: P1 → **status**: ready
+- **due**: 2026-10-22
+- **detected**: 2026-10-15
+- **category**: 運用 / 自動化
+- **owner**: Orchestrator → Builder
+- **source**: MEO 計画（[[MEO-001]]）の起票のとき、`node scripts/sync_backlog_to_linear.js`（試し実行）で見つけた
+- **背景**: `scripts/sync_backlog_to_linear.js` の冒頭の説明は「同期の後は Linear が状態と優先度を持つ」だが、実装（`--apply`）は backlog の status と Linear の状態が違えば backlog の側へ書き換える。2026-10-15 の照合で、Linear が完了・中止なのに backlog が ready・in_progress の課題が 23 件あった（例: [[SNS-002]] P-294 は Linear で Done・backlog は ready、[[ISSUE-147]] P-142 は Done・backlog は ready、[[SEO-095]] P-57 は Done・backlog は in_progress）。日次の `/seo-triage`・週次・消費者フィードバックの手順は、採用があった日に `--apply` を呼ぶので、次に採用が出た日にこの 23 件が未着手・進行中に戻る。試し実行の「更新」は 121 件と出るが、アーカイブ済みで一覧に出ない課題も「更新」に数えているため、状態が実際に違うのは 23 件。MEO の 6 件は一括の `--apply` を使わずに作った（`data/linear_sync_state.json` に記録済み）
+- **acceptance**:
+  1. Linear で完了・中止・重複の課題は、`--apply` で状態を変えない（テストで確かめる）
+  2. 試し実行の「更新」に、アーカイブ済みで一覧に出ない課題を数えない（数えるなら理由を分けて出す）
+  3. 23 件の backlog の status を Linear に合わせる（Linear が正）
+  4. `npm test` が通る
+- **関連**: `docs/linear-task-workflow.md`／`.claude/commands/seo-triage.md`（`--apply` を呼ぶ）
+
 ### [SNS-001] 日次ジャーナルの公開後に、X へ記事の紹介を毎日自動で投稿する
 
 - **priority**: P2 → **status**: in_progress
