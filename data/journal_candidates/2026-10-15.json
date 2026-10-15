@@ -1,0 +1,416 @@
+{
+  "date": "2026-10-15",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "池下のイタリアン「QQ（クイント・クインテ）」でデート、棚のワインと抜栓料20%",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 96,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        },
+        {
+          "kw": "イタリアン",
+          "feature": "features/nagoya-italian-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 7日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,コース,予約,シーン,デート) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 158字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「デート」+4",
+          "タイトルにジャンル語「イタリアン」+2"
+        ]
+      },
+      "gate_note": "96点（自動公開ライン 100点）。主な不足: topicality -5 / search_intent -4 / recency -3"
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄三越9階「すしの美登利」10月31日開店、54席と限定の海鮮ひつまぶし",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 89,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "ひつまぶし",
+          "feature": "features/nagoya-hitsumabushi.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,予約,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 101字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「一人飲み」+1",
+          "タイトルにジャンル語「ひつまぶし」+2"
+        ]
+      },
+      "gate_note": "89点（自動公開ライン 100点）。主な不足: topicality -13 / recency -3 / search_intent -3"
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄「お台所 六六堂」10月8日開店、150席と金庫室のワインセラー",
+      "verdict": "HOLD",
+      "total": 72,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 4,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,席,予約) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 107字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「宴会」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "グローバルゲートに「沖縄琉球しゃぶしゃぶ くろ凪」10月26日開店",
+      "verdict": "HOLD",
+      "total": 70,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 4,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 3
+      },
+      "search_intent_links": [
+        {
+          "kw": "すき焼き",
+          "feature": "features/nagoya-sukiyaki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 11日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (予約,シーン,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 106字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「宴会」+1",
+          "タイトルにジャンル語「しゃぶしゃぶ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅「やんやん 焼き小籠包専門店」開店3年、3個450円の設計",
+      "verdict": "HOLD",
+      "total": 62,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1033日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,シーン,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 96字 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "96点（自動公開ライン 100点）。主な不足: topicality -5 / search_intent -4 / recency -3",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "池下のイタリアン「QQ（クイント・クインテ）」でデート、棚のワインと抜栓料20%",
+      "lead_draft": "名古屋・池下に9月15日開店した「QQ（クイント・クインテ）」は、イタリア食材店の奥にレストランがある店です。棚のワインを1本選び、抜栓料（ボトル価格の20%・最低2,000円）を足して奥で開ける「角打ちペアリング」と、ランチ4,800円・ディナー7,500円の月替わりコースを、価格帯・予約・向く場面から読みます。",
+      "angle": "価格帯（コース4,800円/7,500円＋棚値段＋抜栓料20%・最低2,000円）の読み方、食材店とレストランで在庫を共有するオペと予約の取り方（ランチ2時間・木曜夜休み）、デートと少人数の会食に向くシーンの理由",
+      "main_store": {
+        "name": "QQ（クイント・クインテ）",
+        "id": "",
+        "area": "池下",
+        "genre": "イタリアン"
+      },
+      "sources": [
+        {
+          "label": "株式会社BGS プレスリリース（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000004.000192235.html",
+          "date": "2026-10-08"
+        },
+        {
+          "label": "QQ 公式サイト（お知らせ・メニュー）",
+          "url": "https://www.quinto-quinte.com/news",
+          "date": "2026-09-15"
+        },
+        {
+          "label": "QQ 公式Instagram",
+          "url": "https://www.instagram.com/quinto.quinte/"
+        },
+        {
+          "label": "Google マップ 店舗情報",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJz8kaBwBxA2ARppkThLECXHo"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄「お台所 六六堂」10月8日開店、150席と金庫室のワインセラー",
+      "lead_draft": "栄駅8番出口から徒歩1分、運営会社の本社ビル1階に10月8日開店した「お台所 六六堂」。3フロア150席、かつての金庫室を生かしたワインセラーで客が自分でボトルを選べる居酒屋を、宴会の予約と席の使い方から読みます。",
+      "angle": "150席3フロアの席配置と宴会予約、ワインセラーを客が選ぶ価格帯の読み方",
+      "main_store": {
+        "name": "お台所 六六堂",
+        "id": "",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ジェイグループホールディングス お知らせ",
+          "url": "https://www.jgroup.jp/news/20261009-3464/",
+          "date": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "栄三越9階「すしの美登利」10月31日開店、54席と限定の海鮮ひつまぶし",
+      "lead_draft": "東京・梅丘の行列寿司「すしの美登利」が、JRゲートタワー店に続く名古屋2店目を名古屋栄三越9階に10月31日開店します。カウンター10席・テーブル44席とテイクアウトを併せ持つ店の予約と回転を読みます。",
+      "angle": "54席（カウンター10席）の回転と予約受付、限定メニューの価格帯",
+      "main_store": {
+        "name": "すしの美登利 名古屋栄三越店",
+        "id": "",
+        "area": "栄",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "梅丘寿司の美登利総本店（@Press）",
+          "url": "https://www.atpress.ne.jp/news/422531",
+          "date": "2026-10-07"
+        },
+        {
+          "label": "名古屋三越 プレスリリース（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000017.000185183.html",
+          "date": "2026-10-07"
+        },
+        {
+          "label": "ナゴヤト",
+          "url": "https://nagoyato.com/posts/19941",
+          "date": "2026-10-10"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "グローバルゲートに「沖縄琉球しゃぶしゃぶ くろ凪」10月26日開店",
+      "lead_draft": "ささしまライブ駅直結のグローバルゲート3階に、沖縄直送の食材を使うしゃぶしゃぶ居酒屋「沖縄琉球しゃぶしゃぶ くろ凪」が10月26日に開店します。平日昼から夜まで通しで営業する店を、宴会のシーンと予約から読みます。",
+      "angle": "通し営業の回転と宴会予約、シーン",
+      "main_store": {
+        "name": "沖縄琉球しゃぶしゃぶ くろ凪",
+        "id": "",
+        "area": "名駅・ささしま",
+        "genre": "しゃぶしゃぶ"
+      },
+      "sources": [
+        {
+          "label": "株式会社DOUBLE プレスリリース（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000002.000190931.html",
+          "date": "2026-10-04"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "名駅「やんやん 焼き小籠包専門店」開店3年、3個450円の設計",
+      "lead_draft": "近鉄名古屋駅から徒歩2分、2023年10月に開店した「やんやん 焼き小籠包専門店 名駅本店」。スープの多さを看板に、注文後に包む焼き小籠包を3個450円から出す専門店の価格帯と回転を読みます。",
+      "angle": "単品専門の価格帯と回転、一人飲みのシーン",
+      "main_store": {
+        "name": "やんやん 焼き小籠包専門店 名駅本店",
+        "id": "",
+        "area": "名駅",
+        "genre": "点心"
+      },
+      "sources": [
+        {
+          "label": "東海テレビ",
+          "url": "https://www.tokai-tv.com/tokainews/article_20231217_31656",
+          "date": "2023-12-17"
+        },
+        {
+          "label": "ヒトサラ",
+          "url": "https://hitosara.com/0031659291/"
+        }
+      ]
+    }
+  ]
+}
