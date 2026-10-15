@@ -122,3 +122,15 @@ python3 -c "import json;print(json.load(open('data/site_metrics.json'))['cta'])"
 `data/store_referrals.json`（店舗別・経路別の予約送客と予約申告）は、登録済みの `store_name` と `link_domain` だけで動く。**追加の登録は要らない**。
 
 サイトは `store_id`（ホットペッパーID か placeId）と `location`（card / modal / store_page / feature / journal 等）も送っている。どの面から送客したかを GA4 の画面で見たくなったら、上と同じ手順で `store_id` / `location` をイベントスコープで登録する（任意・非遡及）。定義の正本は `docs/reservation-measurement.md`。
+
+## 追補: `location`・`link_kind`・`result` カスタムディメンション（MEO-006・2026-10-15）
+
+`data/store_referrals.json` の地図の場所ごと・リンクの形ごとの内訳と、電話の番号の取得（`call_lookup`）・「現在地」（`geo_search`）の結果ごとの回数に使う。登録されるまでは内訳が `null` になり、合計だけが入る（`missingDimensions` に足りない名前が出る）。`scripts/lib/store_actions.js` が GA4 のメタデータで登録を確かめるので、登録した後にコードを変える必要は無い。
+
+| ディメンション名 | 範囲 | イベントパラメータ | 使うイベント |
+|---|---|---|---|
+| `location` | イベント | `location` | `cta_gmap_click`（ほかの予約・電話のイベントも送っている） |
+| `link_kind` | イベント | `link_kind` | `cta_gmap_click`（`place_id`／`search`） |
+| `result` | イベント | `result` | `call_lookup`・`geo_search` |
+
+登録は「管理」→「カスタム定義」→「カスタムディメンションを作成」（上の 4. と同じ）。さかのぼって数えないので、登録した日から内訳が入る。
