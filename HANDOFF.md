@@ -1,51 +1,44 @@
-status: blocked
+status: in_progress
 
-# 店のデータの正しさ・検索流入・送客の計画（旧 MEO 計画）の改訂（2026-10-15〜）
+# 店のデータの正しさ・検索流入・送客の計画（旧 MEO 計画）の実装（2026-10-15〜）
 
 （前のメモ「X 自動投稿」「2026-10-13 自律実行ラン」は status: archived。内容は git 履歴 2038657fa1 の HANDOFF.md）
 
 ## 目的
-- オーナーの依頼（2026-10-15）「MEO対策として、現状の数字や過去の調査をしっかりした上で、より向上するような実装計画をしてほしい。計画書ができたら見せて」
-- 同じ日の第1版に、オーナーから 7 つの問題の指摘と改訂の指示（12 部構成）が届いた。**計画の改訂だけを行い、実装はしない**
+- 計画書 `docs/meo-plan-2026-10.md`（改訂版）をオーナーが承認した（2026-10-15「計画（改訂版）の返事: 1=A / 2=A（先に止める） / 3=A（標本で 1 割以上が別の店だった帯は、確かめが済むまで出さない）」）。計画 9 章の順で実装する
+- 順番: B1 の電話の部分（先に止める）→ A1 状態を数える → A2 帯ごとの標本 150 組 → B1 の評価・口コミ信頼度（判断 3）→ B3 スイッチと夜間 QA → B2 地図リンク → C1 計測。A3 は並行
 
 ## 完了条件
-- 計画書 `docs/meo-plan-2026-10.md` が改訂版（指示の 12 部構成・事実／仮説／未確認の区別・既存の決定を覆さない）になっている → 済
-- backlog と Linear の MEO-001〜006 が改訂版の中身になっている（status は blocked のまま）→ 済（P-465〜P-470 を読み戻して確認）
-- 表示用ページ https://claude.ai/artifact/CzsAogSbKskKq4nb3QiUMc を同じ URL で改訂版に更新し、返事の欄を判断 1〜3 にする → 済（Version 5）
-- 実装はオーナーの答えの後
+- 電話: 不一致と一致率 0.3 未満の帯の店に電話ボタンが出ない（本番で実例 5 店を確かめる）。店数・店舗ページ数は変わらない
+- A1・A2: 状態ごとの数のコマンド、帯ごとの標本 150 組の記録（根拠つき）、判断 3 の表
+- 評価: 判断 3 の基準で帯ごとに出す・出さない。B3・B2・C1 は計画書の確かめ方どおり
+- 各段階は PR で 1 本ずつ入れ、ビルドの後に本番で確かめる
 
 ## できていること
-- 事実の確認 4 本（店の同一性・計測と座標・規約と料金・既存の SEO 計画）→ 計画書を書き直した
-- 一番大きな発見: 電話ボタンの判定（`scripts/lib/phone_link.js:59-75`）は住所の「町名＋丁目」だけ（`compareJpAddress` は番地・ビル・階を見ない）で、住所が「同じ」なら店名を見ない。一致率 0.3 未満で電話ボタンがある店 275。明らかに別の店へ電話がかかる店は少なくとも 21（place_id を店名の合う別の掲載店と共有）。評価は電話の判定と関係なく出る
-- backlog の MEO-001〜006 と Linear の P-465〜P-470 を改訂版の中身にした（blocked のまま）
-- 別起票: ISSUE-190＝P-472（Google の店舗情報を公開リポジトリに保存していることの規約の確認・ready・DataKeeper・期限 10-29）
-- 表示用ページ（元ファイル: scratchpad の meo-plan.html。生成は build_meo_page.js <md> <out>）
-- 最終チェックで、指示の「継続運用」の 8 項目が抜けていたので計画書 6.4 節を足した（既存の仕組みとの突き合わせ。足すのは夜間 QA 1 行＝計測データの更新日、集計の欄 2 つ＝Google の評価の取得日の古さ・`call_lookup` の結果）。MEO-003・MEO-006 の達成条件と P-467・P-470 の本文にも足した（読み戻して確認）
-- 分かった事実: Google の評価を出している 4,587 店のうち 3,483 店（76%）は取得日が 2026-05（週次の取り直し `--refresh` が 2026-08-15 から予算 0 で止まっている）。取得日は画面に出している。再開するかは P-472 の後にオーナーが決める（計画書 12.2 節）
-- 記憶メモ（meo-plan-2026-10・plan-review-lessons・places-api-quota-and-budget）を更新
-- 中間データ: scratchpad の identity/（low2.json 1,181 組）・measure/（ward_flags.json）
+- 判定を 1 つにまとめた: `scripts/lib/place_binding.js`（状態 confirmed/review/mismatch/none・帯・人の記録 keep/reject）と `data/place_binding_policy.json`（機能ごとの show と許す帯。phone は sim-0・sim-lt-0.3 を許さない）
+- `scripts/lib/phone_link.js` に関門を足した（住所か店名で出せても、状態で止める。理由 binding-mismatch・binding-review・switched-off）。`audit_phone_links.js`・`build.js` のログも同じ判定。テスト `tests/place_binding.test.js`（9 件）。phone・binding・audit のテスト 31 件が通る
+- 今のデータで電話ボタンが消えるのは 297 店（不一致 32・要確認の低い帯 265）。無作為 28 店を見ると、別の店とみられるのは約 6 店。残りは店名の表記の違い（咲夜島 さくやじま→咲夜島、バーガンディ→Burgundy）。オーナーの判断 2 の説明は「正しい店もある。それでも消える損の方が小さい」で承認済み。A2 で正しい店を戻す（人の記録 keep か、帯を細かく分ける）
+- A3（MEO-002）: 別の作業者が `docs/seo-traffic-inventory-2026-10.md` を書いた（ブランチ worktree-agent-a53393ea55498da15・コミット 2b146b8e53）。まだ取り込んでいない。SEO-116 へのコメントもまだ
 
 ## 次にやること
-- **オーナーの返事待ち**（判断 1〜3。返事は「計画（改訂版）の返事: 1=A 2=A 3=A」の形で届く）
-- 返事が来たら: 判断 2 が A なら MEO-004 の電話の部分（21 店＋一致率 0.3 未満の 275 店の電話を出さない）だけ先に ready にして着手。判断 1 が A なら MEO-003（紐付けの 3 状態・標本 150 組）を ready にする
-- main への合流はオーナーの確認の後（計画書・backlog の差分はこのブランチにある）
+- 電話の変更をコミット → 判断の記録 0046（オーナーの判断 1〜3）を書く → backlog と Linear の状態を進める（MEO-001 判断済み・MEO-004 進行中・MEO-003/002/006 を ready）
+- A3 の文書を cherry-pick → npm test・監査 → PR → マージ（ビルドが終わるまで次をマージしない）→ 本番で実例 5 店（ホシノシタ・bindi・BAR EVE・CCC・木村屋 錦）の電話ボタンが消えたことを確かめる
+- SEO-116（Linear）に棚卸しの要点をコメント
+- A1 の `--states`（audit_places_binding.js）→ A2 の標本
 
 ## 試したが駄目だったこと
-- `orca linear save-issue` の作成時の `--parent-id` は効かなかった（作成後に付け直した）
-- `node scripts/sync_backlog_to_linear.js --apply` は使わない（ISSUE-189＝P-471 の不具合で 23 件の状態を戻すため）。新しい課題は scratchpad の create_meo.js で作り、`data/linear_sync_state.json` に手で記録した
-- python3 の標準入力に日本語の長い行を渡すと SyntaxError。スクリプトはファイルに書き、先頭に `# -*- coding: utf-8 -*-` を付ける
-- Maps Platform の規約の本文（保存の例外 30 日など）は WebFetch では途中で切れて読めなかった（→ P-472 で確かめる）
+- `orca linear save-issue` の作成時の `--parent-id` は効かない（作成後に付け直す）。書き込みは linear_write_unconfirmed でも反映されていることが多い。必ず読み戻す
+- `node scripts/sync_backlog_to_linear.js --apply` は使わない（ISSUE-189＝P-471）
+- python3 の標準入力に日本語の長い行を渡すと SyntaxError。スクリプトはファイルに書き、`# -*- coding: utf-8 -*-` を付ける
+- zsh で `echo =====` はエラー（= で始まる語）。区切りは `echo "-----"`
 
 ## 守るルール・判断メモ
-- 判断の記録 0037（2026-10-14・オーナーの決定 10-13）で「近い順」は外した。位置の使いやすさは覆さず、計画書 8.5 節の 4 条件がそろったらオーナーが決め直す
-- ホットペッパーの規約（rws-t-1001・2019-02-01 改訂）: 「第三者のデーターベースに複製保存」禁止・「編集、加工、翻案」禁止・書面の承諾なく「収入を得ることはできません」・キャッシュ更新 24 時間以内。座標を名指しした条文は無い。0028 でオーナーは「確かめないまま続ける」と決めた
-- Places（New）の無料の月量: Details Essentials（location）10,000・Pro 5,000・Enterprise（電話）1,000・Text Search IDs only は無制限（料金ページ 2026-10-14 更新）。請求アカウントは必須
-- GSC: クエリ別の行は表示の 45.1%（行数 3,561 は上限 5,000 未満＝残りは Google がクエリを返さない分）。クエリから数えた数字は常に「下限」と書く
-- 見分けられる変化（4 週ずつ・ポアソン）: セッション ±10%・店舗ページの Google クリック +25%・予約送客 +48%・地図 +107%
-- 判断 1〜3（計画書 12.1 節）: 1=計画の組み直し（推奨 A）・2=電話の誤りを先に止める（推奨 A: 21 店＋一致率 0.3 未満の 275 店の電話を出さない）・3=要確認の店の評価（推奨 A: 標本で 1 割以上が別の店の帯は出さない）
-- main への合流はオーナーの確認の後
+- 判断の記録 0037（近い順は外した）は守る。位置の使いやすさは保留（計画書 8.5 節）
+- 判断 3=A: 標本で 30 組のうち 3 組以上（1 割以上）が別の店だった帯は、評価・口コミ信頼度を確かめが済むまで出さない
+- 不一致・要確認の店で、ボタンは無効にせず要素ごと出さない（読み上げ）
+- 新しい ADR 番号は 0046（origin/main の最新は 0045。マージ前にもう一度確かめる）
 
 ## 関連ファイル
-- docs/meo-plan-2026-10.md（計画書・改訂版）
-- agent-backlog.md の MEO-001〜006・ISSUE-189・ISSUE-190
-- data/linear_sync_state.json（MEO-001〜006・ISSUE-189・ISSUE-190 の Linear の番号）
+- docs/meo-plan-2026-10.md（計画書）・scripts/lib/place_binding.js・data/place_binding_policy.json・scripts/lib/phone_link.js・scripts/audit_phone_links.js・build.js（電話の判定の箇所）・tests/place_binding.test.js
+- agent-backlog.md の MEO-001〜006・ISSUE-189・ISSUE-190 ／ data/linear_sync_state.json
+- 中間データ: scratchpad の identity/・measure/・impact_phone.js

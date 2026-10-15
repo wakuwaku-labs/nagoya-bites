@@ -1,0 +1,11 @@
+{
+  "_doc": "店と Google の店舗情報の紐付けの状態（確認済み・要確認・不一致）ごとに、どの機能を出すかの唯一の情報源（MEO-003/MEO-004・計画書 docs/meo-plan-2026-10.md の 6.1 節・判断の記録 0046）。判定器は scripts/lib/place_binding.js の1本。閾値・帯・スイッチの変更はこのファイルで行い、スクリプトは触らない。不一致の紐付けは、どの機能にも使わない。要確認の紐付けは、allowReviewBands に挙げた帯だけ使う（帯は店名の一致率: sim-0・sim-lt-0.3・sim-0.3-0.6・sim-ge-0.6・branch-conflict）。show=false にすると、その機能を全店で出さない（戻すときは true に戻して次のビルドを待つ）。",
+  "decidedAt": "2026-10-15",
+  "features": {
+    "phone": {
+      "_doc": "電話のボタン（scripts/lib/phone_link.js の「電話確認」の欄）。オーナーの判断 2=A（2026-10-15）で、一致率 0.3 未満の帯と不一致を先に止めた。ほかの帯は、標本の確かめ（MEO-003・帯ごとに 30 組）の後に、判断 3 の基準（別の店が 1 割以上の帯は出さない）で見直す。",
+      "show": true,
+      "allowReviewBands": ["sim-0.3-0.6", "sim-ge-0.6", "branch-conflict"]
+    }
+  }
+}

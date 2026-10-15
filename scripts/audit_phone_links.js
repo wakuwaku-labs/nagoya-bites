@@ -19,7 +19,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { FIELD, REASONS, buildPlaceIndex, phoneLinkVerdict } = require('./lib/phone_link');
+const { FIELD, REASONS, buildPhoneContext, phoneLinkVerdict } = require('./lib/phone_link');
 
 const ROOT = path.resolve(__dirname, '..');
 
@@ -27,14 +27,16 @@ function readJson(rel) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, rel), 'utf8'));
 }
 
-function audit(stores, places) {
-  const index = buildPlaceIndex(places);
+function audit(stores, places, opts) {
+  // build.js と同じ判定（紐付けの状態・data/place_binding_policy.json も見る）
+  const ctx = buildPhoneContext(stores, places, opts);
+  const index = ctx.index;
   const counts = Object.fromEntries(REASONS.map((r) => [r, 0]));
   const stale = [];     // 欄があるのに判定は出さない
   const missing = [];   // 判定は出すのに欄が無い
   const basisDiff = []; // 根拠が違う
   for (const s of stores) {
-    const v = phoneLinkVerdict(s, index, places);
+    const v = phoneLinkVerdict(s, index, places, ctx);
     counts[v.reason] += 1;
     const has = s[FIELD];
     if (has && !v.ok) stale.push({ name: s['店名'], id: s['ホットペッパーID'] || '', field: has, reason: v.reason });
@@ -60,6 +62,7 @@ function main(argv) {
     console.log(`判定の内訳: 住所が同じ ${c['address-same']} ／ 住所は比べられず店名が合う ${c['address-unknown-name-ok']}`
       + ` ／ 住所が別の場所 ${c['address-different']} ／ 住所で比べられず店名も合わない ${c['address-unknown-name-ng']}`
       + ` ／ 紐付け却下 ${c.rejected} ／ 記録なし ${c['no-record']} ／ placeId なし ${c['no-place-id']}`);
+    console.log(`紐付けの状態で止めた店（MEO-004）: 不一致 ${c['binding-mismatch']} ／ 要確認（許していない帯） ${c['binding-review']} ／ スイッチで停止 ${c['switched-off']}`);
     console.log(`欄と判定のずれ: 古い欄 ${r.stale.length}（別の店の番号にかかりうる） ／ 未反映 ${r.missing.length} ／ 根拠の違い ${r.basisDiff.length}`);
     for (const x of r.stale.slice(0, 10)) console.log(`  古い欄: ${x.name}（${x.id}）電話確認=${x.field} → 判定 ${x.reason}`);
     for (const x of r.missing.slice(0, 5)) console.log(`  未反映: ${x.name}（${x.id}）判定の根拠=${x.basis}`);

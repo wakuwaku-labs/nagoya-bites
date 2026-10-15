@@ -1549,12 +1549,15 @@ async function main() {
   // placeId の紐付けが掲載の店と合うと確かめられた店にだけ「電話確認」の欄を持たせる（トップと店舗ページが見る）。
   // 重複統合の後に行う（残った側のレコードで判定する）。判定は scripts/lib/phone_link.js の1本
   // （住所を compareJpAddress()、住所で比べられない店だけ店名を namesMatch()）。placeId は消さない。
+  // そのうえで、紐付けの状態（scripts/lib/place_binding.js・data/place_binding_policy.json）が不一致か、
+  // 許していない要確認の帯の店は出さない（MEO-004・オーナーの判断 2=A・2026-10-15）。
   try {
     const placesForPhone = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'places_resolved.json'), 'utf8'));
     const phoneCounts = require('./scripts/lib/phone_link').annotatePhoneLinks(stores, placesForPhone);
     const phoneOk = phoneCounts['address-same'] + phoneCounts['address-unknown-name-ok'];
     console.log(`電話ボタンの判定（I-36）: 出す ${phoneOk}店（住所 ${phoneCounts['address-same']} / 店名 ${phoneCounts['address-unknown-name-ok']}）`
-      + ` / 出さない 住所が別の場所 ${phoneCounts['address-different']}・店名も合わない ${phoneCounts['address-unknown-name-ng']}・記録なし ${phoneCounts['no-record']}・紐付け却下 ${phoneCounts['rejected']}・placeId なし ${phoneCounts['no-place-id']}`);
+      + ` / 出さない 住所が別の場所 ${phoneCounts['address-different']}・店名も合わない ${phoneCounts['address-unknown-name-ng']}・記録なし ${phoneCounts['no-record']}・紐付け却下 ${phoneCounts['rejected']}・placeId なし ${phoneCounts['no-place-id']}`
+      + ` / 紐付けの状態で止めた（MEO-004） 不一致 ${phoneCounts['binding-mismatch']}・要確認 ${phoneCounts['binding-review']}・スイッチ ${phoneCounts['switched-off']}`);
   } catch (e) {
     console.error(`電話ボタンの判定をスキップ（data/places_resolved.json を読めません）: ${e.message}`);
   }
