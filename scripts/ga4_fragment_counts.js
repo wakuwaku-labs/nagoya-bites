@@ -21,6 +21,9 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 // index.html の nbFilterParams と nbBuildHash が書くキー
 const KNOWN_KEYS = ['genre', 'area', 'cond', 'tag', 'cap', 'q', 'store'];
+// 対照: # を書いた後に送るイベント。filter_apply は applyFilters（→ pushHash が # を書く）の直後に必ず送る。
+// これが 1 回以上あるのに # を含む URL が 0 なら、GA4 は # の後ろを受け取っていない（問い合わせの不具合ではない）
+const CONTROL_EVENTS = ['filter_apply', 'modal_open', 'search', 'geo_search'];
 const PAGE_LIMIT = 100000;
 const MAX_ROWS = 500000;
 
@@ -103,6 +106,8 @@ function summarize(result) {
   lines.push('');
   lines.push(`- 期間: ${result.start} 〜 ${result.end}（取得 ${result.fetchedAt}）`);
   lines.push(`- 期間のイベントの合計: ${result.totalEvents}（うち page_view ${result.totalPageViews}）`);
+  const ctl = result.controlEvents || {};
+  lines.push(`- 対照（# を書いた後に送るイベントの回数。filter_apply は # を書いた直後に必ず送る）: ${CONTROL_EVENTS.map((e) => `${e} ${ctl[e] || 0}`).join('・')}`);
   lines.push(`- URL に # を含むイベント: ${a.events.withFragment}`);
   lines.push(`  - q がエリア名（「現在地」が選ぶ ${result.geoAreas.length} 個のどれか。検索欄に同じ名前を打った分も入るので、「現在地」の分の上限）: ${a.events.qGeoArea}`);
   lines.push(`  - q がそれ以外（手入力の検索語など。値は出さない）: ${a.events.qOther}`);
@@ -173,12 +178,15 @@ async function fetchTotals(runReport, start, end) {
   });
   let total = 0;
   let pageViews = 0;
+  const control = {};
   for (const row of res.data.rows || []) {
     const n = parseInt(row.metricValues[0].value, 10) || 0;
+    const name = row.dimensionValues[0].value;
     total += n;
-    if (row.dimensionValues[0].value === 'page_view') pageViews += n;
+    if (name === 'page_view') pageViews += n;
+    if (CONTROL_EVENTS.includes(name)) control[name] = (control[name] || 0) + n;
   }
-  return { total, pageViews };
+  return { total, pageViews, control };
 }
 
 async function main() {
@@ -204,14 +212,14 @@ async function main() {
   const totals = await fetchTotals(runReport, args.start, args.end);
   const result = {
     start: args.start, end: args.end, fetchedAt: new Date().toISOString(),
-    geoAreas, truncated, totalEvents: totals.total, totalPageViews: totals.pageViews,
+    geoAreas, truncated, totalEvents: totals.total, totalPageViews: totals.pageViews, controlEvents: totals.control,
     counts: aggregate(rows, geoAreas),
   };
   console.log(summarize(result));
   if (args.json) fs.writeFileSync(args.json, JSON.stringify(result, null, 2));
 }
 
-module.exports = { KNOWN_KEYS, readGeoAreas, classifyLocation, aggregate, summarize, parseArgs, fetchRows, fetchTotals };
+module.exports = { KNOWN_KEYS, CONTROL_EVENTS, readGeoAreas, classifyLocation, aggregate, summarize, parseArgs, fetchRows, fetchTotals };
 
 if (require.main === module) {
   main().catch((e) => { console.error(String((e && e.message) || e)); process.exit(1); });
