@@ -352,6 +352,9 @@ test('段階 3a: ハブのカードと店舗ページの関連リンクにも押
   assert.match(hub, /\.hub-grid a:active\{transform:scale\(\.985\);box-shadow:inset 0 0 0 100vmax rgba\(0,0,0,\.16\);transition-duration:var\(--dur-instant\);\}/);
   const gen = fs.readFileSync(path.join(ROOT, 'gen-store-pages.js'), 'utf8');
   // 文中のリンク（inline）は transform が効かないので、背景の色で返す
+  // 自前で押した見た目を出すので、ブラウザの押した光も消す
+  assert.match(hub, /\.hub-grid a\{[^}]*-webkit-tap-highlight-color:transparent;\}/);
+  assert.match(gen, /\.related-features a,\.related-stores a\{[^}]*-webkit-tap-highlight-color:transparent;\}/);
   assert.match(gen, /\.related-features a:active,\.related-stores a:active\{color:var\(--gold2\);background-color:rgba\(122,92,16,\.16\);transition-duration:var\(--dur-instant\);\}/);
 });
 
