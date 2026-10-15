@@ -352,8 +352,12 @@ node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 
 | `--dur-slow` | 250ms | 画面の端から出る大きな面（ドロワー） |
 | `--ease-out` | `cubic-bezier(.2,0,0,1)` | 出るとき・状態が変わるとき |
 | `--ease-in` | `cubic-bezier(.4,0,1,1)` | 消えるとき |
+| `--dur-sheet` | 300ms | スマホで下から出る面（絞り込みシート・クイックビュー）が出るとき（段階 3b） |
+| `--ease-emph-out` | `cubic-bezier(.05,.7,.1,1)` | 大きな面が出るとき（強く減速して止まる・段階 3b） |
+| `--ease-emph-in` | `cubic-bezier(.3,0,.8,.15)` | 大きな面が戻るとき（ゆっくり始まり、速く去る・段階 3b） |
+| `--dur-landed` | 700ms | 着いた場所の光。**色だけの動きにしか使わない**（段階 3b・300ms の上限の例外） |
 
-時間は直書きせず、このトークンを使う。上限は 300ms（待ちの表示 `.skel`・`.nb-wait-long` だけ例外）。
+時間は直書きせず、このトークンを使う。上限は 300ms（待ちの表示 `.skel`・`.nb-wait-long` だけ例外）。色（文字・背景・枠・輪郭の色）だけを変える動きは 1000ms まで許す（判断の記録 0050・`motion.colorOnlyException`）。
 
 ### 書き方の決まり
 
@@ -377,6 +381,14 @@ node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 
 
 押す相手・チップ・♡ のホバーは `@media (hover:hover)` の中に置く（スマホで触った後に色や持ち上げが残らない）。
 
+### 部品（段階 3b・P-500・判断の記録 0050）
+
+| 部品 | 書き方 | 使う所 |
+|---|---|---|
+| 面の出入り（C-1・C-2） | 開くと `.open`。閉じると JS の `nbLeave(el, 後片付け)` が `.is-closing` を付け（`.open` は先に外す）、`animationend`（名前が `Out` で終わるもの）か 400ms で外して後片付けをする。スマホは `@keyframes nbSheetIn`（下から・`var(--dur-sheet) var(--ease-emph-out)`）と `nbSheetOut`（下へ・`var(--dur-base) var(--ease-emph-in) forwards`）、769px 以上は `nbPanelIn`／`nbPanelOut`（16px＋scale .98・出るときは `var(--dur-slow)`）。暗幕は `nbFadeIn`／`nbFadeOut`（opacity）、面を包む暗幕は `nbScrimIn`／`nbScrimOut`（背景の色だけ）。`.is-closing` は `display` を保ち、自分と子孫を `pointer-events:none`・`inert` にする（閉じる途中も下の画面を押せる）。開き直すときは先に `nbLeaveFinish(el)`。動きは `@media (prefers-reduced-motion:no-preference)` の中だけに書く | `index.html` の絞り込みシート（`.filter-sheet-wrap`）・クイックビュー（`.ov`）。新しい開閉する面もこの形にそろえる |
+| 着いた場所の光（C-4） | `nbLand(el, 行き先の top)` を `window.scrollTo` の前に呼ぶ。スクロールが止まってから（`scrollend`、無ければ最後の `scroll` から 120ms、最長 1.5 秒）`.nb-landed` を 1 秒だけ付ける。`nb.css` の `.nb-landed` は `@keyframes nbLanded`（背景色と輪郭の色だけ・`var(--dur-landed) var(--ease-in) 1`）。48px 未満しか動かないときは光らせない。動きを減らす設定では、動かない輪郭だけ | `index.html` の `scrollToResults`・`scrollToActiveConditions`（保存済みもここを通る）・`scrollToMagazine`（特集の帯のときだけ）・`goToPage`（先頭の店） |
+| 一覧の形の変化（B-3） | `setViewMode` が `document.startViewTransition` で `applyViewMode` を包む。名前は画面に見えているカード（最大 16 枚）と写真・♡ に直前に付け（`nb-vt-c<i>`・`nb-vt-p<i>`・`nb-vt-f<i>`。`view-transition-class` は `nb-vt-card`／`nb-vt-photo`／`nb-vt-fav`）、`finished` で外す。群は `var(--dur-slow)`。カードは `object-fit:none`（伸び縮みさせない）、写真は `object-fit:cover`。未対応・動きを減らす設定・同じ表示は一瞬で替える。`nb.css` の動きを減らす規則で `::view-transition-*` も止める | `index.html` のグリッド⇄リストの切り替え |
+
 ### 検査
 
 `node scripts/audit_design_system.js --report` の `motion` に、次の 5 つの件数と一覧が出る。判定は `scripts/lib/motion_audit.js`、閾値と例外は `data/design_system.json` の `motion`（スクリプトは触らない）。
@@ -384,9 +396,11 @@ node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 
 | 検査 | 内容 |
 |---|---|
 | `transition-all` | `transition: all` / `transition-property: all` |
-| `motion-duration` | 300ms を超える時間（`var(--dur-*)` は可。例外は `.skel`・`.nb-wait-long`） |
+| `motion-duration` | 300ms を超える時間（`var(--dur-*)` は可。例外は `.skel`・`.nb-wait-long` と、色だけの動き〈1000ms まで〉）。`--dur-*` のトークンの定義が上限を超えるものも数える |
 | `motion-infinite` | `infinite` の繰り返し（例外は `.skel`・`.nb-wait-long`） |
 | `motion-layout-prop` | 禁止プロパティの transition、`@keyframes` の中での変更 |
 | `smooth-scroll-js` | `nbScrollBehavior(` を通らない `behavior:'smooth'` |
+
+色だけの例外（判断の記録 0050）は、transition なら動かすプロパティ、animation なら同じ CSS（HTML はページの全部の `<style>`）の `@keyframes` の中身が `motion.colorOnlyException.properties`（`color`・`background-color`・`border-color`・`outline-color`）だけのときに当たる。keyframes が見つからないもの・`animation-duration` だけの長い形・例外のトークン（`--dur-landed`）を色以外に使うものは違反。
 
 「動きを減らす」設定の中の規則は数えない。`motion.enforce` は `true`（段階 1・2026-10-16 に `nb.css` と `index.html` の違反を 0 にしてから上げた）で、`motion.enforceScopes`（`assets/css/nb.css`・`index.html`）の違反で `--check` が落ちる。手書きの特集・ルート直下の手書きのページ（about・faq・contact）は落とす対象にしない。店舗ページは雛形（`gen-store-pages.js`）を直してあり、CI の再生成で違反が 0 になったのを確かめてから `enforceScopes` に足す。

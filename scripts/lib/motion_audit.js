@@ -15,6 +15,14 @@
  *   smooth-scroll-js    JS の behavior:'smooth' で、同じ行に nbScrollBehavior( が無いもの
  *
  * @media (prefers-reduced-motion: reduce) の中の規則は数えない（止めるための規則だから）。
+ *
+ * 色だけの例外（motion.colorOnlyException・判断の記録 0050）: 上限を超えてよいのは、色（文字・背景・枠・輪郭の色）
+ * だけを変える動きに限る。物は動かさないので 300ms の上限の理由（待たされる・酔う）に当たらない。
+ *   - 例外のトークン（--dur-landed など）の定義は、例外の上限（maxDurationMs）まで。ほかの --dur-* は通常の上限まで
+ *   - transition は項目ごとに、動かすプロパティが色だけのときだけ例外の上限まで許す
+ *   - animation は、同じ CSS（HTML なら全部の <style>）の @keyframes の中身が色だけのときだけ許す。
+ *     keyframes が見つからないものは確かめられないので許さない
+ *   - 例外のトークンを、色以外を動かす項目や -duration の長い形（何を動かすか読めない）に使えば当たり
  * 違反: { rule, file, line, selector, excerpt }
  */
 
@@ -161,6 +169,44 @@ function selectorAllowed(selector, list) {
   });
 }
 
+/** 色だけの例外の設定（無ければ null）。 */
+function colorOnlyOf(policy) {
+  const c = policy && policy.colorOnlyException;
+  if (!c) return null;
+  return {
+    maxMs: c.maxDurationMs,
+    props: new Set((c.properties || []).map((p) => p.toLowerCase())),
+    tokens: new Set(c.tokens || []),
+  };
+}
+
+/** 値の中で使っている例外のトークン（var(--dur-landed) など）があるか。 */
+function usesExceptionToken(value, co) {
+  if (!co) return false;
+  const re = /var\(\s*(--[\w-]+)/g;
+  let m;
+  while ((m = re.exec(value))) if (co.tokens.has(m[1])) return true;
+  return false;
+}
+
+/** @keyframes の名前 → 変えているプロパティの集合。 */
+function keyframesMap(decls) {
+  const map = {};
+  for (const d of decls) {
+    if (!d.keyframes) continue;
+    const m = /^@(?:-\w+-)?keyframes\s+([^\s{]+)/i.exec(d.selector);
+    if (!m) continue;
+    (map[m[1]] = map[m[1]] || new Set()).add(stripVendor(d.prop));
+  }
+  return map;
+}
+
+/** animation の 1 項目から名前を取る（時間・タイミング・キーワード・回数・var() 以外の語）。 */
+function animationName(toks) {
+  return toks.find((t) => toMs(t) === null && !isTimingToken(t) && !ANIM_KEYWORDS.has(t.toLowerCase())
+    && !/^var\(/i.test(t) && !/^\d*\.?\d+$/.test(t) && !/^(initial|inherit|unset)$/i.test(t)) || null;
+}
+
 function excerptOf(d) {
   return (d.prop + ':' + d.value).replace(/\s+/g, ' ').slice(0, 120);
 }
@@ -179,12 +225,25 @@ function auditCss(css, policy, opts) {
   const forbidden = policy.forbiddenProperties || [];
   const durAllow = (policy.durationAllowlist && policy.durationAllowlist.selectors) || [];
   const infAllow = (policy.infiniteAllowlist && policy.infiniteAllowlist.selectors) || [];
+  const co = colorOnlyOf(policy);
   const violations = [];
   const add = (rule, d) => violations.push({ rule, file, line: d.line + off, selector: d.selector, excerpt: excerptOf(d) });
+  const decls = parseDeclarations(css);
+  // keyframes は同じ CSS のものと、呼び出し側が渡したもの（HTML の別の <style>）を合わせて見る
+  const kf = Object.assign({}, opts.keyframes || {}, keyframesMap(decls));
+  const colorOnlyProps = (set) => !!set && set.size > 0 && [...set].every((p) => co.props.has(p));
 
-  for (const d of parseDeclarations(css)) {
+  for (const d of decls) {
     if (d.reduced) continue;
     const prop = stripVendor(d.prop);
+
+    // 時間のトークンの定義: --dur-* は上限まで。例外のトークンは例外の上限まで
+    if (/^--dur-/.test(d.prop) && !d.keyframes) {
+      const n = toMs(d.value.trim());
+      const limit = co && co.tokens.has(d.prop) ? co.maxMs : maxMs;
+      if (n !== null && n > limit) add('motion-duration', d);
+      continue;
+    }
     const isTransition = prop === 'transition' || prop === 'transition-property' || prop === 'transition-duration' || prop === 'transition-delay';
     const isAnimation = prop === 'animation' || prop === 'animation-duration' || prop === 'animation-iteration-count';
 
@@ -214,13 +273,29 @@ function auditCss(css, policy, opts) {
     if (prop === 'transition' || prop === 'animation') {
       if (!selectorAllowed(d.selector, durAllow)) {
         for (const item of splitTopLevel(d.value, ',')) {
-          const first = tokens(item).map(toMs).find((n) => n !== null);
-          if (first !== undefined && first > maxMs) { add('motion-duration', d); break; }
+          const toks = tokens(item);
+          const first = toks.map(toMs).find((n) => n !== null);
+          const viaToken = usesExceptionToken(item, co);
+          const long = first !== undefined && first > maxMs;
+          if (!long && !viaToken) continue;
+          // 色だけの例外に当たるか
+          let colorOnly = false;
+          if (co && (!long || first <= co.maxMs)) {
+            if (prop === 'transition') {
+              const name = toks.find((t) => toMs(t) === null && !isTimingToken(t) && !/^var\(/i.test(t));
+              colorOnly = !!name && co.props.has(stripVendor(name.toLowerCase()));
+            } else {
+              const name = animationName(toks);
+              colorOnly = !!name && colorOnlyProps(kf[name]);
+            }
+          }
+          if (!colorOnly) { add('motion-duration', d); break; }
         }
       }
     } else if (prop === 'transition-duration' || prop === 'animation-duration') {
       if (!selectorAllowed(d.selector, durAllow)) {
-        if (splitTopLevel(d.value, ',').some((t) => { const n = toMs(t); return n !== null && n > maxMs; })) add('motion-duration', d);
+        // 長い形は何を動かすか読めないので、例外のトークンも許さない
+        if (usesExceptionToken(d.value, co) || splitTopLevel(d.value, ',').some((t) => { const n = toMs(t); return n !== null && n > maxMs; })) add('motion-duration', d);
       }
     }
 
@@ -262,9 +337,12 @@ function lineOffsetAt(text, index) {
 function auditHtml(html, policy, opts) {
   opts = opts || {};
   let out = [];
-  for (const m of html.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)) {
+  const styles = [...html.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)];
+  // 色だけの例外は @keyframes の中身で決めるので、ページの全部の <style> の keyframes を渡す
+  const keyframes = Object.assign({}, opts.keyframes || {}, ...styles.map((m) => keyframesMap(parseDeclarations(m[1]))));
+  for (const m of styles) {
     const start = m.index + m[0].indexOf('>') + 1;
-    out = out.concat(auditCss(m[1], policy, { file: opts.file, lineOffset: lineOffsetAt(html, start) }));
+    out = out.concat(auditCss(m[1], policy, { file: opts.file, lineOffset: lineOffsetAt(html, start), keyframes }));
   }
   for (const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
     if (/\bsrc\s*=/.test(m[1])) continue;
@@ -309,4 +387,4 @@ function enforcedViolations(violations, policy) {
   return violations.filter((v) => scopes.includes(v.file));
 }
 
-module.exports = { RULES, loadMotionPolicy, parseDeclarations, auditCss, auditJs, auditHtml, auditText, summarize, enforcedViolations, isForbiddenProp };
+module.exports = { RULES, loadMotionPolicy, parseDeclarations, auditCss, auditJs, auditHtml, auditText, summarize, enforcedViolations, isForbiddenProp, keyframesMap };
