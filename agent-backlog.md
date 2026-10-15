@@ -44,14 +44,14 @@
 
 ### [MEO-003] 店と Google の紐付けを「確認済み・要確認・不一致」に分けて数え、帯ごとの標本で別の店の率を測る
 
-- **priority**: P1 → **status**: blocked
+- **priority**: P1 → **status**: done
 - **due**: 2026-10-22
 - **detected**: 2026-10-15
 - **category**: データ / 信頼
 - **owner**: DataKeeper
 - **source**: オーナーの改訂の指示（2026-10-15）「住所の一致と同一店舗の一致は同義ではありません（同じビルの別の店など）」
 - **背景**: 電話確認は住所の「町名＋丁目」だけで判定し（`scripts/lib/store_link_identity.js:243-257` は番地・ビル・階を見ない）、住所が「同じ」なら店名を見ない。店名の一致率の帯（営業中）: 0＝121 店（電話あり 106）・0.3 未満＝207（169）・0.3〜0.6＝735（600）・0.6 以上＝398（282）・支店名の食い違い＝50（23）。同じ place_id を 2 店以上で共有する組が 118 組（239 店）。例: レッドランズ（栄3-9-22 グランドビル 8F）→ サウナラボ名古屋（同じビルの 8F）。一方で 清平⇔きよひら のように正しい紐付けも帯の中に混ざる。計画書 1.2〜1.4 節・6.1 節
-- **blocked-by**: 対話セッションで進行中（2026-10-15〜・ブランチ wakuwaku-labs/eelgrass・HANDOFF.md）。自動の課題消化は触らない
+- **結果（2026-10-15）**: 1・2・6 は PR #602 と `node scripts/audit_places_binding.js --states`（状態ごとの数・機能ごとに使う状態・取得日 90 日超の評価 3,883 店）。3 は帯ごとに 30 組・計 150 組（seed 20261015）と、掲載の住所が空の店 30 組（seed 20261016）を `data/places_binding_reviewed.json` に根拠つきで記録（sample=A2-2026-10-15）。4 は計画書 6.1 節の表: 別の店は一致率 0.3 未満 3/30・0.3〜0.6 1/30・0.6 以上 2/30・支店名の食い違い 1/30・店名が合う 0/30。5 は `tests/place_binding.test.js`。判断 3=A の当てはめは [[MEO-004]]（PR #604）
 - **acceptance**:
   1. 状態を決める関数が 1 つにまとまり、電話・評価・口コミ信頼度・地図リンクが同じ判定を使える形になっている（`scripts/lib/phone_link.js` と `scripts/audit_places_binding.js` を広げる。新しい仕組みを作らない）
   2. 状態ごとの店の数と、機能ごとに「どの状態の紐付けを使っているか」の表が出る（読み取りのコマンド 1 つ）
@@ -63,14 +63,14 @@
 
 ### [MEO-004] 電話ボタン・Google の評価・口コミ信頼度を、同じ店と確かめた紐付けだけに出す
 
-- **priority**: P1 → **status**: blocked
+- **priority**: P1 → **status**: in_progress
 - **due**: 2026-10-22
 - **detected**: 2026-10-15
 - **category**: データ / 信頼
 - **owner**: Builder / DataKeeper
 - **source**: 改訂の調査（2026-10-15）で見つけた。オーナーの改訂の指示「信頼できるデータのみを公開機能に使用する」
 - **背景**: 一致率 0.3 未満で電話ボタンがある店が 275（すべて住所の判定で通過）。明らかに別の店へ電話がかかる店は少なくとも 21（同じ place_id を店名の合う別の掲載店と共有）。評価は電話の判定と関係なく出る（`build.js:1430-1446`・`index.html:4915`・`gen-store-pages.js:701`）。押したときの照合も無い（`scripts/lib/call_button_snippet.js:108, 156`）。計画書 1.4 節・判断 2・3
-- **blocked-by**: 対話セッションで進行中（2026-10-15〜・ブランチ wakuwaku-labs/eelgrass・HANDOFF.md）。自動の課題消化は触らない。電話の部分（判断 2=A）は 2026-10-15 に実装（`scripts/lib/place_binding.js`・`data/place_binding_policy.json`）。評価・口コミ信頼度は [[MEO-003]] の標本と判断 3 の後
+- **進み具合（2026-10-15）**: 電話は PR #602（マージ）→ 本番ビルド run 38728803531 の後に確かめた。電話ボタンを止めた店 297（不一致 33・一致率 0.3 未満 264）、`node scripts/audit_phone_links.js` の古い欄 0・未反映 0、実例 5 店（屋上酒場ホシノシタ・bindi ビンディー・BAR EVE イブ・CCC シーシーシー・木村屋 錦）の本番の店舗ページとデータで電話ボタンなし（比べ用の とんかつ朱寿 はあり）。店数 5,005→5,002 はホットペッパーの掲載の変化（3 店・閉店リストではない・取りこぼし 0）で関門とは無関係。評価・口コミ信頼度（判断 3=A）は PR #604。不一致と一致率 0.3 未満の店の Google評価・口コミ数を消し（404 店）、口コミ信頼度を付けない（401 店）。特集の★は `scripts/sync_feature_scores.js` が毎日外す（20 件）。対話セッションで進行中なので自動の課題消化は触らない
 - **acceptance**:
   1. ビルドの後に、確認済みでない紐付けで電話ボタンを出している店が 0（検査が npm test か夜間 QA で数える）
   2. 評価・口コミ信頼度は、判断 3 の答えどおりの状態の店だけに出る
@@ -115,6 +115,41 @@
   5. 電話ボタンの番号の取得の結果（GA4 の `call_lookup {result}`。既に送っている）の回数が、結果ごとに `data/store_referrals.json` に入る
   6. 夜間 QA に 1 行（soft）: `data/view_counts.json`・`site_metrics.json`・`store_referrals.json`・`gsc_metrics.json` の `generatedAt` が 2 日より古ければ赤になる（計画書 6.4 節）
 - **関連**: [[MEO-001]]／`docs/reservation-measurement.md`／判断の記録 0009（予約送客の数え方）
+
+### [ISSUE-191] Google の紐付けが無い店に出ている「Google評価」（スプレッドシート・手動の店の欄）の出どころを確かめ、扱いを決める
+
+- **priority**: P2 → **status**: ready
+- **due**: 2026-10-29
+- **detected**: 2026-10-15
+- **category**: データ / 信頼
+- **owner**: DataKeeper
+- **source**: [[MEO-003]] の評価の関門（PR #604）を作るとき、紐付けの無い店を数えて見つけた
+- **背景**: 紐付け（placeId）が無いのに Google評価を出している店が 30 店ある（2026-10-15 の `data/stores.json`）。内訳は次のとおり。
+  - 26 店: Google スプレッドシート（`build.js` の CSV_URL）の「Google評価」の列から入っている。うち 25 店は、Google の紐付けを却下済み（`data/places_resolved.json` の rejected・address-mismatch 18・name-mismatch-on-refresh 7）。口コミ数は無い。例: 絆串 栄店 5.0
+  - 4 店: 手動の店（`data/manual_stores.json` の Google評価）。Places は notFound 2・rejected 2
+  - 評価の関門（`scripts/lib/place_binding.js` の applyRatingGate）は、紐付けの無い店を触らない。出どころが Google の紐付けではないため
+  - いつ・誰が・どの店の数字を入れたかを、第三者が検算できない（制約10）
+- **acceptance**:
+  1. 30 店それぞれについて、評価の出どころ（スプレッドシートの列・手動の欄）と、今の Google の店舗情報の評価との差が表になっている（取り直しは Places の Basic・規約は [[ISSUE-190]] に従う）
+  2. 「出す・出さない・取り直して紐付ける」の選択肢と、それぞれの店の数が並んでいる
+  3. 選んだ扱いを `data/place_binding_policy.json` か `build.js` の 1 か所に入れ、ビルドのログに件数が出る（オーナーの判断が要る場合は、判断を頼む課題を起票して止める）
+- **関連**: [[MEO-003]]／[[MEO-004]]／[[ISSUE-190]]／判断の記録 0046
+
+### [ISSUE-192] 会席の特集の候補が枠に 1 店足りなくなる（評価の関門の後）のを、11 月の入れ替えの後に確かめる
+
+- **priority**: P3 → **status**: ready
+- **due**: 2026-11-14
+- **detected**: 2026-10-15
+- **category**: 特集 / データ
+- **owner**: Editor
+- **source**: [[MEO-003]] の評価の関門（PR #604）の影響を、ゲート後のデータで `node scripts/refresh_feature_rosters.js --check` にかけて見つけた
+- **背景**: 評価の関門で、紐付けが別の店かもしれない店の Google評価を消す。そのため、`features/nagoya-kaiseki-guide.html` の候補（Google 評価の下限を満たす店）が 10 店から 9 店に減り、枠の 10 店に 1 店足りなくなる（ゲート前のデータでは枠割れ 0 件）。
+  - 入れ替えの手順は水増しせず 9 店で組み、「N選」の表記は `scripts/sync_feature_counts.js` が合わせる
+  - 次の入れ替えは 2026-11-01 以降の最初のビルド（`--if-stale`）
+- **acceptance**:
+  1. 11 月の入れ替えの後、会席の特集の題・h1・ItemList・店カードの件数が一致している（`node scripts/sync_feature_counts.js --check` が 0）
+  2. 候補が足りないままなら、特集の選定の条件（`data/feature_rosters.json`）を本文・FAQ の約束を崩さずに見直すか、9 店のままにするかを決め、決めたことを課題のコメントに残す
+- **関連**: [[MEO-003]]／`data/feature_rosters.json`／判断の記録 0011
 
 ### [ISSUE-190] Google の店舗情報（店名・住所・評価・口コミ数）を公開リポジトリに保存していることが Places の規約に合うかを確かめる
 
