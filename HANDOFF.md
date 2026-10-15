@@ -35,7 +35,7 @@ status: in_progress
 - 段階 2（P-490・In Progress）を別の木 `../motion-stage2`（ブランチ wakuwaku-labs/motion-stage2・motion-stage1 の 516900dfe5 から）で実装中（未コミット）: index.html と nb.css の時間の直書き 32 か所をトークンへ（scratchpad/s2/tokenize.py）・A1 押した瞬間（scale .98＋内側の影）・A2 ♡ の弾み（nbPop）と「保存しました」・知らせのタイマーの重なりを直し role=status・A3 チップのホバーを media の中へ・A6 件数（同じ数字なら動かさない）・A7 待ちの印 .nb-wait-long（電話の確認 call_button_snippet.js・現在地 geoSearch。押し直しを止める）。motion の例外に .nb-wait-long。店舗ページの雛形の .link-btn に transform/box-shadow の時間。テストの偽のボタンに classList を足し、段階 2 のテストを design_system_motion・call_button・store_actions に足した（関係の 3 本は通過）。docs/design-system.md 8 章に「部品」、計画書の状態、CLAUDE.md の表
 
 ## 次にやること
-1. 段階 2: 前後の動画は撮り終えた（scratchpad/motion-rec2/compare.html）。押した瞬間の暗さを .08→.12、待ちの輪は先頭のアイコンをその場で回す形に変えた（文の後ろに足すと「現在地」が広がり検索欄が縮んだ）。残り: e2e_motion（taps 各3回・reduced）→ PR（base は #620 のブランチ）→ P-490 にコメント
+1. 段階 2: 前後の動画は撮り終えた（scratchpad/motion-rec2/compare.html）。押した瞬間の暗さを .08→.12、待ちの輪は先頭のアイコンをその場で回す形に変えた（文の後ろに足すと「現在地」が広がり検索欄が縮んだ）。e2e（taps 各3回・reduced）は合格・PR #621（base は #620 のブランチ）・P-490 にコメント済み。オーナーの OK 待ち
 2. オーナーが前後の動画と実機を見て OK → 充電器で perf.js の前後 → ビルドが止まっている時に #620 → 段階 2 の順にマージ（段階 2 の base を main に替えてから）→ P-489・P-490 Done
 3. 全部終わったら status: done
 
