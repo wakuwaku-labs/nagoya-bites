@@ -68,6 +68,28 @@ test('取得: # を含む URL だけを問い合わせ、rowCount に届くま�
   assert.equal(got.truncated, false);
   assert.deepEqual(bodies.map((b) => b.offset), ['0', '2', '4']);
   assert.deepEqual(bodies[0].dimensionFilter, { filter: { fieldName: 'pageLocation', stringFilter: { matchType: 'CONTAINS', value: '#' } } });
-  assert.deepEqual(await f.fetchTotals(runReport, '30daysAgo', 'yesterday'), { total: 42, pageViews: 40 });
+  assert.deepEqual(await f.fetchTotals(runReport, '30daysAgo', 'yesterday'), { total: 42, pageViews: 40, control: {} });
   assert.equal(bodies[bodies.length - 1].dimensionFilter, undefined, '合計は絞り込まない');
+});
+
+test('対照: # を書いた後に送るイベントの回数を要約に並べる（filter_apply があるのに # が 0 なら、GA4 は # の後ろを受け取っていない）', async () => {
+  const runReport = async () => ({ data: { rows: [['page_view', 50], ['filter_apply', 7], ['modal_open', 3], ['scroll', 9]].map(([v, n]) => ({ dimensionValues: [{ value: v }], metricValues: [{ value: String(n) }] })) } });
+  const totals = await f.fetchTotals(runReport, '30daysAgo', 'yesterday');
+  assert.deepEqual(totals, { total: 69, pageViews: 50, control: { filter_apply: 7, modal_open: 3 } });
+  const text = f.summarize({ start: '30daysAgo', end: 'yesterday', fetchedAt: 'T', geoAreas: GEO, truncated: false, totalEvents: 69, totalPageViews: 50, controlEvents: totals.control, counts: f.aggregate([], GEO) });
+  assert.match(text, /filter_apply 7・modal_open 3・search 0・geo_search 0/);
+  assert.match(text, /URL に # を含むイベント: 0/);
+  // 対照のイベントは index.html が今も送っている
+  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  for (const e of f.CONTROL_EVENTS) assert.ok(html.includes(`'${e}'`), `index.html が ${e} を送っていない`);
+  const apply = html.indexOf("function applyFilters(");
+  assert.ok(apply > 0 && html.indexOf('pushHash();', apply) > apply, 'applyFilters が # を書く');
+});
+
+test('再発の防止: トップと GA のスニペットは page_location を自分で渡さない（渡すと # の後ろの検索語・エリア名が GA4 に届く）', () => {
+  // 2026-10-15 の実測（30 日・全イベント 11,134 件）で、GA4 の既定は # の後ろを受け取っていなかった。location.href などで上書きすると崩れる
+  for (const rel of ['index.html', path.join('scripts', 'lib', 'ga_snippet.js')]) {
+    const text = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    assert.doesNotMatch(text, /page_location/, `${rel} が page_location を渡している`);
+  }
 });
