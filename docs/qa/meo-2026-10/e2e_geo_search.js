@@ -3,8 +3,8 @@
 // サイトが gtag に渡した値（window.dataLayer）を読み、次を確かめる:
 //   - 押下ごとに geo_search がちょうど 1 回、値は { result } だけ（granted・denied・unsupported）
 //   - ボタンを押した後にサイトが送った値のどこにも、緯度・経度・エリア名が無い
-// 外部への通信はすべて中断する（gtag.js も読まない＝GA4 へは何も届かない）。GA4 の自動の page_view が URL の #q=<エリア> を
-// 送るかは gtag.js の設定次第で、この確かめの範囲の外（結果に「URL の書き換え」として事実だけを残す）。
+// 外部への通信はすべて中断する（gtag.js も読まない＝GA4 へは何も届かない）。gtag.js が URL の #q=<エリア> を送らないことは、
+// 本物の gtag.js を読む e2e_gtag_fragment.js で確かめる（判断の記録 0048）。ここでは結果に「URL の書き換え」として事実だけを残す。
 // 使い方: node docs/qa/meo-2026-10/e2e_geo_search.js [--json <出力先>]
 // 終了コード: 失敗した確認があれば 1、なければ 0（puppeteer が無いときは 2）。
 'use strict';
