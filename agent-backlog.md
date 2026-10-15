@@ -58,6 +58,7 @@
   3. 帯（一致率 0.3 未満・0.3〜0.6・0.6 以上・支店名の食い違い・店名が合う）ごとに 30 組、計 150 組を無作為に選び、同じ店かを根拠（見た URL・住所・階）つきで `data/places_binding_reviewed.json` に記録している
   4. 帯ごとの別の店の率が、計画書の判断 3 の材料として表になっている
   5. 単体テストに、計画書 6.1 節の場合ごと（同じビルの別の店・チェーンの別の支店・移転・入れ替わり・名前の変更・place_id の共有）の例がある
+  6. 2 の表に、Google の評価の取得日が 90 日より古いのに評価を出している店の数が並ぶ（数えるだけ。計画書 6.4 節）
 - **関連**: [[MEO-001]]／[[MEO-004]]／P-142（`scripts/audit_places_binding.js`）
 
 ### [MEO-004] 電話ボタン・Google の評価・口コミ信頼度を、同じ店と確かめた紐付けだけに出す
@@ -111,6 +112,8 @@
   2. `cta_gmap_click` が店舗ページの本文の地図ボタンでも store_id・store_name を送る。イベント名は変えない
   3. 「現在地」ボタンの押下を `geo_search {result}`（許可・拒否・使えない・エラー）で送る。緯度・経度・エリア名は送らない（e2e で送る値を確かめる）
   4. 地図のクリックには伸ばす目標を置かない。`docs/kpi-weekly.md` の週次の表に、予約・電話・地図を並べた 1 行がある
+  5. 電話ボタンの番号の取得の結果（GA4 の `call_lookup {result}`。既に送っている）の回数が、結果ごとに `data/store_referrals.json` に入る
+  6. 夜間 QA に 1 行（soft）: `data/view_counts.json`・`site_metrics.json`・`store_referrals.json`・`gsc_metrics.json` の `generatedAt` が 2 日より古ければ赤になる（計画書 6.4 節）
 - **関連**: [[MEO-001]]／`docs/reservation-measurement.md`／判断の記録 0009（予約送客の数え方）
 
 ### [ISSUE-190] Google の店舗情報（店名・住所・評価・口コミ数）を公開リポジトリに保存していることが Places の規約に合うかを確かめる

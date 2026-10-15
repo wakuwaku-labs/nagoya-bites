@@ -11,7 +11,7 @@ status: blocked
 ## 完了条件
 - 計画書 `docs/meo-plan-2026-10.md` が改訂版（指示の 12 部構成・事実／仮説／未確認の区別・既存の決定を覆さない）になっている → 済
 - backlog と Linear の MEO-001〜006 が改訂版の中身になっている（status は blocked のまま）→ 済（P-465〜P-470 を読み戻して確認）
-- 表示用ページ https://claude.ai/artifact/CzsAogSbKskKq4nb3QiUMc を同じ URL で改訂版に更新し、返事の欄を判断 1〜3 にする → 済（Version 4）
+- 表示用ページ https://claude.ai/artifact/CzsAogSbKskKq4nb3QiUMc を同じ URL で改訂版に更新し、返事の欄を判断 1〜3 にする → 済（Version 5）
 - 実装はオーナーの答えの後
 
 ## できていること
@@ -20,6 +20,8 @@ status: blocked
 - backlog の MEO-001〜006 と Linear の P-465〜P-470 を改訂版の中身にした（blocked のまま）
 - 別起票: ISSUE-190＝P-472（Google の店舗情報を公開リポジトリに保存していることの規約の確認・ready・DataKeeper・期限 10-29）
 - 表示用ページ（元ファイル: scratchpad の meo-plan.html。生成は build_meo_page.js <md> <out>）
+- 最終チェックで、指示の「継続運用」の 8 項目が抜けていたので計画書 6.4 節を足した（既存の仕組みとの突き合わせ。足すのは夜間 QA 1 行＝計測データの更新日、集計の欄 2 つ＝Google の評価の取得日の古さ・`call_lookup` の結果）。MEO-003・MEO-006 の達成条件と P-467・P-470 の本文にも足した（読み戻して確認）
+- 分かった事実: Google の評価を出している 4,587 店のうち 3,483 店（76%）は取得日が 2026-05（週次の取り直し `--refresh` が 2026-08-15 から予算 0 で止まっている）。取得日は画面に出している。再開するかは P-472 の後にオーナーが決める（計画書 12.2 節）
 - 記憶メモ（meo-plan-2026-10・plan-review-lessons・places-api-quota-and-budget）を更新
 - 中間データ: scratchpad の identity/（low2.json 1,181 組）・measure/（ward_flags.json）
 
