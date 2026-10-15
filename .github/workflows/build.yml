@@ -286,6 +286,12 @@ jobs:
         run: node scripts/refresh_feature_rosters.js --if-stale
         continue-on-error: true
 
+      - name: 特集の店カードの★を、データに評価が無い店から外す（MEO-003・冪等・日次）
+        # ★は掲載店の入れ替え（月1回）のときに書かれる。build.js が紐付けの状態で消した評価
+        # （scripts/lib/place_binding.js の applyRatingGate・判断の記録 0046）が、特集にだけ次の入れ替えまで残らないようにする
+        run: node scripts/sync_feature_scores.js
+        continue-on-error: true
+
       - name: 特集上部CTAの自動付与（SEO-042・全特集対象・冪等）
         # --all で全 features/*.html を対象にする（SEO-100: 旧来は上位特集のみだったが、
         # ItemList に URL のない特集 17本は HTML 本文の shop-name/stores リンクへフォールバック）。

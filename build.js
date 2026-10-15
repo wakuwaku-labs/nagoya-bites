@@ -1562,6 +1562,25 @@ async function main() {
     console.error(`電話ボタンの判定をスキップ（data/places_resolved.json を読めません）: ${e.message}`);
   }
 
+  // ─── Google の評価・口コミ信頼度を出してよい店の判定（MEO-003・オーナーの判断 3=A・2026-10-15）─────
+  // 紐付けた Google の店舗情報が別の店かもしれない店では、評価・口コミ数・口コミ信頼度が別の店の数字になる。
+  // 紐付けの状態が不一致か、data/place_binding_policy.json の rating / trust が許していない要確認の帯の店は、
+  // Google評価・口コミ数を消し、口コミの時系列・指紋（places_history）も使わず、口コミ信頼度を付けない。
+  // 帯ごとの扱いは、帯ごとに 30 組を確かめた標本で、別の店が 1 割以上だった帯を出さないと決めた（判断の記録 0046）。
+  // 紐付けの無い店は触らない。トレンドスコアと口コミ信頼度より前に行う（別の店の評価で並べ替え・採点しない）。
+  let trustBlockedKeys = new Set();
+  try {
+    const placesForRating = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'places_resolved.json'), 'utf8'));
+    const gate = require('./scripts/lib/place_binding').applyRatingGate(stores, placesForRating);
+    for (const k of gate.ratingBlocked) placesRejectedKeys.add(k);
+    trustBlockedKeys = gate.trustBlocked;
+    const fmt = (m) => Object.entries(m).map(([k, v]) => `${k} ${v}`).join('・') || 'なし';
+    console.log(`Google の評価の判定（MEO-003）: 評価を消した ${fmt(gate.counts.rating)}（紐付けの状態で止めた店 ${gate.ratingBlocked.size}）`
+      + ` / 口コミ信頼度を付けない ${gate.trustBlocked.size}店（${fmt(gate.counts.trust)}）`);
+  } catch (e) {
+    console.error(`Google の評価の判定をスキップ（data/places_resolved.json を読めません）: ${e.message}`);
+  }
+
   // トレンドスコア算出
   const newHpIds =new Set(newStores.map(s => s['ホットペッパーID']).filter(Boolean));
   let trendHot = 0, trendRising = 0, trendWarm = 0;
@@ -1622,9 +1641,15 @@ async function main() {
     const rtFull = trustDisplay.evaluate(s, result, {
       lastChecked: trustDisplay.lastCheckedFrom(historyEntry, trustBuildDate)
     });
-    s['reviewTrust'] = trustDisplay.toSlim(rtFull);
-    if (key) reviewTrustFullById.set(key, trustDisplay.toCompact(rtFull));
-    rtDist[rtFull.tier] = (rtDist[rtFull.tier] || 0) + 1;
+    if (key && trustBlockedKeys.has(key)) {
+      // 紐付けの状態で口コミ信頼度を出さない店（MEO-003）。札も内訳も要素ごと出ない
+      delete s['reviewTrust'];
+      rtDist['非表示（紐付け）'] = (rtDist['非表示（紐付け）'] || 0) + 1;
+    } else {
+      s['reviewTrust'] = trustDisplay.toSlim(rtFull);
+      if (key) reviewTrustFullById.set(key, trustDisplay.toCompact(rtFull));
+      rtDist[rtFull.tier] = (rtDist[rtFull.tier] || 0) + 1;
+    }
     if (Object.keys(result.crossCheckFlags).length > 0) {
       crossCheckFlagList.push({
         '店名': s['店名'],
@@ -1789,6 +1814,8 @@ async function main() {
     const id = s['店名'] ? placesKey(s) : '';
     const bd = s['crossCheckBreakdown'];
     if (!id || !bd || typeof bd !== 'object') continue;
+    // 口コミ信頼度を出さない店（MEO-003）の内訳は公開の JSON にも書かない
+    if (trustBlockedKeys.has(id)) continue;
     const slim = slimCrossCheckBreakdown(bd);
     if (slim && Object.keys(slim).length > 0) {
       // 口コミ信頼度（段階・見出し・検証カバー率）を同梱。reason 本文は軸側を参照（サイズ抑制）

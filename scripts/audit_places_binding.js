@@ -24,6 +24,9 @@
  *   node scripts/audit_places_binding.js --check      # 外すべき紐付けが残っていれば exit 1
  *   node scripts/audit_places_binding.js --apply      # 外すべき紐付けを rejected にして書き戻す
  *   node scripts/audit_places_binding.js --impact     # 外す前後の口コミ信頼度の段階の分布（再計算・書き込みなし）
+ *   node scripts/audit_places_binding.js --states [--json]   # 紐付けの状態（scripts/lib/place_binding.js）ごとの店の数と、
+ *                                                           # 電話・評価・口コミ信頼度がどの状態の紐付けを使っているか（MEO-003）
+ *   node scripts/audit_places_binding.js --sample 30 [--seed N]  # 帯ごとに N 組を無作為に選ぶ（標本の確かめ・MEO-003 の A2）
  */
 
 const fs = require('fs');
@@ -174,6 +177,102 @@ function impact(stores, rows) {
   return { rejected: rejectKeys.size, before: run(false), after: run(true) };
 }
 
+/** Google の評価を画面に出している店か（index.html・gen-store-pages.js と同じく、正の数のときだけ出る） */
+function showsRating(s) { return !!(s['Google評価'] && parseFloat(s['Google評価']) > 0); }
+/** 口コミ信頼度の段階が付いている店か（「—」は判定材料不足で、段階は出ない） */
+function showsTrust(s) { return !!(s.reviewTrust && s.reviewTrust.t && s.reviewTrust.t !== '—'); }
+
+/** 状態の内訳の名前（状態 → 帯か理由） */
+function stateLabel(b) {
+  if (b.state === 'review') return 'review:' + b.band;
+  if (b.state === 'confirmed') return 'confirmed';
+  return b.state + ':' + b.reason;
+}
+
+/**
+ * 紐付けの状態ごとの店の数と、機能ごとにどの状態の紐付けを使っているか（MEO-003 の A1）。
+ * 電話は data/stores.json の「電話確認」の欄（build.js が書いたもの）を、評価と口コミ信頼度は表示されている値を数える。
+ * @param {Array<object>} stores  data/stores.json
+ * @param {object} places  data/places_resolved.json
+ * @param {object} [opts]  place_binding.buildContext() に渡す（policy・reviewed）
+ * @param {string} [today]  YYYY-MM-DD（取得日の古さを数える基準。省略時は今日）
+ */
+function states(stores, places, opts, today) {
+  const pb = require('./lib/place_binding');
+  const { FIELD } = require('./lib/phone_link');
+  const ctx = pb.buildContext(stores, places, opts);
+  const now = new Date((today || new Date().toISOString().slice(0, 10)) + 'T00:00:00Z');
+  const byState = {};
+  const features = { phone: {}, rating: {}, trust: {} };
+  let staleRating = 0;
+  for (const s of stores) {
+    const b = pb.bindingOf(s, ctx);
+    const label = stateLabel(b);
+    byState[label] = (byState[label] || 0) + 1;
+    if (s[FIELD]) features.phone[label] = (features.phone[label] || 0) + 1;
+    if (showsRating(s)) {
+      features.rating[label] = (features.rating[label] || 0) + 1;
+      const d = s.reviewTrust && s.reviewTrust.d ? new Date(s.reviewTrust.d + 'T00:00:00Z') : null;
+      if (d && !isNaN(d) && (now - d) / 864e5 > 90) staleRating++;
+    }
+    if (showsTrust(s)) features.trust[label] = (features.trust[label] || 0) + 1;
+  }
+  const notConfirmed = (m) => Object.entries(m).filter(([k]) => k !== 'confirmed').reduce((a, [, v]) => a + v, 0);
+  return {
+    total: stores.length, byState, features,
+    notConfirmed: { phone: notConfirmed(features.phone), rating: notConfirmed(features.rating), trust: notConfirmed(features.trust) },
+    staleRating,
+  };
+}
+
+/** 決まった種から作る乱数（同じ種なら同じ標本になる。第三者が選び方を再現できるように） */
+function seeded(seed) {
+  let x = (Number(seed) || 1) % 2147483647;
+  if (x <= 0) x += 2147483646;
+  return () => { x = (x * 16807) % 2147483647; return (x - 1) / 2147483646; };
+}
+
+/** 標本の帯（計画書 6.1 節）: 一致率 0.3 未満・0.3〜0.6・0.6 以上・支店名の食い違い（いずれも要確認）と、店名が合う（確認済み） */
+const SAMPLE_BANDS = ['lt-0.3', 'sim-0.3-0.6', 'sim-ge-0.6', 'branch-conflict', 'confirmed'];
+function sampleBandOf(b) {
+  if (b.state === 'confirmed' && b.reason === 'name-match') return 'confirmed';
+  if (b.state !== 'review') return null;
+  return (b.band === 'sim-0' || b.band === 'sim-lt-0.3') ? 'lt-0.3' : b.band;
+}
+
+/**
+ * 帯ごとに n 組を無作為に選ぶ（MEO-003 の A2）。不一致・紐付けなし・人が確かめ済みの組は選ばない。
+ * 確かめに要る事実（掲載の店名・住所・ホットペッパーの店舗ページ、Google 側の店名・住所・place_id）を並べて返す。
+ */
+function sample(stores, places, n, seed, opts) {
+  const pb = require('./lib/place_binding');
+  const ctx = pb.buildContext(stores, places, opts);
+  const pools = Object.fromEntries(SAMPLE_BANDS.map((k) => [k, []]));
+  for (const s of stores) {
+    const b = pb.bindingOf(s, ctx);
+    const band = sampleBandOf(b);
+    if (!band) continue;
+    const rec = ctx.index.get(s.placeId) || {};
+    const hp = s['ホットペッパーID'] || '';
+    pools[band].push({
+      band, key: placesKey(s), store: s['店名'], storeAddress: s['住所'] || '',
+      storeUrl: /^J\d+$/.test(hp) ? `https://www.hotpepper.jp/str${hp}/` : (s['食べログURL'] || s['公式サイト'] || ''),
+      googleName: b.googleName, googleAddress: rec.address || '', placeId: s.placeId,
+      googleUrl: `https://www.google.com/maps/place/?q=place_id:${s.placeId}`,
+      sim: Math.round(b.sim * 100) / 100, addressVerdict: b.addressVerdict || 'unknown',
+    });
+  }
+  const rnd = seeded(seed);
+  const out = {};
+  for (const k of SAMPLE_BANDS) {
+    const pool = pools[k].slice().sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
+    const picked = [];
+    while (picked.length < n && pool.length) picked.push(pool.splice(Math.floor(rnd() * pool.length), 1)[0]);
+    out[k] = { poolSize: pools[k].length, picked };
+  }
+  return out;
+}
+
 function main() {
   const argv = process.argv.slice(2);
   const stores = readJson(STORES_PATH);
@@ -186,6 +285,28 @@ function main() {
     const n = applyRejects(rows, places);
     fs.writeFileSync(PLACES_PATH, JSON.stringify(places, null, 2), 'utf8');
     console.log(`rejected にした紐付け: ${n}件（rejectReason=${REJECT_REASON}）`);
+    return;
+  }
+  if (argv.includes('--states')) {
+    const r = states(stores, places);
+    if (argv.includes('--json')) { console.log(JSON.stringify(r, null, 2)); return; }
+    const keys = Object.keys(r.byState).sort();
+    console.log(`店 ${r.total} 件の紐付けの状態（scripts/lib/place_binding.js）と、機能ごとに使っている状態`);
+    console.log(`  ${'状態'.padEnd(34)} ${'店数'.padStart(6)} ${'電話'.padStart(6)} ${'評価'.padStart(6)} ${'信頼度'.padStart(6)}`);
+    for (const k of keys) {
+      const f = (m) => String(m[k] || 0).padStart(6);
+      console.log(`  ${k.padEnd(36)} ${String(r.byState[k]).padStart(6)} ${f(r.features.phone)} ${f(r.features.rating)} ${f(r.features.trust)}`);
+    }
+    console.log(`確認済みでない紐付けで出している店: 電話 ${r.notConfirmed.phone} ／ 評価 ${r.notConfirmed.rating} ／ 口コミ信頼度 ${r.notConfirmed.trust}`);
+    console.log(`取得日が 90 日より古い Google の評価を出している店: ${r.staleRating}`);
+    return;
+  }
+  const si = argv.indexOf('--sample');
+  if (si >= 0) {
+    const n = Number(argv[si + 1]) || 30;
+    const ei = argv.indexOf('--seed');
+    const seed = ei >= 0 ? Number(argv[ei + 1]) : 20261015;
+    console.log(JSON.stringify({ seed, n, generatedAt: new Date().toISOString(), bands: sample(stores, places, n, seed) }, null, 2));
     return;
   }
   if (argv.includes('--impact')) {
@@ -212,4 +333,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { REVIEWED_PATH, audit, summarize, bandOf, applyRejects, REJECT_REASON };
+module.exports = { REVIEWED_PATH, audit, summarize, bandOf, applyRejects, REJECT_REASON, states, sample, SAMPLE_BANDS, seeded };
