@@ -172,6 +172,24 @@ test('屋号が一般語で消える店名でも、同じ店は一致し別の�
   assert.ok(other.findings.some(f => f.code === 'hero_store_mismatch'));
 });
 
+test('HotPepper が店名を変えても、店カードのホットペッパーIDが写真の持ち主と同じなら同じ店（2026-10-15 の CI 失敗）', () => {
+  const withId = loadStores().filter(s => s['ホットペッパーID'] && /imgfp\.hotp\.jp/.test(String(s['写真URL'] || '')));
+  const a = withId[0];
+  const b = withId.find(s => s['写真URL'] !== a['写真URL'] && s['店名'] !== a['店名']);
+  // 記事を書いた後に店名が変わり、記事に残る店名がデータの店名と合わなくなった状態
+  const renamed = 'ゑゐ改名前の屋号ゑゐ';
+  const html = `<div class="store-card" data-store-id="${a['ホットペッパーID']}"><h3 class="store-name">${renamed}</h3></div>`;
+  const base = { role: 'body', ...ARTICLE, heroUrl: a['写真URL'], heroSource: 'hotpepper', storeNames: [renamed] };
+  assert.strictEqual(judgePhoto(base).ok, false, '店名だけでは照らせない');
+  const [read] = extractBodyPhotosFromHtml(`${html}<figure class="art-body-img" data-photo-source="hotpepper"><img src="${a['写真URL']}"><figcaption>写真: x — 店舗公式写真 / HotPepper</figcaption></figure>`, ARTICLE.slug, ARTICLE.date);
+  assert.deepStrictEqual(read.storeIds, [a['ホットペッパーID']]);
+  assert.strictEqual(judgePhoto(read).ok, true, 'ID が合えば同じ店');
+  // 別の店の写真は、ID でも通らない
+  const other = judgePhoto({ ...base, heroUrl: b['写真URL'], storeIds: [a['ホットペッパーID']] });
+  assert.strictEqual(other.ok, false);
+  assert.ok(other.findings.some(f => f.code === 'hero_store_mismatch'));
+});
+
 test('公開済み記事: 本文写真は記事の店に帰属している（退行検知）', () => {
   const dir = path.join(ROOT, 'journal');
   const files = fs.readdirSync(dir).filter(f => /^\d{4}-\d{2}-\d{2}-.+\.html$/.test(f));
