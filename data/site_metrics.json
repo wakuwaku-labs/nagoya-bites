@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-15T19:14:04.702Z",
+  "generatedAt": "2026-10-15T20:58:35.939Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1623,
-    "pageViews": 2259,
-    "sessions": 1815,
-    "avgSessionDuration": 121.5,
+    "activeUsers": 1628,
+    "pageViews": 2266,
+    "sessions": 1820,
+    "avgSessionDuration": 121.4,
     "bounceRate": 0.285,
-    "pagesPerSession": 1.24
+    "pagesPerSession": 1.25
   },
   "dailyReference": {
     "date": "2026-10-14",
@@ -17,10 +17,10 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1337,
-      "direct": 351,
+      "organic": 1340,
+      "direct": 352,
       "social": 6,
-      "ai_assistant": 103,
+      "ai_assistant": 104,
       "referral": 31,
       "paid": 0,
       "other": 1
@@ -29,7 +29,7 @@
       "organic": 73.1,
       "direct": 19.2,
       "social": 0.3,
-      "ai_assistant": 5.6,
+      "ai_assistant": 5.7,
       "referral": 1.7,
       "paid": 0,
       "other": 0.1
@@ -39,17 +39,17 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 594
+      "sessions": 595
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 497
+      "sessions": 498
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 265
+      "sessions": 266
     },
     {
       "source": "yahoo",
@@ -74,12 +74,12 @@
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 24
+      "sessions": 25
     },
     {
       "source": "duckduckgo",
       "medium": "organic",
-      "sessions": 17
+      "sessions": 18
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -200,8 +200,8 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 77,
-      "sessions": 68
+      "pageViews": 79,
+      "sessions": 69
     },
     {
       "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
@@ -1109,7 +1109,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1623,
+    "value": 1628,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
