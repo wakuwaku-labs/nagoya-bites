@@ -191,7 +191,11 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
     if (!failures.length) {
       out.draft = draft;
       out.post = X.buildDraftPost(draft, entry, policy).text;
-      if (!args.dryRun) X.writeJson(path.relative(root, file), draft, root);
+      if (!args.dryRun) {
+        // 最初の日は保存先のフォルダがまだ無い
+        fs.mkdirSync(path.dirname(file), { recursive: true });
+        X.writeJson(path.relative(root, file), draft, root);
+      }
       return { ...out, result: args.dryRun ? 'dry_run_ok' : 'written' };
     }
     previous = { reason: failures.join(' / '), raw: JSON.stringify({ type: reply.type, body: reply.body, evidence: reply.evidence }) };
