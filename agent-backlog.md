@@ -100,7 +100,8 @@
 
 ### [MEO-006] 予約・電話・地図を分けて毎日数え、「現在地」ボタンの押下を数える（位置は送らない）
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
+- **結果（2026-10-15）**: PR #606 で実装。オーナーが GA4 に location・link_kind・result を登録し、同じ日の手動ビルド（run 38746871640）で `data/store_referrals.json` の missingDimensions が []・内訳が null でなくなったことを確かめた（登録の前の押下は (not set)）。Linear P-470 は Done
 - **due**: 2026-10-29
 - **detected**: 2026-10-15
 - **category**: 計測

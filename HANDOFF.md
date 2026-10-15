@@ -29,7 +29,7 @@ status: done
 ## 次にやること
 （このセッションの作業は終わり。残りは日付とオーナーの操作を待つものだけ）
 1. 2026-10-29 以降: 夜間 QA の状態ごとの数から「確認済みの急な減り」の閾値を決める（P-469 の受け入れ条件 5）
-2. オーナーが GA4 にカスタムディメンション location・link_kind・result を登録したら、次の日の store_referrals.json の byResult・byLocation・byLinkKind が埋まるか確かめ、P-470 を Done にする
+2. （済み・2026-10-15）オーナーが GA4 に location・link_kind・result を登録。手動ビルド run 38746871640 で missingDimensions が [] になったのを確かめ、P-470 を Done にした
 3. 2026-10-29 まで: 「現在地」の後に GA4 が #q=<エリア名> 入りの URL を受け取っているかを数える（ISSUE-193＝P-475。手元の gtag.js では判定できなかった）
 
 ## 試したが駄目だったこと
