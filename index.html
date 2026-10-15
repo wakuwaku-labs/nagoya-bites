@@ -1409,6 +1409,8 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 .grid.list-mode .fav-btn:active{box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16);}
 .mhi-nav:active:not(:disabled){transform:translateY(-50%) scale(.94);}
 /* カードの中の ♡・予約・地図・動画を押したときは、カードごとは沈ませない（押した物だけが沈む） */
+/* カード類は押した見た目（上と下の規則）を自前で出すので、ブラウザが付ける押した光（Android の Chrome では青い膜・カード全体）を消す。♡ やカードの中のボタンを押しても、カード全体が光らない */
+.card,.tp-card,.feature-card,.latest-journal-card,.hist-card,.modal-rsc{-webkit-tap-highlight-color:transparent;}
 .card:active:not(:has(.fav-btn:active,.card-cta a:active,.reel-play:active)),.tp-card:active,.feature-card:active,.latest-journal-card:active,.hist-card:active,.modal-rsc:active{transform:scale(.985);transition-duration:var(--dur-instant);transition-delay:var(--dur-instant);}
 /* カードは写真が大きく、内側の影では写真の上が暗くならない（影は中身の下に描かれる）ので、写真の上まで覆う透明な膜を暗くする。
    店のカードはカード全体を覆う題名のリンクの膜（.cn-link::after）を使い、ほかのカードは自分の ::after を膜にする（押せる物の邪魔をしない: pointer-events:none） */
