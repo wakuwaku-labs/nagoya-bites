@@ -115,7 +115,8 @@ test('候補の順: 保存した文面 → ポイント → 題名だけ。useIn
 // ── 投稿（post_journal_to_x.js の run）────────────────────────────────────
 function fixture({ draft = null, mode = 'live', article = ARTICLE, pol = policy } = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'xdraft-'));
-  fs.mkdirSync(path.join(root, 'data/x_post_drafts'), { recursive: true });
+  // 保存先のフォルダ（data/x_post_drafts）は作らない。本番の最初の日と同じく、無いところから書けること
+  fs.mkdirSync(path.join(root, 'data'));
   fs.mkdirSync(path.join(root, 'journal'));
   fs.mkdirSync(path.join(root, 'docs'));
   fs.writeFileSync(path.join(root, 'data/x_post_policy.json'), JSON.stringify({ ...pol, mode, livePage: { attempts: 1, intervalSeconds: 0 } }));
@@ -123,7 +124,10 @@ function fixture({ draft = null, mode = 'live', article = ARTICLE, pol = policy 
   fs.copyFileSync(path.join(REAL_ROOT, 'docs/x-post-prompt.md'), path.join(root, 'docs/x-post-prompt.md'));
   fs.writeFileSync(path.join(root, 'data/journal_published.json'), JSON.stringify({ entries: [entry] }));
   fs.writeFileSync(path.join(root, `journal/${entry.slug}.html`), article);
-  if (draft) fs.writeFileSync(path.join(root, `data/x_post_drafts/${entry.date}.json`), JSON.stringify(draft));
+  if (draft) {
+    fs.mkdirSync(path.join(root, 'data/x_post_drafts'));
+    fs.writeFileSync(path.join(root, `data/x_post_drafts/${entry.date}.json`), JSON.stringify(draft));
+  }
   return root;
 }
 

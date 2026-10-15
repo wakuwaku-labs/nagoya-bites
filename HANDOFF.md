@@ -23,11 +23,15 @@ status: in_progress
 - 2026-10-15: 9本の例を weightedLength・数字の照合・言い方の検査にかけた → 全部通過（252〜274/280）。Mac 側の Claude は `claude --print --safe-mode --tools "" --no-session-persistence` で launchd と同じ最小の環境（HOME・USER・LOGNAME・SHELL・TMPDIR・PATH）なら3秒で JSON を返す（USER が無いと OAuth の読み込みに失敗する）。直近30本すべてに insider-box（3〜4項目・各60〜228）がある
 - 方針（仮決め・最後にオーナーへ確認）: 型は記事ごとに Claude が選ぶ。CI で使うかは policy の draft.useInPost で切り替え
 - 2026-10-15 夜: 実装した（ブランチ claude/x-post-content）。x_post.js に checkDraft・buildDraftPost・insiderPoints・buildPointPosts・postCandidates／post_journal_to_x.js は候補を順に検査し台帳に text_mode／新規 scripts/write_x_draft.js・docs/x-post-prompt.md・tests/x_post_draft.test.js（16件）・ADR 0047／run_journal_local.sh に 5i／policy の header を空・draft・template。npm test 1775件通過。実際の Claude で 10/13・10/14・10/15 を試し書き → 3本とも1回目で検査通過（32〜48秒）。例は scratchpad の draft-*.txt と PR 本文
+- 2026-10-15 23:3x: オーナーが選択肢で「明日からこの形で」「型は記事ごとに選ぶ」を選んだ → PR #610 をマージ（07402d8b0c）。~/nagoya-bites を origin/main へ早送り済み（write_x_draft.js・5i が入ったのを確認）
+- 本物のデータの通しで不具合を発見: data/x_post_drafts/ が無いと保存が ENOENT で失敗（テストはフォルダを先に作っていて気づけなかった）→ PR #611 で修正。直した後 10/14 で通し: 保存（25秒・1回目で通過）→ 投稿の試運転で「保存した文面」が選ばれた（232/280）
 - 注意: 実行中の bash は古いファイルを読み続けるので、マージした翌朝 09:00 の回は git pull しても古い手順のまま（5i が動くのはその次の日から）。マージ後に ~/nagoya-bites を `git pull --ff-only` しておけば翌朝から動く
 
 ## 次にやること
-1. オーナーに「この形で明日から出すか」と型を選んでもらう（選択肢ボタン）→ 答えに合わせて policy を直し、PR をマージ（build.yml が動いていないとき）→ ~/nagoya-bites を pull --ff-only
-2. （済み）実装（触るファイル: scripts/lib/x_post.js に loadDraft・checkEvidence・buildDraftPost／post_journal_to_x.js:234 で「保存した文面→定型」の順・textMode を残す／data/x_post_policy.json に draft の設定・header を空に・utm_content=<型>／新規 docs/x-post-prompt.md・scripts/check_x_draft.js／run_journal_local.sh の 5i とコミット一覧 :813-818／ADR と CLAUDE.md の表）。テストは tests/x_post.test.js（正しい文面は使う・数字が evidence に無い・evidence が記事に無い・error 語・280字超・slug 違い・ファイル無し → 定型）
+1. PR #611 を build.yml が終わってからマージ → ~/nagoya-bites を origin/main へ早送り（merge --ff-only）
+2. 2026-10-16 09:00 のジャーナルの後: ログ（~/nagoya-bites/.local-logs/）に「X 用の文面 … 保存した」が出たか、data/x_post_drafts/2026-10-16.json が記事と同じコミットに入ったか、x-post.yml の Summary が「保存した文面」か、data/x_post_log.json の text_mode が draft か、X の実物を確かめる → P-476・P-296 を Done、結果をコメント
+3. 4週後（2026-11-12 ごろ）: 台帳の text_mode と GA4 の utm_content で型ごとの反応を比べる（ADR 0047 の見直す条件）
+（済み）オーナーの OK・実装・#610 のマージ（触るファイル: scripts/lib/x_post.js に loadDraft・checkEvidence・buildDraftPost／post_journal_to_x.js:234 で「保存した文面→定型」の順・textMode を残す／data/x_post_policy.json に draft の設定・header を空に・utm_content=<型>／新規 docs/x-post-prompt.md・scripts/check_x_draft.js／run_journal_local.sh の 5i とコミット一覧 :813-818／ADR と CLAUDE.md の表）。テストは tests/x_post.test.js（正しい文面は使う・数字が evidence に無い・evidence が記事に無い・error 語・280字超・slug 違い・ファイル無し → 定型）
 3. 試運転（dry-run）で例を確かめてから本番に入れる。字数は weightedLength で確かめる。2回目の claude --print の時間と利用上限への影響を測る
 
 ## 投稿例（10/15 QQ・型ごと。本文の下に URL とハッシュタグ2個が付く）
