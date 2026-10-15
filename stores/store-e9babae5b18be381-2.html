@@ -129,9 +129,9 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .ig-carousel-prev{left:.4rem;}
 .ig-carousel-next{right:.4rem;}
 .ig-carousel-dots{display:flex;justify-content:center;gap:.4rem;margin-top:.7rem;}
-.ig-carousel-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .2s;}
+.ig-carousel-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background var(--dur-base) var(--ease-out);}
 .ig-carousel-dot.active{background:var(--gold);}
-.link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:border-color var(--dur-fast) var(--ease-out),background-color var(--dur-fast) var(--ease-out);margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
+.link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:border-color var(--dur-fast) var(--ease-out),background-color var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out);margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
 button.link-btn{font:inherit;cursor:pointer;}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:var(--gold);color:var(--bg);border-color:var(--gold);}
@@ -161,14 +161,14 @@ button.link-btn{font:inherit;cursor:pointer;}
 .related-features h2,.related-stores h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .related-features ul,.related-stores ul{list-style:none;padding:0;margin:0;}
 .related-features li,.related-stores li{margin:.5rem 0;}
-.related-features a,.related-stores a{font-size:var(--fs-sm);color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.25);padding-bottom:2px;transition:color .2s;}
+.related-features a,.related-stores a{font-size:var(--fs-sm);color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.25);padding-bottom:2px;transition:color var(--dur-base) var(--ease-out);}
 .related-features a:hover,.related-stores a:hover{color:var(--gold2);border-bottom-color:var(--gold2);}
 .related-features .listed-kind{font-size:var(--fs-xs);color:var(--dim);margin-left:.6em;}
 .related-stores h2{margin-bottom:.35rem;}
 .related-stores .related-note{font-size:var(--fs-xs);color:var(--dim);margin:0 0 .9rem;}
 .related-stores .related-reason{font-size:var(--fs-xs);color:var(--dim);margin-left:.6em;}
 .back-section{border-top:1px solid var(--border);padding-top:1.8rem;text-align:center;}
-.back-section a{font-family:var(--font-body);font-size:var(--fs-sm);font-weight:500;letter-spacing:0;color:var(--muted);text-decoration:none;transition:color .2s;min-height:var(--tap-min);display:inline-flex;align-items:center;}
+.back-section a{font-family:var(--font-body);font-size:var(--fs-sm);font-weight:500;letter-spacing:0;color:var(--muted);text-decoration:none;transition:color var(--dur-base) var(--ease-out);min-height:var(--tap-min);display:inline-flex;align-items:center;}
 .back-section a:hover{color:var(--gold);}
 </style>
 </head>
@@ -391,6 +391,7 @@ document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=
 <script class="nb-call-js">(function nbCallMain() {
   var TAP_LIMIT = 20;               // この端末で、1日に番号を確かめられる回数
   var LOOKUP_TIMEOUT_MS = 12000;    // Google から返事が無いまま、これを過ぎたら通信の失敗として扱う
+  var WAIT_MARK_MS = 1000;          // 確かめるのがこれより長くかかったら、ボタンに回る印を足す（A7）
   var MAP_HINT = 'Googleマップで確かめられます';
   var CHECKING = '電話番号を確かめています…';
   var UNAVAILABLE = 'いまは電話番号を確かめられません';
@@ -472,6 +473,8 @@ document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=
   }
 
   function finish(btn, ctx, out) {
+    clearTimeout(ctx.waitMark);
+    btn.classList.remove('nb-wait-long');
     btn.disabled = false;
     btn.removeAttribute('aria-busy');
     setLabel(btn, '電話する');
@@ -499,6 +502,8 @@ document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=
     btn.setAttribute('aria-busy', 'true');
     setLabel(btn, '確認中…');
     say(btn, CHECKING);
+    // 1 秒を超えたら、ボタンに小さな回る印を足す（動きの計画 2 章 A7・形は assets/css/nb.css の .nb-wait-long）
+    ctx.waitMark = setTimeout(function () { btn.classList.add('nb-wait-long'); }, WAIT_MARK_MS);
     var done = false;
     function settle(out) {
       if (done) return;
