@@ -244,7 +244,7 @@ test('段階 2 A1: 押す相手のボタンは押した瞬間に沈み（scale .
   const pressIndex = ['.search-wrap button', '.sticky-search-btn', '.fs-go', '.modal-cta-btn', '.card-cta a', '.pg-btn', '.m-pg-btn', '.empty-state-reset', '.filter-toggle-btn', '.scene-tile', '.scene-chip'];
   const pressNb = ['.nb-btn', '.store-link', '.link-btn', '.nb-bar-btn'];
   const activeRule = (css) => {
-    const r = css.match(/([^{}]*:active[^{}]*)\{[^{}]*transform:scale\(\.98\);box-shadow:inset 0 0 0 100vmax rgba\(0,0,0,\.08\);transition-duration:var\(--dur-press\);\}/);
+    const r = css.match(/([^{}]*:active[^{}]*)\{[^{}]*transform:scale\(\.98\);box-shadow:inset 0 0 0 100vmax rgba\(0,0,0,\.12\);transition-duration:var\(--dur-press\);\}/);
     return r ? r[1] : '';
   };
   const ai = activeRule(INDEX_CSS);

@@ -381,11 +381,13 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 /* 押した瞬間（動きの計画 2 章 A1）: 色を濃くし、わずかに沈む。押す 100ms・離す 150ms。
    色は内側の影で濃くする（filter は動かさない）。「動きを減らす」設定では時間が 0 になり、色の変化だけが残る */
 .nb-btn,.store-link,.link-btn,.nb-bar-btn{transition-property:color,background-color,border-color,box-shadow,transform,opacity;transition-duration:var(--dur-fast);transition-timing-function:var(--ease-out);}
-.nb-btn:active:not(:disabled),.store-link:active:not(:disabled),.link-btn:active:not(:disabled),.nb-bar-btn:active:not(:disabled){transform:scale(.98);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.08);transition-duration:var(--dur-press);}
-/* 待ちの印（動きの計画 2 章 A7）: 押してから 1 秒を超えた操作（電話番号の確認・現在地）にだけ、ボタンの文の後ろに小さな回る印を出す。
+.nb-btn:active:not(:disabled),.store-link:active:not(:disabled),.link-btn:active:not(:disabled),.nb-bar-btn:active:not(:disabled){transform:scale(.98);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.12);transition-duration:var(--dur-press);}
+/* 待ちの印（動きの計画 2 章 A7）: 押してから 1 秒を超えた操作（電話番号の確認・現在地）にだけ、ボタンの先頭のアイコンを
+   その場で回る輪に変える。アイコンの箱の大きさのまま描くので、ボタンの幅は変わらない（横の検索欄が縮まない・レイアウトがずれない）。
    付け外しは JS（.nb-wait-long）。止まらない繰り返しはこの印とスケルトンだけ（data/design_system.json の motion の例外）。
    「動きを減らす」設定では回らず、欠けた輪のまま止まって見える */
-.nb-wait-long::after{content:"";display:inline-block;flex:none;width:.9em;height:.9em;margin-left:.45em;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;vertical-align:-.12em;animation:nbSpin .8s linear infinite;}
+.nb-wait-long>svg:first-child,.nb-wait-long>.nb-icon:first-child{box-sizing:border-box;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:nbSpin .8s linear infinite;}
+.nb-wait-long>svg:first-child>*,.nb-wait-long>.nb-icon:first-child>svg{visibility:hidden;}
 @keyframes nbSpin{to{transform:rotate(360deg);}}
 
 .related,.related-wrap{background:var(--bg2);border-top:1px solid var(--border);padding:var(--rhythm-sm) 1.5rem;text-align:center;}

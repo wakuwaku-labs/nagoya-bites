@@ -370,9 +370,9 @@ node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 
 
 | 部品 | 書き方 | 使う所 |
 |---|---|---|
-| 押した瞬間（A1） | `:active` で `transform:scale(.98)` と `box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.08)`（色を内側の影で濃くする。グラデーションの背景でも同じに濃くなる）。`transition-duration:var(--dur-press)`。元の規則は `transition-property:color,background-color,border-color,box-shadow,transform,opacity` を `var(--dur-fast)` で持つ（押す 100ms・離す 150ms） | `nb.css`: `.nb-btn`・`.store-link`・`.link-btn`・`.nb-bar-btn`。`index.html`: 検索・「N軒を見る」・クイックビューの行動バー・カードの予約・ページ送り・シーンの導線など（`<style>` の最後の段階 2 の区画）。新しいボタンもこの一覧に足す |
+| 押した瞬間（A1） | `:active` で `transform:scale(.98)` と `box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.12)`（色を内側の影で濃くする。グラデーションの背景でも同じに濃くなる）。`transition-duration:var(--dur-press)`。元の規則は `transition-property:color,background-color,border-color,box-shadow,transform,opacity` を `var(--dur-fast)` で持つ（押す 100ms・離す 150ms） | `nb.css`: `.nb-btn`・`.store-link`・`.link-btn`・`.nb-bar-btn`。`index.html`: 検索・「N軒を見る」・クイックビューの行動バー・カードの予約・ページ送り・シーンの導線など（`<style>` の最後の段階 2 の区画）。新しいボタンもこの一覧に足す |
 | ♡ の弾み（A2） | `.is-pop` を付けると `@keyframes nbPop`（1→1.15→1・`var(--dur-base)`）で 1 回だけ弾む。JS の `nbPop(el)` が付け、`animationend` で外す。保存したときだけ（外したときは弾ませない）。続けて「保存しました」の知らせ（`#toast`・`role="status"`）を出す | `index.html` の `.fav-btn`・`.m-fav` |
-| 待ちの印（A7） | 押した瞬間に文を変えて押せなくし（`disabled`・`aria-busy="true"`）、1 秒を超えたら `.nb-wait-long` を付ける（文の後ろに小さな回る輪・`nb.css`）。終わったら外す。止まらない繰り返しはこれとスケルトンだけ | 電話番号の確認（`scripts/lib/call_button_snippet.js`）・現在地（`index.html` の `geoSearch`） |
+| 待ちの印（A7） | 押した瞬間に文を変えて押せなくし（`disabled`・`aria-busy="true"`）、1 秒を超えたら `.nb-wait-long` を付ける（先頭のアイコンがその場で回る輪に変わる・`nb.css`）。ボタンの幅は変えない（先頭にアイコンを置く）。終わったら外す。止まらない繰り返しはこれとスケルトンだけ | 電話番号の確認（`scripts/lib/call_button_snippet.js`）・現在地（`index.html` の `geoSearch`） |
 | 件数の切り替え（A6） | 数字が変わるときだけ `#cnt.fading`（薄く 100ms）→ 書き換え → 戻す（150ms）。同じ数字なら動かさない | `index.html` の `renderGrid` |
 
 押す相手・チップ・♡ のホバーは `@media (hover:hover)` の中に置く（スマホで触った後に色や持ち上げが残らない）。

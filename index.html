@@ -1401,7 +1401,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
    色は内側の影で濃くする（グラデーションの背景でも同じに濃くなる。filter は動かさない）。
    「動きを減らす」設定では時間が 0 になり、色の変化だけが残る（nb.css の一括の規則） */
 .search-wrap button,.sticky-search-btn,.fs-go,.modal-cta-btn,.card-cta a,.pg-btn,.m-pg-btn,.empty-state-reset,.filter-toggle-btn,.scene-tile,.scene-chip{transition-property:color,background-color,border-color,box-shadow,transform,opacity;transition-duration:var(--dur-fast);transition-timing-function:var(--ease-out);}
-.search-wrap button:active,.sticky-search-btn:active,.fs-go:active:not(:disabled),.modal-cta-btn:active:not(:disabled),.card-cta a:active,.pg-btn:active:not(:disabled):not(.active),.m-pg-btn:active:not(:disabled),.empty-state-reset:active,.filter-toggle-btn:active,.scene-tile:active,.scene-chip:active{transform:scale(.98);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.08);transition-duration:var(--dur-press);}
+.search-wrap button:active,.sticky-search-btn:active,.fs-go:active:not(:disabled),.modal-cta-btn:active:not(:disabled),.card-cta a:active,.pg-btn:active:not(:disabled):not(.active),.m-pg-btn:active:not(:disabled),.empty-state-reset:active,.filter-toggle-btn:active,.scene-tile:active,.scene-chip:active{transform:scale(.98);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.12);transition-duration:var(--dur-press);}
 /* A2 ♡ を保存したとき: 1 回だけ小さく弾む（1→1.15→1・200ms）。外したときは弾ませない */
 @keyframes nbPop{50%{transform:scale(1.15);}}
 .fav-btn.is-pop,.m-fav.is-pop{animation:nbPop var(--dur-base) var(--ease-out);}

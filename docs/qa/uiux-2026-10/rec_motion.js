@@ -248,9 +248,16 @@ const SCENES = {
       });
     },
     async run(page, vp) {
-      const pt = await centerOf(page, '#geo-btn');
-      if (!pt) throw new Error('現在地のボタンが見つからない');
+      // 「現在地」は追従の検索バー（下へ進んで最初の検索欄が隠れると出る）の中にある
+      await page.evaluate(() => window.scrollTo({ top: 1400, behavior: 'instant' }));
+      const shown = await waitFn(page, () => document.getElementById('sticky-search').classList.contains('visible'), null, 3000);
+      if (!shown) throw new Error('追従の検索バーが出なかった');
       await sleep(600);
+      const pt = await page.evaluate(() => {
+        const r = document.getElementById('geo-btn').getBoundingClientRect();
+        return r.width > 0 && r.height > 0 ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : null;
+      });
+      if (!pt) throw new Error('現在地のボタンが見えない');
       await tap(page, vp, pt);
       await sleep(3800);
     },
