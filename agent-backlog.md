@@ -156,7 +156,7 @@
 
 ### [ISSUE-193] 「現在地」で絞り込んだ後に GA4 がエリア名入りの URL（#q=）を受け取っているかを数え、扱いを決める
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **due**: 2026-10-29
 - **detected**: 2026-10-15
 - **category**: 計測 / プライバシー
@@ -168,6 +168,11 @@
   2. 0 件でなければ、絞り込みの URL を GA4 に渡さない方法を比べた結果と判断が P-475 か `docs/decisions/` に残っている
 - **関連**: [[MEO-006]]／index.html の geoSearch・nbBuildHash／計画書 `docs/meo-plan-2026-10.md` 8.2 節
 - **進み具合（2026-10-15）**: 数える道具を作った。`scripts/ga4_fragment_counts.js`（件数だけを出す。URL・検索語・店の ID・プロパティ ID は出さない）を `.github/workflows/ga4-fragment-counts.yml`（手動・読み取りのみ・結果はジョブの要約）から動かす。q の値は「現在地」が選ぶエリア名（index.html の GEO_AREAS）かどうかだけで分ける。検索欄に同じ名前を打った分も入るので、エリア名の件数は「現在地」の分の上限。`store=` の件数が 0 なら、GA4 は # の後ろをそもそも受け取っていない
+- **結果（2026-10-15・done）**:
+  - 30daysAgo〜yesterday の全イベント 11,144 件のうち、pageLocation に `#` を含むものは 0 件（`q=`・`store=` も 0 件）。run 38756893135・38760363890。
+  - 同じ期間に、`#` を書いた後に送るイベント（filter_apply 1・search 32・modal_open 48）はあった。
+  - GA4 のデータには `#` の後ろが入っていないので、渡さない仕組みは作らない。page_location を上書きしないことをテストで見張る（判断の記録 0048）。
+  - gtag.js の通信そのものに `#` の後ろが入るかは、確かめていない。
 
 ### [ISSUE-190] Google の店舗情報（店名・住所・評価・口コミ数）を公開リポジトリに保存していることが Places の規約に合うかを確かめる
 
