@@ -346,10 +346,12 @@ node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 
 
 | トークン | 値 | 使う所 |
 |---|---|---|
-| `--dur-press` | 100ms | 押した瞬間の反応 |
-| `--dur-fast` | 150ms | 色・枠・影の変化、消えるとき |
-| `--dur-base` | 200ms | シート・クイックビュー・知らせが出るとき |
-| `--dur-slow` | 250ms | 画面の端から出る大きな面（ドロワー） |
+| `--dur-instant` | 50ms | 押し込む見た目（段階 3a）。カードは押し込みをこの分だけ遅らせる |
+| `--dur-press` | 100ms | 小さい状態の変化（段階 2 の押した瞬間。段階 3a から押し込みは `--dur-instant`） |
+| `--dur-fast` | 150ms | 色・枠・影の変化、消えるとき、♡ を外したときの縮み |
+| `--dur-base` | 200ms | シート・クイックビュー・知らせが出るとき、押した見た目の戻り、件数の入れ替わり、✓ の弾み |
+| `--dur-slow` | 250ms | 画面の端から出る大きな面（ドロワー）、件数の丸の弾み |
+| `--dur-emph` | 300ms | 状態が変わった 1 回の弾み（♡ を保存したとき）。上限ちょうど |
 | `--ease-out` | `cubic-bezier(.2,0,0,1)` | 出るとき・状態が変わるとき |
 | `--ease-in` | `cubic-bezier(.4,0,1,1)` | 消えるとき |
 
@@ -357,7 +359,7 @@ node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 
 
 ### 書き方の決まり
 
-1. 動かしてよいのは `transform`・`opacity` と、色（`color`・`background-color`・`border-color`・`box-shadow`。150ms 以内）だけ。`width`・`height`・`margin`・`padding`・`top`・`left`・`gap`・`filter` は動かさない。
+1. 動かしてよいのは `transform`・`opacity` と、色（`color`・`background-color`・`border-color`・`box-shadow`。200ms 以内）だけ。`width`・`height`・`margin`・`padding`・`top`・`left`・`gap`・`filter` は動かさない。
 2. `transition: all` は書かない。
 3. 止まらない繰り返しは、読み込み中の表示だけ。
 4. ホバーの動きは `@media (hover:hover)` の中だけ。
@@ -366,14 +368,16 @@ node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 
 7. 押した瞬間に見た目を変える。処理の後に動かさない。
 8. 新しい動きは Designer の確認（`agents/designer.md` の QA-5）を通す。
 
-### 部品（段階 2・P-490）
+### 部品（段階 2・P-490、段階 3a で強めた）
 
 | 部品 | 書き方 | 使う所 |
 |---|---|---|
-| 押した瞬間（A1） | `:active` で `transform:scale(.98)` と `box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.12)`（色を内側の影で濃くする。グラデーションの背景でも同じに濃くなる）。`transition-duration:var(--dur-press)`。元の規則は `transition-property:color,background-color,border-color,box-shadow,transform,opacity` を `var(--dur-fast)` で持つ（押す 100ms・離す 150ms） | `nb.css`: `.nb-btn`・`.store-link`・`.link-btn`・`.nb-bar-btn`。`index.html`: 検索・「N軒を見る」・クイックビューの行動バー・カードの予約・ページ送り・シーンの導線など（`<style>` の最後の段階 2 の区画）。新しいボタンもこの一覧に足す |
-| ♡ の弾み（A2） | `.is-pop` を付けると `@keyframes nbPop`（1→1.15→1・`var(--dur-base)`）で 1 回だけ弾む。JS の `nbPop(el)` が付け、`animationend` で外す。保存したときだけ（外したときは弾ませない）。続けて「保存しました」の知らせ（`#toast`・`role="status"`）を出す | `index.html` の `.fav-btn`・`.m-fav` |
+| 押した見た目（A1・段階 3a の A-1〜A-3） | `:active` で沈み（`transform:scale()`）、色を内側の影で濃くする（`box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16)`。グラデーションの背景でも同じに濃くなる。写真の上の暗い面は白 `.16`）。`transition-duration:var(--dur-instant)`（押し込み 50ms）。元の規則は `transition-property:color,background-color,border-color,box-shadow,transform,opacity` を `var(--dur-base)` で持つ（戻り 200ms）。縮みは大きさで 3 段: ボタン `.96`・小さい部品 `.94`・カード `.985`。カードはスクロールし始めた指で一瞬暗くならないよう `transition-delay:var(--dur-instant)` で押し込みを遅らせ、中の ♡・予約・動画を押したときはカードごとは沈ませない（`:not(:has(...))`）。文中のリンク（inline）は transform が効かないので背景の色（`rgba(122,92,16,.16)`）で返す。iPhone の Safari は touch のリスナーが無いと `:active` を出さないので、全ページの共通の `<script>`（`scripts/lib/site_chrome.js` の `chromeScript()`）とトップの頭の `<script>` で document に空の `touchstart`（passive）を付ける | `nb.css`: `.nb-btn`・`.store-link`・`.link-btn`・`.nb-bar-btn`・`.related-link`・`.nb-conclusion-hubs a`（`.96`）・`.hamburger`（`.94`）。`index.html`: `<style>` の最後の「動きの段階 2・3a」の区画（ボタン・小さい部品・カードの 3 つの一覧）。ハブの `.hub-grid a`（`.985`）・店舗ページの関連リンク（色）。新しい押せる物もこの一覧に足す |
+| ♡ の弾み（A2・段階 3a の A-5） | 保存したら `.is-pop`（`@keyframes nbPop`: 1→1.3→.92→1 と、周りに広がって消える輪・`var(--dur-emph)`）、外したら `.is-unpop`（`@keyframes nbUnpop`: 1→.85→1・`var(--dur-fast)`）。JS の `nbPop(el, off)` が付け、`animationend` で外す。続けて「保存しました」「保存を外しました」の知らせ（`#toast`・`role="status"`）を出す | `index.html` の `.fav-btn`・`.m-fav` |
+| ✓ の弾み（段階 3a の A-4） | 押して選んだチップにだけ `.is-check` を付け直し、`[aria-pressed="true"]::before` の ✓ が `@keyframes nbCheck`（.3→1.15→1・`var(--dur-base)`）で 1 回弾む。外したとき・シートを開いたときに選んである ✓ は動かさない（JS の `nbCheckPop(chip)`） | `index.html` の絞り込みシートの `.fs-chip` |
 | 待ちの印（A7） | 押した瞬間に文を変えて押せなくし（`disabled`・`aria-busy="true"`）、1 秒を超えたら `.nb-wait-long` を付ける（先頭のアイコンがその場で回る輪に変わる・`nb.css`）。ボタンの幅は変えない（先頭にアイコンを置く）。終わったら外す。止まらない繰り返しはこれとスケルトンだけ | 電話番号の確認（`scripts/lib/call_button_snippet.js`）・現在地（`index.html` の `geoSearch`） |
-| 件数の切り替え（A6） | 数字が変わるときだけ `#cnt.fading`（薄く 100ms）→ 書き換え → 戻す（150ms）。同じ数字なら動かさない | `index.html` の `renderGrid` |
+| 待ちの輪（段階 3a の D-1） | 全店のデータを待つ間の「読み込み中…」が 1 秒を超えたら `.nb-wait-long` を付け、文の左に回る輪を重ねて描く（`::before` を `position:absolute`。文だけのボタンで先頭のアイコンが無いため。幅と文の位置は変えない）。届いたら外し、件数を 1 回弾ませる。取得に失敗してもシートを数え直して止める | `index.html` の `#fs-go` |
+| 件数の切り替え（A6・段階 3a の B-1） | 見える件数（結果の帯の数字・絞り込みボタンの丸・シートの「N軒を見る」）の文字の変化を `MutationObserver` で見て、前と違う数字になった 1 回だけ `.is-tick-up`（増えた）／`.is-tick-down`（減った）を付ける。帯の数字は下から・上から入れ替わり（`var(--dur-base)`）、丸は弾み（.6→1.2→1・`var(--dur-slow)`）、主ボタンは小さく弾む（1.05・`var(--dur-slow)`）。同じ数字・前が数字でない・触ってから 1 秒より後（全店のデータの到着・戻る・復元）は動かさない。数え上げはしない。見えない `#cnt` には動きを付けない | `index.html` の `#results-summary-count`・`#filter-badge`・`#tb-filter-badge`・`#fs-go`（件数を書く関数は変えず、見張り役だけが動きを付ける） |
 
 押す相手・チップ・♡ のホバーは `@media (hover:hover)` の中に置く（スマホで触った後に色や持ち上げが残らない）。
 

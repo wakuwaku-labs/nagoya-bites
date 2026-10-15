@@ -241,6 +241,11 @@ function nbScrollBehavior(){
   try{return window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';}
   catch(e){return 'smooth';}
 }
+// 押した見た目（動きの計画 段階 3a の A-1）: iPhone の Safari は touch のリスナーが無い要素に :active を出さない。
+// 空の touchstart を document に付けると、どこを押しても押した見た目が出る（passive なのでスクロールを止めない）。
+// 利用者が最後に触った時刻も残す。見える件数の動き（B-1）は、触ってから 1 秒の間に変わったときだけ動かす（全店のデータの到着・戻るでは動かさない）
+document.addEventListener('touchstart',function(){},{passive:true});
+['pointerdown','keydown','input'].forEach(function(t){document.addEventListener(t,function(){window.__nbLastInput=Date.now();},{capture:true,passive:true});});
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- タイトル/説明文は SERP の切り詰め（モバイル約25〜30字）を前提に、
@@ -413,7 +418,7 @@ body.search-active .filter-toggle-wrap{position:static;}
 .fs-chip{display:inline-flex;align-items:center;min-height:var(--tap-min);padding:.35rem .9rem;font-family:inherit;font-size:var(--fs-sm);letter-spacing:.02em;color:var(--muted);background:#fff;border:1px solid var(--border-h);border-radius:6px;cursor:pointer;user-select:none;transition:background var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out);}
 @media(hover:hover){.fs-chip:hover{color:var(--text);border-color:var(--gold);}}
 .fs-chip[aria-pressed="true"]{color:#fff;background:var(--gold);border-color:var(--gold);font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);}
-.fs-chip[aria-pressed="true"]::before{content:"\2713 ";font-weight:700;margin-right:.3rem;}
+.fs-chip[aria-pressed="true"]::before{content:"\2713 ";display:inline-block;white-space:pre;font-weight:700;margin-right:.3rem;}
 .fs-chips.is-folded .fs-extra{display:none;}
 .fs-foot{flex:none;display:flex;flex-direction:column;gap:.55rem;padding:.7rem 1.1rem calc(.8rem + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--border);box-shadow:0 -2px 12px rgba(0,0,0,.06);}
 .fs-suggest{display:flex;flex-wrap:wrap;gap:.45rem;}
@@ -1085,10 +1090,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible{outline:2px solid var(-
 .empty-state p{font-size:var(--fs-xs);letter-spacing:.05em;color:var(--dim);margin-bottom:1.5rem;line-height:1.8;}
 .empty-state-reset{background:var(--warm-grad);border:none;color:#fff;font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;padding:.75rem 1.7rem;border-radius:3px;cursor:pointer;font-weight:600;transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out);box-shadow:0 1px 3px rgba(140,58,20,.25);}
 @media(hover:hover){.empty-state-reset:hover{transform:translateY(-1px);box-shadow:var(--warm-glow);filter:brightness(1.05);}}
-/* ── RESULT COUNT TRANSITION ── */
-/* 件数が変わるとき（動きの計画 2 章 A6）: 1 回だけ薄く→濃く。薄くなる 100ms・戻る 150ms。数え上げはしない */
-#cnt{transition:opacity var(--dur-fast) var(--ease-out);}
-#cnt.fading{opacity:.3;transition-duration:var(--dur-press);transition-timing-function:var(--ease-in);}
 /* ── CARD TAG PILLS ── */
 .card-tags{display:flex;flex-wrap:wrap;gap:.3rem;padding:.35rem 0;}
 .ctag{font-size:var(--fs-xs);letter-spacing:.07em;color:var(--muted);border:1px solid var(--border);padding:.18rem .55rem;border-radius:2px;background:var(--surface);white-space:nowrap;}
@@ -1112,8 +1113,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible{outline:2px solid var(-
 .card-cta a.card-cta-map-only{background:var(--surface);color:var(--text);border:1px solid var(--border-h);box-shadow:none;text-transform:none;letter-spacing:0;font-size:var(--fs-sm);}
 @media(hover:hover){.card-cta a.card-cta-map-only:hover{box-shadow:0 3px 8px rgba(0,0,0,.12);filter:none;}}
 @media(hover:hover){.card-cta a:hover{transform:translateY(-1px);box-shadow:var(--warm-glow);filter:brightness(1.05);}}
-/* ── CARD ACTIVE STATE ── */
-.card:active{transform:scale(.99);background:#F1EFE8;}
 /* ── MODAL IMPROVEMENTS ── */
 .pwa-banner-icon{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-right:.45rem;vertical-align:-.15em;color:currentColor;}
 .pwa-banner-icon svg{width:100%;height:100%;}
@@ -1396,15 +1395,45 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 @media(min-width:769px) and (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(max-width:720px){.no-sakura-pillars{grid-template-columns:1fr;border:0;}.no-sakura-pillar{border:0;padding:0;}}
 @media(max-width:640px){.authority-bar{display:grid;grid-template-columns:1fr 1fr;gap:.6rem 1rem;}.auth-item{font-size:var(--fs-xs);}.auth-item:last-child:nth-child(odd){grid-column:1/-1;justify-content:center;}}
-/* ===== 動きの段階 2（P-490・動きの計画 2 章）: 押した結果を処理より先に見た目で返す ===== */
-/* A1 押した瞬間: 色を濃くし、わずかに沈む（scale .98）。押す 100ms・離す 150ms。
-   色は内側の影で濃くする（グラデーションの背景でも同じに濃くなる。filter は動かさない）。
-   「動きを減らす」設定では時間が 0 になり、色の変化だけが残る（nb.css の一括の規則） */
-.search-wrap button,.sticky-search-btn,.fs-go,.modal-cta-btn,.card-cta a,.pg-btn,.m-pg-btn,.empty-state-reset,.filter-toggle-btn,.scene-tile,.scene-chip{transition-property:color,background-color,border-color,box-shadow,transform,opacity;transition-duration:var(--dur-fast);transition-timing-function:var(--ease-out);}
-.search-wrap button:active,.sticky-search-btn:active,.fs-go:active:not(:disabled),.modal-cta-btn:active:not(:disabled),.card-cta a:active,.pg-btn:active:not(:disabled):not(.active),.m-pg-btn:active:not(:disabled),.empty-state-reset:active,.filter-toggle-btn:active,.scene-tile:active,.scene-chip:active{transform:scale(.98);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.12);transition-duration:var(--dur-press);}
-/* A2 ♡ を保存したとき: 1 回だけ小さく弾む（1→1.15→1・200ms）。外したときは弾ませない */
-@keyframes nbPop{50%{transform:scale(1.15);}}
-.fav-btn.is-pop,.m-fav.is-pop{animation:nbPop var(--dur-base) var(--ease-out);}
+/* ===== 動きの段階 2・3a（P-490・段階 3a・動きの計画 2 章）: 押した結果を処理より先に見た目で返す ===== */
+/* 押した見た目（A1・段階 3a の A-1〜A-3）: 押した物が沈み、色が濃くなる。押し込み 50ms（--dur-instant）・戻り 200ms（--dur-base）。
+   色は内側の影で濃くする（暗さ .16。グラデーションの背景でも同じに濃くなる。filter は動かさない）。暗い面（写真の上の ♡・写真の左右）は白 .16 で明るくする。
+   縮みは大きさで 3 段: ボタン .96・小さい部品（♡・×・チップ・条件の札・ページ番号・上へ戻る・写真の左右）.94・カード .985。
+   カードはスクロールし始めた指で一瞬暗くならないよう、押し込みだけ --dur-instant（50ms）遅らせる（押してから最初の変化まで 50ms・沈み切るまで 100ms）。
+   iPhone の Safari は touch のリスナーが無いと :active を出さないので、頭のスクリプトで document に空の touchstart（passive）を付けている。
+   「動きを減らす」設定では時間と遅れが 0 になり、色の変化だけが残る（nb.css の一括の規則） */
+.search-wrap button,.sticky-search-btn,.fs-go,.modal-cta-btn,.card-cta a,.m-pg-btn,.empty-state-reset,.filter-toggle-btn,.scene-tile,.scene-chip,.mobile-cta-bar .cta-filter,.tb-filter,.view-toggle button,.geo-btn,.sbtn,.share-btn,.clear-all-btn,.fs-reset,.fs-suggest-btn,.suggest-pill,.fold-toggle,.fav-btn,.m-fav,.mcl,.fs-close,.fs-chip,.chip,.pg-btn,#scroll-top,.mhi-nav,.card,.tp-card,.feature-card,.latest-journal-card,.hist-card,.modal-rsc{transition-property:color,background-color,border-color,box-shadow,transform,opacity;transition-duration:var(--dur-base);transition-timing-function:var(--ease-out);}
+.search-wrap button:active,.sticky-search-btn:active,.fs-go:active:not(:disabled),.modal-cta-btn:active:not(:disabled),.card-cta a:active,.m-pg-btn:active:not(:disabled),.empty-state-reset:active,.filter-toggle-btn:active,.scene-tile:active,.scene-chip:active,.mobile-cta-bar .cta-filter:active,.tb-filter:active,.view-toggle button:active,.geo-btn:active:not(:disabled),.sbtn:active,.share-btn:active,.clear-all-btn:active,.fs-reset:active:not(:disabled),.fs-suggest-btn:active,.suggest-pill:active,.fold-toggle:active{transform:scale(.96);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16);transition-duration:var(--dur-instant);}
+.fav-btn:active,.m-fav:active,.mcl:active,.fs-close:active,.fs-chip:active,.chip:active,.pg-btn:active:not(:disabled):not(.active),#scroll-top:active,.mhi-nav:active:not(:disabled){transform:scale(.94);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16);transition-duration:var(--dur-instant);}
+.fav-btn:active,.mhi-nav:active:not(:disabled){box-shadow:inset 0 0 0 100vmax rgba(255,255,255,.16);}
+.grid.list-mode .fav-btn:active{box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16);}
+.mhi-nav:active:not(:disabled){transform:translateY(-50%) scale(.94);}
+/* カードの中の ♡・予約・地図・動画を押したときは、カードごとは沈ませない（押した物だけが沈む） */
+.card:active:not(:has(.fav-btn:active,.card-cta a:active,.reel-play:active)),.tp-card:active,.feature-card:active,.latest-journal-card:active,.hist-card:active,.modal-rsc:active{transform:scale(.985);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16);transition-duration:var(--dur-instant);transition-delay:var(--dur-instant);}
+/* A2・A-5 ♡: 保存したら 1 回だけ大きく弾み（1→1.3→.92→1・300ms）、周りに輪が広がって消える。外したら小さく縮んで戻る（1→.85→1・150ms）。
+   どちらも続けて「保存しました」「保存を外しました」と知らせる（#toast）。輪は影だけで描く（大きさは変えない） */
+@keyframes nbPop{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(184,84,31,.45);}35%{transform:scale(1.3);}70%{transform:scale(.92);}100%{transform:scale(1);box-shadow:0 0 0 10px rgba(184,84,31,0);}}
+@keyframes nbUnpop{50%{transform:scale(.85);}}
+.fav-btn.is-pop,.m-fav.is-pop{animation:nbPop var(--dur-emph) var(--ease-out);}
+.fav-btn.is-unpop,.m-fav.is-unpop{animation:nbUnpop var(--dur-fast) var(--ease-out);}
+/* A-4 絞り込みシートのチップの ✓: 選んだ 1 回だけ、✓ が小さい所から弾んで出る（.3→1.15→1・200ms）。シートを開いたときに選んである ✓ は動かさない（JS が押した 1 つにだけ .is-check を付ける） */
+@keyframes nbCheck{0%{transform:scale(.3);opacity:.3;}60%{transform:scale(1.15);opacity:1;}100%{transform:scale(1);}}
+.fs-chip.is-check[aria-pressed="true"]::before{animation:nbCheck var(--dur-base) var(--ease-out);}
+/* B-1 見える件数（結果の帯の数字・絞り込みボタンの丸）: 数字が変わった 1 回だけ動かす。帯の数字は、増えたら下から・減ったら上から入れ替わる（200ms）。
+   丸は小さい所から弾む（.6→1.2→1・250ms）。シートの「N軒を見る」は小さく弾む（1→1.05→1・250ms）。
+   同じ数字なら動かさない。利用者が触ってから 1 秒の間に変わったときだけ（全店のデータの到着・戻る・復元では動かさない）。数え上げはしない */
+#results-summary-count{display:inline-block;}
+@keyframes nbCountUp{0%{transform:translateY(.5em);opacity:.2;}100%{transform:none;opacity:1;}}
+@keyframes nbCountDown{0%{transform:translateY(-.5em);opacity:.2;}100%{transform:none;opacity:1;}}
+@keyframes nbBadge{0%{transform:scale(.6);}55%{transform:scale(1.2);}100%{transform:scale(1);}}
+@keyframes nbBump{45%{transform:scale(1.05);}}
+#results-summary-count.is-tick-up{animation:nbCountUp var(--dur-base) var(--ease-out);}
+#results-summary-count.is-tick-down{animation:nbCountDown var(--dur-base) var(--ease-out);}
+.filter-badge.is-tick-up,.filter-badge.is-tick-down{animation:nbBadge var(--dur-slow) var(--ease-out);}
+.fs-go.is-tick-up,.fs-go.is-tick-down{animation:nbBump var(--dur-slow) var(--ease-out);}
+/* D-1 全店のデータを待つ間の「N軒を見る」: 1 秒を超えたら、文の左に回る輪を出す（.nb-wait-long の形・ボタンの幅と文の位置は変えない） */
+.fs-go{position:relative;}
+.fs-go.nb-wait-long::before{content:"";position:absolute;left:1rem;top:50%;width:1em;height:1em;margin-top:-.5em;box-sizing:border-box;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:nbSpin .8s linear infinite;}
 </style>
 
 <!-- ======================================================= -->
@@ -2518,6 +2547,7 @@ function fetchFullCatalog() {
     if (FULL_CATALOG_LOADED || FULL_CATALOG_FAILED) return;
     FULL_CATALOG_FAILED = true;
     applyFilters();   // 読み込み中の表示を、いまの一覧の表示（0 軒なら 0 軒の表示）に直す
+    nbRefreshFilterSheet();   // 絞り込みシートの「読み込み中…」と待ちの輪も、いまある店で数え直して止める
   }
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
     .then(function(r){ return r.ok ? r.json() : null; })
@@ -4371,6 +4401,14 @@ function nbRefreshFilterSheet() {
 (function() {
   var wrap = document.getElementById('filter-sheet-wrap');
   if (!wrap) return;
+  // 選んだチップの ✓ を 1 回だけ弾ませる（動きの計画 段階 3a の A-4）。押して選んだ 1 つにだけ .is-check を付け直す（形は CSS・外すのは animationend）。
+  // 外したチップ・シートを開いたときに選んである ✓ は動かさない
+  function nbCheckPop(chip) {
+    if (!chip || !chip.classList || chip.getAttribute('aria-pressed') !== 'true') return;
+    chip.classList.remove('is-check');
+    void chip.offsetWidth;   // 続けて押し直したときも、もう 1 回弾ませる
+    chip.classList.add('is-check');
+  }
   wrap.addEventListener('click', function(e) {
     if (!NB_SHEET.open || !NB_SHEET.draft) return;
     var t = e.target;
@@ -4380,6 +4418,7 @@ function nbRefreshFilterSheet() {
     if (chip) {
       NB_SHEET.draft = nbToggleFilter(NB_SHEET.draft, chip.getAttribute('data-k'), chip.getAttribute('data-v'));
       nbSheetSync();
+      nbCheckPop(chip);
       return;
     }
     var sug = t.closest('.fs-suggest-btn');
@@ -4553,6 +4592,78 @@ function updateFilterUI() {
 function nbZeroIsProvisional(data) {
   return !!data && data.length === 0 && !FULL_CATALOG_LOADED && !FULL_CATALOG_FAILED && !(SHOW_FAVS_ONLY && getFavs().length === 0);
 }
+
+// ── 見える件数の動き（動きの計画 段階 3a の B-1）と、全店のデータを待つ間の輪（D-1） ──
+// 件数を書く処理（updateFilterUI・nbSetBadge・nbSheetUpdateFooter）は変えず、見える件数の要素の文字が変わったのを見張って動きを付ける。
+// 動かすのは、前と違う数字になった 1 回だけ。前が数字でない（「--」・「読み込み中…」）・利用者が触ってから 1 秒より後
+// （全店のデータの到着・戻る・復元）では動かさない。増えたら .is-tick-up、減ったら .is-tick-down（形は CSS）。数え上げはしない
+var NB_TICK_WINDOW_MS = 1000;    // 触ってから、件数の変化を「操作の結果」とみなす長さ
+var NB_SHEET_WAIT_MS = 1000;     // シートの主ボタンが全店のデータを待つのがこれより長くなったら、回る輪を出す（D-1・2 章 A7 と同じ）
+function nbCountNum(t) {
+  var m = /\d[\d,]*/.exec(String(t || ''));
+  return m ? Number(m[0].replace(/,/g, '')) : NaN;
+}
+function nbCountTick(el, before, after, force) {
+  if (!el || !el.classList || before === after) return false;
+  var a = nbCountNum(before), b = nbCountNum(after);
+  if (!force) {
+    if (isNaN(a) || isNaN(b) || a === b) return false;
+    if (NB_RESTORING || !(Date.now() - (window.__nbLastInput || 0) <= NB_TICK_WINDOW_MS)) return false;
+  }
+  el.classList.remove('is-tick-up', 'is-tick-down');
+  void el.offsetWidth;   // 続けて変わったときも、もう 1 回動かす
+  el.classList.add(!isNaN(a) && !isNaN(b) && b < a ? 'is-tick-down' : 'is-tick-up');
+  return true;
+}
+document.addEventListener('animationend', function(e) {
+  var n = e.animationName, t = e.target;
+  if (!t || !t.classList) return;
+  if (n === 'nbCountUp' || n === 'nbCountDown' || n === 'nbBadge' || n === 'nbBump') t.classList.remove('is-tick-up', 'is-tick-down');
+  else if (n === 'nbCheck') t.classList.remove('is-check');   // ✓（::before）の動きの終わりも、チップ自身に届く
+});
+// シートの主ボタンが全店のデータを待っている間か（nbSheetFooterState の「読み込み中…」と同じ条件）
+function nbSheetWaiting() {
+  return !!(NB_SHEET && NB_SHEET.open) && !FULL_CATALOG_LOADED && !FULL_CATALOG_FAILED;
+}
+function nbSheetWaitMark(go) {
+  if (nbSheetWaiting()) {
+    go.setAttribute('aria-busy', 'true');
+    if (!go.classList.contains('nb-wait-long') && !go.__nbWaitTimer) {
+      go.__nbWaitTimer = setTimeout(function() {
+        go.__nbWaitTimer = 0;
+        if (nbSheetWaiting()) go.classList.add('nb-wait-long');
+      }, NB_SHEET_WAIT_MS);
+    }
+    return true;
+  }
+  clearTimeout(go.__nbWaitTimer);
+  go.__nbWaitTimer = 0;
+  go.classList.remove('nb-wait-long');
+  go.removeAttribute('aria-busy');
+  return false;
+}
+(function() {
+  if (typeof MutationObserver !== 'function') return;
+  ['results-summary-count', 'filter-badge', 'tb-filter-badge', 'fs-go'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var last = el.textContent;
+    var wasWaiting = false;
+    new MutationObserver(function() {
+      var now = el.textContent;
+      if (id === 'fs-go') {
+        var waiting = nbSheetWaitMark(el);
+        // 待っていた主ボタンに件数が届いたら、触っていなくても 1 回弾ませる（見ている人に「届いた」を返す）
+        if (wasWaiting && !waiting && nbCountNum(now) > 0) nbCountTick(el, last, now, true);
+        else nbCountTick(el, last, now);
+        wasWaiting = waiting;
+      } else {
+        nbCountTick(el, last, now);
+      }
+      last = now;
+    }).observe(el, { childList: true, characterData: true, subtree: true });
+  });
+})();
 
 // 0 軒のとき、「外すと増える条件」をボタンで出す（条件を 1 つ外した件数を実際に数えた上位 3 つ）
 function nbEmptySuggestHtml() {
@@ -5029,21 +5140,9 @@ function nbPlayReel(ev, btn, code) {
 function renderGrid(data) {
   var cntEl = document.getElementById('cnt');
   var provisional = nbZeroIsProvisional(data);
-  if (cntEl) {
-    // 件数（動きの計画 2 章 A6）: 数字が変わるときだけ、1 回薄く（100ms）してから書き換え、濃く戻す（150ms）。
-    // ページ送りなどで同じ数字のときは動かさない。続けて呼ばれたら、最後の数字だけを書く
-    var cntText = (provisional ? '--' : data.length.toLocaleString('ja-JP')) + ' 件';
-    clearTimeout(window.__nbCntTimer);
-    if (cntEl.textContent === cntText) {
-      cntEl.classList.remove('fading');
-    } else {
-      cntEl.classList.add('fading');
-      window.__nbCntTimer = setTimeout(function() {
-        cntEl.textContent = cntText;
-        cntEl.classList.remove('fading');
-      }, 100);
-    }
-  }
+  // #cnt は見えない（一覧が出ていないときは帯ごと隠れ、出ているときは見出しを隠している）ので動かさない。
+  // 件数の動きは見える件数（結果の帯の数字・絞り込みの丸・シートの「N軒を見る」）に付ける（nbCountTick・動きの計画 段階 3a の B-1）
+  if (cntEl) cntEl.textContent = (provisional ? '--' : data.length.toLocaleString('ja-JP')) + ' 件';
   var gridEl = document.getElementById('grid');
   var pagEl = document.getElementById('pagination');
   NB_OPEN_REEL = null;   // 再描画で開いていたカードのDOMは失われる
@@ -6752,20 +6851,21 @@ function toggleFav(name, e) {
     if (b.getAttribute('data-name') === name) {
       b.classList.toggle('faved', isFav);
       b.innerHTML = '<svg viewBox="0 0 24 24" fill="' + (isFav ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7.5-4.5-10-9.5C.5 7 3.5 3 8 3c2.5 0 3.5 1.5 4 2 .5-.5 1.5-2 4-2 4.5 0 7.5 4 6 8.5C19.5 16.5 12 21 12 21z"/></svg>';
-      if (isFav) nbPop(b);
+      nbPop(b, !isFav);
     }
   });
-  if (isFav) showToast('保存しました');
+  showToast(isFav ? '保存しました' : '保存を外しました');
 }
-// ♡ を保存したときの弾み（動きの計画 2 章 A2）。クラスを付け直すので、続けて押しても毎回 1 回だけ弾む。
-// 付け直すときだけレイアウトを読む（弾みの途中で押されたとき）。終わったら animationend で外す
-function nbPop(el) {
+// ♡ の弾み（動きの計画 2 章 A2・段階 3a の A-5）。保存したら大きく弾み（.is-pop）、外したら小さく縮んで戻る（.is-unpop）。
+// クラスを付け直すので、続けて押しても毎回 1 回だけ動く。付け直すときだけレイアウトを読む（動きの途中で押されたとき）。終わったら animationend で外す
+function nbPop(el, off) {
   if (!el) return;
-  if (el.classList.contains('is-pop')) { el.classList.remove('is-pop'); void el.offsetWidth; }
-  el.classList.add('is-pop');
+  var cls = off ? 'is-unpop' : 'is-pop';
+  if (el.classList.contains('is-pop') || el.classList.contains('is-unpop')) { el.classList.remove('is-pop', 'is-unpop'); void el.offsetWidth; }
+  el.classList.add(cls);
 }
 document.addEventListener('animationend', function(e) {
-  if (e.animationName === 'nbPop' && e.target && e.target.classList) e.target.classList.remove('is-pop');
+  if ((e.animationName === 'nbPop' || e.animationName === 'nbUnpop') && e.target && e.target.classList) e.target.classList.remove('is-pop', 'is-unpop');
 });
 function updateFavCount() {
   var c = document.getElementById('fav-count');
@@ -6780,7 +6880,7 @@ function toggleModalFav() {
   btn.classList.toggle('faved', isFav);
   btn.setAttribute('aria-pressed', isFav ? 'true' : 'false');
   btn.innerHTML = '<svg viewBox="0 0 24 24" fill="' + (isFav ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7.5-4.5-10-9.5C.5 7 3.5 3 8 3c2.5 0 3.5 1.5 4 2 .5-.5 1.5-2 4-2 4.5 0 7.5 4 6 8.5C19.5 16.5 12 21 12 21z"/></svg>';
-  if (isFav) nbPop(btn);
+  nbPop(btn, !isFav);
 }
 // ナビの「保存済み」: 保存した店だけの表示を入り切りする（I-23）。
 // 以前は保存した店だけを描画していたが、トップは検索・絞り込みが無いと一覧（#grid）を隠す作りのため
