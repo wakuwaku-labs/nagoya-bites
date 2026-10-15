@@ -67,7 +67,7 @@ const SOURCE = [
   'var NB_RESTORING = 0;',   // 「戻る」「進む」の読み直し中の印（NB-HISTORY 区画。ここでは常に 0）
   ['normalizeGenre', 'nbEscHtml', 'getFavs', 'nbSyncFavNav', 'applyFilters', 'nbTrackZeroResult', 'nbActiveConditions', 'nbSetBadge',
     'updateFilterUI', 'nbZeroIsProvisional', 'nbEmptySuggestHtml', 'nbDropCondition', 'clearAllFilters', 'showFavs',
-    'scrollToMagazine', 'scrollToActiveConditions', 'exitSearchMode', 'renderSkeletons', 'renderGrid', 'nbSheetQuery',
+    'nbScrollBehavior', 'scrollToMagazine', 'scrollToActiveConditions', 'exitSearchMode', 'renderSkeletons', 'renderGrid', 'nbSheetQuery',
     'nbSheetFooterState', 'nbBuildHash'].map(fnSource).join('\n'),
   handlerSource(SUGGEST_HANDLER),
   handlerSource(CHIP_HANDLER),
