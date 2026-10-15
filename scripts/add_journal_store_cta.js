@@ -22,6 +22,7 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
+const { nbMapUrl } = require('./lib/map_link');
 
 const ROOT = path.join(__dirname, '..');
 
@@ -44,11 +45,10 @@ function loadHpMap() {
   return _hpMap;
 }
 
-function gmapSearchUrl(name, area, access) {
-  const base = String(name || '').trim();
-  const addrMatch = String(access || '').match(/(?:愛知県)?(名古屋市[^\s（）()【】「」]+)/);
-  const q = addrMatch ? `${base} ${addrMatch[1]}` : `${base} ${String(area || '').split('/')[0] || '名古屋'}`;
-  return 'https://maps.google.com/search?q=' + encodeURIComponent(q);
+// 地図リンクはトップ・店舗ページと同じ公式の形（scripts/lib/map_link.js の nbMapUrl・MEO-005 の B2）。
+// データの店（rec）があればその住所と「地図確認」の欄を使い、無ければ店名とエリアで検索する
+function gmapSearchUrl(name, area, rec) {
+  return nbMapUrl(rec || { '店名': name, 'エリア': area });
 }
 
 // 各 store-card を非貪欲マッチで抽出する。内側の .store-meta の </div> は直後が
@@ -72,7 +72,7 @@ function processHtml(html) {
     const reserveHtml = rec
       ? `<a class="store-link store-link-reserve" href="https://www.hotpepper.jp/str${esc(rec['ホットペッパーID'])}/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_reserve',{store_name:'${jsEsc(name)}'})">この店を予約する</a>`
       : '';
-    const mapUrl = gmapSearchUrl(name, rec ? rec['エリア'] : '', rec ? rec['アクセス'] : '');
+    const mapUrl = gmapSearchUrl(name, '', rec);
     const mapHtml = `<a class="store-link store-link-map" href="${esc(mapUrl)}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{store_name:'${jsEsc(name)}',location:'journal_store_card'})">地図で確認する</a>`;
 
     const ctaRow = `          <div class="store-cta-row">${reserveHtml}${mapHtml}${existingLinkHtml}</div>`;

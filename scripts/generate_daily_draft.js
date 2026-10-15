@@ -58,6 +58,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { nbMapUrl } = require('./lib/map_link');
 const https = require('https');
 // ヒーロー写真の帰属判定は scripts/lib/hero_photo_gate.js に一元化（2026-08-17 の事故）
 const { judgeHero } = require('./lib/hero_photo_gate');
@@ -111,12 +112,10 @@ function loadHpMap() {
   return _hpMapCache;
 }
 
-// index.html の gmap() の簡易移植（アクセス文字列から住所を抽出→無ければ店名+エリアで検索）
-function gmapSearchUrl(name, area, access) {
-  const base = String(name || '').trim();
-  const addrMatch = String(access || '').match(/(?:愛知県)?(名古屋市[^\s（）()【】「」]+)/);
-  const q = addrMatch ? `${base} ${addrMatch[1]}` : `${base} ${String(area || '').split('/')[0] || '名古屋'}`;
-  return 'https://maps.google.com/search?q=' + encodeURIComponent(q);
+// 地図リンクはトップ・店舗ページと同じ公式の形（scripts/lib/map_link.js の nbMapUrl・MEO-005 の B2）。
+// データの店（rec）があればその住所と「地図確認」の欄を使い、無ければ店名とエリアで検索する
+function gmapSearchUrl(name, area, rec) {
+  return nbMapUrl(rec || { '店名': name, 'エリア': area });
 }
 
 function toDateJa(dateStr) {
@@ -157,7 +156,7 @@ function buildStores(stores) {
     const reserveHtml = rec
       ? `<a class="store-link store-link-reserve" href="https://www.hotpepper.jp/str${esc(rec['ホットペッパーID'])}/" target="_blank" rel="noopener noreferrer" onclick="(window.nbReserveExit||trackEvent)('cta_reserve',{store_name:'${jsEsc(s.name)}',store_id:'${esc(rec['ホットペッパーID'])}',link_domain:'www.hotpepper.jp',location:'journal'})">この店を予約する</a>`
       : '';
-    const mapUrl = gmapSearchUrl(s.name, rec ? (rec['エリア'] || s.area) : s.area, rec ? rec['アクセス'] : '');
+    const mapUrl = gmapSearchUrl(s.name, s.area, rec);
     const mapHtml = s.name
       ? `<a class="store-link store-link-map" href="${esc(mapUrl)}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{store_name:'${jsEsc(s.name)}',location:'journal_store_card'})">地図で確認する</a>`
       : '';

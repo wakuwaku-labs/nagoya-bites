@@ -28,6 +28,11 @@
         "sim-ge-0.6",
         "branch-conflict"
       ]
+    },
+    "map": {
+      "_doc": "地図リンクに付ける place_id（scripts/lib/map_link.js の nbMapUrl・build.js が「地図確認」の欄を書く）。place_id が別の店を指していると、店名で検索しても Google はその店を開くので、確認済みの紐付けだけに付ける（計画書 4.2 節の B2・MEO-005）。付けない店も、地図リンクそのものは店名＋住所の検索で出す。",
+      "show": true,
+      "allowReviewBands": []
     }
   },
   "a2Sample": {

@@ -6,7 +6,7 @@ status: in_progress
 
 ## 目的
 - 計画書 `docs/meo-plan-2026-10.md`（改訂版）をオーナーが承認した（2026-10-15「計画（改訂版）の返事: 1=A / 2=A（先に止める） / 3=A（標本で 1 割以上が別の店だった帯は、確かめが済むまで出さない）」）。計画 9 章の順で実装する
-- 順番: B1 の電話の部分（済）→ A1 状態を数える（済）→ A2 帯ごとの標本 150 組（済）→ B1 の評価・口コミ信頼度（判断 3・作業中）→ B3 スイッチと夜間 QA → B2 地図リンク → C1 計測。A3 は済み
+- 順番: B1 の電話の部分（済）→ A1 状態を数える（済）→ A2 帯ごとの標本 150 組（済）→ B1 の評価・口コミ信頼度（済）→ B3 スイッチと夜間 QA（済）→ B2 地図リンク（作業中）→ C1 計測。A3 は済み
 
 ## 完了条件
 - 電話: 不一致と一致率 0.3 未満の帯の店に電話ボタンが出ない（本番で実例 5 店を確かめる）。店数・店舗ページ数は変わらない
@@ -15,37 +15,19 @@ status: in_progress
 - 各段階は PR で 1 本ずつ入れ、ビルドの後に本番で確かめる
 
 ## できていること
-- PR #602（マージ済み 2026-10-15 11:17Z）: `scripts/lib/place_binding.js`・`data/place_binding_policy.json`・電話の関門・ADR 0046・計画書・`docs/seo-traffic-inventory-2026-10.md`（A3）。電話ボタンが消えるのは 297 店（不一致 32・要確認の低い帯 265）
-- マージ後の本番ビルド run 38726252524 は npm test で失敗（公開されず）。原因は PR #602 と無関係: HotPepper が店名を「天ぷらとおでん　海鮮　…　天串（TENGUSHI）錦店」→「天串 TENGUSHI 錦店」（J004661097）に変え、ジャーナル 2026-09-14 の本文写真の持ち主が店名で合わなくなった
-- PR #603（マージ済み 11:38Z）: hero_photo_gate.js が写真の持ち主を店名に加えてホットペッパーID（店カードの data-store-id）でも照らす。CI と同じ改名データで再現→直った後は通ることを確かめた。npm test 1,735 件通過。本番ビルド run 38728803531 が実行中（バックグラウンド bqw0119l7 で完了待ち）
-- コミット 8ef4af5c84: reviewed の記録 203 件（標本 150＋住所が空 30＋既存）
-- ブランチ `wakuwaku-labs/meo-a1-states`（main ca5e59f503 から）:
-  - コミット 752bc15a32: `audit_places_binding.js --states [--json]`（状態ごとの数・機能ごとに使う状態・取得日 90 日超の評価）と `--sample N --seed S`（帯ごとに決まった種で選ぶ）＋テスト 2 件
-  - 未コミット: `data/places_binding_reviewed.json` に標本 150 組の判定を書いた（sample=A2-2026-10-15・evidence・storeUrl・googleUrl・checkedUrls）。same→keep（住所の裏付けがあるときだけ）／different→reject／unknown と裏付けなしの same→undecided。`_doc` を keep 対応に書き換えた
-- A2 の結果（seed 20261015・帯ごとに 30 組）:
-  | 帯 | 母数 | 同じ | 別の店 | 決められない | 判断 3 |
-  |---|---|---|---|---|---|
-  | 一致率 0.3 未満（sim-0＋sim-lt-0.3） | 310 | 22 | 3 | 5 | 出さない（3/30＝1 割） |
-  | 0.3〜0.6 | 700 | 29 | 1 | 0 | 出す |
-  | 0.6 以上 | 383 | 28 | 2 | 0 | 出す（別の店の 2 組は掲載の住所が空） |
-  | 支店名の食い違い | 33 | 26 | 1 | 3 | 出す |
-  | 店名が合う（比べ用） | 3,081 | 28 | 0 | 2 | — |
-  - 追加の確かめ: 一致率 0.3 以上の要確認で掲載の住所が空の店（203 店）から 30 組（seed 20261016）→ 同じ 28・別 0・決められない 2。細かい帯は作らない
-  - 結果の元: scratchpad の `a2/results/*.json`・`a2/band_*.json`・`a2/sample.json`・`a2/band_no-address.json`（追加分の結果はまだファイルにしていない＝会話の通知の中）
-
-- B1 の評価・口コミ信頼度（未コミット・作業中）:
-  - `place_binding.js` に `applyRatingGate`（不一致・許さない帯の店の Google評価・口コミ数を消す、口コミ信頼度を止める店の集合を返す。紐付けなしは触らない。スイッチは全店）
-  - policy に `rating`・`trust`（許す帯は sim-0.3-0.6・sim-ge-0.6・branch-conflict）と `a2Sample`（帯ごとの結果）
-  - build.js: 電話の直後に applyRatingGate → placesRejectedKeys に足す／口コミ信頼度のループで止めた店は reviewTrust を付けない／crosscheck.json に書かない
-  - 新しい `scripts/sync_feature_scores.js`（特集の店カードの★を、データに評価が無い店から外す・store-card と手書きの store の外枠・build.yml で refresh_feature_rosters の直後）
-  - テスト: place_binding 12 件・sync_feature_scores 4 件 通過
-  - 影響（実データ）: 評価を消す 404 店（不一致 129・一致率 0.3 未満 275）、口コミ信頼度の札が消える 401 店、特集の★ 20 件（15 本）
+- PR #602（電話の関門）・#603（写真の持ち主をホットペッパーIDでも照らす・本番停止の直し）・#604（評価・口コミ信頼度の関門＝判断 3=A・状態ごとの数・標本の記録・特集の★を外す sync_feature_scores.js）をマージ済み
+- 電話の本番確認（run 38728803531 の後）: 止めた店 297（不一致 33・一致率 0.3 未満 264）、audit_phone_links の古い欄 0・未反映 0、実例 5 店で店舗ページとデータに電話ボタンなし（とんかつ朱寿はあり）。店数 5,005→5,002 はホットペッパーの掲載の変化（3 店・閉店リストではない）
+- 起票: ISSUE-191＝P-473（紐付けの無い店の評価 30 店。26 はスプレッドシートの列・4 は手動の店）、ISSUE-192＝P-474（会席の特集の候補 9<10。入れ替えは 9 店で組み「N選」は sync_feature_counts が合わせる）。P-467（MEO-003）Done・P-468（MEO-004）In Progress。data/linear_sync_state.json に対応を足した
+- ブランチ wakuwaku-labs/meo-b3-switch（main a1eb3b2895 から・上流なし・push 済みの 1 コミット）:
+  - B3 済（コミット済み）: place_binding.js に gateFor（関門の決め方を 1 本に）、audit_places_binding.js --states に violations・noBinding・switches と --check、nightly_qa.js に soft の place-binding-states、ADR 0046 の 8、CLAUDE.md、backlog MEO-005 を in_progress。npm test 1,745 通過。全部のスイッチを切ると電話・評価・信頼度が全店で消えることを実データで確かめた
+  - B2 作業中（未コミット）: 新しい scripts/lib/map_link.js（NB-MAP-CORE: cleanArea・cleanStoreName を index.html から移した＋nbMapAddress・nbMapUrl＝api=1&query=店名 住所［&query_place_id は「地図確認」の欄がある店だけ］、annotateMapLinks、--apply/--check）。index.html は NB-MAP-EMBED に置き換え済み・gmap は nbMapUrl を呼ぶ。gen-store-pages.js は nbMapUrl(s)（属性は escapeHtml）
 ## 次にやること
-1. ADR 0046 に判断 3 の表を追記・計画書に A2 の表・CLAUDE.md の place_binding の行と sync_feature_scores の行
-2. npm test・audit_design_system・audit_inline_js_syntax → コミット → PR → run 38728803531 の成功を確かめてからマージ → 本番で確かめる（評価が消えた店の店舗ページ・トップのカード・特集の★・ハブ）
-3. ジャーナルの店カードの★（日付つきの記事）は触らない方針。件数だけ最終報告に書く
-5. 本番の電話の確かめ（run 38726252524 の後）: `node scripts/audit_phone_links.js`、実例 5 店（屋上酒場ホシノシタ・bindi ビンディー・BAR EVE イブ・CCC シーシーシー・木村屋 錦）の店舗ページとトップのクイックビュー、店数と店舗ページ数
-6. B3（夜間 QA に状態の数・スイッチ）→ B2 → C1。backlog・Linear（P-467 MEO-003 を進める）を更新
+1. B2 の残り: policy に features.map（show:true・allowReviewBands: []＝確認済みだけ）／gateFor の「紐付けなしは止めない」を rating・trust だけにする（今は phone 以外すべて）／build.js で電話の直後に annotateMapLinks／states() に map を足す／tests/map_link.test.js（符号化 & # 空白 全角・place_id の有無・住所の優先順・index.html の埋め込みのずれ）／ジャーナルの生成器 2 本（generate_daily_draft.js:119・add_journal_store_cta.js:51）も nbMapUrl に／CLAUDE.md・ADR・計画書／npm test・audit_design_system・inline_js
+2. B3+B2 を 1 本の PR にしてもよい（B3 は push 済み）。PR #604 の本番ビルド run 38731812421 の成功（バックグラウンド buc64gl0g が待っている）を確かめてからマージ
+3. PR #604 の本番確認: audit_places_binding --states --check が 0、評価が消えた店（ホシノシタ J004633161 など）の店舗ページ・トップのカードで★と札なし、比べ用 とんかつ朱寿 J004558109 はあり、特集の★（sync_feature_scores --check が 0）、画面写し 390px と 1280px、audit_page_weight
+4. B2 の本番確認: 実例 5 店で地図リンクが正しい店を開く（place_id つきと無し）
+5. C1（MEO-006）: 予約・電話・地図を別々に毎日数える・地図ボタンの店名の欠け・「現在地」の押下（位置は送らない）
+6. 最終報告に入れる: 297 店の電話停止・404 店の評価停止（正しい店も含む）・強制 push 1 回・30 店（P-473）・取得日 90 日超 3,880 店・ジャーナルの★ 5 件は書き換えない・会席の特集の訂正（前に「飛ばして今の掲載を残す」と書いたのは誤り）・PR #603 の本番停止の直し・急な減りの閾値は 10-29 以降
 
 ## 試したが駄目だったこと
 - `orca linear save-issue` の作成時の `--parent-id` は効かない（作成後に付け直す）。書き込みは linear_write_unconfirmed でも反映されていることが多い。必ず読み戻す
@@ -61,7 +43,7 @@ status: in_progress
 - 不一致・要確認の店で、ボタンは無効にせず要素ごと出さない（読み上げ）
 - keep を書くのは住所の裏付けがあるときだけ（掲載の住所が空で店舗ページも見ていない same は undecided）
 - このセッションで自分の作業ブランチを一度 `git push -f` した（ルール違反）。以後は merge で取り込み、強制 push しない。最終報告で触れる
-- placeId が無いのに評価が出ている店が 30 店ある（出どころ未調査）。最終報告で触れる
+- placeId が無いのに評価が出ている店が 30 店ある（P-473 で扱う）。最終報告で触れる
 
 ## 関連ファイル
 - docs/meo-plan-2026-10.md（計画書）・docs/decisions/0046-place-binding-states.md・scripts/lib/place_binding.js・data/place_binding_policy.json・data/places_binding_reviewed.json・scripts/audit_places_binding.js・scripts/lib/phone_link.js・build.js（1411〜1452 行 Places の反映、1547〜1562 行 電話、1600〜1630 行 口コミ信頼度）
