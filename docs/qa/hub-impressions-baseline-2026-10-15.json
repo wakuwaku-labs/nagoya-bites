@@ -1,15 +1,22 @@
 {
- "_note": "エリア×ジャンル×条件のハブの基線（P-121・SEO-125）。表示とクリックは data/gsc_metrics.json の hubPages（GSC から表示のあった全ページ 3,300 件を取った中のハブ。上限 25,000 件に届いていないので、載っていないハブは期間中の表示が 0）。公開日は data/area_genre_pages_manifest.json の firstPublished。比べるときは同じ期間の長さ（28日）で取り直す。",
+ "_note": "エリア×ジャンル×条件のハブの基線（SEO-125）。表示とクリックは data/gsc_metrics.json の hubPages（GSC から表示のあった全ページを取った中のハブ。載っていないハブは期間中の表示が 0）。公開日は data/area_genre_pages_manifest.json の firstPublished。比べるときは同じ期間の長さ（28日）で取り直す。",
  "dateRange": {
   "startDate": "2026-09-16",
   "endDate": "2026-10-13"
  },
- "generatedAt": "2026-10-14T16:16:48.675Z",
+ "generatedAt": "2026-10-15T00:14:01.401Z",
+ "gscGeneratedAt": "2026-10-14T21:19:19.865Z",
  "summaryByType": {
+  "area": {
+   "pages": 10,
+   "withImpressions": 0,
+   "impressions": 0,
+   "clicks": 0
+  },
   "genre": {
    "pages": 97,
-   "withImpressions": 13,
-   "impressions": 49,
+   "withImpressions": 14,
+   "impressions": 51,
    "clicks": 0
   },
   "condition": {
@@ -17,12 +24,6 @@
    "withImpressions": 17,
    "impressions": 44,
    "clicks": 1
-  },
-  "area": {
-   "pages": 10,
-   "withImpressions": 0,
-   "impressions": 0,
-   "clicks": 0
   }
  },
  "hubsNotInManifest": [],
@@ -180,6 +181,14 @@
    "position": 10
   },
   {
+   "path": "stores/area/yabacho-osu/izakaya.html",
+   "type": "genre",
+   "firstPublished": "2026-09-14",
+   "impressions": 2,
+   "clicks": 0,
+   "position": 3.5
+  },
+  {
    "path": "stores/area/kanayama/izakaya-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
@@ -272,5952 +281,5201 @@
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/bar-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/bar-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/bar-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/bar-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/bar.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/cafe-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/cafe-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/cafe-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/cafe-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/cafe-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/cafe-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/cafe.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/chinese-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/chinese-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/chinese-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/chinese-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/chinese-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/chinese-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/chinese-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/chinese.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/dining-bar-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/dining-bar-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/dining-bar-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/dining-bar-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/dining-bar-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/dining-bar-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/dining-bar.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/index.html",
    "type": "area",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/italian-french-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/italian-french-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/italian-french-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-24",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/italian-french-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/italian-french-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/italian-french-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/italian-french-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/italian-french-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/italian-french-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/italian-french.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/izakaya-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/izakaya-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/izakaya-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/izakaya-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/izakaya-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/izakaya-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/izakaya-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/izakaya-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/izakaya-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/izakaya-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/izakaya-tabehodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/izakaya-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/korean-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/korean.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/other-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/other.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/ramen-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/ramen.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/washoku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/washoku-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/washoku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/washoku-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/washoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/washoku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/washoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/washoku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/washoku-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/washoku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/washoku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/washoku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yakiniku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yakiniku-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yakiniku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yakiniku-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yakiniku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yakiniku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yakiniku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yakiniku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yakiniku-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yakiniku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yakiniku-tabehodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yakiniku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yakiniku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yoshoku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yoshoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yoshoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yoshoku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/chikusa-imaike/yoshoku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/cafe-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/cafe-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/cafe-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/cafe-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/cafe-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/cafe-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/dining-bar-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/dining-bar-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/dining-bar-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/dining-bar.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/index.html",
    "type": "area",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/italian-french-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-24",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/italian-french-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/italian-french-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/italian-french-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/italian-french-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/italian-french-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/italian-french.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/izakaya-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/izakaya-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/izakaya-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/izakaya-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/izakaya-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/izakaya-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/izakaya-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/izakaya-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/izakaya-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/izakaya-tabehodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/izakaya-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/izakaya.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/washoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/washoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/washoku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/washoku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/washoku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/yakiniku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/yakiniku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/yakiniku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/yakiniku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/yakiniku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/yakiniku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/yakiniku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/yoshoku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/yoshoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/yoshoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/yoshoku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/yoshoku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kakuozan/yoshoku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/chinese-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/chinese-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/chinese.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/dining-bar-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/dining-bar-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/dining-bar.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/index.html",
    "type": "area",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/italian-french-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/italian-french.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/izakaya-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/izakaya-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/izakaya-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/izakaya-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/izakaya-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/izakaya-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/izakaya-tabehodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/izakaya-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/washoku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/washoku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/washoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/washoku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-10-03",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/washoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/washoku-parking.html",
    "type": "condition",
    "firstPublished": "2026-10-03",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/washoku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/washoku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/washoku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/yakiniku-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/yakiniku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/yakiniku-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/yakiniku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/yakiniku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/yakiniku-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/yakiniku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/yakiniku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/kanayama/yakiniku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/asian-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/asian-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/asian-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/asian-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/asian-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/asian-parking.html",
    "type": "condition",
    "firstPublished": "2026-10-09",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/asian-sunday.html",
    "type": "condition",
    "firstPublished": "2026-10-09",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/asian-tabehodai.html",
    "type": "condition",
    "firstPublished": "2026-10-09",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/asian.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/bar-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/bar-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/bar.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/cafe-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/cafe-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/cafe-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-10-09",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/cafe-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/cafe-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/cafe-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/cafe-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/cafe-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-16",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/cafe-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/cafe-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/cafe.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/chinese-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/chinese-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/chinese-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/chinese-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/chinese-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/chinese-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/chinese-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/chinese-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/chinese.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/dining-bar-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/dining-bar-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/dining-bar-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/dining-bar-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/dining-bar-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/dining-bar-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/dining-bar-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/dining-bar-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/dining-bar-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/dining-bar-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/dining-bar-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/dining-bar-tabehodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/dining-bar-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/dining-bar.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/index.html",
    "type": "area",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/italian-french-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-10-09",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/italian-french-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/italian-french-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/italian-french-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/italian-french-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/italian-french-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/italian-french-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/italian-french-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/italian-french-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/italian-french.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/izakaya-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/izakaya-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/izakaya-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/izakaya-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/izakaya-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/izakaya-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/izakaya-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/izakaya-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/izakaya-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/izakaya-tabehodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/izakaya-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/karaoke-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/karaoke-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/karaoke-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/karaoke-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/karaoke-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/karaoke-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/karaoke.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/korean-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/korean-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/korean-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/korean.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/ramen-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/ramen-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/ramen-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/ramen-parking.html",
    "type": "condition",
    "firstPublished": "2026-10-09",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/ramen-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/ramen.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/sosaku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-10-09",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/sosaku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/washoku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/washoku-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/washoku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/washoku-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/washoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/washoku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/washoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/washoku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/washoku-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-10-09",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/washoku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/washoku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yakiniku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yakiniku-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yakiniku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yakiniku-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yakiniku-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yakiniku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yakiniku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yakiniku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yakiniku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yakiniku-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yakiniku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yakiniku-tabehodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yakiniku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yoshoku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yoshoku-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yoshoku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yoshoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yoshoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yoshoku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yoshoku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yoshoku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/meieki/yoshoku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/asian-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/asian-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/asian-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/asian-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/asian.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/cafe-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/cafe-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/cafe-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/cafe-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/cafe-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/cafe.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/chinese-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/chinese-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/chinese-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/chinese-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/chinese-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/chinese-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/chinese-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/chinese.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/dining-bar-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/dining-bar-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/dining-bar.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/index.html",
    "type": "area",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/italian-french-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/italian-french-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/italian-french-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/italian-french-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/italian-french-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/italian-french-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/italian-french-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/italian-french-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/italian-french.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/izakaya-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/izakaya-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/izakaya-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/izakaya-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/izakaya-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/izakaya-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/izakaya-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/izakaya-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/izakaya-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/izakaya-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/izakaya.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/ramen-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/ramen-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/ramen-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/ramen-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/ramen.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/washoku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/washoku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/washoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/washoku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/washoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/washoku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/washoku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/washoku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/washoku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yakiniku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yakiniku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yakiniku-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yakiniku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yakiniku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yakiniku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yakiniku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yakiniku-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yakiniku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yakiniku-tabehodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yakiniku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yakiniku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yoshoku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yoshoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yoshoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yoshoku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yoshoku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/midori-tempaku/yoshoku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/cafe-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/cafe-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/cafe-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/cafe-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/cafe-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/cafe.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/chinese-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/chinese-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/chinese-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/chinese-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/chinese-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/chinese-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/chinese-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/chinese.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/index.html",
    "type": "area",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/izakaya-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/izakaya-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/izakaya-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/izakaya-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/izakaya-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/izakaya-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/izakaya-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/izakaya-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/izakaya-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/ramen-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/ramen-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/ramen-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/ramen-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/ramen.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/washoku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/washoku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/washoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/washoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/washoku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/washoku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/washoku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/yakiniku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/yakiniku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/yakiniku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/yakiniku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/yakiniku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/yakiniku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/yakiniku-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/yakiniku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/yakiniku-tabehodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nakagawa-minato/yakiniku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/asian-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/asian-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/asian-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/asian-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/asian-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/asian.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/bar-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/bar-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/bar-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/bar-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/bar-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/bar-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/bar-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/bar-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/bar-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/bar.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/cafe-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/cafe-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/cafe-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/cafe-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/cafe-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/cafe-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/cafe-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/cafe.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/chinese-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/chinese-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/chinese-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/chinese-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/chinese-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/chinese-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/chinese-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/chinese-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/chinese-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/chinese.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/dining-bar-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/dining-bar-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/dining-bar-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/dining-bar-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/dining-bar-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/dining-bar-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/dining-bar-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/dining-bar-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/dining-bar-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/dining-bar-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/dining-bar.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/index.html",
    "type": "area",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/italian-french-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/italian-french-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/italian-french-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/italian-french-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/italian-french-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/italian-french-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/italian-french-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/italian-french-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/italian-french-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/italian-french-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/italian-french-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/italian-french.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/izakaya-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/izakaya-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/izakaya-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/izakaya-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/izakaya-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/izakaya-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/izakaya-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/izakaya-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/izakaya-tabehodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/izakaya-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/karaoke-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/karaoke.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/korean-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/korean-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/korean.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/sosaku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/washoku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/washoku-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/washoku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/washoku-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/washoku-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/washoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/washoku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/washoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/washoku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/washoku-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/washoku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/washoku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/yakiniku-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/yakiniku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/yakiniku-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/yakiniku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/yakiniku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/yakiniku-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/yakiniku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/yakiniku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/yoshoku-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/yoshoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/yoshoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/yoshoku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/nishiki-fushimi/yoshoku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/bar-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/bar-group-30.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/bar-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/bar-late-night.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/bar-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/bar-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/bar-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/bar-sunday.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/bar.html",
    "type": "genre",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/cafe-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/cafe-group-30.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/cafe-lunch.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/cafe-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/cafe-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/cafe-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/cafe-sunday.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/cafe-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/cafe.html",
    "type": "genre",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/chinese-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/chinese-group-30.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/chinese-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/chinese-lunch.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/chinese-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/chinese-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/chinese-sunday.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/chinese.html",
    "type": "genre",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/dining-bar-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/dining-bar-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/dining-bar-group-30.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/dining-bar-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/dining-bar-late-night.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/dining-bar-lunch.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/dining-bar-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/dining-bar-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/dining-bar-parking.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/dining-bar-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/dining-bar-sunday.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/dining-bar-tabehodai.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/dining-bar-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/dining-bar.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/index.html",
    "type": "area",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/italian-french-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/italian-french-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/italian-french-group-30.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/italian-french-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/italian-french-lunch.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/italian-french-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/italian-french-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/italian-french-parking.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/italian-french-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/italian-french-sunday.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/italian-french-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/italian-french.html",
    "type": "genre",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/izakaya-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/izakaya-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/izakaya-group-30.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/izakaya-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/izakaya-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/izakaya-lunch.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/izakaya-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/izakaya-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/izakaya-parking.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/izakaya-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/izakaya-sunday.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/izakaya-tabehodai.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/izakaya-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/karaoke-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/karaoke-late-night.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/karaoke-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/karaoke-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/karaoke.html",
    "type": "genre",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/korean-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/korean.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/sosaku.html",
    "type": "genre",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/washoku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/washoku-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/washoku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/washoku-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/washoku-late-night.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/washoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/washoku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/washoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/washoku-parking.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/washoku-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/washoku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/washoku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/washoku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/yakiniku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/yakiniku-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/yakiniku-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/yakiniku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/yoshoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/yoshoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/sakae/yoshoku.html",
    "type": "genre",
    "firstPublished": "2026-10-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/cafe-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/cafe-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/cafe-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/cafe-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/cafe-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/cafe-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/cafe.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/index.html",
    "type": "area",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/izakaya-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/izakaya-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/izakaya-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/izakaya-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/izakaya-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/izakaya-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/izakaya-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/izakaya-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/izakaya-tabehodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/izakaya-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/izakaya.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/washoku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/washoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/washoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/washoku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/washoku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/washoku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/washoku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/yakiniku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/yakiniku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/yakiniku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/tsurumai-yagoto/yakiniku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/asian-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/asian-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/asian.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/bar-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/bar-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/bar-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/bar-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/bar-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/bar-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/bar-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/bar-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/bar.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/cafe-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/cafe-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/cafe-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/cafe-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/cafe-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/cafe-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/cafe-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/cafe-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/cafe-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/cafe-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/cafe.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/chinese-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/chinese-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/chinese-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/chinese-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/chinese-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/chinese-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/chinese-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/chinese-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/chinese-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/chinese.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/dining-bar-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/dining-bar-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/dining-bar-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/dining-bar-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/dining-bar-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/dining-bar-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/dining-bar-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/dining-bar-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/dining-bar-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/dining-bar-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/dining-bar-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/dining-bar-tabehodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/dining-bar-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/index.html",
    "type": "area",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/italian-french-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/italian-french-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/italian-french-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/italian-french-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/italian-french-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/italian-french-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/italian-french-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/italian-french-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/italian-french-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/italian-french-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/izakaya-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/izakaya-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/izakaya-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/izakaya-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/izakaya-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/izakaya-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/izakaya-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/izakaya-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/izakaya-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/izakaya-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/izakaya-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/izakaya-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
-  },
-  {
-   "path": "stores/area/yabacho-osu/izakaya.html",
-   "type": "genre",
-   "firstPublished": "2026-09-14",
-   "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/karaoke-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/karaoke-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/karaoke-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/karaoke-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/karaoke-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/karaoke-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/karaoke.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/korean-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/korean-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/korean-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/korean.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/sosaku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/sosaku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/washoku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/washoku-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/washoku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/washoku-koshitsu.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/washoku-late-night.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/washoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/washoku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/washoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/washoku-parking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/washoku-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/washoku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/washoku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/washoku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/yakiniku-budget-5000-plus.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/yakiniku-group-30.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/yakiniku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/yakiniku-nomihodai.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/yakiniku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/yakiniku-smoking-ok.html",
    "type": "condition",
    "firstPublished": "2026-09-24",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/yakiniku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/yakiniku-walk-3.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/yakiniku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/yoshoku-budget-3000.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/yoshoku-lunch.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/yoshoku-non-smoking.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/yoshoku-sunday.html",
    "type": "condition",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   },
   {
    "path": "stores/area/yabacho-osu/yoshoku.html",
    "type": "genre",
    "firstPublished": "2026-09-14",
    "impressions": 0,
-   "clicks": 0,
-   "position": null
+   "clicks": 0
   }
  ]
 }
