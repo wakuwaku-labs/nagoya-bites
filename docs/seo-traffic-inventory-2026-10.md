@@ -3,7 +3,7 @@
 - 取得日: 2026-10-15（`data/gsc_metrics.json` の `generatedAt` は 2026-10-15 00:22 UTC）
 - 期間: 2026-09-17 〜 2026-10-14（28 日）。全体は表示 38,716・クリック 722・CTR 1.86%・平均 11.2 位。
 - 元データは Search Console の実測だけ。外部 API は呼んでいない。新しい分類の辞書は作らず、`scripts/gsc_query_intent.js`（`data/journal_seo_keywords.json` と掲載店名 9,077 件）をそのまま使った。
-- 背景は `docs/meo-plan-2026-10.md` の 5.2 節の問 2・8.3 節（この文書を書いた作業ブランチには無く、git の履歴 `9bfb85d011` にある）。
+- 背景は `docs/meo-plan-2026-10.md` の 5.2 節の問 2・8.3 節。
 
 ## 結論
 
