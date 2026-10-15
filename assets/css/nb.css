@@ -8,12 +8,19 @@
 
 :root{
   /* ── 動き（モーション）。正本: data/design_system.json の motion。上限 300ms、動かすのは transform・opacity と色だけ ── */
-  --dur-press:100ms;                              /* 押した瞬間の反応 */
+  --dur-instant:50ms;                             /* 押し込む見た目（段階 3a）。カードは押し込みをこの分だけ遅らせる */
+  --dur-press:100ms;                              /* 小さい状態の変化（段階 2 の押した瞬間。段階 3a から押し込みは --dur-instant） */
   --dur-fast:150ms;                               /* 色・枠・影の変化、消えるとき */
   --dur-base:200ms;                               /* シート・クイックビュー・知らせが出るとき */
   --dur-slow:250ms;                               /* 画面の端から出る大きな面（ドロワー） */
+  --dur-emph:300ms;                               /* 状態が変わった 1 回の弾み（♡ を保存したとき）。上限ちょうど */
   --ease-out:cubic-bezier(.2,0,0,1);              /* 出るとき・状態が変わるとき */
   --ease-in:cubic-bezier(.4,0,1,1);               /* 消えるとき */
+  /* 段階 3b（判断の記録 0050）: 開閉する面の出入り・着いた場所の光 */
+  --dur-sheet:300ms;                              /* スマホで下から出る面（絞り込みシート・クイックビュー）が出るとき */
+  --ease-emph-out:cubic-bezier(.05,.7,.1,1);      /* 大きな面が出るとき（強く減速して止まる） */
+  --ease-emph-in:cubic-bezier(.3,0,.8,.15);       /* 大きな面が戻るとき（ゆっくり始まり、速く去る） */
+  --dur-landed:700ms;                             /* 着いた場所の光。色だけの動きにしか使わない（300ms の上限の例外） */
   /* ── 型スケール（床 12px。ユーザーが読む文字は --fs-xs 以上） ── */
   --fs-2xs:.75rem;                                /* 12px 写真クレジット・法的表示 */
   --fs-xs:.8125rem;                               /* 13px メタ・kicker・キャプション */
@@ -117,7 +124,19 @@ img{max-width:100%;display:block;}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.001ms!important;transition-delay:0s!important;scroll-behavior:auto!important;}
+}
+
+/* ── 段階 3b（判断の記録 0050）──
+   着いた場所の光（C-4）: 飛んだ先を色だけで 1 回ほのかに光らせて消す。物は動かさない（位置・大きさは変えない）。
+   付け外しは index.html の nbLand。色だけなので 300ms の上限の例外（data/design_system.json の motion.colorOnlyException）。 */
+.nb-landed{outline:2px solid transparent;outline-offset:-2px;animation:nbLanded var(--dur-landed) var(--ease-in) 1;}
+@keyframes nbLanded{from{background-color:rgba(184,84,31,.18);outline-color:rgba(184,84,31,.7);}}
+/* 動きを減らす設定: 光は動かさず輪郭だけを出す（nbLand が 1 秒で外す）。View Transitions も止める
+   （上の一括規則は *・::before・::after だけで ::view-transition-* に効かないため） */
+@media(prefers-reduced-motion:reduce){
+  .nb-landed{animation:none;outline-color:rgba(184,84,31,.7);}
+  ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important;}
 }
 
 /* ── サイト共通クローム: ヘッダー / ナビ / ハンバーガー / パンくず / フッター ── */
@@ -378,10 +397,14 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 @media(hover:hover){.store-link-reserve:hover,.store-link[href*="hotpepper"]:hover,.link-btn.hp:hover,.topcta .store-link:not([href*="hotpepper"]):hover{background:var(--gold2);transform:translateY(-1px);}}
 .store-link-map{background:#fff;color:var(--gold);border:1px solid var(--gold);}
 .store-link-map:hover{background:rgba(122,92,16,.08);}
-/* 押した瞬間（動きの計画 2 章 A1）: 色を濃くし、わずかに沈む。押す 100ms・離す 150ms。
-   色は内側の影で濃くする（filter は動かさない）。「動きを減らす」設定では時間が 0 になり、色の変化だけが残る */
-.nb-btn,.store-link,.link-btn,.nb-bar-btn{transition-property:color,background-color,border-color,box-shadow,transform,opacity;transition-duration:var(--dur-fast);transition-timing-function:var(--ease-out);}
-.nb-btn:active:not(:disabled),.store-link:active:not(:disabled),.link-btn:active:not(:disabled),.nb-bar-btn:active:not(:disabled){transform:scale(.98);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.12);transition-duration:var(--dur-press);}
+/* 押した見た目（動きの計画 2 章 A1・段階 3a の A-2・A-3）: 押した物が沈み、色が濃くなる。押し込み 50ms（--dur-instant）・戻り 200ms（--dur-base）。
+   色は内側の影で濃くする（filter は動かさない・暗さ .16）。縮みはボタン .96・小さい部品 .94。
+   iPhone の Safari は touch のリスナーが無いと :active を出さないので、全ページの共通の <script>（scripts/lib/site_chrome.js の chromeScript）と
+   トップの頭の <script> で document に空の touchstart（passive）を付けている。自前で押した見た目を出すので、ブラウザが付ける押した光（Android の Chrome では青い膜）は消す。「動きを減らす」設定では時間が 0 になり、色の変化だけが残る */
+.nb-btn,.store-link,.link-btn,.nb-bar-btn,.related-link,.nb-conclusion-hubs a,.hamburger{transition-property:color,background-color,border-color,box-shadow,transform,opacity;transition-duration:var(--dur-base);transition-timing-function:var(--ease-out);-webkit-tap-highlight-color:transparent;}
+.nb-btn:active:not(:disabled),.store-link:active:not(:disabled),.link-btn:active:not(:disabled),.nb-bar-btn:active:not(:disabled),.related-link:active,.nb-conclusion-hubs a:active{transform:scale(.96);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16);transition-duration:var(--dur-instant);}
+.hamburger{border-radius:50%;}
+.hamburger:active{transform:scale(.94);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16);transition-duration:var(--dur-instant);}
 /* 待ちの印（動きの計画 2 章 A7）: 押してから 1 秒を超えた操作（電話番号の確認・現在地）にだけ、ボタンの先頭のアイコンを
    その場で回る輪に変える。アイコンの箱の大きさのまま描くので、ボタンの幅は変わらない（横の検索欄が縮まない・レイアウトがずれない）。
    付け外しは JS（.nb-wait-long）。止まらない繰り返しはこの印とスケルトンだけ（data/design_system.json の motion の例外）。

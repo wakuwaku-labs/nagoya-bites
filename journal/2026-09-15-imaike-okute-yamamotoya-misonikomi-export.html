@@ -277,6 +277,7 @@ window.closeNav = window.closeNav || function(){
   if(btn)btn.setAttribute('aria-expanded','false');
 };
 document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+document.addEventListener('touchstart',function(){},{passive:true});
 </script>
 <!-- NB-CHROME:SCRIPT:END -->
 </body>

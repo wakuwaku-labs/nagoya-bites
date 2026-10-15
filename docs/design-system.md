@@ -346,18 +346,24 @@ node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 
 
 | トークン | 値 | 使う所 |
 |---|---|---|
-| `--dur-press` | 100ms | 押した瞬間の反応 |
-| `--dur-fast` | 150ms | 色・枠・影の変化、消えるとき |
-| `--dur-base` | 200ms | シート・クイックビュー・知らせが出るとき |
-| `--dur-slow` | 250ms | 画面の端から出る大きな面（ドロワー） |
+| `--dur-instant` | 50ms | 押し込む見た目（段階 3a）。カードは押し込みをこの分だけ遅らせる |
+| `--dur-press` | 100ms | 小さい状態の変化（段階 2 の押した瞬間。段階 3a から押し込みは `--dur-instant`） |
+| `--dur-fast` | 150ms | 色・枠・影の変化、消えるとき、♡ を外したときの縮み |
+| `--dur-base` | 200ms | シート・クイックビュー・知らせが出るとき、押した見た目の戻り、件数の入れ替わり、✓ の弾み |
+| `--dur-slow` | 250ms | 画面の端から出る大きな面（ドロワー）、件数の丸の弾み |
+| `--dur-emph` | 300ms | 状態が変わった 1 回の弾み（♡ を保存したとき）。上限ちょうど |
 | `--ease-out` | `cubic-bezier(.2,0,0,1)` | 出るとき・状態が変わるとき |
 | `--ease-in` | `cubic-bezier(.4,0,1,1)` | 消えるとき |
+| `--dur-sheet` | 300ms | スマホで下から出る面（絞り込みシート・クイックビュー）が出るとき（段階 3b） |
+| `--ease-emph-out` | `cubic-bezier(.05,.7,.1,1)` | 大きな面が出るとき（強く減速して止まる・段階 3b） |
+| `--ease-emph-in` | `cubic-bezier(.3,0,.8,.15)` | 大きな面が戻るとき（ゆっくり始まり、速く去る・段階 3b） |
+| `--dur-landed` | 700ms | 着いた場所の光。**色だけの動きにしか使わない**（段階 3b・300ms の上限の例外） |
 
-時間は直書きせず、このトークンを使う。上限は 300ms（待ちの表示 `.skel`・`.nb-wait-long` だけ例外）。
+時間は直書きせず、このトークンを使う。上限は 300ms（待ちの表示 `.skel`・`.nb-wait-long` だけ例外）。色（文字・背景・枠・輪郭の色）だけを変える動きは 1000ms まで許す（判断の記録 0050・`motion.colorOnlyException`）。
 
 ### 書き方の決まり
 
-1. 動かしてよいのは `transform`・`opacity` と、色（`color`・`background-color`・`border-color`・`box-shadow`。150ms 以内）だけ。`width`・`height`・`margin`・`padding`・`top`・`left`・`gap`・`filter` は動かさない。
+1. 動かしてよいのは `transform`・`opacity` と、色（`color`・`background-color`・`border-color`・`box-shadow`。200ms 以内）だけ。`width`・`height`・`margin`・`padding`・`top`・`left`・`gap`・`filter` は動かさない。
 2. `transition: all` は書かない。
 3. 止まらない繰り返しは、読み込み中の表示だけ。
 4. ホバーの動きは `@media (hover:hover)` の中だけ。
@@ -366,16 +372,26 @@ node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 
 7. 押した瞬間に見た目を変える。処理の後に動かさない。
 8. 新しい動きは Designer の確認（`agents/designer.md` の QA-5）を通す。
 
-### 部品（段階 2・P-490）
+### 部品（段階 2・P-490、段階 3a で強めた）
 
 | 部品 | 書き方 | 使う所 |
 |---|---|---|
-| 押した瞬間（A1） | `:active` で `transform:scale(.98)` と `box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.12)`（色を内側の影で濃くする。グラデーションの背景でも同じに濃くなる）。`transition-duration:var(--dur-press)`。元の規則は `transition-property:color,background-color,border-color,box-shadow,transform,opacity` を `var(--dur-fast)` で持つ（押す 100ms・離す 150ms） | `nb.css`: `.nb-btn`・`.store-link`・`.link-btn`・`.nb-bar-btn`。`index.html`: 検索・「N軒を見る」・クイックビューの行動バー・カードの予約・ページ送り・シーンの導線など（`<style>` の最後の段階 2 の区画）。新しいボタンもこの一覧に足す |
-| ♡ の弾み（A2） | `.is-pop` を付けると `@keyframes nbPop`（1→1.15→1・`var(--dur-base)`）で 1 回だけ弾む。JS の `nbPop(el)` が付け、`animationend` で外す。保存したときだけ（外したときは弾ませない）。続けて「保存しました」の知らせ（`#toast`・`role="status"`）を出す | `index.html` の `.fav-btn`・`.m-fav` |
+| 押した見た目（A1・段階 3a の A-1〜A-3） | `:active` で沈み（`transform:scale()`）、色を内側の影で濃くする（`box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16)`。グラデーションの背景でも同じに濃くなる。写真の上の暗い面は白 `.16`）。`transition-duration:var(--dur-instant)`（押し込み 50ms）。元の規則は `transition-property:color,background-color,border-color,box-shadow,transform,opacity` を `var(--dur-base)` で持つ（戻り 200ms）。縮みは大きさで 3 段: ボタン `.96`・小さい部品 `.94`・カード `.985`。カードはスクロールし始めた指で一瞬暗くならないよう `transition-delay:var(--dur-instant)` で押し込みを遅らせ、中の ♡・予約・動画を押したときはカードごとは沈ませない（`:not(:has(...))`）。カードは写真が大きく、内側の影（中身の下に描かれる）では写真の上が暗くならないので、写真まで覆う透明な膜を `rgba(0,0,0,.16)` にする（店のカードはカード全体を覆う題名のリンクの膜 `.cn-link::after`、ほかのカードは自分の `::after`・`pointer-events:none`）。文中のリンク（inline）は transform が効かないので背景の色（`rgba(122,92,16,.16)`）で返す。iPhone の Safari は touch のリスナーが無いと `:active` を出さないので、全ページの共通の `<script>`（`scripts/lib/site_chrome.js` の `chromeScript()`）とトップの頭の `<script>` で document に空の `touchstart`（passive）を付ける。自前で押した見た目を出す部品は、ブラウザが付ける押した光（Android の Chrome の青い膜）を `-webkit-tap-highlight-color:transparent` で消す（押す相手の transition を書いた規則に一緒に書く・`tests/design_system_motion.test.js` が見張る） | `nb.css`: `.nb-btn`・`.store-link`・`.link-btn`・`.nb-bar-btn`・`.related-link`・`.nb-conclusion-hubs a`（`.96`）・`.hamburger`（`.94`）。`index.html`: `<style>` の最後の「動きの段階 2・3a」の区画（ボタン・小さい部品・カードの 3 つの一覧）。ハブの `.hub-grid a`（`.985`）・店舗ページの関連リンク（色）。新しい押せる物もこの一覧に足す |
+| ♡ の弾み（A2・段階 3a の A-5） | 保存したら `.is-pop`（`@keyframes nbPop`: 1→1.3→.92→1 と、周りに広がって消える輪・`var(--dur-emph)`）、外したら `.is-unpop`（`@keyframes nbUnpop`: 1→.85→1・`var(--dur-fast)`）。JS の `nbPop(el, off)` が付け、`animationend` で外す。続けて「保存しました」「保存を外しました」の知らせ（`#toast`・`role="status"`）を出す | `index.html` の `.fav-btn`・`.m-fav` |
+| ✓ の弾み（段階 3a の A-4） | 押して選んだチップにだけ `.is-check` を付け直し、`[aria-pressed="true"]::before` の ✓ が `@keyframes nbCheck`（.3→1.15→1・`var(--dur-base)`）で 1 回弾む。外したとき・シートを開いたときに選んである ✓ は動かさない（JS の `nbCheckPop(chip)`） | `index.html` の絞り込みシートの `.fs-chip` |
 | 待ちの印（A7） | 押した瞬間に文を変えて押せなくし（`disabled`・`aria-busy="true"`）、1 秒を超えたら `.nb-wait-long` を付ける（先頭のアイコンがその場で回る輪に変わる・`nb.css`）。ボタンの幅は変えない（先頭にアイコンを置く）。終わったら外す。止まらない繰り返しはこれとスケルトンだけ | 電話番号の確認（`scripts/lib/call_button_snippet.js`）・現在地（`index.html` の `geoSearch`） |
-| 件数の切り替え（A6） | 数字が変わるときだけ `#cnt.fading`（薄く 100ms）→ 書き換え → 戻す（150ms）。同じ数字なら動かさない | `index.html` の `renderGrid` |
+| 待ちの輪（段階 3a の D-1） | 全店のデータを待つ間の「読み込み中…」が 1 秒を超えたら `.nb-wait-long` を付け、文の左に回る輪を重ねて描く（`::before` を `position:absolute`。文だけのボタンで先頭のアイコンが無いため。幅と文の位置は変えない）。届いたら外し、件数を 1 回弾ませる。取得に失敗してもシートを数え直して止める | `index.html` の `#fs-go` |
+| 件数の切り替え（A6・段階 3a の B-1） | 見える件数（結果の帯の数字・絞り込みボタンの丸・シートの「N軒を見る」）の文字の変化を `MutationObserver` で見て、前と違う数字になった 1 回だけ `.is-tick-up`（増えた）／`.is-tick-down`（減った）を付ける。帯の数字は下から・上から入れ替わり（`var(--dur-base)`）、丸は弾み（.6→1.2→1・`var(--dur-slow)`）、主ボタンは小さく弾む（1.05・`var(--dur-slow)`）。同じ数字・前が数字でない・触ってから 1 秒より後（全店のデータの到着・戻る・復元）は動かさない。数え上げはしない。見えない `#cnt` には動きを付けない | `index.html` の `#results-summary-count`・`#filter-badge`・`#tb-filter-badge`・`#fs-go`（件数を書く関数は変えず、見張り役だけが動きを付ける） |
 
 押す相手・チップ・♡ のホバーは `@media (hover:hover)` の中に置く（スマホで触った後に色や持ち上げが残らない）。
+
+### 部品（段階 3b・P-500・判断の記録 0050）
+
+| 部品 | 書き方 | 使う所 |
+|---|---|---|
+| 面の出入り（C-1・C-2） | 開くと `.open`。閉じると JS の `nbLeave(el, 後片付け)` が `.is-closing` を付け（`.open` は先に外す）、`animationend`（名前が `Out` で終わるもの）か 400ms で外して後片付けをする。スマホは `@keyframes nbSheetIn`（下から・`var(--dur-sheet) var(--ease-emph-out)`）と `nbSheetOut`（下へ・`var(--dur-base) var(--ease-emph-in) forwards`）、769px 以上は `nbPanelIn`／`nbPanelOut`（16px＋scale .98・出るときは `var(--dur-slow)`）。暗幕は `nbFadeIn`／`nbFadeOut`（opacity）、面を包む暗幕は `nbScrimIn`／`nbScrimOut`（背景の色だけ）。`.is-closing` は `display` を保ち、自分と子孫を `pointer-events:none`・`inert` にする（閉じる途中も下の画面を押せる）。開き直すときは先に `nbLeaveFinish(el)`。動きは `@media (prefers-reduced-motion:no-preference)` の中だけに書く | `index.html` の絞り込みシート（`.filter-sheet-wrap`）・クイックビュー（`.ov`）。新しい開閉する面もこの形にそろえる |
+| 着いた場所の光（C-4） | `nbLand(el, 行き先の top)` を `window.scrollTo` の前に呼ぶ。スクロールが止まってから（`scrollend`、無ければ最後の `scroll` から 120ms、最長 1.5 秒）`.nb-landed` を 1 秒だけ付ける。`nb.css` の `.nb-landed` は `@keyframes nbLanded`（背景色と輪郭の色だけ・`var(--dur-landed) var(--ease-in) 1`）。48px 未満しか動かないときは光らせない。動きを減らす設定では、動かない輪郭だけ | `index.html` の `scrollToResults`・`scrollToActiveConditions`（保存済みもここを通る）・`scrollToMagazine`（特集の帯のときだけ）・`goToPage`（先頭の店） |
+| 一覧の形の変化（B-3） | `setViewMode` が `document.startViewTransition` で `applyViewMode` を包む。名前は画面に見えているカード（最大 16 枚）と写真・♡ に直前に付け（`nb-vt-c<i>`・`nb-vt-p<i>`・`nb-vt-f<i>`。`view-transition-class` は `nb-vt-card`／`nb-vt-photo`／`nb-vt-fav`）、`finished` で外す。群は `var(--dur-slow)`。カードは `object-fit:none`（伸び縮みさせない）、写真は `object-fit:cover`。未対応・動きを減らす設定・同じ表示は一瞬で替える。`nb.css` の動きを減らす規則で `::view-transition-*` も止める | `index.html` のグリッド⇄リストの切り替え |
 
 ### 検査
 
@@ -384,9 +400,11 @@ node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 
 | 検査 | 内容 |
 |---|---|
 | `transition-all` | `transition: all` / `transition-property: all` |
-| `motion-duration` | 300ms を超える時間（`var(--dur-*)` は可。例外は `.skel`・`.nb-wait-long`） |
+| `motion-duration` | 300ms を超える時間（`var(--dur-*)` は可。例外は `.skel`・`.nb-wait-long` と、色だけの動き〈1000ms まで〉）。`--dur-*` のトークンの定義が上限を超えるものも数える |
 | `motion-infinite` | `infinite` の繰り返し（例外は `.skel`・`.nb-wait-long`） |
 | `motion-layout-prop` | 禁止プロパティの transition、`@keyframes` の中での変更 |
 | `smooth-scroll-js` | `nbScrollBehavior(` を通らない `behavior:'smooth'` |
+
+色だけの例外（判断の記録 0050）は、transition なら動かすプロパティ、animation なら同じ CSS（HTML はページの全部の `<style>`）の `@keyframes` の中身が `motion.colorOnlyException.properties`（`color`・`background-color`・`border-color`・`outline-color`）だけのときに当たる。keyframes が見つからないもの・`animation-duration` だけの長い形・例外のトークン（`--dur-landed`）を色以外に使うものは違反。
 
 「動きを減らす」設定の中の規則は数えない。`motion.enforce` は `true`（段階 1・2026-10-16 に `nb.css` と `index.html` の違反を 0 にしてから上げた）で、`motion.enforceScopes`（`assets/css/nb.css`・`index.html`）の違反で `--check` が落ちる。手書きの特集・ルート直下の手書きのページ（about・faq・contact）は落とす対象にしない。店舗ページは雛形（`gen-store-pages.js`）を直してあり、CI の再生成で違反が 0 になったのを確かめてから `enforceScopes` に足す。
