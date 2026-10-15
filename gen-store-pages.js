@@ -24,7 +24,7 @@ const { editorReasonOf, visitStatusLabel } = require('./scripts/lib/editor_reaso
 const { renderPhotoCredit, PHOTO_CREDIT_CSS } = require('./scripts/lib/photo_credit');
 const { isDeadPhotoUrl } = require('./scripts/lib/dead_photo_urls');
 const { canShowCallButton } = require('./scripts/lib/phone_link');
-const { nbMapUrl } = require('./scripts/lib/map_link');
+const { nbMapUrl, nbMapLinkKind } = require('./scripts/lib/map_link');
 const { CALL_SCRIPT } = require('./scripts/lib/call_button_snippet');
 const IG_MAX_POSTS_PER_STORE = (loadIgPostPolicy().thresholds && loadIgPostPolicy().thresholds.maxPostsPerStore) || 1;
 
@@ -127,6 +127,12 @@ function reserveExitAttr(eventName, name, storeId, linkDomain, location = 'store
   return `nbReserveExit('${eventName}',{store_name:'${jsAttr(name)}',store_id:'${jsAttr(storeId)}',link_domain:'${linkDomain}',location:'${location}'})`;
 }
 
+// 地図ボタンの計測（MEO-006・計画書 8.2 節）。イベント名は変えず、どの店のどの形のリンクかを送る。
+// store_id は店舗ページの ID（URL の stores/<ID>.html）、link_kind は place_id つきか検索だけか（scripts/lib/map_link.js）
+function mapClickAttr(name, slug, gmUrl, location = 'store_page') {
+  return `trackEvent('cta_gmap_click',{link_url:this.href,store_id:'${jsAttr(slug || '')}',store_name:'${jsAttr(name)}',location:'${location}',link_kind:'${nbMapLinkKind(gmUrl)}'})`;
+}
+
 // ── 行動バー（I-14b・スマホの画面の下に固定する予約・電話・地図）──
 // 出すボタンは計画 7.3 節の表のとおり、店の種類で4通り。一番手（塗り）は、予約先があれば予約、無ければ電話
 // （出せる店だけ）、どちらも無ければ地図。予約先はホットペッパーを先に、無ければ食べログ。行き先をボタンに書く。
@@ -139,7 +145,7 @@ const BAR_LOCATION = 'store_page_bar';
 const BAR_PHONE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg>';
 const BAR_MAP_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>';
 
-function buildActionBar({ name, hpId, hpUrl, tbUrl, placeId, callOk, gmUrl }) {
+function buildActionBar({ name, slug, hpId, hpUrl, tbUrl, placeId, callOk, gmUrl }) {
   const nameAttr = escapeHtml(name);
   const reserve = hpUrl
     ? { href: hpUrl, label: 'ホットペッパーで予約', domain: 'www.hotpepper.jp', storeId: hpId }
@@ -148,7 +154,7 @@ function buildActionBar({ name, hpId, hpUrl, tbUrl, placeId, callOk, gmUrl }) {
       : null;
   const cls = (primary) => `nb-bar-btn ${primary ? 'nb-bar-primary' : 'nb-bar-sub'}`;
   const tel = (primary) => `<button type="button" class="${cls(primary)} nb-bar-tel" data-call-loc="${BAR_LOCATION}" onclick="nbCallStore(event,'${jsAttr(placeId)}','${jsAttr(name)}',this)" aria-label="${nameAttr}に電話する">${BAR_PHONE_ICON}<span>電話する</span></button>`;
-  const map = (primary) => `<a class="${cls(primary)} nb-bar-map" href="${escapeHtml(gmUrl)}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href,store_name:'${jsAttr(name)}',location:'${BAR_LOCATION}'})" aria-label="${nameAttr}の地図をGoogleマップで開く">${BAR_MAP_ICON}<span>${primary ? '地図を開く' : '地図'}</span></a>`;
+  const map = (primary) => `<a class="${cls(primary)} nb-bar-map" href="${escapeHtml(gmUrl)}" target="_blank" rel="noopener noreferrer" onclick="${mapClickAttr(name, slug, gmUrl, BAR_LOCATION)}" aria-label="${nameAttr}の地図をGoogleマップで開く">${BAR_MAP_ICON}<span>${primary ? '地図を開く' : '地図'}</span></a>`;
   const parts = [];
   if (reserve) {
     parts.push(`<a class="${cls(true)} nb-bar-reserve" href="${escapeHtml(reserve.href)}" target="_blank" rel="noopener noreferrer" onclick="${reserveExitAttr('cta_click', name, reserve.storeId, reserve.domain, BAR_LOCATION)}">${reserve.label}</a>`);
@@ -967,7 +973,7 @@ ${igAllUrls.map((_, i) => `        <span class="ig-carousel-dot${i === 0 ? ' act
   const tagPills = tags.map(t => `<span class="tag">${t}</span>`).join('');
   const linksHtml = [
     hpUrl && `<a class="link-btn hp" href="${hpUrl}" target="_blank" rel="noopener noreferrer" onclick="${reserveExitAttr('cta_click', name, hpId, 'www.hotpepper.jp')}">ホットペッパーで予約</a>`,
-    gmUrl && `<a class="link-btn gm" href="${escapeHtml(gmUrl)}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>`,
+    gmUrl && `<a class="link-btn gm" href="${escapeHtml(gmUrl)}" target="_blank" rel="noopener noreferrer" onclick="${mapClickAttr(name, slug, gmUrl)}">Googleマップ</a>`,
     igUrl && `<a class="link-btn ig" href="${igUrl}" target="_blank" rel="noopener noreferrer">Instagram</a>`,
     tbUrl && `<a class="link-btn tb" href="${tbUrl}" target="_blank" rel="noopener noreferrer" onclick="${reserveExitAttr('cta_click', name, hpId || placeId, 'tabelog.com')}">食べログ</a>`,
     tkUrl && tkUrl !== '#' && `<a class="link-btn tk" href="${tkUrl}" target="_blank" rel="noopener noreferrer">TikTok</a>`,
@@ -1168,7 +1174,7 @@ ${trustBreakdownHtml}
 </div>
 
 ${siteChrome.renderFooter({ depth: 1 })}
-${buildActionBar({ name, hpId, hpUrl, tbUrl, placeId, callOk, gmUrl })}
+${buildActionBar({ name, slug, hpId, hpUrl, tbUrl, placeId, callOk, gmUrl })}
 ${siteChrome.chromeScript()}
 ${hasIgEmbed ? `<script>
 (function(){

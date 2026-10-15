@@ -88,7 +88,7 @@
 - **owner**: Builder
 - **source**: オーナーの改訂の指示（2026-10-15）「継続的なデータ品質管理が不足している」「機能停止やロールバック」
 - **背景**: 地図リンクは店舗ページが `google.com/maps/search/店名 エリア`（`gen-store-pages.js:745`）、トップが `maps.google.com/search?q=店名 住所`（`index.html:4715`）。公式の形は `https://www.google.com/maps/search/?api=1&query=…&query_place_id=…`（API キー不要）。紐付けの監査は夜間 QA に入っていない（`scripts/nightly_qa.js`）。止めるスイッチも無い。計画書 4.2 節の B2・B3、6.3 節
-- **進み具合（2026-10-15）**: B3 の 3・4 を実装（スイッチは `data/place_binding_policy.json` の `show`・全部切った設定で実データの電話・評価・口コミ信頼度が全店で消えることを確かめた／夜間QA の soft `place-binding-states` が `audit_places_binding.js --states --check` で、設定が許していない状態で出している店を数える）。5 の閾値は、夜間QA の報告に毎晩残る状態ごとの数で 2026-10-29 まで揺れを測ってから決める。1 は B2 で実装（`scripts/lib/map_link.js` の `nbMapUrl`・api=1・place_id は確認済みの店だけ＝`features.map`・店舗ページ／トップ／日次ジャーナルの生成器が共有・符号化は `tests/map_link.test.js`）。2（実例 5 店で本番の地図リンクが正しい店を開く）はマージ後に確かめる。対話セッションで進行中なので自動の課題消化は触らない
+- **進み具合（2026-10-15）**: B3 の 3・4 を実装（スイッチは `data/place_binding_policy.json` の `show`・全部切った設定で実データの電話・評価・口コミ信頼度が全店で消えることを確かめた／夜間QA の soft `place-binding-states` が `audit_places_binding.js --states --check` で、設定が許していない状態で出している店を数える）。5 の閾値は、夜間QA の報告に毎晩残る状態ごとの数で 2026-10-29 まで揺れを測ってから決める。1 は B2 で実装（`scripts/lib/map_link.js` の `nbMapUrl`・api=1・place_id は確認済みの店だけ＝`features.map`・店舗ページ／トップ／日次ジャーナルの生成器が共有・符号化は `tests/map_link.test.js`）。2（実例 5 店で本番の地図リンクが正しい店を開く）はマージ後に確かめる。対話セッションで進行中なので自動の課題消化は触らない 本番（PR #605・run 38734163945 の後）: 地図リンクに place_id を付けた店 3,205（要確認 1,291・不一致 133 は検索の形）、実例 5 店の店舗ページは検索の形・朱寿は query_place_id つき、本番の data/stores.json で設定が許していない状態の店は電話・評価・口コミ信頼度・地図とも 0。残りは 5 の閾値（2026-10-29 以降）
 - **acceptance**:
   1. 地図リンクが公式の形（`api=1`）になり、place_id は確認済みの店にだけ付く。`&`・`#`・空白・全角の記号を含む店名で URL が正しく符号化される（単体テスト）
   2. 実例 5 店で、本番の地図リンクが正しい店を開く
@@ -99,13 +99,14 @@
 
 ### [MEO-006] 予約・電話・地図を分けて毎日数え、「現在地」ボタンの押下を数える（位置は送らない）
 
-- **priority**: P2 → **status**: blocked
+- **priority**: P2 → **status**: in_progress
 - **due**: 2026-10-29
 - **detected**: 2026-10-15
 - **category**: 計測
 - **owner**: Builder / Marketer
 - **source**: オーナーの改訂の指示（2026-10-15）「予約・電話・公式サイト・地図など店舗選択行動全体で評価」「位置情報をGA4へ送信しない」
 - **背景**: 地図ボタンの `cta_gmap_click` は毎日の集計（`scripts/fetch_ga4_views.js`）に入っていない（4 週で 22 回）。店舗ページの本文の地図ボタン（`gen-store-pages.js:968`）は店名を送らない。`outbound_click` はサイトが自分で送るイベントで、`cta_click`・`cta_gmap_click` と同時に必ず送られる（足すと 2 倍に数える）。「現在地」ボタン（`index.html:6812-6840`）は押下を数えておらず、位置の使いやすさ（近い順・近くの店）を作るかどうかを決める材料が無い。地図は予約送客に入れない（判断の記録 0009）。計画書 8.2 節
+- **進み具合（2026-10-15）**: 1〜4・6 はブランチ wakuwaku-labs/meo-c1-metrics で実装（`scripts/lib/store_actions.js`・`scripts/fetch_ga4_views.js`・`scripts/check_metrics_freshness.js`・夜間QA の soft `metrics-freshness`・`docs/kpi-weekly.md`）。地図ボタンはトップ・店舗ページ・ジャーナルで `store_id`・`link_kind` を送る。「現在地」は `geo_search {result}` だけを送り、e2e（`docs/qa/meo-2026-10/e2e_geo_search.js`）で 3 場面とも位置・エリア名を送らないことを確かめた。5 の結果ごとの回数と、地図の場所ごと・形ごとの内訳は、GA4 にカスタムディメンション `result`・`location`・`link_kind` が登録されるまで `null`（合計は入る）。登録はオーナーの操作
 - **blocked-by**: 対話セッションで進行中（2026-10-15〜・ブランチ wakuwaku-labs/eelgrass・HANDOFF.md）。自動の課題消化は触らない
 - **acceptance**:
   1. `data/store_referrals.json` に、予約（ホットペッパー・食べログ）・電話・地図が別々の欄で、30 日の合計と上位の店が毎日入る。`outbound_click` は足さない

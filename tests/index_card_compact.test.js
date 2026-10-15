@@ -217,7 +217,7 @@ function load(opts) {
   ctx.window.localStorage = storage;
   vm.createContext(ctx);
   const names = ['nbEscHtml', 'mWalkFromAccess', 'nbStationKey', 'nbNearText', 'nbCardSizes', 'nbCardClick', 'nbPhotoCredit', 'nbPhotoCreditLine',
-    'nbStoreHref', 'nbImgFallback', 'nbSavedView', 'nbDefaultView', 'applyViewMode', 'setViewMode', 'restoreViewMode', 'buildCardHtml'];
+    'nbStoreHref', 'nbStoreKey', 'nbImgFallback', 'nbSavedView', 'nbDefaultView', 'applyViewMode', 'setViewMode', 'restoreViewMode', 'buildCardHtml'];
   // 例外の表（NB_STORE_PAGES）は、生成器が STORE-INDEX の区画に書く。渡さなければ「表が無い」状態（例外なし）で動かす
   vm.runInContext((opts.pages ? 'var NB_STORE_PAGES = ' + JSON.stringify(opts.pages) + ';\n' : '') + names.map(fnSource).join('\n'), ctx);
   return ctx;
@@ -236,6 +236,8 @@ test('カード（実物の関数）: 写真・題名のリンク・最寄駅の
   assert.ok(html.startsWith('<div class="card has-link" onclick="nbCardClick(event,0)">'), 'リンクのある店はボタンの属性を持たない');
   assert.ok(!/role="button"/.test(html), 'リンクのある店に role=button は付けない（題名の a が入り口・二重に読み上げない）');
   assert.ok(html.includes('<h3 class="cn"><a class="cn-link" href="stores/J001.html">焼肉 福 錦通り店</a></h3>'), '題名のリンク');
+  assert.ok(html.includes("trackEvent('cta_gmap_click',{store_name:'焼肉 福 錦通り店',location:'card',store_id:'J001',link_kind:nbMapLinkKind(this.href)})"),
+    '地図の計測は店の ID とリンクの形つき（MEO-006）');
   assert.ok(html.includes('src="https://example.com/photo.jpg#w400"'), '写真は 400 幅を src に');
   assert.ok(html.includes('srcset="https://example.com/photo.jpg#w192 192w, https://example.com/photo.jpg#w288 288w, https://example.com/photo.jpg#w400 400w, https://example.com/photo.jpg#w600 600w, https://example.com/photo.jpg#w800 800w"'),
     'srcset は 192〜800（リストの 96px×DPR2〜3 から PC の大きな写真まで）');

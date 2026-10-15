@@ -30,6 +30,8 @@ const METRICS_OUT_PATH = path.join(__dirname, '..', 'data', 'site_metrics.json')
 // 「予約につながった」と数えるリンク先ドメインは scripts/lib/reservation_exits.js が正本（ISSUE-149）。
 const { isReservationDomain, aggregateStoreReferrals, dedupeReservationClicks, EXIT_EVENTS, REPORT_EVENTS, DEFINITIONS: REFERRAL_DEFINITIONS } = require('./lib/reservation_exits');
 const REFERRALS_OUT_PATH = path.join(__dirname, '..', 'data', 'store_referrals.json');
+// 地図・電話の番号の取得・「現在地」（予約送客に入れない行動・MEO-006）は scripts/lib/store_actions.js が正本。
+const storeActions = require('./lib/store_actions');
 
 // 良し悪しの目安（地域グルメメディアの素人判断用ベンチマーク）
 const BENCHMARKS = {
@@ -158,8 +160,16 @@ async function fetchStoreReferrals(analyticsdata) {
       return { ...s, thisMonth: { exits: m ? m.exits.total : 0, reportsYes: m ? m.reports.yes : 0 } };
     }),
   };
+  // 予約送客の数字は確定済み。地図などの取得に失敗しても、予約送客は書く（地図などの欄は書かず、理由を actionsError に残す）
+  try {
+    Object.assign(out, await storeActions.fetchStoreActions(analyticsdata, PROPERTY, `${LOOKBACK}daysAgo`, out.totals.exits));
+  } catch (e) {
+    console.error('地図・電話の取得結果・現在地の集計エラー（予約送客は書く）:', e.message);
+    out.actionsError = e.message;
+  }
   fs.writeFileSync(REFERRALS_OUT_PATH, JSON.stringify(out, null, 2));
-  console.log(`store_referrals.json 更新: ${out.stores.length} 店舗 / 送客 ${out.totals.exits.total} / 予約申告 ${out.totals.reports.yes}`);
+  console.log(`store_referrals.json 更新: ${out.stores.length} 店舗 / 送客 ${out.totals.exits.total} / 予約申告 ${out.totals.reports.yes}`
+    + (out.actions ? ` / 予約 ${out.actions.reserve}・電話 ${out.actions.tel}・地図 ${out.actions.map}` : ''));
 }
 
 // 流入元を organic / direct / social / ai_assistant / referral / other に分類

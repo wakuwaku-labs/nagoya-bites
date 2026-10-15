@@ -58,7 +58,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { nbMapUrl } = require('./lib/map_link');
+const { nbMapUrl, nbMapLinkKind } = require('./lib/map_link');
 const https = require('https');
 // ヒーロー写真の帰属判定は scripts/lib/hero_photo_gate.js に一元化（2026-08-17 の事故）
 const { judgeHero } = require('./lib/hero_photo_gate');
@@ -158,7 +158,7 @@ function buildStores(stores) {
       : '';
     const mapUrl = gmapSearchUrl(s.name, s.area, rec);
     const mapHtml = s.name
-      ? `<a class="store-link store-link-map" href="${esc(mapUrl)}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{store_name:'${jsEsc(s.name)}',location:'journal_store_card'})">地図で確認する</a>`
+      ? `<a class="store-link store-link-map" href="${esc(mapUrl)}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{store_name:'${jsEsc(s.name)}',location:'journal_store_card',link_kind:'${nbMapLinkKind(mapUrl)}'${rec ? `,store_id:'${esc(rec['ホットペッパーID'] || '')}'` : ''}})">地図で確認する</a>`
       : '';
     const ctaRowHtml = (linkHtml || reserveHtml || mapHtml)
       ? `<div class="store-cta-row">${reserveHtml}${mapHtml}${linkHtml}</div>`
