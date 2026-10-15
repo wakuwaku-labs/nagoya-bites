@@ -20,6 +20,8 @@ status: in_progress
   - 型は3つ: 型1「損しない数字」・型2「意外な仕組み」・型3「行く前の3つ」。10/13〜10/15 の3本で9本の例を作った（例は下の「投稿例」）
   - 作り方は B を採る: ジャーナル生成の Mac 側（scripts/run_journal_local.sh の OGP 整理 :799 の後・コミット :801 の前に「5i」）で2回目の claude --print に docs/x-post-prompt.md（新規）と記事を渡し、data/x_post_drafts/<date>.json（{slug,type,body,evidence[記事の原文の引用]}）を書かせて同じコミットに入れる（別に push すると先に定型が出る）。CI は「本文の数字がすべて evidence にあり、evidence が記事の原文そのまま」などを検査して使い、落ちたら定型（できれば「ポイントの1項目目＋URL」）に戻す。A（機械で抜く）は代わりの手、C（CI から Claude API）は鍵・課金・二重投稿の防ぎ方が崩れるので却下
   - 注意: 「3つ」の「3」が今の数字の照合で落ちることがある → 数を表す語を照合から外すか使わない
+- 2026-10-16: 9本の例を weightedLength・数字の照合・言い方の検査にかけた → 全部通過（252〜274/280）。Mac 側の Claude は `claude --print --safe-mode --tools "" --no-session-persistence` で launchd と同じ最小の環境（HOME・USER・LOGNAME・SHELL・TMPDIR・PATH）なら3秒で JSON を返す（USER が無いと OAuth の読み込みに失敗する）。直近30本すべてに insider-box（3〜4項目・各60〜228）がある
+- 方針（仮決め・最後にオーナーへ確認）: 型は記事ごとに Claude が選ぶ。CI で使うかは policy の draft.useInPost で切り替え
 
 ## 次にやること
 1. オーナーに型を選んでもらう（選択肢ボタン・推奨は「記事ごとに合う型を選ぶ」）
