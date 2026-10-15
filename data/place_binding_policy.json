@@ -3,9 +3,70 @@
   "decidedAt": "2026-10-15",
   "features": {
     "phone": {
-      "_doc": "電話のボタン（scripts/lib/phone_link.js の「電話確認」の欄）。オーナーの判断 2=A（2026-10-15）で、一致率 0.3 未満の帯と不一致を先に止めた。ほかの帯は、標本の確かめ（MEO-003・帯ごとに 30 組）の後に、判断 3 の基準（別の店が 1 割以上の帯は出さない）で見直す。",
+      "_doc": "電話のボタン（scripts/lib/phone_link.js の「電話確認」の欄）。オーナーの判断 2=A（2026-10-15）で、一致率 0.3 未満の帯と不一致を先に止めた。帯ごとの標本（2026-10-15・帯ごとに 30 組・data/places_binding_reviewed.json の sample=A2-2026-10-15）で、別の店は 一致率 0.3 未満 3/30・0.3〜0.6 1/30・0.6 以上 2/30・支店名の食い違い 1/30 だった。判断 3 の基準（別の店が 1 割以上の帯は出さない）で、今の許す帯のままにする。",
       "show": true,
-      "allowReviewBands": ["sim-0.3-0.6", "sim-ge-0.6", "branch-conflict"]
+      "allowReviewBands": [
+        "sim-0.3-0.6",
+        "sim-ge-0.6",
+        "branch-conflict"
+      ]
+    },
+    "rating": {
+      "_doc": "Google の評価と口コミ数（build.js が data/stores.json の Google評価・口コミ数を消す。トップのカード・店舗ページ・JSON-LD・ハブの並び・特集の選定の下限が同じ欄を読む）。オーナーの判断 3=A（2026-10-15）と帯ごとの標本（a2Sample）で、一致率 0.3 未満の帯（sim-0・sim-lt-0.3）は出さない。消した店は口コミの時系列・指紋（places_history）も使わない。紐付けの無い店は触らない。",
+      "show": true,
+      "allowReviewBands": [
+        "sim-0.3-0.6",
+        "sim-ge-0.6",
+        "branch-conflict"
+      ]
+    },
+    "trust": {
+      "_doc": "口コミ信頼度（build.js が reviewTrust を付けない。トップのカードとクイックビュー・店舗ページは、無ければ札と内訳を要素ごと出さない）。評価を出さない店には付けない。許す帯は rating と同じ（判断 3=A）。",
+      "show": true,
+      "allowReviewBands": [
+        "sim-0.3-0.6",
+        "sim-ge-0.6",
+        "branch-conflict"
+      ]
+    }
+  },
+  "a2Sample": {
+    "_doc": "帯ごとの標本の結果（MEO-003・2026-10-15・種 20261015・帯ごとに 30 組を店舗ページと Google の店舗情報で目で確かめた）。判断 3=A: 30 組のうち 3 組以上（1 割以上）が別の店だった帯は、評価・口コミ信頼度を確かめが済むまで出さない。「決められない」は別の店に数えない。記録は data/places_binding_reviewed.json（sample=A2-2026-10-15）。",
+    "bands": {
+      "sim-0+sim-lt-0.3": {
+        "population": 310,
+        "same": 22,
+        "different": 3,
+        "undecided": 5,
+        "show": false
+      },
+      "sim-0.3-0.6": {
+        "population": 700,
+        "same": 29,
+        "different": 1,
+        "undecided": 0,
+        "show": true
+      },
+      "sim-ge-0.6": {
+        "population": 383,
+        "same": 28,
+        "different": 2,
+        "undecided": 0,
+        "show": true
+      },
+      "branch-conflict": {
+        "population": 33,
+        "same": 26,
+        "different": 1,
+        "undecided": 3,
+        "show": true
+      },
+      "confirmed（比べ用）": {
+        "population": 3081,
+        "same": 28,
+        "different": 0,
+        "undecided": 2
+      }
     }
   }
 }

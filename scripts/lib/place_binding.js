@@ -135,7 +135,51 @@ function allowedFor(feature, binding, policy) {
   return { ok: true, reason: 'confirmed' };
 }
 
+/**
+ * Google の評価・口コミ数・口コミ信頼度を出してよいかを店ごとに決め、出さない店の評価と口コミ数を消す
+ * （MEO-003・オーナーの判断 3=A・2026-10-15・判断の記録 0046）。
+ * 不一致の店と、policy の rating が許していない要確認の帯の店は、評価と口コミ数を消す（別の店の数字の可能性がある）。
+ * 口コミ信頼度は、評価を消した店と、policy の trust が許していない店に付けない（呼び出し側が trustBlocked を見る）。
+ * 紐付けの無い店（状態 none）は触らない（評価に Google の紐付け以外の出どころがある）。スイッチ（show=false）は全店に効く。
+ * @param {Array<object>} stores  書き換える（Google評価・口コミ数を消す）
+ * @param {object} places  data/places_resolved.json
+ * @param {{reviewed?:object, policy?:object, keyOf?:function}} [opts]
+ * @returns {{ratingBlocked:Set<string>, trustBlocked:Set<string>, counts:{rating:object, trust:object}}}
+ *   ratingBlocked / trustBlocked は placesKey の集合。counts は止めた理由ごとの店の数（評価は、評価を持っていた店だけ数える）
+ */
+function applyRatingGate(stores, places, opts) {
+  const o = opts || {};
+  const ctx = buildContext(stores, places, o);
+  const keyOf = o.keyOf || placesKey;
+  const ratingBlocked = new Set();
+  const trustBlocked = new Set();
+  const counts = { rating: {}, trust: {} };
+  const bump = (m, k) => { m[k] = (m[k] || 0) + 1; };
+  const decide = (feature, b) => {
+    const r = allowedFor(feature, b, ctx.policy);
+    return (b.state === 'none' && r.reason !== 'switched-off') ? { ok: true, reason: 'no-binding' } : r;
+  };
+  for (const s of stores || []) {
+    if (!s || !s['店名']) continue;
+    const b = bindingOf(s, ctx);
+    const key = keyOf(s);
+    const rating = decide('rating', b);
+    if (!rating.ok) {
+      if (s['Google評価'] || s['口コミ数']) bump(counts.rating, rating.reason);
+      delete s['Google評価'];
+      delete s['口コミ数'];
+      ratingBlocked.add(key);
+    }
+    const trust = decide('trust', b);
+    if (!rating.ok || !trust.ok) {
+      trustBlocked.add(key);
+      bump(counts.trust, trust.ok ? rating.reason : trust.reason);
+    }
+  }
+  return { ratingBlocked, trustBlocked, counts };
+}
+
 module.exports = {
   STATES, BANDS, POLICY_PATH, REVIEWED_PATH,
-  bandOf, loadPolicy, loadReviewed, buildPlaceIndex, buildContext, bindingOf, allowedFor,
+  bandOf, loadPolicy, loadReviewed, buildPlaceIndex, buildContext, bindingOf, allowedFor, applyRatingGate,
 };

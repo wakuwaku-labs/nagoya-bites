@@ -121,3 +121,72 @@ test('annotatePhoneLinks: 住所は丁目まで同じでも、紐付けの状態
   assert.equal(off['switched-off'], 3, '住所か店名では出せる 3 店がすべてスイッチで止まる');
   assert.deepEqual(stores.map((s) => s[FIELD]), [undefined, undefined, undefined]);
 });
+
+// ---------------------------------------------------------------- MEO-003: Google の評価・口コミ信頼度（判断 3=A）
+
+const RATING_POLICY = {
+  features: {
+    phone: POLICY.features.phone,
+    rating: { show: true, allowReviewBands: ['sim-0.3-0.6', 'sim-ge-0.6', 'branch-conflict'] },
+    trust: { show: true, allowReviewBands: ['sim-0.3-0.6', 'sim-ge-0.6', 'branch-conflict'] },
+  },
+};
+const gyusho = { '店名': '焼肉 牛匠 錦本店', '住所': '愛知県名古屋市中区錦3-1-1', 'ホットペッパーID': 'J000000007', placeId: 'P_GYUSHO' };
+const placesWithGyusho = {
+  ...places,
+  J000000007: { fetchedAt: '2026-05-22T06:41:02.407Z', placeId: 'P_GYUSHO', name: '牛匠', formatted_address: '日本、〒460-0003 愛知県名古屋市中区錦３丁目１−１' },
+};
+const rated = (s) => ({ ...s, 'Google評価': '4.1', '口コミ数': '120' });
+
+test('applyRatingGate: 不一致と一致率 0.3 未満の帯は評価と口コミ数を消し、口コミ信頼度も止める。許す帯・確認済み・紐付けなしは残す', () => {
+  const stores = [rated(hinokami), rated(hoshinoshita), rated(kiyohira), rated(isomaru), rated(gyusho),
+    { '店名': '紐付けなし', '住所': '愛知県名古屋市中区栄2-2-2', 'Google評価': '3.8', '口コミ数': '40' }];
+  const keyOf = (s) => s['ホットペッパーID'] || s['店名'];
+  const g = binding.applyRatingGate(stores, placesWithGyusho, { policy: RATING_POLICY, reviewed: NO_REVIEW, keyOf });
+  assert.deepEqual(stores.map((s) => s['Google評価'] || ''), ['4.1', '', '', '', '4.1', '3.8']);
+  assert.deepEqual(stores.map((s) => s['口コミ数'] || ''), ['120', '', '', '', '120', '40']);
+  assert.deepEqual([...g.ratingBlocked].sort(), ['J000000002', 'J000000003', 'J000000004']);
+  assert.deepEqual([...g.trustBlocked].sort(), ['J000000002', 'J000000003', 'J000000004']);
+  assert.deepEqual(g.counts.rating, { 'binding-mismatch': 2, 'binding-review': 1 }, 'ホシノシタ・磯丸水産は不一致、清平は sim-0');
+});
+
+test('applyRatingGate: 人が同じ店と記録すれば戻る。trust だけ止めれば評価は残し口コミ信頼度だけ止める。スイッチは紐付けの無い店にも効く', () => {
+  const keyOf = (s) => s['ホットペッパーID'] || s['店名'];
+  const reviewed = { entries: [{ key: 'J000000003', googleName: 'きよひら', decision: 'keep' }] };
+  const kept = [rated(kiyohira)];
+  binding.applyRatingGate(kept, places, { policy: RATING_POLICY, reviewed, keyOf });
+  assert.equal(kept[0]['Google評価'], '4.1');
+
+  const trustOnly = { features: { ...RATING_POLICY.features, trust: { show: true, allowReviewBands: [] } } };
+  const s2 = [rated(gyusho)];
+  const g2 = binding.applyRatingGate(s2, placesWithGyusho, { policy: trustOnly, reviewed: NO_REVIEW, keyOf });
+  assert.equal(s2[0]['Google評価'], '4.1', '評価は rating の設定で残る');
+  assert.deepEqual([...g2.trustBlocked], ['J000000007']);
+  assert.deepEqual(g2.counts.trust, { 'binding-review': 1 });
+
+  const off = { features: { ...RATING_POLICY.features, rating: { show: false } } };
+  const s3 = [rated(hinokami), { '店名': '紐付けなし', 'Google評価': '3.8' }];
+  const g3 = binding.applyRatingGate(s3, places, { policy: off, reviewed: NO_REVIEW, keyOf });
+  assert.deepEqual(s3.map((s) => s['Google評価'] || ''), ['', ''], 'show=false は全店で消す');
+  assert.equal(g3.counts.rating['switched-off'], 2);
+  assert.equal(g3.trustBlocked.size, 2, '評価を消した店には口コミ信頼度も付けない');
+});
+
+test('data/place_binding_policy.json: 評価と口コミ信頼度は一致率 0.3 未満の帯を許さない（判断 3=A・標本で 3/30 が別の店）', () => {
+  const pol = binding.loadPolicy();
+  for (const f of ['rating', 'trust']) {
+    const c = pol.features[f];
+    assert.ok(c, `features.${f} が無い`);
+    assert.equal(c.show, true);
+    for (const band of c.allowReviewBands) assert.ok(binding.BANDS.includes(band), `知らない帯: ${band}`);
+    assert.equal(c.allowReviewBands.includes('sim-0'), false);
+    assert.equal(c.allowReviewBands.includes('sim-lt-0.3'), false);
+  }
+  // 標本で別の店が 1 割以上だった帯は許さない（判断 3 の基準そのものを固定する）
+  for (const [band, r] of Object.entries(pol.a2Sample.bands)) {
+    if (typeof r.show !== 'boolean') continue;
+    const total = r.same + r.different + r.undecided;
+    assert.equal(total, 30, `${band} の標本は 30 組`);
+    assert.equal(r.show, r.different / total < 0.1, `${band}: 別の店 ${r.different}/30 と show=${r.show} が判断 3 の基準と合わない`);
+  }
+});

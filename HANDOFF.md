@@ -16,7 +16,9 @@ status: in_progress
 
 ## できていること
 - PR #602（マージ済み 2026-10-15 11:17Z）: `scripts/lib/place_binding.js`・`data/place_binding_policy.json`・電話の関門・ADR 0046・計画書・`docs/seo-traffic-inventory-2026-10.md`（A3）。電話ボタンが消えるのは 297 店（不一致 32・要確認の低い帯 265）
-- マージ後の本番ビルド run 38726252524 は 11:28Z 時点で実行中（バックグラウンドで完了待ち）
+- マージ後の本番ビルド run 38726252524 は npm test で失敗（公開されず）。原因は PR #602 と無関係: HotPepper が店名を「天ぷらとおでん　海鮮　…　天串（TENGUSHI）錦店」→「天串 TENGUSHI 錦店」（J004661097）に変え、ジャーナル 2026-09-14 の本文写真の持ち主が店名で合わなくなった
+- PR #603（マージ済み 11:38Z）: hero_photo_gate.js が写真の持ち主を店名に加えてホットペッパーID（店カードの data-store-id）でも照らす。CI と同じ改名データで再現→直った後は通ることを確かめた。npm test 1,735 件通過。本番ビルド run 38728803531 が実行中（バックグラウンド bqw0119l7 で完了待ち）
+- コミット 8ef4af5c84: reviewed の記録 203 件（標本 150＋住所が空 30＋既存）
 - ブランチ `wakuwaku-labs/meo-a1-states`（main ca5e59f503 から）:
   - コミット 752bc15a32: `audit_places_binding.js --states [--json]`（状態ごとの数・機能ごとに使う状態・取得日 90 日超の評価）と `--sample N --seed S`（帯ごとに決まった種で選ぶ）＋テスト 2 件
   - 未コミット: `data/places_binding_reviewed.json` に標本 150 組の判定を書いた（sample=A2-2026-10-15・evidence・storeUrl・googleUrl・checkedUrls）。same→keep（住所の裏付けがあるときだけ）／different→reject／unknown と裏付けなしの same→undecided。`_doc` を keep 対応に書き換えた
@@ -31,11 +33,17 @@ status: in_progress
   - 追加の確かめ: 一致率 0.3 以上の要確認で掲載の住所が空の店（203 店）から 30 組（seed 20261016）→ 同じ 28・別 0・決められない 2。細かい帯は作らない
   - 結果の元: scratchpad の `a2/results/*.json`・`a2/band_*.json`・`a2/sample.json`・`a2/band_no-address.json`（追加分の結果はまだファイルにしていない＝会話の通知の中）
 
+- B1 の評価・口コミ信頼度（未コミット・作業中）:
+  - `place_binding.js` に `applyRatingGate`（不一致・許さない帯の店の Google評価・口コミ数を消す、口コミ信頼度を止める店の集合を返す。紐付けなしは触らない。スイッチは全店）
+  - policy に `rating`・`trust`（許す帯は sim-0.3-0.6・sim-ge-0.6・branch-conflict）と `a2Sample`（帯ごとの結果）
+  - build.js: 電話の直後に applyRatingGate → placesRejectedKeys に足す／口コミ信頼度のループで止めた店は reviewTrust を付けない／crosscheck.json に書かない
+  - 新しい `scripts/sync_feature_scores.js`（特集の店カードの★を、データに評価が無い店から外す・store-card と手書きの store の外枠・build.yml で refresh_feature_rosters の直後）
+  - テスト: place_binding 12 件・sync_feature_scores 4 件 通過
+  - 影響（実データ）: 評価を消す 404 店（不一致 129・一致率 0.3 未満 275）、口コミ信頼度の札が消える 401 店、特集の★ 20 件（15 本）
 ## 次にやること
-1. 追加の 30 組（住所が空）も reviewed に書く（same→keep・evidence store-page／unknown→undecided）
-2. B1 の評価・口コミ信頼度: policy に `rating`・`trust`（allowReviewBands は sim-0.3-0.6・sim-ge-0.6・branch-conflict）。build.js の電話の判定の直後・トレンドスコアの前で、状態が不一致か許していない要確認の店は Google評価・口コミ数を空にし、places_history を使わない（placesRejectedKeys に足す）。trust を許さない店は reviewTrust を付けない（index.html・gen-store-pages.js は無ければ要素ごと出さない）。状態 none（紐付けなし）は触らない。スイッチ show:false は全店で止める
-3. テスト・`--states` で影響の数・ADR 0046 に判断 3 の表を追記（新しい番号は使わない）・計画書に A2 の表
-4. npm test・audit_design_system・audit_inline_js_syntax → PR → 本番ビルドが終わっていることを確かめてマージ → 本番で確かめる
+1. ADR 0046 に判断 3 の表を追記・計画書に A2 の表・CLAUDE.md の place_binding の行と sync_feature_scores の行
+2. npm test・audit_design_system・audit_inline_js_syntax → コミット → PR → run 38728803531 の成功を確かめてからマージ → 本番で確かめる（評価が消えた店の店舗ページ・トップのカード・特集の★・ハブ）
+3. ジャーナルの店カードの★（日付つきの記事）は触らない方針。件数だけ最終報告に書く
 5. 本番の電話の確かめ（run 38726252524 の後）: `node scripts/audit_phone_links.js`、実例 5 店（屋上酒場ホシノシタ・bindi ビンディー・BAR EVE イブ・CCC シーシーシー・木村屋 錦）の店舗ページとトップのクイックビュー、店数と店舗ページ数
 6. B3（夜間 QA に状態の数・スイッチ）→ B2 → C1。backlog・Linear（P-467 MEO-003 を進める）を更新
 
