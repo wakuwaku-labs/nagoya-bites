@@ -31,7 +31,7 @@ status: in_progress
 - 注意: 実行中の bash は古いファイルを読み続けるので、マージした翌朝 09:00 の回は git pull しても古い手順のまま（5i が動くのはその次の日から）。マージ後に ~/nagoya-bites を `git pull --ff-only` しておけば翌朝から動く
 
 ## 次にやること
-1. 見張りの PR をビルドが動いていないときにマージ（#611 は済み）
+（済み）#611・#613 をマージし、~/nagoya-bites を 67c5e48a56 まで早送りした
 2. 2026-10-16 09:00 のジャーナルの後: ログ（~/nagoya-bites/.local-logs/）に「X 用の文面 … 保存した」が出たか、data/x_post_drafts/2026-10-16.json が記事と同じコミットに入ったか、x-post.yml の Summary が「保存した文面」か、data/x_post_log.json の text_mode が draft か、X の実物を確かめる → P-476・P-296 を Done、結果をコメント
 3. 4週後（2026-11-12 ごろ）: 台帳の text_mode と GA4 の utm_content で型ごとの反応を比べる（ADR 0047 の見直す条件）
 （済み）オーナーの OK・実装・#610 のマージ（触るファイル: scripts/lib/x_post.js に loadDraft・checkEvidence・buildDraftPost／post_journal_to_x.js:234 で「保存した文面→定型」の順・textMode を残す／data/x_post_policy.json に draft の設定・header を空に・utm_content=<型>／新規 docs/x-post-prompt.md・scripts/check_x_draft.js／run_journal_local.sh の 5i とコミット一覧 :813-818／ADR と CLAUDE.md の表）。テストは tests/x_post.test.js（正しい文面は使う・数字が evidence に無い・evidence が記事に無い・error 語・280字超・slug 違い・ファイル無し → 定型）
