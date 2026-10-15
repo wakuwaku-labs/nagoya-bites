@@ -401,10 +401,19 @@ body.search-active .filter-toggle-wrap{position:static;}
 .clear-all-btn:hover{color:var(--text);border-color:var(--border-h);}
 /* ── 絞り込みシート（I-20）── 下から出る画面（広い画面では中央）。モーダル（.ov:500）より下、↑ボタン（300）・ご意見（290〜295）より上 */
 .filter-sheet-wrap{display:none;position:fixed;top:0;right:0;bottom:0;left:0;z-index:450;}
-.filter-sheet-wrap.open{display:flex;align-items:flex-end;justify-content:center;}
+.filter-sheet-wrap.open,.filter-sheet-wrap.is-closing{display:flex;align-items:flex-end;justify-content:center;}
+/* 閉じる動きの途中（.is-closing・段階 3b・判断の記録 0050）は、下の画面を押せる */
+.filter-sheet-wrap.is-closing,.filter-sheet-wrap.is-closing *{pointer-events:none;}
 .fs-backdrop{position:absolute;top:0;right:0;bottom:0;left:0;background:rgba(10,10,8,.5);}
 .filter-sheet{position:relative;width:100%;max-width:640px;max-height:90vh;max-height:90dvh;display:flex;flex-direction:column;background:var(--bg);border-radius:14px 14px 0 0;box-shadow:0 -6px 28px rgba(0,0,0,.22);outline:none;}
-@media (prefers-reduced-motion:no-preference){.filter-sheet-wrap.open .filter-sheet{animation:up var(--dur-base) var(--ease-out);}}
+/* 出入り（段階 3b C-1・C-2・判断の記録 0050）: スマホは画面の下から出て、閉じると下へ戻る。暗幕は濃くなって薄れる。
+   広い画面の形は下の @media(min-width:769px) の後で上書きする。動きを減らす設定では動かさない */
+@media (prefers-reduced-motion:no-preference){
+  .filter-sheet-wrap.open .filter-sheet{animation:nbSheetIn var(--dur-sheet) var(--ease-emph-out);}
+  .filter-sheet-wrap.is-closing .filter-sheet{animation:nbSheetOut var(--dur-base) var(--ease-emph-in) forwards;}
+  .filter-sheet-wrap.open .fs-backdrop{animation:nbFadeIn var(--dur-sheet) var(--ease-out);}
+  .filter-sheet-wrap.is-closing .fs-backdrop{animation:nbFadeOut var(--dur-base) var(--ease-in) forwards;}
+}
 .fs-head{flex:none;display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.35rem .5rem .35rem 1.1rem;border-bottom:1px solid var(--border);}
 .fs-title{margin:0;font-family:var(--font-display);font-size:var(--fs-xl);font-weight:500;color:var(--ink);}
 .fs-close{flex:none;width:var(--tap-min);height:var(--tap-min);display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:50%;color:var(--muted);font-family:inherit;font-size:var(--fs-xl);line-height:1;cursor:pointer;}
@@ -432,13 +441,26 @@ body.search-active .filter-toggle-wrap{position:static;}
 .fs-go{flex:1;min-height:48px;padding:.8rem 1.2rem;font-family:inherit;font-size:var(--fs-md);font-weight:700;letter-spacing:.04em;color:#fff;background:var(--warm-grad);border:0;border-radius:6px;cursor:pointer;box-shadow:0 2px 8px rgba(184,84,31,.28);transition:transform var(--dur-press) var(--ease-out),box-shadow var(--dur-base) var(--ease-out);}
 @media(hover:hover){.fs-go:hover:not(:disabled){filter:brightness(1.06);box-shadow:var(--warm-glow);}}
 .fs-go:disabled{opacity:.45;cursor:default;box-shadow:none;}
-@media(min-width:769px){.filter-sheet-wrap.open{align-items:center;}.filter-sheet{border-radius:12px;max-height:86vh;max-height:86dvh;box-shadow:0 12px 48px rgba(0,0,0,.28);}}
+@media(min-width:769px){.filter-sheet-wrap.open,.filter-sheet-wrap.is-closing{align-items:center;}.filter-sheet{border-radius:12px;max-height:86vh;max-height:86dvh;box-shadow:0 12px 48px rgba(0,0,0,.28);}}
 /* 検索欄の下の帯の右側（この条件をシェア・すべてリセット） */
 /* 0 軒の表示の「外すと増える条件」 */
 .empty-state .empty-suggest{margin:0 auto 1.5rem;max-width:560px;}
 .empty-state .empty-suggest-lead{margin:0 0 .6rem;font-size:var(--fs-sm);color:var(--muted);}
 .empty-suggest-list{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;}
-@keyframes up{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+/* 開閉する面の出入り（段階 3b・判断の記録 0050）。絞り込みシートとクイックビューが使う。動かすのは transform・opacity・暗幕の色だけ */
+@keyframes nbSheetIn{from{transform:translateY(100%);}}
+@keyframes nbSheetOut{to{transform:translateY(100%);}}
+@keyframes nbPanelIn{from{opacity:0;transform:translateY(16px) scale(.98);}}
+@keyframes nbPanelOut{to{opacity:0;transform:translateY(16px) scale(.98);}}
+@keyframes nbFadeIn{from{opacity:0;}}
+@keyframes nbFadeOut{to{opacity:0;}}
+@keyframes nbScrimIn{from{background-color:rgba(5,5,4,0);}}
+@keyframes nbScrimOut{to{background-color:rgba(5,5,4,0);}}
+/* 広い画面: 下から出さず、その場で 16px 下から少し小さく出て、同じ所へ戻る */
+@media (prefers-reduced-motion:no-preference) and (min-width:769px){
+  .filter-sheet-wrap.open .filter-sheet{animation:nbPanelIn var(--dur-slow) var(--ease-emph-out);}
+  .filter-sheet-wrap.is-closing .filter-sheet{animation:nbPanelOut var(--dur-base) var(--ease-emph-in) forwards;}
+}
 /* 動きを減らす設定は assets/css/nb.css の一括の規則で止める（動きの計画 F3・判断の記録 0049） */
 /* ── SECTION HEAD ── */
 .sec-head{padding:clamp(2.2rem,4vw,3rem) 1.5rem 1.2rem;display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--border);}
@@ -568,10 +590,23 @@ body.search-query-active .card-why{display:flex;}
    方針: 写真が最初・店名が最大・指標は1つ・言葉を先に・空は描かない・色は塗らない。
    角丸などページ固有トークンは :root を触らず .ov スコープに --page- 接頭辞で定義（DSN-001）。 */
 .ov{display:none;position:fixed;inset:0;z-index:500;background:rgba(5,5,4,.78);align-items:flex-end;justify-content:center;padding:0;--page-r-sheet:20px;--page-r-card:12px;--page-r-chip:999px;}
-.ov.open{display:flex;}
-.modal{position:relative;background:var(--bg);border:0;max-width:640px;width:100%;max-height:92vh;max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;border-radius:var(--page-r-sheet) var(--page-r-sheet) 0 0;box-shadow:0 -8px 40px rgba(0,0,0,.35);animation:min var(--dur-base) var(--ease-out);outline:none;}
-@keyframes min{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:none;}}
+.ov.open,.ov.is-closing{display:flex;}
+/* 閉じる動きの途中（.is-closing・段階 3b・判断の記録 0050）は、下の画面を押せる */
+.ov.is-closing,.ov.is-closing *{pointer-events:none;}
+.modal{position:relative;background:var(--bg);border:0;max-width:640px;width:100%;max-height:92vh;max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;border-radius:var(--page-r-sheet) var(--page-r-sheet) 0 0;box-shadow:0 -8px 40px rgba(0,0,0,.35);outline:none;}
 @media(min-width:769px){.ov{align-items:center;padding:1.5rem;}.modal{max-height:88vh;border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.4);}.m-handle{display:none;}}
+/* クイックビューの出入り（段階 3b C-1・C-2）: 絞り込みシートと同じ。暗幕（.ov の背景）は色だけを変える。
+   前後の店（nbQvStep）は .open を付けたまま中身を替えるので、面は動かし直さない */
+@media (prefers-reduced-motion:no-preference){
+  .ov.open{animation:nbScrimIn var(--dur-sheet) var(--ease-out);}
+  .ov.is-closing{animation:nbScrimOut var(--dur-base) var(--ease-in) forwards;}
+  .ov.open .modal{animation:nbSheetIn var(--dur-sheet) var(--ease-emph-out);}
+  .ov.is-closing .modal{animation:nbSheetOut var(--dur-base) var(--ease-emph-in) forwards;}
+}
+@media (prefers-reduced-motion:no-preference) and (min-width:769px){
+  .ov.open .modal{animation:nbPanelIn var(--dur-slow) var(--ease-emph-out);}
+  .ov.is-closing .modal{animation:nbPanelOut var(--dur-base) var(--ease-emph-in) forwards;}
+}
 /* ヒーロー: 写真は 1:1（スマホは幅いっぱい・高さは画面の 46% まで）。文字を重ねない。読み込み中は店舗固有SVGが下地に出る。実写が無い店は枠ごと出さない（.is-nophoto） */
 .mhi{position:relative;overflow:hidden;aspect-ratio:1/1;width:100%;max-width:480px;max-height:46vh;max-height:46dvh;margin:0 auto;background:var(--bg2);background-size:cover;background-position:center;}
 @media(min-width:769px){.mhi{max-width:360px;max-height:none;border-radius:var(--page-r-card);}}
@@ -1219,6 +1254,12 @@ button:focus-visible,a:focus-visible,.card:focus-visible{outline:2px solid var(-
 .fav-btn.faved{color:#e74c3c;}
 .grid.list-mode .fav-btn{top:8px;right:8px;background:var(--surface);color:var(--dim);}
 .grid.list-mode .fav-btn.faved{color:#e74c3c;background:rgba(231,76,60,.08);}
+/* グリッド⇄リストの形の変化（段階 3b B-3・判断の記録 0050）。setViewMode が見えているカード・写真・♡ にだけ名前を付ける。
+   カードは伸び縮みさせず（object-fit:none）前と後の姿を左上にそろえて入れ替え、写真は枠いっぱいに合わせる。
+   動きを減らす設定では nb.css が止める（setViewMode もそもそも使わない） */
+::view-transition-group(*){animation-duration:var(--dur-slow);animation-timing-function:var(--ease-out);}
+::view-transition-old(*),::view-transition-new(*){height:100%;object-fit:none;object-position:left top;}
+::view-transition-old(*.nb-vt-photo),::view-transition-new(*.nb-vt-photo){object-fit:cover;object-position:center;}
 /* ── PAGINATION ── */
 .pagination{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;align-items:center;padding:1.5rem 1.5rem 2.5rem;}
 .pagination:empty{display:none;}
@@ -4333,9 +4374,42 @@ function nbSheetSetInert(on) {
     node = node.parentNode;
   }
 }
+// ── 開閉する面の閉じる動き（段階 3b C-1・C-2・判断の記録 0050）──
+// 絞り込みシートとクイックビューは、閉じると下へ戻ってから消える（CSS の .is-closing）。.open は先に外すので、
+// 「開いているか」の判定（NB_SHEET.open・nbModalIsOpen）は閉じた瞬間に偽になる。動きの間は下の画面を押せ（CSS で
+// pointer-events を外す）、焦点と読み上げからは inert で外す。動きを減らす設定と matchMedia の無い環境では待たずに消す。
+// animationend が来ないとき（タブが裏に回ったなど）の保険に 400ms で必ず終える
+function nbMotionOk() {
+  try { return !!(window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches); }
+  catch (e) { return false; }
+}
+function nbLeave(el, done) {
+  if (el) nbLeaveFinish(el);
+  if (!el || !nbMotionOk()) { if (done) done(); return; }
+  var hadInert = el.hasAttribute('inert');
+  var st = { done: done, timer: 0, onEnd: null, hadInert: hadInert };
+  st.onEnd = function(ev) { if (ev && /Out$/.test(ev.animationName || '')) nbLeaveFinish(el); };
+  el._nbLeave = st;
+  el.classList.add('is-closing');
+  if (!hadInert) el.setAttribute('inert', '');
+  el.addEventListener('animationend', st.onEnd);
+  st.timer = setTimeout(function() { nbLeaveFinish(el); }, 400);
+}
+// 閉じる動きを今すぐ終える（後片付けも今する）。閉じる途中にもう一度開くときに呼ぶ
+function nbLeaveFinish(el) {
+  var st = el && el._nbLeave;
+  if (!st) return;
+  el._nbLeave = null;
+  clearTimeout(st.timer);
+  el.removeEventListener('animationend', st.onEnd);
+  el.classList.remove('is-closing');
+  if (!st.hadInert) el.removeAttribute('inert');
+  if (st.done) st.done();
+}
 function nbOpenFilterSheet(opener) {
   var wrap = document.getElementById('filter-sheet-wrap');
   if (!wrap || NB_SHEET.open || NB_SHEET.leaving) return;
+  nbLeaveFinish(wrap);
   NB_SHEET.open = true;
   // 「戻る」で閉じられるよう、履歴を1つ足す（URL は変えない・P-428）。モーダルと同じく state の印で見分ける
   try { history.pushState({ nbS: 1 }, '', location.href); } catch (e) { /* 履歴を触れない環境でもシートは開く */ }
@@ -4358,7 +4432,7 @@ function nbCloseFilterSheet(fromPop) {
   NB_SHEET.open = false;
   NB_SHEET.draft = null;
   var wrap = document.getElementById('filter-sheet-wrap');
-  if (wrap) wrap.classList.remove('open');
+  if (wrap) { wrap.classList.remove('open'); nbLeave(wrap); }
   nbSheetSetInert(false);
   document.body.style.overflow = NB_SHEET.prevOverflow;
   var op = NB_SHEET.opener;
@@ -4467,6 +4541,7 @@ function scrollToResults() {
   if (!target) return;
   var rect = target.getBoundingClientRect();
   var top = rect.top + window.pageYOffset - 110;
+  if (typeof nbLand === 'function') nbLand(target, top);
   window.scrollTo({ top: top, behavior:nbScrollBehavior() });
 }
 
@@ -4477,6 +4552,7 @@ function scrollToActiveConditions() {
   var target = document.getElementById('active-chips');
   if (!target || !target.offsetHeight) { scrollToResults(); return; }
   var top = target.getBoundingClientRect().top + window.pageYOffset - 130;
+  if (typeof nbLand === 'function') nbLand(target, top < 0 ? 0 : top);
   window.scrollTo({ top: top < 0 ? 0 : top, behavior:nbScrollBehavior() });
 }
 
@@ -4485,7 +4561,50 @@ function scrollToMagazine() {
   var target = document.querySelector('.feature-strip') || document.getElementById('main-content');
   if (!target) { window.scrollTo({ top: 0, behavior:nbScrollBehavior() }); return; }
   var top = target.getBoundingClientRect().top + window.pageYOffset - 70;
+  // 光らせるのは特集の帯だけ（main 全体は光らせない）
+  if (typeof nbLand === 'function' && target.classList && target.classList.contains('feature-strip')) nbLand(target, top < 0 ? 0 : top);
   window.scrollTo({ top: top < 0 ? 0 : top, behavior:nbScrollBehavior() });
+}
+
+// ── 着いた場所を光らせる（段階 3b C-4・判断の記録 0050）──
+// ボタンでページの別の場所へ飛んだとき、飛んだ先を色だけで 1 回ほのかに光らせて消す（CSS の .nb-landed・nb.css）。
+// 物は動かさない。window.scrollTo の前に呼ぶ（動く前の位置で距離を測る）。ほとんど動かないとき（48px 未満）は、
+// 目がもうそこにあるので光らせない（検索欄で 1 文字ずつ打つたびに光らないように）。
+// 光るのはスクロールが止まってから: scrollend、無い端末（Safari など）は最後の scroll から 120ms、どちらも来なければ 1.5 秒で
+var NB_LAND = { wait: 0, cap: 0, off: 0, el: null, onScroll: null };
+function nbLandStop() {
+  clearTimeout(NB_LAND.wait); clearTimeout(NB_LAND.cap);
+  if (NB_LAND.onScroll) {
+    window.removeEventListener('scroll', NB_LAND.onScroll);
+    window.removeEventListener('scrollend', NB_LAND.onScroll);
+    NB_LAND.onScroll = null;
+  }
+}
+function nbLand(el, top) {
+  if (!el || !el.classList) return;
+  nbLandStop();
+  var from = window.pageYOffset || 0;
+  if (Math.abs((top || 0) - from) < 48) return;
+  var fire = function() {
+    nbLandStop();
+    if (NB_LAND.el && NB_LAND.el !== el) NB_LAND.el.classList.remove('nb-landed');
+    clearTimeout(NB_LAND.off);
+    el.classList.remove('nb-landed');
+    void el.offsetWidth;   // 光っている途中に同じ所へ来たときも、最初から光らせ直す
+    el.classList.add('nb-landed');
+    NB_LAND.el = el;
+    NB_LAND.off = setTimeout(function() { el.classList.remove('nb-landed'); if (NB_LAND.el === el) NB_LAND.el = null; }, 1000);
+  };
+  if (nbScrollBehavior() !== 'smooth') { NB_LAND.wait = setTimeout(fire, 0); return; }
+  NB_LAND.onScroll = function(ev) {
+    clearTimeout(NB_LAND.wait);
+    if (ev && ev.type === 'scrollend') { fire(); return; }
+    NB_LAND.wait = setTimeout(fire, 120);
+  };
+  window.addEventListener('scroll', NB_LAND.onScroll, { passive: true });
+  window.addEventListener('scrollend', NB_LAND.onScroll);
+  NB_LAND.wait = setTimeout(fire, 250);    // スクロールが始まらなかったとき
+  NB_LAND.cap = setTimeout(fire, 1500);
 }
 
 // 検索モードを抜けて雑誌面（特集・ランキング）に戻る
@@ -5220,6 +5339,9 @@ function goToPage(pageNum) {
   if (gridEl) {
     var rect = gridEl.getBoundingClientRect();
     var top = rect.top + window.pageYOffset - 110; // ヘッダ＆stickyバー分オフセット
+    // 新しいページの先頭の店を光らせる（段階 3b C-4）
+    var firstCard = gridEl.querySelector ? gridEl.querySelector('.card') : null;
+    if (firstCard && typeof nbLand === 'function') nbLand(firstCard, top);
     window.scrollTo({ top: top, behavior:nbScrollBehavior() });
   }
 }
@@ -5774,6 +5896,8 @@ function nbRenderModalFeatures(r) {
 function openM(i, source) {
   // ハートボタン経由のクリックならモーダルを開かない
   if (window.event && window.event.target && window.event.target.closest && window.event.target.closest('.fav-btn')) return;
+  // 閉じる動きの途中に開き直したら、その動きを今終える（片付けてから開く・段階 3b）
+  if (typeof nbLeaveFinish === 'function') nbLeaveFinish(document.getElementById('ov'));
   var r = ALL_STORES[i];
   nbQvRememberOpener();
   // store_id はほかの cta_click と同じ決まり（ホットペッパーID。無い店は 店舗ID）。店ごとの集計に使う（I-08）
@@ -6224,9 +6348,15 @@ function closeM(opts) {
   ovEl.classList.remove('open');
   document.body.style.overflow = '';
   document.getElementById('mobile-cta-bar').style.display='';
-  document.getElementById('mig-container').innerHTML = '';
-  document.getElementById('mig-wrap').style.display = 'none';
-  var stickyC = document.getElementById('m-sticky-cta'); if (stickyC) stickyC.innerHTML = '';
+  // 中身（Instagram・下の行動バー）は、閉じる動き（段階 3b・判断の記録 0050）が終わってから片付ける。
+  // 似たお店への切り替え（swap）と、もともと閉じていたときは待たずに片付ける
+  var tidy = function() {
+    document.getElementById('mig-container').innerHTML = '';
+    document.getElementById('mig-wrap').style.display = 'none';
+    var stickyC = document.getElementById('m-sticky-cta'); if (stickyC) stickyC.innerHTML = '';
+  };
+  if (wasOpen && !(opts && opts.swap) && typeof nbLeave === 'function') nbLeave(ovEl, tidy);
+  else tidy();
   var ldPrev = document.getElementById('modal-store-jsonld'); if (ldPrev && ldPrev.parentNode) ldPrev.parentNode.removeChild(ldPrev);
   // 履歴の後始末。閉じ済みのモーダルをもう一度閉じても（背景を続けて押すなど）履歴は戻さない。
   // 「戻る」で閉じるとき（fromPop）と、似たお店へ切り替えるとき（swap）は、履歴に触れない
@@ -7102,8 +7232,45 @@ function applyViewMode(mode) {
   var sizes = nbCardSizes();
   for (var i = 0; i < imgs.length; i++) imgs[i].setAttribute('sizes', sizes);
 }
+// 一覧の形が変わる（段階 3b B-3・判断の記録 0050）: グリッド⇄リストを同じページの View Transitions で切り替え、
+// カードが新しい位置と大きさへ滑って見えるようにする。対応していない端末・動きを減らす設定・同じ表示への切り替えは、
+// 今のまま一瞬で替える。名前は画面に見えているカード（最大 16 枚）とその写真・♡ にだけ付け、終わったら外す
 function setViewMode(mode) {
-  applyViewMode(mode);
+  var grid = document.getElementById('grid');
+  var change = !!grid && grid.classList.contains('list-mode') !== (mode === 'list');
+  var named = [];
+  if (change && typeof document.startViewTransition === 'function' && typeof nbMotionOk === 'function' && nbMotionOk()) {
+    var vh = window.innerHeight || 800;
+    var cards = grid.querySelectorAll('.card');
+    var name = function(el, n, cls) {
+      if (!el) return;
+      el.style.setProperty('view-transition-name', n);
+      el.style.setProperty('view-transition-class', cls);
+      named.push(el);
+    };
+    for (var i = 0, k = 0; i < cards.length && k < 16; i++) {
+      var rc = cards[i].getBoundingClientRect();
+      if (rc.bottom <= 0 || rc.top >= vh) continue;
+      name(cards[i], 'nb-vt-c' + k, 'nb-vt-card');
+      name(cards[i].querySelector('.ci'), 'nb-vt-p' + k, 'nb-vt-photo');
+      name(cards[i].querySelector('.fav-btn'), 'nb-vt-f' + k, 'nb-vt-fav');
+      k++;
+    }
+  }
+  var unname = function() {
+    for (var j = 0; j < named.length; j++) {
+      named[j].style.removeProperty('view-transition-name');
+      named[j].style.removeProperty('view-transition-class');
+    }
+  };
+  if (named.length) {
+    try {
+      var vt = document.startViewTransition(function() { applyViewMode(mode); });
+      vt.finished.then(unname, unname);
+    } catch (e) { unname(); applyViewMode(mode); }
+  } else {
+    applyViewMode(mode);
+  }
   try { localStorage.setItem('nb_view', mode); } catch(e) {}
 }
 function restoreViewMode() {

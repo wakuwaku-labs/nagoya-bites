@@ -8,11 +8,14 @@
 // 本番には繋がない。この木を手元（127.0.0.1）で配信し、外部への通信（GA4・画像・フォントなど）はすべて中断する。puppeteer と Chrome が要る。
 //
 // 1. taps: 押してから画面が変わるまで。Event Timing（PerformanceObserver type 'event'・durationThreshold 16）の interaction（interactionId が同じイベントの最大 duration）。
-//    操作 ① 店のカードの保存（♡ .fav-btn）② 絞り込みシートを開く ③ シートの中のチップを 1 つ選ぶ ④ 店のカードを押してクイックビューを開く。
+//    操作 ① 店のカードの保存（♡ .fav-btn）② 絞り込みシートを開く ③ シートの中のチップを 1 つ選ぶ ④ 店のカードを押してクイックビューを開く
+//    ⑤ グリッド⇄リストの切り替え（段階 3b の View Transitions）。
+//    段階 3b（判断の記録 0050）: シート・クイックビューを閉じてから 450ms 後に、閉じる途中の印（.is-closing）や表示が残っていないかも見る（残れば不合格）。
 //    390x823（タッチ）と 1280x800 の両方で CPU 4 倍遅く。各操作 N 回の中央値と最大。目安 200ms（INP の「良い」）。中央値が超えれば不合格、最大だけが超えれば印（over）だけ。
 //    Event Timing は 16ms 未満の操作は報告しない（durationThreshold の下限）。その回は「押す直前（pointerdown）から次の rAF 2 回目まで」の時間（method: raf）を残す。
 //    各回に method（event / raf）を残し、集計は回ごとに event があればそれ、なければ raf を使う。操作ごとに状態を戻す（シート・クイックビューを閉じる・保存を外す・localStorage を消す）。
-// 2. reduced: prefers-reduced-motion: reduce にして、読み込み後・シートを開いた後・クイックビューを開いた後に、実行中で 1ms を超える長さの
+// 2. reduced: prefers-reduced-motion: reduce にして、読み込み後・シートを開いた後・クイックビューを開いた後・グリッド⇄リストの後・ページ送りの光の後に、実行中で 1ms を超える長さの
+//    （段階 3b: シートとクイックビューは閉じた瞬間に消えること〈.is-closing を付けない〉も見る）
 //    document.getAnimations() を数える（0 が合格）。さらに JS の smooth スクロール（#scroll-top・scrollToMagazine・scrollToResults）が、押してから rAF 1 回後に
 //    もう目的の位置か（即時か）を見る。今のコードは behavior:'smooth' を明示するので、CSS の scroll-behavior:auto を上書きして不合格になるのが正しい（直す前の記録）。
 // 3. skeleton: トップを読み込んでから .skel が DOM に出ている時間（perf.js と同じ 遅延 150ms・下り 1.6Mbps・CPU 4 倍）。DOM に出た時間と、実際に見えた時間（display:none でない）を分けて残す。トップの既定の状態と、条件つき（#q=…）の両方。合否には使わない（記録）。
@@ -166,8 +169,13 @@ async function tapAt(page, vp, pt) {
 async function closeSheet(page) {
   await page.evaluate(() => { if (typeof nbCloseFilterSheet === 'function' && NB_SHEET.open) nbCloseFilterSheet(); });
   await waitFn(page, () => !NB_SHEET.open && !NB_SHEET.leaving, null, 4000);
-  await sleep(300);
+  await sleep(450);   // 閉じる動き（段階 3b・200ms）より十分長く
 }
+// 閉じてから 450ms 後に、閉じる途中の印や表示が残っている面（段階 3b）。残っていなければ空
+const LEFTOVER = () => ['filter-sheet-wrap', 'ov'].filter(id => {
+  const e = document.getElementById(id);
+  return e && !e.classList.contains('open') && (e.classList.contains('is-closing') || getComputedStyle(e).display !== 'none');
+});
 
 const OPS = [
   {
@@ -216,7 +224,33 @@ const OPS = [
     async reset(page) {
       await page.evaluate(() => { if (document.getElementById('ov').classList.contains('open')) closeM(); });
       await waitFn(page, () => !document.getElementById('ov').classList.contains('open'), null, 3000);
-      await sleep(400);
+      await sleep(450);
+    },
+  },
+  {
+    id: 'view-toggle', name: 'グリッド⇄リストを切り替える',
+    async prepare(page) {
+      // 前の回の選択を消し、端末の既定の表示から始める（スマホはリスト・PC はグリッド）
+      await page.evaluate(() => { try { localStorage.removeItem('nb_view'); } catch (e) { /* なし */ } if (typeof restoreViewMode === 'function') restoreViewMode(); });
+      await sleep(300);
+    },
+    async find(page) {
+      return page.evaluate(() => {
+        const list = document.getElementById('grid').classList.contains('list-mode');
+        window.__vtWant = !list;
+        const b = document.getElementById(list ? 'vt-grid' : 'vt-list');
+        b.scrollIntoView({ block: 'center', behavior: 'instant' });
+        const r = b.getBoundingClientRect();
+        return r.width > 0 ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : null;
+      });
+    },
+    async check(page) {
+      await sleep(400);   // View Transitions の 250ms が終わってから
+      return page.evaluate(() => document.getElementById('grid').classList.contains('list-mode') === window.__vtWant);
+    },
+    async reset(page) {
+      await page.evaluate(() => { try { localStorage.removeItem('nb_view'); } catch (e) { /* なし */ } if (typeof restoreViewMode === 'function') restoreViewMode(); });
+      await sleep(300);
     },
   },
 ];
@@ -244,6 +278,8 @@ async function measureTaps(browser, base, vp) {
         if (!r.worked) rec.failed++;
         rec.runs.push(r);
         await op.reset(page);
+        const left = await page.evaluate(LEFTOVER);
+        if (left.length) { rec.leftover = (rec.leftover || []).concat(left); }
       }
       const ok = rec.runs.filter(r => !r.error && r.worked);
       const ms = ok.map(r => r.ms);
@@ -253,7 +289,7 @@ async function measureTaps(browser, base, vp) {
       rec.methods = { event: ok.filter(r => r.method === 'event').length, raf: ok.filter(r => r.method === 'raf').length };
       rec.rafMedianMs = r1(median(ok.map(r => r.rafMs)));
       rec.over = rec.maxMs !== null && rec.maxMs > TARGET_MS;
-      rec.pass = rec.n > 0 && rec.failed === 0 && rec.medianMs <= TARGET_MS;
+      rec.pass = rec.n > 0 && rec.failed === 0 && rec.medianMs <= TARGET_MS && !rec.leftover;
       out.ops.push(rec);
     }
     out.pageErrors = page.__log.pageErrors.slice(0, 5);
@@ -281,12 +317,46 @@ async function measureReduced(browser, base, vp) {
     await page.evaluate(() => nbOpenFilterSheet(null));
     await sleep(500);
     await count('sheet-open');
+    // 段階 3b: 動きを減らす設定では、閉じた瞬間に消える（閉じる途中の印を付けない）
+    out.closedAtOnce = {};
+    out.closedAtOnce.sheet = await page.evaluate(() => {
+      nbCloseFilterSheet();
+      const w = document.getElementById('filter-sheet-wrap');
+      return !w.classList.contains('is-closing') && getComputedStyle(w).display === 'none';
+    });
     await closeSheet(page);
     await page.evaluate(() => { window.scrollTo({ top: 0, behavior: 'instant' }); openM(0, 'grid'); });
     await sleep(500);
     await count('quick-view');
-    await page.evaluate(() => closeM());
+    out.closedAtOnce.quickView = await page.evaluate(() => {
+      closeM();
+      const o = document.getElementById('ov');
+      return !o.classList.contains('is-closing') && getComputedStyle(o).display === 'none';
+    });
     await sleep(400);
+    // 段階 3b: グリッド⇄リスト（View Transitions を使わない）と、ページ送りの後の光（動かない輪郭だけ）
+    await page.goto(base + '/index.html' + LIST_HASH, { waitUntil: 'load', timeout: 60000 });
+    await waitCatalog(page);
+    await waitFn(page, () => document.querySelectorAll('#grid .card').length > 0, null, 20000);
+    await sleep(800);
+    await page.evaluate(() => { const g = document.getElementById('grid'); setViewMode(g.classList.contains('list-mode') ? 'grid' : 'list'); });
+    await sleep(60);
+    await count('view-toggle');
+    await page.evaluate(() => { try { localStorage.removeItem('nb_view'); } catch (e) { /* なし */ } });
+    out.landed = await page.evaluate(() => new Promise(res => {
+      if (!document.querySelector('#pagination .pg-nav[aria-label="次のページ"]:not([disabled])')) { res({ skipped: '1 ページしか無い' }); return; }
+      window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' });
+      goToPage(2);
+      setTimeout(() => {
+        const c = document.querySelector('#grid .card');
+        res({ marked: !!(c && c.classList.contains('nb-landed')) });
+      }, 80);
+    }));
+    await count('landed');
+    // 下のスクロールの確かめは、前と同じく条件の無いトップで行う
+    await page.goto(base + '/index.html', { waitUntil: 'load', timeout: 60000 });
+    await waitCatalog(page);
+    await sleep(1500);
     out.reducedMatches = await page.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches);
 
     // JS の smooth スクロール。押してから rAF 1 回後に、もう目的の位置か
@@ -329,7 +399,8 @@ async function measureReduced(browser, base, vp) {
   out.animationsPass = anim === 0;
   const checked = out.scroll.filter(s => !s.vacuous);
   out.scrollPass = checked.length > 0 && checked.every(s => s.instant);
-  out.pass = out.animationsPass && out.scrollPass && out.reducedMatches === true;
+  out.closePass = !out.closedAtOnce || (out.closedAtOnce.sheet !== false && out.closedAtOnce.quickView !== false);
+  out.pass = out.animationsPass && out.scrollPass && out.closePass && out.reducedMatches === true;
   return out;
 }
 
@@ -408,7 +479,7 @@ const SKEL_SCENARIOS = [{ id: 'top', hash: '' }, { id: 'with-query', hash: LIST_
   (result.taps || []).forEach(t => {
     console.log(`[押してから変わるまで ${t.viewport}]（目安 ${TARGET_MS}ms）`);
     t.ops.forEach(o => {
-      console.log(`  ${o.pass ? 'PASS' : 'FAIL'}  ${o.name}: 中央値 ${o.medianMs}ms / 最大 ${o.maxMs}ms${o.over ? '  [最大が目安超え]' : ''}  (n=${o.n}, 失敗 ${o.failed}, 測り方 event ${o.methods.event}/raf ${o.methods.raf}, raf 中央値 ${o.rafMedianMs}ms)`);
+      console.log(`  ${o.pass ? 'PASS' : 'FAIL'}  ${o.name}: 中央値 ${o.medianMs}ms / 最大 ${o.maxMs}ms${o.over ? '  [最大が目安超え]' : ''}  (n=${o.n}, 失敗 ${o.failed}, 測り方 event ${o.methods.event}/raf ${o.methods.raf}, raf 中央値 ${o.rafMedianMs}ms)${o.leftover ? '  [閉じた後に残った: ' + o.leftover.join(',') + ']' : ''}`);
       if (!o.pass) fails.push(`taps ${t.viewport} ${o.name}`);
     });
     t.notes.forEach(n => console.log('  注: ' + n));
@@ -417,6 +488,8 @@ const SKEL_SCENARIOS = [{ id: 'top', hash: '' }, { id: 'with-query', hash: LIST_
     console.log(`[動きを減らす ${r.viewport}] 設定が効いている: ${r.reducedMatches}`);
     Object.keys(r.running).forEach(k => console.log(`  実行中のアニメーション ${k}: ${r.running[k].count} ${r.running[k].count ? JSON.stringify(r.running[k].names) : ''}`));
     r.scroll.forEach(s => console.log(`  ${s.instant ? 'PASS' : 'FAIL'}  ${s.id}: 開始 ${s.y0} → 目的 ${s.target} / 直後 ${s.yRightAfter} / 1フレーム後 ${s.yAfter1Frame}`));
+    if (r.closedAtOnce) console.log(`  ${r.closePass ? 'PASS' : 'FAIL'}  閉じた瞬間に消える: シート ${r.closedAtOnce.sheet} / クイックビュー ${r.closedAtOnce.quickView}`);
+    if (r.landed) console.log(`  ページ送りの後の光（動かない輪郭）: ${JSON.stringify(r.landed)}`);
     if (!r.pass) fails.push(`reduced ${r.viewport}`);
   });
   (result.skeleton || []).forEach(s => {

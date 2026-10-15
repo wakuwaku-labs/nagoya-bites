@@ -49,7 +49,11 @@
     "--dur-slow",
     "--dur-emph",
     "--ease-out",
-    "--ease-in"
+    "--ease-in",
+    "--dur-sheet",
+    "--ease-emph-out",
+    "--ease-emph-in",
+    "--dur-landed"
   ],
   "motion": {
     "_comment": "動き（モーション）の決まりの正本（動きの計画 5 章）。判定は scripts/lib/motion_audit.js。閾値・例外・禁止プロパティの変更はここで行いスクリプトは触らない。enforce が false の間は audit_design_system.js が数えるだけで落とさない。true にすると enforceScopes のファイルの違反だけで --check が落ちる（手書きの特集などは落とす対象にしない）。",
@@ -57,6 +61,7 @@
     "durationAllowlist": { "comment": "300ms を超えてよい選択子（待ちの表示: スケルトンと、1 秒を超えた操作の回る印 A7）", "selectors": [".skel", ".nb-wait-long"] },
     "infiniteAllowlist": { "comment": "止まらない繰り返しを許す選択子（読み込み中の表示だけ: スケルトンと、1 秒を超えた操作の回る印 A7）", "selectors": [".skel", ".nb-wait-long"] },
     "forbiddenProperties": ["width", "height", "min-width", "min-height", "max-width", "max-height", "margin*", "padding*", "top", "left", "right", "bottom", "gap", "row-gap", "column-gap", "filter"],
+    "colorOnlyException": { "comment": "上限（maxDurationMs）を超えてよいのは色だけを変える動き（判断の記録 0050・段階 3b の C-4: 着いた場所を光らせる）。物は動かさないので、上限の理由（待たされる・酔う）に当たらない。transition は動かすプロパティが properties だけのとき、animation は @keyframes の中身が properties だけのときに、この上限まで許す。tokens は色だけの動きにしか使わないトークンで、色以外を動かす所や -duration の長い形に使えば違反。", "maxDurationMs": 1000, "properties": ["color", "background-color", "border-color", "outline-color"], "tokens": ["--dur-landed"] },
     "scrollBehaviorFunction": "nbScrollBehavior",
     "enforce": true,
     "enforceScopes": ["assets/css/nb.css", "index.html"]

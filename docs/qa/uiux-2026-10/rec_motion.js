@@ -1,9 +1,11 @@
 // 動きの前後を動画（mp4・GIF）に撮る道具（動きの計画 8.3 節）。
-// 使い方: node docs/qa/uiux-2026-10/rec_motion.js --root <配信するフォルダ> --label before|after --out-dir <出力先> [--only load,hover,sheet,quickview,fav,scroll,press,presslist,wait,count,sheetwait]
+// 使い方: node docs/qa/uiux-2026-10/rec_motion.js --root <配信するフォルダ> --label before|after --out-dir <出力先> [--only load,hover,sheet,quickview,fav,scroll,press,presslist,wait,count,sheetwait,sheetclose,qvclose,landed,viewmode]
 // 場面: load（読み込み直後 3 秒）/ hover（1280 のみ・カードにマウス）/ sheet（絞り込みシート）/ quickview / fav（♡）/ scroll（下へ→上へ戻るボタン）。
 // 段階 2・3a の場面（--only で選ぶ。既定には入れない）: press（トップの押せる物を押したまま 0.7 秒→外で離す）/ presslist（一覧のカード・♡・予約・条件の札・ページ番号）/
 //   wait（現在地。位置の返事を 2.5 秒遅らせる）/ count（シートでチップ→「N軒を見る」→条件の札の × で件数が変わる。指で操作する）/
 //   sheetwait（全店のデータ data/stores.json の返事を止めたままシートを開き、3 秒後に返す）。
+// 段階 3b の場面（--only で選ぶ。既定には入れない・判断の記録 0050）: sheetclose（シートを開く→×→開く→背景で閉じる）/ qvclose（クイックビューを開く→×→開く→Esc）/
+//   landed（シートで条件を選び「N軒を見る」→結果の先頭が光る→「次へ」で先頭の店が光る）/ viewmode（グリッド⇄リスト）。
 // 出力: <label>-<幅>-<場面>.{webm,mp4,gif} と index-<label>.json。外部の画像は読み込む。GA4 だけ中断。「動きを減らす」は付けない。
 // puppeteer の page.screencast（ffmpeg 要）で録画し、ffmpeg で mp4（H.264・yuv420p）と GIF（15fps・390 は幅 390・1280 は幅 800）にする。
 'use strict';
@@ -97,6 +99,20 @@ async function centerOf(page, sel, within) {
     const r = el.getBoundingClientRect();
     return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
   }, sel, within || '');
+}
+// 録画の間、右下の 1px を毎フレーム描き直す（見た目はほぼ変わらない）。page.screencast は画面が変わったときにしか
+// コマを送らず、動きの最後のコマ（例: 閉じたシートが消えた画面）が届かないまま、途中のコマが最後まで残ることがあった（段階 3b）
+async function keepPainting(page) {
+  await page.evaluate(() => {
+    const d = document.createElement('div');
+    d.id = '__rec_tick';
+    d.setAttribute('aria-hidden', 'true');
+    d.style.cssText = 'position:fixed;right:0;bottom:0;width:1px;height:1px;pointer-events:none;z-index:2147483647;background:rgb(250,250,250);';
+    document.documentElement.appendChild(d);
+    let on = false;
+    const f = () => { if (!d.isConnected) return; on = !on; d.style.backgroundColor = on ? 'rgb(251,251,251)' : 'rgb(250,250,250)'; requestAnimationFrame(f); };
+    requestAnimationFrame(f);
+  });
 }
 async function tap(page, vp, pt) {
   if (vp.hasTouch) await page.touchscreen.tap(pt.x, pt.y); else { await page.mouse.move(pt.x, pt.y, { steps: 12 }); await sleep(150); await page.mouse.click(pt.x, pt.y); }
@@ -359,6 +375,119 @@ const SCENES = {
       await sleep(1800);
     },
   },
+  // ── 段階 3b（P-500・判断の記録 0050）の場面 ──
+  sheetclose: {
+    vps: [0, 1],
+    async setup(page, vp, base) { await gotoList(page, base); },
+    async run(page, vp) {
+      const openSheet = async () => {
+        const open = await centerOf(page, '#tb-filter-btn, #filter-toggle-btn, .cta-filter');
+        if (!open) throw new Error('絞り込みボタンが見つからない');
+        await tap(page, vp, open);
+        const ok = await waitFn(page, () => document.getElementById('filter-sheet-wrap').classList.contains('open'), null, 5000);
+        if (!ok) throw new Error('シートが開かなかった');
+      };
+      await sleep(600);
+      await openSheet();
+      await sleep(1000);
+      const x = await centerOf(page, '#fs-close', '#filter-sheet');
+      if (!x) throw new Error('× が見つからない');
+      await tap(page, vp, x);
+      await sleep(1100);
+      await openSheet();
+      await sleep(1000);
+      // 背景（暗幕）のうち、シートに覆われていない所を押す
+      const bd = await page.evaluate(() => {
+        const sh = document.getElementById('filter-sheet').getBoundingClientRect();
+        const pts = [[innerWidth / 2, Math.max(20, sh.top / 2)], [Math.max(20, sh.left / 2), innerHeight / 2]];
+        for (const [x, y] of pts) { const h = document.elementFromPoint(x, y); if (h && h.id === 'fs-backdrop') return { x, y }; }
+        return null;
+      });
+      if (!bd) throw new Error('背景の押せる所が無い');
+      await tap(page, vp, bd);
+      await sleep(1200);
+    },
+  },
+  qvclose: {
+    vps: [0, 1],
+    async setup(page, vp, base) { await gotoList(page, base); },
+    async run(page, vp) {
+      const openQv = async () => {
+        const pt = await cardPhotoPoint(page);
+        if (!pt) throw new Error('カード写真が見つからない');
+        await tap(page, vp, pt);
+        const ok = await waitFn(page, () => document.getElementById('ov').classList.contains('open'), null, 4000);
+        if (!ok) throw new Error('クイックビューが開かなかった');
+      };
+      await sleep(600);
+      await openQv();
+      await sleep(1300);
+      const x = await page.evaluate(() => {
+        const b = document.querySelector('#ov .mcl-close');
+        const r = b && b.getBoundingClientRect();
+        return r && r.width > 0 ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : null;
+      });
+      if (!x) throw new Error('× が見つからない');
+      await tap(page, vp, x);
+      await sleep(1100);
+      await openQv();
+      await sleep(1300);
+      await page.keyboard.press('Escape');
+      await sleep(1200);
+    },
+  },
+  landed: {
+    vps: [0, 1],
+    async setup(page, vp, base) { await gotoList(page, base); },
+    async run(page, vp) {
+      await sleep(500);
+      const open = await centerOf(page, '#tb-filter-btn, #filter-toggle-btn, .cta-filter');
+      if (!open) throw new Error('絞り込みボタンが見つからない');
+      await tap(page, vp, open);
+      await waitFn(page, () => document.getElementById('filter-sheet-wrap').classList.contains('open') && document.querySelector('#filter-sheet .fs-chip'), null, 5000);
+      await sleep(800);
+      // 最初のチップ（居酒屋の検索に足すので、多くは 1 ページを超え「次へ」も見せられる）
+      const chip = await centerOf(page, '#filter-sheet .fs-chip', '#filter-sheet');
+      if (!chip) throw new Error('チップが見つからない');
+      await tap(page, vp, chip);
+      await sleep(700);
+      const go = await centerOf(page, '#fs-go', '#filter-sheet');
+      if (!go) throw new Error('「N軒を見る」が見つからない');
+      await tap(page, vp, go);
+      await sleep(2200);   // 閉じる→結果の先頭へ→光る
+      // ページの下の「次へ」まで即時に下り、押す→先頭の店へ戻って光る
+      const next = await centerOf(page, '#pagination .pg-nav[aria-label="次のページ"]:not([disabled])');
+      if (!next) { /* 1 ページしか無い条件なら飛ばす */ return; }
+      await sleep(700);
+      await tap(page, vp, next);
+      await sleep(2400);
+    },
+  },
+  viewmode: {
+    vps: [0, 1],
+    async setup(page, vp, base) {
+      await gotoList(page, base);
+      // 一覧の先頭が見える所へ（切り替えのボタンも見える）
+      await page.evaluate(() => { const t = document.getElementById('view-toggle'); if (t) window.scrollTo({ top: t.getBoundingClientRect().top + scrollY - 140, behavior: 'instant' }); });
+      await sleep(600);
+      await waitImages(page);
+    },
+    async run(page, vp) {
+      const isList = await page.evaluate(() => document.getElementById('grid').classList.contains('list-mode'));
+      const order = isList ? ['#vt-grid', '#vt-list'] : ['#vt-list', '#vt-grid'];
+      await sleep(700);
+      for (const sel of order.concat(order)) {
+        const pt = await page.evaluate((sel) => {
+          const r = document.querySelector(sel).getBoundingClientRect();
+          return r.width > 0 ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : null;
+        }, sel);
+        if (!pt) throw new Error('切り替えのボタンが見えない: ' + sel);
+        await tap(page, vp, pt);
+        await sleep(1300);
+      }
+      await page.evaluate(() => { try { localStorage.removeItem('nb_view'); } catch (e) { /* なし */ } });
+    },
+  },
 };
 
 function ffmpeg(args) { execFileSync(FFMPEG, ['-y', '-loglevel', 'error', ...args], { stdio: ['ignore', 'inherit', 'inherit'] }); }
@@ -390,6 +519,7 @@ function convert(webm, mp4, gif, gifW) {
           try {
             await sc.setup(page, vp, base);
             const recorder = await page.screencast({ path: webm });
+            await keepPainting(page).catch(() => {});
             await sleep(300);
             try { await sc.run(page, vp, base, { skipped: rec.skipped }); } finally { await sleep(600); await recorder.stop(); }
             const mp4 = path.join(OUT, base_name + '.mp4'), gif = path.join(OUT, base_name + '.gif');

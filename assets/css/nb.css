@@ -16,6 +16,11 @@
   --dur-emph:300ms;                               /* 状態が変わった 1 回の弾み（♡ を保存したとき）。上限ちょうど */
   --ease-out:cubic-bezier(.2,0,0,1);              /* 出るとき・状態が変わるとき */
   --ease-in:cubic-bezier(.4,0,1,1);               /* 消えるとき */
+  /* 段階 3b（判断の記録 0050）: 開閉する面の出入り・着いた場所の光 */
+  --dur-sheet:300ms;                              /* スマホで下から出る面（絞り込みシート・クイックビュー）が出るとき */
+  --ease-emph-out:cubic-bezier(.05,.7,.1,1);      /* 大きな面が出るとき（強く減速して止まる） */
+  --ease-emph-in:cubic-bezier(.3,0,.8,.15);       /* 大きな面が戻るとき（ゆっくり始まり、速く去る） */
+  --dur-landed:700ms;                             /* 着いた場所の光。色だけの動きにしか使わない（300ms の上限の例外） */
   /* ── 型スケール（床 12px。ユーザーが読む文字は --fs-xs 以上） ── */
   --fs-2xs:.75rem;                                /* 12px 写真クレジット・法的表示 */
   --fs-xs:.8125rem;                               /* 13px メタ・kicker・キャプション */
@@ -120,6 +125,18 @@ img{max-width:100%;display:block;}
 
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.001ms!important;transition-delay:0s!important;scroll-behavior:auto!important;}
+}
+
+/* ── 段階 3b（判断の記録 0050）──
+   着いた場所の光（C-4）: 飛んだ先を色だけで 1 回ほのかに光らせて消す。物は動かさない（位置・大きさは変えない）。
+   付け外しは index.html の nbLand。色だけなので 300ms の上限の例外（data/design_system.json の motion.colorOnlyException）。 */
+.nb-landed{outline:2px solid transparent;outline-offset:-2px;animation:nbLanded var(--dur-landed) var(--ease-in) 1;}
+@keyframes nbLanded{from{background-color:rgba(184,84,31,.18);outline-color:rgba(184,84,31,.7);}}
+/* 動きを減らす設定: 光は動かさず輪郭だけを出す（nbLand が 1 秒で外す）。View Transitions も止める
+   （上の一括規則は *・::before・::after だけで ::view-transition-* に効かないため） */
+@media(prefers-reduced-motion:reduce){
+  .nb-landed{animation:none;outline-color:rgba(184,84,31,.7);}
+  ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important;}
 }
 
 /* ── サイト共通クローム: ヘッダー / ナビ / ハンバーガー / パンくず / フッター ── */

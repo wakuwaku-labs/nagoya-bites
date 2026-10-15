@@ -59,6 +59,37 @@ test('motion-duration: s と ms を読む。上限ちょうどは可・超える
   assert.deepEqual(rules('.skeleton{animation:pulse 1.6s ease}'), ['motion-duration']);
 });
 
+test('色だけの例外（判断の記録 0050）: 色だけを変える動きは 1000ms まで。物を動かすもの・確かめられないものは当たり', () => {
+  assert.deepEqual(P.colorOnlyException.maxDurationMs, 1000);
+  assert.deepEqual(P.colorOnlyException.properties, ['color', 'background-color', 'border-color', 'outline-color']);
+  assert.deepEqual(P.colorOnlyException.tokens, ['--dur-landed']);
+  // animation: 同じ CSS の @keyframes の中身が色だけなら可
+  assert.deepEqual(rules('.a{animation:x var(--dur-landed) ease 1}@keyframes x{from{background-color:red;outline-color:red}}'), []);
+  assert.deepEqual(rules('.a{animation:x 700ms ease 1}@keyframes x{from{color:red}}'), []);
+  assert.deepEqual(rules('.a{animation:x var(--dur-landed) ease 1}@keyframes x{from{transform:scale(1.1)}}'), ['motion-duration']);
+  assert.deepEqual(rules('.a{animation:x 700ms ease 1}@keyframes x{from{color:red;opacity:0}}'), ['motion-duration']);
+  assert.deepEqual(rules('.a{animation:x 1200ms ease 1}@keyframes x{from{color:red}}'), ['motion-duration'], '例外の上限を超える');
+  assert.deepEqual(rules('.a{animation:nokf var(--dur-landed) ease 1}'), ['motion-duration'], 'keyframes が無いと確かめられない');
+  // transition: 動かすプロパティが色だけなら可
+  assert.deepEqual(rules('.a{transition:background-color 700ms ease}'), []);
+  assert.deepEqual(rules('.a{transition:opacity var(--dur-landed) ease}'), ['motion-duration']);
+  assert.deepEqual(rules('.a{transition:color var(--dur-landed) ease,opacity var(--dur-fast)}'), []);
+  assert.deepEqual(rules('.a{transition:opacity 700ms ease}'), ['motion-duration']);
+  // 長い形は何を動かすか読めないので許さない
+  assert.deepEqual(rules('.a{animation-duration:var(--dur-landed)}'), ['motion-duration']);
+  assert.deepEqual(rules('.a{transition-duration:700ms}'), ['motion-duration']);
+  // トークンの定義: --dur-* は上限まで、例外のトークンは例外の上限まで
+  assert.deepEqual(rules(':root{--dur-landed:700ms;--dur-sheet:300ms}'), []);
+  assert.deepEqual(rules(':root{--dur-x:400ms}'), ['motion-duration']);
+  assert.deepEqual(rules(':root{--dur-landed:1.2s}'), ['motion-duration']);
+  // HTML では、別の <style> の keyframes も見る
+  const html = '<style>@keyframes g{from{background-color:red}}</style><style>.a{animation:g var(--dur-landed) 1}</style>';
+  assert.deepEqual(m.auditHtml(html, P, { file: 't.html' }).map((v) => v.rule), []);
+  // 例外が無い設定では今までどおり
+  const noEx = Object.assign({}, P, { colorOnlyException: undefined });
+  assert.deepEqual(m.auditCss('.a{transition:background-color 700ms ease}', noEx, { file: 't.css' }).map((v) => v.rule), ['motion-duration']);
+});
+
 test('motion-infinite: 当たりと外れ（例外 .skel）', () => {
   assert.deepEqual(rules('.a{animation:spin .2s linear infinite}'), ['motion-infinite']);
   assert.deepEqual(rules('.a{animation-iteration-count:infinite}'), ['motion-infinite']);
