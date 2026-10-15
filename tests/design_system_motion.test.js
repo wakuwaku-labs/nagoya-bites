@@ -256,11 +256,17 @@ test('段階 2 A1・段階 3a A-2/A-3: 押した物は沈み（ボタン .96・�
   for (const s2 of pressIndex) assert.ok(ai.includes(s2 + ':active'), `index.html: ${s2} の押した瞬間（.96）が無い`);
   const as = activeRule(INDEX_CSS, '.94');
   for (const s2 of smallIndex) assert.ok(as.includes(s2 + ':active'), `index.html: ${s2} の押した瞬間（.94）が無い`);
-  // カードはスクロールし始めた指で一瞬暗くならないよう、押し込みを --dur-instant だけ遅らせる
-  const ac = activeRule(INDEX_CSS, '.985', 'transition-delay:var\\(--dur-instant\\);');
+  // カードはスクロールし始めた指で一瞬暗くならないよう、押し込みを --dur-instant だけ遅らせる。
+  // 写真の上は内側の影では暗くならないので、写真まで覆う膜（::after）を暗くする
+  const cr = INDEX_CSS.match(/([^{}]*:active[^{}]*)\{transform:scale\(\.985\);transition-duration:var\(--dur-instant\);transition-delay:var\(--dur-instant\);\}/);
+  const ac = cr ? cr[1] : '';
   for (const s2 of cardIndex) assert.ok(ac.includes(s2 + ':active'), `index.html: ${s2} の押した瞬間（.985）が無い`);
   // カードの中の ♡・予約・動画を押したときは、カードごとは沈ませない
   assert.match(ac, /\.card:active:not\(:has\(\.fav-btn:active,\.card-cta a:active,\.reel-play:active\)\)/);
+  assert.match(INDEX_CSS, /\.card:active:not\(:has\([^)]*\)\) \.cn-link::after\{background-color:rgba\(0,0,0,\.16\);transition-duration:var\(--dur-instant\);transition-delay:var\(--dur-instant\);\}/);
+  const film = INDEX_CSS.match(/([^{}]*:active::after[^{}]*)\{background-color:rgba\(0,0,0,\.16\);transition-duration:var\(--dur-instant\);transition-delay:var\(--dur-instant\);\}/);
+  for (const s2 of cardIndex.filter((c) => c !== '.card')) assert.ok(film && film[1].includes(s2 + ':active::after'), `index.html: ${s2} の膜が無い`);
+  assert.match(INDEX_CSS, /\.tp-card::after,\.feature-card::after,\.latest-journal-card::after,\.hist-card::after,\.modal-rsc::after\{content:"";position:absolute;inset:0;z-index:3;border-radius:inherit;pointer-events:none;/);
   const an = activeRule(NB2, '.96');
   for (const s2 of pressNb) assert.ok(an.includes(s2 + ':active'), `nb.css: ${s2} の押した瞬間が無い`);
   assert.match(NB2, /\.hamburger:active\{transform:scale\(\.94\);box-shadow:inset 0 0 0 100vmax rgba\(0,0,0,\.16\);transition-duration:var\(--dur-instant\);\}/);

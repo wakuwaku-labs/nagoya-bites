@@ -1,7 +1,9 @@
 // 動きの前後を動画（mp4・GIF）に撮る道具（動きの計画 8.3 節）。
-// 使い方: node docs/qa/uiux-2026-10/rec_motion.js --root <配信するフォルダ> --label before|after --out-dir <出力先> [--only load,hover,sheet,quickview,fav,scroll,press,wait,count]
+// 使い方: node docs/qa/uiux-2026-10/rec_motion.js --root <配信するフォルダ> --label before|after --out-dir <出力先> [--only load,hover,sheet,quickview,fav,scroll,press,presslist,wait,count,sheetwait]
 // 場面: load（読み込み直後 3 秒）/ hover（1280 のみ・カードにマウス）/ sheet（絞り込みシート）/ quickview / fav（♡）/ scroll（下へ→上へ戻るボタン）。
-// 段階 2 の場面（--only で選ぶ。既定には入れない）: press（ボタンを押したまま 0.7 秒→離す）/ wait（現在地。位置の返事を 2.5 秒遅らせる）/ count（検索語を替えて件数が変わる）。
+// 段階 2・3a の場面（--only で選ぶ。既定には入れない）: press（トップの押せる物を押したまま 0.7 秒→外で離す）/ presslist（一覧のカード・♡・予約・条件の札・ページ番号）/
+//   wait（現在地。位置の返事を 2.5 秒遅らせる）/ count（シートでチップ→「N軒を見る」→条件の札の × で件数が変わる。指で操作する）/
+//   sheetwait（全店のデータ data/stores.json の返事を止めたままシートを開き、3 秒後に返す）。
 // 出力: <label>-<幅>-<場面>.{webm,mp4,gif} と index-<label>.json。外部の画像は読み込む。GA4 だけ中断。「動きを減らす」は付けない。
 // puppeteer の page.screencast（ffmpeg 要）で録画し、ffmpeg で mp4（H.264・yuv420p）と GIF（15fps・390 は幅 390・1280 は幅 800）にする。
 'use strict';
@@ -62,8 +64,12 @@ async function openPage(browser, base, vp) {
   await page.setViewport({ width: vp.w, height: vp.h, deviceScaleFactor: vp.deviceScaleFactor, isMobile: vp.isMobile, hasTouch: vp.hasTouch });
   await page.setCacheEnabled(false);
   await page.setRequestInterception(true);
+  page.__holdRe = null;   // 場面の setup が正規表現を入れると、当たるリクエストを止めて page.__held に貯める（page.__release() で流す）
+  page.__held = [];
+  page.__release = () => { const h = page.__held.splice(0); page.__holdRe = null; h.forEach(r => r.continue().catch(() => {})); return h.length; };
   page.on('request', req => {
     const u = req.url();
+    if (page.__holdRe && page.__holdRe.test(u)) { page.__held.push(req); return; }
     if (u.startsWith(base) && /\/(sw\.js|manifest\.(json|webmanifest))(\?|$)/.test(u)) return req.respond({ status: 404, contentType: 'text/plain', body: 'not found' });
     if (/googletagmanager\.com|google-analytics\.com|analytics\.google\.com/.test(u)) return req.abort();
     return req.continue();
@@ -129,6 +135,21 @@ async function gotoTop(page, base) {
   await waitImages(page);
 }
 
+// 押したまま 0.7 秒止めてから、要素の外で離す（クリックの処理は走らせない）。見つからない要素は飛ばして記録する
+function holdFn(page, vp, ctx) {
+  return async (name, sel) => {
+    const pt = await centerOf(page, sel);
+    if (!pt) { ctx.skipped.push(name + ': 要素が見つからない（' + sel + '）'); return; }
+    await page.mouse.move(pt.x, pt.y, { steps: 8 });
+    await sleep(400);
+    await page.mouse.down();
+    await sleep(700);
+    await page.mouse.move(3, Math.round(vp.h / 2), { steps: 2 });
+    await page.mouse.up();
+    await sleep(800);
+  };
+}
+
 // ── 場面 ──  setup は録画の前（準備）、run は録画の中。setup が false を返したら場面ごと失敗にする
 const SCENES = {
   load: {
@@ -176,12 +197,15 @@ const SCENES = {
       await tap(page, vp, open);
       await waitFn(page, () => document.getElementById('filter-sheet-wrap').classList.contains('open') && document.querySelector('#filter-sheet .fs-chip'), null, 5000);
       await sleep(900);
-      const chip = await centerOf(page, '#filter-sheet .fs-chip', '#filter-sheet');
-      if (!chip) throw new Error('チップが見つからない');
-      await tap(page, vp, chip);
-      await sleep(900);
+      // 選んでいないチップを 2 つ、続けて選ぶ（✓ と「N軒を見る」を見せる）
+      for (let i = 0; i < 2; i++) {
+        const chip = await centerOf(page, '#filter-sheet .fs-chip[aria-pressed="false"]', '#filter-sheet');
+        if (!chip) { ctx.skipped.push('チップ ' + (i + 1) + ' が見つからない'); break; }
+        await tap(page, vp, chip);
+        await sleep(1300);
+      }
       await page.evaluate(() => { if (typeof nbCloseFilterSheet === 'function') nbCloseFilterSheet(); });
-      await sleep(1000);
+      await sleep(900);
     },
   },
   quickview: {
@@ -218,22 +242,25 @@ const SCENES = {
     vps: [0, 1],
     async setup(page, vp, base) { await gotoTop(page, base); },
     async run(page, vp, base, ctx) {
-      // 押したまま止めて「色が濃く・わずかに沈む」を見せ、ボタンの外で離す（クリックの処理は走らせない）
-      const hold = async (name, sel) => {
-        const pt = await centerOf(page, sel);
-        if (!pt) { ctx.skipped.push(name + ': 要素が見つからない（' + sel + '）'); return; }
-        await page.mouse.move(pt.x, pt.y, { steps: 8 });
-        await sleep(400);
-        await page.mouse.down();
-        await sleep(700);
-        await page.mouse.move(3, Math.round(vp.h / 2), { steps: 2 });
-        await page.mouse.up();
-        await sleep(800);
-      };
+      // 押したまま止めて「沈む・色が濃くなる」を見せ、外で離す（クリックの処理は走らせない）
+      const hold = holdFn(page, vp, ctx);
       await hold('検索ボタン', '.search-wrap button');
       await hold('シーンのタイル', '.scene-tile');
-      await gotoList(page, base);
+      await hold('特集カード', '.feature-card');
+      await hold('今日の話題店の写真', '.tp-card');
+      await hold('最新ジャーナルのカード', '.latest-journal-card');
+    },
+  },
+  presslist: {
+    vps: [0, 1],
+    async setup(page, vp, base) { await gotoList(page, base); },
+    async run(page, vp, base, ctx) {
+      const hold = holdFn(page, vp, ctx);
+      await hold('店のカード（写真）', '#grid .card .ci');
+      await hold('カードの ♡', '#grid .fav-btn');
       await hold('カードの予約ボタン', '#grid .card-cta a');
+      await hold('条件の札', '#active-chips .chip, .chip[data-clear]');
+      await hold('ページ番号', '.pg-btn:not(.active):not(:disabled)');
     },
   },
   wait: {
@@ -265,14 +292,53 @@ const SCENES = {
   count: {
     vps: [0, 1],
     async setup(page, vp, base) { await gotoList(page, base); },
-    async run(page) {
-      const pt = await centerOf(page, '#cnt');
-      if (!pt) throw new Error('件数が見つからない');
-      await sleep(600);
-      for (const q of ['焼肉', '個室', '居酒屋']) {
-        await page.evaluate((w) => suggestSearch(w), q);
-        await sleep(1300);
-      }
+    async run(page, vp, base, ctx) {
+      // 件数の動きは「触ってから 1 秒の間」の変化だけなので、関数を直接呼ばずに指（マウス）で操作する
+      const pickAndGo = async () => {
+        const open = await centerOf(page, '#tb-filter-btn, #filter-toggle-btn, .cta-filter');
+        if (!open) throw new Error('絞り込みボタンが見つからない');
+        await tap(page, vp, open);
+        await waitFn(page, () => document.getElementById('filter-sheet-wrap').classList.contains('open') && document.querySelector('#filter-sheet .fs-chip'), null, 5000);
+        await sleep(700);
+        const chip = await centerOf(page, '#filter-sheet .fs-chip[aria-pressed="false"]', '#filter-sheet');
+        if (!chip) throw new Error('チップが見つからない');
+        await tap(page, vp, chip);
+        await sleep(900);
+        const go = await page.evaluate(() => { const r = document.getElementById('fs-go').getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
+        await tap(page, vp, go);
+        await sleep(1600);
+      };
+      await sleep(500);
+      await pickAndGo();
+      await pickAndGo();
+      // 条件の札の × で 1 つ外す（件数が増える）
+      const x = await centerOf(page, '#active-chips .chip[data-clear], .chip[data-clear]');
+      if (x) { await tap(page, vp, x); await sleep(1600); } else ctx.skipped.push('条件の札が見つからない');
+    },
+  },
+  sheetwait: {
+    vps: [0, 1],
+    async setup(page, vp, base) {
+      // 全店のデータの返事を止めたまま、先頭の店だけで一覧を出す（録画のためだけの差し止め。サイトの動きは変えない）
+      page.__holdRe = /\/data\/stores\.json(\?|$)/;
+      await page.goto(base + '/index.html' + LIST_HASH, { waitUntil: 'domcontentloaded', timeout: 60000 });
+      const ok = await waitFn(page, () => document.querySelectorAll('#grid .card').length > 0, null, 20000);
+      if (!ok) return false;
+      await sleep(1500);
+      await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+      await sleep(300);
+    },
+    async run(page, vp) {
+      const open = await centerOf(page, '#tb-filter-btn, #filter-toggle-btn, .cta-filter');
+      if (!open) throw new Error('絞り込みボタンが見つからない');
+      await sleep(500);
+      await tap(page, vp, open);
+      await waitFn(page, () => document.getElementById('filter-sheet-wrap').classList.contains('open'), null, 5000);
+      await sleep(3000);
+      const n = page.__release();
+      if (!n) throw new Error('全店のデータのリクエストを止められなかった');
+      await waitFn(page, () => window.FULL_CATALOG_LOADED === true, null, 30000);
+      await sleep(1800);
     },
   },
   scroll: {

@@ -1409,7 +1409,14 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 .grid.list-mode .fav-btn:active{box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16);}
 .mhi-nav:active:not(:disabled){transform:translateY(-50%) scale(.94);}
 /* カードの中の ♡・予約・地図・動画を押したときは、カードごとは沈ませない（押した物だけが沈む） */
-.card:active:not(:has(.fav-btn:active,.card-cta a:active,.reel-play:active)),.tp-card:active,.feature-card:active,.latest-journal-card:active,.hist-card:active,.modal-rsc:active{transform:scale(.985);box-shadow:inset 0 0 0 100vmax rgba(0,0,0,.16);transition-duration:var(--dur-instant);transition-delay:var(--dur-instant);}
+.card:active:not(:has(.fav-btn:active,.card-cta a:active,.reel-play:active)),.tp-card:active,.feature-card:active,.latest-journal-card:active,.hist-card:active,.modal-rsc:active{transform:scale(.985);transition-duration:var(--dur-instant);transition-delay:var(--dur-instant);}
+/* カードは写真が大きく、内側の影では写真の上が暗くならない（影は中身の下に描かれる）ので、写真の上まで覆う透明な膜を暗くする。
+   店のカードはカード全体を覆う題名のリンクの膜（.cn-link::after）を使い、ほかのカードは自分の ::after を膜にする（押せる物の邪魔をしない: pointer-events:none） */
+.cn-link::after{border-radius:12px;transition-property:background-color;transition-duration:var(--dur-base);transition-timing-function:var(--ease-out);}
+.card:active:not(:has(.fav-btn:active,.card-cta a:active,.reel-play:active)) .cn-link::after{background-color:rgba(0,0,0,.16);transition-duration:var(--dur-instant);transition-delay:var(--dur-instant);}
+.tp-card,.feature-card,.hist-card,.modal-rsc{position:relative;}
+.tp-card::after,.feature-card::after,.latest-journal-card::after,.hist-card::after,.modal-rsc::after{content:"";position:absolute;inset:0;z-index:3;border-radius:inherit;pointer-events:none;background-color:rgba(0,0,0,0);transition-property:background-color;transition-duration:var(--dur-base);transition-timing-function:var(--ease-out);}
+.tp-card:active::after,.feature-card:active::after,.latest-journal-card:active::after,.hist-card:active::after,.modal-rsc:active::after{background-color:rgba(0,0,0,.16);transition-duration:var(--dur-instant);transition-delay:var(--dur-instant);}
 /* A2・A-5 ♡: 保存したら 1 回だけ大きく弾み（1→1.3→.92→1・300ms）、周りに輪が広がって消える。外したら小さく縮んで戻る（1→.85→1・150ms）。
    どちらも続けて「保存しました」「保存を外しました」と知らせる（#toast）。輪は影だけで描く（大きさは変えない） */
 @keyframes nbPop{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(184,84,31,.45);}35%{transform:scale(1.3);}70%{transform:scale(.92);}100%{transform:scale(1);box-shadow:0 0 0 10px rgba(184,84,31,0);}}
