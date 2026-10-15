@@ -275,9 +275,9 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .nb-section-head h2 em{font-style:italic;color:var(--gold);}
 .nb-section-lead{font-size:var(--fs-sm);color:var(--muted);margin-top:var(--sp-1);}
 .nb-more{display:inline-flex;align-items:center;gap:.45rem;min-height:var(--tap-min);font-size:var(--fs-sm);color:var(--gold);text-decoration:none;white-space:nowrap;}
-.nb-more::after{content:"";display:inline-block;width:18px;height:1px;background:currentColor;transition:width .25s ease;}
+.nb-more::after{content:"";display:inline-block;width:18px;height:1px;background:currentColor;transform-origin:left center;transition:transform var(--dur-fast) var(--ease-out);}
 .nb-more:hover{color:var(--ember-deep);}
-.nb-more:hover::after{width:28px;}
+@media(hover:hover){.nb-more:hover::after{transform:scaleX(1.5);}}
 
 /* ── ボタン ── */
 .nb-btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:var(--tap-min);padding:0 var(--sp-5);font-family:var(--font-body);font-size:var(--fs-sm);font-weight:500;letter-spacing:0;border-radius:var(--r-sm);border:1px solid transparent;text-decoration:none;cursor:pointer;transition:background .15s,color .15s,border-color .15s;}

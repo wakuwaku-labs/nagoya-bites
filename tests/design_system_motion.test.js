@@ -3,6 +3,7 @@
 /**
  * 動き（モーション）の判定器 scripts/lib/motion_audit.js と、audit_design_system.js への組み込みの試験
  * （動きの計画 5.3 節・段階 0）。5 つの検査それぞれの当たり・外れと、enforce の切り替えを固定する。
+ * 段階 1（F1〜F8）の後の実物（index.html・nb.css・店舗ページの雛形）が決まりを守っていることも確かめる。
  */
 
 const { test } = require('node:test');
@@ -28,7 +29,7 @@ test('policy: 動きのトークン 6 つが coreTokens と nb.css にあり、m
     assert.ok(new RegExp(t + '\\s*:').test(nb), t + ' が nb.css に無い');
   }
   assert.equal(P.maxDurationMs, 300);
-  assert.equal(P.enforce, false);
+  assert.equal(P.enforce, true);   // 段階 1 で nb.css と index.html の違反を 0 にしてから上げた
   assert.deepEqual(P.enforceScopes, ['assets/css/nb.css', 'index.html']);
   assert.equal(P.scrollBehaviorFunction, 'nbScrollBehavior');
 });
@@ -114,10 +115,56 @@ test('auditHtml: <style>・インライン <script>・on*= 属性。src 付き�
   assert.deepEqual(v.map((x) => x.rule + ':' + x.line), ['transition-all:2', 'smooth-scroll-js:4', 'smooth-scroll-js:8']);
 });
 
-test('実物: nb.css は 300ms 超・transition:all を持たない（既存の 1 件は width の動きとして数えている）', () => {
-  const nb = fs.readFileSync(path.join(ROOT, DS.cssPath), 'utf8');
-  const v = m.auditCss(nb, P, { file: DS.cssPath });
-  assert.equal(v.filter((x) => x.rule === 'transition-all' || x.rule === 'motion-duration').length, 0);
+test('実物: 落とす対象（nb.css・index.html）の動きの違反は 0 件', () => {
+  for (const f of P.enforceScopes) {
+    const v = m.auditText(fs.readFileSync(path.join(ROOT, f), 'utf8'), P, f);
+    assert.deepEqual(v.map((x) => x.rule + ' ' + f + ':' + x.line), [], f);
+  }
+});
+
+const INDEX = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+
+test('段階 1 F8: トップの見出し・説明・検索欄・シーンの導線は最初から見える（opacity:0 から始めない）', () => {
+  const decls = m.parseDeclarations(INDEX.match(/<style\b[^>]*>([\s\S]*?)<\/style>/i)[1]);
+  for (const sel of ['.hero .eyebrow', '.hero h1', '.hero-sub', '.search-wrap', '.scene-nav']) {
+    const own = decls.filter((d) => d.selector === sel && !d.reduced);
+    assert.ok(own.length > 0, sel + ' の規則が見つからない');
+    assert.ok(!own.some((d) => d.prop === 'animation' || (d.prop === 'opacity' && d.value.trim() === '0')), sel + ' が入場の動きを持つ');
+  }
+});
+
+test('段階 1 F5: ホバーで写真を大きくしない。カードのホバーは @media(hover:hover) の中だけ', () => {
+  for (const sel of ['.card:hover .ci img', '.feature-card:hover .feature-card-thumb', '.tp-card:hover .tp-img']) {
+    assert.ok(!INDEX.includes(sel + '{'), sel + ' が残っている');
+  }
+  for (const sel of ['.card:hover{', '.feature-card:hover{', '.latest-journal-card:hover{']) {
+    const i = INDEX.indexOf(sel);
+    assert.ok(i > 0, sel + ' が見つからない');
+    assert.ok(INDEX.slice(i - 20, i).endsWith('@media(hover:hover){'), sel + ' が @media(hover:hover) の外にある');
+    const body = INDEX.slice(i, INDEX.indexOf('}', i));
+    assert.ok(!/transform/.test(body), sel + ' が動く（枠と影だけにする）');
+  }
+});
+
+test('段階 1 F2: nbScrollBehavior は「動きを減らす」設定なら auto、それ以外と例外は smooth', () => {
+  const vm = require('vm');
+  const a = INDEX.indexOf('\nfunction nbScrollBehavior(');
+  assert.ok(a > 0 && INDEX.indexOf('\nfunction nbScrollBehavior(', a + 1) < 0, 'nbScrollBehavior は 1 つだけ');
+  // 頭の <script> で決める（onclick の属性から、本体の大きな <script> が届く前に呼ばれても動く）
+  assert.ok(a < INDEX.indexOf('var LOCAL_STORES = ['), 'nbScrollBehavior が本体の <script> より後にある');
+  const src = INDEX.slice(a + 1, INDEX.indexOf('\n}\n', a) + 2);
+  const run = (window) => { const ctx = vm.createContext({ window }); vm.runInContext(src, ctx); return ctx.nbScrollBehavior(); };
+  assert.equal(run({ matchMedia: (q) => ({ matches: q === '(prefers-reduced-motion: reduce)' }) }), 'auto');
+  assert.equal(run({ matchMedia: () => ({ matches: false }) }), 'smooth');
+  assert.equal(run({}), 'smooth');
+  assert.equal(run({ matchMedia: () => { throw new Error('x'); } }), 'smooth');
+});
+
+test('段階 1: 店舗ページの雛形（gen-store-pages.js）は transition:all と、nbScrollBehavior を通らない smooth を書き出さない', () => {
+  const gen = fs.readFileSync(path.join(ROOT, 'gen-store-pages.js'), 'utf8');
+  assert.ok(!/transition\s*:\s*all\b/.test(gen), 'transition:all が残っている');
+  assert.deepEqual(m.auditJs(gen, P, { file: 'gen-store-pages.js' }).map((v) => v.line), []);
+  assert.ok(/function nbScrollBehavior\(\)/.test(gen), '雛形が nbScrollBehavior を持たない');
 });
 
 test('enforcedViolations: enforce:false は空・true は enforceScopes のファイルだけ', () => {

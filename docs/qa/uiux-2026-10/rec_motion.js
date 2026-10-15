@@ -1,0 +1,286 @@
+// 動きの前後を動画（mp4・GIF）に撮る道具（動きの計画 8.3 節）。
+// 使い方: node docs/qa/uiux-2026-10/rec_motion.js --root <配信するフォルダ> --label before|after --out-dir <出力先> [--only load,hover,sheet,quickview,fav,scroll]
+// 場面: load（読み込み直後 3 秒）/ hover（1280 のみ・カードにマウス）/ sheet（絞り込みシート）/ quickview / fav（♡）/ scroll（下へ→上へ戻るボタン）。
+// 出力: <label>-<幅>-<場面>.{webm,mp4,gif} と index-<label>.json。外部の画像は読み込む。GA4 だけ中断。「動きを減らす」は付けない。
+// puppeteer の page.screencast（ffmpeg 要）で録画し、ffmpeg で mp4（H.264・yuv420p）と GIF（15fps・390 は幅 390・1280 は幅 800）にする。
+'use strict';
+const fs = require('fs');
+const path = require('path');
+const http = require('http');
+const { execFileSync } = require('child_process');
+const puppeteer = require('puppeteer');
+
+const argv = process.argv.slice(2);
+const getOpt = (k, d) => { const i = argv.indexOf(k); return i >= 0 && argv[i + 1] !== undefined && !argv[i + 1].startsWith('--') ? argv[i + 1] : d; };
+const ROOT = path.resolve(getOpt('--root', path.join(__dirname, '..', '..', '..')));
+const LABEL = getOpt('--label', 'before');
+const OUT = path.resolve(getOpt('--out-dir', path.join(__dirname, 'motion-rec')));
+const ONLY = getOpt('--only', 'load,hover,sheet,quickview,fav,scroll').split(',');
+const FFMPEG = fs.existsSync('/opt/homebrew/bin/ffmpeg') ? '/opt/homebrew/bin/ffmpeg' : 'ffmpeg';
+const LIST_HASH = '#q=%E5%B1%85%E9%85%92%E5%B1%8B';
+const BLANK = 'data:text/html;charset=utf-8,' + encodeURIComponent('<meta name="viewport" content="width=device-width,initial-scale=1"><body style="margin:0;background:#fff"></body>');
+
+const VPS = [
+  { w: 390, h: 823, deviceScaleFactor: 2, isMobile: true, hasTouch: true, gifW: 390 },
+  { w: 1280, h: 800, deviceScaleFactor: 1, isMobile: false, hasTouch: false, gifW: 800 },
+];
+const MIME = {
+  '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8',
+  '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.gif': 'image/gif', '.ico': 'image/x-icon', '.xml': 'application/xml',
+  '.txt': 'text/plain; charset=utf-8', '.woff2': 'font/woff2', '.woff': 'font/woff',
+};
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+function startServer() {
+  const server = http.createServer((req, res) => {
+    let p;
+    try { p = decodeURIComponent(req.url.split('?')[0]); } catch (e) { res.writeHead(400); return res.end('bad'); }
+    if (p.endsWith('/')) p += 'index.html';
+    const f = path.join(ROOT, p);
+    let ok = false;
+    try { ok = f.startsWith(ROOT) && fs.statSync(f).isFile(); } catch (e) { ok = false; }
+    if (!ok) { res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' }); return res.end('not found'); }
+    res.writeHead(200, { 'content-type': MIME[path.extname(f)] || 'application/octet-stream', 'cache-control': 'no-store' });
+    fs.createReadStream(f).pipe(res);
+  });
+  return new Promise(resolve => server.listen(0, '127.0.0.1', () => resolve(server)));
+}
+
+async function launchBrowser() {
+  let lastErr;
+  for (const m of ['shell', true]) {
+    try { return await puppeteer.launch({ headless: m, args: ['--no-sandbox', '--disable-gpu'], protocolTimeout: 120000 }); } catch (e) { lastErr = e; }
+  }
+  throw lastErr;
+}
+
+async function openPage(browser, base, vp) {
+  const ctx = await browser.createBrowserContext();
+  const page = await ctx.newPage();
+  await page.setViewport({ width: vp.w, height: vp.h, deviceScaleFactor: vp.deviceScaleFactor, isMobile: vp.isMobile, hasTouch: vp.hasTouch });
+  await page.setCacheEnabled(false);
+  await page.setRequestInterception(true);
+  page.on('request', req => {
+    const u = req.url();
+    if (u.startsWith(base) && /\/(sw\.js|manifest\.(json|webmanifest))(\?|$)/.test(u)) return req.respond({ status: 404, contentType: 'text/plain', body: 'not found' });
+    if (/googletagmanager\.com|google-analytics\.com|analytics\.google\.com/.test(u)) return req.abort();
+    return req.continue();
+  });
+  return { ctx, page };
+}
+
+async function waitFn(page, fn, arg, timeout) {
+  try { await page.waitForFunction(fn, { timeout: timeout || 10000, polling: 50 }, arg); return true; } catch (e) { return false; }
+}
+const waitCatalog = page => waitFn(page, () => window.FULL_CATALOG_LOADED === true && window.ALL_STORES && window.ALL_STORES.length > 1000, null, 60000);
+async function waitImages(page) {
+  await page.evaluate(() => Promise.all(Array.from(document.images).filter(i => !i.complete && i.getBoundingClientRect().top < innerHeight * 2).slice(0, 30).map(i => new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 4000); })))).catch(() => {});
+}
+
+// 要素を画面中央へ即時スクロールして中心座標を返す
+async function centerOf(page, sel, within) {
+  return page.evaluate((sel, within) => {
+    const root = within ? document.querySelector(within) : document;
+    const els = (root || document).querySelectorAll(sel);
+    let el = null;
+    for (let i = 0; i < els.length; i++) { const r = els[i].getBoundingClientRect(); const cs = getComputedStyle(els[i]); if (r.width > 4 && r.height > 4 && cs.visibility !== 'hidden' && cs.display !== 'none') { el = els[i]; break; } }
+    if (!el) return null;
+    if (!el.closest('#filter-sheet-wrap')) el.scrollIntoView({ block: 'center', behavior: 'instant' });
+    const r = el.getBoundingClientRect();
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+  }, sel, within || '');
+}
+async function tap(page, vp, pt) {
+  if (vp.hasTouch) await page.touchscreen.tap(pt.x, pt.y); else { await page.mouse.move(pt.x, pt.y, { steps: 12 }); await sleep(150); await page.mouse.click(pt.x, pt.y); }
+}
+// カード写真の真ん中（ボタンでない所。題名リンクが伸びてカード全体を覆うが、ふつうのクリックは nbCardClick がクイックビューを開く）
+async function cardPhotoPoint(page) {
+  return page.evaluate(() => {
+    const cards = document.querySelectorAll('#grid .card');
+    for (let i = 0; i < cards.length; i++) {
+      const ci = cards[i].querySelector('.ci') || cards[i];
+      ci.scrollIntoView({ block: 'center', behavior: 'instant' });
+      const r = ci.getBoundingClientRect();
+      if (r.width > 40 && r.height > 40) {
+        const x = r.left + r.width / 2, y = r.top + r.height / 2;
+        const hit = document.elementFromPoint(x, y);
+        if (hit && cards[i].contains(hit) && !hit.closest('button, .fav-btn')) return { x, y };
+      }
+    }
+    return null;
+  });
+}
+
+async function gotoList(page, base) {
+  await page.goto(base + '/index.html' + LIST_HASH, { waitUntil: 'load', timeout: 60000 });
+  await waitCatalog(page);
+  await waitFn(page, () => document.querySelectorAll('#grid .card').length > 0, null, 20000);
+  await sleep(1000);
+  await waitImages(page);
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await sleep(500);
+}
+async function gotoTop(page, base) {
+  await page.goto(base + '/index.html', { waitUntil: 'load', timeout: 60000 });
+  await waitCatalog(page);
+  await sleep(2500); // 前（段階 1 の前）の入場の動きが終わるのを待つ
+  await waitImages(page);
+}
+
+// ── 場面 ──  setup は録画の前（準備）、run は録画の中。setup が false を返したら場面ごと失敗にする
+const SCENES = {
+  load: {
+    vps: [0, 1],
+    // 白紙から始める。about:blank はスマホの表示で幅 980 の画面になり、録画の大きさがそれに固定されて
+    // 画面が左上に小さく写るので、幅を端末に合わせた白紙を使う
+    async setup(page) { await page.goto(BLANK); },
+    async run(page, vp, base, ctx) {
+      await page.goto(BLANK);
+      await sleep(300);
+      page.goto(base + '/index.html', { waitUntil: 'load', timeout: 60000 }).catch(() => {});
+      await sleep(3000);
+    },
+  },
+  hover: {
+    vps: [1],
+    async setup(page, vp, base) { await gotoList(page, base); },
+    async run(page, vp, base, ctx) {
+      const skipped = ctx.skipped;
+      const hoverOne = async (name, sel, hash) => {
+        const pt = await centerOf(page, sel);
+        if (!pt) { skipped.push(name + ': 要素が見つからない（' + sel + '）'); return; }
+        await page.mouse.move(Math.max(5, pt.x - 300), Math.max(5, pt.y - 200), { steps: 5 });
+        await sleep(500);
+        await page.mouse.move(pt.x, pt.y, { steps: 25 });
+        await sleep(1200);
+        await page.mouse.move(Math.max(5, pt.x - 300), Math.max(5, pt.y - 200), { steps: 25 });
+        await sleep(700);
+      };
+      await hoverOne('店のカード', '#grid .card .ci');
+      // トップ（ハッシュ無し）へ
+      await gotoTop(page, base);
+      await hoverOne('特集カード', '.feature-card');
+      await hoverOne('今日の話題店の写真', '.tp-card');
+      await hoverOne('最新ジャーナルのカード', '.latest-journal-card');
+    },
+  },
+  sheet: {
+    vps: [0, 1],
+    async setup(page, vp, base) { await gotoList(page, base); },
+    async run(page, vp, base, ctx) {
+      const open = await centerOf(page, '#tb-filter-btn, #filter-toggle-btn, .cta-filter');
+      if (!open) throw new Error('絞り込みボタンが見つからない');
+      await sleep(600);
+      await tap(page, vp, open);
+      await waitFn(page, () => document.getElementById('filter-sheet-wrap').classList.contains('open') && document.querySelector('#filter-sheet .fs-chip'), null, 5000);
+      await sleep(900);
+      const chip = await centerOf(page, '#filter-sheet .fs-chip', '#filter-sheet');
+      if (!chip) throw new Error('チップが見つからない');
+      await tap(page, vp, chip);
+      await sleep(900);
+      await page.evaluate(() => { if (typeof nbCloseFilterSheet === 'function') nbCloseFilterSheet(); });
+      await sleep(1000);
+    },
+  },
+  quickview: {
+    vps: [0, 1],
+    async setup(page, vp, base) { await gotoList(page, base); },
+    async run(page, vp, base) {
+      const pt = await cardPhotoPoint(page);
+      if (!pt) throw new Error('カード写真が見つからない');
+      await sleep(600);
+      await tap(page, vp, pt);
+      const ok = await waitFn(page, () => document.getElementById('ov').classList.contains('open'), null, 4000);
+      if (!ok) throw new Error('クイックビューが開かなかった');
+      await sleep(1500);
+      await page.evaluate(() => closeM());
+      await sleep(900);
+    },
+  },
+  fav: {
+    vps: [0, 1],
+    async setup(page, vp, base) { await gotoList(page, base); },
+    async run(page, vp, base) {
+      const pt = await centerOf(page, '#grid .fav-btn');
+      if (!pt) throw new Error('♡が見つからない');
+      await sleep(700);
+      await tap(page, vp, pt);
+      await sleep(1100);
+      await tap(page, vp, pt);
+      await sleep(1000);
+      await page.evaluate(() => { try { localStorage.clear(); } catch (e) { /* なし */ } });
+    },
+  },
+  scroll: {
+    vps: [0, 1],
+    async setup(page, vp, base) { await gotoList(page, base); },
+    async run(page, vp, base) {
+      await sleep(500);
+      await page.evaluate(() => new Promise(res => {
+        let n = 0;
+        (function step() { window.scrollBy(0, 40); n++; if (n < 100) requestAnimationFrame(step); else res(); })();
+      }));
+      await sleep(700);
+      const ok = await waitFn(page, () => document.getElementById('scroll-top').classList.contains('visible'), null, 3000);
+      if (!ok) throw new Error('上へ戻るボタンが出なかった');
+      const pt = await centerOf(page, '#scroll-top');
+      if (!pt) throw new Error('上へ戻るボタンが見つからない');
+      await tap(page, vp, pt); // #scroll-top は position:fixed なので、centerOf の scrollIntoView は位置を動かさない
+      await sleep(1800);
+    },
+  },
+};
+
+function ffmpeg(args) { execFileSync(FFMPEG, ['-y', '-loglevel', 'error', ...args], { stdio: ['ignore', 'inherit', 'inherit'] }); }
+function convert(webm, mp4, gif, gifW) {
+  ffmpeg(['-i', webm, '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', mp4]);
+  ffmpeg(['-i', webm, '-vf', `fps=15,scale=${gifW}:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=128[p];[b][p]paletteuse=dither=bayer:bayer_scale=4`, gif]);
+}
+
+(async () => {
+  const t0 = Date.now();
+  fs.mkdirSync(OUT, { recursive: true });
+  const server = await startServer();
+  const base = 'http://127.0.0.1:' + server.address().port;
+  const browser = await launchBrowser();
+  const index = { label: LABEL, root: ROOT, startedAt: new Date().toISOString(), files: [], scenes: [] };
+  try {
+    for (const vp of VPS) {
+      for (const name of Object.keys(SCENES)) {
+        if (!ONLY.includes(name)) continue;
+        const sc = SCENES[name];
+        const rec = { scene: name, width: vp.w, ok: false, skipped: [] };
+        if (!sc.vps.includes(VPS.indexOf(vp))) { rec.skippedReason = vp.w + ' では撮らない場面'; index.scenes.push(rec); continue; }
+        const base_name = `${LABEL}-${vp.w}-${name}`;
+        const webm = path.join(OUT, base_name + '.webm');
+        // 失敗した場面は 1 回だけ撮り直す（読み込みの順の揺れで、たまにボタンが出る前に時間切れになるため）
+        for (let attempt = 1; attempt <= 2 && !rec.ok; attempt++) {
+          rec.skipped = [];
+          const { ctx, page } = await openPage(browser, base, vp);
+          try {
+            await sc.setup(page, vp, base);
+            const recorder = await page.screencast({ path: webm });
+            await sleep(300);
+            try { await sc.run(page, vp, base, { skipped: rec.skipped }); } finally { await sleep(600); await recorder.stop(); }
+            const mp4 = path.join(OUT, base_name + '.mp4'), gif = path.join(OUT, base_name + '.gif');
+            convert(webm, mp4, gif, vp.gifW);
+            rec.ok = true;
+            rec.attempts = attempt;
+            delete rec.error;
+            rec.files = [mp4, gif].map(f => ({ path: f, bytes: fs.statSync(f).size }));
+            index.files.push(...rec.files);
+            console.log('OK  ' + base_name + '  gif ' + (rec.files[1].bytes / 1048576).toFixed(2) + 'MB' + (attempt > 1 ? '  （撮り直し ' + attempt + ' 回目）' : '') + (rec.skipped.length ? '  飛ばし: ' + rec.skipped.join(' / ') : ''));
+          } catch (e) {
+            rec.error = String((e && e.message) || e).slice(0, 300);
+            console.log((attempt < 2 ? 'やり直し  ' : 'NG  ') + base_name + ': ' + rec.error);
+          } finally { await ctx.close().catch(() => {}); }
+        }
+        index.scenes.push(rec);
+      }
+    }
+  } finally { await browser.close().catch(() => {}); server.close(); }
+  index.seconds = Math.round((Date.now() - t0) / 1000);
+  fs.writeFileSync(path.join(OUT, `index-${LABEL}.json`), JSON.stringify(index, null, 2) + '\n');
+  console.log(`完了 ${index.seconds}s  成功 ${index.scenes.filter(s => s.ok).length}/${index.scenes.filter(s => !s.skippedReason).length}`);
+})().catch(e => { console.error(e); process.exit(2); });

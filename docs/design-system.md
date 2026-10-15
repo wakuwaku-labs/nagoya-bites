@@ -378,4 +378,4 @@ node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 
 | `motion-layout-prop` | 禁止プロパティの transition、`@keyframes` の中での変更 |
 | `smooth-scroll-js` | `nbScrollBehavior(` を通らない `behavior:'smooth'` |
 
-「動きを減らす」設定の中の規則は数えない。`motion.enforce` が `false` の間は数えるだけで、`--check` は落ちない。`true` にすると `motion.enforceScopes`（`assets/css/nb.css`・`index.html`）の違反で落ちる。手書きの特集などは落とす対象にしない。
+「動きを減らす」設定の中の規則は数えない。`motion.enforce` は `true`（段階 1・2026-10-16 に `nb.css` と `index.html` の違反を 0 にしてから上げた）で、`motion.enforceScopes`（`assets/css/nb.css`・`index.html`）の違反で `--check` が落ちる。手書きの特集・ルート直下の手書きのページ（about・faq・contact）は落とす対象にしない。店舗ページは雛形（`gen-store-pages.js`）を直してあり、CI の再生成で違反が 0 になったのを確かめてから `enforceScopes` に足す。
