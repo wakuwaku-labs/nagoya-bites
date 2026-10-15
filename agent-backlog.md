@@ -88,7 +88,7 @@
 - **owner**: Builder
 - **source**: オーナーの改訂の指示（2026-10-15）「継続的なデータ品質管理が不足している」「機能停止やロールバック」
 - **背景**: 地図リンクは店舗ページが `google.com/maps/search/店名 エリア`（`gen-store-pages.js:745`）、トップが `maps.google.com/search?q=店名 住所`（`index.html:4715`）。公式の形は `https://www.google.com/maps/search/?api=1&query=…&query_place_id=…`（API キー不要）。紐付けの監査は夜間 QA に入っていない（`scripts/nightly_qa.js`）。止めるスイッチも無い。計画書 4.2 節の B2・B3、6.3 節
-- **進み具合（2026-10-15）**: B3 の 3・4 を実装（スイッチは `data/place_binding_policy.json` の `show`・全部切った設定で実データの電話・評価・口コミ信頼度が全店で消えることを確かめた／夜間QA の soft `place-binding-states` が `audit_places_binding.js --states --check` で、設定が許していない状態で出している店を数える）。5 の閾値は、夜間QA の報告に毎晩残る状態ごとの数で 2026-10-29 まで揺れを測ってから決める。1 は B2 で実装（`scripts/lib/map_link.js` の `nbMapUrl`・api=1・place_id は確認済みの店だけ＝`features.map`・店舗ページ／トップ／日次ジャーナルの生成器が共有・符号化は `tests/map_link.test.js`）。2（実例 5 店で本番の地図リンクが正しい店を開く）はマージ後に確かめる。対話セッションで進行中なので自動の課題消化は触らない
+- **進み具合（2026-10-15）**: B3 の 3・4 を実装（スイッチは `data/place_binding_policy.json` の `show`・全部切った設定で実データの電話・評価・口コミ信頼度が全店で消えることを確かめた／夜間QA の soft `place-binding-states` が `audit_places_binding.js --states --check` で、設定が許していない状態で出している店を数える）。5 の閾値は、夜間QA の報告に毎晩残る状態ごとの数で 2026-10-29 まで揺れを測ってから決める。1 は B2 で実装（`scripts/lib/map_link.js` の `nbMapUrl`・api=1・place_id は確認済みの店だけ＝`features.map`・店舗ページ／トップ／日次ジャーナルの生成器が共有・符号化は `tests/map_link.test.js`）。2（実例 5 店で本番の地図リンクが正しい店を開く）はマージ後に確かめる。対話セッションで進行中なので自動の課題消化は触らない 本番（PR #605・run 38734163945 の後）: 地図リンクに place_id を付けた店 3,205（要確認 1,291・不一致 133 は検索の形）、実例 5 店の店舗ページは検索の形・朱寿は query_place_id つき、本番の data/stores.json で設定が許していない状態の店は電話・評価・口コミ信頼度・地図とも 0。残りは 5 の閾値（2026-10-29 以降）
 - **acceptance**:
   1. 地図リンクが公式の形（`api=1`）になり、place_id は確認済みの店にだけ付く。`&`・`#`・空白・全角の記号を含む店名で URL が正しく符号化される（単体テスト）
   2. 実例 5 店で、本番の地図リンクが正しい店を開く
