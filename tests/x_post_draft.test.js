@@ -305,3 +305,34 @@ test('設定と指示書: 型の一覧が指示書と一致し、本番の設定
   assert.strictEqual(realPolicy.header, '');
   assert.ok(realPolicy.draft.maxBodyWeighted + 23 + 3 + X.weightedLength('#名古屋グルメ #久屋大通') <= 280, '本文の上限＋URL＋ハッシュタグ2個が 280 に収まる');
 });
+
+// ── 見張り役: 保存した文面が続けて使われていない ──────────────────────────────
+test('投稿: 保存した文面を使わなかったときは、その理由を台帳の draft_reason に残す', async () => {
+  const root = fixture({});
+  await postRun({}, { root, env: ENV, fetchImpl: fakeFetch(root), now: NOW });
+  const row = JSON.parse(fs.readFileSync(path.join(root, 'data/x_post_log.json'), 'utf8')).posts[0];
+  assert.strictEqual(row.text_mode, 'template-point');
+  assert.strictEqual(row.draft_reason, 'draft_missing');
+});
+
+test('見張り役: 送った投稿が3回続けて保存した文面を使っていなければ原因つきで鳴らし、1回でも使えば静かにする', () => {
+  const { draftUnused, issueBody } = require('../scripts/check_x_post_health');
+  const pol = { ...policy, draft: { ...policy.draft, since: '2026-10-16', alertAfterDays: 3 } };
+  const row = (date, mode, extra = {}) => ({ date, slug: `${date}-x`, status: 'posted', text_mode: mode, ...extra });
+  const three = [row('2026-10-16', 'template-point', { draft_reason: 'draft_missing' }), row('2026-10-17', 'template'), row('2026-10-18', 'template-point', { draft_reason: 'draft_missing' })];
+  const p = draftUnused(pol, { posts: three }, '2026-10-15');
+  assert.strictEqual(p.kind, 'draft_unused');
+  assert.strictEqual(p.date, '2026-10-18');
+  assert.ok(p.reason.includes('2026-10-16: template-point（draft_missing）'));
+  assert.ok(issueBody({ today: '2026-10-18', problems: [p] }).includes('.local-logs'));
+  // 1回でも保存した文面を使えば鳴らさない
+  assert.strictEqual(draftUnused(pol, { posts: [...three.slice(0, 2), row('2026-10-18', 'draft')] }, '2026-10-15'), null);
+  // まだ2回しか送っていない・since より前・作り方を記録していない行・失敗の行は数えない
+  assert.strictEqual(draftUnused(pol, { posts: three.slice(1) }, '2026-10-15'), null);
+  assert.strictEqual(draftUnused(pol, { posts: [row('2026-10-14', 'template'), row('2026-10-15', 'template'), ...three.slice(1)] }, '2026-10-15'), null);
+  assert.strictEqual(draftUnused(pol, { posts: [{ date: '2026-10-16', status: 'posted' }, ...three.slice(1)] }, '2026-10-15'), null);
+  assert.strictEqual(draftUnused(pol, { posts: [...three.slice(0, 2), { ...three[2], status: 'failed' }] }, '2026-10-15'), null);
+  // 使う設定でなければ鳴らさない
+  assert.strictEqual(draftUnused({ ...pol, draft: { ...pol.draft, useInPost: false } }, { posts: three }, '2026-10-15'), null);
+  assert.strictEqual(draftUnused({ ...pol, draft: { ...pol.draft, alertAfterDays: 0 } }, { posts: three }, '2026-10-15'), null);
+});

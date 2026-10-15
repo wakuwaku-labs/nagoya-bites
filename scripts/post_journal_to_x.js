@@ -173,7 +173,7 @@ async function sendTweet(text, cred, fetchImpl = fetch) {
 }
 
 /** 結果を台帳・心拍に書く（live のときだけ呼ぶ）。 */
-function record(root, { date, entry, result, reason, text, textMode, tweetId, errorClass, status }) {
+function record(root, { date, entry, result, reason, text, textMode, draftReason, tweetId, errorClass, status }) {
   const now = new Date().toISOString();
   if (status) {
     const log = X.readLog(root);
@@ -181,6 +181,7 @@ function record(root, { date, entry, result, reason, text, textMode, tweetId, er
     const row = {
       date, slug: entry.slug, status, text,
       ...(textMode ? { text_mode: textMode } : {}),
+      ...(draftReason ? { draft_reason: draftReason } : {}),
       attempted_at: now,
       ...(tweetId ? { tweet_id: tweetId, tweet_url: `https://x.com/i/web/status/${tweetId}`, posted_at: now } : {}),
       ...(errorClass ? { error_class: errorClass } : {}),
@@ -244,6 +245,8 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
     rejected.push({ mode: c.mode, reason: failures.join(' / '), ...(c.text ? { text: c.text } : {}) });
   }
   if (rejected.length) out.rejected = rejected.map(({ mode: m, reason }) => ({ mode: m, reason }));
+  // 保存した文面を使わなかった理由（見張り役が「続けて使われていない」ときに原因として出す）
+  const draftReason = (rejected.find((x) => x.mode === 'draft') || {}).reason;
   if (!built) {
     // 最後の候補（題名だけの定型）が落ちた理由を書く
     const last = rejected[rejected.length - 1] || { reason: 'no_candidate' };
@@ -276,7 +279,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
 
   const cred = credentials(env);
   if (!cred) {
-    record(root, { date, entry, result: 'failed', reason: 'no_credentials', errorClass: 'auth', text: built.text, textMode: built.mode, status: 'failed' });
+    record(root, { date, entry, result: 'failed', reason: 'no_credentials', errorClass: 'auth', text: built.text, textMode: built.mode, draftReason, status: 'failed' });
     return { ...out, result: 'failed', reason: 'no_credentials', errorClass: 'auth', exitCode: 1 };
   }
 
@@ -285,12 +288,12 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
     res = await sendTweet(built.text, cred, fetchImpl);
   } catch (e) {
     const reason = `network:${e.message || e}`;
-    record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, status: 'failed' });
+    record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, draftReason, status: 'failed' });
     return { ...out, result: 'failed', reason, errorClass: 'server', exitCode: 1 };
   }
   const id = res.body && res.body.data && res.body.data.id;
   if ((res.status === 201 || res.status === 200) && id) {
-    record(root, { date, entry, result: 'posted', text: built.text, textMode: built.mode, tweetId: id, status: 'posted' });
+    record(root, { date, entry, result: 'posted', text: built.text, textMode: built.mode, draftReason, tweetId: id, status: 'posted' });
     return { ...out, result: 'posted', tweetId: id, tweetUrl: `https://x.com/i/web/status/${id}`, exitCode: 0 };
   }
   const errorClass = X.classifyError(res.status, res.body);
@@ -298,10 +301,10 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   const reason = `http_${res.status}: ${detail}`;
   if (errorClass === 'duplicate') {
     // 同じ文面が既に X にある＝前の回で届いていた。もう送らない
-    record(root, { date, entry, result: 'duplicate', reason, errorClass, text: built.text, textMode: built.mode, status: 'duplicate' });
+    record(root, { date, entry, result: 'duplicate', reason, errorClass, text: built.text, textMode: built.mode, draftReason, status: 'duplicate' });
     return { ...out, result: 'duplicate', reason, errorClass, exitCode: 0 };
   }
-  record(root, { date, entry, result: 'failed', reason, errorClass, text: built.text, textMode: built.mode, status: 'failed' });
+  record(root, { date, entry, result: 'failed', reason, errorClass, text: built.text, textMode: built.mode, draftReason, status: 'failed' });
   return { ...out, result: 'failed', reason, errorClass, exitCode: 1 };
 }
 

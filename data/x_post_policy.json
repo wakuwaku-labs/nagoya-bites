@@ -30,6 +30,9 @@
   "draft": {
     "generate": true,
     "useInPost": true,
+    "since": "2026-10-16",
+    "alertAfterDays": 3,
+    "alertHelp": "見張り役（scripts/check_x_post_health.js）は、since 以降に送った投稿が alertAfterDays 回続けて保存した文面を使っていなければ Issue を出す（Mac 側の文面づくりが黙って止まり、定型に戻り続けるのを見逃さないため）。保存した文面が1回使われれば自動で閉じる。0 で鳴らさない",
     "help": "P-476・docs/decisions/0047。generate = ジャーナルを作る Mac 側（scripts/run_journal_local.sh の 5i → scripts/write_x_draft.js）で Claude に X 用の文面を書かせ、data/x_post_drafts/<date>.json に保存する。useInPost = 投稿でその文面を最初に試す（検査に落ちたら下の定型に戻る）。文面の書き方の指示は docs/x-post-prompt.md",
     "types": {
       "number": "損しない数字（計算・落とし穴で、読んだ人の財布と時間を守る）",
