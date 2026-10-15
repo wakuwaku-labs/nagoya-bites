@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-15T13:56:59.335Z",
+  "generatedAt": "2026-10-15T14:15:23.237Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1641,
-    "pageViews": 2293,
-    "sessions": 1839,
-    "avgSessionDuration": 123.1,
+    "activeUsers": 1646,
+    "pageViews": 2302,
+    "sessions": 1844,
+    "avgSessionDuration": 124.3,
     "bounceRate": 0.283,
     "pagesPerSession": 1.25
   },
@@ -17,7 +17,7 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1355,
+      "organic": 1360,
       "direct": 355,
       "social": 6,
       "ai_assistant": 104,
@@ -26,8 +26,8 @@
       "other": 1
     },
     "pct": {
-      "organic": 73.1,
-      "direct": 19.2,
+      "organic": 73.2,
+      "direct": 19.1,
       "social": 0.3,
       "ai_assistant": 5.6,
       "referral": 1.7,
@@ -39,12 +39,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 601
+      "sessions": 603
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 509
+      "sessions": 510
     },
     {
       "source": "(direct)",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 225
+      "sessions": 227
     },
     {
       "source": "chatgpt.com",
@@ -195,8 +195,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 341,
-      "sessions": 326
+      "pageViews": 344,
+      "sessions": 328
     },
     {
       "path": "/",
@@ -220,12 +220,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 180,
+    "outboundClicks": 181,
     "ctaClickRate": 9.8,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 59
+        "clicks": 60
       },
       {
         "domain": "tabelog.com",
@@ -290,7 +290,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 107,
+      "organic": 108,
       "direct": 53,
       "social": 0,
       "ai_assistant": 19,
@@ -415,11 +415,11 @@
         "clicks": 2
       },
       {
-        "path": "/stores/J001239080.html",
+        "path": "/stores/J001147583.html",
         "clicks": 2
       },
       {
-        "path": "/stores/J003828115.html",
+        "path": "/stores/J001239080.html",
         "clicks": 2
       }
     ],
@@ -566,6 +566,11 @@
       },
       {
         "path": "/stores/J000431352.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/J001147583.html",
         "domain": "www.hotpepper.jp",
         "clicks": 2
       },
@@ -765,11 +770,6 @@
         "clicks": 1
       },
       {
-        "path": "/stores/J001147583.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
         "path": "/stores/J001192240.html",
         "domain": "tabelog.com",
         "clicks": 1
@@ -955,6 +955,10 @@
         "clicks": 2
       },
       {
+        "path": "/stores/J001147583.html",
+        "clicks": 2
+      },
+      {
         "path": "/stores/J000661748.html",
         "clicks": 2
       },
@@ -1012,10 +1016,6 @@
       },
       {
         "path": "/stores/J001127221.html",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001147583.html",
         "clicks": 1
       },
       {
@@ -1079,7 +1079,7 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 95,
+    "reservationClicks": 96,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 24,
@@ -1105,7 +1105,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1641,
+    "value": 1646,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
