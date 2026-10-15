@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-14T21:19:15.743Z",
+  "generatedAt": "2026-10-15T00:11:37.561Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1560,
-    "pageViews": 2182,
-    "sessions": 1752,
-    "avgSessionDuration": 123.6,
+    "activeUsers": 1569,
+    "pageViews": 2192,
+    "sessions": 1761,
+    "avgSessionDuration": 123.2,
     "bounceRate": 0.284,
-    "pagesPerSession": 1.25
+    "pagesPerSession": 1.24
   },
   "dailyReference": {
     "date": "2026-10-13",
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1281,
-      "direct": 343,
+      "organic": 1289,
+      "direct": 348,
       "social": 5,
       "ai_assistant": 103,
       "referral": 32,
@@ -26,8 +26,8 @@
       "other": 1
     },
     "pct": {
-      "organic": 72.6,
-      "direct": 19.4,
+      "organic": 72.5,
+      "direct": 19.6,
       "social": 0.3,
       "ai_assistant": 5.8,
       "referral": 1.8,
@@ -39,22 +39,22 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 571
+      "sessions": 573
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 481
+      "sessions": 484
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 252
+      "sessions": 253
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 209
+      "sessions": 212
     },
     {
       "source": "chatgpt.com",
@@ -69,7 +69,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 31
+      "sessions": 35
     },
     {
       "source": "openai",
@@ -190,8 +190,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 330,
-      "sessions": 316
+      "pageViews": 331,
+      "sessions": 317
     },
     {
       "path": "/",
@@ -210,12 +210,12 @@
     },
     {
       "path": "/features/nagoya-autumn-2026.html",
-      "pageViews": 73,
-      "sessions": 72
+      "pageViews": 74,
+      "sessions": 73
     }
   ],
   "cta": {
-    "outboundClicks": 164,
+    "outboundClicks": 165,
     "ctaClickRate": 9.4,
     "byDomain": [
       {
@@ -228,7 +228,7 @@
       },
       {
         "domain": "maps.google.com",
-        "clicks": 26
+        "clicks": 27
       },
       {
         "domain": "www.instagram.com",
@@ -285,7 +285,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 91,
+      "organic": 92,
       "direct": 53,
       "social": 0,
       "ai_assistant": 19,
@@ -294,7 +294,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 7.1,
-    "ctaClickRate_direct": 15.5,
+    "ctaClickRate_direct": 15.2,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -725,6 +725,11 @@
         "clicks": 1
       },
       {
+        "path": "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
+        "domain": "maps.google.com",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J000392719.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -1013,7 +1018,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1560,
+    "value": 1569,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
