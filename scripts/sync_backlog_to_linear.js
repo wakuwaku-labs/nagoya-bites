@@ -22,6 +22,8 @@ const open = new Set(['ready', 'in_progress', 'partial', 'blocked']);
 const stateFor = { ready: 'Todo', in_progress: 'In Progress', partial: 'In Progress', blocked: 'Todo', done: 'Done', wont_fix: 'Canceled', superseded: 'Canceled', duplicate: 'Duplicate' };
 const priorityFor = { P0: 'urgent', P1: 'high', P2: 'medium', P3: 'low' };
 const priorityNumber = { urgent: 1, high: 2, medium: 3, low: 4 };
+// Linear state types that must not be overwritten by backlog sync
+const TERMINAL_STATE_TYPES = new Set(['completed', 'cancelled', 'duplicate']);
 
 function isValidDueDate(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value || '')) return false;
@@ -108,6 +110,44 @@ function listAllIssues(read = readJson, maxPages = 50) {
   throw new Error(`Linear issue listing did not finish within ${maxPages} pages; refusing to sync an incomplete list`);
 }
 
+/**
+ * Build the list of planned actions from parsed backlog tasks, live Linear issues, and sync state.
+ * Exported for testing. Does not call Linear or touch the filesystem.
+ *
+ * @param {object[]} tasks      - result of parseBacklog()
+ * @param {Map}      liveIssues - identifier → Linear issue object
+ * @param {object}   state      - content of linear_sync_state.json
+ * @param {object}   defaults   - content of linear_issue_defaults.json
+ * @param {string}   md         - raw backlog markdown (for description extraction)
+ * @returns {object[]} plan items with action, task, identifier, status, priority
+ */
+function buildPlan(tasks, liveIssues, state, defaults, md) {
+  const active = tasks.filter(t => stateFor[t.status]);
+  const plan = [];
+  for (const task of active) {
+    const entry = state.issues[task.id];
+    const status = stateFor[task.status];
+    const priority = priorityFor[task.priority] || 'low';
+    if (entry) {
+      const current = liveIssues.get(entry.identifier);
+      if (!current) {
+        // Archived: no longer visible in live list; report separately, don't apply
+        plan.push({ action: 'archived', task, identifier: entry.identifier, status, priority });
+        continue;
+      }
+      // Never overwrite Linear's terminal states (completed/cancelled/duplicate)
+      if (TERMINAL_STATE_TYPES.has(current.state?.type)) continue;
+      const title = `[${task.id}] ${task.title}`;
+      if (current.state?.name !== status || current.priority !== priorityNumber[priority] || current.title !== title) {
+        plan.push({ action: 'update', task, identifier: entry.identifier, status, priority, description: null });
+      }
+    } else if (open.has(task.status)) {
+      plan.push({ action: 'create', task: withCreateDefaults(task, defaults), status, priority, description: descriptionFor(md, task) });
+    }
+  }
+  return plan;
+}
+
 function main() {
   const apply = process.argv.includes('--apply');
   const skipAt = process.argv.indexOf('--skip');
@@ -124,22 +164,7 @@ function main() {
     process.exitCode = 1;
     return;
   }
-  const active = tasks.filter(t => stateFor[t.status]);
-  const plan = [];
-  for (const task of active) {
-    const entry = state.issues[task.id];
-    const status = stateFor[task.status];
-    const priority = priorityFor[task.priority] || 'low';
-    if (entry) {
-      const current = liveIssues.get(entry.identifier);
-      const title = `[${task.id}] ${task.title}`;
-      if (!current || current.state?.name !== status || current.priority !== priorityNumber[priority] || current.title !== title) {
-        plan.push({ action: 'update', task, identifier: entry.identifier, status, priority, description: null });
-      }
-    } else if (open.has(task.status)) {
-      plan.push({ action: 'create', task: withCreateDefaults(task, defaults), status, priority, description: descriptionFor(md, task) });
-    }
-  }
+  const plan = buildPlan(tasks, liveIssues, state, defaults, md);
   for (const duplicate of state.duplicateImports || []) {
     try {
       const context = readJson(['linear', 'issue', duplicate.identifier, '--relations', '--workspace', WORKSPACE, '--json']);
@@ -156,8 +181,12 @@ function main() {
     }
   }
   const pending = plan.filter(x => !skipped.has(x.identifier));
-  const counts = pending.reduce((a, x) => (a[x.action]++, a), { create: 0, update: 0, 'mark-duplicate': 0 });
-  console.log(JSON.stringify({ mode: apply ? 'apply' : 'dry-run', workspace: state.workspaceName, total: pending.length, ...counts,
+  // archived issues are reported but not applied; exclude them from total/update counts
+  const counts = pending.reduce((a, x) => (a[x.action]++, a), { create: 0, update: 0, 'mark-duplicate': 0, archived: 0 });
+  const actionable = pending.filter(x => x.action !== 'archived');
+  console.log(JSON.stringify({ mode: apply ? 'apply' : 'dry-run', workspace: state.workspaceName,
+    total: actionable.length, create: counts.create, update: counts.update, 'mark-duplicate': counts['mark-duplicate'],
+    ...(counts.archived ? { archived: counts.archived } : {}),
     tasks: pending.map(x => ({ action: x.action, id: x.task.id, title: x.task.title, linear: x.identifier || null, status: x.status, priority: x.priority,
       missingFields: x.action === 'create' ? missingCreateFields(x.task) : [] })) }, null, 2));
   if (!apply) return;
@@ -171,6 +200,10 @@ function main() {
   }
 
   for (const item of pending) {
+    if (item.action === 'archived') {
+      console.log(`archived: ${item.task.id} → ${item.identifier} (not in live list; skipped)`);
+      continue;
+    }
     if (item.action === 'mark-duplicate') {
       const read = spawnSync('orca', ['linear', 'issue', item.identifier, '--relations', '--workspace', WORKSPACE, '--json'],
         { encoding: 'utf8', maxBuffer: 2 * 1024 * 1024 });
@@ -235,4 +268,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { isValidDueDate, missingCreateFields, withCreateDefaults, listAllIssues };
+module.exports = { isValidDueDate, missingCreateFields, withCreateDefaults, listAllIssues, buildPlan };
