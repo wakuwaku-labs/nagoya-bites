@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-10-16T19:21:38.753Z",
+  "generatedAt": "2026-10-16T20:33:23.706Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1877,
+  "total_sessions": 1880,
   "engines": [
     {
       "key": "google",
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 501,
-      "pct": 26.7,
+      "pct": 26.6,
       "sources": [
         {
           "source": "bing",
@@ -40,13 +40,13 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 298,
-      "pct": 15.9,
+      "sessions": 300,
+      "pct": 16,
       "sources": [
         {
           "source": "(direct)",
           "medium": "(none)",
-          "sessions": 274
+          "sessions": 276
         },
         {
           "source": "(not set)",
@@ -58,13 +58,13 @@
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 235,
-      "pct": 12.5,
+      "sessions": 236,
+      "pct": 12.6,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 233
+          "sessions": 234
         },
         {
           "source": "hk.search.yahoo.com",
@@ -82,7 +82,7 @@
       "key": "ai_assistant",
       "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
       "sessions": 108,
-      "pct": 5.8,
+      "pct": 5.7,
       "sources": [
         {
           "source": "chatgpt.com",
@@ -222,7 +222,7 @@
     }
   ],
   "search_only": {
-    "total": 1489,
+    "total": 1490,
     "share": [
       {
         "key": "google",
@@ -239,14 +239,14 @@
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 235,
+        "sessions": 236,
         "pct_of_search": 15.8
       },
       {
         "key": "ai_assistant",
         "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
         "sessions": 108,
-        "pct_of_search": 7.3
+        "pct_of_search": 7.2
       },
       {
         "key": "duckduckgo",
@@ -260,14 +260,14 @@
     "from": "2026-10-15",
     "to": "2026-10-16",
     "delta": {
-      "google": 4,
+      "google": 32,
       "bing": 0,
-      "direct": 2,
-      "yahoo": 0,
-      "ai_assistant": 0,
-      "other": 1,
+      "direct": 1,
+      "yahoo": 7,
+      "ai_assistant": 4,
+      "other": -4,
       "duckduckgo": 0,
-      "social": 1
+      "social": 2
     }
   },
   "blind_spots": [
