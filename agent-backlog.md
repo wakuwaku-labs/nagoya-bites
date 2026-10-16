@@ -1339,7 +1339,7 @@
 
 ### [SEO-118] GA4 の計測復旧による段差を効果測定から切り離し、継続中の施策の基線を取り直す
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done（2026-10-16）
 - **detected**: 2026-10-09
 - **due**: 2026-10-20
 - **category**: SEO / 計測
@@ -1353,6 +1353,7 @@
   3. 既存4件は、`/stores/` を除いた値で比べるか、比較できないと台帳に記録する
   4. 店舗ページ込みの GA4 の真値（PV・セッション）を `docs/kpi-weekly.md` に記録する
 - **2026-10-10 途中経過（達成条件1・3）**: 1: 計測が変わった日の台帳 `data/measurement_changes.json` に SEO-115（2026-10-09・ga4）を記録し、`scripts/track_metrics.js` の `--followup`・`--report`・`--north-star` が、比べる2日の間（前の日の30日窓の始まりより後〜後の日）にこの日が入ると `measurement_changes` に注意を出すようにした（GSC だけの比較には出さない・`tests/measurement_changes.test.js`）。3: 台帳の既存4件（SEO-003・ISSUE-067・SEO-060・DSN-003）に `measurement_note` を付け、GA4 での比較は 10-09 をまたがない（`/stores/` を除いた合計は site_metrics.json に無く、除いた比較もできない）と記録した。2（10-16 以降に SEO-095・SEO-099 の基線）と4（GA4 の真値を kpi-weekly へ）は日付待ち
+- **結果（2026-10-16）**: 2: SEO-095・SEO-099 の基線を `track_metrics.js --baseline` で `data/effect_ledger.json` に記録した（2026-10-16・セッション1821・PV2267・発見型クリック125）。4: 店舗ページ含む GA4 の真値を `docs/kpi-weekly.md` の「週次スナップショット — 2026-10-16」として記録した。全4件の達成条件を満たした。
 
 
 ### [SEO-119] 栄エリア7店のアクセス文から県外の駅名を除く

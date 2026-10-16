@@ -221,6 +221,306 @@
         "comparable_after_change": false,
         "note": "この施策の基線（2026-09-07）は店舗ページの GA4 が動いていなかった期間に取った。2026-10-09 以降の GA4 の値と比べると計測の段差が入る。site_metrics.json は /stores/ を除いた合計を持たないため、店舗ページを除いた値での比較もできない。GA4 での比較は 2026-10-09 より前の followup までで止め、以後は GSC（計測変更の影響を受けない）で見る（SEO-118）"
       }
+    },
+    "--help": {
+      "baseline": {
+        "date": "2026-10-16",
+        "metrics": {
+          "totals": {
+            "activeUsers": 1629,
+            "pageViews": 2267,
+            "sessions": 1821,
+            "avgSessionDuration": 121.3,
+            "bounceRate": 0.285,
+            "pagesPerSession": 1.24
+          },
+          "gsc": {
+            "generatedAt": "2026-10-15T21:10:00.867Z",
+            "dateRange": {
+              "startDate": "2026-09-17",
+              "endDate": "2026-10-14"
+            },
+            "totals": {
+              "clicks": 767,
+              "impressions": 40329,
+              "ctr": 0.019,
+              "position": 11.1,
+              "impressionsPerDay": 1440.3
+            },
+            "intent_kpi": {
+              "discovery_impressions": 1862,
+              "discovery_clicks": 125,
+              "discovery_impressions_share": 10.2
+            },
+            "pageTypes": {
+              "feature": {
+                "pages": 43,
+                "clicks": 256,
+                "impressions": 4410,
+                "ctr": 0.058,
+                "position": 8.3
+              },
+              "journal": {
+                "pages": 105,
+                "clicks": 190,
+                "impressions": 4729,
+                "ctr": 0.0402,
+                "position": 7.8
+              },
+              "store": {
+                "pages": 3163,
+                "clicks": 302,
+                "impressions": 29070,
+                "ctr": 0.0104,
+                "position": 11.7
+              },
+              "home": {
+                "pages": 1,
+                "clicks": 19,
+                "impressions": 2159,
+                "ctr": 0.0088,
+                "position": 18
+              },
+              "area_hub": {
+                "pages": 30,
+                "clicks": 1,
+                "impressions": 86,
+                "ctr": 0.0116,
+                "position": 13.9
+              }
+            }
+          },
+          "channels_pct": {
+            "organic": 73.1,
+            "direct": 19.2,
+            "social": 0.3,
+            "ai_assistant": 5.7,
+            "referral": 1.7,
+            "paid": 0,
+            "other": 0.1
+          },
+          "search_channels": {
+            "google": 595,
+            "bing": 501,
+            "direct": 297,
+            "yahoo": 228,
+            "ai_assistant": 104,
+            "other": 86,
+            "duckduckgo": 18,
+            "social": 6
+          },
+          "cta": {
+            "outboundClicks": 182,
+            "ctaClickRate": 10,
+            "ctaClickRate_organic": 8.3,
+            "ctaClickRate_direct": 14.5,
+            "ctaClickRate_social": 0
+          }
+        }
+      },
+      "target_metric": null,
+      "target_value": null,
+      "followup": null
+    },
+    "SEO-095": {
+      "baseline": {
+        "date": "2026-10-16",
+        "metrics": {
+          "totals": {
+            "activeUsers": 1629,
+            "pageViews": 2267,
+            "sessions": 1821,
+            "avgSessionDuration": 121.3,
+            "bounceRate": 0.285,
+            "pagesPerSession": 1.24
+          },
+          "gsc": {
+            "generatedAt": "2026-10-15T21:10:00.867Z",
+            "dateRange": {
+              "startDate": "2026-09-17",
+              "endDate": "2026-10-14"
+            },
+            "totals": {
+              "clicks": 767,
+              "impressions": 40329,
+              "ctr": 0.019,
+              "position": 11.1,
+              "impressionsPerDay": 1440.3
+            },
+            "intent_kpi": {
+              "discovery_impressions": 1862,
+              "discovery_clicks": 125,
+              "discovery_impressions_share": 10.2
+            },
+            "pageTypes": {
+              "feature": {
+                "pages": 43,
+                "clicks": 256,
+                "impressions": 4410,
+                "ctr": 0.058,
+                "position": 8.3
+              },
+              "journal": {
+                "pages": 105,
+                "clicks": 190,
+                "impressions": 4729,
+                "ctr": 0.0402,
+                "position": 7.8
+              },
+              "store": {
+                "pages": 3163,
+                "clicks": 302,
+                "impressions": 29070,
+                "ctr": 0.0104,
+                "position": 11.7
+              },
+              "home": {
+                "pages": 1,
+                "clicks": 19,
+                "impressions": 2159,
+                "ctr": 0.0088,
+                "position": 18
+              },
+              "area_hub": {
+                "pages": 30,
+                "clicks": 1,
+                "impressions": 86,
+                "ctr": 0.0116,
+                "position": 13.9
+              }
+            }
+          },
+          "channels_pct": {
+            "organic": 73.1,
+            "direct": 19.2,
+            "social": 0.3,
+            "ai_assistant": 5.7,
+            "referral": 1.7,
+            "paid": 0,
+            "other": 0.1
+          },
+          "search_channels": {
+            "google": 595,
+            "bing": 501,
+            "direct": 297,
+            "yahoo": 228,
+            "ai_assistant": 104,
+            "other": 86,
+            "duckduckgo": 18,
+            "social": 6
+          },
+          "cta": {
+            "outboundClicks": 182,
+            "ctaClickRate": 10,
+            "ctaClickRate_organic": 8.3,
+            "ctaClickRate_direct": 14.5,
+            "ctaClickRate_social": 0
+          }
+        }
+      },
+      "target_metric": null,
+      "target_value": null,
+      "followup": null
+    },
+    "SEO-099": {
+      "baseline": {
+        "date": "2026-10-16",
+        "metrics": {
+          "totals": {
+            "activeUsers": 1629,
+            "pageViews": 2267,
+            "sessions": 1821,
+            "avgSessionDuration": 121.3,
+            "bounceRate": 0.285,
+            "pagesPerSession": 1.24
+          },
+          "gsc": {
+            "generatedAt": "2026-10-15T21:10:00.867Z",
+            "dateRange": {
+              "startDate": "2026-09-17",
+              "endDate": "2026-10-14"
+            },
+            "totals": {
+              "clicks": 767,
+              "impressions": 40329,
+              "ctr": 0.019,
+              "position": 11.1,
+              "impressionsPerDay": 1440.3
+            },
+            "intent_kpi": {
+              "discovery_impressions": 1862,
+              "discovery_clicks": 125,
+              "discovery_impressions_share": 10.2
+            },
+            "pageTypes": {
+              "feature": {
+                "pages": 43,
+                "clicks": 256,
+                "impressions": 4410,
+                "ctr": 0.058,
+                "position": 8.3
+              },
+              "journal": {
+                "pages": 105,
+                "clicks": 190,
+                "impressions": 4729,
+                "ctr": 0.0402,
+                "position": 7.8
+              },
+              "store": {
+                "pages": 3163,
+                "clicks": 302,
+                "impressions": 29070,
+                "ctr": 0.0104,
+                "position": 11.7
+              },
+              "home": {
+                "pages": 1,
+                "clicks": 19,
+                "impressions": 2159,
+                "ctr": 0.0088,
+                "position": 18
+              },
+              "area_hub": {
+                "pages": 30,
+                "clicks": 1,
+                "impressions": 86,
+                "ctr": 0.0116,
+                "position": 13.9
+              }
+            }
+          },
+          "channels_pct": {
+            "organic": 73.1,
+            "direct": 19.2,
+            "social": 0.3,
+            "ai_assistant": 5.7,
+            "referral": 1.7,
+            "paid": 0,
+            "other": 0.1
+          },
+          "search_channels": {
+            "google": 595,
+            "bing": 501,
+            "direct": 297,
+            "yahoo": 228,
+            "ai_assistant": 104,
+            "other": 86,
+            "duckduckgo": 18,
+            "social": 6
+          },
+          "cta": {
+            "outboundClicks": 182,
+            "ctaClickRate": 10,
+            "ctaClickRate_organic": 8.3,
+            "ctaClickRate_direct": 14.5,
+            "ctaClickRate_social": 0
+          }
+        }
+      },
+      "target_metric": null,
+      "target_value": null,
+      "followup": null
     }
   }
 }
