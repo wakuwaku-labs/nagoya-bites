@@ -1,37 +1,38 @@
 {
-  "generatedAt": "2026-10-16T00:36:18.141Z",
+  "generatedAt": "2026-10-16T19:21:38.708Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
   "byQuery": {
-    "ctrFix": [],
+    "ctrFix": [
+      {
+        "query": "ウルフ ギャング 名古屋 レビュー",
+        "impressions": 627,
+        "clicks": 3,
+        "position": 8.1,
+        "ctr": 0.48,
+        "expectedCtr": 3.2,
+        "missedClicks": 16.8
+      }
+    ],
     "ctrFixGeoless": [
       {
-        "query": "イルタッソ",
-        "impressions": 172,
-        "clicks": 2,
-        "position": 6.8,
-        "ctr": 1.16,
-        "expectedCtr": 4.2,
-        "missedClicks": 5.2
-      },
-      {
         "query": "cm 伏見",
-        "impressions": 197,
+        "impressions": 205,
         "clicks": 3,
-        "position": 7.3,
-        "ctr": 1.52,
-        "expectedCtr": 3.8,
-        "missedClicks": 4.4
+        "position": 7.4,
+        "ctr": 1.46,
+        "expectedCtr": 3.7,
+        "missedClicks": 4.6
       },
       {
         "query": "一人飲み",
-        "impressions": 77,
-        "clicks": 4,
-        "position": 3.8,
-        "ctr": 5.19,
-        "expectedCtr": 8.6,
-        "missedClicks": 2.6
+        "impressions": 80,
+        "clicks": 5,
+        "position": 3.9,
+        "ctr": 6.25,
+        "expectedCtr": 8.3,
+        "missedClicks": 1.6
       }
     ],
     "rankPush": []
@@ -40,50 +41,59 @@
     "ctrFix": [
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 851,
-        "clicks": 10,
+        "impressions": 888,
+        "clicks": 11,
         "position": 7.4,
-        "ctr": 1.18,
+        "ctr": 1.24,
         "expectedCtr": 3.7,
-        "missedClicks": 21.3
+        "missedClicks": 21.7
       },
       {
         "page": "/stores/J004660861.html",
-        "impressions": 1040,
+        "impressions": 1072,
         "clicks": 17,
         "position": 7.5,
-        "ctr": 1.63,
+        "ctr": 1.59,
         "expectedCtr": 3.6,
-        "missedClicks": 20.5
+        "missedClicks": 21.5
       },
       {
         "page": "/stores/J004660223.html",
-        "impressions": 884,
+        "impressions": 922,
         "clicks": 13,
         "position": 7.6,
-        "ctr": 1.47,
+        "ctr": 1.41,
         "expectedCtr": 3.5,
-        "missedClicks": 18.1
+        "missedClicks": 19.5
+      },
+      {
+        "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
+        "impressions": 556,
+        "clicks": 10,
+        "position": 8.6,
+        "ctr": 1.8,
+        "expectedCtr": 3,
+        "missedClicks": 6.4
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2092,
-        "clicks": 19,
-        "position": 18.1,
-        "ctr": 0.91,
-        "upsideClicks": 39.5
+        "impressions": 2165,
+        "clicks": 20,
+        "position": 17.9,
+        "ctr": 0.92,
+        "upsideClicks": 40.7
       }
     ]
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / ctrFixGeoless=地名なし全国クエリ(SEO-061)→検索者の大半が名古屋在住とは限らず低CTRが正常。追うなら要検証 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
-    "queryCtrFix": 0,
-    "queryCtrFixGeoless": 3,
+    "queryCtrFix": 1,
+    "queryCtrFixGeoless": 2,
     "queryRankPush": 0,
-    "pageCtrFix": 3,
+    "pageCtrFix": 4,
     "pageRankPush": 1,
     "topPageCtrFix": [
       "/features/nagoya-tebasaki.html",

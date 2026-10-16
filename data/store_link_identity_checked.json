@@ -1544,7 +1544,7 @@
     "storeName": "裏の山の木の子 名古屋",
     "kind": "tabelog",
     "area": "名古屋市中村区",
-    "checkedAt": "2026-10-09T04:01:15.455Z"
+    "checkedAt": "2026-10-16T19:29:54.847Z"
   },
   "a3c475361271268a0c4d65663d9a30a5": {
     "ok": false,
@@ -56047,7 +56047,7 @@
     "storeName": "完全個室居酒屋 哉月",
     "kind": "tabelog",
     "area": "名古屋市中村区",
-    "checkedAt": "2026-10-09T04:01:32.785Z"
+    "checkedAt": "2026-10-16T19:30:00.060Z"
   },
   "f71f59356709e1b27cd2df513d3612e6": {
     "ok": false,
@@ -56233,7 +56233,7 @@
     "storeName": "那古野 しば福や 名駅店",
     "kind": "tabelog",
     "area": "名古屋（名古屋駅/西区/中村区）",
-    "checkedAt": "2026-10-09T04:01:05.074Z"
+    "checkedAt": "2026-10-16T19:29:44.774Z"
   },
   "d750b39e9b24d44ed1489e00bd82999c": {
     "ok": true,
@@ -56391,7 +56391,7 @@
     "storeName": "勝手口河内屋",
     "kind": "tabelog",
     "area": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-    "checkedAt": "2026-10-09T04:01:11.040Z"
+    "checkedAt": "2026-10-16T19:29:49.459Z"
   },
   "2e8323a83ea39237dceca3d4bbd1e5d1": {
     "ok": true,
@@ -124420,5 +124420,43 @@
     "kind": "tabelog",
     "area": "名古屋市中区",
     "checkedAt": "2026-10-16T00:18:07.987Z"
+  },
+  "784fef74b5366955dbcfcb9458a6e490": {
+    "ok": false,
+    "reason": "fetch-error",
+    "error": "HTTP 403",
+    "url": "https://tabelog.com/aichi/A2301/A230105/23096176/",
+    "storeName": "プンミポチャ 金山店",
+    "kind": "tabelog",
+    "area": "金山・神宮前・熱田区",
+    "checkedAt": "2026-10-16T19:29:39.141Z"
+  },
+  "57a42e020f5f0e1b963007098d9f4bff": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "天ぷらスタンド KITSUNE キツネ 今池店",
+    "shopState": null,
+    "closed": false,
+    "storeName": "天ぷらスタンド KITSUNE キツネ 今池店",
+    "title": "天ぷらスタンド KITSUNE キツネ 今池店(今池/居酒屋)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ003298620/",
+    "kind": "hotpepper",
+    "area": "大曽根･千種･今池･池下･守山区",
+    "checkedAt": "2026-10-16T19:30:05.829Z"
+  },
+  "945058362307dd5fde1988aa0bd4f9cf": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "プンミポチャ 金山店",
+    "shopState": null,
+    "closed": false,
+    "storeName": "プンミポチャ 金山店",
+    "title": "プンミポチャ 金山店(金山/韓国料理)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004559448/",
+    "kind": "hotpepper",
+    "area": "金山・神宮前・熱田区",
+    "checkedAt": "2026-10-16T19:30:12.212Z"
   }
 }
