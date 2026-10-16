@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-15T21:09:57.968Z",
+  "generatedAt": "2026-10-16T00:05:09.536Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1629,
-    "pageViews": 2267,
-    "sessions": 1821,
-    "avgSessionDuration": 121.3,
-    "bounceRate": 0.285,
+    "activeUsers": 1635,
+    "pageViews": 2275,
+    "sessions": 1829,
+    "avgSessionDuration": 120.9,
+    "bounceRate": 0.286,
     "pagesPerSession": 1.24
   },
   "dailyReference": {
@@ -17,19 +17,19 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1341,
-      "direct": 352,
-      "social": 6,
+      "organic": 1345,
+      "direct": 354,
+      "social": 7,
       "ai_assistant": 104,
       "referral": 31,
       "paid": 0,
-      "other": 1
+      "other": 2
     },
     "pct": {
-      "organic": 73.1,
+      "organic": 73,
       "direct": 19.2,
-      "social": 0.3,
-      "ai_assistant": 5.7,
+      "social": 0.4,
+      "ai_assistant": 5.6,
       "referral": 1.7,
       "paid": 0,
       "other": 0.1
@@ -39,7 +39,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 595
+      "sessions": 599
     },
     {
       "source": "bing",
@@ -49,7 +49,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 266
+      "sessions": 268
     },
     {
       "source": "yahoo",
@@ -122,6 +122,11 @@
       "sessions": 2
     },
     {
+      "source": "x",
+      "medium": "social",
+      "sessions": 2
+    },
+    {
       "source": "cn.bing.com",
       "medium": "referral",
       "sessions": 2
@@ -172,6 +177,11 @@
       "sessions": 1
     },
     {
+      "source": "trend_today",
+      "medium": "",
+      "sessions": 1
+    },
+    {
       "source": "unknown",
       "medium": "",
       "sessions": 1
@@ -180,23 +190,18 @@
       "source": "us.search.yahoo.com",
       "medium": "referral",
       "sessions": 1
-    },
-    {
-      "source": "x",
-      "medium": "social",
-      "sessions": 1
     }
   ],
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 331,
-      "sessions": 315
+      "pageViews": 332,
+      "sessions": 316
     },
     {
       "path": "/",
-      "pageViews": 113,
-      "sessions": 103
+      "pageViews": 114,
+      "sessions": 104
     },
     {
       "path": "/index.html",
@@ -209,13 +214,13 @@
       "sessions": 74
     },
     {
-      "path": "/features/nagoya-hitsumabushi.html",
+      "path": "/features/nagoya-autumn-2026.html",
       "pageViews": 74,
       "sessions": 73
     }
   ],
   "cta": {
-    "outboundClicks": 182,
+    "outboundClicks": 183,
     "ctaClickRate": 10,
     "byDomain": [
       {
@@ -240,7 +245,7 @@
       },
       {
         "domain": "www.google.com",
-        "clicks": 8
+        "clicks": 9
       },
       {
         "domain": "jouhou.nagoya",
@@ -291,10 +296,10 @@
       "ai_assistant": 19,
       "referral": 1,
       "paid": 0,
-      "other": 0
+      "other": 1
     },
     "ctaClickRate_organic": 8.3,
-    "ctaClickRate_direct": 14.5,
+    "ctaClickRate_direct": 14.4,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -307,7 +312,7 @@
       },
       {
         "path": "/",
-        "clicks": 13
+        "clicks": 14
       },
       {
         "path": "/journal/2026-09-29-sakae-tsukemen-tou-counter12.html",
@@ -485,6 +490,11 @@
         "clicks": 3
       },
       {
+        "path": "/",
+        "domain": "www.google.com",
+        "clicks": 2
+      },
+      {
         "path": "/features/birthday.html",
         "domain": "www.hotpepper.jp",
         "clicks": 2
@@ -573,11 +583,6 @@
         "path": "/stores/J001203914.html",
         "domain": "tabelog.com",
         "clicks": 2
-      },
-      {
-        "path": "/",
-        "domain": "www.google.com",
-        "clicks": 1
       },
       {
         "path": "/",
@@ -1109,7 +1114,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1629,
+    "value": 1635,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

@@ -1,11 +1,17 @@
 {
-  "generatedAt": "2026-10-15T21:19:07.734Z",
-  "run": {},
+  "generatedAt": "2026-10-16T00:18:08.018Z",
+  "run": {
+    "tabelog": {
+      "attempted": 1,
+      "fetched": 0,
+      "stopped": false
+    }
+  },
   "health": {
     "tabelog": {
-      "links": 2688,
+      "links": 2689,
       "neverChecked": 0,
-      "unfetched": 174,
+      "unfetched": 175,
       "lastFetchedAt": "2026-09-20T15:34:53.838Z"
     },
     "hotpepper": {
@@ -1972,6 +1978,16 @@
       "検出タイトル": null,
       "エラー": "HTTP 403",
       "検証日": "2026-10-09T04:05:04.274Z"
+    },
+    {
+      "店名": "Reminiscence",
+      "エリア": "名古屋市中区",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230106/23085308/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-16T00:18:07.987Z"
     },
     {
       "店名": "PASTA MANIA 鶴舞店",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-15T21:10:00.967Z",
+  "generatedAt": "2026-10-16T00:10:13.306Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -8,30 +8,30 @@
     "ctrFixGeoless": [
       {
         "query": "イルタッソ",
-        "impressions": 173,
+        "impressions": 172,
         "clicks": 2,
         "position": 6.8,
         "ctr": 1.16,
         "expectedCtr": 4.2,
-        "missedClicks": 5.3
+        "missedClicks": 5.2
       },
       {
         "query": "cm 伏見",
-        "impressions": 208,
+        "impressions": 197,
         "clicks": 3,
         "position": 7.3,
-        "ctr": 1.44,
+        "ctr": 1.52,
         "expectedCtr": 3.8,
-        "missedClicks": 4.8
+        "missedClicks": 4.4
       },
       {
         "query": "一人飲み",
-        "impressions": 84,
+        "impressions": 77,
         "clicks": 4,
         "position": 3.8,
-        "ctr": 4.76,
+        "ctr": 5.19,
         "expectedCtr": 8.6,
-        "missedClicks": 3.2
+        "missedClicks": 2.6
       }
     ],
     "rankPush": []
@@ -40,41 +40,41 @@
     "ctrFix": [
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 865,
+        "impressions": 851,
         "clicks": 10,
         "position": 7.4,
-        "ctr": 1.16,
+        "ctr": 1.18,
         "expectedCtr": 3.7,
-        "missedClicks": 21.8
+        "missedClicks": 21.3
       },
       {
         "page": "/stores/J004660861.html",
-        "impressions": 1133,
-        "clicks": 22,
-        "position": 7.3,
-        "ctr": 1.94,
-        "expectedCtr": 3.8,
-        "missedClicks": 20.6
+        "impressions": 1040,
+        "clicks": 17,
+        "position": 7.5,
+        "ctr": 1.63,
+        "expectedCtr": 3.6,
+        "missedClicks": 20.5
       },
       {
         "page": "/stores/J004660223.html",
-        "impressions": 890,
+        "impressions": 884,
         "clicks": 13,
         "position": 7.6,
-        "ctr": 1.46,
+        "ctr": 1.47,
         "expectedCtr": 3.5,
-        "missedClicks": 18.3
+        "missedClicks": 18.1
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2159,
+        "impressions": 2092,
         "clicks": 19,
-        "position": 18,
-        "ctr": 0.88,
-        "upsideClicks": 41.5
+        "position": 18.1,
+        "ctr": 0.91,
+        "upsideClicks": 39.5
       }
     ]
   },
