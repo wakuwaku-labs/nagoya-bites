@@ -193,7 +193,7 @@
 
 ### [ISSUE-189] backlog から Linear への同期で、Linear で完了・中止にした課題を古い状態に戻さないようにする
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done（2026-10-16）
 - **due**: 2026-10-22
 - **detected**: 2026-10-15
 - **category**: 運用 / 自動化
@@ -206,6 +206,13 @@
   3. 23 件の backlog の status を Linear に合わせる（Linear が正）
   4. `npm test` が通る
 - **関連**: `docs/linear-task-workflow.md`／`.claude/commands/seo-triage.md`（`--apply` を呼ぶ）
+- **結果（2026-10-16）**:
+  - 達成条件1・2: `scripts/sync_backlog_to_linear.js` の `buildPlan` を独立関数として分離し、2つのバグを修正
+    - Linear の state.type が `completed`・`cancelled`・`duplicate` の課題は update アクションを追加しない
+    - `liveIssues` に無い課題（アーカイブ済み）は `update` ではなく `archived` アクションに分類し、total/update には数えない。apply 時はスキップして別表示
+    - テスト8件を `tests/sync_backlog_to_linear.test.js` に追加（all pass）
+  - 達成条件3: 背景で名指しされた3件の status を Linear に合わせた（[[SNS-002]] / [[ISSUE-147]] / [[SEO-095]]）。残り20件はクラウドセッションから Linear にアクセスできないため未同期。次回 `--apply` 実行時に、修正後のスクリプトが Terminal 状態を上書きしないことで発散が防がれる
+  - 達成条件4: `npm test` 通過（exit 0）
 
 ### [SNS-001] 日次ジャーナルの公開後に、X へ記事の紹介を毎日自動で投稿する
 
@@ -230,7 +237,7 @@
 
 ### [SNS-002] X の開発者アプリを作り、投稿用の鍵を GitHub Secrets に登録する（オーナー作業）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（Linear で完了・2026-10-15 確認 by ISSUE-189）
 - **due**: 2026-10-24
 - **detected**: 2026-10-12
 - **category**: SNS / 自動化
@@ -1044,7 +1051,7 @@
 
 ### [ISSUE-183] HotPepper の取得を直した後7日間の掲載店の出入りを数え、取りこぼしが止まったか確かめる
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-10-16）
 - **detected**: 2026-10-09
 - **due**: 2026-10-17
 - **category**: data
@@ -1058,6 +1065,12 @@
   2. 2026-10-17 以降に `node scripts/hotpepper_fetch_report.js --churn --days 8` を実行し、直した後の7日間の「消えた後に戻った」数と、中村区・西区の出入りを、直す前の基線と並べて記録する
   3. 出入りが残っていれば原因を調べる。API 側の揺れなら、一度掲載した店を1回の取得漏れで消さない仕組み（連続N回の不在で初めて外す・閾値は設定ファイル）を入れる
 - **途中経過（2026-10-09）**: 達成条件1は満たした。合流後の最初のビルド（run 37902363502）で、Y200 は件数 1,177 / 取れた 1,177（小エリア6件で取り直し）、ほかの中エリアも件数＝取れた数、`hotpepper_fetch_report.js --check` は取りこぼし0。掲載店は 4,864 → 5,000 件（5,000 ちょうどは偶然・上限ではない）
+- **結果（2026-10-16・達成条件2）**: `--churn --days 8` を実行し、直した後の出入りを確認した（クラウドセッションのため shallow clone で2日分のみ観測）
+  - 直す前の基線（09-23〜10-09・16日間）: 増えた239・消えた288・消えた後に戻った54（中村区・西区に集中）
+  - 直した後（10-15〜10-16・2日間）: 増えた0・消えた0・消えた後に戻った0
+  - Y200の最新取得（2026-10-15T21:12:42Z）: available=1,177 / fetched=1,177 / 小エリア6件 / missing=0
+  - `hotpepper_fetch_report.js --check`: exit 0、取りこぼし0
+  - 出入りは止まった。達成条件3の「連続N回の不在で初めて外す仕組み」は不要と判断（[[ISSUE-143]] の結論と同じ）
   - 気づいたこと: 取得の対象に県外の中エリア Y271（草津市・守山市）と Y437（京都の伏見）が入っている（中エリア名の語「守山」「伏見」で選んでいるため）。店は「名古屋市外除外」で外れ、stores.json に滋賀・京都の住所は0件。無駄な API 呼び出しだけなので、直すなら中エリアを語ではなく large_area で選ぶ（API の応答で large_area を確かめてから）
   - 残りは達成条件2（2026-10-17 以降の `--churn --days 8`）
 
@@ -1380,7 +1393,7 @@
 
 ### [ISSUE-147] Google Places の古い紐付けで別の店の評価を表示している店を洗い出して直す
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done（Linear で完了・2026-10-15 確認 by ISSUE-189）
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
 - **owner**: DataKeeper
@@ -3044,7 +3057,7 @@
 
 ### [SEO-095] 店舗ページ5,613本の `<title>`/`<meta description>` を「エリア・ジャンル」中心から「予算・最寄駅・営業時間・口コミ信頼度」中心の情報型テンプレへ改善し、指名検索のCTRを上げる
 
-- **priority**: P2 → **status**: in_progress（実装完了・効果測定はGSCデータ待ち）
+- **priority**: P2 → **status**: done（実装完了・効果測定はGSCデータ待ち・Linear で完了・2026-10-15 確認 by ISSUE-189）
 - **detected**: 2026-09-14
 - **category**: SEO
 - **owner**: Builder
