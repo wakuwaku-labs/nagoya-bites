@@ -1,0 +1,435 @@
+{
+  "date": "2026-10-17",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄『お台所 六六堂』接待・宴会に、150席と元金庫室のワインセラーを読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 89,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 8日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,コース,席,予約,接待,デート) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 180字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「接待」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "89点（自動公開ライン 100点）。主な不足: topicality -10 / recency -7 / writability -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄の新店「お台所 六六堂」デートに、元金庫室のセラーで選ぶワイン約50種",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 86,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 9日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,コース,席,予約,デート,アラカルト) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 158字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「デート」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "86点（自動公開ライン 100点）。主な不足: topicality -13 / recency -7 / writability -2"
+    },
+    {
+      "id": "c4",
+      "title_draft": "名駅・椿町「焼肉 三郎 椿町店」2か月で3店、昭和焼肉の出店の速さを読む",
+      "verdict": "HOLD",
+      "total": 74,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 8,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (価格帯,席) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 119字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "天白「魚魚丸 天白店」10月21日開店、回転寿司の鮮魚ケースと藁焼きを読む",
+      "verdict": "HOLD",
+      "total": 68,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 5,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (価格帯) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 127字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「寿司」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "今池焼鳥 B7（今池）名古屋コーチンを備長炭で、8,000〜12,000円の焼鳥店",
+      "verdict": "HOLD",
+      "total": 57,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "焼き鳥",
+          "feature": "features/nagoya-yakitori-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 88日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,接待,デート) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 132字 +4",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「今池」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「焼鳥」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "89点（自動公開ライン 100点）。主な不足: topicality -10 / recency -7 / writability -2",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "栄『お台所 六六堂』接待・宴会に、150席と元金庫室のワインセラーを読む",
+      "lead_draft": "2026年10月8日、栄駅8番出口から徒歩約1分のジェイグループ本社ビルに「お台所 六六堂」が開店した。全3フロア・150席、コースは飲み放題100分付きで6,000円・8,000円・10,000円の3段。元証券会社の金庫室を使ったワインセラーに客が入って一本を選べる。150席でも宴会は最大40名という席の組み方から、宴会・接待・デートのどれに向くかを読む。",
+      "angle": "150席・3フロアでも宴会は最大40名、個室6〜24名。コース3段（6,000/8,000/10,000円・飲み放題100分・混雑時2時間/2時間半制）と、セラーの約50種が飲み放題の一覧に入らない価格帯の設計を、予約締切と席の配置から接待・宴会・デートの向き不向きまで読む",
+      "main_store": {
+        "name": "お台所 六六堂",
+        "id": "J004698986",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社ジェイグループホールディングス）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000001.000191903.html",
+          "date": "2026-10-08"
+        },
+        {
+          "label": "ジェイグループ お知らせ",
+          "url": "https://www.jgroup.jp/news/20261009-3464/",
+          "date": "2026-10-09"
+        },
+        {
+          "label": "お台所 六六堂 公式サイト",
+          "url": "https://rokurokudou.jproject-shop.jp/"
+        },
+        {
+          "label": "ホットペッパーグルメ お台所 六六堂",
+          "url": "https://www.hotpepper.jp/strJ004698986/"
+        },
+        {
+          "label": "フロム・エー ナビ（お台所 六六堂 オープニング求人）",
+          "url": "https://www.froma.com/viewjob/7f04395f990b428b/",
+          "date": "2026-08-24"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄の新店「お台所 六六堂」デートに、元金庫室のセラーで選ぶワイン約50種",
+      "lead_draft": "栄に10月8日開店した「お台所 六六堂」は、元証券会社の金庫室をウォークインのワインセラーにした。イタリア中心に常時約50種を置き、客がセラーに入って一本を選ぶ。飲み放題の一覧に入るワインはクズマーノの白・赤2種で、セラーの一本はアラカルトで頼む形になる。料理の単価とあわせて、デートで使うときの予算の組み方を読む。",
+      "angle": "飲み放題付きコース6,000円とアラカルト（造り2名盛り2,960円・あか牛200g3,600円）の価格帯を比べ、セラーのボトルを選ぶならコースか席のみ予約かをカウンター席のデート目線で読む",
+      "main_store": {
+        "name": "お台所 六六堂",
+        "id": "J004698986",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社ジェイグループホールディングス）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000001.000191903.html",
+          "date": "2026-10-08"
+        },
+        {
+          "label": "お台所 六六堂 公式サイト",
+          "url": "https://rokurokudou.jproject-shop.jp/"
+        },
+        {
+          "label": "ホットペッパーグルメ お台所 六六堂",
+          "url": "https://www.hotpepper.jp/strJ004698986/"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "今池焼鳥 B7（今池）名古屋コーチンを備長炭で、8,000〜12,000円の焼鳥店",
+      "lead_draft": "8月14日、今池駅から徒歩2分のビル1階に「今池焼鳥 B7」が開店した。大阪の会社の名古屋1号店で、名古屋コーチンと銘柄鶏、旬の魚介を紀州備長炭で焼く。リリースのディナー予算は8,000〜12,000円、日曜定休。高級ではなく上質を、という打ち出しの価格帯を読む。",
+      "angle": "ディナー8,000〜12,000円の価格帯と17時〜24時の営業、日曜定休の設計から、今池の焼鳥店としてデートと接待のどちらに向くかを読む",
+      "main_store": {
+        "name": "今池焼鳥 B7",
+        "id": "",
+        "area": "今池",
+        "genre": "焼鳥"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社Mab）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000022.000132079.html",
+          "date": "2026-07-21"
+        },
+        {
+          "label": "ベストカレンダー",
+          "url": "https://bestcalendar.jp/press/142274",
+          "date": "2026-07-21"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "名駅・椿町「焼肉 三郎 椿町店」2か月で3店、昭和焼肉の出店の速さを読む",
+      "lead_draft": "岐阜の会社が「焼肉二郎」の弟ブランド「焼肉三郎」を名古屋で続けて出している。8月29日に天白区の原店、10月2日に名駅西の椿町店、11月6日に名駅西口店の予定。椿町店は40席で平均予算4,500円。2か月で3店を出す出店の組み立てを読む。",
+      "angle": "40席・平均予算4,500円・17時〜翌0時の営業と、同じ名駅西に2店を置く出店の設計を価格帯と席数から読む",
+      "main_store": {
+        "name": "焼肉 三郎 椿町店",
+        "id": "J004698083",
+        "area": "名駅",
+        "genre": "焼肉"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社コズミックホールディングス）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000033.000033002.html",
+          "date": "2026-10-13"
+        },
+        {
+          "label": "ホットペッパーグルメ 焼肉 三郎 椿町店",
+          "url": "https://www.hotpepper.jp/strJ004698083/"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "天白「魚魚丸 天白店」10月21日開店、回転寿司の鮮魚ケースと藁焼きを読む",
+      "lead_draft": "三河の回転寿司「廻鮮江戸前すし魚魚丸」が名古屋市内4店目の天白店を10月21日にグランドオープンする。10日からのプレオープンは最大約100分待ち。店内の鮮魚ケースで注文ごとに捌く。焼玉子209円、焼穴子一本勝負638円の価格帯と、待ち時間の出方を読む。",
+      "angle": "プレオープンの最大約100分待ちと、鮮魚ケースで注文ごとに捌くオペレーション、209円〜の価格帯から家族の週末の使い方を読む",
+      "main_store": {
+        "name": "廻鮮江戸前すし魚魚丸 天白店",
+        "id": "",
+        "area": "天白",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社コムライン）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000018.000065701.html",
+          "date": "2026-10-16"
+        },
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/totomaru-tenpaku/",
+          "date": "2026-10-10"
+        }
+      ]
+    }
+  ]
+}
