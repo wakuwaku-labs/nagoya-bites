@@ -1337,9 +1337,9 @@
   3. 北極星4指標を履歴から1コマンドで出す方法を `docs/seo-strategy-2026-10.md` §5 に書く
 - **結果（2026-10-09）**: `scripts/track_metrics.js --snapshot` の各行に `gsc`（`generatedAt`・`dateRange`・`totals`・`intent_kpi`・`pageTypes`）を足した（既存の項目は変えない・GSC が読めない日は null で GA4 側は止めない）。北極星4指標は `node scripts/track_metrics.js --north-star --days 28` で最新と N 日前を比べて出る（`docs/seo-strategy-2026-10.md` §5）。過去の行は `scripts/backfill_gsc_history.js` で git に残る `data/gsc_metrics.json` の各日の最後の版から埋め戻した（74日分・`backfilledFrom` にコミット。版が無い46日は空欄のまま）。テスト `tests/track_metrics_gsc.test.js`（4件）
 
-### [SEO-118] GA4 の計測復旧による段差を効果測定から切り離し、継続中の施策の基線を取り直す
+### [SEO-118] GA4 の計測復旧による段差を効果測定から切り直す
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **due**: 2026-10-20
 - **category**: SEO / 計測
@@ -1352,7 +1352,8 @@
   2. 合流後 7 日以上のデータで、[[SEO-095]]・[[SEO-099]] の基線を `track_metrics.js --baseline` で取る
   3. 既存4件は、`/stores/` を除いた値で比べるか、比較できないと台帳に記録する
   4. 店舗ページ込みの GA4 の真値（PV・セッション）を `docs/kpi-weekly.md` に記録する
-- **2026-10-10 途中経過（達成条件1・3）**: 1: 計測が変わった日の台帳 `data/measurement_changes.json` に SEO-115（2026-10-09・ga4）を記録し、`scripts/track_metrics.js` の `--followup`・`--report`・`--north-star` が、比べる2日の間（前の日の30日窓の始まりより後〜後の日）にこの日が入ると `measurement_changes` に注意を出すようにした（GSC だけの比較には出さない・`tests/measurement_changes.test.js`）。3: 台帳の既存4件（SEO-003・ISSUE-067・SEO-060・DSN-003）に `measurement_note` を付け、GA4 での比較は 10-09 をまたがない（`/stores/` を除いた合計は site_metrics.json に無く、除いた比較もできない）と記録した。2（10-16 以降に SEO-095・SEO-099 の基線）と4（GA4 の真値を kpi-weekly へ）は日付待ち
+- **2026-10-10 途中経過（達成条件1・3）**: 1: 計測が変わった日の台帳 `data/measurement_changes.json` に SEO-115（2026-10-09・ga4）を記録し、`scripts/track_metrics.js` の `--followup`・`--report`・`--north-star` が、比べる2日の間（前の日の30日窓の始まりより後〜後の日）にこの日が入ると `measurement_changes` に注意を出すようにした（GSC だけの比較には出さない・`tests/measurement_changes.test.js`）。3: 台帳の既存4件（SEO-003・ISSUE-067・SEO-060・DSN-003）に `measurement_note` を付け、GA4 での比較は 10-09 をまたがない（`/stores/` を除いた合計は site_metrics.json に無く、除いた比較もできない）と記録した。
+- **2026-10-17 完了（達成条件2・4）**: 2: `node scripts/track_metrics.js --baseline SEO-095 --save` と `--baseline SEO-099 --save` で、SEO-115 合流後8日分のデータを含む基線を `data/effect_ledger.json` に保存した（GA4 30日: sessions 1,873・UU 1,677・PV 2,322）。4: `docs/kpi-weekly.md` に 2026-10-17 のスナップショットを追記（北極星4指標・GA4真値・チャネル別・検索エンジン別・GSC全体）。全達成条件を満たした
 
 
 ### [SEO-119] 栄エリア7店のアクセス文から県外の駅名を除く
