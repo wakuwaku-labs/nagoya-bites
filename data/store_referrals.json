@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-17T19:19:05.628Z",
+  "generatedAt": "2026-10-17T20:11:31.160Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -772,10 +772,10 @@
       "other": 0
     },
     "tel": 4,
-    "map": 37
+    "map": 38
   },
   "map": {
-    "total": 37,
+    "total": 38,
     "unattributed": 6,
     "stores": 14,
     "top": [
@@ -793,6 +793,10 @@
       },
       {
         "store_name": "げんかい 名駅別邸",
+        "count": 2
+      },
+      {
+        "store_name": "ひものや 官兵衛 伏見駅店",
         "count": 2
       },
       {
@@ -814,19 +818,16 @@
       {
         "store_name": "ちゃんこ九重",
         "count": 1
-      },
-      {
-        "store_name": "ひものや 官兵衛 伏見駅店",
-        "count": 1
       }
     ],
     "byLocation": {
       "(not set)": 33,
       "modal_cta": 2,
-      "store_page_bar": 2
+      "store_page_bar": 2,
+      "journal_store_card": 1
     },
     "byLinkKind": {
-      "(not set)": 33,
+      "(not set)": 34,
       "place_id": 2,
       "search": 2
     }
