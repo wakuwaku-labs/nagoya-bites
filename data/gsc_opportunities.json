@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-16T20:33:23.665Z",
+  "generatedAt": "2026-10-17T00:14:12.290Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -17,22 +17,22 @@
     ],
     "ctrFixGeoless": [
       {
-        "query": "cm 伏見",
-        "impressions": 205,
-        "clicks": 3,
-        "position": 7.4,
-        "ctr": 1.46,
-        "expectedCtr": 3.7,
-        "missedClicks": 4.6
+        "query": "イルタッソ",
+        "impressions": 168,
+        "clicks": 2,
+        "position": 6.8,
+        "ctr": 1.19,
+        "expectedCtr": 4.2,
+        "missedClicks": 5.1
       },
       {
-        "query": "一人飲み",
-        "impressions": 80,
-        "clicks": 5,
-        "position": 3.9,
-        "ctr": 6.25,
-        "expectedCtr": 8.3,
-        "missedClicks": 1.6
+        "query": "cm 伏見",
+        "impressions": 199,
+        "clicks": 3,
+        "position": 7.4,
+        "ctr": 1.51,
+        "expectedCtr": 3.7,
+        "missedClicks": 4.3
       }
     ],
     "rankPush": []
@@ -41,50 +41,50 @@
     "ctrFix": [
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 888,
+        "impressions": 866,
         "clicks": 11,
         "position": 7.4,
-        "ctr": 1.24,
+        "ctr": 1.27,
         "expectedCtr": 3.7,
-        "missedClicks": 21.7
-      },
-      {
-        "page": "/stores/J004660861.html",
-        "impressions": 1072,
-        "clicks": 17,
-        "position": 7.5,
-        "ctr": 1.59,
-        "expectedCtr": 3.6,
-        "missedClicks": 21.5
+        "missedClicks": 20.9
       },
       {
         "page": "/stores/J004660223.html",
-        "impressions": 922,
-        "clicks": 13,
+        "impressions": 908,
+        "clicks": 12,
         "position": 7.6,
-        "ctr": 1.41,
+        "ctr": 1.32,
         "expectedCtr": 3.5,
-        "missedClicks": 19.5
+        "missedClicks": 20
+      },
+      {
+        "page": "/stores/J004660861.html",
+        "impressions": 1018,
+        "clicks": 16,
+        "position": 7.6,
+        "ctr": 1.57,
+        "expectedCtr": 3.5,
+        "missedClicks": 19.9
       },
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 556,
+        "impressions": 544,
         "clicks": 10,
         "position": 8.6,
-        "ctr": 1.8,
+        "ctr": 1.84,
         "expectedCtr": 3,
-        "missedClicks": 6.4
+        "missedClicks": 6.1
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2165,
+        "impressions": 2080,
         "clicks": 20,
-        "position": 17.9,
-        "ctr": 0.92,
-        "upsideClicks": 40.7
+        "position": 17.7,
+        "ctr": 0.96,
+        "upsideClicks": 38.3
       }
     ]
   },
@@ -97,8 +97,8 @@
     "pageRankPush": 1,
     "topPageCtrFix": [
       "/features/nagoya-tebasaki.html",
-      "/stores/J004660861.html",
-      "/stores/J004660223.html"
+      "/stores/J004660223.html",
+      "/stores/J004660861.html"
     ]
   }
 }
