@@ -778,7 +778,7 @@
 - **priority**: P1 → **status**: ready
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
-- **owner**: DataKeeper
+- **owner**: 片桐 ← DataKeeper（2026-10-17 自動ルーチンがエスカレーション: 着手条件1「定期的な API 利用をオーナーに確かめる」がオーナー判断を要するため）
 - **source**: [[ISSUE-169]] で発見
 - **brand-filter**: ✅ 適合 — 実在保証（閉店した店を掲載し続けない）
 - **背景**: `scripts/audit_store_liveness.js` は `data/places_resolved.json` の CLOSED_PERMANENTLY を HARD で止める。しかしその記録は、大半の店が 2026-05-22 の取得のまま更新されていない。
