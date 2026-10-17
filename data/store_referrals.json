@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-17T00:25:49.492Z",
+  "generatedAt": "2026-10-17T19:19:05.628Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -8,18 +8,18 @@
   },
   "totals": {
     "exits": {
-      "hotpepper": 61,
+      "hotpepper": 60,
       "tabelog": 11,
       "tel": 4,
       "other": 0,
-      "total": 76
+      "total": 75
     },
     "reports": {
       "yes": 0,
       "no": 0
     }
   },
-  "unattributedExits": 19,
+  "unattributedExits": 18,
   "month": {
     "start": "2026-10-01",
     "totals": {
@@ -765,19 +765,19 @@
     "geoSearch": "現在地: トップの「現在地」ボタンを押した回数と結果（granted・denied・unsupported・error）。位置・エリア名は送っていない"
   },
   "actions": {
-    "reserve": 72,
+    "reserve": 71,
     "reserveBySite": {
-      "hotpepper": 61,
+      "hotpepper": 60,
       "tabelog": 11,
       "other": 0
     },
     "tel": 4,
-    "map": 40
+    "map": 37
   },
   "map": {
-    "total": 40,
+    "total": 37,
     "unattributed": 6,
-    "stores": 16,
+    "stores": 14,
     "top": [
       {
         "store_name": "なかがわ 街仲食堂 by ジーバーFOOD",
@@ -793,10 +793,6 @@
       },
       {
         "store_name": "げんかい 名駅別邸",
-        "count": 2
-      },
-      {
-        "store_name": "海老豚骨ラーメン一番軒 メイチカ店",
         "count": 2
       },
       {
@@ -816,17 +812,21 @@
         "count": 1
       },
       {
-        "store_name": "ソルビン名古屋栄店",
+        "store_name": "ちゃんこ九重",
+        "count": 1
+      },
+      {
+        "store_name": "ひものや 官兵衛 伏見駅店",
         "count": 1
       }
     ],
     "byLocation": {
-      "(not set)": 36,
+      "(not set)": 33,
       "modal_cta": 2,
       "store_page_bar": 2
     },
     "byLinkKind": {
-      "(not set)": 36,
+      "(not set)": 33,
       "place_id": 2,
       "search": 2
     }
