@@ -1,0 +1,414 @@
+{
+  "date": "2026-10-18",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "黒川『さく蛸』たこ焼きのコスパ、名古屋焼き醤油10個600円と持ち帰り専門の22時営業を読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 95,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 7件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,予約,シーン) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 144字 +4",
+          "title 46字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「金山」+1",
+          "タイトルにシーン語「コスパ」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "95点（自動公開ライン 100点）。主な不足: search_intent -5 / brand_fit -4 / recency -3"
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄3丁目「cowcow」炭火焼肉の居酒屋が開店",
+      "verdict": "HOLD",
+      "total": 69,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (価格帯,席) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 66字 +2",
+          "title 23字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "名古屋のたこ焼きは醤油とキャベツ、さく蛸3店の営業時間の差を読む",
+      "verdict": "HOLD",
+      "total": 67,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 8,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (シーン,繁忙) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 112字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「金山」+1",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "天白区に回転寿司「魚魚丸」、家族の週末の寿司を読む",
+      "verdict": "HOLD",
+      "total": 67,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 4,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "緑区・天白区",
+          "feature": "stores/area/midori-tempaku/index.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 8日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,予約,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 50字 +2",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「天白区」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「寿司」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "焼肉二郎の弟ブランド「焼肉三郎」が名古屋で3店目へ",
+      "verdict": "HOLD",
+      "total": 35,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 4,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (価格帯) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 58字 +2",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "95点（自動公開ライン 100点）。主な不足: search_intent -5 / brand_fit -4 / recency -3",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "黒川『さく蛸』たこ焼きのコスパ、名古屋焼き醤油10個600円と持ち帰り専門の22時営業を読む",
+      "lead_draft": "2026年10月13日、地下鉄名城線の黒川駅4番出口から徒歩1〜2分の交差点に、醤油味・キャベツ入りの名古屋焼き醤油専門「さく蛸」の3店舗目が開いた。10個600円から、持ち帰り専門で11時から22時まで。八田と熱田の既存店より3時間長く開く理由と、10個単位の価格帯、駐車券の線を読む。",
+      "angle": "10個600円の価格帯と駐車サービスの線（1,000円/2,000円）、持ち帰り専門で席を持たないオペと22時までの営業時間、予約（電話準備中）と焼き上がりの待ち、帰り道の家飲みというシーンを読む",
+      "main_store": {
+        "name": "名古屋焼き醤油専門 さく蛸 北区黒川交差点店",
+        "id": "",
+        "area": "黒川",
+        "genre": "たこ焼き"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「さく蛸」黒川駅前にオープン",
+          "url": "https://jouhou.nagoya/sakutako-kurokawa/",
+          "date": "2026-10-12"
+        },
+        {
+          "label": "Do Local なごや 北区・開店メモ",
+          "url": "https://manabito758.com/kitakuopenmemo2026/"
+        },
+        {
+          "label": "食べログ さく蛸 北区黒川交差点店",
+          "url": "https://tabelog.com/aichi/A2301/A230110/23097898/"
+        },
+        {
+          "label": "はたらいく さく蛸 黒川店 求人",
+          "url": "https://www.hatalike.jp/viewjob/6f46e77c26613e0f/",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "名古屋観光コンベンションビューロー 賛助会員紹介",
+          "url": "https://www.nagoya-info.jp/ncvb/member/detail/424/"
+        },
+        {
+          "label": "さく蛸 公式Instagram",
+          "url": "https://www.instagram.com/sakutako_nagoyayaki/"
+        },
+        {
+          "label": "note きむいさ「新・名古屋めし さく蛸」",
+          "url": "https://note.com/kimisa0504/n/na62804ff51d6",
+          "date": "2026-01-03"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "名古屋のたこ焼きは醤油とキャベツ、さく蛸3店の営業時間の差を読む",
+      "lead_draft": "八田・熱田・黒川と3店に増えた名古屋焼き醤油専門「さく蛸」。八田と熱田は19時まで、黒川は22時まで。同じ商品を売る店でも、駅前の交差点と商業施設の中とでは客の来る時間が違う。営業時間の差から、店ごとに想定している客を読む。",
+      "angle": "3店の営業時間と立地の差からシーンと繁忙の時間帯を読む",
+      "main_store": {
+        "name": "名古屋焼き醤油専門 さく蛸",
+        "id": "",
+        "area": "黒川",
+        "genre": "たこ焼き"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/sakutako-kurokawa/",
+          "date": "2026-10-12"
+        },
+        {
+          "label": "名古屋コンシェルジュ 八田本店",
+          "url": "https://www.nagoya-info.jp/gourmet/detail/131/"
+        },
+        {
+          "label": "名古屋コンシェルジュ 熱田店",
+          "url": "https://www.nagoya-info.jp/gourmet/detail/130/"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "栄3丁目「cowcow」炭火焼肉の居酒屋が開店",
+      "lead_draft": "栄3丁目に炭火で黒毛和牛を焼く居酒屋「cowcow」が10月17日に開いた。焼肉店と居酒屋のあいだの業態で、一人でも寄れるかを読む。",
+      "angle": "焼肉と居酒屋の中間業態の価格帯と席",
+      "main_store": {
+        "name": "cowcow",
+        "id": "",
+        "area": "栄",
+        "genre": "焼肉"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/cowcow-sakaba/",
+          "date": "2026-10-17"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "天白区に回転寿司「魚魚丸」、家族の週末の寿司を読む",
+      "lead_draft": "天白区に回転寿司の魚魚丸が10月10日に開いた。家族で行く週末の寿司として、待ち時間と価格帯を読む。",
+      "angle": "回転寿司の価格帯と予約、週末の回転",
+      "main_store": {
+        "name": "魚魚丸 天白店",
+        "id": "",
+        "area": "天白区",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/totomaru-tenpaku/",
+          "date": "2026-10-10"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "焼肉二郎の弟ブランド「焼肉三郎」が名古屋で3店目へ",
+      "lead_draft": "焼肉二郎の弟ブランド「焼肉三郎」が約2か月で名古屋に3店舗を展開する。同じ屋号を短期間で増やす出店の組み立てを読む。",
+      "angle": "短期多店舗の出店と価格帯",
+      "main_store": {
+        "name": "焼肉三郎",
+        "id": "",
+        "area": "名古屋",
+        "genre": "焼肉"
+      },
+      "sources": [
+        {
+          "label": "グルメプレス",
+          "url": "https://gourmetpress.net/1488006/"
+        }
+      ]
+    }
+  ]
+}
