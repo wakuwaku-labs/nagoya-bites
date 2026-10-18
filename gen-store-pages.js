@@ -973,6 +973,7 @@ ${igAllUrls.map((_, i) => `        <span class="ig-carousel-dot${i === 0 ? ' act
   const tagPills = tags.map(t => `<span class="tag">${t}</span>`).join('');
   const linksHtml = [
     hpUrl && `<a class="link-btn hp" href="${hpUrl}" target="_blank" rel="noopener noreferrer" onclick="${reserveExitAttr('cta_click', name, hpId, 'www.hotpepper.jp')}">ホットペッパーで予約</a>`,
+    !hpUrl && s['ホットペッパー掲載URL'] && `<a class="link-btn hp" href="${escapeHtml(s['ホットペッパー掲載URL'])}" target="_blank" rel="noopener noreferrer">ホットペッパー</a>`,
     gmUrl && `<a class="link-btn gm" href="${escapeHtml(gmUrl)}" target="_blank" rel="noopener noreferrer" onclick="${mapClickAttr(name, slug, gmUrl)}">Googleマップ</a>`,
     igUrl && `<a class="link-btn ig" href="${igUrl}" target="_blank" rel="noopener noreferrer">Instagram</a>`,
     tbUrl && `<a class="link-btn tb" href="${tbUrl}" target="_blank" rel="noopener noreferrer" onclick="${reserveExitAttr('cta_click', name, hpId || placeId, 'tabelog.com')}">食べログ</a>`,
