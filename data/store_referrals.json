@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-18T00:15:47.604Z",
+  "generatedAt": "2026-10-18T00:31:45.856Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -772,16 +772,16 @@
       "other": 0
     },
     "tel": 4,
-    "map": 39
+    "map": 40
   },
   "map": {
-    "total": 39,
+    "total": 40,
     "unattributed": 6,
     "stores": 15,
     "top": [
       {
         "store_name": "なかがわ 街仲食堂 by ジーバーFOOD",
-        "count": 10
+        "count": 11
       },
       {
         "store_name": "燈 tou",
@@ -822,13 +822,13 @@
     ],
     "byLocation": {
       "(not set)": 33,
+      "journal_store_card": 2,
       "modal_cta": 2,
       "store_page_bar": 2,
-      "journal_store_card": 1,
       "store_page": 1
     },
     "byLinkKind": {
-      "(not set)": 34,
+      "(not set)": 35,
       "place_id": 3,
       "search": 2
     }
