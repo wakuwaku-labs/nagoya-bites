@@ -88,9 +88,10 @@ function buildContext(stores, places, opts) {
  */
 function bindingOf(store, ctx) {
   const placeId = store && store.placeId;
-  if (!placeId) return { state: 'none', reason: 'no-place-id' };
   const own = ctx.places[placesKey(store)];
+  // placeId が消えた後も places_resolved.json の rejected 記録は残るため、placeId の有無より先に確認する
   if (own && own.rejected) return { state: 'mismatch', reason: 'rejected' };
+  if (!placeId) return { state: 'none', reason: 'no-place-id' };
   const rec = ctx.index.get(placeId);
   if (!rec) return { state: 'none', reason: 'no-record' };
 

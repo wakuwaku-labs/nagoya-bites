@@ -80,6 +80,8 @@ test('紐付けが無い・却下済みの店', () => {
   assert.equal(binding.bindingOf({ '店名': 'x' }, ctxOf([])).state, 'none');
   assert.equal(binding.bindingOf({ '店名': 'x', placeId: 'P_NONE', 'ホットペッパーID': 'J9' }, ctxOf([])).reason, 'no-record');
   assert.equal(binding.bindingOf({ '店名': 'x', placeId: 'P_X', 'ホットペッパーID': 'J000000006' }, ctxOf([])).reason, 'rejected');
+  // placeId が消えた後も HP ID が rejected 記録を指していれば mismatch（ISSUE-191）
+  assert.equal(binding.bindingOf({ '店名': 'x', 'ホットペッパーID': 'J000000006' }, ctxOf([])).reason, 'rejected');
 });
 
 test('allowedFor: 確認済みは出す・不一致は出さない・要確認は許した帯だけ・スイッチを切れば全部出さない', () => {
