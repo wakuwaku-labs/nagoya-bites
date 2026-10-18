@@ -504,7 +504,18 @@ function buildGateNote(result, policy) {
   return `${result.total}点（自動公開ライン ${policy.auto_publish_min}点）。主な不足: ${gaps.join(' / ') || 'なし'}`;
 }
 
-function scoreOne(candidate, published, today, policy, saturated = []) {
+/**
+ * 登録済みの「当日分」を比較対象から外す（P-567）。
+ * 登録後に採点し直す（手動のやり直し・途中再開）と、今日の記事自身と重複判定して即失格になっていた。
+ * 過去の日付の記事との判定は変えない。判定は entries の date（検証できる事実）だけで行う。
+ */
+function excludeToday(published, today) {
+  const entries = (published && published.entries) || [];
+  return Object.assign({}, published, { entries: entries.filter(e => e.date !== today) });
+}
+
+function scoreOne(candidate, publishedAll, today, policy, saturated = []) {
+  const published = excludeToday(publishedAll, today);
   const disqual = checkDisqualified(candidate, published, today);
   if (disqual.length > 0) {
     return {
@@ -831,4 +842,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { scoreAll, scoreOne, scoreBrandFit, loadGatePolicy, WEIGHTS, PASS_THRESHOLD };
+module.exports = { excludeToday, scoreAll, scoreOne, scoreBrandFit, loadGatePolicy, WEIGHTS, PASS_THRESHOLD };
