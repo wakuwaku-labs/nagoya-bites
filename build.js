@@ -1585,6 +1585,16 @@ async function main() {
     console.error(`店の詳細の補完をスキップ: ${e.message}`);
   }
 
+  // ─── 話題店の営業時間・定休日・ホットペッパーのページ（ID は入れない）─────
+  // data/hotpepper_trending_details.json は scripts/enrich_hotpepper_details.js が CI で書く。
+  try {
+    const hpDetails = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'hotpepper_trending_details.json'), 'utf8'));
+    const n = require('./scripts/lib/hotpepper_trending_merge').mergeHotpepperTrending(stores, hpDetails);
+    console.log(`話題店のホットペッパー情報: ${n}店`);
+  } catch (e) {
+    if (e.code !== 'ENOENT') console.error(`話題店のホットペッパー情報をスキップ: ${e.message}`);
+  }
+
   // ─── Google の評価・口コミ信頼度を出してよい店の判定（MEO-003・オーナーの判断 3=A・2026-10-15）─────
   // 紐付けた Google の店舗情報が別の店かもしれない店では、評価・口コミ数・口コミ信頼度が別の店の数字になる。
   // 紐付けの状態が不一致か、data/place_binding_policy.json の rating / trust が許していない要確認の帯の店は、

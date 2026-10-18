@@ -53,3 +53,7 @@ status: done
 - assets/css/nb.css / data/design_system.json / docs/design-system.md / agents/designer.md
 - index.html / gen-store-pages.js / scripts/gen_area_genre_pages.js / journal/_template.html
 - docs/qa/uiux-2026-10/（速さの測定の道具と基線）
+
+## 2026-10-19 話題店の情報不足（ブランチ wakuwaku-labs/coho・未push）
+- 住所補完: scripts/lib/store_detail_backfill.js（build.js）。ホットペッパー照合: scripts/enrich_hotpepper_details.js → data/hotpepper_trending_details.json（IDは入れずURL不変）。食べログは403のため保留（ADR 0013）。
+- 次: 合流・初回ビルド後に見つかった店数と、話題店ページの表示を確認。
