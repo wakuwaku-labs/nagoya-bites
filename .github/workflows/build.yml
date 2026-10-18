@@ -122,6 +122,12 @@ jobs:
         run: node scripts/select_ig_posts.js --limit 80 --delay 1200
         continue-on-error: true
 
+      - name: 話題店のホットペッパー情報を探す（営業時間・定休日・ページ。ID は入れない）
+        run: node scripts/enrich_hotpepper_details.js --limit 60
+        continue-on-error: true
+        env:
+          HOTPEPPER_API_KEY: ${{ secrets.HOTPEPPER_API_KEY }}
+
       - name: Build (embed store data & update sitemap)
         run: node build.js
         env:
