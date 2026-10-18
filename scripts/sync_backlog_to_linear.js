@@ -136,7 +136,11 @@ function buildPlan(tasks, liveIssues, state, defaults, md) {
         continue;
       }
       // Never overwrite Linear's terminal states (completed/cancelled/duplicate)
-      if (TERMINAL_STATE_TYPES.has(current.state?.type)) continue;
+      // backlog の状態が違うときだけ 'terminal' として報告する（--apply では書かない・backlog を直す手がかり）
+      if (TERMINAL_STATE_TYPES.has(current.state?.type)) {
+        if (current.state?.name !== status) plan.push({ action: 'terminal', task, identifier: entry.identifier, status, linearState: current.state?.name, priority });
+        continue;
+      }
       const title = `[${task.id}] ${task.title}`;
       if (current.state?.name !== status || current.priority !== priorityNumber[priority] || current.title !== title) {
         plan.push({ action: 'update', task, identifier: entry.identifier, status, priority, description: null });
@@ -182,12 +186,13 @@ function main() {
   }
   const pending = plan.filter(x => !skipped.has(x.identifier));
   // archived issues are reported but not applied; exclude them from total/update counts
-  const counts = pending.reduce((a, x) => (a[x.action]++, a), { create: 0, update: 0, 'mark-duplicate': 0, archived: 0 });
-  const actionable = pending.filter(x => x.action !== 'archived');
+  const counts = pending.reduce((a, x) => (a[x.action]++, a), { create: 0, update: 0, 'mark-duplicate': 0, archived: 0, terminal: 0 });
+  const actionable = pending.filter(x => x.action !== 'archived' && x.action !== 'terminal');
   console.log(JSON.stringify({ mode: apply ? 'apply' : 'dry-run', workspace: state.workspaceName,
     total: actionable.length, create: counts.create, update: counts.update, 'mark-duplicate': counts['mark-duplicate'],
     ...(counts.archived ? { archived: counts.archived } : {}),
-    tasks: pending.map(x => ({ action: x.action, id: x.task.id, title: x.task.title, linear: x.identifier || null, status: x.status, priority: x.priority,
+    ...(counts.terminal ? { terminal: counts.terminal } : {}),
+    tasks: pending.map(x => ({ action: x.action, id: x.task.id, title: x.task.title, linear: x.identifier || null, status: x.status, ...(x.linearState ? { linearState: x.linearState } : {}), priority: x.priority,
       missingFields: x.action === 'create' ? missingCreateFields(x.task) : [] })) }, null, 2));
   if (!apply) return;
 
@@ -202,6 +207,10 @@ function main() {
   for (const item of pending) {
     if (item.action === 'archived') {
       console.log(`archived: ${item.task.id} → ${item.identifier} (not in live list; skipped)`);
+      continue;
+    }
+    if (item.action === 'terminal') {
+      console.log(`terminal: ${item.task.id} → ${item.identifier} (Linear ${item.linearState}; not overwritten)`);
       continue;
     }
     if (item.action === 'mark-duplicate') {

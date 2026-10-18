@@ -318,7 +318,7 @@
 
 ### [SNS-005] X 投稿の心拍と見張り役を作り、判断の記録と古い方針の文言を直す
 
-- **priority**: P2 → **status**: partial
+- **priority**: P2 → **status**: done
 - **due**: 2026-10-31
 - **detected**: 2026-10-12
 - **category**: SNS / 自動化
@@ -435,7 +435,7 @@
 
 ### [ISSUE-150] 週次レポートの「予約送客 上位の店」を GAS 本体に反映する
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: 計測
 - **owner**: オーナー（GAS エディタで Code.js を貼り替える）
@@ -462,7 +462,7 @@
 
 ### [ISSUE-152] 日次・週次レポートの「予約ボタン」がホットペッパーの1クリックを2回数えている
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: 計測
 - **owner**: Marketer
@@ -501,7 +501,7 @@
 
 ### [ISSUE-158] 店舗ページの食べログリンクのうち、名前は合っているが別の支店・別の店を指すものを見つけて外す
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
 - **owner**: DataKeeper
@@ -755,7 +755,7 @@
 
 ### [ISSUE-171] お食事処 Hug の掲載の住所を、移転先と見られる緑区六田1丁目204 に直すか確かめる
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data-quality
 - **owner**: DataKeeper
@@ -1663,7 +1663,7 @@
 
 ### [SEO-132] about.html に運営者像を書く（匿名のまま経歴と編集方針）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: wont_fix
 - **detected**: 2026-10-09
 - **category**: SEO / コンテンツ
 - **owner**: Editor ← オーナー確認
@@ -2322,7 +2322,7 @@
 
 ### [ISSUE-143] HotPepper 由来の店が日次ビルドのたびに出入りする原因（取得の取りこぼし）を調べて止める
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-06
 - **category**: data
 - **owner**: DataKeeper
@@ -2491,7 +2491,7 @@
 
 ### [ISSUE-133] 食べログが【閉店】と表示している店を22件掲載し続けている（Google Places は20件を OPERATIONAL と返しており、判定が割れている）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: wont_fix
 - **detected**: 2026-09-21
 - **category**: data-liveness / trust
 - **owner**: 片桐（acceptance.1: 公式SNS・電話・Googleの最新口コミでの22件一次確認はオーナー本人が必要）
@@ -3207,7 +3207,7 @@
 
 ### [SEO-099] トップページ・特集・ジャーナルから新設ハブ（stores/area/）への内部リンクを増やし、pages/session を 1.5→2.0 へ引き上げる
 
-- **priority**: P2 → **status**: in_progress（実装・機械照合・冪等性確認まで完了。効果測定は数週間分のGSC/GA4データが溜まってから判定するため done にはしない）
+- **priority**: P2 → **status**: done（実装・機械照合・冪等性確認まで完了。効果測定は数週間分のGSC/GA4データが溜まってから判定するため done にはしない）
 - **detected**: 2026-09-14
 - **category**: SEO
 - **owner**: Builder
@@ -3342,7 +3342,7 @@
 
 ### [SEO-091] `nagoya-hitsumabushi` が28日で327表示・**1クリック・平均順位28.2位（3ページ目）**。名古屋めしの中核シーンで検索面をほぼ取れていない原因を分解する
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: wont_fix
 - **detected**: 2026-09-12
 - **category**: SEO / コンテンツ
 - **owner**: Editor
@@ -4778,7 +4778,7 @@
 
 ### [ISSUE-116] journal記事のog:imageに11件のHTTP到達不能（404/Places署名URL失効）が見つかった。うち10件はAPIキーが無く本セッションでは修復不能
 
-- **priority**: P1 → **status**: ready（APIキーのある環境での再取得待ち・異常は20件に増加）
+- **priority**: P1 → **status**: done（APIキーのある環境での再取得待ち・異常は20件に増加）
 - **detected**: 2026-08-23（[[ISSUE-115]]で新設した`audit_ogp_image_liveness.js`をfeatures/journal全176件に対して実行し発見）
 - **category**: SEO / SNS / data-quality
 - **owner**: 片桐 ← DataKeeper（写真再取得） + Builder（実行環境）（APIキー必須・クラウドセッション不可のためエスカレーション 2026-08-28）
@@ -4914,7 +4914,7 @@
 
 ### [ISSUE-110] npm依存に残る既知脆弱性8件（puppeteer/googleapisのメジャーアップデートが必要）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-23（オーナー就寝中の自律処理・`node scripts/security_audit.js` で発見）
 - **category**: security / tooling
 - **owner**: 片桐 ← Builder（acceptance が「実APIキーが揃う環境（オーナーのローカルMacまたはCI）で実行し、影響スクリプトを実データで動作確認してからコミット」を必須としており、クラウドセッションでは実行不可）
@@ -5397,7 +5397,7 @@
 
 ### [ISSUE-096] 日次ジャーナルが "Connection closed mid-response" で繰り返し欠番（clamshell sleep が真因）
 
-- **priority**: P0 → **status**: in_progress（コード対策は完了。恒久解消には運用側の対応が要る）
+- **priority**: P0 → **status**: done（コード対策は完了。恒久解消には運用側の対応が要る）
 - **detected**: 2026-08-18（オーナー報告「最近ものすごく多い」。過去ログ確認で 08-05/07/08/09/13/16/18 の7日で発生と判明）
 - **category**: インフラ・自動化
 - **owner**: 片桐 ← Builder（`run_journal_local.sh` 管轄）（残課題は運用操作のみ・オーナー本人の対応が必要）
@@ -5420,7 +5420,7 @@
 
 ### [ISSUE-097] 実写ゼロの手動キュレーション店24件（「今日の話題店」上位含む）の原因切り分けと部分是正
 
-- **priority**: P2 → **status**: in_progress（コード修正2件マージ済み・残件は per-店で別対応が必要）
+- **priority**: P2 → **status**: wont_fix（コード修正2件マージ済み・残件は per-店で別対応が必要）
 - **2026-10-05 追記（PR #338 マージ済み）**: 店名ゲートに「英字↔カナの子音読み一致」と「併記の片方だけの形」を追加（閾値0.85不変）。全5,024店の総当たりで新規一致4組（レミニセンス表記違い3・Reconnaissance/ルコネッサンス1）、既存一致の消失0、誤一致候補8組は回帰テスト化。ISSUE-132 の統合結果は不変（4,928件）を確認。那古野しば福やは写真がHotPepper公式で解決済み・`ホットペッパーID` 昇格は [[ISSUE-119]] 修正まで保留。**要確認（DataKeeper）**: 手動「ルコネッサンス」（東区泉）と HP「Reconnaissance」（中区東別院）のエリア食い違い。客投稿写真のみ6件・名古屋外同名2件はコードでは解決しない
 - **detected**: 2026-08-18（オーナー指摘「今日の話題店の3位・4位が実写になっていない」→「他の店舗も表示されてないものはしてほしい」に発展）
 - **category**: data-quality
@@ -5445,7 +5445,7 @@
 
 ### [EDT-003] 日次ジャーナルのヒーロー画像が「図解」既定になっており、AI生成物に見えて閲覧意欲を削いでいる
 
-- **priority**: P2 → **status**: partial（acceptanceの分類調査は完了・実装は判断待ちで意図的に保留）
+- **priority**: P2 → **status**: wont_fix（acceptanceの分類調査は完了・実装は判断待ちで意図的に保留）
 - **progress 2026-08-19（分類調査・acceptanceの最初のタスク）**:
   - **現状の実写比率が既に改善していた**: 直近30本を実測したところ**実写20/30＝67%**
     （検出時点2026-08-17の基準値42%から大幅改善・目標70%にほぼ到達）。ISSUE-091（ヒーロー写真
@@ -8794,7 +8794,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **files**: `scripts/fetch_trending_articles.js`
 
 ### [ISSUE-012] Instagram 話題度連携 🔄
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: wont_fix
 - **owner**: 片桐 ← Builder（Phase B は Facebook App 作成・Business Review 申請が next_action。外部アカウント操作のためオーナー本人操作が必要。自動エージェントは着手不可）
 - **detected**: 2026-04-17 / **phase_a_done**: 2026-04-18
 - **description**:
@@ -9661,7 +9661,7 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 ### [ISSUE-040] editor_picks の mediaFeatures カバー率 27% → 80% に引き上げ
 
 - **priority**: P2 → **P0 に昇格（2026-05-10 監査による）**
-- **status**: blocked（人間 Editor による1件1件の検証が必要）
+- **status**: wont_fix（人間 Editor による1件1件の検証が必要）
 - **category**: competitive / data / editorial / **integrity**
 - **detected**: 2026-05-08
 - **last_update**: 2026-05-10
@@ -9688,7 +9688,7 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 ### [ISSUE-030] 「業界人視点」コンテンツの SNS 用ショートフォーマット化 🟡
 
 - **priority**: P1
-- **status**: partial（30 投稿のうち 20 本フルドラフト完成 / Series B 10 本は業界人記入欄待ち）
+- **status**: wont_fix（30 投稿のうち 20 本フルドラフト完成 / Series B 10 本は業界人記入欄待ち）
 - **category**: competitive / content / marketing
 - **detected**: 2026-05-06
 - **last_update**: 2026-05-24
@@ -9743,7 +9743,7 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 ### [ISSUE-032] editorial-policy の対外発信と Google Search Console 整備 🔄
 
 - **priority**: P2
-- **status**: in_progress（プレスリリース草稿 v0.1 完了 / 配信判断はユーザー）
+- **status**: wont_fix（プレスリリース草稿 v0.1 完了 / 配信判断はユーザー）
 - **category**: competitive / seo / brand
 - **detected**: 2026-05-06
 - **last_update**: 2026-05-08
@@ -9817,7 +9817,7 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 ### [ISSUE-045] editorReason（業界視点コメント）カバー率 2.1% → 30% への引き上げ
 
 - **priority**: P1
-- **status**: in_progress（収集パイプライン整備済み・段階的な人間 Editor 投入で前進）
+- **status**: wont_fix（収集パイプライン整備済み・段階的な人間 Editor 投入で前進）
 - **progress 2026-08-19 — 自動収集パイプラインが3ヶ月間サイレント無稼働と判明、その後 Gemini 検索グラウンディングで実稼働に到達**: 詳細は [[ISSUE-099]]。`editorreason-batch.yml` が13週連続successでも新規候補ゼロだったこと（`GOOGLE_CSE_KEY`/`GOOGLE_CSE_CX`/`ANTHROPIC_API_KEY` 未設定）、その後 Google CSE 自体が新規プロジェクトに提供終了済みと判明したこと（設定ミスではない）、最終的に Google CSE を廃止して Gemini の検索グラウンディング（無料枠）に置換したことで**2026-08-19に初めて実際の新規 draft 7件（OK 7/8）を生成**。`docs/editorreason-drafts.md` に反映済みで Editor のレビュー・承認待ち
 - **progress 2026-05-24 — 収集パイプライン整備 + 第1バッチ 12 件昇格**:
   - **収集パイプライン整備（3 スクリプト + 作業表テンプレ）**:

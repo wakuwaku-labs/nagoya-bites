@@ -22,7 +22,7 @@ test('does not update when Linear state is completed', () => {
   const live = new Map([liveIssue('P-1', 'completed', 'Done', 2)]);
   const s = state({ 'ISSUE-1': { identifier: 'P-1' } });
   const plan = buildPlan(tasks, live, s, defaults, '### [ISSUE-1] タスク\n');
-  assert.equal(plan.length, 0, 'completed Linear issue must not be updated');
+  assert.ok(plan.every(p => p.action !== "update"), 'completed Linear issue must not be updated');
 });
 
 test('does not update when Linear state is cancelled', () => {
@@ -30,7 +30,7 @@ test('does not update when Linear state is cancelled', () => {
   const live = new Map([liveIssue('P-1', 'cancelled', 'Canceled', 3)]);
   const s = state({ 'ISSUE-1': { identifier: 'P-1' } });
   const plan = buildPlan(tasks, live, s, defaults, '### [ISSUE-1] タスク\n');
-  assert.equal(plan.length, 0, 'cancelled Linear issue must not be updated');
+  assert.ok(plan.every(p => p.action !== "update"), 'cancelled Linear issue must not be updated');
 });
 
 test('does not update when Linear state is duplicate', () => {
@@ -38,7 +38,7 @@ test('does not update when Linear state is duplicate', () => {
   const live = new Map([liveIssue('P-1', 'duplicate', 'Duplicate', 3)]);
   const s = state({ 'ISSUE-1': { identifier: 'P-1' } });
   const plan = buildPlan(tasks, live, s, defaults, '### [ISSUE-1] タスク\n');
-  assert.equal(plan.length, 0, 'duplicate Linear issue must not be updated');
+  assert.ok(plan.every(p => p.action !== "update"), 'duplicate Linear issue must not be updated');
 });
 
 test('categorizes archived issues (not in live list) as archived, not update', () => {
@@ -80,7 +80,22 @@ test('mix: archived and terminal are excluded, only open diff tasks produce acti
   ]);
   const s = state({ 'ISSUE-A': { identifier: 'P-A' }, 'ISSUE-B': { identifier: 'P-B' }, 'ISSUE-C': { identifier: 'P-C' } });
   const plan = buildPlan(tasks, live, s, defaults, '### [ISSUE-A] タスク\n### [ISSUE-B] タスク\n### [ISSUE-C] タスク\n');
-  assert.deepEqual(plan.map(x => x.action), ['archived', 'update']);
+  assert.deepEqual(plan.map(x => x.action), ['archived', 'terminal', 'update']);
   assert.equal(plan[0].identifier, 'P-A');
-  assert.equal(plan[1].identifier, 'P-C');
+  assert.equal(plan[2].identifier, 'P-C');
+});
+
+test("Linear が完了で backlog と状態が違う課題は terminal として報告し、update にしない（P-471）", () => {
+  const tasks = [task("ISSUE-1", "in_progress", "P1")];
+  const live = new Map([liveIssue("P-1", "completed", "Done", 2)]);
+  const plan = buildPlan(tasks, live, state({ "ISSUE-1": { identifier: "P-1" } }), defaults, "");
+  assert.equal(plan.length, 1);
+  assert.equal(plan[0].action, "terminal");
+  assert.equal(plan[0].linearState, "Done");
+});
+
+test("Linear が完了で backlog も done なら何も出さない", () => {
+  const tasks = [task("ISSUE-1", "done", "P1")];
+  const live = new Map([liveIssue("P-1", "completed", "Done", 2)]);
+  assert.equal(buildPlan(tasks, live, state({ "ISSUE-1": { identifier: "P-1" } }), defaults, "").length, 0);
 });
