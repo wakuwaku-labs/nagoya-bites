@@ -29,7 +29,7 @@ function searchName(name) {
 /** API の shop 群から、店名・住所の両方が合う1件を選ぶ（合う店が複数でも先頭ではなく、1件に決まるときだけ） */
 function pickShop(store, shops) {
   const hits = (shops || []).filter((sh) =>
-    namesMatch(store['店名'], sh.name) && compareJpAddress(store['住所'], sh.address) === 'same');
+    namesMatch(store['店名'], sh.name).ok && compareJpAddress(store['住所'], sh.address).verdict === 'same');
   return hits.length === 1 ? hits[0] : null;
 }
 
