@@ -121,7 +121,7 @@
 
 ### [ISSUE-191] Google の紐付けが無い店に出ている「Google評価」（スプレッドシート・手動の店の欄）の出どころを確かめ、扱いを決める
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-10-18）
 - **due**: 2026-10-29
 - **detected**: 2026-10-15
 - **category**: データ / 信頼
@@ -137,6 +137,13 @@
   2. 「出す・出さない・取り直して紐付ける」の選択肢と、それぞれの店の数が並んでいる
   3. 選んだ扱いを `data/place_binding_policy.json` か `build.js` の 1 か所に入れ、ビルドのログに件数が出る（オーナーの判断が要る場合は、判断を頼む課題を起票して止める）
 - **関連**: [[MEO-003]]／[[MEO-004]]／[[ISSUE-190]]／判断の記録 0046
+- **結果（2026-10-18）**:
+  - 実際は 31 店（スプレッドシート由来 26・手動 5 店 = LA VAGABONDE・The Living Room with SKY BAR・オステリア ラマンテ・Reminiscence・ラ・グランターブル・ドゥ・キタムラ、口コミ数なし 1 店 = 居酒屋 我楽多文庫 栄店）
+  - カテゴリ別の扱い:
+    - **25 店（HP ID あり・places_resolved rejected）**: rejected エントリが残っているのに placeId が消去されると state:'none' に落ちてゲートをすり抜けていた（制約10 違反）。`scripts/lib/place_binding.js` の `bindingOf` で own.rejected 確認を !placeId 早期リターンより前に移動→ state:'mismatch' に修正。次回ビルドで Google評価・口コミ数が消去される。ビルドログに `binding-mismatch: N` が出る
+    - **5 店（手動店・HP ID なし）**: places_resolved.json に rejected エントリなし。既存ポリシー「出どころが Google の紐付けではない」に従い触らない
+    - **1 店（HP ID あり・places_resolved エントリなし）**: 同上、触らない
+  - 選択肢 2（取り直して紐付ける）は ISSUE-190 の規約確認を先にする必要がある（hand-off）
 
 ### [ISSUE-192] 会席の特集の候補が枠に 1 店足りなくなる（評価の関門の後）のを、11 月の入れ替えの後に確かめる
 
@@ -176,7 +183,7 @@
 
 ### [ISSUE-190] Google の店舗情報（店名・住所・評価・口コミ数）を公開リポジトリに保存していることが Places の規約に合うかを確かめる
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-10-18）
 - **due**: 2026-10-29
 - **detected**: 2026-10-15
 - **category**: データ / 信頼
@@ -189,7 +196,28 @@
   2. 当サイトが保存している Places 由来の項目（ファイル・項目名・更新の頻度・公開かどうか）の一覧がある
   3. 項目ごとに「規約に合う／合わない／決められない」と、その根拠が書いてある
   4. 合わない項目があれば、選択肢（保存の仕方を変える・表示の時に取る・表示をやめる 等）と費用（Places の SKU と無料の月量）を並べて、オーナーに判断を頼む課題を起票している
-- **関連**: [[MEO-001]]／判断の記録 0042・0045／`scripts/fetch_places.js`
+- **関連**: [[MEO-001]]／判断の記録 0042・0045・0051／`scripts/fetch_places.js`
+- **結果（2026-10-18）**:
+  - 達成条件1: Places ポリシーページ（2026-10-13 更新版）から原文引用・URL 付きで記録した。Maps Platform Service Specific Terms は WebFetch で完全取得できず（途中で切断）。`docs/decisions/0051-places-api-caching-compliance.md` に記録
+  - 達成条件2: places_resolved.json の4項目（placeId・name・formatted_address・fetchedAt）と stores.json の2項目（Google評価・口コミ数）の一覧を ADR に作成
+  - 達成条件3: placeId と fetchedAt/rejected は「合う」。name・formatted_address・Google評価・口コミ数は「決められない」（Service Specific Terms の allowed exceptions を確認できていないため）
+  - 達成条件4: 「決められない」項目について、選択肢A〜D と費用を ADR に記載。オーナー判断依頼として [[ISSUE-192]] を起票（Service Specific Terms を確認して判断を頼む）
+
+### [ISSUE-192] Places 規約の「allowed exceptions」の内容を確認し、Google 側データの保存継続可否をオーナーに判断してもらう
+
+- **priority**: P2 → **status**: ready
+- **due**: 2026-11-15
+- **detected**: 2026-10-18
+- **category**: データ / 信頼
+- **owner**: 片桐 ←（オーナー作業：ブラウザで Maps Platform Service Specific Terms を確認する操作が必要）
+- **source**: [[ISSUE-190]] の規約調査で Service Specific Terms が取得できず「決められない」に終わったため
+- **背景**: Places ポリシーは "must not pre-fetch, cache, or store Places API content beyond the allowed exceptions" と書く。"allowed exceptions"（表示用の一時キャッシュ等）の具体的な内容は Maps Platform Service Specific Terms に書かれているが、2026-10-18 の WebFetch では途中で切れて取得できなかった。そのため、当サイトが保存している name・formatted_address・Google評価・口コミ数（計4項目）が規約に合うかを判定できていない。詳細は `docs/decisions/0051-places-api-caching-compliance.md`
+- **acceptance**:
+  1. オーナーが Maps Platform Service Specific Terms（https://cloud.google.com/maps-platform/terms/maps-service-terms）を直接ブラウザで開き、"Places API" の節の "Caching" または "Content" に関する条項を確認する
+  2. "allowed exceptions" が当サイトの使い方（毎日更新・公開リポジトリにコミット・表示用）をカバーするかどうかを判断する
+  3. カバーする → `docs/decisions/0051` の判定を「合う」に更新して完了
+  4. カバーしない → `docs/decisions/0051` の選択肢 A〜D から対応策を選んで Builder/DataKeeper に実装を依頼する（この場合の実装は P1 相当）
+- **関連**: [[ISSUE-190]]／`docs/decisions/0051-places-api-caching-compliance.md`／[[MEO-001]]
 
 ### [ISSUE-189] backlog から Linear への同期で、Linear で完了・中止にした課題を古い状態に戻さないようにする
 
