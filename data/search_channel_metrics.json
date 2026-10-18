@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-10-18T20:09:43.720Z",
+  "generatedAt": "2026-10-18T20:26:46.631Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1912,
+  "total_sessions": 1914,
   "engines": [
     {
       "key": "google",
@@ -22,13 +22,13 @@
     {
       "key": "bing",
       "label": "Bing",
-      "sessions": 476,
+      "sessions": 477,
       "pct": 24.9,
       "sources": [
         {
           "source": "bing",
           "medium": "organic",
-          "sessions": 474
+          "sessions": 475
         },
         {
           "source": "cn.bing.com",
@@ -40,13 +40,13 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 310,
+      "sessions": 311,
       "pct": 16.2,
       "sources": [
         {
           "source": "(direct)",
           "medium": "(none)",
-          "sessions": 288
+          "sessions": 289
         },
         {
           "source": "(not set)",
@@ -232,7 +232,7 @@
     }
   ],
   "search_only": {
-    "total": 1513,
+    "total": 1514,
     "share": [
       {
         "key": "google",
@@ -243,7 +243,7 @@
       {
         "key": "bing",
         "label": "Bing",
-        "sessions": 476,
+        "sessions": 477,
         "pct_of_search": 31.5
       },
       {
@@ -270,11 +270,11 @@
     "from": "2026-10-17",
     "to": "2026-10-18",
     "delta": {
-      "google": 9,
+      "google": 11,
       "bing": -17,
-      "direct": 7,
-      "yahoo": 7,
-      "ai_assistant": 7,
+      "direct": 8,
+      "yahoo": 8,
+      "ai_assistant": 8,
       "other": -2,
       "duckduckgo": -1,
       "social": 4
@@ -283,7 +283,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 654 セッションのみ。Bing(476) + 生成AI(116) の 592 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 654 セッションのみ。Bing(477) + 生成AI(116) の 593 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
