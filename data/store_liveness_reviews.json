@@ -1030,6 +1030,31 @@
           "usedAsEvidence": false
         }
       }
+    },
+    {
+      "id": "manual:日々担々 守山店|名古屋市守山区",
+      "storeName": "日々担々 守山店",
+      "issue": "ISSUE-173",
+      "checkedAt": "2026-10-19",
+      "verdict": "決められない",
+      "why": "Google の店舗情報（日次の取り直し・名前と住所は掲載と一致）が CLOSED_PERMANENTLY。独立した2つ目の情報源が無い: 食べログのページは取得できるが【閉店】の表示は無い（移転・改装で古いページを閉店にすることがあるため、食べログ単独でも根拠にしない）。検索でも閉店の記事は見つからなかった。推測で外さず掲載を続け、30日後に確かめ直す（現地・公式SNS・電話は本人の確認が要る）",
+      "evidence": {
+        "places": {
+          "placeId": null,
+          "fetchedAt": "2026-10-19",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "日々担々 守山店",
+          "businessStatus": "CLOSED_PERMANENTLY",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2303/A230302/23096737/",
+          "fetchedAt": "2026-10-19",
+          "status": 200,
+          "closedBanner": false
+        }
+      }
     }
   ]
 }
