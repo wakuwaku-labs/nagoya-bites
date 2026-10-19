@@ -1,0 +1,8 @@
+{
+  "_doc": "掲載店の Google の営業状態（business_status）を取り直す設定の唯一の情報源（ISSUE-173・P-177・オーナーの了承 2026-10-19『推奨で進めて』）。取る項目は Basic の name・formatted_address・business_status だけ（口コミなど Atmosphere は取らない）。1日の件数と1か月の上限は無料枠（Place Details 月5,000件）より低く置く。他の Places 取得（fetch_places.js の新規店解決など）と無料枠を分け合うので、上限は無料枠の約6割。変更はこのファイルで行いスクリプトは触らない。",
+  "dailyLimit": 100,
+  "monthlyCap": 3000,
+  "fields": ["name", "formatted_address", "business_status"],
+  "delayMs": 150,
+  "restaleDays": 30
+}
