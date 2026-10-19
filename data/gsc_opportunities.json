@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-18T00:31:58.174Z",
+  "generatedAt": "2026-10-18T20:50:44.293Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -7,32 +7,32 @@
     "ctrFix": [
       {
         "query": "ウルフ ギャング 名古屋 レビュー",
-        "impressions": 661,
+        "impressions": 672,
         "clicks": 3,
         "position": 8,
         "ctr": 0.45,
         "expectedCtr": 3.2,
-        "missedClicks": 18.2
+        "missedClicks": 18.5
       }
     ],
     "ctrFixGeoless": [
       {
-        "query": "cm 伏見",
-        "impressions": 191,
+        "query": "ひものや官兵衛 伏見",
+        "impressions": 159,
         "clicks": 3,
-        "position": 7.6,
-        "ctr": 1.57,
-        "expectedCtr": 3.5,
-        "missedClicks": 3.7
+        "position": 6.3,
+        "ctr": 1.89,
+        "expectedCtr": 4.7,
+        "missedClicks": 4.5
       },
       {
-        "query": "ひものや官兵衛 伏見",
-        "impressions": 115,
+        "query": "cm 伏見",
+        "impressions": 196,
         "clicks": 3,
-        "position": 6,
-        "ctr": 2.61,
-        "expectedCtr": 5,
-        "missedClicks": 2.7
+        "position": 7.7,
+        "ctr": 1.53,
+        "expectedCtr": 3.4,
+        "missedClicks": 3.7
       }
     ],
     "rankPush": []
@@ -41,50 +41,50 @@
     "ctrFix": [
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 872,
-        "clicks": 11,
-        "position": 7.3,
-        "ctr": 1.26,
-        "expectedCtr": 3.8,
-        "missedClicks": 21.8
-      },
-      {
-        "page": "/stores/J004660861.html",
-        "impressions": 985,
-        "clicks": 15,
-        "position": 7.7,
-        "ctr": 1.52,
-        "expectedCtr": 3.4,
-        "missedClicks": 18.9
+        "impressions": 902,
+        "clicks": 12,
+        "position": 7.4,
+        "ctr": 1.33,
+        "expectedCtr": 3.7,
+        "missedClicks": 21.2
       },
       {
         "page": "/stores/J004660223.html",
-        "impressions": 916,
+        "impressions": 935,
         "clicks": 13,
         "position": 7.7,
-        "ctr": 1.42,
+        "ctr": 1.39,
         "expectedCtr": 3.4,
-        "missedClicks": 18.5
+        "missedClicks": 19.2
+      },
+      {
+        "page": "/stores/J004660861.html",
+        "impressions": 1010,
+        "clicks": 17,
+        "position": 7.8,
+        "ctr": 1.68,
+        "expectedCtr": 3.4,
+        "missedClicks": 17
       },
       {
         "page": "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
-        "impressions": 407,
-        "clicks": 14,
-        "position": 6.3,
-        "ctr": 3.44,
-        "expectedCtr": 4.7,
-        "missedClicks": 5.1
+        "impressions": 508,
+        "clicks": 16,
+        "position": 6.6,
+        "ctr": 3.15,
+        "expectedCtr": 4.4,
+        "missedClicks": 6.4
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2047,
+        "impressions": 2142,
         "clicks": 21,
-        "position": 17.7,
-        "ctr": 1.03,
-        "upsideClicks": 36.2
+        "position": 17.4,
+        "ctr": 0.98,
+        "upsideClicks": 39
       }
     ]
   },
@@ -97,8 +97,8 @@
     "pageRankPush": 1,
     "topPageCtrFix": [
       "/features/nagoya-tebasaki.html",
-      "/stores/J004660861.html",
-      "/stores/J004660223.html"
+      "/stores/J004660223.html",
+      "/stores/J004660861.html"
     ]
   }
 }

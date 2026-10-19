@@ -38,7 +38,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       "@type": "PostalAddress",
       "addressRegion": "愛知県",
       "addressCountry": "JP",
-      "addressLocality": "名古屋市中区"
+      "addressLocality": "名古屋市中区",
+      "streetAddress": "愛知県名古屋市中区千代田２丁目１６−１２ さくらビル 1F"
     },
     "image": "https://lh3.googleusercontent.com/grass-cs/ACvplmOAlovVhRLlfDw_VJTD-gJVEhK2R6Xn75sS2niOcEQ4msGMJVreR1kC5563YAhWrUrOuU9oXEiStHGWENsi8Nswe3jsKX5wKzDXH23DQQ6AJQ92kpRHyMRjXF94lS8TfoKiFis1XUQRjOU=s1600-w1200",
     "url": "https://nagoya-bites.com/stores/pasta-mania.html",
@@ -228,7 +229,7 @@ button.link-btn{font:inherit;cursor:pointer;}
 
   <div class="info-grid">
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市中区</span></div>
-    
+    <div class="info-cell"><label>住所</label><span>愛知県名古屋市中区千代田２丁目１６−１２ さくらビル 1F</span></div>
     <div class="info-cell"><label>価格帯</label><span>2001～3000円</span></div>
     
     
@@ -299,7 +300,7 @@ button.link-btn{font:inherit;cursor:pointer;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/?api=1&amp;query=PASTA%20MANIA%20%E9%B6%B4%E8%88%9E%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%8D%83%E4%BB%A3%E7%94%B0&amp;query_place_id=ChIJg9bsJPlxA2ARDhwM4x60Q20" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href,store_id:'pasta-mania',store_name:'PASTA MANIA 鶴舞店',location:'store_page',link_kind:'place_id'})">Googleマップ</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/?api=1&amp;query=PASTA%20MANIA%20%E9%B6%B4%E8%88%9E%E5%BA%97%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%8D%83%E4%BB%A3%E7%94%B0%EF%BC%92%E4%B8%81%E7%9B%AE%EF%BC%91%EF%BC%96%E2%88%92%EF%BC%91%EF%BC%92%20%E3%81%95%E3%81%8F%E3%82%89%E3%83%93%E3%83%AB%201F&amp;query_place_id=ChIJg9bsJPlxA2ARDhwM4x60Q20" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href,store_id:'pasta-mania',store_name:'PASTA MANIA 鶴舞店',location:'store_page',link_kind:'place_id'})">Googleマップ</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230105/23097097/" target="_blank" rel="noopener noreferrer" onclick="nbReserveExit('cta_click',{store_name:'PASTA MANIA 鶴舞店',store_id:'ChIJg9bsJPlxA2ARDhwM4x60Q20',link_domain:'tabelog.com',location:'store_page'})">食べログ</a>
   </div>
 
@@ -366,7 +367,7 @@ button.link-btn{font:inherit;cursor:pointer;}
 <div class="nb-action-bar" role="region" aria-label="PASTA MANIA 鶴舞店の予約・電話・地図">
   <a class="nb-bar-btn nb-bar-primary nb-bar-reserve" href="https://tabelog.com/aichi/A2301/A230105/23097097/" target="_blank" rel="noopener noreferrer" onclick="nbReserveExit('cta_click',{store_name:'PASTA MANIA 鶴舞店',store_id:'ChIJg9bsJPlxA2ARDhwM4x60Q20',link_domain:'tabelog.com',location:'store_page_bar'})">食べログで予約・確認</a>
   <button type="button" class="nb-bar-btn nb-bar-sub nb-bar-tel" data-call-loc="store_page_bar" onclick="nbCallStore(event,'ChIJg9bsJPlxA2ARDhwM4x60Q20','PASTA MANIA 鶴舞店',this)" aria-label="PASTA MANIA 鶴舞店に電話する"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg><span>電話する</span></button>
-  <a class="nb-bar-btn nb-bar-sub nb-bar-map" href="https://www.google.com/maps/search/?api=1&amp;query=PASTA%20MANIA%20%E9%B6%B4%E8%88%9E%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%8D%83%E4%BB%A3%E7%94%B0&amp;query_place_id=ChIJg9bsJPlxA2ARDhwM4x60Q20" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href,store_id:'pasta-mania',store_name:'PASTA MANIA 鶴舞店',location:'store_page_bar',link_kind:'place_id'})" aria-label="PASTA MANIA 鶴舞店の地図をGoogleマップで開く"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span>地図</span></a>
+  <a class="nb-bar-btn nb-bar-sub nb-bar-map" href="https://www.google.com/maps/search/?api=1&amp;query=PASTA%20MANIA%20%E9%B6%B4%E8%88%9E%E5%BA%97%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%8D%83%E4%BB%A3%E7%94%B0%EF%BC%92%E4%B8%81%E7%9B%AE%EF%BC%91%EF%BC%96%E2%88%92%EF%BC%91%EF%BC%92%20%E3%81%95%E3%81%8F%E3%82%89%E3%83%93%E3%83%AB%201F&amp;query_place_id=ChIJg9bsJPlxA2ARDhwM4x60Q20" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href,store_id:'pasta-mania',store_name:'PASTA MANIA 鶴舞店',location:'store_page_bar',link_kind:'place_id'})" aria-label="PASTA MANIA 鶴舞店の地図をGoogleマップで開く"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span>地図</span></a>
   <p class="nb-call-status" role="status"></p>
 </div>
 <!-- NB-CHROME:SCRIPT:START -->

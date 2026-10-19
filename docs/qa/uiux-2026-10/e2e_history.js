@@ -219,7 +219,7 @@ async function openerStoreId(h) {
 }
 // idMode: 'with' = ID のある店だけ（URL に store= を載せられる）／'without' = ID の無い店だけ／'any'。skip = 条件に合う入口を先頭から何個飛ばすか
 async function firstVisibleOpener(page, selector, idMode, skip) {
-  const handles = await page.$$(selector || '[onclick*="openM("]');
+  const handles = await page.$$(selector || '[onclick*="openM("],[onclick*="nbCardClick("]');
   let seen = 0;
   for (const h of handles) {
     const box = await h.boundingBox();
@@ -232,8 +232,18 @@ async function firstVisibleOpener(page, selector, idMode, skip) {
   }
   return null;
 }
+// 最初の30件に ID の無い店（編集部の店・全体の約3%）が並ばないので、'without' のときは、その店のある頁（renderPage・履歴には触れない）を出してから探す
+async function showPageWithIdless(page) {
+  return page.evaluate(() => {
+    const i = RENDER_DATA.findIndex(s => !s['ホットペッパーID']);
+    if (i < 0) return false;
+    renderPage(Math.floor(i / PAGE_SIZE) + 1);
+    return true;
+  });
+}
 async function openByClick(page, selector, idMode, skip) {
   let h = null;
+  if (idMode === 'without') await showPageWithIdless(page);
   for (let i = 0; i < 60 && !h; i++) { h = await firstVisibleOpener(page, selector, idMode || 'with', skip); if (!h) await sleep(250); }
   if (!h) return false;
   const c = await realClick(page, h);
@@ -260,6 +270,30 @@ async function freshTop(browser, base, vp, hash, opts) {
   return page;
 }
 
+// 一覧（#grid）は、検索か絞り込みで結果を出すまで隠れている（body.search-active・判断の記録 0037）。
+// 絞り込みのシートを実際に開き、ジャンルのチップを押し、「N軒を見る」で確定して一覧を出す（履歴は足さず置き換える・0037）。戻り値は選んだジャンル
+async function applyGenreViaSheet(page) {
+  const opener = await page.evaluate(() => { nbOpenFilterSheet(document.getElementById('tb-filter-btn') || document.getElementById('filter-toggle-btn')); return !!NB_SHEET.open; });
+  if (!opener) return '';
+  await waitFn(page, () => document.querySelectorAll('#fs-row-genre .fs-chip, .fs-chip[data-k="genre"]').length > 0, null, 8000);
+  const genre = await page.evaluate(() => {
+    const c = document.querySelector('.fs-chip[data-k="genre"]:not(.fs-extra)');
+    if (!c) return '';
+    c.click();
+    return c.dataset.v;
+  });
+  await sleep(300);
+  await page.evaluate(() => document.getElementById('fs-go').click());
+  await waitFn(page, () => document.body.classList.contains('search-active') && document.querySelectorAll('#grid .card').length > 0, null, 10000);
+  await waitFn(page, () => !NB_SHEET.open, null, 4000);
+  await sleep(500);
+  return genre;
+}
+// 一覧を出した状態のトップ（店を開く確認の入口はここのカード）。共有リンクと同じ #genre= で開くので、履歴の枠は増えない
+async function freshResults(browser, base, vp) {
+  return freshTop(browser, base, vp, '#genre=' + encodeURIComponent('居酒屋'));
+}
+
 const results = [];
 function check(vp, id, name, ok, detail) { results.push({ viewport: vp.name, id, name, ok: !!ok, detail: detail || '' }); }
 
@@ -276,9 +310,12 @@ async function closeBy(page, vp, how) {
     const real = vp.hasTouch;
     await page.evaluate(() => { const m = document.querySelector('.modal'); if (m) m.scrollTop = 0; });
     if (real) {
-      const touch = await page.touchscreen.touchStart(Math.round(vp.width / 2), 200);
-      await touch.move(Math.round(vp.width / 2), 260);
-      await touch.move(Math.round(vp.width / 2), 340);
+      // 詳細（クイックビュー）は画面の下から出る板で、上の余白は背景。指は板の上（モーダルの中）から始める（背景を押すと閉じる別の動きになる）
+      await sleep(700); // 板が下から上がりきるのを待つ（上がる途中は板の位置が動く）
+      const y0 = await page.evaluate(() => { const r = document.querySelector('.modal').getBoundingClientRect(); return Math.round(Math.max(r.top, 0) + 40); });
+      const touch = await page.touchscreen.touchStart(Math.round(vp.width / 2), y0);
+      await touch.move(Math.round(vp.width / 2), y0 + 60);
+      await touch.move(Math.round(vp.width / 2), y0 + 140);
       await touch.end();
       return '（実タッチ）';
     }
@@ -322,7 +359,7 @@ async function scenarioDeepLink(browser, base, vp) {
 }
 
 async function scenarioBackForward(browser, base, vp) {
-  const page = await freshTop(browser, base, vp, '');
+  const page = await freshResults(browser, base, vp);
   const before = await navState(page);
   const opened = await openByClick(page);
   const st = await navState(page);
@@ -352,25 +389,24 @@ async function scenarioBackForward(browser, base, vp) {
   await page.close();
 }
 
+// ホットペッパーIDの無い店には、共有リンク用の「店舗ID」（E + 10 文字）が付く（判断の記録 0043）。ID のある店と同じく URL に store= が載り、「進む」で開き直せる
 async function scenarioIdLess(browser, base, vp) {
-  const page = await freshTop(browser, base, vp, '');
+  const page = await freshResults(browser, base, vp);
   const before = await navState(page);
   const opened = await openByClick(page, null, 'without');
   const st = await navState(page);
   check(vp, 'S7-open', 'ホットペッパーIDの無い店（編集部の店・全体の約3%）でもモーダルが開く', opened, opened ? '' : '入口が見つからない／開かなかった ' + (page.__lastOpenWhy || ''));
-  check(vp, 'S7-push', '開くと履歴が1つ増え（印 nbM）、URL は変わらない（ID が無いので store= を付けられない）', opened && st.index === before.index + 1 && st.state && st.state.nbM === 1 && st.hash.indexOf('store=') < 0, `index ${before.index}→${st.index} hash=${st.hash} state=${JSON.stringify(st.state)}`);
+  check(vp, 'S7-push', '開くと履歴が1つ増え（印 nbM）、URL に店舗ID（store=E…・0043）が載る', opened && st.index === before.index + 1 && st.state && st.state.nbM === 1 && /store=E[0-9a-z]{10}\b/.test(st.hash), `index ${before.index}→${st.index} hash=${st.hash} state=${JSON.stringify(st.state)}`);
+  const title1 = st.title;
   await goBack(page);
   const closedByBack = await waitModal(page, false);
   await waitIndex(page, before.index);
   const st2 = await navState(page);
-  check(vp, 'S7-back', '「戻る」1回でモーダルが閉じる', closedByBack && st2.index === before.index && page.url().startsWith(base), `modalOpen=${st2.modalOpen} index=${st2.index}`);
+  check(vp, 'S7-back', '「戻る」1回でモーダルが閉じ、URL から store= が消える', closedByBack && st2.index === before.index && st2.hash.indexOf('store=') < 0 && page.url().startsWith(base), `modalOpen=${st2.modalOpen} index=${st2.index} hash=${st2.hash}`);
   await goForward(page);
-  await sleep(600);
+  const reopened = await waitModal(page, true);
   const st3 = await navState(page);
-  check(vp, 'S7-forward', '（制約）「進む」では開き直さない。URL に店の ID が無く、どの店か分からないため。画面は壊れない', !st3.modalOpen && page.__log.pageErrors.length === 0, `modalOpen=${st3.modalOpen} index=${st3.index}`);
-  const reopened = await openByClick(page, null, 'without');
-  const st4 = await navState(page);
-  check(vp, 'S7-reopen', '「進む」で着いた履歴の上で開き直しても、履歴は増えない（置き換える）', reopened && st4.index === st3.index && st4.length === st3.length, `index ${st3.index}→${st4.index} length ${st3.length}→${st4.length}`);
+  check(vp, 'S7-forward', '「進む」で同じ店のモーダルがもう一度開く（URL に店舗IDがあるので、どの店か分かる）', reopened && st3.title === title1 && /store=E/.test(st3.hash) && page.__log.pageErrors.length === 0, `modalOpen=${st3.modalOpen} title「${st3.title}」/ 最初「${title1}」 hash=${st3.hash}`);
   const xc = await clickSel(page, '.mcl-close');
   await waitIndex(page, before.index);
   const closed = await waitModal(page, false);
@@ -381,7 +417,7 @@ async function scenarioIdLess(browser, base, vp) {
 }
 
 async function scenarioScroll(browser, base, vp) {
-  const page = await freshTop(browser, base, vp, '');
+  const page = await freshResults(browser, base, vp);
   // 読み込み直後はページの高さがまだ動く（フォント・画像）。落ち着いてから測る（履歴の動きとは関係しない揺れを避ける）
   await sleep(1500);
   await page.evaluate(() => window.scrollTo({ top: 900, behavior: 'instant' }));
@@ -409,7 +445,7 @@ async function scenarioScroll(browser, base, vp) {
 }
 
 async function scenarioCloseMethods(browser, base, vp) {
-  const page = await freshTop(browser, base, vp, '');
+  const page = await freshResults(browser, base, vp);
   const before = await navState(page);
   const methods = ['×ボタン', '背景', 'Esc', '下スワイプ'];
   for (const how of methods) {
@@ -421,7 +457,7 @@ async function scenarioCloseMethods(browser, base, vp) {
     await waitIndex(page, before.index);
     const st2 = await navState(page);
     const ok = opened && closed && st2.index === before.index && st2.length === before.length + 1 && st2.hash.indexOf('store=') < 0 && page.url().startsWith(base);
-    check(vp, 'S3-' + how, `${how}で閉じると、足した履歴が1つ戻って消える${note}`, ok, `opened=${opened} closed=${closed} index ${st.index}→${st2.index} length=${st2.length} hash=${st2.hash} url=${page.url().slice(0, 60)}`);
+    check(vp, 'S3-' + how, `${how}で閉じると、足した履歴が1つ戻って消える${note}`, ok, `opened=${opened}${opened ? '' : '（' + (page.__lastOpenWhy || '') + '）'} closed=${closed} index ${st.index}→${st2.index} length=${st2.length} hash=${st2.hash} url=${page.url().slice(0, 60)}`);
     check(vp, 'S3-' + how + '-scroll', `${how}で閉じたあと、背景のスクロール固定が戻る`, st2.bodyOverflow === '', `overflow="${st2.bodyOverflow}"`);
   }
   // 閉じた直後にもう一度開いても、履歴は増え続けない（進む側の履歴を置き換える）
@@ -438,13 +474,18 @@ async function scenarioCloseMethods(browser, base, vp) {
 }
 
 async function scenarioSwap(browser, base, vp) {
-  const page = await freshTop(browser, base, vp, '');
+  const page = await freshResults(browser, base, vp);
   const before = await navState(page);
   const opened = await openWithRelated(page);
   const st = await navState(page);
   const rs = await page.$('.modal-rsc');
   check(vp, 'S4-has-related', '店のモーダルに「似たお店」が出る', opened && !!rs, `opened=${opened} related=${!!rs}`);
   if (rs) {
+    // 「似たお店」は、詳細の「もっと見る」（details.m-more）の中にある。閉じたままだと押せないので、見出しを押して開く
+    const sum = await rs.evaluateHandle(el => { const d = el.closest('details'); return d && !d.open ? d.querySelector('summary') : null; });
+    const sumEl = sum.asElement();
+    if (sumEl) { await realClick(page, sumEl); await sleep(400); }
+    const nOpensBefore = modalOpens(await events(page)).length;
     const rc = await realClick(page, rs);
     check(vp, 'S4-related-reach', '「似たお店」が押せる', rc.ok, rc.why);
     await waitFn(page, t => document.getElementById('mn').textContent !== t, st.title, 6000);
@@ -453,7 +494,7 @@ async function scenarioSwap(browser, base, vp) {
     check(vp, 'S4-swap', '「似たお店」へ切り替えても、履歴は増えない（置き換わる）', st2.modalOpen && st2.title !== st.title && st2.index === before.index + 1 && st2.length === before.length + 1, `タイトル「${st.title}」→「${st2.title}」 index=${st2.index} length=${st2.length}`);
     check(vp, 'S4-url', '切り替えたあとの URL は、新しい店の store= になる', st2.hash !== st.hash && /store=/.test(st2.hash) && st2.state && st2.state.nbM === 1, `${st.hash} → ${st2.hash}`);
     const evs = modalOpens(await events(page));
-    check(vp, 'S4-ga', '切り替えの modal_open は source=modal_reco で1回増える', evs.length === 2 && evs[1].source === 'modal_reco', JSON.stringify(evs));
+    check(vp, 'S4-ga', '切り替えの modal_open は source=modal_reco で1回増える（「似たお店」を探す途中で開いて閉じた店の分は、押す前の数に含める）', evs.length === nOpensBefore + 1 && evs[evs.length - 1].source === 'modal_reco', JSON.stringify(evs));
     await goBack(page);
     const closed = await waitModal(page, false);
     await waitIndex(page, before.index);
@@ -468,15 +509,10 @@ async function scenarioFilters(browser, base, vp) {
   const page = await freshTop(browser, base, vp, '');
   const before = await navState(page);
   // 絞り込み（ジャンル）: 履歴は足さず、URL だけが変わる
-  const genre = await page.evaluate(() => {
-    const chips = Array.from(document.querySelectorAll('.ft')).filter(x => x.dataset.f && x.dataset.f !== 'All');
-    if (!chips.length) return '';
-    chips[0].click();
-    return chips[0].dataset.f;
-  });
+  const genre = await applyGenreViaSheet(page);
   await sleep(500);
   const st = await navState(page);
-  check(vp, 'S5-filter', '絞り込みは履歴を足さず、URL に genre= を載せる', !!genre && st.length === before.length && st.hash.indexOf('genre=') >= 0, `genre=${genre} length ${before.length}→${st.length} hash=${st.hash}`);
+  check(vp, 'S5-filter', '絞り込みは履歴を足さず（シートを閉じた「戻る」の先の空き枠は数えない）、URL に genre= を載せる', !!genre && st.index === before.index && st.hash.indexOf('genre=') >= 0, `genre=${genre} length ${before.length}→${st.length} hash=${st.hash}`);
   // 検索語: 実行（nbSubmitSearch）で履歴を1つ足し、URL に q= を載せる。結果の一覧から店を開く
   await page.evaluate(g => { const si = document.getElementById('si'); si.value = g; }, genre);
   await page.evaluate(() => nbSubmitSearch());
@@ -512,11 +548,11 @@ async function scenarioBadHashes(browser, base, vp) {
   for (const [hash, label] of BAD_HASHES) {
     const page = await freshTop(browser, base, vp, hash);
     await sleep(500);
-    const info = await page.evaluate(() => ({ n: window.ALL_STORES ? window.ALL_STORES.length : -1, full: window.FULL_CATALOG_LOADED === true, cards: document.querySelectorAll('.card, .trend-rank-card').length }));
+    const info = await page.evaluate(() => ({ n: window.ALL_STORES ? window.ALL_STORES.length : -1, full: window.FULL_CATALOG_LOADED === true, cards: document.querySelectorAll('.card, .trend-rank-card').length, active: document.body.classList.contains('search-active') }));
     const wantsStore = /store=J/.test(hash);
     let storeOk = true;
     if (wantsStore) storeOk = await waitModal(page, true, 20000);
-    check(vp, 'S6-' + hash, `壊れたハッシュ ${hash}（${label}）でも初期化が止まらない`, page.__log.pageErrors.length === 0 && info.full && info.n > 1000 && info.cards > 0 && storeOk, `pageerror=${page.__log.pageErrors.length} stores=${info.n} cards=${info.cards}${wantsStore ? ' store-modal=' + storeOk : ''} ${page.__log.pageErrors.join(' | ')}`);
+    check(vp, 'S6-' + hash, `壊れたハッシュ ${hash}（${label}）でも初期化が止まらない`, page.__log.pageErrors.length === 0 && info.full && info.n > 1000 && (info.cards > 0 || info.active) && storeOk, `pageerror=${page.__log.pageErrors.length} stores=${info.n} cards=${info.cards} active=${info.active}${wantsStore ? ' store-modal=' + storeOk : ''} ${page.__log.pageErrors.join(' | ')}`);
     await page.close();
   }
   // 存在しない店 ID: 全店のデータを読み終えたら、URL から外れる（モーダルは開かない）
