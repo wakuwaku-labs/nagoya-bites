@@ -1,0 +1,534 @@
+{
+  "_doc": "外した食べログのページから取った Instagram のアカウントを確かめた記録（ISSUE-165・P-169・2026-10-19）。オーナー方針（推奨）: ブランド共通の公式アカウントは残し、別の支店・別の店のアカウントと確かめたものだけ外す。ここに載せたのは、アカウント名が『別の支店の地名』（handle の地名＝取得元の食べログの支店名の地名）を含み、掲載の店名・住所・エリアにその地名が無い組（第三者が handle・食べログの店名・掲載住所で検算できる事実のみ・制約10）。外すのは scripts/clear_wrong_ig_accounts.js（instagram_resolved.json を failed 化して元のURLを rejectedInstagram に残す・埋め込み投稿も外す）。残りの約265件（ブランド共通の公式・地名がアカウント名に無い・決められない）は掲載を続ける。",
+  "decidedAt": "2026-10-19",
+  "entries": [
+    {
+      "id": "J004492409",
+      "storeName": "餃子のかっちゃん 名古屋駅南口2号店",
+      "handle": "kacchan_sakae",
+      "otherBranchPage": "餃子のかっちゃん 栄住吉店",
+      "tokens": [
+        "sakae"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J003582200",
+      "storeName": "肉のよいち 新栄葵店",
+      "handle": "nikunoyoichi_oozone",
+      "otherBranchPage": "肉のよいち 大曽根駅前店",
+      "tokens": [
+        "oozone"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J004470580",
+      "storeName": "うまかもん 金山駅店",
+      "handle": "imozou.sakae",
+      "otherBranchPage": "九州うまいもんと焼酎 芋蔵 栄店 （いもぞう）",
+      "tokens": [
+        "sakae"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J003498170",
+      "storeName": "餃子のかっちゃん 金山店",
+      "handle": "kacchan_sakae",
+      "otherBranchPage": "餃子のかっちゃん 栄住吉店",
+      "tokens": [
+        "sakae"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J004510095",
+      "storeName": "博多かわ屋 金山東口店",
+      "handle": "kawaya.nishiki",
+      "otherBranchPage": "博多かわ屋 錦店",
+      "tokens": [
+        "nishiki"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J003893597",
+      "storeName": "餃子のかっちゃん 金山駅前店",
+      "handle": "kacchan_sakae",
+      "otherBranchPage": "餃子のかっちゃん 栄住吉店",
+      "tokens": [
+        "sakae"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J003298852",
+      "storeName": "全席完全個室居酒屋　牛煌（GYUOU）金山本店",
+      "handle": "gyuou.toyota",
+      "otherBranchPage": "全席完全個室居酒屋 牛煌 豊田市駅前店  （GYUOU）",
+      "tokens": [
+        "toyota"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J001040356",
+      "storeName": "居酒屋 鳥心 金山店",
+      "handle": "torishin_sakae",
+      "otherBranchPage": "秘伝手羽先唐揚げと本格串焼専門店 鳥心 栄住吉店",
+      "tokens": [
+        "sakae"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J003959102",
+      "storeName": "寿司と天ぷらとわたくし　金山東口店",
+      "handle": "sushiten.watakushi.fujigaoka",
+      "otherBranchPage": "寿司と天ぷらとわたくし 藤が丘店",
+      "tokens": [
+        "fujigaoka"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J003737452",
+      "storeName": "サカナのハチベエ 金山店",
+      "handle": "sakan.no.hachibe.yabacho",
+      "otherBranchPage": "サカナのハチベエ 矢場町店",
+      "tokens": [
+        "yabacho"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J004026414",
+      "storeName": "炭火焼鳥 しげ 金山店",
+      "handle": "shige_fushimi",
+      "otherBranchPage": "炭火焼鳥しげ 伏見店 （シゲ）",
+      "tokens": [
+        "fushimi"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J000107909",
+      "storeName": "昔の矢場とん アスナル金山店",
+      "handle": "mukashinoyabaton.nishiki",
+      "otherBranchPage": "昔の矢場とん 錦3丁目店",
+      "tokens": [
+        "nishiki"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J001203646",
+      "storeName": "肉のよいち 名駅本店",
+      "handle": "nikunoyoichi_oozone",
+      "otherBranchPage": "肉のよいち 大曽根駅前店",
+      "tokens": [
+        "oozone"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J004090812",
+      "storeName": "ふじさん別邸 昼だけうなぎ屋 名駅店",
+      "handle": "unagi_hirudake_osu",
+      "otherBranchPage": "昼だけうなぎ屋 大須店",
+      "tokens": [
+        "osu"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J001263743",
+      "storeName": "韓国酒場 パル/8 名駅柳橋店",
+      "handle": "paru_8_fushimi",
+      "otherBranchPage": "韓国酒場 パル/8 伏見店",
+      "tokens": [
+        "fushimi"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J001267175",
+      "storeName": "居酒屋ホタル 名駅西店",
+      "handle": "hotaru_imaike0601",
+      "otherBranchPage": "居酒屋 ホタル 今池店",
+      "tokens": [
+        "imaike"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J001218309",
+      "storeName": "肉ときどきレモンサワー 名駅店",
+      "handle": "niku_tokidoki_lemon_sakae",
+      "otherBranchPage": "全120品 食べ放題 肉ときどきレモンサワー。 栄住吉店",
+      "tokens": [
+        "sakae"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J001208696",
+      "storeName": "肉汁餃子のダンダダン 岩塚店",
+      "handle": "dandadan_meiekinishiguchi",
+      "otherBranchPage": "肉汁餃子のダンダダン 名駅西口店",
+      "tokens": [
+        "meieki"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J004421566",
+      "storeName": "回転焼肉一升びん 名古屋則武新町店",
+      "handle": "issyoubin_meieki",
+      "otherBranchPage": "松阪牛焼肉 一升びん 名古屋名駅店",
+      "tokens": [
+        "meieki"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J001294925",
+      "storeName": "マイペンライ チカマチラウンジ店",
+      "handle": "maipenrai_fushimi",
+      "otherBranchPage": "THAIFOOD DINING&BAR　マイペンライ 伏見店",
+      "tokens": [
+        "fushimi"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J001265474",
+      "storeName": "嘉文 センチュリー豊田ビル店",
+      "handle": "kamon.kanayamaten",
+      "otherBranchPage": "嘉文 金山店 （かもん）",
+      "tokens": [
+        "kanayama"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J004026361",
+      "storeName": "ダイニングダーツバーBee 名駅店",
+      "handle": "beesakae",
+      "otherBranchPage": "ダイニングダーツバーBee 栄店 （ダイニングダーツバービー）",
+      "tokens": [
+        "sakae"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J003625137",
+      "storeName": "飛騨牛焼肉　牛ざんまい　納屋橋リバーサイド店",
+      "handle": "zanmai__kanayama",
+      "otherBranchPage": "飛騨牛焼肉 牛ざんまい 金山店 （GYUZANMAI）",
+      "tokens": [
+        "kanayama"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J004469213",
+      "storeName": "お酒の美術館 名駅スパイラルタワーズ店",
+      "handle": "lm_fushimichikagai",
+      "otherBranchPage": "お酒の美術館 伏見地下街店",
+      "tokens": [
+        "fushimi"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J001140272",
+      "storeName": "嘉文 うまいもん通り広小路店",
+      "handle": "kamon.kanayamaten",
+      "otherBranchPage": "嘉文 金山店 （かもん）",
+      "tokens": [
+        "kanayama"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J000022402",
+      "storeName": "矢場とん 名古屋駅エスカ店",
+      "handle": "mukashinoyabaton.nishiki",
+      "otherBranchPage": "昔の矢場とん 錦3丁目店",
+      "tokens": [
+        "nishiki"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J000393877",
+      "storeName": "風来坊 浄心店",
+      "handle": "furaibo_kanayama",
+      "otherBranchPage": "風来坊  金山店",
+      "tokens": [
+        "kanayama"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J001283454",
+      "storeName": "からみそラーメンふくろう 名駅店",
+      "handle": "2960_fushiminayabashi",
+      "otherBranchPage": "からみそラーメンふくろう 伏見納屋橋店",
+      "tokens": [
+        "fushimi"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J004576402",
+      "storeName": "シガン 生サムギョプサル専門店 名駅店",
+      "handle": "shigan_imaike",
+      "otherBranchPage": "シガン 生サムギョプサル専門店 今池",
+      "tokens": [
+        "imaike"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J003829467",
+      "storeName": "原価ビストロチーズプラス 名古屋錦店",
+      "handle": "cheese_bistro_toyota",
+      "otherBranchPage": "原価ビストロチーズプラス 豊田",
+      "tokens": [
+        "toyota"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J004576400",
+      "storeName": "シガン 生サムギョプサル専門店 東桜店",
+      "handle": "shigan_imaike",
+      "otherBranchPage": "シガン 生サムギョプサル専門店 今池",
+      "tokens": [
+        "imaike"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J003829218",
+      "storeName": "肉汁餃子のダンダダン 錦三丁目店",
+      "handle": "dandadan_meiekinishiguchi",
+      "otherBranchPage": "肉汁餃子のダンダダン 名駅西口店",
+      "tokens": [
+        "meieki"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J001279806",
+      "storeName": "肉汁餃子のダンダダン 大須観音店",
+      "handle": "dandadan_meiekinishiguchi",
+      "otherBranchPage": "肉汁餃子のダンダダン 名駅西口店",
+      "tokens": [
+        "meieki"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J000021168",
+      "storeName": "嘉文 栄本店",
+      "handle": "kamon.kanayamaten",
+      "otherBranchPage": "嘉文 金山店 （かもん）",
+      "tokens": [
+        "kanayama"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J003324481",
+      "storeName": "お酒の美術館 マルエイガレリア店",
+      "handle": "lm_fushimichikagai",
+      "otherBranchPage": "お酒の美術館 伏見地下街店",
+      "tokens": [
+        "fushimi"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J001022384",
+      "storeName": "矢場とん 栄松坂屋店",
+      "handle": "mukashinoyabaton.nishiki",
+      "otherBranchPage": "昔の矢場とん 錦3丁目店",
+      "tokens": [
+        "nishiki"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J000823101",
+      "storeName": "矢場とん 栄セントライズ店",
+      "handle": "mukashinoyabaton.nishiki",
+      "otherBranchPage": "昔の矢場とん 錦3丁目店",
+      "tokens": [
+        "nishiki"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J000428429",
+      "storeName": "矢場とん 栄LACHIC店",
+      "handle": "mukashinoyabaton.nishiki",
+      "otherBranchPage": "昔の矢場とん 錦3丁目店",
+      "tokens": [
+        "nishiki"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J004004443",
+      "storeName": "お酒の美術館 大須店",
+      "handle": "lm_fushimichikagai",
+      "otherBranchPage": "お酒の美術館 伏見地下街店",
+      "tokens": [
+        "fushimi"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J003851127",
+      "storeName": "肉汁餃子のダンダダン 金山駅南口店",
+      "handle": "dandadan_meiekinishiguchi",
+      "otherBranchPage": "肉汁餃子のダンダダン 名駅西口店",
+      "tokens": [
+        "meieki"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J004004785",
+      "storeName": "番菜百薬 金山本店",
+      "handle": "banzai.hyakuyaku.sakae",
+      "otherBranchPage": "番菜百薬 栄店",
+      "tokens": [
+        "sakae"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J003450885",
+      "storeName": "飛騨牛焼肉 牛ざんまい 御器所店",
+      "handle": "zanmai__kanayama",
+      "otherBranchPage": "飛騨牛焼肉 牛ざんまい 金山店 （GYUZANMAI）",
+      "tokens": [
+        "kanayama"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J001219192",
+      "storeName": "居酒屋 炭火焼き鳥 豆鳥 鶴舞店",
+      "handle": "mamecho_sakae_sumiyoshi",
+      "otherBranchPage": "炭火焼き鳥 豆鳥 栄住吉店 （マメチョウ）",
+      "tokens": [
+        "sakae"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J001284900",
+      "storeName": "みそ吟 鶴舞店",
+      "handle": "misogin_nagoya.sakae",
+      "otherBranchPage": "札幌ラーメン みそ吟 栄プリンセス通り店",
+      "tokens": [
+        "sakae"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J003298620",
+      "storeName": "天ぷらスタンド KITSUNE キツネ 今池店",
+      "handle": "tempura.kitsune.fushimi",
+      "otherBranchPage": "天ぷらスタンド KITSUNE 伏見店",
+      "tokens": [
+        "fushimi"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J003850535",
+      "storeName": "サカナのハチベエ 今池店",
+      "handle": "sakan.no.hachibe.yabacho",
+      "otherBranchPage": "サカナのハチベエ 矢場町店",
+      "tokens": [
+        "yabacho"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J001279810",
+      "storeName": "肉汁餃子のダンダダン 千種店",
+      "handle": "dandadan_meiekinishiguchi",
+      "otherBranchPage": "肉汁餃子のダンダダン 名駅西口店",
+      "tokens": [
+        "meieki"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    },
+    {
+      "id": "J003498559",
+      "storeName": "餃子のかっちゃん 今池店",
+      "handle": "kacchan_sakae",
+      "otherBranchPage": "餃子のかっちゃん 栄住吉店",
+      "tokens": [
+        "sakae"
+      ],
+      "decision": "remove",
+      "why": "アカウント名が別の支店の地名を含み、掲載の店には無い"
+    }
+  ]
+}
