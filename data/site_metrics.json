@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-18T20:50:40.997Z",
+  "generatedAt": "2026-10-19T00:05:58.419Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1709,
-    "pageViews": 2367,
-    "sessions": 1904,
+    "activeUsers": 1727,
+    "pageViews": 2398,
+    "sessions": 1926,
     "avgSessionDuration": 120.9,
     "bounceRate": 0.293,
-    "pagesPerSession": 1.24
+    "pagesPerSession": 1.25
   },
   "dailyReference": {
     "date": "2026-10-17",
@@ -17,20 +17,20 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1398,
-      "direct": 355,
+      "organic": 1415,
+      "direct": 357,
       "social": 14,
-      "ai_assistant": 116,
+      "ai_assistant": 119,
       "referral": 30,
       "paid": 0,
       "other": 2
     },
     "pct": {
-      "organic": 73,
-      "direct": 18.5,
+      "organic": 73.1,
+      "direct": 18.4,
       "social": 0.7,
       "ai_assistant": 6.1,
-      "referral": 1.6,
+      "referral": 1.5,
       "paid": 0,
       "other": 0.1
     }
@@ -39,27 +39,27 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 654
+      "sessions": 664
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 475
+      "sessions": 477
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 289
+      "sessions": 291
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 249
+      "sessions": 254
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 82
+      "sessions": 83
     },
     {
       "source": "unknown",
@@ -69,7 +69,7 @@
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 28
+      "sessions": 30
     },
     {
       "source": "(not set)",
@@ -200,8 +200,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 341,
-      "sessions": 321
+      "pageViews": 349,
+      "sessions": 329
     },
     {
       "path": "/",
@@ -220,17 +220,17 @@
     },
     {
       "path": "/features/nagoya-autumn-2026.html",
-      "pageViews": 70,
-      "sessions": 68
+      "pageViews": 71,
+      "sessions": 69
     }
   ],
   "cta": {
-    "outboundClicks": 183,
-    "ctaClickRate": 9.6,
+    "outboundClicks": 189,
+    "ctaClickRate": 9.8,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 60
+        "clicks": 66
       },
       {
         "domain": "tabelog.com",
@@ -295,7 +295,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 111,
+      "organic": 117,
       "direct": 51,
       "social": 0,
       "ai_assistant": 20,
@@ -303,8 +303,8 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.9,
-    "ctaClickRate_direct": 14.4,
+    "ctaClickRate_organic": 8.3,
+    "ctaClickRate_direct": 14.3,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -320,16 +320,16 @@
         "clicks": 14
       },
       {
+        "path": "/features/nagoya-solo-dining.html",
+        "clicks": 10
+      },
+      {
         "path": "/journal/2026-09-29-sakae-tsukemen-tou-counter12.html",
         "clicks": 10
       },
       {
         "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
         "clicks": 8
-      },
-      {
-        "path": "/features/nagoya-solo-dining.html",
-        "clicks": 6
       },
       {
         "path": "/journal/2026-09-24-kurumamichi-pizzeria-mimi-counter12.html",
@@ -360,6 +360,10 @@
         "clicks": 4
       },
       {
+        "path": "/stores/J001147583.html",
+        "clicks": 4
+      },
+      {
         "path": "/features/nagoya-hitsumabushi.html",
         "clicks": 3
       },
@@ -377,10 +381,6 @@
       },
       {
         "path": "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
-        "clicks": 3
-      },
-      {
-        "path": "/stores/J001147583.html",
         "clicks": 3
       },
       {
@@ -420,11 +420,11 @@
         "clicks": 2
       },
       {
-        "path": "/stores/J003828115.html",
+        "path": "/stores/J003649439.html",
         "clicks": 2
       },
       {
-        "path": "/stores/J004402690.html",
+        "path": "/stores/J003828115.html",
         "clicks": 2
       }
     ],
@@ -440,13 +440,13 @@
         "clicks": 11
       },
       {
-        "path": "/",
-        "domain": "tabelog.com",
-        "clicks": 6
-      },
-      {
         "path": "/features/nagoya-solo-dining.html",
         "domain": "www.hotpepper.jp",
+        "clicks": 10
+      },
+      {
+        "path": "/",
+        "domain": "tabelog.com",
         "clicks": 6
       },
       {
@@ -485,6 +485,11 @@
         "clicks": 4
       },
       {
+        "path": "/stores/J001147583.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 4
+      },
+      {
         "path": "/",
         "domain": "www.google.com",
         "clicks": 3
@@ -497,11 +502,6 @@
       {
         "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
         "domain": "chihirosweets.myshopify.com",
-        "clicks": 3
-      },
-      {
-        "path": "/stores/J001147583.html",
-        "domain": "www.hotpepper.jp",
         "clicks": 3
       },
       {
@@ -582,6 +582,11 @@
       {
         "path": "/stores/J001203914.html",
         "domain": "tabelog.com",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/J003649439.html",
+        "domain": "www.hotpepper.jp",
         "clicks": 2
       },
       {
@@ -820,11 +825,6 @@
         "clicks": 1
       },
       {
-        "path": "/stores/J003649439.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
         "path": "/stores/J003828115.html",
         "domain": "www.google.com",
         "clicks": 1
@@ -926,12 +926,12 @@
         "clicks": 15
       },
       {
-        "path": "/",
+        "path": "/features/nagoya-solo-dining.html",
         "clicks": 10
       },
       {
-        "path": "/features/nagoya-solo-dining.html",
-        "clicks": 6
+        "path": "/",
+        "clicks": 10
       },
       {
         "path": "/features/nagoya-seafood.html",
@@ -942,11 +942,11 @@
         "clicks": 4
       },
       {
-        "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 3
+        "path": "/stores/J001147583.html",
+        "clicks": 4
       },
       {
-        "path": "/stores/J001147583.html",
+        "path": "/features/nagoya-hitsumabushi.html",
         "clicks": 3
       },
       {
@@ -971,6 +971,10 @@
       },
       {
         "path": "/stores/J000431352.html",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/J003649439.html",
         "clicks": 2
       },
       {
@@ -1054,10 +1058,6 @@
         "clicks": 1
       },
       {
-        "path": "/stores/J003649439.html",
-        "clicks": 1
-      },
-      {
         "path": "/stores/J003828115.html",
         "clicks": 1
       },
@@ -1106,20 +1106,20 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 95,
+    "reservationClicks": 101,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
-      "ctaEvents": 35,
-      "reservationOutbound": 36,
-      "naiveSum": 71,
-      "deduped": 39,
-      "overlap": 32,
+      "ctaEvents": 41,
+      "reservationOutbound": 42,
+      "naiveSum": 83,
+      "deduped": 45,
+      "overlap": 38,
       "bySite": [
         {
           "site": "hotpepper.jp",
-          "cta": 27,
-          "outbound": 24,
-          "deduped": 27
+          "cta": 33,
+          "outbound": 30,
+          "deduped": 33
         },
         {
           "site": "tabelog.com",
@@ -1132,7 +1132,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1709,
+    "value": 1727,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
