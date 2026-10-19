@@ -1,0 +1,205 @@
+{
+  "date": "2026-10-19",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄・矢場町『炭火酒場COWCOW』26席・15時〜深夜1時、姉妹店VIVANとの使い分けを読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 93,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "出典が偏っている媒体 jouhou.nagoya は独立ドメインに数えない（別媒体・一次発表で裏を取ると加点）",
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,シーン,デート,一人飲み) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 127字 +4",
+          "title 47字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「個室」+1",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "93点（自動公開ライン 100点）。主な不足: topicality -5 / search_intent -5 / brand_fit -4"
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄3丁目の炭火居酒屋COWCOW、黒毛和牛タルタル1,380円とお通し330円を読む",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "出典が偏っている媒体 jouhou.nagoya は独立ドメインに数えない（別媒体・一次発表で裏を取ると加点）",
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,席,一人飲み) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 97字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「和牛」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "93点（自動公開ライン 100点）。主な不足: topicality -5 / search_intent -5 / brand_fit -4",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "栄・矢場町『炭火酒場COWCOW』26席・15時〜深夜1時、姉妹店VIVANとの使い分けを読む",
+      "lead_draft": "2026年10月13日、栄3丁目に「炭火酒場COWCOW」が開店した。近隣の炭火バルVIVANの新店で、26席・半個室・15時から翌1時営業。食べログ夜4,000円台、お通し330円と1ドリンク制の価格帯、少人数の貸切、一人飲みや二軒目のシーンから読む。",
+      "angle": "価格帯（お通し330円・1ドリンク・夜4,000円台・黒毛和牛タルタル1,380円）、オペ（26席・カウンター・半個室・貸切35名・全席喫煙可・15時〜翌1時）、シーン（一人飲み・二軒目・少人数宴会・デート）、姉妹店VIVANとの席数と予算の違い",
+      "main_store": {
+        "name": "炭火酒場 COWCOW",
+        "id": "J004698938",
+        "area": "栄・矢場町",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「黒毛和牛と季節素材を味わう炭火酒場『cowcow』栄3丁目にオープン」",
+          "url": "https://jouhou.nagoya/cowcow-sakaba/",
+          "date": "2026-10-17"
+        },
+        {
+          "label": "開店閉店.com「【開店】炭火酒場COWCOW」",
+          "url": "https://kaiten-heiten-24.com/sumibisakaba-cowcow/",
+          "date": "2026-10-13"
+        },
+        {
+          "label": "食べログ 炭火酒場COWCOW",
+          "url": "https://tabelog.com/aichi/A2301/A230103/23097559/",
+          "date": "2026-10-13"
+        },
+        {
+          "label": "ホットペッパーグルメ 炭火酒場 COWCOW",
+          "url": "https://www.hotpepper.jp/strJ004698938/",
+          "date": "2026-10-13"
+        },
+        {
+          "label": "COWCOW 公式Instagram",
+          "url": "https://www.instagram.com/cowcow_nagoya/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄3丁目の炭火居酒屋COWCOW、黒毛和牛タルタル1,380円とお通し330円を読む",
+      "lead_draft": "栄3丁目に10月13日開店のCOWCOWは、黒毛和牛タルタル1,380円、炭焼きニラユッケ880円と、お通し330円・1ドリンク制で組む店。席数26で貸切は最大35名、客単価の見積もり方を読む。",
+      "angle": "価格帯の読み方（単品の積み上げと一人飲み予算）、席配置と貸切、深夜1時までの営業と二軒目利用",
+      "main_store": {
+        "name": "炭火酒場 COWCOW",
+        "id": "J004698938",
+        "area": "栄・矢場町",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 cowcow",
+          "url": "https://jouhou.nagoya/cowcow-sakaba/",
+          "date": "2026-10-17"
+        },
+        {
+          "label": "開店閉店.com COWCOW",
+          "url": "https://kaiten-heiten-24.com/sumibisakaba-cowcow/",
+          "date": "2026-10-13"
+        },
+        {
+          "label": "食べログ COWCOW",
+          "url": "https://tabelog.com/aichi/A2301/A230103/23097559/",
+          "date": "2026-10-13"
+        }
+      ]
+    }
+  ]
+}
