@@ -1,21 +1,21 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-10-19T06:53:20.246Z",
+  "generatedAt": "2026-10-19T08:55:52.535Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1948,
+  "total_sessions": 1952,
   "engines": [
     {
       "key": "google",
       "label": "Google",
-      "sessions": 668,
+      "sessions": 670,
       "pct": 34.3,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 668
+          "sessions": 670
         }
       ]
     },
@@ -41,7 +41,7 @@
       "key": "direct",
       "label": "直接/不明",
       "sessions": 315,
-      "pct": 16.2,
+      "pct": 16.1,
       "sources": [
         {
           "source": "(direct)",
@@ -58,13 +58,13 @@
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 259,
-      "pct": 13.3,
+      "sessions": 261,
+      "pct": 13.4,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 257
+          "sessions": 259
         },
         {
           "source": "hk.search.yahoo.com",
@@ -237,25 +237,25 @@
     }
   ],
   "search_only": {
-    "total": 1543,
+    "total": 1547,
     "share": [
       {
         "key": "google",
         "label": "Google",
-        "sessions": 668,
+        "sessions": 670,
         "pct_of_search": 43.3
       },
       {
         "key": "bing",
         "label": "Bing",
         "sessions": 480,
-        "pct_of_search": 31.1
+        "pct_of_search": 31
       },
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 259,
-        "pct_of_search": 16.8
+        "sessions": 261,
+        "pct_of_search": 16.9
       },
       {
         "key": "ai_assistant",
@@ -288,7 +288,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 668 セッションのみ。Bing(480) + 生成AI(119) の 599 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 670 セッションのみ。Bing(480) + 生成AI(119) の 599 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
