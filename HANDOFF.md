@@ -57,3 +57,5 @@ status: done
 ## 2026-10-19 話題店の情報不足（ブランチ wakuwaku-labs/coho・未push）
 - 住所補完: scripts/lib/store_detail_backfill.js（build.js）。ホットペッパー照合: scripts/enrich_hotpepper_details.js → data/hotpepper_trending_details.json（IDは入れずURL不変）。食べログは403のため保留（ADR 0013）。
 - 次: 合流・初回ビルド後に見つかった店数と、話題店ページの表示を確認。
+
+- 2026-10-19 夜: Linear 課題消化。P-567/471/446/184/472/473/445/177 を Done（#633〜#639）。P-177 は place-status.yml を本番で1回実行済み（100件・閉業1件=日々担々 守山店は『決められない』で記録）。P-169 はオーナーが推奨（ブランド共通は残す）で進めると回答、350件の判定が未着手＝次回子課題に分けて着手
