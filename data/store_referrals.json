@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-19T09:08:40.813Z",
+  "generatedAt": "2026-10-19T19:15:10.102Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -8,27 +8,27 @@
   },
   "totals": {
     "exits": {
-      "hotpepper": 71,
+      "hotpepper": 72,
       "tabelog": 11,
       "tel": 4,
       "other": 0,
-      "total": 86
+      "total": 87
     },
     "reports": {
       "yes": 0,
       "no": 0
     }
   },
-  "unattributedExits": 16,
+  "unattributedExits": 15,
   "month": {
     "start": "2026-10-01",
     "totals": {
       "exits": {
-        "hotpepper": 56,
+        "hotpepper": 58,
         "tabelog": 11,
         "tel": 4,
         "other": 0,
-        "total": 71
+        "total": 73
       },
       "reports": {
         "yes": 0,
@@ -650,6 +650,42 @@
       }
     },
     {
+      "store_name": "ひつまぶし 名古屋 備長 エスカ店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "ひつまぶし 名古屋 備長 大名古屋ビルヂング店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "プルミエール",
       "exits": {
         "hotpepper": 1,
@@ -837,19 +873,19 @@
     "geoSearch": "現在地: トップの「現在地」ボタンを押した回数と結果（granted・denied・unsupported・error）。位置・エリア名は送っていない"
   },
   "actions": {
-    "reserve": 82,
+    "reserve": 83,
     "reserveBySite": {
-      "hotpepper": 71,
+      "hotpepper": 72,
       "tabelog": 11,
       "other": 0
     },
     "tel": 4,
-    "map": 42
+    "map": 44
   },
   "map": {
-    "total": 42,
+    "total": 44,
     "unattributed": 6,
-    "stores": 16,
+    "stores": 18,
     "top": [
       {
         "store_name": "なかがわ 街仲食堂 by ジーバーFOOD",
@@ -880,15 +916,15 @@
         "count": 1
       },
       {
+        "store_name": "うな祥",
+        "count": 1
+      },
+      {
         "store_name": "サウィ食堂 名古屋栄店",
         "count": 1
       },
       {
         "store_name": "サッポロラーメン専門 荒畑 神宮前店",
-        "count": 1
-      },
-      {
-        "store_name": "ちゃんこ九重",
         "count": 1
       }
     ],
@@ -896,13 +932,13 @@
       "(not set)": 33,
       "journal_store_card": 3,
       "modal_cta": 3,
-      "store_page_bar": 2,
-      "store_page": 1
+      "store_page": 3,
+      "store_page_bar": 2
     },
     "byLinkKind": {
       "(not set)": 36,
-      "place_id": 3,
-      "search": 3
+      "place_id": 4,
+      "search": 4
     }
   },
   "callLookup": {
