@@ -1,0 +1,64 @@
+{
+  "status": "OK",
+  "editorReason": "「次郎 名古屋駅店」は、お客様にとって最高のひとときを提供することにこだわり、ラグジュアリーな空間で多様なシーンに対応できる店舗づくりを追求。コストパフォーマンスに優れたコース料理も魅力で、幅広いニーズに応える居酒屋として注目されます。",
+  "insiderNote": "店主は最高のひとときと多様なシーンへの対応、こだわりの空間提供を重視。ラグジュアリーな雰囲気とコスパの良いコースで顧客満足度を高める戦略が見えます。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.75,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGHfFGd2WkBic2ta6rAE_oEo7pgI9mIu87ZtDuX0jkHAOyT2HCgKtrqAsBAY-isHj2h_yzS0A1LNBYQGFXfih3saSAbaGwp2g16mjS9wX2p14bHZmwB4hBV1j7-bh3Q8m6tsQ==",
+      "snippet_quote": "お客様にとって最高のひとときを提供することにこだわっています。",
+      "supports": "顧客体験の質へのこだわり"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFjsqfBjZrgY7f5HjdF2NqUSi2jB9C3S4GMYdHW_NrseyB8fObLSYc96kWO4El5ny5GwPRx-XupEMqoa5OenvANYqxwM5KQKpuLMvHxKgo6-gGHZDadsGpeCA0y1hrQrh3M7HVNL6e4ZEZ5Q-zz8pYw",
+      "snippet_quote": "どのようなシーンにも対応できる店舗づくりを心掛けているとのことです。",
+      "supports": "多様な利用シーンへの対応"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGHfFGd2WkBic2ta6rAE_oEo7pgI9mIu87ZtDuX0jkHAOyT2HCgKtrqAsBAY-isHj2h_yzS0A1LNBYQGFXfih3saSAbaGwp2g16mjS9wX2p14bHZmwB4hBV1j7-bh3Q8m6tsQ==",
+      "snippet_quote": "こだわりの空間」を提供しているとされています。",
+      "supports": "空間演出へのこだわり"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFjsqfBjZrgY7f5HjdF2NqUSi2jB9C3S4GMYdHW_NrseyB8fObLSYc96kWO4El5ny5GwPRx-XupEMqoa5OenvANYqxwM5KQKpuLMvHxKgo6-gGHZDadsGpeCA0y1hrQrh3M7HVNL6e4ZEZ5Q-zz8pYw",
+      "snippet_quote": "雰囲気の良いラグジュアリーな空間での飲食を特徴としています。",
+      "supports": "ラグジュアリーな空間の提供"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE8qXR_xXoIt9vs_5yNht4BDg8YMOWZB6RZvofH6HUGeHKFrBzr_omOxaR-rDzibEz9DeTFN6TIuBeqrzOBxrpQH4eXS9A8o3vOpQB8a_DLBHKLgAGg-vJkJ0GFPGiGD1vul7FnGqP2m3vHbsg7isdQ",
+      "snippet_quote": "二次会などでの利用も可能で、様々なシーンに対応できる店舗を目指しています。",
+      "supports": "二次会など多様なシーンでの利用可能性"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE8qXR_xXoIt9vs_5yNht4BDg8YMOWZB6RZvofH6HUGeHKFrBzr_omOxaR-rDzibEz9DeTFN6TIuBeqrzOBxrpQH4eXS9A8o3vOpQB8a_DLBHKLgAGg-vJkJ0GFPGiGD1vul7FnGqP2m3vHbsg7isdQ",
+      "snippet_quote": "コストパフォーマンスに優れたコース料理も用意されています。",
+      "supports": "コストパフォーマンスに優れたコース料理の提供"
+    }
+  ],
+  "warnings": [],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「次郎 名古屋駅店」（居酒屋）について、Google検索で確認できた業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「次郎 名古屋駅店」は、お客様にとって最高のひとときを提供することにこだわっています。どのようなシーンにも対応できる店舗づくりを心掛けているとのことです。また、「こだわりの空間」を提供しているとされています。\n\n**提供スタイルの特徴**\n提供スタイルとしては、雰囲気の良いラグジュアリーな空間での飲食を特徴としています。二次会などでの利用も可能で、様々なシーンに対応できる店舗を目指しています。コストパフォーマンスに優れたコース料理も用意されています。\n\n**地元グルメメディアでの紹介**\n「次郎 名古屋駅店」（居酒屋）が特定の地元グルメメディアで紹介されているという直接的な情報は見つかりませんでした。主な情報源は全国展開しているグルメサイト「ホットペッパーグルメ」でした。\n\n**料理人としての評価**\n「次郎 名古屋駅店」（居酒屋）の料理人に関する具体的な評価や、料理人の名前、その技術に対する言及は、今回の検索では見つかりませんでした。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGHfFGd2WkBic2ta6rAE_oEo7pgI9mIu87ZtDuX0jkHAOyT2HCgKtrqAsBAY-isHj2h_yzS0A1LNBYQGFXfih3saSAbaGwp2g16mjS9wX2p14bHZmwB4hBV1j7-bh3Q8m6tsQ==",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFjsqfBjZrgY7f5HjdF2NqUSi2jB9C3S4GMYdHW_NrseyB8fObLSYc96kWO4El5ny5GwPRx-XupEMqoa5OenvANYqxwM5KQKpuLMvHxKgo6-gGHZDadsGpeCA0y1hrQrh3M7HVNL6e4ZEZ5Q-zz8pYw",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE8qXR_xXoIt9vs_5yNht4BDg8YMOWZB6RZvofH6HUGeHKFrBzr_omOxaR-rDzibEz9DeTFN6TIuBeqrzOBxrpQH4eXS9A8o3vOpQB8a_DLBHKLgAGg-vJkJ0GFPGiGD1vul7FnGqP2m3vHbsg7isdQ",
+        "title": "hotpepper.jp"
+      }
+    ]
+  },
+  "store_id": "J001245796",
+  "store_name": "次郎 名古屋駅店",
+  "area": "名古屋（名古屋駅/西区/中村区）",
+  "genre": "居酒屋",
+  "rating": "",
+  "generated_at": "2026-10-19T22:11:21.058Z"
+}

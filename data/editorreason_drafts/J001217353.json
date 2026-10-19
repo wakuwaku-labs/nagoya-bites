@@ -1,0 +1,113 @@
+{
+  "status": "OK",
+  "editorReason": "全席完全個室でプライベートな空間を提供し、名物の飛騨牛溶岩焼きや牛タンしゃぶしゃぶ、豊富な梅酒など、料理長のこだわりと顧客満足度を両立させた運営が評価される。",
+  "insiderNote": "全席完全個室でインターホンによる効率的なサービスを提供。A5飛騨牛溶岩焼きや牛タンしゃぶしゃぶ、39種の梅酒など、素材と提供方法にこだわり、顧客満足度を高める工夫が随所に見られる。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHpE2UTKGv_G_0jZAnnX-Jenjc84uUhqa8XSPO7XOWBQKPebI0vHkvciOnkWg1KPnGs8ELA5aESq-RBVM1IX2ftRKvvOtU6Md3pb8p-ealiYLkkXX6b3ctqpqzQqS4sSJkd5EiV5qelBH4ns0gjrY3SzV0=",
+      "snippet_quote": "特に「牛タンしゃぶしゃぶ」や「飛騨牛の溶岩焼き」が名物料理として取り上げられ、個室の雰囲気や梅酒の種類の豊富さなどが評価されています。",
+      "supports": "全席完全個室であること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHpE2UTKGv_G_0jZAnnX-Jenjc84uUhqa8XSPO7XOWBQKPebI0vHkvciOnkWg1KPnGs8ELA5aESq-RBVM1IX2ftRKvvOtU6Md3pb8p-ealiYLkkXX6b3ctqpqzQqS4sSJkd5EiV5qelBH4ns0gjrY3SzV0=",
+      "snippet_quote": "特に「牛タンしゃぶしゃぶ」や「飛騨牛の溶岩焼き」が名物料理として取り上げられ",
+      "supports": "飛騨牛の溶岩焼きが名物料理であること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHpE2UTKGv_G_0jZAnnX-Jenjc84uUhqa8XSPO7XOWBQKPebI0vHkvciOnkWg1KPnGs8ELA5aESq-RBVM1IX2ftRKvvOtU6Md3pb8p-ealiYLkkXX6b3ctqpqzQqS4sSJkd5EiV5qelBH4ns0gjrY3SzV0=",
+      "snippet_quote": "特に「牛タンしゃぶしゃぶ」や「飛騨牛の溶岩焼き」が名物料理として取り上げられ",
+      "supports": "牛タンしゃぶしゃぶが名物料理であること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHpE2UTKGv_G_0jZAnnX-Jenjc84uUhqa8XSPO7XOWBQKPebI0vHkvciOnkWg1KPnGs8ELA5aESq-RBVM1IX2ftRKvvOtU6Md3pb8p-ealiYLkkXX6b3ctqpqzQqS4sSJkd5EiV5qelBH4ns0gjrY3SzV0=",
+      "snippet_quote": "梅酒の種類の豊富さなどが評価されています。",
+      "supports": "梅酒の種類が豊富であること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF0r6O88lLY_hGgKlSB7j4Epk7mN3BYSA5l1cd7i29Rywmtx4147kxWhohswNgG8JVdLNhEitd2VTXU1QvcOXUcWogA6btyxzPMhWgSZEwLYUvEl4vMp98JjtTCfMcuhqFxwDRVI_7xPMm22v8=",
+      "snippet_quote": "旬の食材の美味しさを最大限に発揮し、料理人のこだわりを感じるコース",
+      "supports": "料理長のこだわりが料理に反映されていること"
+    }
+  ],
+  "warnings": [
+    "5件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「箱屋 名古屋駅前店」について、Google検索で得られた業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「箱屋 名古屋駅前店」は、「照明から壁紙まで拘った『大人の空間』」を提供することにこだわっています。 サービス面では、記念日や誕生日、歓送迎会などの大切な日に、メッセージ付きのバースデーケーキを提供するサプライズ演出も行っています。 料理においては、「素材が良いから美味しさが際立つ」という考えのもと、農家や漁港から直送される鮮度抜群の野菜や魚介を毎日仕入れ、料理長のアイデアを散りばめた和洋折衷の創作料理として提供しています。 特に、最高ランクA5の飛騨牛を溶岩焼きで提供し、素材の持ち味を活かしたシンプルな調理法で、外は焼けすぎず中まで柔らかくジューシーに仕上げることにこだわっています。 また、全国各地から集めた39種類の梅酒や愛知の地酒など、酒通も満足できる豊富なドリンクラインナップも自慢としています。 季節ごとに旬の食材をオリジナルアレンジした鮮度抜群の刺身盛り合わせや釜飯など、充実したコース料理も提供しています。\n\n**提供スタイルの特徴**\nこの店舗の最大の特徴は「全席完全個室」であることです。2名から最大40名まで、人数に合わせて壁で仕切られた完全個室を用意しており、掘りごたつ席が中心でリラックスできる空間を提供しています。 個室にはインターホンが設置されており、カラオケのようにオーダーできるため、効率的なサービスとスムーズなドリンク提供につながっていると評価されています。 また、料理の一部では、卓上で炙ることで出来たての炙り肉寿司を提供するなど、提供方法にも工夫が見られます。\n\n**地元グルメメディアでの紹介**\n「箱屋 名古屋駅前店」は、以下の主要なグルメ・旅行情報サイトで紹介されています。\n*   ホットペッパーグルメ\n*   Retty\n*   favy\n*   じゃらんnet\n*   フォートラベル\n*   ヒトサラ\n*   NAVITIME Travel\n*   AutoReserve\n\nこれらのメディアでは、特に「牛タンしゃぶしゃぶ」や「飛騨牛の溶岩焼き」が名物料理として取り上げられ、個室の雰囲気や梅酒の種類の豊富さなどが評価されています。\n\n**料理人としての評価**\n料理人個人の具体的な評価は見当たりませんでしたが、「料理長渾身の逸品は\"牛タンしゃぶしゃぶ\"」と紹介されており、料理長の腕前が店の看板メニューに結びついていることが示唆されています。 また、「料理長のアイデアを散りばめた、和洋折衷の創作料理」を提供していることや、「旬の食材の美味しさを最大限に発揮し、料理人のこだわりを感じるコース」が提供されていることからも、料理人が料理の質や創造性において重要な役割を担っていることがうかがえます。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQExdzqa6nGEz3Nb6pkZITTESF4PUN_oc_C569VJJtKkoK7LRSuKciHM5k6NIR1pRU3EbohYjLtHUqqqY-aDwNLaxAzQcAHXDaTRlYnmagDprLORtUF3kU8Drs3mhI0rGuZTtlx10EOdFvvO6bxY",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFzH4JDYvZq26m97oSScgkkBHbxgwPszA5L0oZLO_SV-nSbLXg6wOpjSvdR3GvU9VL8dEHs8th837bsBA1BiAJdvITSUdvx8BDHvk9I7c-J",
+        "title": "hako-ya.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF0r6O88lLY_hGgKlSB7j4Epk7mN3BYSA5l1cd7i29Rywmtx4147kxWhohswNgG8JVdLNhEitd2VTXU1QvcOXUcWogA6btyxzPMhWgSZEwLYUvEl4vMp98JjtTCfMcuhqFxwDRVI_7xPMm22v8=",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGTLvldEkt_NvAvPZbdGLZHm7raELt2nKdOfVK43aROAcCKL5vaZwu9nqrALJmFSczq03_35mEQZN3GRMvhoGKoz6kObNu4OvTLIpIiHGHg5jxSirYVMg==",
+        "title": "hako-ya.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHpE2UTKGv_G_0jZAnnX-Jenjc84uUhqa8XSPO7XOWBQKPebI0vHkvciOnkWg1KPnGs8ELA5aESq-RBVM1IX2ftRKvvOtU6Md3pb8p-ealiYLkkXX6b3ctqpqzQqS4sSJkd5EiV5qelBH4ns0gjrY3SzV0=",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGUXuxCqG-x6meprz2Rhw6bdTlSfyUSfpNWmAmq0_v6bcR1uhRFzRlkPyqv0zw5n47FfOfLrJirG6ndQ65hC1FRQjHIFqKCUxXudUuEV2CRT3_Ky9P_jLDgeRZ1r6St_KXxMNyzSjHHcCiPCxkwzc1m7McTaWJl-8_Nww==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHb8KKa9jPKE3vS80bziXrzmOEO2tSifQ0aSSJIjZAIUNbGmsKftM3sET2NJtY__EENZ8BaSeIGllBjJ_OMb7JeVLh34eri9W7ovfzgUcksBUEe8RX_fWdf-m5LP6V_iYHdphsLHXtxuN8=",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFSgNqJf9A-v32UD_dQ0QrG0wwjr3T03S_vY29gXMOdEOl7KOKxaQMsMDmZhZzzqwj0CxZWsDZbF50ooFoixqX-qtqtDO79NF7Urlm4qNi7zdC_KqQTm3X0qxO-KpD-JndINaLvrcT-",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGRrcv_x4UdLgffZNVLX8NgkL-JyG3GZYOFLtrIUZSaWIlC7pEFFWBVehqb7ALbxme8fQYxQbZWE_8o1ubw7RAWh7nS3MgEY17U1GWkzETrx6_K4S7wfXLwYOf8s-5QgDx12Q==",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGpZqSYZsP1unaZ8OwG86giA5qWv1wS6UGJDVe48RyE-gRyjVbk9Bm2plfE0zfQ2c_BvoLdb5s_-vVxTRoZEW1fZ2FiDi8oHsCrJAZ8-zeLxzyuCjtB2-dHsNKt",
+        "title": "favy.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHSH5ujI_q76d1eQw21ONctBR93xWcz2-TNpa1UQXOJFaFSj0b6ApFLNmwb0WqITyqA86Dwvjp276hso7oQhAVUSkMYaKDTBO84xi6eekcoqhxwUbgWrOe647uS",
+        "title": "favy.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFwDSmoX6lFFNZJyC5K5DSkJPbk7NwTYClM-Vh-dwBA0rKa9dJTJV7GOiQ6XuTSPk2xkl2h37ajaxR5X4NFB75IMT27OzLoCFE5CN7GAZPboqDxNa5o8YfzLDE2_dKWDxH8iSC2PqNZzXizPlYB3Pg=",
+        "title": "jalan.net"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFCW6K37DEL0jnhm2smNO2sQv2s5le7jz3zSMWFE7dACXsjqNW7mB4uK9YZcowC1xESUuLF5qGsLnh6i0pw9IgWCp8U7lbieiLvxwA16Vp8X8_xu7rW6yrjyTocUnbOqBG8YQ==",
+        "title": "4travel.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGWKi9R_-Vg4c-i-SyMLXYNuwxW2D7A7HAOtTr88yXab5S5Y0weHI-PtgBhpILtyGjb2fOc_sShgvYI8HQahUE3ANsta8BlAisR_Xq2KsAxnlwhhdiX4a22GrcA",
+        "title": "hitosara.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE5cjjbH-eYD_J36YJwh_GaNxtHFBh7zcGf-0__w0DwYg6PBF8C8vqzPKV8xBu7Tr0OROdKcX50RGXBRfGdkvQPmh0pjiPT_O0Z8blv67dzltosd45j4JpLeFaTeJA85uNcgJUU-IeoGbcMvYNGerhaf68FD0AfLGU=",
+        "title": "navitime.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGjGnNJ9qkZSBA8DMFvUMJBvYReWqJfdQehTcu9AwCPSYwjiKKROcdxMaPxZGRFgsRyLfEtBOqovRSbGMb1lLRcuaWPcCfidJ-dNICZMJYdILgU92HHBJbeIAvvQBxSfqSJCuhZ6cG1IhznqHM419iwmshTB7Jw",
+        "title": "autoreserve.com"
+      }
+    ]
+  },
+  "store_id": "J001217353",
+  "store_name": "箱屋 名古屋駅前店",
+  "area": "名古屋駅",
+  "genre": "居酒屋",
+  "rating": "4.5",
+  "generated_at": "2026-10-19T22:09:53.855Z"
+}

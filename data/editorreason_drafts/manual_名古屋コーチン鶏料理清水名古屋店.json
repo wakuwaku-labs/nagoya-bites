@@ -1,0 +1,78 @@
+{
+  "status": "OK",
+  "editorReason": "名古屋駅直結の大名古屋ビルヂングに位置し、和モダンな完全個室で上質な名古屋コーチン料理を堪能できる。熟練シェフのこだわりが詰まった水炊きや鶏すき焼きは、スタッフによるフルサービスで最高の状態で提供され、接待や特別な日に最適だ。",
+  "insiderNote": "",
+  "visitStatus": "desk_automated",
+  "confidence": 0.9,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFwdpbtS0hFEfmGMjTKXUqjA6GXDN-faTY93CJb7uK6a1NGWimZZyrScEEFWXsXPgygnn2atba5RyMTUNOJPvioyWt25lseOHd5m2-b1pX68cbshVKm3RC4qSjPyM1lDNubYBOlQKtIrLni4PY=",
+      "snippet_quote": "名古屋駅直結の大名古屋ビルヂングにあり、日本三大地鶏の王様「名古屋コーチン」の旨みを凝縮した熟撰水炊きや、秘伝の割下で味わう鶏すき焼きなどをコースで堪能できると紹介しています。和モダンで落ち着く空間で、友人や家族とゆったり語らうひとときを過ごせる点も強調されています。",
+      "supports": "名古屋駅直結の大名古屋ビルヂングに位置し、和モダンな空間で名古屋コーチン料理を提供していること、友人や家族との利用に適していること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGq-e2kBG1CVGmzAfSdtC3wFyK13ng8mkckifYrxw4-okMYybGLKNnB9Xyu3_tsJb-b-VUiHY7ymK7W221-ZVKHrGudYDC2BYbMDVUWVl26GslGKrQCiCUf9420sK7Ks8PvXlyukGxD0Pkcbg==",
+      "snippet_quote": "「大名古屋ビルヂング」3階に2026年4月にオープンした名古屋コーチンや厳選鶏を使った鶏料理店として紹介されており、名物の鶏鍋料理はスタッフが全て作ると説明されています。特に「名古屋コーチンの水炊き」が一押しで、厳選した手羽先と香味野菜、名古屋コーチンのガラを加えて炊いた、旨味・コク・香りのバランスが取れた鶏白湯スープが自慢とされています。",
+      "supports": "大名古屋ビルヂングに位置し、名古屋コーチン料理を提供していること、名物の鶏鍋料理はスタッフが全て調理するフルサービスであること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEM5DmO-F0aUW8fAtbLYlbc262nvoh2GAt5sb1tkp8B2aOhLqlFlfu-cm6evPF0-mJKcFzBsfSLPZxbq5rlNMxDzWQ9MD6DEgFwUKGDJGDua1pgyFfcOALQ1FAofn8=",
+      "snippet_quote": "名古屋駅直結で喧騒を忘れさせる静謐な完全個室を完備しており、観光や出張、仕事終わりの夜、家族での贅沢な食事、国内外の賓客をもてなす宴に最適であると紹介されています。熟練のスタッフが目の前で丁寧に鍋料理を仕上げる点や、有名銘柄から希少なものまで揃う二十種の日本酒も魅力として挙げられています。",
+      "supports": "名古屋駅直結で完全個室を完備していること、観光や出張、接待など多様なシーンに最適であること、熟練スタッフによるフルサービスであること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF33qW-0qVxv2bKNfQ4yy3_jrb2sg6qZ465VcVzhCuVKFq7OcclN176pNXgV31GR4nS4MClEjUEoxpPLQl_NnDfgmeCWKBKGgKBCu81o6gJYukYjwPwqGAp9ZNnhBQ1qrZtPK8=",
+      "snippet_quote": "名古屋駅直結のモダンな個室空間で、極上地鶏で名古屋を贅沢に味わい尽くせる店として紹介されており、大切な方のおもてなしや記念日にもおすすめとされています。",
+      "supports": "名古屋駅直結のモダンな個室空間であること、大切な方のおもてなしや記念日におすすめであること"
+    }
+  ],
+  "warnings": [],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「名古屋コーチン鶏料理 清水 名古屋店」に関する業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「名古屋コーチン鶏料理 清水 名古屋店」は、鶏料理一筋20年の経験を持つ清水明シェフが手掛ける専門店です。シェフは“鶏”を知り尽くしており、日本三大地鶏の一つである「名古屋コーチン」を最も美味しく味わえる料理へと昇華させることにこだわっています。特に名物の「水炊き」では、朝引きの鶏の骨付きぶつ切りをじっくり煮込んだ、コラーゲンを多く含む黄白色のスープが特徴で、「スープを味わうための鍋」として提供されています。また、秘伝の割下で味わう「鶏すき焼き」では、濃厚な卵を絡めることで、地鶏本来の力強いコクが広がるように工夫されています。\n\n**提供スタイルの特徴**\nこの店舗では、鍋料理を美味しく味わってもらうために、スタッフが全て調理を行う「フルサービス」を提供しています。客は名古屋コーチンのおだしに地鶏をさっとくぐらせ、大根おろしとともに自家製白ポン酢で堪能できます。 鍋の〆には、ブランド卵を使用した土鍋のたまごかけご飯や煮込み麺なども追加できます。\n\n**地元グルメメディアでの紹介**\n「名古屋コーチン鶏料理 清水 名古屋店」は、複数のグルメメディアで紹介されています。\n*   **OZmall**：名古屋駅直結の大名古屋ビルヂングにあり、日本三大地鶏の王様「名古屋コーチン」の旨みを凝縮した熟撰水炊きや、秘伝の割下で味わう鶏すき焼きなどをコースで堪能できると紹介しています。和モダンで落ち着く空間で、友人や家族とゆったり語らうひとときを過ごせる点も強調されています。\n*   **東海テレビ yum-yumグルメ**：「大名古屋ビルヂング」3階に2026年4月にオープンした名古屋コーチンや厳選鶏を使った鶏料理店として紹介されており、名物の鶏鍋料理はスタッフが全て作ると説明されています。特に「名古屋コーチンの水炊き」が一押しで、厳選した手羽先と香味野菜、名古屋コーチンのガラを加えて炊いた、旨味・コク・香りのバランスが取れた鶏白湯スープが自慢とされています。\n*   **一休.comレストラン**：名古屋駅直結で喧騒を忘れさせる静謐な完全個室を完備しており、観光や出張、仕事終わりの夜、家族での贅沢な食事、国内外の賓客をもてなす宴に最適であると紹介されています。熟練のスタッフが目の前で丁寧に鍋料理を仕上げる点や、有名銘柄から希少なものまで揃う二十種の日本酒も魅力として挙げられています。\n*   **ヒトサラ**：店舗情報や料理写真、店内写真が掲載されています。\n*   **PayPayグルメ**：名古屋駅直結のモダンな個室空間で、極上地鶏で名古屋を贅沢に味わい尽くせる店として紹介されており、大切な方のおもてなしや記念日にもおすすめとされています。\n*   **OpenRice 日本**：グルメ情報やレビュー、評価が掲載されています。\n\n**料理人としての評価**\n清水明シェフは「鶏料理一筋20年、数々の鶏料理専門店を手掛けてきた」と評価されています。 「“鶏”を知り尽くしたシェフ」が、名古屋が全国に誇る厳選素材である名古屋コーチンを最も美味しく味わえる料理へと昇華させていると紹介されています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGEMYlC7J_DIf3N2kNoTJgj-t2BuMH4YQnE7VlhjoxZ0X9_6Ag_oQw38xkRxnp6pM35btCGoF2V_j17y9FwE9fdg7pXyJyz7NtudHYR_YzoW80RZc9N-PMYM1XGT01oY0SuaGIxYyV1f8TnhEadjQ==",
+        "title": "dainagoyabuilding.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFwdpbtS0hFEfmGMjTKXUqjA6GXDN-faTY93CJb7uK6a1NGWimZZyrScEEFWXsXPgygnn2atba5RyMTUNOJPvioyWt25lseOHd5m2-b1pX68cbshVKm3RC4qSjPyM1lDNubYBOlQKtIrLni4PY=",
+        "title": "ozmall.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGq-e2kBG1CVGmzAfSdtC3wFyK13ng8mkckifYrxw4-okMYybGLKNnB9Xyu3_tsJb-b-VUiHY7ymK7W221-ZVKHrGudYDC2BYbMDVUWVl26GslGKrQCiCUf9420sK7Ks8PvXlyukGxD0Pkcbg==",
+        "title": "tokai-tv.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEM5DmO-F0aUW8fAtbLYlbc262nvoh2GAt5sb1tkp8B2aOhLqlFlfu-cm6evPF0-mJKcFzBsfSLPZxbq5rlNMxDzWQ9MD6DEgFwUKGDJGDua1pgyFfcOALQ1FAofn8=",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG5RlKKSE79nTYSkrOZZOQvgvWQ7lVFUigklmmvPJROsmXzV6c0nWudQkXPegl8rDl7Hb4l97ZPYNtFL_jS3LipAbqxrBKL9UOUJmNssJSqua1OOck2qqAfPGsqsWjM4o6elVVIbSmkXzOP8pf6PkafqQ==",
+        "title": "ozmall.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF2IMEvKeHUoXa4bMdx3c33ZlXiyeGr6cJ342nfHUivF6IfCT77cly4fJn72W4SumxYcPJTcT0rDLR6YISqADlQRTaKun88NUAn8wwiaVIhXW5OvXxle8qMS7bNZzzW854C_VD-1w==",
+        "title": "ozmall.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE2Gw_Tw8QAXtETDkw0ZQZnxU-M1SePmKDFyxQ6Okrgw0x7R3Up_LJQ_9XZ_sTfMa6zAVxGfB85U5Z-PDZQVHoYz5vSS4f58xT95tLLSMYEhFXwA_ia_oSvb2y-",
+        "title": "hitosara.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF33qW-0qVxv2bKNfQ4yy3_jrb2sg6qZ465VcVzhCuVKFq7OcclN176pNXgV31GR4nS4MClEjUEoxpPLQl_NnDfgmeCWKBKGgKBCu81o6gJYukYjwPwqGAp9ZNnhBQ1qrZtPK8=",
+        "title": "yahoo.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEVWDLGBLo9q9s4CW_UmlkxaZ3qyZw5SyVhlPGNJCReedU9F7Dr4WF92HXEjdwEnpEhEiuKrIgsbzVi3QbfIoVYTxxx24wlq9ev2iWqX71ToneJ37LNpfXcqtzGY0nVHcOrZkzx-SK3CUoKJS0Wdh7Wi3_5EJ7_dw8mv4EypF-enVxXAV2jMGghw61yhAuPWRJ0Pq-bEtBj_59E-ou1CBmHMhYDeEbTYcRSeC12MDKqmOoz_e7qqhX0Zq6P_8L65P4vN8-XWy1W49ypPgv0PsDAhd-7zPeymdEZzEQT8VurOiFwL_zlWK6jD8McNMb6_IqJt-zPLVG2XoybNZoezbTKOA==",
+        "title": "openrice.com"
+      }
+    ]
+  },
+  "store_id": "manual_名古屋コーチン鶏料理清水名古屋店",
+  "store_name": "名古屋コーチン鶏料理 清水 名古屋店",
+  "area": "名古屋市中村区",
+  "genre": "鶏料理（名古屋コーチン、水炊き、鶏しゃぶしゃぶ、鶏すき焼き）",
+  "rating": "4.3",
+  "generated_at": "2026-10-19T22:17:51.312Z"
+}
