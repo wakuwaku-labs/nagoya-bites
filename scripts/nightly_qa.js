@@ -231,6 +231,16 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/audit_places_binding.js', '--states', '--check']],
 });
+// 掲載店の Google の営業状態の取り直し（ISSUE-173・P-177・SOFT）。紐付けが確認済みで、取った名前と住所が掲載と合う店が
+// 閉業に変わっていれば赤。自動では外さない（外すのは ISSUE-170 と同じ一次情報の確認の後）。通信はしない
+checks.push({
+  id: 'place-status-closures',
+  title: '掲載店の Google の営業状態が閉業に変わっていない（ISSUE-173）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/refresh_place_status.js', '--report', '--check']],
+});
 // 毎日書き直されるはずの計測のファイル（GA4 の閲覧数・サイト全体・予約・電話・地図・Search Console）が
 // 2 日より古くなっていないか（MEO-006・SOFT で開始）。鍵が切れて取得が止まっても、レポートは古い数字のまま出続けるため
 checks.push({

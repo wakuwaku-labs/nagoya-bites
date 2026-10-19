@@ -1,0 +1,47 @@
+name: Daily Google place status refresh
+
+# ISSUE-173 / P-177。掲載店の Google の営業状態（business_status）を Basic の項目だけで毎日少しずつ取り直す。
+# 1日の件数と月の上限は data/place_status_policy.json（無料枠の内側）。鍵が無ければ何もせず正常終了する。
+# 結果は data/place_status.json。閉業に変わった店は夜間QA（place-status-closures）が出す。店は自動では外さない。
+
+on:
+  schedule:
+    - cron: '30 19 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: place-status
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: 営業状態を取り直す
+        run: node scripts/refresh_place_status.js
+        env:
+          GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
+      - name: 閉業に変わった店を数える
+        run: node scripts/refresh_place_status.js --report
+      - name: Commit & push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/place_status.json
+          if git diff --cached --quiet; then
+            echo "変更なし"
+          else
+            git commit -m "chore: Google 営業状態の取り直し [skip actions]"
+            git pull --rebase origin main || true
+            git push || (sleep 5 && git pull --rebase origin main && git push)
+          fi

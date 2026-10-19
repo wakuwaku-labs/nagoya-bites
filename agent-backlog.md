@@ -803,7 +803,7 @@
 
 ### [ISSUE-173] 掲載店の Google の営業状態（business_status）を Basic の項目だけで定期的に取り直す
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done（2026-10-19）
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
 - **owner**: 片桐 ← DataKeeper（2026-10-17 自動ルーチンがエスカレーション: 着手条件1「定期的な API 利用をオーナーに確かめる」がオーナー判断を要するため）
@@ -819,6 +819,7 @@
   3. 名前と住所が掲載と合うものだけを営業状態の根拠にする（住所が違うものは [[ISSUE-147]] の誤紐付けとして別に数える）
   4. 閉業に変わった店を、毎日の報告と夜間QA に出す（自動では外さない。外すのは [[ISSUE-170]] と同じ確認の後）
 - **メモ**: 30分を超えるので、着手時に子課題に分ける
+- **結果（2026-10-19）**: オーナーの了承（推奨で進めて）の後に実装。`scripts/refresh_place_status.js`＋`scripts/lib/place_status.js`＋`data/place_status_policy.json`（1日100件・月3,000件・Basic の name/formatted_address/business_status のみ）、日次 `.github/workflows/place-status.yml`、記録 `data/place_status.json`（店ごとの取得日時・名前と住所の一致）、夜間QA `place-status-closures`（soft）。対象は紐付けが確認済みの店だけ。実機で5件取得し全件 OPERATIONAL・名前住所一致。店は自動で外さない
 
 ### [ISSUE-174] 日次のリンク照合で、ホットペッパーのページが【閉店】と表示している掲載店と掲載終了の店を数える
 
