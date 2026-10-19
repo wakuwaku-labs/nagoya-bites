@@ -2,7 +2,7 @@
   "_note": "ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない",
   "mergedCount": 70,
   "absorbedCount": 72,
-  "skippedCount": 0,
+  "skippedCount": 3,
   "merged": [
     {
       "reasons": [
@@ -1893,5 +1893,42 @@
       ]
     }
   ],
-  "skipped": []
+  "skipped": [
+    {
+      "names": [
+        "燈 tou",
+        "つけ麺 燈 tou"
+      ],
+      "hpIds": [
+        "",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "no_corroboration"
+    },
+    {
+      "names": [
+        "レミニセンス (Reminiscence)",
+        "レミニセンス（Reminiscence）"
+      ],
+      "hpIds": [
+        "",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "transitive_ward_conflict"
+    },
+    {
+      "names": [
+        "レミニセンス",
+        "レミニセンス（Reminiscence）"
+      ],
+      "hpIds": [
+        "",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "ward_conflict"
+    }
+  ]
 }
