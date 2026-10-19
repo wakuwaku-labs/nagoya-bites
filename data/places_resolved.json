@@ -53136,7 +53136,7 @@
         "relativeTime": "3 年前"
       }
     ],
-    "detailsNotFoundAt": "2026-10-12T23:58:28.850Z"
+    "detailsNotFoundAt": "2026-10-19T21:51:58.042Z"
   },
   "J000748057": {
     "fetchedAt": "2026-05-22T06:56:44.685Z",
@@ -54421,18 +54421,18 @@
     ]
   },
   "J004493360": {
-    "fetchedAt": "2026-08-24T18:26:19.547Z",
+    "fetchedAt": "2026-10-19T21:51:58.775Z",
     "placeId": "ChIJSw5eOABxA2ARArFrGadxT78",
     "name": "栄熱狂酒場 ごくらく荘 栄本店",
     "formatted_address": "日本、〒460-0003 愛知県名古屋市中区錦３丁目２４−２７ 大野屋ビル 1Ｆ",
-    "rating": 4.2,
-    "user_ratings_total": 104,
+    "rating": 4.4,
+    "user_ratings_total": 278,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1766627825,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 385,
         "lang": "ja",
         "incentiveHit": false,
@@ -54442,19 +54442,8 @@
       },
       {
         "rating": 5,
-        "time": 1768944961,
-        "relativeTime": "7 か月前",
-        "textLen": 194,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "940d1cdcfb7e773a",
-        "authorNameHash": "328b217026be1cb1",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1765622291,
-        "relativeTime": "8 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 418,
         "lang": "ja",
         "incentiveHit": false,
@@ -54465,7 +54454,7 @@
       {
         "rating": 5,
         "time": 1765273432,
-        "relativeTime": "8 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 406,
         "lang": "ja",
         "incentiveHit": false,
@@ -54476,12 +54465,23 @@
       {
         "rating": 5,
         "time": 1765173993,
-        "relativeTime": "8 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 863,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "94e9b8d2be6e1294",
         "authorNameHash": "c2585e6074a1c55f",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1765600261,
+        "relativeTime": "10 か月前",
+        "textLen": 424,
+        "lang": "ja",
+        "incentiveHit": true,
+        "textHash": "d04203e77ab7cdd6",
+        "authorNameHash": "01b4ff24e9556340",
         "textSignalsVersion": 2
       }
     ]
@@ -87062,70 +87062,11 @@
     ]
   },
   "J004492300": {
-    "fetchedAt": "2026-08-24T18:26:26.230Z",
-    "placeId": "ChIJpZ4jVbt3A2ARuNjwIGgRNLQ",
-    "name": "食堂バルshitu",
-    "formatted_address": "日本、〒460-0011 愛知県名古屋市中区大須２丁目５−１３ 魚住ビル 2階",
-    "rating": 4.2,
-    "user_ratings_total": 15,
-    "business_status": "OPERATIONAL",
-    "latestReviews": [
-      {
-        "rating": 5,
-        "time": 1773757160,
-        "relativeTime": "5 か月前",
-        "textLen": 263,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "6105c3cf50e1bb07",
-        "authorNameHash": "d288cdb5414f1f1b",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1778023236,
-        "relativeTime": "3 か月前",
-        "textLen": 384,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "742b0a14f1004cff",
-        "authorNameHash": "5af0f7dcf4224dc5",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1777414237,
-        "relativeTime": "3 か月前",
-        "textLen": 278,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "78777750a10c13db",
-        "authorNameHash": "f0b8e84471b5cd4f",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1773807788,
-        "relativeTime": "5 か月前",
-        "textLen": 155,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "3b106ff75449a40b",
-        "authorNameHash": "7605ea6561ebfb45",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1770126490,
-        "relativeTime": "6 か月前",
-        "textLen": 93,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "4d38e150022bc83f",
-        "authorNameHash": "a0ab7d680dd72388",
-        "textSignalsVersion": 2
-      }
-    ]
+    "fetchedAt": "2026-10-19T21:51:59.032Z",
+    "rejected": true,
+    "rejectReason": "name-mismatch-on-refresh",
+    "candidateName": "食堂バルshitu",
+    "previousPlaceId": "ChIJpZ4jVbt3A2ARuNjwIGgRNLQ"
   },
   "J000728638": {
     "fetchedAt": "2026-05-22T07:07:17.722Z",
@@ -123394,7 +123335,7 @@
         "relativeTime": "6 か月前"
       }
     ],
-    "detailsNotFoundAt": "2026-10-12T23:58:29.066Z"
+    "detailsNotFoundAt": "2026-10-19T21:51:58.295Z"
   },
   "J001296131": {
     "fetchedAt": "2026-05-22T07:18:31.209Z",
@@ -124883,29 +124824,18 @@
     ]
   },
   "J004576355": {
-    "fetchedAt": "2026-09-07T20:55:50.877Z",
+    "fetchedAt": "2026-10-19T21:51:59.280Z",
     "placeId": "ChIJcX7fMgBvA2ARwSRNpFGVoNw",
     "name": "わがやの食堂",
     "formatted_address": "日本、〒463-0021 愛知県名古屋市守山区大森２丁目３０３",
     "rating": 4.8,
-    "user_ratings_total": 14,
+    "user_ratings_total": 13,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1776697038,
-        "relativeTime": "4 か月前",
-        "textLen": 171,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "370d617273ba48fa",
-        "authorNameHash": "c6d3abd8310557d4",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1783917687,
-        "relativeTime": "1 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 883,
         "lang": "ja",
         "incentiveHit": true,
@@ -124914,9 +124844,20 @@
         "textSignalsVersion": 2
       },
       {
+        "rating": 5,
+        "time": 1776697038,
+        "relativeTime": "6 か月前",
+        "textLen": 171,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "370d617273ba48fa",
+        "authorNameHash": "c6d3abd8310557d4",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 3,
         "time": 1779852693,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 62,
         "lang": "ja",
         "incentiveHit": false,
@@ -124926,24 +124867,24 @@
       },
       {
         "rating": 5,
-        "time": 1774150605,
-        "relativeTime": "5 か月前",
-        "textLen": 381,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "a4b7e11ba4e6789e",
-        "authorNameHash": "6daf2106f0a2c89a",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1783076246,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 49,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "a5cd6fda596587ea",
         "authorNameHash": "13071ca50dbfded1",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1774150605,
+        "relativeTime": "7 か月前",
+        "textLen": 381,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "a4b7e11ba4e6789e",
+        "authorNameHash": "6daf2106f0a2c89a",
         "textSignalsVersion": 2
       }
     ]
@@ -125960,7 +125901,7 @@
     ]
   },
   "J004509170": {
-    "fetchedAt": "2026-09-07T20:55:53.712Z",
+    "fetchedAt": "2026-10-19T21:51:59.555Z",
     "placeId": "ChIJUU9GFwBxA2ARcafPHOSi9J4",
     "name": "Vert-Zai",
     "formatted_address": "日本、〒464-0067 愛知県名古屋市千種区池下１丁目４−２ ＡＸＩＳビル",
@@ -125971,7 +125912,7 @@
       {
         "rating": 5,
         "time": 1758803077,
-        "relativeTime": "11 か月前",
+        "relativeTime": "1 年前",
         "textLen": 15,
         "lang": "ja",
         "incentiveHit": false,
@@ -125982,7 +125923,7 @@
       {
         "rating": 5,
         "time": 1779183727,
-        "relativeTime": "3 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -125993,7 +125934,7 @@
       {
         "rating": 4,
         "time": 1759965924,
-        "relativeTime": "11 か月前",
+        "relativeTime": "1 年前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -126289,29 +126230,29 @@
     ]
   },
   "J004492931": {
-    "fetchedAt": "2026-09-07T20:55:54.391Z",
+    "fetchedAt": "2026-10-19T21:51:59.797Z",
     "placeId": "ChIJu89hbQBxA2ARqAMvEA2Rzts",
     "name": "CAFE MARI",
     "formatted_address": "日本、〒461-0003 愛知県名古屋市東区筒井３丁目１３−３",
-    "rating": 4.7,
-    "user_ratings_total": 14,
+    "rating": 4.8,
+    "user_ratings_total": 19,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
-        "rating": 5,
-        "time": 1766973869,
-        "relativeTime": "8 か月前",
-        "textLen": 98,
+        "rating": 4,
+        "time": 1785967944,
+        "relativeTime": "2 か月前",
+        "textLen": 245,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "ed295a462c58d35e",
-        "authorNameHash": "d6b580af27f25019",
+        "textHash": "bcf6f40b9f85114a",
+        "authorNameHash": "0bab500005c5c696",
         "textSignalsVersion": 2
       },
       {
         "rating": 4,
         "time": 1767962062,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 562,
         "lang": "ja",
         "incentiveHit": false,
@@ -126322,7 +126263,7 @@
       {
         "rating": 5,
         "time": 1763789640,
-        "relativeTime": "9 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 108,
         "lang": "ja",
         "incentiveHit": false,
@@ -126333,7 +126274,7 @@
       {
         "rating": 5,
         "time": 1779782983,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 319,
         "lang": "ja",
         "incentiveHit": false,
@@ -126344,7 +126285,7 @@
       {
         "rating": 5,
         "time": 1763863195,
-        "relativeTime": "9 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 310,
         "lang": "ja",
         "incentiveHit": false,
@@ -126551,7 +126492,7 @@
     ]
   },
   "J000107682": {
-    "fetchedAt": "2026-09-07T20:55:54.667Z",
+    "fetchedAt": "2026-10-19T21:52:00.046Z",
     "placeId": "ChIJXS30aXJwA2AR0I-7ESWwFQQ",
     "name": "小久保",
     "formatted_address": "日本、〒464-0045 愛知県名古屋市千種区城山町２丁目１−２",
@@ -126562,23 +126503,12 @@
       {
         "rating": 5,
         "time": 1775605478,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 484,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "e711e0223d0fb047",
         "authorNameHash": "0bab500005c5c696",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1755141933,
-        "relativeTime": "1 年前",
-        "textLen": 150,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "7d325002beedffec",
-        "authorNameHash": "868dca0489da77a9",
         "textSignalsVersion": 2
       },
       {
@@ -126613,11 +126543,22 @@
         "textHash": "ce1dde6b24196e2c",
         "authorNameHash": "775ab9bd0846f8fa",
         "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1755141933,
+        "relativeTime": "1 年前",
+        "textLen": 150,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "7d325002beedffec",
+        "authorNameHash": "868dca0489da77a9",
+        "textSignalsVersion": 2
       }
     ]
   },
   "J003671336": {
-    "fetchedAt": "2026-09-07T20:55:54.958Z",
+    "fetchedAt": "2026-10-19T21:52:00.378Z",
     "placeId": "ChIJKyKmrhtxA2ARQ8eZv_7KqMc",
     "name": "鮨処宿木",
     "formatted_address": "日本、〒461-0025 愛知県名古屋市東区徳川１丁目１０１−２ クレスト徳川 2F-E",
@@ -126628,7 +126569,7 @@
       {
         "rating": 5,
         "time": 1761088700,
-        "relativeTime": "10 か月前",
+        "relativeTime": "12 か月前",
         "textLen": 728,
         "lang": "ja",
         "incentiveHit": false,
@@ -127055,7 +126996,7 @@
     ]
   },
   "J004402367": {
-    "fetchedAt": "2026-09-07T20:55:55.567Z",
+    "fetchedAt": "2026-10-19T21:52:00.646Z",
     "placeId": "ChIJBch7QYRxA2AR3S2k1t1fx1I",
     "name": "casualbar Zappa",
     "formatted_address": "日本、〒462-0844 愛知県名古屋市北区清水５丁目１０−５",
@@ -127099,7 +127040,7 @@
       {
         "rating": 4,
         "time": 1771557684,
-        "relativeTime": "6 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 178,
         "lang": "fr",
         "incentiveHit": false,
@@ -127110,7 +127051,7 @@
       {
         "rating": 5,
         "time": 1769252440,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -127121,29 +127062,18 @@
     ]
   },
   "J004559017": {
-    "fetchedAt": "2026-09-07T20:55:55.837Z",
+    "fetchedAt": "2026-10-19T21:52:00.912Z",
     "placeId": "ChIJc9PQSABxA2ARG0vSYMjEg8o",
     "name": "BAR DURALUMIN",
     "formatted_address": "日本、〒461-0003 愛知県名古屋市東区筒井３丁目２９−１",
     "rating": 5,
-    "user_ratings_total": 6,
+    "user_ratings_total": 7,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1766303645,
-        "relativeTime": "8 か月前",
-        "textLen": 116,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "ee04cc2744aada80",
-        "authorNameHash": "5960eeca7a03741b",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1769327322,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 45,
         "lang": "ja",
         "incentiveHit": false,
@@ -127153,8 +127083,19 @@
       },
       {
         "rating": 5,
+        "time": 1766303645,
+        "relativeTime": "10 か月前",
+        "textLen": 116,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "ee04cc2744aada80",
+        "authorNameHash": "5960eeca7a03741b",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1776525670,
-        "relativeTime": "4 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 182,
         "lang": "en",
         "incentiveHit": false,
@@ -127165,7 +127106,7 @@
       {
         "rating": 5,
         "time": 1776526002,
-        "relativeTime": "4 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 133,
         "lang": "en",
         "incentiveHit": false,
@@ -127176,7 +127117,7 @@
       {
         "rating": 5,
         "time": 1777380498,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -127302,18 +127243,18 @@
     ]
   },
   "J003624605": {
-    "fetchedAt": "2026-09-07T20:55:56.426Z",
+    "fetchedAt": "2026-10-19T21:52:01.249Z",
     "placeId": "ChIJtX8AV6BxA2ARjXXM2Yw107A",
     "name": "躍郎喜",
     "formatted_address": "日本、〒462-0844 愛知県名古屋市北区清水５丁目３４−１",
     "rating": 4.8,
-    "user_ratings_total": 33,
+    "user_ratings_total": 37,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1766041144,
-        "relativeTime": "8 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 386,
         "lang": "ja",
         "incentiveHit": false,
@@ -127335,7 +127276,7 @@
       {
         "rating": 5,
         "time": 1765584981,
-        "relativeTime": "8 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 66,
         "lang": "ja",
         "incentiveHit": false,
@@ -127345,24 +127286,24 @@
       },
       {
         "rating": 5,
+        "time": 1785498547,
+        "relativeTime": "2 か月前",
+        "textLen": 113,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "6869b0418e7209c4",
+        "authorNameHash": "71541c68c80f279e",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1783946469,
-        "relativeTime": "1 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 88,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "7f5cfd8b1f7d5c1c",
         "authorNameHash": "23f08a10cd747eee",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1777903626,
-        "relativeTime": "4 か月前",
-        "textLen": 109,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "3ad6a1ee4550abe7",
-        "authorNameHash": "9e75b43e458f9585",
         "textSignalsVersion": 2
       }
     ]
@@ -127512,18 +127453,18 @@
     ]
   },
   "J004025187": {
-    "fetchedAt": "2026-09-07T20:55:56.759Z",
+    "fetchedAt": "2026-10-19T21:52:01.504Z",
     "placeId": "ChIJo6731sxxA2ARQ1Sp1E-YwiI",
     "name": "音楽とお数 池下わわ",
     "formatted_address": "日本、〒464-0074 愛知県名古屋市千種区仲田２丁目１３−２ 九六六蔵 2F",
     "rating": 4.8,
-    "user_ratings_total": 19,
+    "user_ratings_total": 20,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 3,
         "time": 1769525710,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 118,
         "lang": "ja",
         "incentiveHit": false,
@@ -127545,7 +127486,7 @@
       {
         "rating": 5,
         "time": 1767608215,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 122,
         "lang": "ja",
         "incentiveHit": false,
@@ -127567,7 +127508,7 @@
       {
         "rating": 5,
         "time": 1757727006,
-        "relativeTime": "11 か月前",
+        "relativeTime": "1 年前",
         "textLen": 40,
         "lang": "ja",
         "incentiveHit": false,
@@ -127650,7 +127591,7 @@
     ]
   },
   "J004067398": {
-    "fetchedAt": "2026-09-07T20:55:57.083Z",
+    "fetchedAt": "2026-10-19T21:52:01.745Z",
     "placeId": "ChIJzVS4mwVxA2ARn1WG6jc_V5c",
     "name": "agap. Dessert & Bar-アガ-",
     "formatted_address": "日本、〒464-0848 愛知県名古屋市千種区春岡１丁目６−１４ ｆメゾン池下 1階",
@@ -127661,7 +127602,7 @@
       {
         "rating": 4,
         "time": 1766585018,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 275,
         "lang": "ja",
         "incentiveHit": false,
@@ -127672,7 +127613,7 @@
       {
         "rating": 5,
         "time": 1762964269,
-        "relativeTime": "9 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 140,
         "lang": "ja",
         "incentiveHit": false,
@@ -127683,7 +127624,7 @@
       {
         "rating": 4,
         "time": 1764993599,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 417,
         "lang": "ja",
         "incentiveHit": false,
@@ -127705,7 +127646,7 @@
       {
         "rating": 5,
         "time": 1764436496,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 196,
         "lang": "ja",
         "incentiveHit": false,
@@ -127932,7 +127873,7 @@
     ]
   },
   "J004492053": {
-    "fetchedAt": "2026-09-07T20:55:57.328Z",
+    "fetchedAt": "2026-10-19T21:52:02.013Z",
     "placeId": "ChIJD5nWOxlxA2ARTtGmGD2MmAE",
     "name": "火の鶏",
     "formatted_address": "日本、〒464-0850 愛知県名古屋市千種区今池５丁目５−１２ ミサハイツ １F",
@@ -127963,17 +127904,6 @@
         "textSignalsVersion": 2
       },
       {
-        "rating": 5,
-        "time": 1713575779,
-        "relativeTime": "2 年前",
-        "textLen": 127,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "28a6d5a707ecebb2",
-        "authorNameHash": "01771988de1101fb",
-        "textSignalsVersion": 2
-      },
-      {
         "rating": 4,
         "time": 1730501447,
         "relativeTime": "1 年前",
@@ -127987,18 +127917,29 @@
       {
         "rating": 5,
         "time": 1781843929,
-        "relativeTime": "2 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 30,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "ef26f75ec88a1ea9",
         "authorNameHash": "f8073427cbeb0748",
         "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1755266561,
+        "relativeTime": "1 年前",
+        "textLen": 58,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "2fef67928cc2323e",
+        "authorNameHash": "7d48747f272e929f",
+        "textSignalsVersion": 2
       }
     ]
   },
   "J001294438": {
-    "fetchedAt": "2026-09-07T20:55:57.659Z",
+    "fetchedAt": "2026-10-19T21:52:02.251Z",
     "placeId": "ChIJodNw9EBxA2ARGiLDYSaF6hk",
     "name": "アンディ ベトナム",
     "formatted_address": "日本、〒464-0851 愛知県名古屋市千種区今池南３１−１７",
@@ -128103,7 +128044,7 @@
     ]
   },
   "J003497222": {
-    "fetchedAt": "2026-09-07T20:55:57.986Z",
+    "fetchedAt": "2026-10-19T21:52:02.519Z",
     "placeId": "ChIJUf6BjetxA2ARbVFt2gg-7qQ",
     "name": "BAR WOMACK",
     "formatted_address": "日本、〒464-0850 愛知県名古屋市千種区今池５丁目２０−２０ １F",
@@ -128158,7 +128099,7 @@
       {
         "rating": 5,
         "time": 1774358824,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 82,
         "lang": "en",
         "incentiveHit": false,
@@ -128323,7 +128264,7 @@
     ]
   },
   "J003763394": {
-    "fetchedAt": "2026-09-07T20:55:58.240Z",
+    "fetchedAt": "2026-10-19T21:52:02.785Z",
     "placeId": "ChIJIVGABABxA2ARbPm3Pbtg_sU",
     "name": "焼肉ふじなが",
     "formatted_address": "日本、〒462-0809 愛知県名古屋市北区上飯田西町２丁目１０−１",
@@ -128333,19 +128274,8 @@
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1777116214,
-        "relativeTime": "4 か月前",
-        "textLen": 273,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "d9e90a5aa8580ebd",
-        "authorNameHash": "0e7ed54b9fd71702",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1777097909,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 280,
         "lang": "ja",
         "incentiveHit": false,
@@ -128356,12 +128286,23 @@
       {
         "rating": 5,
         "time": 1779421990,
-        "relativeTime": "3 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 184,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "794be0d29cf742b5",
         "authorNameHash": "788d66c249c0225c",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1777116214,
+        "relativeTime": "5 か月前",
+        "textLen": 273,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "d9e90a5aa8580ebd",
+        "authorNameHash": "0e7ed54b9fd71702",
         "textSignalsVersion": 2
       },
       {
@@ -128378,7 +128319,7 @@
       {
         "rating": 5,
         "time": 1775972374,
-        "relativeTime": "4 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 185,
         "lang": "ja",
         "incentiveHit": false,
@@ -128698,7 +128639,7 @@
     ]
   },
   "J003715703": {
-    "fetchedAt": "2026-09-07T20:55:58.478Z",
+    "fetchedAt": "2026-10-19T21:52:03.015Z",
     "placeId": "ChIJCT1U26VxA2ARGygxRFP3Xsw",
     "name": "とも",
     "formatted_address": "日本、〒461-0045 愛知県名古屋市東区砂田橋５丁目２−１０",
@@ -128753,7 +128694,7 @@
       {
         "rating": 5,
         "time": 1695991551,
-        "relativeTime": "2 年前",
+        "relativeTime": "3 年前",
         "textLen": 113,
         "lang": "ja",
         "incentiveHit": false,
@@ -129118,7 +129059,7 @@
     ]
   },
   "J003693915": {
-    "fetchedAt": "2026-09-07T20:55:58.985Z",
+    "fetchedAt": "2026-10-19T21:52:03.344Z",
     "placeId": "ChIJn39x2AJxA2AR2l2ARkxXcQ4",
     "name": "創作料理 さくら",
     "formatted_address": "日本、〒464-0086 愛知県名古屋市千種区萱場２丁目１−２ ナガタビル",
@@ -129162,7 +129103,7 @@
       {
         "rating": 5,
         "time": 1726997782,
-        "relativeTime": "1 年前",
+        "relativeTime": "2 年前",
         "textLen": 76,
         "lang": "ja",
         "incentiveHit": false,
@@ -129184,7 +129125,7 @@
     ]
   },
   "J003497448": {
-    "fetchedAt": "2026-09-07T20:55:59.311Z",
+    "fetchedAt": "2026-10-19T21:52:03.601Z",
     "placeId": "ChIJZxkLhSNxA2AR820-wSlbP58",
     "name": "隠れ家dining CURA 〜蔵〜",
     "formatted_address": "日本、〒464-0851 愛知県名古屋市千種区今池南１３−２１",
@@ -129195,7 +129136,7 @@
       {
         "rating": 5,
         "time": 1781178505,
-        "relativeTime": "2 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 386,
         "lang": "ja",
         "incentiveHit": false,
@@ -129206,7 +129147,7 @@
       {
         "rating": 5,
         "time": 1780095232,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 619,
         "lang": "ja",
         "incentiveHit": false,
@@ -129217,7 +129158,7 @@
       {
         "rating": 5,
         "time": 1763004220,
-        "relativeTime": "9 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 156,
         "lang": "ja",
         "incentiveHit": false,
@@ -129237,14 +129178,14 @@
         "textSignalsVersion": 2
       },
       {
-        "rating": 4,
-        "time": 1743522453,
-        "relativeTime": "1 年前",
-        "textLen": 461,
+        "rating": 5,
+        "time": 1786963085,
+        "relativeTime": "2 か月前",
+        "textLen": 418,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "1162fb9c549bde7b",
-        "authorNameHash": "be87dbfbbf6e24e2",
+        "textHash": "f9c3e8a39ba99a6b",
+        "authorNameHash": "2bea9ece2fc73040",
         "textSignalsVersion": 2
       }
     ]
@@ -129466,7 +129407,7 @@
     ]
   },
   "J003599652": {
-    "fetchedAt": "2026-09-07T20:55:59.548Z",
+    "fetchedAt": "2026-10-19T21:52:03.838Z",
     "placeId": "ChIJAX8lmlFxA2AR2LzLGupHpiI",
     "name": "キャッツ食堂",
     "formatted_address": "日本、〒464-0850 愛知県名古屋市千種区今池３丁目２−９ ママビルディング",
@@ -129477,7 +129418,7 @@
       {
         "rating": 4,
         "time": 1773326078,
-        "relativeTime": "5 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 56,
         "lang": "ja",
         "incentiveHit": false,
@@ -129488,23 +129429,12 @@
       {
         "rating": 5,
         "time": 1763540026,
-        "relativeTime": "9 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 111,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "bb704e3c6061b5c6",
         "authorNameHash": "92f26f7ee3f8fcd1",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1771263588,
-        "relativeTime": "6 か月前",
-        "textLen": 12,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": null,
-        "authorNameHash": "782d44f5f39da288",
         "textSignalsVersion": 2
       },
       {
@@ -129521,12 +129451,23 @@
       {
         "rating": 5,
         "time": 1774328171,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 22,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "d6a5b50c08107967",
         "authorNameHash": "6b7bfb78a1e537ad",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1771263588,
+        "relativeTime": "8 か月前",
+        "textLen": 12,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": null,
+        "authorNameHash": "782d44f5f39da288",
         "textSignalsVersion": 2
       }
     ]
@@ -129670,7 +129611,7 @@
     ]
   },
   "J003497936": {
-    "fetchedAt": "2026-09-07T20:56:00.108Z",
+    "fetchedAt": "2026-10-19T21:52:04.102Z",
     "placeId": "ChIJEYQcFUhxA2ARePurWcjI5b4",
     "name": "Wine Bar Kuroda",
     "formatted_address": "日本、〒464-0850 愛知県名古屋市千種区今池４丁目１０−１６ 今池ビイハウス 3階",
@@ -129681,7 +129622,7 @@
       {
         "rating": 5,
         "time": 1695774935,
-        "relativeTime": "2 年前",
+        "relativeTime": "3 年前",
         "textLen": 685,
         "lang": "ja",
         "incentiveHit": false,
@@ -129703,7 +129644,7 @@
       {
         "rating": 5,
         "time": 1729288340,
-        "relativeTime": "1 年前",
+        "relativeTime": "2 年前",
         "textLen": 384,
         "lang": "ja",
         "incentiveHit": false,
@@ -131795,7 +131736,7 @@
     ]
   },
   "J004025679": {
-    "fetchedAt": "2026-09-07T20:56:01.624Z",
+    "fetchedAt": "2026-10-19T21:52:04.353Z",
     "placeId": "ChIJu9P6P-pxA2AReHZJotHADP4",
     "name": "Turtle",
     "formatted_address": "日本、〒464-0850 愛知県名古屋市千種区今池２丁目９−７ コーポシオン 1F",
@@ -131806,7 +131747,7 @@
       {
         "rating": 4,
         "time": 1767195706,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 275,
         "lang": "ja",
         "incentiveHit": false,
@@ -131817,7 +131758,7 @@
       {
         "rating": 5,
         "time": 1763433108,
-        "relativeTime": "9 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 264,
         "lang": "ja",
         "incentiveHit": false,
@@ -133328,7 +133269,7 @@
     ]
   },
   "J004493173": {
-    "fetchedAt": "2026-09-07T20:56:02.519Z",
+    "fetchedAt": "2026-10-19T21:52:04.599Z",
     "placeId": "ChIJRbCVEH99A2ARE1HrYtZP_P4",
     "name": "ヒュッテ",
     "formatted_address": "日本、〒458-0034 愛知県名古屋市緑区若田２丁目９２０",
@@ -133339,7 +133280,7 @@
       {
         "rating": 5,
         "time": 1758344306,
-        "relativeTime": "11 か月前",
+        "relativeTime": "1 年前",
         "textLen": 144,
         "lang": "ja",
         "incentiveHit": false,
@@ -133350,7 +133291,7 @@
       {
         "rating": 5,
         "time": 1772873164,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 54,
         "lang": "ja",
         "incentiveHit": false,
@@ -133360,24 +133301,13 @@
       },
       {
         "rating": 5,
-        "time": 1755868933,
-        "relativeTime": "1 年前",
-        "textLen": 31,
+        "time": 1786500458,
+        "relativeTime": "2 か月前",
+        "textLen": 69,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "313f9875cb6d8482",
-        "authorNameHash": "cc723dc2ba024f53",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1771761361,
-        "relativeTime": "6 か月前",
-        "textLen": 41,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "08a189b694416389",
-        "authorNameHash": "9466829dbe1e826e",
+        "textHash": "f49ad3be40454be2",
+        "authorNameHash": "6a22e7ff1c590a4f",
         "textSignalsVersion": 2
       },
       {
@@ -133389,6 +133319,17 @@
         "incentiveHit": false,
         "textHash": "5ed67df9633156fe",
         "authorNameHash": "3883f62e47ca4baa",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1770540714,
+        "relativeTime": "8 か月前",
+        "textLen": 25,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "61371b50ecd0a71c",
+        "authorNameHash": "94234d4382b7764d",
         "textSignalsVersion": 2
       }
     ]
@@ -134469,18 +134410,18 @@
     ]
   },
   "J004576075": {
-    "fetchedAt": "2026-09-07T20:56:03.515Z",
+    "fetchedAt": "2026-10-19T21:52:04.843Z",
     "placeId": "ChIJ7d8xfgB7A2AR8SnpGpkRZsw",
     "name": "焼鳥どん新瑞橋店",
     "formatted_address": "日本、〒467-0066 愛知県名古屋市瑞穂区洲山町２丁目３０ あらたまクインビル 1階",
     "rating": 4.4,
-    "user_ratings_total": 58,
+    "user_ratings_total": 65,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1783166843,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 110,
         "lang": "ja",
         "incentiveHit": false,
@@ -134491,7 +134432,7 @@
       {
         "rating": 5,
         "time": 1776858415,
-        "relativeTime": "4 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 147,
         "lang": "ja",
         "incentiveHit": false,
@@ -134502,7 +134443,7 @@
       {
         "rating": 5,
         "time": 1776925295,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 172,
         "lang": "ja",
         "incentiveHit": false,
@@ -134513,7 +134454,7 @@
       {
         "rating": 5,
         "time": 1781566483,
-        "relativeTime": "2 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 236,
         "lang": "ja",
         "incentiveHit": false,
@@ -134524,7 +134465,7 @@
       {
         "rating": 5,
         "time": 1776513714,
-        "relativeTime": "4 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 49,
         "lang": "ja",
         "incentiveHit": false,
@@ -135003,18 +134944,18 @@
     ]
   },
   "J004089322": {
-    "fetchedAt": "2026-09-07T20:56:03.771Z",
+    "fetchedAt": "2026-10-19T21:52:05.096Z",
     "placeId": "ChIJowYce4p7A2AR0MRJLIT6BVM",
     "name": "シオガマグチバル LUDENS",
     "formatted_address": "日本、〒468-0073 愛知県名古屋市天白区塩釜口２丁目１５０１ 2F",
     "rating": 4.9,
-    "user_ratings_total": 23,
+    "user_ratings_total": 25,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1769435578,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 83,
         "lang": "ja",
         "incentiveHit": false,
@@ -135023,25 +134964,25 @@
         "textSignalsVersion": 2
       },
       {
-        "rating": 4,
-        "time": 1774959154,
-        "relativeTime": "5 か月前",
-        "textLen": 207,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "998c2004779a434e",
-        "authorNameHash": "aaa9402664f1a41f",
-        "textSignalsVersion": 2
-      },
-      {
         "rating": 5,
         "time": 1765717117,
-        "relativeTime": "8 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 507,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "0da245c6c1111e38",
         "authorNameHash": "320a0041affbe2fa",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1774959154,
+        "relativeTime": "6 か月前",
+        "textLen": 207,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "998c2004779a434e",
+        "authorNameHash": "aaa9402664f1a41f",
         "textSignalsVersion": 2
       },
       {
@@ -135105,7 +135046,7 @@
     ]
   },
   "J004049818": {
-    "fetchedAt": "2026-09-07T20:56:04.011Z",
+    "fetchedAt": "2026-10-19T21:52:05.339Z",
     "placeId": "ChIJHVYAbwB7A2AR_-XE2WZMejw",
     "name": "呑ん処 とらのすけ",
     "formatted_address": "日本、〒467-0825 愛知県名古屋市瑞穂区柳ケ枝町１丁目２９",
@@ -135595,7 +135536,7 @@
     ]
   },
   "J004558626": {
-    "fetchedAt": "2026-09-07T20:56:04.248Z",
+    "fetchedAt": "2026-10-19T21:52:05.583Z",
     "placeId": "ChIJK3vuqF59A2AR0va5vgKNbdU",
     "name": "お番菜まるり",
     "formatted_address": "日本、〒457-0067 愛知県名古屋市南区上浜町３０１−５",
@@ -135606,7 +135547,7 @@
       {
         "rating": 5,
         "time": 1768707404,
-        "relativeTime": "7 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 60,
         "lang": "ja",
         "incentiveHit": false,
@@ -135616,19 +135557,8 @@
       },
       {
         "rating": 5,
-        "time": 1768619658,
-        "relativeTime": "7 か月前",
-        "textLen": 51,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "42d0aa08817dec83",
-        "authorNameHash": "415737136f9e9910",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1768560486,
-        "relativeTime": "7 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 31,
         "lang": "ja",
         "incentiveHit": false,
@@ -135638,8 +135568,19 @@
       },
       {
         "rating": 5,
+        "time": 1768619658,
+        "relativeTime": "9 か月前",
+        "textLen": 51,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "42d0aa08817dec83",
+        "authorNameHash": "415737136f9e9910",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1768794476,
-        "relativeTime": "7 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 47,
         "lang": "ja",
         "incentiveHit": false,
@@ -135649,13 +135590,13 @@
       },
       {
         "rating": 5,
-        "time": 1768560533,
-        "relativeTime": "7 か月前",
-        "textLen": 70,
+        "time": 1768610414,
+        "relativeTime": "9 か月前",
+        "textLen": 196,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "2503e0b3290a6c9b",
-        "authorNameHash": "82ba87c4cac50ca3",
+        "textHash": "13e67c178e35bc87",
+        "authorNameHash": "06821ad4f63ad954",
         "textSignalsVersion": 2
       }
     ]
@@ -135697,18 +135638,18 @@
     ]
   },
   "J004576130": {
-    "fetchedAt": "2026-09-07T20:56:04.499Z",
+    "fetchedAt": "2026-10-19T21:52:05.827Z",
     "placeId": "ChIJGa9Yj6h7A2AR7nrPm8dv-Jc",
     "name": "Bistro & Cafe ARAKAZU",
     "formatted_address": "日本、〒468-0066 愛知県名古屋市天白区元八事４丁目２８８ サニーヒル八事 1F",
     "rating": 5,
-    "user_ratings_total": 9,
+    "user_ratings_total": 10,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1778866426,
-        "relativeTime": "3 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 97,
         "lang": "ja",
         "incentiveHit": false,
@@ -135719,7 +135660,7 @@
       {
         "rating": 5,
         "time": 1781952009,
-        "relativeTime": "2 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 165,
         "lang": "ja",
         "incentiveHit": false,
@@ -135730,7 +135671,7 @@
       {
         "rating": 5,
         "time": 1779101041,
-        "relativeTime": "3 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 66,
         "lang": "ja",
         "incentiveHit": false,
@@ -135741,7 +135682,7 @@
       {
         "rating": 5,
         "time": 1773820587,
-        "relativeTime": "5 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 288,
         "lang": "ja",
         "incentiveHit": false,
@@ -135752,7 +135693,7 @@
       {
         "rating": 5,
         "time": 1773757977,
-        "relativeTime": "5 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 78,
         "lang": "ja",
         "incentiveHit": false,
@@ -136647,18 +136588,18 @@
     ]
   },
   "J004536303": {
-    "fetchedAt": "2026-09-07T20:56:04.742Z",
+    "fetchedAt": "2026-10-19T21:52:06.061Z",
     "placeId": "ChIJS-EdgRp7A2ARXM5cLl3i_ZE",
     "name": "韓国ダイニングアリラン",
     "formatted_address": "ネオ新瑞, ２丁目-75-2 姫宮町 瑞穂区 名古屋市 愛知県 467-0834 日本",
     "rating": 4.6,
-    "user_ratings_total": 9,
+    "user_ratings_total": 10,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1775739240,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 77,
         "lang": "ja",
         "incentiveHit": false,
@@ -136669,7 +136610,7 @@
       {
         "rating": 3,
         "time": 1778719606,
-        "relativeTime": "3 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 31,
         "lang": "ja",
         "incentiveHit": false,
@@ -136680,7 +136621,7 @@
       {
         "rating": 4,
         "time": 1775373523,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 20,
         "lang": "ja",
         "incentiveHit": false,
@@ -136691,7 +136632,7 @@
       {
         "rating": 5,
         "time": 1777755844,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 87,
         "lang": "ja",
         "incentiveHit": false,
@@ -136702,7 +136643,7 @@
       {
         "rating": 5,
         "time": 1773888120,
-        "relativeTime": "5 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 111,
         "lang": "ja",
         "incentiveHit": false,
@@ -136785,34 +136726,34 @@
     ]
   },
   "J004509242": {
-    "fetchedAt": "2026-09-07T20:56:04.989Z",
+    "fetchedAt": "2026-10-19T21:52:06.300Z",
     "placeId": "ChIJWyh7-Ed7A2AR9UosH00eC5Q",
     "name": "炭火焼き鳥せんど",
     "formatted_address": "日本、〒467-0012 愛知県名古屋市瑞穂区豊岡通１丁目３３−３",
     "rating": 4.8,
-    "user_ratings_total": 18,
+    "user_ratings_total": 21,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 4,
-        "time": 1781097925,
-        "relativeTime": "2 か月前",
-        "textLen": 149,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "1a8de357b238492f",
-        "authorNameHash": "dbad5b811b7a1b96",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 4,
         "time": 1784167702,
-        "relativeTime": "1 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 96,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "6d665e4715aa11e6",
         "authorNameHash": "56922e70b63891a1",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1781097925,
+        "relativeTime": "4 か月前",
+        "textLen": 149,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1a8de357b238492f",
+        "authorNameHash": "dbad5b811b7a1b96",
         "textSignalsVersion": 2
       },
       {
@@ -136828,30 +136769,30 @@
       },
       {
         "rating": 5,
-        "time": 1781854254,
-        "relativeTime": "2 か月前",
-        "textLen": 540,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "ca6f3ed9b77629c8",
-        "authorNameHash": "dbd2772d112a31eb",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1783511871,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 204,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "5181600a80d1179a",
         "authorNameHash": "9387233a122c6694",
         "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1781854254,
+        "relativeTime": "4 か月前",
+        "textLen": 540,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "ca6f3ed9b77629c8",
+        "authorNameHash": "dbd2772d112a31eb",
+        "textSignalsVersion": 2
       }
     ]
   },
   "J004469172": {
-    "fetchedAt": "2026-09-07T20:56:05.239Z",
+    "fetchedAt": "2026-10-19T21:52:06.554Z",
     "placeId": "ChIJdd49sXdjA2ARjUMBvB_hnJg",
     "name": "chez Suzuki",
     "formatted_address": "日本、〒458-0809 愛知県名古屋市緑区西神の倉１丁目３０２ グランドメゾン神ノ倉 1F",
@@ -136861,8 +136802,19 @@
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1783251298,
+        "time": 1786884479,
         "relativeTime": "2 か月前",
+        "textLen": 233,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "e8982f0b58b11882",
+        "authorNameHash": "374a1743eb7e044d",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1783251298,
+        "relativeTime": "3 か月前",
         "textLen": 68,
         "lang": "ja",
         "incentiveHit": false,
@@ -136884,7 +136836,7 @@
       {
         "rating": 5,
         "time": 1771074031,
-        "relativeTime": "6 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 150,
         "lang": "ja",
         "incentiveHit": false,
@@ -136901,17 +136853,6 @@
         "incentiveHit": false,
         "textHash": "6411858aef76d376",
         "authorNameHash": "0927d1edf29a1da3",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1774450310,
-        "relativeTime": "5 か月前",
-        "textLen": 382,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "ff9c5cae0bfac065",
-        "authorNameHash": "1e0c9c76492ff8c3",
         "textSignalsVersion": 2
       }
     ]
@@ -138969,7 +138910,7 @@
     ]
   },
   "J004536072": {
-    "fetchedAt": "2026-09-07T20:56:05.742Z",
+    "fetchedAt": "2026-10-19T21:52:06.794Z",
     "placeId": "ChIJY671IYF7A2ARBfEw9cKLsUA",
     "name": "Bar BOND18",
     "formatted_address": "日本、〒466-0054 愛知県名古屋市昭和区円上町２９−２０ 宇野ビル 1階",
@@ -138980,7 +138921,7 @@
       {
         "rating": 5,
         "time": 1781225748,
-        "relativeTime": "2 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 107,
         "lang": "ja",
         "incentiveHit": false,
@@ -138991,7 +138932,7 @@
       {
         "rating": 5,
         "time": 1781171375,
-        "relativeTime": "2 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 32,
         "lang": "ja",
         "incentiveHit": false,
@@ -139002,7 +138943,7 @@
       {
         "rating": 5,
         "time": 1772160985,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 136,
         "lang": "ja",
         "incentiveHit": false,
@@ -139013,7 +138954,7 @@
       {
         "rating": 5,
         "time": 1770128408,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 9,
         "lang": "ja",
         "incentiveHit": false,
@@ -139312,7 +139253,7 @@
     ]
   },
   "J003959002": {
-    "fetchedAt": "2026-09-07T20:56:05.985Z",
+    "fetchedAt": "2026-10-19T21:52:07.063Z",
     "placeId": "ChIJMatKE2J7A2ARTw9_A4bNovk",
     "name": "珈琲酒場OGU",
     "formatted_address": "日本、〒467-0806 愛知県名古屋市瑞穂区瑞穂通７丁目32−１",
@@ -139323,7 +139264,7 @@
       {
         "rating": 5,
         "time": 1726970225,
-        "relativeTime": "1 年前",
+        "relativeTime": "2 年前",
         "textLen": 105,
         "lang": "ja",
         "incentiveHit": false,
@@ -139367,7 +139308,7 @@
       {
         "rating": 5,
         "time": 1758977711,
-        "relativeTime": "11 か月前",
+        "relativeTime": "1 年前",
         "textLen": 70,
         "lang": "ja",
         "incentiveHit": false,
@@ -139903,18 +139844,18 @@
     ]
   },
   "J003473491": {
-    "fetchedAt": "2026-09-07T20:56:06.247Z",
+    "fetchedAt": "2026-10-19T21:52:07.307Z",
     "placeId": "ChIJAS5kHq17A2ARbV8TdJOpDT4",
     "name": "しんちゃん",
     "formatted_address": "日本、〒467-0017 愛知県名古屋市瑞穂区東栄町３丁目６−３",
     "rating": 4.6,
-    "user_ratings_total": 37,
+    "user_ratings_total": 39,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1777288411,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 129,
         "lang": "ja",
         "incentiveHit": false,
@@ -139925,7 +139866,7 @@
       {
         "rating": 5,
         "time": 1665888103,
-        "relativeTime": "3 年前",
+        "relativeTime": "4 年前",
         "textLen": 205,
         "lang": "ja",
         "incentiveHit": false,
@@ -139958,7 +139899,7 @@
       {
         "rating": 5,
         "time": 1780673287,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 79,
         "lang": "ja",
         "incentiveHit": false,
@@ -140461,7 +140402,7 @@
     "previousPlaceId": "ChIJc2b1VOV9A2ARN_xnfIDr0Ps"
   },
   "J003693501": {
-    "fetchedAt": "2026-09-07T20:56:06.972Z",
+    "fetchedAt": "2026-10-19T21:52:07.546Z",
     "placeId": "ChIJ3yw2hnx7A2ARfaM12xzd0NU",
     "name": "いざっく K-na",
     "formatted_address": "日本、〒458-0847 愛知県名古屋市緑区浦里２丁目１６７",
@@ -140483,7 +140424,7 @@
       {
         "rating": 5,
         "time": 1764498410,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -140494,7 +140435,7 @@
       {
         "rating": 5,
         "time": 1757837763,
-        "relativeTime": "11 か月前",
+        "relativeTime": "1 年前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -140505,7 +140446,7 @@
       {
         "rating": 5,
         "time": 1663791597,
-        "relativeTime": "3 年前",
+        "relativeTime": "4 年前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -141831,7 +141772,7 @@
     ]
   },
   "J003672114": {
-    "fetchedAt": "2026-09-07T20:56:07.938Z",
+    "fetchedAt": "2026-10-19T21:52:07.797Z",
     "placeId": "ChIJMY1siO17A2ARehde9fKvA9Y",
     "name": "仁の焼き肉",
     "formatted_address": "日本、〒457-0022 愛知県名古屋市南区明円町２０−２",
@@ -141853,7 +141794,7 @@
       {
         "rating": 3,
         "time": 1773743681,
-        "relativeTime": "5 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 66,
         "lang": "ja",
         "incentiveHit": false,
@@ -141886,7 +141827,7 @@
       {
         "rating": 5,
         "time": 1762951622,
-        "relativeTime": "9 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 135,
         "lang": "ja",
         "incentiveHit": false,
@@ -142180,7 +142121,7 @@
     ]
   },
   "J004576792": {
-    "fetchedAt": "2026-09-07T20:56:08.201Z",
+    "fetchedAt": "2026-10-19T21:52:08.033Z",
     "placeId": "ChIJDeUdOq17A2ARGOYbzSU3bi0",
     "name": "栄",
     "formatted_address": "日本、〒457-0011 愛知県名古屋市南区呼続元町１８−７",
@@ -142321,18 +142262,18 @@
     ]
   },
   "J003942437": {
-    "fetchedAt": "2026-09-07T20:56:08.450Z",
+    "fetchedAt": "2026-10-19T21:52:08.314Z",
     "placeId": "ChIJ62bmFnF7A2ARCVjLX11qSKM",
     "name": "焼肉れんき",
     "formatted_address": "日本、〒468-0045 愛知県名古屋市天白区野並１丁目４０ ＮＢＣビレッジ 1A",
-    "rating": 4.7,
-    "user_ratings_total": 33,
+    "rating": 4.6,
+    "user_ratings_total": 34,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 4,
         "time": 1772272945,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 167,
         "lang": "ja",
         "incentiveHit": false,
@@ -142365,7 +142306,7 @@
       {
         "rating": 5,
         "time": 1779032226,
-        "relativeTime": "3 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 87,
         "lang": "ja",
         "incentiveHit": false,
@@ -143019,18 +142960,18 @@
     ]
   },
   "J004509565": {
-    "fetchedAt": "2026-09-07T20:56:08.944Z",
+    "fetchedAt": "2026-10-19T21:52:08.567Z",
     "placeId": "ChIJcf78om17A2ARw_VmXgPUDC4",
     "name": "みそなご",
     "formatted_address": "日本、〒467-0027 愛知県名古屋市瑞穂区田辺通３丁目２７",
     "rating": 4.5,
-    "user_ratings_total": 10,
+    "user_ratings_total": 11,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1782959721,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 245,
         "lang": "ja",
         "incentiveHit": false,
@@ -143041,7 +142982,7 @@
       {
         "rating": 4,
         "time": 1771011038,
-        "relativeTime": "6 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 183,
         "lang": "ja",
         "incentiveHit": false,
@@ -143052,7 +142993,7 @@
       {
         "rating": 5,
         "time": 1785941652,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 143,
         "lang": "ja",
         "incentiveHit": false,
@@ -143063,7 +143004,7 @@
       {
         "rating": 4,
         "time": 1769678312,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 120,
         "lang": "ja",
         "incentiveHit": true,
@@ -143074,7 +143015,7 @@
       {
         "rating": 5,
         "time": 1778919466,
-        "relativeTime": "3 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 434,
         "lang": "ja",
         "incentiveHit": false,
@@ -143229,29 +143170,18 @@
     ]
   },
   "J004576662": {
-    "fetchedAt": "2026-09-07T20:56:09.194Z",
+    "fetchedAt": "2026-10-19T21:52:08.801Z",
     "placeId": "ChIJ04usPQB7A2ARj1C7ggDexmU",
     "name": "gallery & shisha cafe Absolem 【新瑞橋】",
     "formatted_address": "日本、〒467-0843 愛知県名古屋市瑞穂区土市町２丁目２２−６",
-    "rating": 4.5,
-    "user_ratings_total": 8,
+    "rating": 4.6,
+    "user_ratings_total": 11,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1774094309,
-        "relativeTime": "5 か月前",
-        "textLen": 72,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "d5cb992f77670030",
-        "authorNameHash": "b2a8f3c5b8725f05",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1776680479,
-        "relativeTime": "4 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 72,
         "lang": "ja",
         "incentiveHit": false,
@@ -143262,7 +143192,7 @@
       {
         "rating": 5,
         "time": 1776935063,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 39,
         "lang": "ja",
         "incentiveHit": false,
@@ -143272,8 +143202,19 @@
       },
       {
         "rating": 5,
+        "time": 1774094309,
+        "relativeTime": "7 か月前",
+        "textLen": 72,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "d5cb992f77670030",
+        "authorNameHash": "b2a8f3c5b8725f05",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1776680906,
-        "relativeTime": "4 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 27,
         "lang": "ja",
         "incentiveHit": false,
@@ -143284,7 +143225,7 @@
       {
         "rating": 5,
         "time": 1776744919,
-        "relativeTime": "4 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 36,
         "lang": "ja",
         "incentiveHit": false,
@@ -143583,7 +143524,7 @@
     ]
   },
   "J003942334": {
-    "fetchedAt": "2026-09-07T20:56:09.441Z",
+    "fetchedAt": "2026-10-19T21:52:09.040Z",
     "placeId": "ChIJiedUtJl9A2ARqVv-VMgowWo",
     "name": "みえちゃん食堂",
     "formatted_address": "日本、〒458-0045 愛知県名古屋市緑区鹿山２丁目２７",
@@ -143594,7 +143535,7 @@
       {
         "rating": 3,
         "time": 1772776646,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 289,
         "lang": "ja",
         "incentiveHit": false,
@@ -143605,7 +143546,7 @@
       {
         "rating": 3,
         "time": 1778133015,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 194,
         "lang": "ja",
         "incentiveHit": false,
@@ -143627,7 +143568,7 @@
       {
         "rating": 5,
         "time": 1726054611,
-        "relativeTime": "1 年前",
+        "relativeTime": "2 年前",
         "textLen": 171,
         "lang": "ja",
         "incentiveHit": false,
@@ -144081,18 +144022,18 @@
     ]
   },
   "J003916187": {
-    "fetchedAt": "2026-09-07T20:56:09.685Z",
+    "fetchedAt": "2026-10-19T21:52:09.293Z",
     "placeId": "ChIJ5QWDEwBlA2ARIXUdmCIgKg4",
     "name": "pizza Rica-rica",
     "formatted_address": "日本、〒468-0011 愛知県名古屋市天白区平針２丁目１７０２ ビューパレー平針",
     "rating": 4.7,
-    "user_ratings_total": 39,
+    "user_ratings_total": 42,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 4,
         "time": 1783411248,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 303,
         "lang": "ja",
         "incentiveHit": false,
@@ -144103,7 +144044,7 @@
       {
         "rating": 5,
         "time": 1784020229,
-        "relativeTime": "1 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 295,
         "lang": "ja",
         "incentiveHit": false,
@@ -144113,8 +144054,19 @@
       },
       {
         "rating": 5,
+        "time": 1786356755,
+        "relativeTime": "2 か月前",
+        "textLen": 279,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "b521e4bf9c1a32eb",
+        "authorNameHash": "eb4136711cbf22f5",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1778921785,
-        "relativeTime": "3 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 91,
         "lang": "ja",
         "incentiveHit": false,
@@ -144125,23 +144077,12 @@
       {
         "rating": 5,
         "time": 1777505348,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 77,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "cfb96582b3388bed",
         "authorNameHash": "351f66123e91d904",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1769349193,
-        "relativeTime": "7 か月前",
-        "textLen": 159,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "47001aee7285e657",
-        "authorNameHash": "818efc181dd3ead5",
         "textSignalsVersion": 2
       }
     ]
@@ -147339,7 +147280,7 @@
     ]
   },
   "J004492117": {
-    "fetchedAt": "2026-09-07T20:56:10.908Z",
+    "fetchedAt": "2026-10-19T21:52:09.538Z",
     "placeId": "ChIJW4yZnZ1xA2ARIaTftaYG3CQ",
     "name": "SOLEA CAFE &BAR",
     "formatted_address": "日本、〒464-0086 愛知県名古屋市千種区萱場２丁目３−３５ レジデンス大和 １C",
@@ -147348,9 +147289,20 @@
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
+        "rating": 3,
+        "time": 1785244500,
+        "relativeTime": "2 か月前",
+        "textLen": 311,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "61305061a24d94a9",
+        "authorNameHash": "a18e8f92491e217e",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 5,
         "time": 1781957545,
-        "relativeTime": "2 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 424,
         "lang": "ja",
         "incentiveHit": false,
@@ -147361,7 +147313,7 @@
       {
         "rating": 5,
         "time": 1774443542,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 215,
         "lang": "ja",
         "incentiveHit": false,
@@ -147372,7 +147324,7 @@
       {
         "rating": 5,
         "time": 1776682732,
-        "relativeTime": "4 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 286,
         "lang": "ja",
         "incentiveHit": false,
@@ -147383,23 +147335,12 @@
       {
         "rating": 5,
         "time": 1770294448,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 287,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "b480e7ad9008490c",
         "authorNameHash": "ff543ee73fbfa14a",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1765861961,
-        "relativeTime": "8 か月前",
-        "textLen": 327,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "e325b4f132c9f3cb",
-        "authorNameHash": "1362118f126a8783",
         "textSignalsVersion": 2
       }
     ]
@@ -148151,18 +148092,18 @@
     ]
   },
   "J004558344": {
-    "fetchedAt": "2026-09-07T20:56:11.653Z",
+    "fetchedAt": "2026-10-19T21:52:09.800Z",
     "placeId": "ChIJS7rKqSp7A2ARQp7B9w6QdgM",
     "name": "CHEDDAR",
     "formatted_address": "日本、〒464-0027 愛知県名古屋市千種区新池町４丁目57−１ ペガースビル 1F",
-    "rating": 4.7,
-    "user_ratings_total": 44,
+    "rating": 4.6,
+    "user_ratings_total": 47,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 4,
         "time": 1782835768,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 413,
         "lang": "ja",
         "incentiveHit": false,
@@ -148173,7 +148114,7 @@
       {
         "rating": 5,
         "time": 1768966882,
-        "relativeTime": "7 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 454,
         "lang": "ja",
         "incentiveHit": true,
@@ -148182,20 +148123,9 @@
         "textSignalsVersion": 2
       },
       {
-        "rating": 4,
-        "time": 1778051041,
-        "relativeTime": "4 か月前",
-        "textLen": 452,
-        "lang": "ja",
-        "incentiveHit": true,
-        "textHash": "6eca644979d0248d",
-        "authorNameHash": "0bab500005c5c696",
-        "textSignalsVersion": 2
-      },
-      {
         "rating": 5,
         "time": 1774152292,
-        "relativeTime": "5 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 190,
         "lang": "ja",
         "incentiveHit": false,
@@ -148206,12 +148136,23 @@
       {
         "rating": 4,
         "time": 1780182953,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 583,
         "lang": "ja",
         "incentiveHit": true,
         "textHash": "046b4cf10ef05a34",
         "authorNameHash": "05bc0419547b1e05",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1769032492,
+        "relativeTime": "9 か月前",
+        "textLen": 653,
+        "lang": "ja",
+        "incentiveHit": true,
+        "textHash": "8bd891c56f95d665",
+        "authorNameHash": "e9a61521e1128cf6",
         "textSignalsVersion": 2
       }
     ]
@@ -149083,7 +149024,7 @@
     ]
   },
   "J000861200": {
-    "fetchedAt": "2026-09-07T20:56:11.894Z",
+    "fetchedAt": "2026-10-19T21:52:10.047Z",
     "placeId": "ChIJ45gkbINlA2ARdEasRO894Cc",
     "name": "藤が丘B.B.Q.",
     "formatted_address": "日本、〒465-0042 愛知県名古屋市名東区照が丘２",
@@ -149105,7 +149046,7 @@
       {
         "rating": 4,
         "time": 1696686605,
-        "relativeTime": "2 年前",
+        "relativeTime": "3 年前",
         "textLen": 91,
         "lang": "ja",
         "incentiveHit": false,
@@ -149127,7 +149068,7 @@
       {
         "rating": 2,
         "time": 1757815228,
-        "relativeTime": "11 か月前",
+        "relativeTime": "1 年前",
         "textLen": 90,
         "lang": "ja",
         "incentiveHit": false,
@@ -149257,29 +149198,18 @@
     ]
   },
   "J003984900": {
-    "fetchedAt": "2026-09-07T20:56:12.149Z",
+    "fetchedAt": "2026-10-19T21:52:10.283Z",
     "placeId": "ChIJIU10awBxA2ARx7C0RbWgTtg",
     "name": "M+CAFE",
     "formatted_address": "日本、〒464-0035 愛知県名古屋市千種区橋本町１丁目６５",
-    "rating": 4.8,
-    "user_ratings_total": 19,
+    "rating": 4.7,
+    "user_ratings_total": 21,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1766909543,
-        "relativeTime": "8 か月前",
-        "textLen": 210,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "1fba6cc84d67b791",
-        "authorNameHash": "56acaf309846ff0b",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1781852822,
-        "relativeTime": "2 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 273,
         "lang": "ja",
         "incentiveHit": false,
@@ -149290,7 +149220,7 @@
       {
         "rating": 5,
         "time": 1774908060,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 139,
         "lang": "ja",
         "incentiveHit": false,
@@ -149301,7 +149231,7 @@
       {
         "rating": 3,
         "time": 1778375716,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 301,
         "lang": "ja",
         "incentiveHit": false,
@@ -149312,12 +149242,23 @@
       {
         "rating": 5,
         "time": 1758071619,
-        "relativeTime": "11 か月前",
+        "relativeTime": "1 年前",
         "textLen": 347,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "22ef42f309c78cb9",
         "authorNameHash": "698ee5e5d3c14c33",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1766909543,
+        "relativeTime": "9 か月前",
+        "textLen": 210,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1fba6cc84d67b791",
+        "authorNameHash": "56acaf309846ff0b",
         "textSignalsVersion": 2
       }
     ]
@@ -150102,12 +150043,12 @@
     ]
   },
   "J000396204": {
-    "fetchedAt": "2026-09-07T20:56:12.654Z",
+    "fetchedAt": "2026-10-19T21:52:10.524Z",
     "placeId": "ChIJQxjop0RlA2ARTebCyiMM2g8",
     "name": "日本料理こもれび",
     "formatted_address": "日本、〒465-0093 愛知県名古屋市名東区一社１丁目１００",
-    "rating": 3.9,
-    "user_ratings_total": 21,
+    "rating": 4,
+    "user_ratings_total": 20,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
@@ -150124,7 +150065,7 @@
       {
         "rating": 1,
         "time": 1780975485,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 110,
         "lang": "ja",
         "incentiveHit": false,
@@ -150135,7 +150076,7 @@
       {
         "rating": 5,
         "time": 1665759386,
-        "relativeTime": "3 年前",
+        "relativeTime": "4 年前",
         "textLen": 71,
         "lang": "ja",
         "incentiveHit": false,
@@ -150156,13 +150097,13 @@
       },
       {
         "rating": 1,
-        "time": 1681893383,
-        "relativeTime": "3 年前",
-        "textLen": 1067,
+        "time": 1648252186,
+        "relativeTime": "4 年前",
+        "textLen": 518,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "ee7c417d1a484ff7",
-        "authorNameHash": "065e5c38fa66bfca",
+        "textHash": "91b8f6e325f055e5",
+        "authorNameHash": "c001079ad7576f75",
         "textSignalsVersion": 2
       }
     ]
@@ -150204,18 +150145,18 @@
     ]
   },
   "J001286615": {
-    "fetchedAt": "2026-09-07T20:56:12.908Z",
+    "fetchedAt": "2026-10-19T21:52:10.776Z",
     "placeId": "ChIJK1GD0KVlA2ARe6qqqZglb6Y",
     "name": "炭火焼肉 善と月",
     "formatted_address": "日本、〒465-0087 愛知県名古屋市名東区名東本通５丁目21―1",
     "rating": 4.8,
-    "user_ratings_total": 36,
+    "user_ratings_total": 37,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 4,
         "time": 1775284809,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 337,
         "lang": "ja",
         "incentiveHit": false,
@@ -150237,7 +150178,7 @@
       {
         "rating": 3,
         "time": 1662809459,
-        "relativeTime": "3 年前",
+        "relativeTime": "4 年前",
         "textLen": 171,
         "lang": "ja",
         "incentiveHit": false,
@@ -150306,18 +150247,18 @@
     ]
   },
   "J001284821": {
-    "fetchedAt": "2026-09-07T20:56:13.163Z",
+    "fetchedAt": "2026-10-19T21:52:11.009Z",
     "placeId": "ChIJu_4N2kZxA2AR14yvY4asZ3E",
     "name": "手づくりおはぎ ぐらんま",
     "formatted_address": "日本、〒464-0841 愛知県名古屋市千種区覚王山通９丁目１８−１８ 覚王山センタービル 1F",
     "rating": 4.6,
-    "user_ratings_total": 40,
+    "user_ratings_total": 42,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1771740571,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 134,
         "lang": "ja",
         "incentiveHit": false,
@@ -150361,7 +150302,7 @@
       {
         "rating": 4,
         "time": 1634249998,
-        "relativeTime": "4 年前",
+        "relativeTime": "5 年前",
         "textLen": 149,
         "lang": "ja",
         "incentiveHit": false,
@@ -151059,7 +151000,7 @@
     ]
   },
   "J001261846": {
-    "fetchedAt": "2026-09-07T20:56:14.151Z",
+    "fetchedAt": "2026-10-19T21:52:11.270Z",
     "placeId": "ChIJw92iweplA2ARuCRTT5_-Hj4",
     "name": "地球食堂 こはる",
     "formatted_address": "日本、〒465-0088 愛知県名古屋市名東区名東本町170-A",
@@ -151081,7 +151022,7 @@
       {
         "rating": 5,
         "time": 1763838563,
-        "relativeTime": "9 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 306,
         "lang": "ja",
         "incentiveHit": false,
@@ -151125,7 +151066,7 @@
     ]
   },
   "J004576250": {
-    "fetchedAt": "2026-09-07T20:56:14.384Z",
+    "fetchedAt": "2026-10-19T21:52:11.498Z",
     "placeId": "ChIJhalQQF9lA2ARBdzx-CL8fLg",
     "name": "ソラリウム",
     "formatted_address": "日本、〒465-0048 愛知県名古屋市名東区藤見が丘６２−１ セレス藤見が丘 201",
@@ -151136,7 +151077,7 @@
       {
         "rating": 5,
         "time": 1765606288,
-        "relativeTime": "8 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 242,
         "lang": "ja",
         "incentiveHit": false,
@@ -151407,7 +151348,7 @@
     ]
   },
   "J001295502": {
-    "fetchedAt": "2026-09-07T20:56:14.619Z",
+    "fetchedAt": "2026-10-19T21:52:11.748Z",
     "placeId": "ChIJ_48Fk09lA2AR-oMnMqr3IpQ",
     "name": "呑処 眞",
     "formatted_address": "日本、〒465-0064 愛知県名古屋市名東区大針３丁目５",
@@ -151768,12 +151709,12 @@
     "previousPlaceId": "ChIJ6SJDXipvA2ARKjnTtBM9oMw"
   },
   "J001236636": {
-    "fetchedAt": "2026-09-14T21:11:36.067Z",
+    "fetchedAt": "2026-10-19T21:52:12.231Z",
     "placeId": "ChIJY6QqADdvA2ARS7jCXyy2ms4",
     "name": "スキレットダイニング八龍",
     "formatted_address": "日本、〒465-0011 愛知県名古屋市名東区山の手３丁目９０９",
     "rating": 4.8,
-    "user_ratings_total": 13,
+    "user_ratings_total": 17,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
@@ -151812,7 +151753,7 @@
       {
         "rating": 5,
         "time": 1571486209,
-        "relativeTime": "6 年前",
+        "relativeTime": "7 年前",
         "textLen": 37,
         "lang": "ja",
         "incentiveHit": false,
@@ -151936,7 +151877,7 @@
     ]
   },
   "J000397916": {
-    "fetchedAt": "2026-09-14T21:11:36.629Z",
+    "fetchedAt": "2026-10-19T21:52:12.467Z",
     "placeId": "ChIJvzay5FhlA2ARBOIVGDznFmI",
     "name": "アフターワーク",
     "formatted_address": "日本、〒465-0091 愛知県名古屋市名東区よもぎ台３丁目１３０４",
@@ -151958,7 +151899,7 @@
       {
         "rating": 5,
         "time": 1761663092,
-        "relativeTime": "10 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 177,
         "lang": "ja",
         "incentiveHit": false,
@@ -151980,7 +151921,7 @@
       {
         "rating": 5,
         "time": 1570013725,
-        "relativeTime": "6 年前",
+        "relativeTime": "7 年前",
         "textLen": 28,
         "lang": "ja",
         "incentiveHit": false,
@@ -152284,18 +152225,18 @@
     ]
   },
   "J003559335": {
-    "fetchedAt": "2026-09-14T21:11:37.188Z",
+    "fetchedAt": "2026-10-19T21:52:12.715Z",
     "placeId": "ChIJ0dw4cdBlA2ARbAHouO1t4yw",
     "name": "和食 よこみち",
     "formatted_address": "日本、〒465-0048 愛知県名古屋市名東区藤見が丘８３ 83番地",
     "rating": 4.8,
-    "user_ratings_total": 14,
+    "user_ratings_total": 17,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1775231320,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 75,
         "lang": "ja",
         "incentiveHit": false,
@@ -152317,7 +152258,7 @@
       {
         "rating": 5,
         "time": 1767534244,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 40,
         "lang": "ja",
         "incentiveHit": false,
@@ -152328,7 +152269,7 @@
       {
         "rating": 5,
         "time": 1778325030,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 104,
         "lang": "ja",
         "incentiveHit": false,
@@ -152339,7 +152280,7 @@
       {
         "rating": 5,
         "time": 1770654338,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 29,
         "lang": "ja",
         "incentiveHit": false,
@@ -152762,7 +152703,7 @@
     ]
   },
   "J004004810": {
-    "fetchedAt": "2026-09-14T21:11:37.431Z",
+    "fetchedAt": "2026-10-19T21:52:12.979Z",
     "placeId": "ChIJJ_vpj9llA2ARFqUuxij0eVU",
     "name": "Shisha藤が丘ASH",
     "formatted_address": "日本、〒465-0032 愛知県名古屋市名東区藤が丘１１６ アスクビル 1F",
@@ -152773,7 +152714,7 @@
       {
         "rating": 5,
         "time": 1785081711,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 143,
         "lang": "ja",
         "incentiveHit": false,
@@ -152795,7 +152736,7 @@
       {
         "rating": 3,
         "time": 1770735538,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 114,
         "lang": "ja",
         "incentiveHit": false,
@@ -153960,7 +153901,7 @@
     ]
   },
   "J003581277": {
-    "fetchedAt": "2026-09-14T21:11:37.717Z",
+    "fetchedAt": "2026-10-19T21:52:13.223Z",
     "placeId": "ChIJ70ALjdxxA2ARQUdDnF98Vik",
     "name": "焼肉ダイニングBeef Burn Best(B.B.B.)",
     "formatted_address": "日本、〒464-0833 愛知県名古屋市千種区大島町１丁目２０",
@@ -157208,7 +157149,7 @@
     ]
   },
   "J004558140": {
-    "fetchedAt": "2026-09-14T21:11:38.299Z",
+    "fetchedAt": "2026-10-19T21:52:13.459Z",
     "placeId": "ChIJo-1utoZ3A2ARlgpvpm4h7sY",
     "name": "味まる屋",
     "formatted_address": "日本、〒454-0866 愛知県名古屋市中川区東中島町３丁目１−４",
@@ -157219,7 +157160,7 @@
       {
         "rating": 4,
         "time": 1780057189,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 133,
         "lang": "ja",
         "incentiveHit": false,
@@ -157230,7 +157171,7 @@
       {
         "rating": 5,
         "time": 1773818681,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 127,
         "lang": "ja",
         "incentiveHit": false,
@@ -157241,7 +157182,7 @@
       {
         "rating": 5,
         "time": 1773645980,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 272,
         "lang": "ja",
         "incentiveHit": false,
@@ -157252,7 +157193,7 @@
       {
         "rating": 5,
         "time": 1776137296,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 168,
         "lang": "ja",
         "incentiveHit": false,
@@ -157263,7 +157204,7 @@
       {
         "rating": 5,
         "time": 1773484481,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 41,
         "lang": "ja",
         "incentiveHit": false,
@@ -157947,7 +157888,7 @@
     ]
   },
   "J004025857": {
-    "fetchedAt": "2026-09-14T21:11:39.140Z",
+    "fetchedAt": "2026-10-19T21:52:13.701Z",
     "placeId": "ChIJQZYwHVR3A2ARzVi6b4f0U-Y",
     "name": "金蘭苑",
     "formatted_address": "日本、〒454-0912 愛知県名古屋市中川区野田１丁目６９０ １階",
@@ -157958,7 +157899,7 @@
       {
         "rating": 5,
         "time": 1782798883,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 639,
         "lang": "ja",
         "incentiveHit": false,
@@ -157969,7 +157910,7 @@
       {
         "rating": 4,
         "time": 1773658377,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 161,
         "lang": "ja",
         "incentiveHit": false,
@@ -157979,8 +157920,19 @@
       },
       {
         "rating": 5,
+        "time": 1788771096,
+        "relativeTime": "1 か月前",
+        "textLen": 85,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "f58ea298a6130321",
+        "authorNameHash": "44742914cf704c63",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1766496500,
-        "relativeTime": "8 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 271,
         "lang": "ja",
         "incentiveHit": false,
@@ -157991,23 +157943,12 @@
       {
         "rating": 5,
         "time": 1759975565,
-        "relativeTime": "11 か月前",
+        "relativeTime": "1 年前",
         "textLen": 399,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "a7ede7bb8c666672",
         "authorNameHash": "8091ea27be569f39",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 4,
-        "time": 1750507620,
-        "relativeTime": "1 年前",
-        "textLen": 183,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "b2e8343e94c08e95",
-        "authorNameHash": "f7f95ef90def47e9",
         "textSignalsVersion": 2
       }
     ]
@@ -158589,7 +158530,7 @@
     ]
   },
   "J003958738": {
-    "fetchedAt": "2026-09-14T21:11:39.386Z",
+    "fetchedAt": "2026-10-19T21:52:13.943Z",
     "placeId": "ChIJvwrbdBF3A2ARRqSWtFGV4-M",
     "name": "はるあき",
     "formatted_address": "日本、〒454-0932 愛知県名古屋市中川区中島新町２丁目３１０",
@@ -158600,7 +158541,7 @@
       {
         "rating": 5,
         "time": 1728312016,
-        "relativeTime": "1 年前",
+        "relativeTime": "2 年前",
         "textLen": 39,
         "lang": "ja",
         "incentiveHit": false,
@@ -158907,29 +158848,18 @@
     ]
   },
   "J003784520": {
-    "fetchedAt": "2026-09-14T21:11:39.715Z",
+    "fetchedAt": "2026-10-19T21:52:14.207Z",
     "placeId": "ChIJTac9luJ3A2ARc9eUsgqv4Mc",
     "name": "まつ",
     "formatted_address": "日本、〒455-0075 愛知県名古屋市港区正徳町２丁目３３−１",
     "rating": 4.6,
-    "user_ratings_total": 17,
+    "user_ratings_total": 18,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
-        "rating": 5,
-        "time": 1762655178,
-        "relativeTime": "10 か月前",
-        "textLen": 120,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "506ef4dde53fe837",
-        "authorNameHash": "0c747ce55fb60f9b",
-        "textSignalsVersion": 2
-      },
-      {
         "rating": 1,
         "time": 1771684556,
-        "relativeTime": "6 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 134,
         "lang": "ja",
         "incentiveHit": false,
@@ -158939,8 +158869,19 @@
       },
       {
         "rating": 5,
+        "time": 1762655178,
+        "relativeTime": "11 か月前",
+        "textLen": 120,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "506ef4dde53fe837",
+        "authorNameHash": "0c747ce55fb60f9b",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1728129076,
-        "relativeTime": "1 年前",
+        "relativeTime": "2 年前",
         "textLen": 64,
         "lang": "ja",
         "incentiveHit": false,
@@ -159767,18 +159708,18 @@
     ]
   },
   "J003985110": {
-    "fetchedAt": "2026-09-14T21:11:41.363Z",
+    "fetchedAt": "2026-10-19T21:52:14.449Z",
     "placeId": "ChIJ04e5XX95A2ARvizlZEGdY_M",
     "name": "TACOS＆DRINK RICO",
     "formatted_address": "日本、〒455-0036 愛知県名古屋市港区浜２丁目１２−３８",
     "rating": 4.8,
-    "user_ratings_total": 22,
+    "user_ratings_total": 24,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1784893982,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 47,
         "lang": "ja",
         "incentiveHit": false,
@@ -159822,7 +159763,7 @@
       {
         "rating": 5,
         "time": 1779210687,
-        "relativeTime": "3 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 12,
         "lang": "ja",
         "incentiveHit": false,
@@ -160193,18 +160134,18 @@
     ]
   },
   "J003715056": {
-    "fetchedAt": "2026-09-14T21:11:41.602Z",
+    "fetchedAt": "2026-10-19T21:52:14.702Z",
     "placeId": "ChIJjRCQJ2V3A2AR052Z5gCHxCs",
     "name": "くにたこ酒場",
     "formatted_address": "日本、〒454-0943 愛知県名古屋市中川区大当郎２丁目１５０６",
     "rating": 4.6,
-    "user_ratings_total": 24,
+    "user_ratings_total": 25,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 4,
         "time": 1781350369,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 36,
         "lang": "ja",
         "incentiveHit": false,
@@ -160215,7 +160156,7 @@
       {
         "rating": 5,
         "time": 1765704629,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 83,
         "lang": "ja",
         "incentiveHit": false,
@@ -160259,7 +160200,7 @@
     ]
   },
   "J001278216": {
-    "fetchedAt": "2026-09-14T21:11:41.863Z",
+    "fetchedAt": "2026-10-19T21:52:14.965Z",
     "placeId": "ChIJK3Ocb6V5A2AREmdFNyMXG5c",
     "name": "螢",
     "formatted_address": "日本、〒455-0015 愛知県名古屋市港区港栄４丁目１",
@@ -160270,7 +160211,7 @@
       {
         "rating": 5,
         "time": 1773561788,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 38,
         "lang": "ja",
         "incentiveHit": false,
@@ -160443,18 +160384,18 @@
     ]
   },
   "J004509922": {
-    "fetchedAt": "2026-09-14T21:11:42.123Z",
+    "fetchedAt": "2026-10-19T21:52:15.205Z",
     "placeId": "ChIJ7-g-iLl3A2ARB3pd75gZYSI",
     "name": "Squall & sun",
     "formatted_address": "日本、〒454-0052 愛知県名古屋市中川区花塚町２丁目４２",
     "rating": 4.6,
-    "user_ratings_total": 17,
+    "user_ratings_total": 18,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1777068468,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 210,
         "lang": "ja",
         "incentiveHit": true,
@@ -160465,7 +160406,7 @@
       {
         "rating": 5,
         "time": 1768308486,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 139,
         "lang": "ja",
         "incentiveHit": false,
@@ -160476,7 +160417,7 @@
       {
         "rating": 5,
         "time": 1769821071,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 146,
         "lang": "ja",
         "incentiveHit": false,
@@ -160487,7 +160428,7 @@
       {
         "rating": 5,
         "time": 1727592494,
-        "relativeTime": "1 年前",
+        "relativeTime": "2 年前",
         "textLen": 559,
         "lang": "ja",
         "incentiveHit": false,
@@ -160498,7 +160439,7 @@
       {
         "rating": 5,
         "time": 1727087820,
-        "relativeTime": "1 年前",
+        "relativeTime": "2 年前",
         "textLen": 178,
         "lang": "ja",
         "incentiveHit": false,
@@ -161183,18 +161124,18 @@
     ]
   },
   "J004536463": {
-    "fetchedAt": "2026-09-14T21:11:42.355Z",
+    "fetchedAt": "2026-10-19T21:52:15.473Z",
     "placeId": "ChIJnX2fSmh3A2AR-lpmnvTQqoQ",
     "name": "居酒屋 琴",
     "formatted_address": "日本、〒454-0043 愛知県名古屋市中川区牛立町２丁目５５",
     "rating": 4.9,
-    "user_ratings_total": 8,
+    "user_ratings_total": 9,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 4,
         "time": 1771511594,
-        "relativeTime": "6 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 99,
         "lang": "ja",
         "incentiveHit": false,
@@ -161205,7 +161146,7 @@
       {
         "rating": 5,
         "time": 1766813681,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 80,
         "lang": "ja",
         "incentiveHit": false,
@@ -161216,7 +161157,7 @@
       {
         "rating": 5,
         "time": 1767031696,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 56,
         "lang": "ja",
         "incentiveHit": false,
@@ -161227,7 +161168,7 @@
       {
         "rating": 5,
         "time": 1765877478,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 31,
         "lang": "ja",
         "incentiveHit": false,
@@ -161238,7 +161179,7 @@
       {
         "rating": 5,
         "time": 1766049118,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 14,
         "lang": "ja",
         "incentiveHit": false,
@@ -161357,7 +161298,7 @@
     ]
   },
   "J000637658": {
-    "fetchedAt": "2026-09-14T21:11:42.811Z",
+    "fetchedAt": "2026-10-19T21:52:15.710Z",
     "placeId": "ChIJGf_JKpZ5A2ARsYWzpwJtxbY",
     "name": "むいち",
     "formatted_address": "日本、〒455-0015 愛知県名古屋市港区港栄３丁目１−１ 池田ビル 1F",
@@ -161365,17 +161306,6 @@
     "user_ratings_total": 80,
     "business_status": "CLOSED_TEMPORARILY",
     "latestReviews": [
-      {
-        "rating": 4,
-        "time": 1756029408,
-        "relativeTime": "1 年前",
-        "textLen": 175,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "86cb6a5ae3b279b1",
-        "authorNameHash": "9b29ca8ef7062d30",
-        "textSignalsVersion": 2
-      },
       {
         "rating": 5,
         "time": 1755432042,
@@ -161385,6 +161315,17 @@
         "incentiveHit": false,
         "textHash": "cc24eff99e2e9615",
         "authorNameHash": "af2b484c5bb444ab",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1756029408,
+        "relativeTime": "1 年前",
+        "textLen": 175,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "86cb6a5ae3b279b1",
+        "authorNameHash": "9b29ca8ef7062d30",
         "textSignalsVersion": 2
       },
       {
@@ -162158,7 +162099,7 @@
     ]
   },
   "J000391680": {
-    "fetchedAt": "2026-09-14T21:11:43.743Z",
+    "fetchedAt": "2026-10-19T21:52:15.951Z",
     "placeId": "ChIJ3yUm3Sh4A2ARlUr1lQ2rBU0",
     "name": "クイーンメリー",
     "formatted_address": "日本、〒455-0803 愛知県名古屋市港区入場１丁目３１６ レジデンス入場 1F",
@@ -162169,7 +162110,7 @@
       {
         "rating": 5,
         "time": 1765465679,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 113,
         "lang": "ja",
         "incentiveHit": false,
@@ -162180,7 +162121,7 @@
       {
         "rating": 3,
         "time": 1778943871,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 53,
         "lang": "ja",
         "incentiveHit": false,
@@ -162213,7 +162154,7 @@
       {
         "rating": 5,
         "time": 1761957945,
-        "relativeTime": "10 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 560,
         "lang": "ja",
         "incentiveHit": false,
@@ -165419,18 +165360,18 @@
     ]
   },
   "J004612434": {
-    "fetchedAt": "2026-09-14T21:11:45.516Z",
+    "fetchedAt": "2026-10-19T21:52:16.229Z",
     "placeId": "ChIJR4CuXwB3A2ARBlE5pZJ_ptw",
     "name": "炊き肉屋 しじみ倶楽部 名駅店",
     "formatted_address": "日本、〒453-0015 愛知県名古屋市中村区椿町２２−５",
     "rating": 4.8,
-    "user_ratings_total": 123,
+    "user_ratings_total": 134,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1783496209,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 731,
         "lang": "ja",
         "incentiveHit": true,
@@ -165440,19 +165381,19 @@
       },
       {
         "rating": 5,
-        "time": 1784477171,
-        "relativeTime": "1 か月前",
-        "textLen": 233,
+        "time": 1782055525,
+        "relativeTime": "4 か月前",
+        "textLen": 386,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "56e176f30672e991",
-        "authorNameHash": "d039f1a0790a1e18",
+        "textHash": "918a752d85541ac8",
+        "authorNameHash": "043db8a3d229971c",
         "textSignalsVersion": 2
       },
       {
         "rating": 3,
         "time": 1783253254,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 248,
         "lang": "ja",
         "incentiveHit": true,
@@ -165463,7 +165404,7 @@
       {
         "rating": 5,
         "time": 1787629112,
-        "relativeTime": "2 週間前",
+        "relativeTime": "1 か月前",
         "textLen": 100,
         "lang": "ja",
         "incentiveHit": false,
@@ -165474,7 +165415,7 @@
       {
         "rating": 5,
         "time": 1780754263,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 127,
         "lang": "ja",
         "incentiveHit": false,
@@ -165521,18 +165462,18 @@
     ]
   },
   "J004613098": {
-    "fetchedAt": "2026-09-14T21:11:45.928Z",
+    "fetchedAt": "2026-10-19T21:52:16.481Z",
     "placeId": "ChIJD_-fJWl3A2ART5L_mxx1elQ",
     "name": "韓国料理 柳 名駅店",
     "formatted_address": "日本、〒450-0003 愛知県名古屋市中村区名駅南１丁目１−１４ 新納屋橋ビル 1F",
-    "rating": 4.9,
-    "user_ratings_total": 14,
+    "rating": 4.8,
+    "user_ratings_total": 42,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1782488110,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 535,
         "lang": "ja",
         "incentiveHit": false,
@@ -165543,7 +165484,7 @@
       {
         "rating": 5,
         "time": 1785932692,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 442,
         "lang": "ja",
         "incentiveHit": false,
@@ -165554,7 +165495,7 @@
       {
         "rating": 5,
         "time": 1784907679,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 468,
         "lang": "ja",
         "incentiveHit": false,
@@ -165564,24 +165505,24 @@
       },
       {
         "rating": 5,
-        "time": 1784960453,
-        "relativeTime": "1 か月前",
-        "textLen": 318,
+        "time": 1787204515,
+        "relativeTime": "2 か月前",
+        "textLen": 545,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "0a3ece852960af65",
-        "authorNameHash": "92631ba1c4336ec9",
+        "textHash": "aec79e1d31d867e3",
+        "authorNameHash": "73932cc5a5dc8fb5",
         "textSignalsVersion": 2
       },
       {
         "rating": 5,
-        "time": 1787912561,
-        "relativeTime": "2 週間前",
-        "textLen": 42,
+        "time": 1786841645,
+        "relativeTime": "2 か月前",
+        "textLen": 310,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "31edfd7b12bd7c24",
-        "authorNameHash": "c6690ba664044c92",
+        "textHash": "80ba2b7ca026f8c9",
+        "authorNameHash": "1149abe4008b9393",
         "textSignalsVersion": 2
       }
     ]
@@ -165669,18 +165610,18 @@
     ]
   },
   "J004612963": {
-    "fetchedAt": "2026-09-14T21:11:46.184Z",
+    "fetchedAt": "2026-10-19T21:52:16.713Z",
     "placeId": "ChIJvwPZt9h3A2ARq_JVjHEmdg8",
     "name": "Nagoya Dining SAYURI",
     "formatted_address": "日本、〒450-0002 愛知県名古屋市中村区名駅３丁目１１−１７ ブルームーン名駅 3階",
-    "rating": 4.4,
-    "user_ratings_total": 68,
+    "rating": 4.7,
+    "user_ratings_total": 220,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1777287436,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 36,
         "lang": "ja",
         "incentiveHit": false,
@@ -165691,7 +165632,7 @@
       {
         "rating": 5,
         "time": 1777957238,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 106,
         "lang": "ja",
         "incentiveHit": false,
@@ -165702,7 +165643,7 @@
       {
         "rating": 3,
         "time": 1778641449,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 66,
         "lang": "ja",
         "incentiveHit": false,
@@ -165713,7 +165654,7 @@
       {
         "rating": 5,
         "time": 1777383580,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 42,
         "lang": "ja",
         "incentiveHit": false,
@@ -165724,7 +165665,7 @@
       {
         "rating": 5,
         "time": 1777985938,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 37,
         "lang": "ja",
         "incentiveHit": false,
@@ -166241,18 +166182,18 @@
     ]
   },
   "J004444105": {
-    "fetchedAt": "2026-09-14T21:11:47.938Z",
+    "fetchedAt": "2026-10-19T21:52:16.956Z",
     "placeId": "ChIJg4td1L5xA2ARTS5W0TOaLt4",
     "name": "Trattoria TAPIRO",
     "formatted_address": "日本、〒462-0845 愛知県名古屋市北区柳原４丁目４−４",
     "rating": 4.6,
-    "user_ratings_total": 33,
+    "user_ratings_total": 34,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 4,
         "time": 1780809569,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 336,
         "lang": "ja",
         "incentiveHit": false,
@@ -166263,7 +166204,7 @@
       {
         "rating": 3,
         "time": 1780279582,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 141,
         "lang": "ja",
         "incentiveHit": false,
@@ -166274,7 +166215,7 @@
       {
         "rating": 5,
         "time": 1783516379,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 129,
         "lang": "ja",
         "incentiveHit": false,
@@ -166285,7 +166226,7 @@
       {
         "rating": 5,
         "time": 1765254294,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 264,
         "lang": "ja",
         "incentiveHit": false,
@@ -166296,7 +166237,7 @@
       {
         "rating": 4,
         "time": 1774730903,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 165,
         "lang": "ja",
         "incentiveHit": false,
@@ -166887,18 +166828,18 @@
     ]
   },
   "J004612802": {
-    "fetchedAt": "2026-09-14T21:11:48.595Z",
+    "fetchedAt": "2026-10-19T21:52:17.195Z",
     "placeId": "ChIJdQ3eKgB3A2ARr7eZwS2e1iE",
     "name": "居酒屋 酔いウサギ",
     "formatted_address": "日本、〒451-0063 愛知県名古屋市西区押切１丁目３−１ 1A",
     "rating": 4.7,
     "user_ratings_total": 6,
-    "business_status": "OPERATIONAL",
+    "business_status": "CLOSED_PERMANENTLY",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1779794755,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 401,
         "lang": "ja",
         "incentiveHit": false,
@@ -166909,7 +166850,7 @@
       {
         "rating": 5,
         "time": 1779612906,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 6,
         "lang": "ja",
         "incentiveHit": false,
@@ -166920,7 +166861,7 @@
       {
         "rating": 5,
         "time": 1784293693,
-        "relativeTime": "1 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 235,
         "lang": "en",
         "incentiveHit": false,
@@ -166931,7 +166872,7 @@
       {
         "rating": 4,
         "time": 1783476744,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -166942,7 +166883,7 @@
       {
         "rating": 5,
         "time": 1783260380,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -167097,18 +167038,18 @@
     ]
   },
   "J000393555": {
-    "fetchedAt": "2026-09-14T21:11:48.840Z",
+    "fetchedAt": "2026-10-19T21:52:17.460Z",
     "placeId": "ChIJ-a3eLgB1A2ARyFzbQO6sjwQ",
     "name": "珈琲＆ギャラリーマリオ",
     "formatted_address": "日本、〒452-0838 愛知県名古屋市西区長先町１８３",
-    "rating": 4.8,
-    "user_ratings_total": 38,
+    "rating": 4.9,
+    "user_ratings_total": 40,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1774619265,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 433,
         "lang": "ja",
         "incentiveHit": false,
@@ -167119,7 +167060,7 @@
       {
         "rating": 5,
         "time": 1776138428,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 342,
         "lang": "ja",
         "incentiveHit": false,
@@ -167140,13 +167081,13 @@
       },
       {
         "rating": 4,
-        "time": 1779780785,
+        "time": 1782876980,
         "relativeTime": "3 か月前",
-        "textLen": 128,
+        "textLen": 94,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "746b0b13de7a1744",
-        "authorNameHash": "eead8466ba976d5e",
+        "textHash": "30a5b3141dc97bc5",
+        "authorNameHash": "5a2c398e4930b014",
         "textSignalsVersion": 2
       },
       {
@@ -168169,18 +168110,29 @@
     ]
   },
   "J004536221": {
-    "fetchedAt": "2026-09-14T21:11:49.924Z",
+    "fetchedAt": "2026-10-19T21:52:17.691Z",
     "placeId": "ChIJOwyELYZxA2AR3FhxoLnjLn4",
     "name": "さけとめし たより",
     "formatted_address": "日本、〒460-0003 愛知県名古屋市中区錦３丁目１８−７ 毛利ビル 5F",
     "rating": 4.8,
-    "user_ratings_total": 26,
+    "user_ratings_total": 27,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
+        "rating": 4,
+        "time": 1786369621,
+        "relativeTime": "2 か月前",
+        "textLen": 223,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "c7720db2203869cd",
+        "authorNameHash": "9b60eb95c57299f7",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 5,
         "time": 1774513872,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 29,
         "lang": "ja",
         "incentiveHit": false,
@@ -168191,7 +168143,7 @@
       {
         "rating": 5,
         "time": 1770207305,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 267,
         "lang": "ja",
         "incentiveHit": false,
@@ -168202,7 +168154,7 @@
       {
         "rating": 4,
         "time": 1767757310,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 416,
         "lang": "ja",
         "incentiveHit": false,
@@ -168213,23 +168165,12 @@
       {
         "rating": 5,
         "time": 1784885217,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 44,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "a9199d5c4b4ce785",
         "authorNameHash": "03721b9c0a98e904",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1778309082,
-        "relativeTime": "4 か月前",
-        "textLen": 52,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "2991c528ccff1496",
-        "authorNameHash": "cc0ea387ebfd6e63",
         "textSignalsVersion": 2
       }
     ]
@@ -168271,18 +168212,18 @@
     ]
   },
   "J003532547": {
-    "fetchedAt": "2026-09-14T21:11:50.188Z",
+    "fetchedAt": "2026-10-19T21:52:17.930Z",
     "placeId": "ChIJK1vfIAVxA2AR1eBQ8ddP-xw",
     "name": "大衆食堂 キヨゲン",
     "formatted_address": "日本、〒460-0003 愛知県名古屋市中区錦３丁目１３−２４",
     "rating": 4.7,
-    "user_ratings_total": 22,
+    "user_ratings_total": 23,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 3,
         "time": 1782362409,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 184,
         "lang": "ja",
         "incentiveHit": false,
@@ -168304,7 +168245,7 @@
       {
         "rating": 5,
         "time": 1764118017,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 181,
         "lang": "ja",
         "incentiveHit": false,
@@ -168315,7 +168256,7 @@
       {
         "rating": 5,
         "time": 1781014394,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 31,
         "lang": "ja",
         "incentiveHit": false,
@@ -168818,7 +168759,7 @@
     "previousPlaceId": "ChIJB-4GTLZxA2AR7yH8dep9jhc"
   },
   "J003806708": {
-    "fetchedAt": "2026-09-14T21:11:51.286Z",
+    "fetchedAt": "2026-10-19T21:52:18.169Z",
     "placeId": "ChIJ62_xhoRxA2ARbmoGIFT_zOg",
     "name": "日本酒Bar 地炉の間",
     "formatted_address": "日本、〒460-0003 愛知県名古屋市中区錦３丁目１４−２０ ヤマタケビル 2F",
@@ -168829,7 +168770,7 @@
       {
         "rating": 5,
         "time": 1765890281,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 162,
         "lang": "ja",
         "incentiveHit": false,
@@ -168873,7 +168814,7 @@
       {
         "rating": 5,
         "time": 1764458302,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 59,
         "lang": "ja",
         "incentiveHit": false,
@@ -169366,7 +169307,7 @@
         "relativeTime": "過去 1 週間以内"
       }
     ],
-    "detailsNotFoundAt": "2026-10-12T23:58:29.288Z"
+    "detailsNotFoundAt": "2026-10-19T21:51:58.515Z"
   },
   "J004402817": {
     "fetchedAt": "2026-06-01T21:25:28.225Z",
@@ -171084,7 +171025,7 @@
     ]
   },
   "J003851062": {
-    "fetchedAt": "2026-09-14T21:11:53.156Z",
+    "fetchedAt": "2026-10-19T21:52:18.403Z",
     "placeId": "ChIJP7Ym9sxwA2ARCQmQI-cxS_0",
     "name": "矢場サロン",
     "formatted_address": "日本、〒460-0011 愛知県名古屋市中区大須３丁目４−１７",
@@ -171095,7 +171036,7 @@
       {
         "rating": 5,
         "time": 1763392970,
-        "relativeTime": "10 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 74,
         "lang": "ja",
         "incentiveHit": false,
@@ -171459,18 +171400,18 @@
     ]
   },
   "J004090288": {
-    "fetchedAt": "2026-09-14T21:11:53.715Z",
+    "fetchedAt": "2026-10-19T21:52:18.647Z",
     "placeId": "ChIJY1GBgBRxA2ARvxOs69MNnIk",
     "name": "サケとアテ ひぐらし",
     "formatted_address": "日本、〒460-0012 愛知県名古屋市中区千代田２丁目３−６",
     "rating": 4.8,
-    "user_ratings_total": 35,
+    "user_ratings_total": 37,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 4,
         "time": 1758198374,
-        "relativeTime": "12 か月前",
+        "relativeTime": "1 年前",
         "textLen": 270,
         "lang": "ja",
         "incentiveHit": false,
@@ -171503,7 +171444,7 @@
       {
         "rating": 2,
         "time": 1775052018,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 86,
         "lang": "ja",
         "incentiveHit": false,
@@ -171514,7 +171455,7 @@
       {
         "rating": 5,
         "time": 1781099835,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 11,
         "lang": "ja",
         "incentiveHit": false,
@@ -171525,29 +171466,18 @@
     ]
   },
   "J004612516": {
-    "fetchedAt": "2026-09-14T21:11:54.025Z",
+    "fetchedAt": "2026-10-19T21:52:18.917Z",
     "placeId": "ChIJF-iktdRxA2ARydpyTNsAmrY",
     "name": "KONOSAKU (このさく)",
     "formatted_address": "日本、〒460-0008 愛知県名古屋市中区栄３丁目１１−１８ ファーストビル 2階",
     "rating": 4.8,
-    "user_ratings_total": 57,
+    "user_ratings_total": 59,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
-        "rating": 5,
-        "time": 1779288149,
-        "relativeTime": "3 か月前",
-        "textLen": 560,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "411057bbe742fee8",
-        "authorNameHash": "a4cd9450f65d2a3a",
-        "textSignalsVersion": 2
-      },
-      {
         "rating": 4,
         "time": 1783026498,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 911,
         "lang": "ja",
         "incentiveHit": false,
@@ -171558,7 +171488,7 @@
       {
         "rating": 5,
         "time": 1780618692,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 411,
         "lang": "ja",
         "incentiveHit": false,
@@ -171569,7 +171499,7 @@
       {
         "rating": 5,
         "time": 1786625735,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 537,
         "lang": "ja",
         "incentiveHit": false,
@@ -171580,12 +171510,23 @@
       {
         "rating": 5,
         "time": 1780271918,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 385,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "702e2c76b34e5e2a",
         "authorNameHash": "36a25449130b00fe",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1784916567,
+        "relativeTime": "2 か月前",
+        "textLen": 725,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "cf7c89fada8aaea0",
+        "authorNameHash": "6ac5fb6b65fd475f",
         "textSignalsVersion": 2
       }
     ]
@@ -171627,18 +171568,18 @@
     ]
   },
   "J004612075": {
-    "fetchedAt": "2026-09-14T21:11:54.299Z",
+    "fetchedAt": "2026-10-19T21:52:19.169Z",
     "placeId": "ChIJNeczT-VxA2ARd_pNwyJNek0",
     "name": "春巻きバー MARUGO",
     "formatted_address": "日本、〒460-0008 愛知県名古屋市中区栄４丁目１２−２０ 栄ストーンビル 7階",
     "rating": 5,
-    "user_ratings_total": 9,
+    "user_ratings_total": 10,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1786259421,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 190,
         "lang": "ja",
         "incentiveHit": false,
@@ -171648,19 +171589,8 @@
       },
       {
         "rating": 5,
-        "time": 1783019613,
-        "relativeTime": "2 か月前",
-        "textLen": 310,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "a7347f524fd67eae",
-        "authorNameHash": "542eff386b2154cd",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1776768417,
-        "relativeTime": "4 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 107,
         "lang": "ja",
         "incentiveHit": false,
@@ -171670,8 +171600,19 @@
       },
       {
         "rating": 5,
+        "time": 1783019613,
+        "relativeTime": "3 か月前",
+        "textLen": 310,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "a7347f524fd67eae",
+        "authorNameHash": "542eff386b2154cd",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1773893509,
-        "relativeTime": "5 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 128,
         "lang": "ja",
         "incentiveHit": false,
@@ -171681,13 +171622,13 @@
       },
       {
         "rating": 5,
-        "time": 1785244338,
-        "relativeTime": "1 か月前",
-        "textLen": 49,
+        "time": 1786259996,
+        "relativeTime": "2 か月前",
+        "textLen": 132,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "6863e5b5d1551d22",
-        "authorNameHash": "6e75d67fb30df435",
+        "textHash": "803843a55a1aa228",
+        "authorNameHash": "1f23ecc32b879d09",
         "textSignalsVersion": 2
       }
     ]
@@ -174285,7 +174226,7 @@
     ]
   },
   "J004612831": {
-    "fetchedAt": "2026-09-14T21:11:55.278Z",
+    "fetchedAt": "2026-10-19T21:52:19.403Z",
     "placeId": "ChIJMcjR5qJ3A2ARfTG88xPQb1Y",
     "name": "浜焼きカラオケまーちゃん",
     "formatted_address": "日本、〒456-0002 愛知県名古屋市熱田区金山町１丁目２−１７ 2階",
@@ -174296,7 +174237,7 @@
       {
         "rating": 5,
         "time": 1778558049,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 65,
         "lang": "ja",
         "incentiveHit": false,
@@ -174307,7 +174248,7 @@
       {
         "rating": 5,
         "time": 1778548608,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 62,
         "lang": "ja",
         "incentiveHit": false,
@@ -174318,7 +174259,7 @@
       {
         "rating": 5,
         "time": 1778548626,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 52,
         "lang": "ja",
         "incentiveHit": false,
@@ -174329,7 +174270,7 @@
       {
         "rating": 4,
         "time": 1778548619,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -175144,18 +175085,18 @@
     "latestReviews": []
   },
   "J004576054": {
-    "fetchedAt": "2026-09-14T21:11:55.787Z",
+    "fetchedAt": "2026-10-19T21:52:19.642Z",
     "placeId": "ChIJ8dNuMBBvA2ARfJCco3xfeFc",
     "name": "創作炭火鉄板 翔",
     "formatted_address": "日本、〒463-0012 愛知県名古屋市守山区茶臼前１−８ パレス茶臼前 1A",
-    "rating": 4.8,
-    "user_ratings_total": 8,
+    "rating": 4.4,
+    "user_ratings_total": 9,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1775308857,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 22,
         "lang": "ja",
         "incentiveHit": false,
@@ -175166,7 +175107,7 @@
       {
         "rating": 5,
         "time": 1775308733,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 17,
         "lang": "ja",
         "incentiveHit": false,
@@ -175177,7 +175118,7 @@
       {
         "rating": 5,
         "time": 1778246506,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 53,
         "lang": "ja",
         "incentiveHit": false,
@@ -175188,7 +175129,7 @@
       {
         "rating": 5,
         "time": 1779612174,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 3,
         "lang": "ja",
         "incentiveHit": false,
@@ -175199,7 +175140,7 @@
       {
         "rating": 5,
         "time": 1787997530,
-        "relativeTime": "2 週間前",
+        "relativeTime": "1 か月前",
         "textLen": 28,
         "lang": "ja",
         "incentiveHit": false,
@@ -175210,18 +175151,18 @@
     ]
   },
   "J004509782": {
-    "fetchedAt": "2026-09-14T21:11:56.130Z",
+    "fetchedAt": "2026-10-19T21:52:19.872Z",
     "placeId": "ChIJL7Nxz7pvA2AR9BOLukHcmcw",
     "name": "金源東北菜館",
     "formatted_address": "日本、〒463-0022 愛知県名古屋市守山区八剣２丁目２３０８",
     "rating": 4.8,
-    "user_ratings_total": 22,
+    "user_ratings_total": 25,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1773559093,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 352,
         "lang": "ja",
         "incentiveHit": true,
@@ -175230,9 +175171,20 @@
         "textSignalsVersion": 2
       },
       {
+        "rating": 5,
+        "time": 1776489256,
+        "relativeTime": "6 か月前",
+        "textLen": 45,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "00422595a4734c2e",
+        "authorNameHash": "97122c8b595c5b2e",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 4,
         "time": 1784085892,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 99,
         "lang": "ja",
         "incentiveHit": false,
@@ -175242,19 +175194,8 @@
       },
       {
         "rating": 5,
-        "time": 1776489256,
-        "relativeTime": "4 か月前",
-        "textLen": 45,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "00422595a4734c2e",
-        "authorNameHash": "97122c8b595c5b2e",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1774427468,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 34,
         "lang": "ja",
         "incentiveHit": false,
@@ -175264,13 +175205,13 @@
       },
       {
         "rating": 5,
-        "time": 1768084237,
-        "relativeTime": "8 か月前",
-        "textLen": 26,
+        "time": 1779461113,
+        "relativeTime": "5 か月前",
+        "textLen": 202,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "ec9abee32f831abe",
-        "authorNameHash": "57994b76cbf2a6e1",
+        "textHash": "1e3d5a228cd99d50",
+        "authorNameHash": "d6057df9151afefb",
         "textSignalsVersion": 2
       }
     ]
@@ -176500,12 +176441,12 @@
     ]
   },
   "J001269355": {
-    "fetchedAt": "2026-09-14T21:11:57.562Z",
+    "fetchedAt": "2026-10-19T21:52:20.110Z",
     "placeId": "ChIJJ3Lr1apxA2ARoJCrto_Q_j4",
     "name": "おうちごはんcafe iwase",
     "formatted_address": "日本、〒462-0825 愛知県名古屋市北区大曽根３丁目７−４３",
-    "rating": 4.6,
-    "user_ratings_total": 39,
+    "rating": 4.7,
+    "user_ratings_total": 40,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
@@ -176522,7 +176463,7 @@
       {
         "rating": 5,
         "time": 1765004913,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 104,
         "lang": "ja",
         "incentiveHit": false,
@@ -177852,18 +177793,18 @@
     ]
   },
   "J004612278": {
-    "fetchedAt": "2026-09-14T21:11:59.023Z",
+    "fetchedAt": "2026-10-19T21:52:20.373Z",
     "placeId": "ChIJiVuRe0pjA2ARm3Hqy5Qwncw",
     "name": "韓流 MOGO MOGO",
     "formatted_address": "日本、〒458-0804 愛知県名古屋市緑区亀が洞１丁目１０３",
     "rating": 4.2,
-    "user_ratings_total": 30,
+    "user_ratings_total": 32,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1779196795,
-        "relativeTime": "3 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 522,
         "lang": "ja",
         "incentiveHit": false,
@@ -177874,7 +177815,7 @@
       {
         "rating": 5,
         "time": 1783834182,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 110,
         "lang": "ja",
         "incentiveHit": false,
@@ -177885,7 +177826,7 @@
       {
         "rating": 5,
         "time": 1779285687,
-        "relativeTime": "3 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 202,
         "lang": "ja",
         "incentiveHit": false,
@@ -177896,7 +177837,7 @@
       {
         "rating": 5,
         "time": 1787810019,
-        "relativeTime": "2 週間前",
+        "relativeTime": "1 か月前",
         "textLen": 79,
         "lang": "ja",
         "incentiveHit": false,
@@ -177907,7 +177848,7 @@
       {
         "rating": 5,
         "time": 1779182540,
-        "relativeTime": "3 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 143,
         "lang": "ja",
         "incentiveHit": false,
@@ -178609,18 +178550,18 @@
     ]
   },
   "J001165894": {
-    "fetchedAt": "2026-09-14T21:11:59.588Z",
+    "fetchedAt": "2026-10-19T21:52:20.619Z",
     "placeId": "ChIJhX8VByh6A2ARt20hOFk3x5Q",
     "name": "串人",
     "formatted_address": "日本、〒457-0866 愛知県名古屋市南区三条２丁目５−１７ 明治ビル",
     "rating": 4.6,
-    "user_ratings_total": 37,
+    "user_ratings_total": 38,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1769132919,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 308,
         "lang": "ja",
         "incentiveHit": false,
@@ -178631,7 +178572,7 @@
       {
         "rating": 4,
         "time": 1772453158,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 183,
         "lang": "ja",
         "incentiveHit": false,
@@ -178653,7 +178594,7 @@
       {
         "rating": 5,
         "time": 1782389142,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 23,
         "lang": "ja",
         "incentiveHit": false,
@@ -178963,18 +178904,18 @@
     ]
   },
   "J004613173": {
-    "fetchedAt": "2026-09-14T21:11:59.828Z",
+    "fetchedAt": "2026-10-19T21:52:20.869Z",
     "placeId": "ChIJ2YuDCwVlA2ARHDHfNvTqDxM",
     "name": "ネネチキン藤が丘店",
     "formatted_address": "日本、〒465-0048 愛知県名古屋市名東区藤見が丘５１ koreanpark 2階",
     "rating": 4.7,
-    "user_ratings_total": 21,
+    "user_ratings_total": 25,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1777645420,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 110,
         "lang": "ja",
         "incentiveHit": false,
@@ -178983,9 +178924,20 @@
         "textSignalsVersion": 2
       },
       {
+        "rating": 4,
+        "time": 1784967510,
+        "relativeTime": "2 か月前",
+        "textLen": 38,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "b7b83292297141a3",
+        "authorNameHash": "57994b76cbf2a6e1",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 5,
         "time": 1782477611,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 87,
         "lang": "ja",
         "incentiveHit": false,
@@ -178996,7 +178948,7 @@
       {
         "rating": 5,
         "time": 1782481271,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 39,
         "lang": "ja",
         "incentiveHit": false,
@@ -179013,17 +178965,6 @@
         "incentiveHit": false,
         "textHash": "6c8d42ad32c51f9e",
         "authorNameHash": "62c66a7a5dd70c31",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1781885551,
-        "relativeTime": "2 か月前",
-        "textLen": 31,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "deef2b2d96a6505f",
-        "authorNameHash": "c97dc6fc2845b390",
         "textSignalsVersion": 2
       }
     ]
@@ -179072,18 +179013,18 @@
     "previousPlaceId": "ChIJ-58Avc9vA2AR5fXSJUgSTHw"
   },
   "J004612572": {
-    "fetchedAt": "2026-09-14T21:12:00.352Z",
+    "fetchedAt": "2026-10-19T21:52:21.114Z",
     "placeId": "ChIJBe2kzztxA2ARy2OLGHCW_EI",
     "name": "TOSAYA",
     "formatted_address": "日本、〒464-0032 愛知県名古屋市千種区猫洞通３丁目１１ メゾン猫ケ洞 1F-D",
-    "rating": 4.6,
-    "user_ratings_total": 14,
+    "rating": 4.7,
+    "user_ratings_total": 15,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1768478910,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 158,
         "lang": "ja",
         "incentiveHit": false,
@@ -179094,7 +179035,7 @@
       {
         "rating": 4,
         "time": 1761366003,
-        "relativeTime": "10 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 253,
         "lang": "ja",
         "incentiveHit": false,
@@ -179105,7 +179046,7 @@
       {
         "rating": 5,
         "time": 1758632563,
-        "relativeTime": "11 か月前",
+        "relativeTime": "1 年前",
         "textLen": 162,
         "lang": "ja",
         "incentiveHit": false,
@@ -179116,7 +179057,7 @@
       {
         "rating": 5,
         "time": 1766216105,
-        "relativeTime": "8 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 193,
         "lang": "ja",
         "incentiveHit": false,
@@ -179126,13 +179067,13 @@
       },
       {
         "rating": 5,
-        "time": 1754951302,
-        "relativeTime": "1 年前",
-        "textLen": 765,
+        "time": 1699770587,
+        "relativeTime": "2 年前",
+        "textLen": 106,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "6737a671439b09ee",
-        "authorNameHash": "446a2de5f7e850e8",
+        "textHash": "edff321a26319afb",
+        "authorNameHash": "846ec2b9acf2ee8c",
         "textSignalsVersion": 2
       }
     ]
@@ -179750,7 +179691,7 @@
     ]
   },
   "J003762909": {
-    "fetchedAt": "2026-09-14T21:12:00.610Z",
+    "fetchedAt": "2026-10-19T21:52:21.361Z",
     "placeId": "ChIJqf2Unsl5A2ARF99WYZL1SuM",
     "name": "居酒ック KimiHouse",
     "formatted_address": "日本、〒455-0002 愛知県名古屋市港区東海通３丁目7−２ オーディンビル 2F",
@@ -179761,7 +179702,7 @@
       {
         "rating": 1,
         "time": 1768678335,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 80,
         "lang": "ja",
         "incentiveHit": false,
@@ -179772,7 +179713,7 @@
       {
         "rating": 5,
         "time": 1773711270,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 29,
         "lang": "ja",
         "incentiveHit": false,
@@ -179783,7 +179724,7 @@
       {
         "rating": 5,
         "time": 1664324025,
-        "relativeTime": "3 年前",
+        "relativeTime": "4 年前",
         "textLen": 86,
         "lang": "ja",
         "incentiveHit": false,
@@ -179805,7 +179746,7 @@
       {
         "rating": 5,
         "time": 1664888177,
-        "relativeTime": "3 年前",
+        "relativeTime": "4 年前",
         "textLen": 12,
         "lang": "ja",
         "incentiveHit": false,
@@ -179895,7 +179836,7 @@
     ]
   },
   "J003581347": {
-    "fetchedAt": "2026-09-14T21:12:01.120Z",
+    "fetchedAt": "2026-10-19T21:52:21.592Z",
     "placeId": "ChIJl_MuqPx3A2ARHVf0uCQ-n5E",
     "name": "ＮＤＮ知らんけど（笑）",
     "formatted_address": "日本、〒454-0012 愛知県名古屋市中川区尾頭橋３丁目２−１４ 安田ビル",
@@ -179928,7 +179869,7 @@
       {
         "rating": 5,
         "time": 1768621581,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -179939,7 +179880,7 @@
       {
         "rating": 4,
         "time": 1762751938,
-        "relativeTime": "10 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -180711,18 +180652,18 @@
     "latestReviews": []
   },
   "J004634130": {
-    "fetchedAt": "2026-09-14T21:12:01.366Z",
+    "fetchedAt": "2026-10-19T21:52:21.825Z",
     "placeId": "ChIJNy-ROKJ3A2ARkCmISfxARlo",
     "name": "やきとんきっ粋。国際センター",
     "formatted_address": "日本、〒450-0002 愛知県名古屋市中村区名駅５丁目１６−１７ 花車ビル南館 18号",
     "rating": 4.6,
-    "user_ratings_total": 26,
+    "user_ratings_total": 37,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1783750368,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 158,
         "lang": "ja",
         "incentiveHit": false,
@@ -180733,7 +180674,7 @@
       {
         "rating": 5,
         "time": 1783341915,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 88,
         "lang": "ja",
         "incentiveHit": false,
@@ -180744,7 +180685,7 @@
       {
         "rating": 4,
         "time": 1783243787,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 157,
         "lang": "ja",
         "incentiveHit": false,
@@ -180755,7 +180696,7 @@
       {
         "rating": 5,
         "time": 1786367473,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 69,
         "lang": "ja",
         "incentiveHit": false,
@@ -180764,14 +180705,14 @@
         "textSignalsVersion": 2
       },
       {
-        "rating": 5,
-        "time": 1783244711,
+        "rating": 4,
+        "time": 1786371415,
         "relativeTime": "2 か月前",
-        "textLen": 94,
+        "textLen": 384,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "eb78d6449fa00052",
-        "authorNameHash": "b71334017d5f783c",
+        "textHash": "b39f07365b934a79",
+        "authorNameHash": "bcb7b581ff50a4be",
         "textSignalsVersion": 2
       }
     ]
@@ -180889,18 +180830,29 @@
     ]
   },
   "J004633506": {
-    "fetchedAt": "2026-09-14T21:12:01.627Z",
+    "fetchedAt": "2026-10-19T21:52:22.071Z",
     "placeId": "ChIJe1bEin13A2ARtQWs-nnAhEo",
     "name": "FUNPY（ふぁんぴい）",
     "formatted_address": "日本、〒453-0015 愛知県名古屋市中村区椿町８−６ ラッキーリバービルディング 3Ｆ",
-    "rating": 4.8,
-    "user_ratings_total": 6,
+    "rating": 4.9,
+    "user_ratings_total": 7,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
+        "time": 1787840744,
+        "relativeTime": "1 か月前",
+        "textLen": 347,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "0b9f974038ebfda4",
+        "authorNameHash": "d425fbcf4cf2d23c",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1782565317,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 84,
         "lang": "ja",
         "incentiveHit": false,
@@ -180911,7 +180863,7 @@
       {
         "rating": 5,
         "time": 1785852970,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 49,
         "lang": "ja",
         "incentiveHit": false,
@@ -180922,7 +180874,7 @@
       {
         "rating": 4,
         "time": 1788445083,
-        "relativeTime": "1 週間前",
+        "relativeTime": "1 か月前",
         "textLen": 310,
         "lang": "ja",
         "incentiveHit": false,
@@ -180933,23 +180885,12 @@
       {
         "rating": 5,
         "time": 1787930419,
-        "relativeTime": "2 週間前",
+        "relativeTime": "1 か月前",
         "textLen": 151,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "fd6a8fb4a4d54d23",
         "authorNameHash": "ae22d6185b675f6e",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1787840744,
-        "relativeTime": "2 週間前",
-        "textLen": 347,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "0b9f974038ebfda4",
-        "authorNameHash": "d425fbcf4cf2d23c",
         "textSignalsVersion": 2
       }
     ]
@@ -180962,7 +180903,7 @@
     "previousPlaceId": "ChIJfXaCre53A2ARZ-zP4Y0760A"
   },
   "J004633445": {
-    "fetchedAt": "2026-09-14T21:12:02.146Z",
+    "fetchedAt": "2026-10-19T21:52:22.308Z",
     "placeId": "ChIJyTqktyJ1A2ARcYWhfaTiIbc",
     "name": "花嫁食堂",
     "formatted_address": "日本、〒452-0805 愛知県名古屋市西区市場木町３７",
@@ -180973,7 +180914,7 @@
       {
         "rating": 5,
         "time": 1782732388,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 783,
         "lang": "ja",
         "incentiveHit": false,
@@ -180984,7 +180925,7 @@
       {
         "rating": 2,
         "time": 1785386519,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 727,
         "lang": "ja",
         "incentiveHit": false,
@@ -180995,7 +180936,7 @@
       {
         "rating": 1,
         "time": 1786664481,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 189,
         "lang": "ja",
         "incentiveHit": false,
@@ -181006,7 +180947,7 @@
       {
         "rating": 5,
         "time": 1786709419,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 4,
         "lang": "ja",
         "incentiveHit": false,
@@ -181017,7 +180958,7 @@
       {
         "rating": 1,
         "time": 1785652635,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -181686,18 +181627,18 @@
     ]
   },
   "J004633588": {
-    "fetchedAt": "2026-09-14T21:12:03.183Z",
+    "fetchedAt": "2026-10-19T21:52:22.557Z",
     "placeId": "ChIJJ-yeaDJxA2ARX0-n37bGW6E",
     "name": "cafe RaBaCaTa",
     "formatted_address": "日本、〒460-0007 愛知県名古屋市中区新栄１丁目１４−３",
-    "rating": 4.9,
-    "user_ratings_total": 41,
+    "rating": 4.8,
+    "user_ratings_total": 57,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1782222793,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 180,
         "lang": "ja",
         "incentiveHit": false,
@@ -181708,7 +181649,7 @@
       {
         "rating": 5,
         "time": 1779136259,
-        "relativeTime": "3 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 407,
         "lang": "ja",
         "incentiveHit": false,
@@ -181718,8 +181659,19 @@
       },
       {
         "rating": 5,
+        "time": 1788132501,
+        "relativeTime": "1 か月前",
+        "textLen": 403,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "a4a65145484aa8a7",
+        "authorNameHash": "f8e30f4ff1b2a7c4",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1781242005,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 150,
         "lang": "ja",
         "incentiveHit": false,
@@ -181729,24 +181681,13 @@
       },
       {
         "rating": 5,
-        "time": 1781523334,
-        "relativeTime": "3 か月前",
-        "textLen": 88,
+        "time": 1788072310,
+        "relativeTime": "1 か月前",
+        "textLen": 221,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "935850a976ff4f63",
-        "authorNameHash": "1b16b1df538ba12d",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1782623965,
-        "relativeTime": "2 か月前",
-        "textLen": 104,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "f033a95f3f6ed16a",
-        "authorNameHash": "cd72be48e9baa786",
+        "textHash": "e08e8d659aee8a66",
+        "authorNameHash": "e8751c1873017a8b",
         "textSignalsVersion": 2
       }
     ]
@@ -182365,18 +182306,18 @@
     "notFound": true
   },
   "J004612975": {
-    "fetchedAt": "2026-09-14T21:12:04.500Z",
+    "fetchedAt": "2026-10-19T21:52:22.812Z",
     "placeId": "ChIJPXyl3GZ7A2AR8ngnbKQSDLY",
     "name": "とろけるハンバーグ福よし名古屋八事店",
     "formatted_address": "日本、〒466-0811 愛知県名古屋市昭和区高峯町 168K&K1階",
     "rating": 4.7,
-    "user_ratings_total": 364,
+    "user_ratings_total": 413,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 5,
         "time": 1783956037,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 1003,
         "lang": "ja",
         "incentiveHit": false,
@@ -182387,7 +182328,7 @@
       {
         "rating": 5,
         "time": 1784812286,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 573,
         "lang": "ja",
         "incentiveHit": false,
@@ -182398,7 +182339,7 @@
       {
         "rating": 5,
         "time": 1783592586,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 74,
         "lang": "ja",
         "incentiveHit": false,
@@ -182409,7 +182350,7 @@
       {
         "rating": 5,
         "time": 1786105882,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 287,
         "lang": "ja",
         "incentiveHit": true,
@@ -182420,7 +182361,7 @@
       {
         "rating": 5,
         "time": 1787580495,
-        "relativeTime": "3 週間前",
+        "relativeTime": "1 か月前",
         "textLen": 332,
         "lang": "ja",
         "incentiveHit": false,
@@ -200622,18 +200563,18 @@
     ]
   },
   "J004403440": {
-    "fetchedAt": "2026-09-14T21:11:30.436Z",
+    "fetchedAt": "2026-10-19T21:52:11.985Z",
     "placeId": "ChIJf1uqi-13A2ARRzoJttdxP0A",
     "name": "名駅 すき焼き 粋匠",
     "formatted_address": "日本、〒450-0002 愛知県名古屋市中村区名駅３丁目２６−６ 4F-E",
-    "rating": 3.8,
-    "user_ratings_total": 11,
+    "rating": 4,
+    "user_ratings_total": 13,
     "business_status": "OPERATIONAL",
     "latestReviews": [
       {
         "rating": 4,
         "time": 1780119122,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 786,
         "lang": "ja",
         "incentiveHit": false,
@@ -200644,7 +200585,7 @@
       {
         "rating": 5,
         "time": 1782898522,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 660,
         "lang": "ja",
         "incentiveHit": false,
@@ -200655,7 +200596,7 @@
       {
         "rating": 5,
         "time": 1773150111,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 463,
         "lang": "ja",
         "incentiveHit": false,
@@ -200666,7 +200607,7 @@
       {
         "rating": 5,
         "time": 1775460298,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 292,
         "lang": "ja",
         "incentiveHit": false,
@@ -200676,13 +200617,13 @@
       },
       {
         "rating": 5,
-        "time": 1773195854,
+        "time": 1776660370,
         "relativeTime": "6 か月前",
-        "textLen": 284,
+        "textLen": 220,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "790e2a75f8f0ca0a",
-        "authorNameHash": "78617519c03bcde8",
+        "textHash": "ac08e0647dcc7f9a",
+        "authorNameHash": "e7687b0eacf65cd0",
         "textSignalsVersion": 2
       }
     ]
@@ -206221,5 +206162,650 @@
     "user_ratings_total": null,
     "business_status": "OPERATIONAL",
     "latestReviews": []
+  },
+  "manual:レミニセンス（Reminiscence）|名古屋市東区": {
+    "fetchedAt": "2026-10-19T21:51:45.938Z",
+    "placeId": "ChIJEbARMC13A2ARd_ybO79h7-8",
+    "name": "レミニセンス",
+    "formatted_address": "日本、〒461-0003 愛知県名古屋市東区筒井３丁目１８−３ 南口",
+    "rating": 4.5,
+    "user_ratings_total": 484,
+    "business_status": "OPERATIONAL",
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1786975454,
+        "relativeTime": "2 か月前",
+        "textLen": 376,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "97fb3242e67c4356",
+        "authorNameHash": "b82235c72af258c9",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1788840091,
+        "relativeTime": "1 か月前",
+        "textLen": 2638,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "9bd876cd4e99b6ad",
+        "authorNameHash": "ac6463608212c285",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1783473840,
+        "relativeTime": "3 か月前",
+        "textLen": 1249,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1d54fa0576345034",
+        "authorNameHash": "a391984a67809a1f",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1785294619,
+        "relativeTime": "2 か月前",
+        "textLen": 112,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "04d518c5e7b93d9e",
+        "authorNameHash": "e884e5a993ea4604",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1774052675,
+        "relativeTime": "7 か月前",
+        "textLen": 737,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "4454669f28a3482b",
+        "authorNameHash": "08d815996a4e2d3e",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "manual:名古屋コーチン鶏料理 清水 名古屋店|名古屋市中村区": {
+    "fetchedAt": "2026-10-19T21:51:47.075Z",
+    "placeId": "ChIJ7-5vrzh3A2ARPOFFoNC-dpI",
+    "name": "名古屋コーチン鶏料理 清水",
+    "formatted_address": "日本、〒450-6490 愛知県名古屋市中村区名駅３丁目２８−１２ 大名古屋ビルヂング 3階",
+    "rating": 4.6,
+    "user_ratings_total": 46,
+    "business_status": "OPERATIONAL",
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1783429558,
+        "relativeTime": "3 か月前",
+        "textLen": 646,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "98ccb880af84a61d",
+        "authorNameHash": "8b43b279c6620916",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1788756714,
+        "relativeTime": "1 か月前",
+        "textLen": 203,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "cbdcf9e6da655097",
+        "authorNameHash": "f07338516ffc88b6",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1782881759,
+        "relativeTime": "3 か月前",
+        "textLen": 624,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "43070fad60db6a88",
+        "authorNameHash": "f24df08dc64d7c62",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1781191401,
+        "relativeTime": "4 か月前",
+        "textLen": 562,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "11b02e284d59fd43",
+        "authorNameHash": "ceefa928388f7986",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1780672682,
+        "relativeTime": "4 か月前",
+        "textLen": 896,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "6d7cd6cf7d549dff",
+        "authorNameHash": "4cf25d8ae908ad61",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "manual:昼だけうなぎ屋 栄本店|栄": {
+    "fetchedAt": "2026-10-19T21:51:47.948Z",
+    "placeId": "ChIJhYLbdOBxA2ARm2oaa4YAOxA",
+    "name": "昼だけうなぎ屋 栄本店",
+    "formatted_address": "日本、〒460-0008 愛知県名古屋市中区栄３丁目１３−６ オー・ド・ヴィー 栄 ２Ｆ",
+    "rating": 4.5,
+    "user_ratings_total": 4685,
+    "business_status": "OPERATIONAL",
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1783075673,
+        "relativeTime": "3 か月前",
+        "textLen": 901,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "c77dea0dee5dc2e7",
+        "authorNameHash": "9d1fd8ad687cbe96",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1778424880,
+        "relativeTime": "5 か月前",
+        "textLen": 280,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "7cb7674f73ee6a66",
+        "authorNameHash": "dfdd679a7de2c8f9",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1780494988,
+        "relativeTime": "4 か月前",
+        "textLen": 744,
+        "lang": "ja",
+        "incentiveHit": true,
+        "textHash": "0a92bd6294f2e7f0",
+        "authorNameHash": "cfabcf67917453b1",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1774695025,
+        "relativeTime": "6 か月前",
+        "textLen": 240,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "bc3f31197889f1f5",
+        "authorNameHash": "04501506ab168759",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1778138557,
+        "relativeTime": "5 か月前",
+        "textLen": 193,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "f26e611cf04ccf57",
+        "authorNameHash": "2da2b707397f8409",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "manual:今池焼鳥 B7|今池": {
+    "fetchedAt": "2026-10-19T21:51:48.833Z",
+    "placeId": "ChIJf_H1FQBxA2AReo8Q63EZc7U",
+    "name": "今池焼鳥 B7",
+    "formatted_address": "日本、〒464-0850 愛知県名古屋市千種区今池１丁目１３−１７ OFビル 1F",
+    "rating": 4.5,
+    "user_ratings_total": 6,
+    "business_status": "OPERATIONAL",
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1787410711,
+        "relativeTime": "1 か月前",
+        "textLen": 310,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "8426a3be1cbd7135",
+        "authorNameHash": "387e9d8de14830af",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1786712178,
+        "relativeTime": "2 か月前",
+        "textLen": 199,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "3c07307b6a8613f9",
+        "authorNameHash": "8b43b279c6620916",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1786973555,
+        "relativeTime": "2 か月前",
+        "textLen": 294,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "2ad761c3ed90bbed",
+        "authorNameHash": "fad96f9cb492c4d5",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1788660530,
+        "relativeTime": "1 か月前",
+        "textLen": 126,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "ee7b0f4f6562fda8",
+        "authorNameHash": "f42b61b04857281a",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1787221743,
+        "relativeTime": "2 か月前",
+        "textLen": 143,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "9fc6a52f55b4d5d2",
+        "authorNameHash": "2806552ac0eb9408",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "manual:鮨栞庵やましろ|栄": {
+    "fetchedAt": "2026-10-19T21:51:49.637Z",
+    "placeId": "ChIJ2dHqmMZxA2ARbxUSxnMdNhQ",
+    "name": "鮨 栞庵 やましろ",
+    "formatted_address": "日本、〒460-0003 愛知県名古屋市中区錦３丁目１２−２５ 3F",
+    "rating": 4.1,
+    "user_ratings_total": 103,
+    "business_status": "OPERATIONAL",
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1782285794,
+        "relativeTime": "3 か月前",
+        "textLen": 453,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "4f1206a207509892",
+        "authorNameHash": "81537a86ab2dad83",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1782272779,
+        "relativeTime": "3 か月前",
+        "textLen": 636,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "b23f457785aa7e6f",
+        "authorNameHash": "5b9a4e5c892c488b",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1781508984,
+        "relativeTime": "4 か月前",
+        "textLen": 346,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1b650f6c9adb40a9",
+        "authorNameHash": "afff93af301832dd",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1768448765,
+        "relativeTime": "9 か月前",
+        "textLen": 404,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "233a21c2ed5f9f3d",
+        "authorNameHash": "fe8f20aa6c743ea3",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1773874986,
+        "relativeTime": "7 か月前",
+        "textLen": 115,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "42f4d094d1ab95f1",
+        "authorNameHash": "d627188cfe991bbf",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "manual:めしや 浮世ばなれ|栄": {
+    "fetchedAt": "2026-10-19T21:51:50.440Z",
+    "placeId": "ChIJH-mI6iZxA2ARyJISheRbkE8",
+    "name": "浮世ばなれ",
+    "formatted_address": "日本、〒460-0008 愛知県名古屋市中区栄３丁目１１−１８ ２階",
+    "rating": 4.1,
+    "user_ratings_total": 266,
+    "business_status": "OPERATIONAL",
+    "latestReviews": [
+      {
+        "rating": 4,
+        "time": 1777702937,
+        "relativeTime": "5 か月前",
+        "textLen": 325,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "8df926e6f0a6380c",
+        "authorNameHash": "3a3cdc048dbe27c2",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1771145289,
+        "relativeTime": "8 か月前",
+        "textLen": 244,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "683903a5c0c8aeb5",
+        "authorNameHash": "0026f00eafdfe271",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1768994310,
+        "relativeTime": "9 か月前",
+        "textLen": 227,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1d0a66d7b307426a",
+        "authorNameHash": "a8c5906a61b40448",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1769535274,
+        "relativeTime": "8 か月前",
+        "textLen": 646,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1d45cd43f9affa56",
+        "authorNameHash": "e9a61521e1128cf6",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1770271530,
+        "relativeTime": "8 か月前",
+        "textLen": 214,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "621178992ff0a637",
+        "authorNameHash": "1760545843177a79",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "manual:懐石 八泉|名古屋市千種区": {
+    "fetchedAt": "2026-10-19T21:51:51.214Z",
+    "placeId": "ChIJ_VDbqwlwA2AR0GFgV8sMq2c",
+    "name": "懐石 八泉",
+    "formatted_address": "日本、〒464-0032 愛知県名古屋市千種区猫洞通４丁目３４",
+    "rating": 4.6,
+    "user_ratings_total": 46,
+    "business_status": "OPERATIONAL",
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1777124526,
+        "relativeTime": "5 か月前",
+        "textLen": 260,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "7cd6cd3d934f54f6",
+        "authorNameHash": "f05ba67f8cfc951e",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1784910337,
+        "relativeTime": "2 か月前",
+        "textLen": 95,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "451282ab8e90f109",
+        "authorNameHash": "4ca63061b53f91bb",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1642125145,
+        "relativeTime": "4 年前",
+        "textLen": 133,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "6d3e094cda2babf3",
+        "authorNameHash": "307e21c4fdcd3471",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1613720170,
+        "relativeTime": "5 年前",
+        "textLen": 106,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "d66cd56d3341eb0c",
+        "authorNameHash": "08a6ae5df1628e8b",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 1,
+        "time": 1717284592,
+        "relativeTime": "2 年前",
+        "textLen": 1456,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "18d6d5ba77a9a70a",
+        "authorNameHash": "277146b95ed52c72",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "manual:イチビキ (ichibiki)|名古屋市中村区": {
+    "fetchedAt": "2026-10-19T21:51:52.001Z",
+    "placeId": "ChIJNyyzfAB3A2AR_YTpnTzkEOQ",
+    "name": "イチビキ",
+    "formatted_address": "日本、〒450-0003 愛知県名古屋市中村区名駅南１丁目３−１６",
+    "rating": 4.5,
+    "user_ratings_total": 1151,
+    "business_status": "OPERATIONAL",
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1783219618,
+        "relativeTime": "3 か月前",
+        "textLen": 227,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "2cf5b4ef138ea634",
+        "authorNameHash": "51a5ec85a21418d2",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1787378057,
+        "relativeTime": "1 か月前",
+        "textLen": 146,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "d95b829d0f77f15a",
+        "authorNameHash": "55c555a13dd8ccbd",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1788618522,
+        "relativeTime": "1 か月前",
+        "textLen": 613,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "ca8c886625bd1357",
+        "authorNameHash": "f52c35ced6427082",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1775471586,
+        "relativeTime": "6 か月前",
+        "textLen": 230,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "97b5f48d89e60aff",
+        "authorNameHash": "95974021b9b429d6",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1782989214,
+        "relativeTime": "3 か月前",
+        "textLen": 289,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "9bb5e534aeaac5fe",
+        "authorNameHash": "421f161f4524cc46",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004716003": {
+    "fetchedAt": "2026-10-19T21:51:52.545Z",
+    "rejected": true,
+    "rejectReason": "name-mismatch",
+    "candidateName": "焼肉赤身にくがとう 名古屋店",
+    "candidateAddress": "日本、〒451-0042 愛知県名古屋市西区那古野１丁目２０−３０"
+  },
+  "manual:燈 tou|栄": {
+    "fetchedAt": "2026-10-19T21:51:53.488Z",
+    "placeId": "ChIJ85pDiGBxA2ARX513nsOSd3M",
+    "name": "つけ麺 燈 tou",
+    "formatted_address": "日本、〒460-0008 愛知県名古屋市中区栄３丁目１２−１２ プリンセスコート 1F",
+    "rating": 4.4,
+    "user_ratings_total": 96,
+    "business_status": "OPERATIONAL",
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1792420216,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 166,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "5168e51dbe3a798b",
+        "authorNameHash": "300b443f18f74cb9",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1792405221,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 6,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": null,
+        "authorNameHash": "23f51c2f56750a4d",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1792402639,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 286,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "fa3d38e387dbc9dd",
+        "authorNameHash": "761a39fee822205c",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1792329963,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 47,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "e6daf1872045af61",
+        "authorNameHash": "2e5422efa5040220",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1792308506,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 125,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "4059363715444d39",
+        "authorNameHash": "0d9d618246f17b4e",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "manual:ひものや 官兵衛 伏見駅店|伏見・栄": {
+    "fetchedAt": "2026-10-19T21:51:54.333Z",
+    "placeId": "ChIJFbXRgLx3A2ARa5S-tgY5dO0",
+    "name": "ひものや官兵衛 伏見駅店",
+    "formatted_address": "日本、〒460-0008 愛知県名古屋市中区栄１丁目５−７",
+    "rating": 3.3,
+    "user_ratings_total": 3,
+    "business_status": "OPERATIONAL",
+    "latestReviews": [
+      {
+        "rating": 4,
+        "time": 1791720866,
+        "relativeTime": "1 週間前",
+        "textLen": 229,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "cd99e6a45b2d05f0",
+        "authorNameHash": "70f6270ed3738626",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1791686714,
+        "relativeTime": "1 週間前",
+        "textLen": 105,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "291bbc4d21b1f99f",
+        "authorNameHash": "1567e79a15758616",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 2,
+        "time": 1790907567,
+        "relativeTime": "2 週間前",
+        "textLen": 168,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "561d8bec6764a436",
+        "authorNameHash": "53ea0a3eea44d04a",
+        "textSignalsVersion": 2
+      }
+    ]
   }
 }
