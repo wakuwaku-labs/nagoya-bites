@@ -241,6 +241,15 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/refresh_place_status.js', '--report', '--check']],
 });
+// 別の支店・別の店と確かめた Instagram アカウントが、再解決などで戻っていないか（ISSUE-165・P-169・SOFT）。通信しない
+checks.push({
+  id: 'ig-account-review',
+  title: '確かめて外した別支店の Instagram アカウントが戻っていない（ISSUE-165）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/clear_wrong_ig_accounts.js', '--check']],
+});
 // 毎日書き直されるはずの計測のファイル（GA4 の閲覧数・サイト全体・予約・電話・地図・Search Console）が
 // 2 日より古くなっていないか（MEO-006・SOFT で開始）。鍵が切れて取得が止まっても、レポートは古い数字のまま出続けるため
 checks.push({
