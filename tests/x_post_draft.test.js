@@ -135,8 +135,11 @@ function fakeFetch(root) {
   const sent = [];
   const fn = async (url, opts = {}) => {
     if (url.startsWith('https://api.x.com/2/tweets')) {
-      sent.push(JSON.parse(opts.body).text);
-      return { status: 201, text: async () => JSON.stringify({ data: { id: '999' } }), headers: new Map() };
+      const b = JSON.parse(opts.body);
+      sent.push(b.text);
+      (fn.bodies = fn.bodies || []).push(b);
+      if (fn.failAt !== undefined && sent.length - 1 === fn.failAt) return { status: 403, text: async () => JSON.stringify({ title: 'Forbidden' }), headers: new Map() };
+      return { status: 201, text: async () => JSON.stringify({ data: { id: String(900 + sent.length) } }), headers: new Map() };
     }
     if (url.startsWith('https://img.example/')) return { status: 200, headers: { get: () => 'image/jpeg' }, body: null };
     const html = fs.readFileSync(path.join(root, `journal/${entry.slug}.html`), 'utf8');
@@ -335,4 +338,87 @@ test('見張り役: 送った投稿が3回続けて保存した文面を使っ�
   // 使う設定でなければ鳴らさない
   assert.strictEqual(draftUnused({ ...pol, draft: { ...pol.draft, useInPost: false } }, { posts: three }, '2026-10-15'), null);
   assert.strictEqual(draftUnused({ ...pol, draft: { ...pol.draft, alertAfterDays: 0 } }, { posts: three }, '2026-10-15'), null);
+});
+
+// ── 返信（続き）: 本文＋最大3件のスレッド ─────────────────────────────────
+const WITH_REPLIES = {
+  ...GOOD,
+  replies: [
+    '池下のQQは、ランチが12〜14時の2時間。ディナーは月・木が休みで、祝日は営業。',
+    '池下のQQの抜栓料は最低2,000円なので、1万円までのボトルは一律で2,000円が乗る。',
+  ],
+  evidence: [...GOOD.evidence, 'ランチは12〜14時の2時間で、ディナーは月・木が休み（祝日は営業）', '1万円までのボトルは一律で2,000円が乗る'],
+};
+
+test('返信: 数字がすべて引用にあり、長さ・URL・ハッシュタグが守られていれば通る。省いても通る', () => {
+  const c = (d) => X.checkDraft({ ...WITH_REPLIES, ...d }, { entry, policy, articleText: ARTICLE_TEXT });
+  assert.deepStrictEqual(c({}), []);
+  assert.deepStrictEqual(c({ replies: [] }), []);
+  assert.deepStrictEqual(X.checkDraft(GOOD, { entry, policy, articleText: ARTICLE_TEXT }), [], '返信の無い文面（今までの形）も通る');
+  assert.ok(c({ replies: ['a', 'b', 'c', 'd'] }).includes('draft_replies_count:4'));
+  assert.ok(c({ replies: 'abc' }).includes('draft_replies_count:not_array'));
+  assert.ok(c({ replies: ['  '] }).includes('draft_reply_empty:0'));
+  assert.ok(c({ replies: ['池下 https://example.com'] }).includes('draft_reply_has_url:0'));
+  assert.ok(c({ replies: ['池下 #池下'] }).includes('draft_reply_has_hashtag:0'));
+  assert.ok(c({ replies: ['あ'.repeat(136)] }).includes('draft_reply_too_long:0:272'));
+  assert.ok(c({ replies: ['池下の席数は30席'] }).some((x) => x.startsWith('draft_reply_numbers_not_in_evidence:0:30')));
+});
+
+test('返信: 使わない言い方・記事に無い数字は送る前の検査で落ちる', () => {
+  const o = { policy, articleText: ARTICLE_TEXT, root: REAL_ROOT };
+  assert.deepStrictEqual(X.validateReplies(WITH_REPLIES.replies, o), []);
+  assert.ok(X.validateReplies(['業界人が選ぶ池下の店'], o)[0].startsWith('reply0_wording'));
+  assert.ok(X.validateReplies(['池下の店は77席'], o)[0].startsWith('reply0_numbers_not_in_article'));
+});
+
+test('投稿: 本文に続けて返信を前の投稿にぶら下げ、台帳に残す', async () => {
+  const root = fixture({ draft: WITH_REPLIES });
+  const f = fakeFetch(root);
+  const r = await postRun({}, { root, env: ENV, fetchImpl: f, now: NOW });
+  assert.strictEqual(r.result, 'posted');
+  assert.strictEqual(r.repliesPosted, 2);
+  assert.strictEqual(f.sent.length, 3);
+  assert.strictEqual(f.bodies[0].reply, undefined);
+  assert.strictEqual(f.bodies[1].reply.in_reply_to_tweet_id, '901', '返信1は本文にぶら下がる');
+  assert.strictEqual(f.bodies[2].reply.in_reply_to_tweet_id, '902', '返信2は返信1にぶら下がる（スレッド）');
+  const row = JSON.parse(fs.readFileSync(path.join(root, 'data/x_post_log.json'), 'utf8')).posts[0];
+  assert.strictEqual(row.status, 'posted');
+  assert.strictEqual(row.thread.replies.length, 2);
+});
+
+test('投稿: 返信の途中で失敗しても本文は posted のまま（二重に送らない）。失敗は台帳と心拍に残る', async () => {
+  const root = fixture({ draft: WITH_REPLIES });
+  const f = fakeFetch(root);
+  f.failAt = 2;
+  const r = await postRun({}, { root, env: ENV, fetchImpl: f, now: NOW });
+  assert.strictEqual(r.result, 'posted');
+  assert.strictEqual(r.repliesPosted, 1);
+  assert.ok(r.repliesFailed.startsWith('http_403'));
+  const row = JSON.parse(fs.readFileSync(path.join(root, 'data/x_post_log.json'), 'utf8')).posts[0];
+  assert.ok(row.thread.failed_reason.startsWith('http_403'));
+  const f2 = fakeFetch(root);
+  assert.strictEqual((await postRun({}, { root, env: ENV, fetchImpl: f2, now: NOW })).result, 'already_posted');
+  assert.strictEqual(f2.sent.length, 0);
+});
+
+test('投稿: 返信が検査に落ちた文面は使わず、ポイント入りの定型に戻る', async () => {
+  const root = fixture({ draft: { ...WITH_REPLIES, replies: ['業界人が選ぶ池下の店。ランチは12〜14時。'] } });
+  const r = await postRun({}, { root, env: ENV, fetchImpl: fakeFetch(root), now: NOW });
+  assert.strictEqual(r.textMode, 'template-point');
+  assert.ok(r.rejected[0].reason.includes('reply0_wording'));
+});
+
+test('書き手: 返信つきの JSON を保存し、返信の検査に落ちたら理由を返して書き直させる', async () => {
+  const root = fixture({});
+  const replies = [
+    JSON.stringify({ ...WITH_REPLIES, replies: ['池下の店は77席。'] }),
+    JSON.stringify({ type: WITH_REPLIES.type, body: WITH_REPLIES.body, replies: WITH_REPLIES.replies, evidence: WITH_REPLIES.evidence }),
+  ];
+  let i = 0;
+  const r = await W.run({ date: entry.date, claudeBin: 'x' }, { root, now: NOW, call: async () => ({ ok: true, out: replies[i++] }) });
+  assert.strictEqual(r.result, 'written');
+  assert.strictEqual(r.attempts.length, 2);
+  assert.ok(r.attempts[0].reason.includes('draft_reply_numbers_not_in_evidence'));
+  const saved = JSON.parse(fs.readFileSync(path.join(root, `data/x_post_drafts/${entry.date}.json`), 'utf8'));
+  assert.deepStrictEqual(saved.replies, WITH_REPLIES.replies);
 });

@@ -159,12 +159,12 @@ function credentialShape(value) {
   return parts.join('・');
 }
 
-async function sendTweet(text, cred, fetchImpl = fetch) {
+async function sendTweet(text, cred, fetchImpl = fetch, replyToId = null) {
   const auth = X.oauthHeader({ method: 'POST', url: TWEET_URL, ...cred });
   const res = await fetchImpl(TWEET_URL, {
     method: 'POST',
     headers: { authorization: auth, 'content-type': 'application/json' },
-    body: JSON.stringify({ text }),
+    body: JSON.stringify(replyToId ? { text, reply: { in_reply_to_tweet_id: replyToId } } : { text }),
   });
   let body;
   const raw = await res.text();
@@ -173,7 +173,7 @@ async function sendTweet(text, cred, fetchImpl = fetch) {
 }
 
 /** 結果を台帳・心拍に書く（live のときだけ呼ぶ）。 */
-function record(root, { date, entry, result, reason, text, textMode, draftReason, tweetId, errorClass, status }) {
+function record(root, { date, entry, result, reason, text, textMode, draftReason, tweetId, errorClass, status, thread }) {
   const now = new Date().toISOString();
   if (status) {
     const log = X.readLog(root);
@@ -186,6 +186,7 @@ function record(root, { date, entry, result, reason, text, textMode, draftReason
       ...(tweetId ? { tweet_id: tweetId, tweet_url: `https://x.com/i/web/status/${tweetId}`, posted_at: now } : {}),
       ...(errorClass ? { error_class: errorClass } : {}),
       ...(reason ? { reason } : {}),
+      ...(thread ? { thread } : {}),
     };
     // 同じ記事の未完了の行（failed・blocked）は最新の1行に置き換える（台帳が失敗で膨らまないように）
     log.posts = log.posts.filter((p) => !(p.slug === entry.slug && (p.status === 'failed' || p.status === 'blocked')));
@@ -199,6 +200,7 @@ function record(root, { date, entry, result, reason, text, textMode, draftReason
       date, slug: entry ? entry.slug : null, result, reason: reason || null,
       ...(errorClass ? { error_class: errorClass } : {}),
       ...(tweetId ? { tweet_id: tweetId } : {}),
+      ...(thread ? { replies_posted: thread.replies.length, ...(thread.failed_reason ? { replies_failed: thread.failed_reason } : {}) } : {}),
       recorded_at: now,
     },
   }, root);
@@ -256,6 +258,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   out.text = built.text;
   out.weighted = built.weighted;
   out.textMode = built.mode;
+  if (built.replies) out.replies = built.replies;
   if (built.type) out.draftType = built.type;
 
   // 本番の記事が出ているか（出ていないページを貼るとリンクカードが壊れる）
@@ -293,8 +296,33 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   }
   const id = res.body && res.body.data && res.body.data.id;
   if ((res.status === 201 || res.status === 200) && id) {
-    record(root, { date, entry, result: 'posted', text: built.text, textMode: built.mode, draftReason, tweetId: id, status: 'posted' });
-    return { ...out, result: 'posted', tweetId: id, tweetUrl: `https://x.com/i/web/status/${id}`, exitCode: 0 };
+    // 続きの返信（前の投稿にぶら下げる）。途中で失敗しても本文は届いているので、台帳は posted のまま残し、
+    // 続きだけ送れなかったことを thread に書く（再実行で本文を二重に送らない）
+    let thread = null;
+    if (built.replies && built.replies.length) {
+      thread = { replies: [] };
+      let parent = id;
+      for (const t of built.replies) {
+        let rr;
+        try {
+          rr = await sendTweet(t, cred, fetchImpl, parent);
+        } catch (e) {
+          thread.failed_reason = `network:${e.message || e}`;
+          break;
+        }
+        const rid = rr.body && rr.body.data && rr.body.data.id;
+        if ((rr.status === 201 || rr.status === 200) && rid) {
+          thread.replies.push({ tweet_id: rid, text: t });
+          parent = rid;
+        } else {
+          const d = typeof rr.body === 'string' ? rr.body.slice(0, 200) : JSON.stringify(rr.body).slice(0, 200);
+          thread.failed_reason = `http_${rr.status}: ${d}`;
+          break;
+        }
+      }
+    }
+    record(root, { date, entry, result: 'posted', text: built.text, textMode: built.mode, draftReason, tweetId: id, status: 'posted', thread });
+    return { ...out, result: 'posted', tweetId: id, tweetUrl: `https://x.com/i/web/status/${id}`, ...(thread ? { repliesPosted: thread.replies.length, ...(thread.failed_reason ? { repliesFailed: thread.failed_reason } : {}) } : {}), exitCode: 0 };
   }
   const errorClass = X.classifyError(res.status, res.body);
   const detail = typeof res.body === 'string' ? res.body.slice(0, 300) : JSON.stringify(res.body).slice(0, 300);
@@ -326,12 +354,14 @@ function summaryMarkdown(r) {
   if (r.livePage) lines.push(`- 本番の記事: HTTP ${r.livePage.status}（${r.livePage.attempts} 回目）`);
   if (r.ogImage) lines.push(`- リンクカードの画像: ${r.ogImage.ok ? 'OK' : `出ない見込み（${r.ogImage.reason}）`}`);
   if (r.tweetUrl) lines.push(`- 投稿: ${r.tweetUrl}`);
+  if (r.replies) lines.push(`- 返信（続き）: ${r.repliesPosted != null ? `${r.repliesPosted} / ` : ''}${r.replies.length} 件${r.repliesFailed ? `（途中で止まった: ${r.repliesFailed}）` : ''}`);
   if (r.credentials) {
     const ja = { set: '登録済み', empty: '空（未登録）', bad_format: '形が違う（別の欄の値の疑い）', looks_access_token: 'Access Token の値が入っている疑い', duplicate: 'ほかの名前と同じ値' };
     lines.push(`- 鍵（値は出さない）: ${CREDENTIAL_NAMES.map((n) => `${n}=${ja[r.credentials[n]]}`).join('・')}`);
     for (const [n, shape] of Object.entries(r.credentialShapes || {})) lines.push(`  - ${n} の形: ${shape}`);
   }
   if (r.text) lines.push('', '### 文面', '', '```', r.text, '```');
+  (r.replies || []).forEach((t, i) => lines.push('', `### 返信 ${i + 1}`, '', '```', t, '```'));
   return lines.join('\n') + '\n';
 }
 
