@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}function nbInternal(){try{return localStorage.getItem('nb_internal')==='1';}catch(e){return false;}}(function(){try{var p=new URLSearchParams(location.search);if(p.get('nb_owner')==='1'){localStorage.setItem('nb_internal','1');history.replaceState(null,'',location.pathname);}}catch(e){}gtag('js',new Date());if(nbInternal()){gtag('config','G-3LCZNGZPWJ',{traffic_type:'internal'});}else{gtag('config','G-3LCZNGZPWJ');}})();function trackEvent(name,params){if(nbInternal())return;if(typeof gtag==='function')gtag('event',name,params||{});}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>居酒屋のお通しは断れるのか——栄の新店330円で読む、価格帯と席に着く前の説明の境目｜NAGOYA BITES Journal</title>
+<meta name="description" content="居酒屋のお通しは断れるのか。民法の契約成立の考え方と、栄の新店「炭火酒場 cowcow」のお通し330円を例に、価格帯の読み方と席に着く前に確かめる説明・表示のポイントを整理する。">
+<meta name="keywords" content="名古屋,お通し,居酒屋,栄,断れる,席料,予約,一人飲み,デート,接待">
+<link rel="canonical" href="https://nagoya-bites.com/journal/2026-10-20-otoshi-refuse-sakae-cowcow.html">
+<meta property="og:title" content="居酒屋のお通しは断れるのか——栄の新店330円で読む、価格帯と席に着く前の説明の境目｜NAGOYA BITES">
+<meta property="og:description" content="居酒屋のお通しは断れるのか。民法の契約成立の考え方と、栄の新店「炭火酒場 cowcow」のお通し330円を例に、価格帯の読み方と席に着く前に確かめる説明・表示のポイントを整理する。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nagoya-bites.com/journal/2026-10-20-otoshi-refuse-sakae-cowcow.html">
+<meta property="og:site_name" content="NAGOYA BITES">
+<meta property="og:image" content="https://nagoya-bites.com/icons/icon-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../assets/css/nb.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "居酒屋のお通しは断れるのか——栄の新店330円で読む、価格帯と席に着く前の説明の境目",
+  "description": "居酒屋のお通しは断れるのか。民法の契約成立の考え方と、栄の新店「炭火酒場 cowcow」のお通し330円を例に、価格帯の読み方と席に着く前に確かめる説明・表示のポイントを整理する。",
+  "author": {"@type": "Organization", "name": "NAGOYA BITES"},
+  "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
+  "url": "https://nagoya-bites.com/journal/2026-10-20-otoshi-refuse-sakae-cowcow.html",
+  "datePublished": "2026-10-20",
+  "dateModified": "2026-10-20",
+  "mainEntityOfPage": "https://nagoya-bites.com/journal/2026-10-20-otoshi-refuse-sakae-cowcow.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},
+    {"@type":"ListItem","position":2,"name":"Journal","item":"https://nagoya-bites.com/journal/"},
+    {"@type":"ListItem","position":3,"name":"居酒屋のお通しは断れるのか——栄の新店330円で読む、価格帯と席に着く前の説明の境目"}
+  ]
+}
+</script>
+<style>
+/* NB-JOURNAL-STYLE v1: 共通の記事組版(.art-hero/.art-title/.store-card/.related 等)は
+   assets/css/nb.css の記事システムが所有する。ここは journal 固有の残り(店舗CTA配色・IG導線)のみ。 */
+.store-meta .score{color:var(--gold2);font-weight:500;}
+/* SEO-054: 店舗カードの予約・地図導線（index.html のモーダルCTAと同じ配色規約） */
+.store-link-reserve{background:#e6002d;color:#fff!important;border-color:transparent;}
+.store-link-reserve:hover{background:#c9001e;}
+.store-link-map{background:#4285F4;color:#fff!important;border-color:transparent;}
+.store-link-map:hover{background:#2b6cd4;}
+.art-hero-ig{max-width:var(--container-mid);margin:0 auto;padding:0 1.5rem 1rem;display:flex;justify-content:center;}
+.art-ig-cta{display:flex;align-items:center;gap:1rem;background:var(--bg2);border:1px solid var(--border);border-left:3px solid #C13584;padding:1rem 1.2rem;border-radius:0 var(--r-md) var(--r-md) 0;margin:var(--sp-5) 0;}
+.art-ig-cta .ig-icon{font-size:1.4rem;flex-shrink:0;}
+.art-ig-cta-body{flex:1;}
+.art-ig-cta-label{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:#C13584;text-transform:none;margin-bottom:.3rem;}
+.art-ig-cta-handle{font-size:var(--fs-sm);font-weight:500;color:var(--ink);margin-bottom:.2rem;}
+.art-ig-cta-note{font-size:var(--fs-md);color:var(--muted);}
+.art-ig-cta a{text-decoration:none;color:inherit;}
+.art-ig-cta a:hover .art-ig-cta-handle{color:#C13584;}
+</style>
+
+<!-- PHOTO SUGGESTIONS (編集メモ — 読者には非表示):
+  - [store_instagram] 炭火酒場 cowcow 公式Instagram: https://www.instagram.com/cowcow_nagoya/ — 公式embedのみ使用
+-->
+</head>
+<body>
+<!-- NB-CHROME:HEADER:START -->
+<a href="#main-content" class="skip-link">本文へスキップ</a>
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+<header>
+  <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
+    <a href="../features/index.html">特集</a>
+    <a href="../journal/index.html" aria-current="page">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
+  </nav>
+</header>
+<main id="main-content">
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
+<nav aria-label="パンくずリスト">
+  <div class="breadcrumb">
+    <a href="../index.html">トップ</a>
+    <span>›</span>
+    <a href="../journal/index.html">ジャーナル</a>
+    <span>›</span>
+    居酒屋のお通しは断れるのか——栄の新店330円で読む、価格帯と席に着く前の説明の境目
+  </div>
+</nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
+
+<article class="nb-article">
+  <div class="art-hero">
+    <p class="art-eyebrow">業界の裏側</p>
+    <h1 class="art-title">居酒屋のお通しは<em>断れるのか</em>——栄の新店330円で読む、価格帯と席に着く前の説明の境目</h1>
+    <div class="art-meta">
+      <span>2026年10月20日 (火)</span>
+      <span>業界の裏側</span>
+      <span>編集部</span>
+    </div>
+    <p class="art-lead">お通しは断れるのか。民法の考え方では、入店前の説明や店頭・メニューの表示があれば契約が成り立つ一方、何も告げられずに出された場合は成立しにくいとされる。2026年10月に栄で開いた新店のお通し330円を例に、価格帯の読み方と席での確認の仕方を整理する。</p>
+  </div>
+
+  <div class="art-hero-ig">
+  <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DeMdZpID9XJ/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);margin:0 auto;max-width:540px;min-width:326px;padding:0;width:calc(100% - 2px);">
+    <a href="https://www.instagram.com/p/DeMdZpID9XJ/?utm_source=ig_embed&amp;utm_campaign=loading" target="_blank" rel="noopener">Instagramで見る</a>
+  </blockquote>
+  <script async src="https://www.instagram.com/embed.js"></script>
+</div>
+
+  <div class="art-body">
+    
+<h2>お通しは「席に着く前の説明」で決まる</h2>
+<p>お通しが断れるかどうかは、料理の問題というより<span class="art-accent">契約がいつ成立したか</span>の問題です。民法第522条は、契約は申込みに対して相手方が承諾したときに成立すると定めています。弁護士の回答をまとめたPRESIDENT Onlineの記事では、入店時に店員が説明した、または店頭やメニューに表示がある場合は、客が申し込んだものとして<strong>お通しの契約が成り立つ</strong>とされています。逆に、予約時にも入店時にも何も告げられていなければ契約の条件を満たさず、品物も代金も断れる、という整理です。</p>
+<!-- SEO-070:FEATURE-CTA:START -->
+<div class="tips-box" role="complementary" aria-label="関連特集">
+  <p style="font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:var(--ls-caps);text-transform:uppercase;color:var(--gold);margin:0 0 .5rem;">合わせて読む</p>
+  <a href="../features/nagoya-izakaya.html" onclick="trackEvent('internal_link_click',{block:'feature_cta_mid',link_url:'../features/nagoya-izakaya.html'})">居酒屋10選 →</a>
+</div>
+<!-- SEO-070:FEATURE-CTA:END -->
+
+<p>一方、ファイナンシャルフィールドの解説は、有料のお通しが居酒屋で広く行われているため、席に着いて出てきた時点で契約が成り立つという見方もあり、「基本的に拒否できないことが多い」としています。お通しは料理というより席料やサービス料の性格が強く、<mark>メニューに料金が書かれていれば、食べなくても払う</mark>のが原則です。どちらの記事も共通しているのは、判断の軸が「事前に説明や表示があったか」にある点です。</p>
+
+<h2>栄の新店330円を、予算の中で見る</h2>
+<p>直近では、2026年10月13日に栄3丁目で開いた「炭火酒場 cowcow」が話題になっています。名古屋情報通の開店記事によると、お通しは<strong>1人330円（税込）</strong>。1人あたりの予算目安は3,500〜5,000円とされており、お通し代はその<span class="art-accent">約7〜9%</span>にあたります。炭焼きニラユッケ880円と合わせても1,210円で、価格帯としては小さな固定費です。</p>
+<p>ただし人数が増えると見え方が変わります。2人で660円、4人で1,320円。お通しは「席に着いた人数分」が自動で加わるため、宴会や四人以上の会食では、会計の読み方に最初から入れておく項目になります。コースや飲み放題の有無とは別に積み上がる点が、価格帯を読むときの落とし穴です。</p>
+
+<figure class="art-body-img" data-photo-source="hotpepper" data-photo-store="炭火酒場　COWCOW">
+  <img src="https://imgfp.hotp.jp/IMGH/62/48/P051456248/P051456248.jpg" alt="炭火酒場　COWCOW（栄・矢場町）の店舗写真" loading="lazy" decoding="async">
+  <figcaption class="art-img-credit">写真: 炭火酒場　COWCOW — <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">店舗公式写真</a> / <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">HotPepper</a></figcaption>
+</figure>
+
+<h2>席でのオペ、予約時の聞き方</h2>
+<p>お通しの有無は、店の回転の組み方とも関わります。席に着いた直後に何かが出る店では、最初の注文までの待ち時間を埋められ、席料の相場感も会計に反映されます。26席で深夜1時まで営業する店のように席数が少ない場合、客単価を安定させる仕組みとして、お通しを設ける慣習が根づいているのは自然な構造です。</p>
+<p>断りたい理由が苦手な食材やアレルギーなら、<strong>予約の電話か、席に着いてすぐの一言</strong>が最も確実です。口をつけてしまうと承諾したとみなされ得る、という解説もあるため、「有料のお通しは何ですか」「苦手な食材があるので代わりはありますか」と先に聞くのが安全です。デートや接待では、会計の場で揉めないよう、予約時にお通しの有無と金額を確かめておくと落ち着いて過ごせます。一人飲みなら、注文前に店のメニューの端に書かれた「お通し」「席料」の欄を見る習慣をつけるだけで十分です。</p>
+<p>なお、法律上の結論は店の表示や個別の事情で変わります。ここで紹介したのは公開されている解説の整理で、個別の判断は専門家への相談が確実です。</p>
+
+
+    <div class="insider-box">
+      <p class="insider-title">知っておきたいポイント</p>
+      <ul>
+                <li>断れるかどうかの分かれ目は、料理ではなく「席に着く前に説明や表示があったか」。メニューの端の「お通し・席料」欄を注文前に見る</li>
+        <li>栄の新店 cowcow のお通し330円は、予算目安3,500〜5,000円の約7〜9%。ただし4人なら1,320円と、人数分が自動で加わる</li>
+        <li>苦手な食材や接待・デートの場面は、予約時か着席直後に「お通しの有無・金額・代替」を聞く。口をつけると承諾とみなされ得る</li>
+      </ul>
+    </div>
+
+    <div class="store-list">
+      
+      <h2 class="visually-hidden">紹介した店</h2>
+      <div class="store-card">
+        <div class="store-num">01</div>
+        <div class="store-info">
+          <h3 class="store-name">炭火酒場　COWCOW</h3>
+          <div class="store-meta">
+            <span>居酒屋</span>
+            <span>栄・矢場町</span>
+            
+          </div>
+          <p class="store-desc">2026年10月13日開店、26席。お通し330円（税込）。この記事ではお通しの金額を読む例として取り上げた。</p>
+          <div class="store-cta-row"><a class="store-link store-link-map" href="https://www.google.com/maps/search/?api=1&amp;query=%E7%82%AD%E7%81%AB%E9%85%92%E5%A0%B4%20COWCOW%20%E6%A0%84%E3%83%BB%E7%9F%A2%E5%A0%B4%E7%94%BA" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{store_name:'炭火酒場　COWCOW',location:'journal_store_card',link_kind:'search'})">地図で確認する</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source-note"><strong>情報源:</strong> <a href="https://president.jp/articles/-/24950" target="_blank" rel="noopener">PRESIDENT Online「&quot;お通し代&quot;の支払いを拒んだらどうなるか」</a><span class="source-date">（2018-05-24掲載）</span>、 <a href="https://financial-field.com/living/entry-227711" target="_blank" rel="noopener">ファイナンシャルフィールド「お通しを拒否できるのか」</a><span class="source-date">（2025-09-26掲載）</span>、 <a href="https://jouhou.nagoya/cowcow-sakaba/" target="_blank" rel="noopener">名古屋情報通「炭火酒場 cowcow」</a><span class="source-date">（2026-10-17掲載）</span>、 <a href="https://www.instagram.com/cowcow_nagoya/" target="_blank" rel="noopener">炭火酒場 cowcow 公式Instagram</a><span class="source-date">（2026-10-07掲載）</span>、 <a href="https://laws.e-gov.go.jp/law/129AC0000000089" target="_blank" rel="noopener">e-Gov法令検索 民法（第522条）</a><span class="source-date">（2026-10-20掲載）</span></div>
+    
+  </div>
+</article>
+
+<!-- 関連記事ブロック: scripts/refresh_journal_related.js が自動更新する。
+     ビルド後のHTMLでは直近3本の他journalへの内部リンクが自動で挿入される。 -->
+<div class="related">
+  <p class="related-title">関連記事</p>
+  <div class="related-links">
+    <a class="related-link" href="2026-10-19-sakae-sumibi-sakaba-cowcow.html">栄・矢場町『炭火酒場COWCOW』一人飲みと二軒目に、26席・深夜1時までを読む</a>
+    <a class="related-link" href="2026-10-17-sakae-rokurokudou-settai-enkai-wine-cellar.html">栄『お台所 六六堂』接待・宴会に、150席と元金庫室のワインセラーを読む</a>
+    <a class="related-link" href="2026-10-16-sakae-nagoya-matsuri-lachic-maruha-yabaton-torikai.html">栄の名古屋まつりで食べ歩き、まるは食堂・矢場とん・鳥開総本家はブースか向かいのラシックか</a>
+    <a class="related-link is-primary" href="index.html">ジャーナル一覧</a>
+    <a class="related-link is-primary" href="../features/nagoya-izakaya.html">居酒屋10選</a>
+    <a class="related-link" href="../stores/area/sakae/izakaya.html" onclick="trackEvent('internal_link_click',{link_url:'../stores/area/sakae/izakaya.html',block:'journal_hub'})">栄の居酒屋を探す</a>
+    <a class="related-link" href="../features/index.html">特集をもっと見る</a>
+    <a class="related-link" href="../index.html">全店舗を検索</a>
+  </div>
+</div>
+
+<!-- NB-CHROME:FOOTER:START -->
+</main>
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。店舗の選定にはAIによる情報収集・分析を活用しています。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/area/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">ジャーナル</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
+</footer>
+<!-- NB-CHROME:FOOTER:END -->
+<!-- SEO-052: 内部リンク（関連記事ブロック）のクリックとスクロール到達を計測。
+     回遊アドバイスの採否を体感でなく実データで判定できるようにする -->
+<script class="nb-engagement-tracking">
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('.related-link');if(!a)return;try{trackEvent('internal_link_click',{link_url:a.getAttribute('href')||'',link_text:(a.innerText||a.textContent||'').trim().slice(0,80),block:'related'});}catch(err){}},true);
+(function(){
+  var fired={},THRESH=[25,50,75,100];
+  function check(){
+    var doc=document.documentElement;
+    var top=window.pageYOffset||doc.scrollTop;
+    var max=(doc.scrollHeight-doc.clientHeight)||1;
+    var pct=Math.min(100,Math.round((top/max)*100));
+    THRESH.forEach(function(t){if(pct>=t&&!fired[t]){fired[t]=true;try{trackEvent('scroll_depth',{percent:t});}catch(err){}}});
+  }
+  var timer=null;
+  window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
+  check();
+})();
+</script>
+<!-- I-08: 記事から店舗ページへのクリックを計測（journal_store_click）。店は ID、記事はファイル名で送る -->
+<script class="nb-journal-store-link">
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var m=(a.getAttribute('href')||'').match(/(?:^|\/)stores\/([A-Za-z0-9_-]+)\.html(?:[?#]|$)/);if(!m||m[1]==='index')return;try{trackEvent('journal_store_click',{store:m[1],journal:location.pathname.replace(/^.*\//,'').replace(/\.html$/,'')});}catch(err){}});
+</script>
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+document.addEventListener('touchstart',function(){},{passive:true});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
+</body>
+</html>
