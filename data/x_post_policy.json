@@ -42,10 +42,12 @@
     "maxBodyWeighted": 230,
     "evidenceMinChars": 10,
     "evidenceMaxChars": 160,
-    "evidenceMaxItems": 6,
+    "evidenceMaxItems": 12,
+    "maxReplies": 3,
+    "maxReplyWeighted": 270,
     "attempts": 2,
     "timeoutSec": 150,
-    "limitsHelp": "maxBodyWeighted = 本文（URL とハッシュタグを除く）の X の数え方の上限。URL(23)＋改行＋ハッシュタグ2個で約45 を足して 280 に収まる値。evidence = 本文の数字の出どころとして記事の原文から写した引用（各 evidenceMinChars〜evidenceMaxChars 字・最大 evidenceMaxItems 個）。attempts = 検査に落ちたとき理由を返して書き直させる回数の上限。timeoutSec = Claude の1回の応答を待つ秒数"
+    "limitsHelp": "maxBodyWeighted = 本文（URL とハッシュタグを除く）の X の数え方の上限。URL(23)＋改行＋ハッシュタグ2個で約45 を足して 280 に収まる値。maxReplies / maxReplyWeighted = 本文の下にぶら下げる返信（続き）の最大数と、1件の X の数え方の上限（URL・ハッシュタグは付けないので 280 に近くてよい）。evidence = 本文と返信の数字の出どころとして記事の原文から写した引用（各 evidenceMinChars〜evidenceMaxChars 字・最大 evidenceMaxItems 個）。attempts = 検査に落ちたとき理由を返して書き直させる回数の上限。timeoutSec = Claude の1回の応答を待つ秒数"
   },
   "template": {
     "points": true,

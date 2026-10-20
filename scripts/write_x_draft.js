@@ -132,6 +132,8 @@ function checkAll(draft, { entry, policy, articleText, root }) {
   if (failures.length) return failures;
   const b = X.buildDraftPost(draft, entry, policy);
   if (!b.ok) return [b.reason];
+  const rf = X.validateReplies(b.replies, { policy, articleText, root });
+  if (rf.length) return rf;
   return X.validatePost(b.text, {
     entry, policy, articleText, root,
     recentTexts: X.recentTexts(X.readLog(root), entry.date, policy.duplicateWindowDays || 30),
@@ -183,6 +185,7 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
       type: reply.type,
       body: typeof reply.body === 'string' ? reply.body.trim() : reply.body,
       evidence: reply.evidence,
+      ...(reply.replies !== undefined ? { replies: Array.isArray(reply.replies) ? reply.replies.map((x) => (typeof x === 'string' ? x.trim() : x)) : reply.replies } : {}),
       generated_at: now.toISOString(),
       generator: `claude --print（${PROMPT_REL}）`,
     };
@@ -198,7 +201,7 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
       }
       return { ...out, result: args.dryRun ? 'dry_run_ok' : 'written' };
     }
-    previous = { reason: failures.join(' / '), raw: JSON.stringify({ type: reply.type, body: reply.body, evidence: reply.evidence }) };
+    previous = { reason: failures.join(' / '), raw: JSON.stringify({ type: reply.type, body: reply.body, replies: reply.replies, evidence: reply.evidence }) };
   }
   return { ...out, result: 'rejected', reason: out.attempts[out.attempts.length - 1].reason };
 }
@@ -213,6 +216,7 @@ function summary(r) {
   const lines = [`X 用の文面 ${r.date}: ${RESULT_JA[r.result] || r.result}${r.reason ? `（${r.reason}）` : ''}`];
   for (const a of r.attempts) lines.push(`  試行${a.i}（${a.seconds}秒）: ${a.reason || '通過'}${a.detail ? ` … ${a.detail}` : ''}`);
   if (r.post) lines.push('---', r.post, '---');
+  ((r.draft && r.draft.replies) || []).forEach((t, i) => lines.push(`返信${i + 1}:`, t, '---'));
   return lines.join('\n') + '\n';
 }
 

@@ -215,6 +215,51 @@ function checkDraft(draft, { entry, policy, articleText }) {
     const missing = numbersMissingFromArticle(body, ev.join(' \n '));
     if (missing.length) f.push(`draft_numbers_not_in_evidence:${missing.join(',')}`);
   }
+  // 返信（続き）。本文と同じく、数字はすべて引用の中になければならない
+  if (draft.replies !== undefined) {
+    const replies = Array.isArray(draft.replies) ? draft.replies : null;
+    const maxReplies = cfg.maxReplies ?? 3;
+    if (!replies || replies.length > maxReplies) f.push(`draft_replies_count:${replies ? replies.length : 'not_array'}`);
+    else {
+      replies.forEach((r, i) => {
+        const t = typeof r === 'string' ? r.trim() : '';
+        if (!t) f.push(`draft_reply_empty:${i}`);
+        else {
+          if (/https?:\/\//i.test(t)) f.push(`draft_reply_has_url:${i}`);
+          if (/(^|\s)[#＃][^\s#＃]/.test(t)) f.push(`draft_reply_has_hashtag:${i}`);
+          const rw = weightedLength(t);
+          if (rw > (cfg.maxReplyWeighted || 270)) f.push(`draft_reply_too_long:${i}:${rw}`);
+          const miss = numbersMissingFromArticle(t, ev.join(' \n '));
+          if (miss.length) f.push(`draft_reply_numbers_not_in_evidence:${i}:${miss.join(',')}`);
+        }
+      });
+    }
+  }
+  return f;
+}
+
+/** 返信の文面（保存した文面の replies。空白だけのものは除く）。 */
+function draftReplies(draft) {
+  return (Array.isArray(draft && draft.replies) ? draft.replies : [])
+    .filter((x) => typeof x === 'string' && x.trim()).map((x) => x.trim());
+}
+
+/**
+ * 返信の送る前の検査。返り値は落ちた理由の配列（空なら通過）。
+ * 数字が記事の本文にあるか・使わない言い方・長さを見る（本文は validatePost が見る）。
+ */
+function validateReplies(replies, { policy, articleText, root = ROOT }) {
+  const f = [];
+  const max = (policy.draft || {}).maxReplyWeighted || 270;
+  (replies || []).forEach((t, i) => {
+    const w = weightedLength(t);
+    if (w > max) f.push(`reply${i}_too_long:${w}`);
+    const missing = numbersMissingFromArticle(t, articleText);
+    if (missing.length) f.push(`reply${i}_numbers_not_in_article:${missing.join(',')}`);
+    const words = wordingViolations(t, root);
+    if (words.length) f.push(`reply${i}_wording:${words.join(',')}`);
+    if ((String(t).match(URL_RE) || []).length) f.push(`reply${i}_has_url`);
+  });
   return f;
 }
 
@@ -223,7 +268,8 @@ function buildDraftPost(draft, entry, policy) {
   const url = utmUrl(entry, policy, draft.type);
   const r = withLink(String(draft.body || '').trim(), url, hashtagsFor(entry, policy), policy.maxWeightedLength || 280);
   if (!r) return { ok: false, mode: 'draft', reason: 'too_long' };
-  return { ok: true, mode: 'draft', type: draft.type, url, ...r };
+  const replies = draftReplies(draft);
+  return { ok: true, mode: 'draft', type: draft.type, url, ...r, ...(replies.length ? { replies } : {}) };
 }
 
 /**
@@ -241,7 +287,9 @@ function postCandidates({ entry, policy, date, html, root = ROOT }) {
       if (failures.length) out.push({ mode: 'draft', failures });
       else {
         const b = buildDraftPost(draft, entry, policy);
-        out.push(b.ok ? b : { mode: 'draft', failures: [b.reason] });
+        // 返信の検査に落ちたら、保存した文面は使わない（定型に戻る）
+        const rf = b.ok && b.replies ? validateReplies(b.replies, { policy, articleText: htmlToText(html), root }) : [];
+        out.push(b.ok && !rf.length ? b : { mode: 'draft', failures: b.ok ? rf : [b.reason] });
       }
     }
   }
@@ -389,7 +437,7 @@ const HUMAN_ACTION_ERRORS = new Set(['auth', 'forbidden', 'payment']);
 module.exports = {
   ROOT, LOG_REL, HEALTH_REL, HUMAN_ACTION_ERRORS,
   weightedLength, loadPolicy, articleUrl, utmUrl, areaHashtag, hashtagsFor, rewriteTitle, buildTemplatePost,
-  DRAFT_DIR, draftPath, loadDraft, checkDraft, buildDraftPost, insiderPoints, buildPointPosts, postCandidates,
+  DRAFT_DIR, draftPath, loadDraft, checkDraft, draftReplies, validateReplies, buildDraftPost, insiderPoints, buildPointPosts, postCandidates,
   htmlToText, normalizeDigits, numbersMissingFromArticle, wordingViolations, validatePost,
   readLog, writeJson, alreadyPosted, recentTexts, oauthHeader, classifyError, pct,
 };
