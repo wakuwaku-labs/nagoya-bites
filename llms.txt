@@ -8,8 +8,8 @@
 - 編集独立性: 広告ゼロ・PR記事ゼロ・予約手数料モデルなし
 - データ規模: <!-- AUTO-GENERATED:store_count:start -->約5,000<!-- AUTO-GENERATED:store_count:end -->店の構造化データ + <!-- AUTO-GENERATED:feature_count:start -->63本<!-- AUTO-GENERATED:feature_count:end -->の特集記事 + 日次ジャーナル
 - 数値の出典と更新日（日付は UTC）:<!-- AUTO-GENERATED:data_sources:start -->
-  - 店舗数・エリア別/ジャンル別の内訳: https://nagoya-bites.com/data/stores.json から営業中の店だけを数えた値（この数値に更新した日: 2026-10-19）
-  - エリア×ジャンル×条件ページの本数と掲載店数: https://nagoya-bites.com/data/area_genre_pages_manifest.json の値（ページの内容が最後に変わった日: 2026-10-19）
+  - 店舗数・エリア別/ジャンル別の内訳: https://nagoya-bites.com/data/stores.json から営業中の店だけを数えた値（この数値に更新した日: 2026-10-20）
+  - エリア×ジャンル×条件ページの本数と掲載店数: https://nagoya-bites.com/data/area_genre_pages_manifest.json の値（ページの内容が最後に変わった日: 2026-10-20）
   - 特集記事の本数: https://nagoya-bites.com/features/ 配下の記事ページの数（一覧ページと編集規約などの案内ページを除く）
 <!-- AUTO-GENERATED:data_sources:end -->
 - 信頼性の根拠: 公開情報（ホットペッパーグルメ・Googleなど）をもとにし、実在と営業の確認・口コミ信頼度（機械採点）を併記している
@@ -50,11 +50,11 @@
 
 ## 主要エリア
 <!-- AUTO-GENERATED:areas:start -->
-エリア別内訳（10区分・営業中4,980店中4,926店をマッピング。区分の定義は data/area_genre_pages_policy.json＝stores/area/配下のエリア×ジャンルハブと同一の正本）:
+エリア別内訳（10区分・営業中4,979店中4,925店をマッピング。区分の定義は data/area_genre_pages_policy.json＝stores/area/配下のエリア×ジャンルハブと同一の正本）:
 
 - 名駅（名古屋駅）: 1,161店
-- 錦・伏見・丸の内: 747店
-- 矢場町・大須・上前津: 740店
+- 錦・伏見・丸の内: 748店
+- 矢場町・大須・上前津: 738店
 - 千種・今池・大曽根: 586店
 - 緑区・南区・天白区・瑞穂区: 377店
 - 栄: 357店
@@ -68,14 +68,14 @@
 <!-- AUTO-GENERATED:area_genre_hubs:start -->
 SEO-094で新設したエリア×ジャンル×条件の一覧ページ（stores/area/配下）が773本公開されている（索引1本 + エリアハブ10本 + エリア×ジャンルハブ97本 + 条件付きハブ665本）。
 起点: https://nagoya-bites.com/stores/area/index.html
-本数と掲載店数の出典: https://nagoya-bites.com/data/area_genre_pages_manifest.json（ページの内容が最後に変わった日: 2026-10-19）
+本数と掲載店数の出典: https://nagoya-bites.com/data/area_genre_pages_manifest.json（ページの内容が最後に変わった日: 2026-10-20）
 
 代表例（掲載店舗数が多い順）:
 - 名駅（名古屋駅）×居酒屋: https://nagoya-bites.com/stores/area/meieki/izakaya.html（527店）
-- 栄×居酒屋: https://nagoya-bites.com/stores/area/sakae/izakaya.html（354店）
-- 錦・伏見・丸の内×居酒屋: https://nagoya-bites.com/stores/area/nishiki-fushimi/izakaya.html（250店）
+- 栄×居酒屋: https://nagoya-bites.com/stores/area/sakae/izakaya.html（353店）
+- 錦・伏見・丸の内×居酒屋: https://nagoya-bites.com/stores/area/nishiki-fushimi/izakaya.html（251店）
 - 千種・今池・大曽根×居酒屋: https://nagoya-bites.com/stores/area/chikusa-imaike/izakaya.html（231店）
-- 矢場町・大須・上前津×居酒屋: https://nagoya-bites.com/stores/area/yabacho-osu/izakaya.html（223店）
+- 矢場町・大須・上前津×居酒屋: https://nagoya-bites.com/stores/area/yabacho-osu/izakaya.html（221店）
 
 エリア → ジャンル → 条件の全階層は、このファイル末尾の「エリア×ジャンル×条件の一覧ページ（全階層）」に載せている。
 <!-- AUTO-GENERATED:area_genre_hubs:end -->
@@ -155,7 +155,7 @@ SEO-094で新設したエリア×ジャンル×条件の一覧ページ（stores
 - Google評価・営業時間・価格帯・タグ・Instagram・食べログ・ホットペッパー
 
 ## ジャンル別店舗数
-<!-- AUTO-GENERATED:genres:start -->居酒屋 1,907 / 和食 479 / 焼肉・ホルモン 463 / ダイニングバー・バル 380 / カフェ・スイーツ 370 / イタリアン・フレンチ 274 / バー・カクテル 182 / 中華 173 / 洋食 121 / ラーメン 92 / アジア・エスニック料理 90 / 韓国料理 81 / カラオケ・パーティ 64 / 創作料理 54 / お好み焼き・もんじゃ 52 / その他グルメ 48 / 各国料理 27<!-- AUTO-GENERATED:genres:end -->
+<!-- AUTO-GENERATED:genres:start -->居酒屋 1,906 / 和食 479 / 焼肉・ホルモン 463 / ダイニングバー・バル 380 / カフェ・スイーツ 370 / イタリアン・フレンチ 274 / バー・カクテル 182 / 中華 173 / 洋食 121 / ラーメン 92 / アジア・エスニック料理 90 / 韓国料理 81 / カラオケ・パーティ 64 / 創作料理 54 / お好み焼き・もんじゃ 52 / その他グルメ 48 / 各国料理 27<!-- AUTO-GENERATED:genres:end -->
 
 ## 引用にあたって
 
@@ -176,7 +176,7 @@ SEO-094で新設したエリア×ジャンル×条件の一覧ページ（stores
 - 居酒屋・527店: https://nagoya-bites.com/stores/area/meieki/izakaya.html ／ 条件別13本: koshitsu(166) late-night(66) sunday(181) smoking-ok(169) non-smoking(246) nomihodai(357) tabehodai(76) group-30(296) walk-3(220) lunch(161) budget-3000(178) budget-5000-plus(36) parking(62)
 - 焼肉・ホルモン・103店: https://nagoya-bites.com/stores/area/meieki/yakiniku.html ／ 条件別13本: koshitsu(25) late-night(8) sunday(45) smoking-ok(26) non-smoking(43) nomihodai(52) tabehodai(10) group-30(47) walk-3(38) lunch(32) budget-3000(26) budget-5000-plus(29) parking(18)
 - 和食・100店: https://nagoya-bites.com/stores/area/meieki/washoku.html ／ 条件別11本: koshitsu(39) sunday(41) smoking-ok(9) non-smoking(82) nomihodai(42) group-30(50) walk-3(38) lunch(57) budget-3000(29) budget-5000-plus(33) parking(40)
-- ダイニングバー・バル・93店: https://nagoya-bites.com/stores/area/meieki/dining-bar.html ／ 条件別13本: koshitsu(27) late-night(13) sunday(40) smoking-ok(27) non-smoking(61) nomihodai(71) tabehodai(14) group-30(68) walk-3(33) lunch(30) budget-3000(21) budget-5000-plus(15) parking(16)
+- ダイニングバー・バル・93店: https://nagoya-bites.com/stores/area/meieki/dining-bar.html ／ 条件別13本: koshitsu(27) late-night(13) sunday(41) smoking-ok(27) non-smoking(61) nomihodai(71) tabehodai(14) group-30(68) walk-3(33) lunch(30) budget-3000(21) budget-5000-plus(15) parking(16)
 - カフェ・スイーツ・69店: https://nagoya-bites.com/stores/area/meieki/cafe.html ／ 条件別10本: koshitsu(9) sunday(34) smoking-ok(12) non-smoking(56) nomihodai(14) group-30(20) walk-3(18) lunch(44) budget-3000(50) parking(24)
 - イタリアン・フレンチ・51店: https://nagoya-bites.com/stores/area/meieki/italian-french.html ／ 条件別9本: sunday(22) non-smoking(40) nomihodai(25) group-30(26) walk-3(12) lunch(31) budget-3000(8) budget-5000-plus(18) parking(19)
 - 中華・31店: https://nagoya-bites.com/stores/area/meieki/chinese.html ／ 条件別8本: sunday(11) non-smoking(27) nomihodai(16) group-30(19) walk-3(12) lunch(22) budget-3000(20) parking(12)
@@ -188,8 +188,8 @@ SEO-094で新設したエリア×ジャンル×条件の一覧ページ（stores
 - 韓国料理・16店: https://nagoya-bites.com/stores/area/meieki/korean.html ／ 条件別3本: non-smoking(12) nomihodai(11) group-30(11)
 - 創作料理・14店: https://nagoya-bites.com/stores/area/meieki/sosaku.html ／ 条件別1本: non-smoking(9)
 
-### 栄・909店: https://nagoya-bites.com/stores/area/sakae/index.html
-- 居酒屋・354店: https://nagoya-bites.com/stores/area/sakae/izakaya.html ／ 条件別13本: koshitsu(53) late-night(85) sunday(67) smoking-ok(95) non-smoking(82) nomihodai(126) tabehodai(36) group-30(114) walk-3(126) lunch(61) budget-3000(117) budget-5000-plus(31) parking(12)
+### 栄・908店: https://nagoya-bites.com/stores/area/sakae/index.html
+- 居酒屋・353店: https://nagoya-bites.com/stores/area/sakae/izakaya.html ／ 条件別13本: koshitsu(53) late-night(84) sunday(67) smoking-ok(95) non-smoking(81) nomihodai(125) tabehodai(35) group-30(114) walk-3(125) lunch(60) budget-3000(117) budget-5000-plus(31) parking(12)
 - 焼肉・ホルモン・108店: https://nagoya-bites.com/stores/area/sakae/yakiniku.html ／ 条件別4本: late-night(35) walk-3(31) budget-3000(15) budget-5000-plus(35)
 - ダイニングバー・バル・91店: https://nagoya-bites.com/stores/area/sakae/dining-bar.html ／ 条件別13本: koshitsu(22) late-night(35) sunday(41) smoking-ok(41) non-smoking(36) nomihodai(57) tabehodai(12) group-30(55) walk-3(32) lunch(23) budget-3000(24) budget-5000-plus(14) parking(11)
 - 和食・76店: https://nagoya-bites.com/stores/area/sakae/washoku.html ／ 条件別12本: koshitsu(18) late-night(8) sunday(25) smoking-ok(15) non-smoking(41) nomihodai(27) group-30(25) walk-3(27) lunch(35) budget-3000(19) budget-5000-plus(24) parking(16)
@@ -203,8 +203,8 @@ SEO-094で新設したエリア×ジャンル×条件の一覧ページ（stores
 - 創作料理・10店: https://nagoya-bites.com/stores/area/sakae/sosaku.html
 - その他グルメ・10店: https://nagoya-bites.com/stores/area/sakae/other.html
 
-### 錦・伏見・丸の内・747店: https://nagoya-bites.com/stores/area/nishiki-fushimi/index.html
-- 居酒屋・250店: https://nagoya-bites.com/stores/area/nishiki-fushimi/izakaya.html ／ 条件別13本: koshitsu(85) late-night(64) sunday(71) smoking-ok(150) non-smoking(100) nomihodai(176) tabehodai(28) group-30(147) walk-3(110) lunch(80) budget-3000(66) budget-5000-plus(40) parking(11)
+### 錦・伏見・丸の内・748店: https://nagoya-bites.com/stores/area/nishiki-fushimi/index.html
+- 居酒屋・251店: https://nagoya-bites.com/stores/area/nishiki-fushimi/izakaya.html ／ 条件別13本: koshitsu(85) late-night(64) sunday(72) smoking-ok(151) non-smoking(100) nomihodai(177) tabehodai(28) group-30(147) walk-3(111) lunch(80) budget-3000(66) budget-5000-plus(40) parking(11)
 - 和食・118店: https://nagoya-bites.com/stores/area/nishiki-fushimi/washoku.html ／ 条件別12本: koshitsu(51) late-night(20) sunday(28) smoking-ok(36) non-smoking(81) nomihodai(50) group-30(39) walk-3(44) lunch(52) budget-3000(13) budget-5000-plus(69) parking(15)
 - ダイニングバー・バル・92店: https://nagoya-bites.com/stores/area/nishiki-fushimi/dining-bar.html ／ 条件別12本: koshitsu(19) late-night(37) sunday(37) smoking-ok(48) non-smoking(43) nomihodai(52) group-30(50) walk-3(38) lunch(24) budget-3000(16) budget-5000-plus(16) parking(8)
 - バー・カクテル・55店: https://nagoya-bites.com/stores/area/nishiki-fushimi/bar.html ／ 条件別8本: late-night(42) sunday(22) smoking-ok(38) non-smoking(17) nomihodai(16) group-30(10) walk-3(17) budget-3000(17)
@@ -217,8 +217,8 @@ SEO-094で新設したエリア×ジャンル×条件の一覧ページ（stores
 - 韓国料理・12店: https://nagoya-bites.com/stores/area/nishiki-fushimi/korean.html ／ 条件別2本: smoking-ok(8) group-30(8)
 - カラオケ・パーティ・10店: https://nagoya-bites.com/stores/area/nishiki-fushimi/karaoke.html ／ 条件別1本: nomihodai(9)
 
-### 矢場町・大須・上前津・740店: https://nagoya-bites.com/stores/area/yabacho-osu/index.html
-- 居酒屋・223店: https://nagoya-bites.com/stores/area/yabacho-osu/izakaya.html ／ 条件別13本: koshitsu(66) late-night(46) sunday(92) smoking-ok(107) non-smoking(108) nomihodai(151) tabehodai(39) group-30(135) walk-3(78) lunch(70) budget-3000(80) budget-5000-plus(27) parking(18)
+### 矢場町・大須・上前津・738店: https://nagoya-bites.com/stores/area/yabacho-osu/index.html
+- 居酒屋・221店: https://nagoya-bites.com/stores/area/yabacho-osu/izakaya.html ／ 条件別13本: koshitsu(65) late-night(45) sunday(91) smoking-ok(106) non-smoking(107) nomihodai(149) tabehodai(38) group-30(135) walk-3(76) lunch(69) budget-3000(80) budget-5000-plus(26) parking(18)
 - ダイニングバー・バル・104店: https://nagoya-bites.com/stores/area/yabacho-osu/dining-bar.html ／ 条件別13本: koshitsu(31) late-night(48) sunday(55) smoking-ok(62) non-smoking(40) nomihodai(76) tabehodai(16) group-30(72) walk-3(33) lunch(32) budget-3000(31) budget-5000-plus(17) parking(11)
 - バー・カクテル・68店: https://nagoya-bites.com/stores/area/yabacho-osu/bar.html ／ 条件別8本: koshitsu(10) late-night(41) sunday(39) smoking-ok(52) non-smoking(15) nomihodai(23) group-30(11) budget-3000(26)
 - カフェ・スイーツ・67店: https://nagoya-bites.com/stores/area/yabacho-osu/cafe.html ／ 条件別10本: late-night(9) sunday(44) smoking-ok(12) non-smoking(53) nomihodai(14) group-30(17) walk-3(17) lunch(28) budget-3000(53) parking(8)
@@ -234,7 +234,7 @@ SEO-094で新設したエリア×ジャンル×条件の一覧ページ（stores
 
 ### 千種・今池・大曽根・586店: https://nagoya-bites.com/stores/area/chikusa-imaike/index.html
 - 居酒屋・231店: https://nagoya-bites.com/stores/area/chikusa-imaike/izakaya.html ／ 条件別12本: koshitsu(64) late-night(37) sunday(106) smoking-ok(118) non-smoking(113) nomihodai(162) tabehodai(30) group-30(134) walk-3(124) lunch(50) budget-3000(90) parking(39)
-- 焼肉・ホルモン・73店: https://nagoya-bites.com/stores/area/chikusa-imaike/yakiniku.html ／ 条件別12本: koshitsu(14) sunday(57) smoking-ok(19) non-smoking(53) nomihodai(57) tabehodai(16) group-30(52) walk-3(30) lunch(25) budget-3000(16) budget-5000-plus(16) parking(36)
+- 焼肉・ホルモン・73店: https://nagoya-bites.com/stores/area/chikusa-imaike/yakiniku.html ／ 条件別12本: koshitsu(14) sunday(57) smoking-ok(20) non-smoking(52) nomihodai(57) tabehodai(16) group-30(52) walk-3(30) lunch(25) budget-3000(16) budget-5000-plus(16) parking(36)
 - カフェ・スイーツ・57店: https://nagoya-bites.com/stores/area/chikusa-imaike/cafe.html ／ 条件別6本: sunday(37) non-smoking(50) walk-3(16) lunch(25) budget-3000(36) parking(32)
 - 和食・51店: https://nagoya-bites.com/stores/area/chikusa-imaike/washoku.html ／ 条件別11本: koshitsu(15) sunday(32) smoking-ok(9) non-smoking(41) nomihodai(16) group-30(19) walk-3(13) lunch(32) budget-3000(19) budget-5000-plus(14) parking(23)
 - イタリアン・フレンチ・37店: https://nagoya-bites.com/stores/area/chikusa-imaike/italian-french.html ／ 条件別9本: koshitsu(8) sunday(22) non-smoking(31) nomihodai(18) group-30(15) walk-3(11) lunch(24) budget-5000-plus(15) parking(13)
