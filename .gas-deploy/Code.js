@@ -97,20 +97,23 @@ function sendLineMessage(text) {
 
 // ─── 日次レポート ───
 function sendDailyReport() {
-  const yesterday = getDateStr(-1);
-  const data = fetchGA4Report(yesterday, yesterday);
-  // 直帰率・平均滞在・流入元は「昨日」ではなく確定済みの日から取る（SEO-076）
-  data.settled = pickSettledSlice();
-  const report = formatDailyReport(data, yesterday);
+  // 報告する日は「確定した日」（通常 D-2）。「昨日」は GA4 の集計が終わる前に配信されるため、
+  // 訪問者数・閲覧数まで実際より少なく出ていた（2026-10-19 は 52PV と出て確定後は 112PV）。
+  // 確定済みの日を先に決め、全ての数字を同じ日で揃える（日をまたいだ数字を並べない）。
+  const settled = pickSettledSlice();
+  const reportDate = settled.date;
+  const data = fetchGA4Report(reportDate, reportDate);
+  data.settled = settled;
+  const report = formatDailyReport(data, reportDate);
 
   // LINE送信
   sendLineMessage(report);
 
   // Gmail送信（併用設定時）
   if (REPORT_EMAIL) {
-    GmailApp.sendEmail(REPORT_EMAIL, '📊 NAGOYA BITES 日次レポート ' + yesterday, report);
+    GmailApp.sendEmail(REPORT_EMAIL, '📊 NAGOYA BITES 日次レポート ' + reportDate, report);
   }
-  Logger.log('日次レポート送信完了');
+  Logger.log('日次レポート送信完了（対象日 ' + reportDate + '）');
 }
 
 // ─── 週次レポート ───
@@ -842,7 +845,7 @@ function callClaudeAdvice(apiKey, model, prompt) {
 function buildAdvicePrompt(data, a, date, isWeekly, gscKeywords) {
   const et = data.totals;
   const t = a.sessionTotals;   // 直帰率・滞在・訪問回数・流入元は確定済みの日の値（SEO-076）
-  const period = isWeekly ? 'この1週間' : (String(date || getDateStr(-1)) + '（前日）');
+  const period = isWeekly ? 'この1週間' : (String(date || getDateStr(-SETTLED_LAG_DAYS)) + '（確定済みの日）');
   const kwList = gscKeywords || [];
   const kwLines = kwList.length
     ? kwList.map(function (k) {
@@ -884,7 +887,7 @@ kwLines,
 '',
 '# ' + period + 'の実データ',
 '- 訪問者: ' + et.users + '人 ／ ページ閲覧: ' + et.pageviews,
-(a.settledDate ? '- ※ 直帰率・平均滞在・訪問回数・流入元は ' + a.settledDate + ' の確定値です（GA4はこれらの集計確定に最大48時間かかるため、前日値は使いません）。訪問者数・ページ閲覧数・人気ページ・行動イベントは ' + date + ' の値です。異なる日の数字を1つの因果として結び付けないこと。' : ''),
+((a.settledDate && a.settledDate !== date) ? '- ※ 直帰率・平均滞在・訪問回数・流入元は ' + a.settledDate + ' の確定値です（GA4はこれらの集計確定に最大48時間かかるため、前日値は使いません）。訪問者数・ページ閲覧数・人気ページ・行動イベントは ' + date + ' の値です。異なる日の数字を1つの因果として結び付けないこと。' : ''),
 '- 訪問回数(セッション): ' + t.sessions,
 '- 1訪問あたり閲覧: ' + a.pagesPerSession.toFixed(1) + 'ページ（目安2以上が良好）',
 '- 平均滞在: ' + secToText(t.avgDuration) + '（目安60秒以上）',
@@ -1087,7 +1090,7 @@ function formatDailyReport(data, date) {
   // 「どの日の確定値なのか」を後から検算できるようにするため（CLAUDE.md 制約10）。
   const settledLabel = s.date ? '（確定値・' + s.date + '）' : '';
 
-  let msg = '📊 NAGOYA BITES｜昨日のサイト状況\n';
+  let msg = '📊 NAGOYA BITES｜確定したサイト状況\n';
   msg += '📅 ' + date + '（' + weekdayJa(date) + '）\n';
   msg += '━━━━━━━━━━━━━━━\n';
   msg += '🏁 一言: ' + overallVerdict(data, a) + '\n\n';
@@ -1099,7 +1102,7 @@ function formatDailyReport(data, date) {
   // SEO-076: 直帰率・平均滞在・回遊は「昨日」だと GA4 の集計が終わっておらず 90% 台の
   // 見せかけの値が出る。確定済みの日の値を、対象日を明示して出す。
   msg += '【読まれ方' + settledLabel + '】\n';
-  if (s.date) msg += '　※GA4は直帰率・滞在・流入元の確定に最大48時間かかるため、この区画だけ確定済みの日です\n';
+  if (s.date && s.date !== date) msg += '　※GA4は直帰率・滞在・流入元の確定に最大48時間かかるため、この区画だけ確定済みの日です\n';
   msg += '　└ 1人あたり ' + a.pagesPerSession.toFixed(1) + 'ページ ' +
     healthIcon(a.pagesPerSession, BENCHMARKS.pagesPerSession) + '\n';
   msg += '⏱ 平均滞在時間: ' + secToText(st.avgDuration) + ' ' +
