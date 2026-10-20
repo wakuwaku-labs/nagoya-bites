@@ -1,0 +1,1229 @@
+{
+  "schema": "nb-ga4-baseline/1",
+  "label": "since-store-ga4",
+  "fetchedAt": "2026-10-20T15:41:50.690Z",
+  "conditions": {
+    "hostName": "nagoya-bites.com",
+    "internalTrafficFilter": "active",
+    "storePageGa4From": "2026-10-09",
+    "segmentation": {
+      "device": [
+        "mobile",
+        "desktop",
+        "other"
+      ],
+      "pageType": [
+        "top",
+        "store",
+        "hub",
+        "stores-index",
+        "feature",
+        "features-index",
+        "journal",
+        "journal-index",
+        "other"
+      ],
+      "classifier": "scripts/lib/ga4_baseline.js の classifyPage / classifyDevice"
+    },
+    "events": [
+      "search",
+      "sort_change",
+      "modal_open",
+      "fav_add",
+      "fav_remove",
+      "share_x",
+      "share_line",
+      "share_copy",
+      "outbound_click",
+      "cta_click",
+      "cta_reserve",
+      "cta_call_click",
+      "cta_gmap_click",
+      "reserve_report_yes",
+      "reserve_report_no",
+      "feature_store_click",
+      "journal_store_click",
+      "hub_store_click",
+      "internal_link_click",
+      "reel_play",
+      "feedback_open",
+      "feedback_submit",
+      "filter_apply",
+      "zero_result",
+      "related_click",
+      "call_lookup"
+    ],
+    "reservationDefinition": "scripts/lib/reservation_exits.js の dedupeReservationClicks（cta_click・cta_reserve・outbound_click をページ×リンク先で重ならないように数える）。電話は events.cta_call_click",
+    "lowCountThreshold": 30,
+    "notes": [
+      "期間は GA4 プロパティのタイムゾーンの日付",
+      "internalTrafficFilter が active でないとき、オーナーと作業者の訪問（セッション）が分母に混ざる（docs/ga4-internal-traffic-verification.md）",
+      "中央値（1セッションで見た店の数など）は Data API では取れない。平均で代える"
+    ]
+  },
+  "mode": "window",
+  "window": {
+    "start": "2026-10-09",
+    "end": "2026-10-19",
+    "days": 11,
+    "settled": true,
+    "includesStorePageGap": false,
+    "warnings": []
+  },
+  "totals": {
+    "all": {
+      "activeUsers": 945,
+      "sessions": 1038,
+      "engagedSessions": 732,
+      "screenPageViews": 1344,
+      "userEngagementDuration": 44075,
+      "eventCount": 6519,
+      "engagementRate": 0.705,
+      "bounceRate": 0.295,
+      "pagesPerSession": 1.29,
+      "engagementSecPerSession": 42.5
+    },
+    "device": {
+      "mobile": {
+        "activeUsers": 535,
+        "sessions": 608,
+        "engagedSessions": 447,
+        "screenPageViews": 784,
+        "userEngagementDuration": 25152,
+        "engagementRate": 0.735,
+        "bounceRate": 0.265,
+        "pagesPerSession": 1.29,
+        "engagementSecPerSession": 41.4
+      },
+      "desktop": {
+        "activeUsers": 402,
+        "sessions": 425,
+        "engagedSessions": 277,
+        "screenPageViews": 549,
+        "userEngagementDuration": 18710,
+        "engagementRate": 0.652,
+        "bounceRate": 0.348,
+        "pagesPerSession": 1.29,
+        "engagementSecPerSession": 44
+      },
+      "other": {
+        "activeUsers": 8,
+        "sessions": 8,
+        "engagedSessions": 8,
+        "screenPageViews": 11,
+        "userEngagementDuration": 213,
+        "engagementRate": 1,
+        "bounceRate": 0,
+        "pagesPerSession": 1.38,
+        "engagementSecPerSession": 26.6
+      }
+    },
+    "note": "端末別の activeUsers は複数の端末を使う人を二重に数える。全体の人数は all を使う"
+  },
+  "landing": {
+    "top": {
+      "all": {
+        "sessions": 55,
+        "engagedSessions": 30,
+        "engagementRate": 0.545
+      },
+      "mobile": {
+        "sessions": 33,
+        "engagedSessions": 20,
+        "engagementRate": 0.606
+      },
+      "desktop": {
+        "sessions": 22,
+        "engagedSessions": 10,
+        "engagementRate": 0.455
+      },
+      "other": {
+        "sessions": 0,
+        "engagedSessions": 0,
+        "engagementRate": null
+      }
+    },
+    "store": {
+      "all": {
+        "sessions": 277,
+        "engagedSessions": 137,
+        "engagementRate": 0.495
+      },
+      "mobile": {
+        "sessions": 131,
+        "engagedSessions": 77,
+        "engagementRate": 0.588
+      },
+      "desktop": {
+        "sessions": 143,
+        "engagedSessions": 57,
+        "engagementRate": 0.399
+      },
+      "other": {
+        "sessions": 3,
+        "engagedSessions": 3,
+        "engagementRate": 1
+      }
+    },
+    "hub": {
+      "all": {
+        "sessions": 24,
+        "engagedSessions": 14,
+        "engagementRate": 0.583
+      },
+      "mobile": {
+        "sessions": 12,
+        "engagedSessions": 10,
+        "engagementRate": 0.833
+      },
+      "desktop": {
+        "sessions": 12,
+        "engagedSessions": 4,
+        "engagementRate": 0.333
+      },
+      "other": {
+        "sessions": 0,
+        "engagedSessions": 0,
+        "engagementRate": null
+      }
+    },
+    "stores-index": {
+      "all": {
+        "sessions": 0,
+        "engagedSessions": 0,
+        "engagementRate": null
+      },
+      "mobile": {
+        "sessions": 0,
+        "engagedSessions": 0,
+        "engagementRate": null
+      },
+      "desktop": {
+        "sessions": 0,
+        "engagedSessions": 0,
+        "engagementRate": null
+      },
+      "other": {
+        "sessions": 0,
+        "engagedSessions": 0,
+        "engagementRate": null
+      }
+    },
+    "feature": {
+      "all": {
+        "sessions": 377,
+        "engagedSessions": 310,
+        "engagementRate": 0.822
+      },
+      "mobile": {
+        "sessions": 201,
+        "engagedSessions": 153,
+        "engagementRate": 0.761
+      },
+      "desktop": {
+        "sessions": 174,
+        "engagedSessions": 155,
+        "engagementRate": 0.891
+      },
+      "other": {
+        "sessions": 2,
+        "engagedSessions": 2,
+        "engagementRate": 1
+      }
+    },
+    "features-index": {
+      "all": {
+        "sessions": 0,
+        "engagedSessions": 0,
+        "engagementRate": null
+      },
+      "mobile": {
+        "sessions": 0,
+        "engagedSessions": 0,
+        "engagementRate": null
+      },
+      "desktop": {
+        "sessions": 0,
+        "engagedSessions": 0,
+        "engagementRate": null
+      },
+      "other": {
+        "sessions": 0,
+        "engagedSessions": 0,
+        "engagementRate": null
+      }
+    },
+    "journal": {
+      "all": {
+        "sessions": 280,
+        "engagedSessions": 241,
+        "engagementRate": 0.861
+      },
+      "mobile": {
+        "sessions": 218,
+        "engagedSessions": 187,
+        "engagementRate": 0.858
+      },
+      "desktop": {
+        "sessions": 59,
+        "engagedSessions": 51,
+        "engagementRate": 0.864
+      },
+      "other": {
+        "sessions": 3,
+        "engagedSessions": 3,
+        "engagementRate": 1
+      }
+    },
+    "journal-index": {
+      "all": {
+        "sessions": 0,
+        "engagedSessions": 0,
+        "engagementRate": null
+      },
+      "mobile": {
+        "sessions": 0,
+        "engagedSessions": 0,
+        "engagementRate": null
+      },
+      "desktop": {
+        "sessions": 0,
+        "engagedSessions": 0,
+        "engagementRate": null
+      },
+      "other": {
+        "sessions": 0,
+        "engagedSessions": 0,
+        "engagementRate": null
+      }
+    },
+    "other": {
+      "all": {
+        "sessions": 29,
+        "engagedSessions": 1,
+        "engagementRate": 0.034
+      },
+      "mobile": {
+        "sessions": 15,
+        "engagedSessions": 1,
+        "engagementRate": 0.067
+      },
+      "desktop": {
+        "sessions": 14,
+        "engagedSessions": 0,
+        "engagementRate": 0
+      },
+      "other": {
+        "sessions": 0,
+        "engagedSessions": 0,
+        "engagementRate": null
+      }
+    }
+  },
+  "pages": {
+    "top": {
+      "all": {
+        "views": 84,
+        "engagementSec": 1746,
+        "engagementSecPerView": 20.79
+      },
+      "mobile": {
+        "views": 52,
+        "engagementSec": 1205,
+        "engagementSecPerView": 23.17
+      },
+      "desktop": {
+        "views": 32,
+        "engagementSec": 541,
+        "engagementSecPerView": 16.91
+      },
+      "other": {
+        "views": 0,
+        "engagementSec": 0,
+        "engagementSecPerView": null
+      }
+    },
+    "store": {
+      "all": {
+        "views": 447,
+        "engagementSec": 6876,
+        "engagementSecPerView": 15.38
+      },
+      "mobile": {
+        "views": 222,
+        "engagementSec": 3130,
+        "engagementSecPerView": 14.1
+      },
+      "desktop": {
+        "views": 219,
+        "engagementSec": 3733,
+        "engagementSecPerView": 17.05
+      },
+      "other": {
+        "views": 6,
+        "engagementSec": 13,
+        "engagementSecPerView": 2.17
+      }
+    },
+    "hub": {
+      "all": {
+        "views": 30,
+        "engagementSec": 479,
+        "engagementSecPerView": 15.97
+      },
+      "mobile": {
+        "views": 14,
+        "engagementSec": 133,
+        "engagementSecPerView": 9.5
+      },
+      "desktop": {
+        "views": 16,
+        "engagementSec": 346,
+        "engagementSecPerView": 21.63
+      },
+      "other": {
+        "views": 0,
+        "engagementSec": 0,
+        "engagementSecPerView": null
+      }
+    },
+    "stores-index": {
+      "all": {
+        "views": 0,
+        "engagementSec": 0,
+        "engagementSecPerView": null
+      },
+      "mobile": {
+        "views": 0,
+        "engagementSec": 0,
+        "engagementSecPerView": null
+      },
+      "desktop": {
+        "views": 0,
+        "engagementSec": 0,
+        "engagementSecPerView": null
+      },
+      "other": {
+        "views": 0,
+        "engagementSec": 0,
+        "engagementSecPerView": null
+      }
+    },
+    "feature": {
+      "all": {
+        "views": 446,
+        "engagementSec": 18380,
+        "engagementSecPerView": 41.21
+      },
+      "mobile": {
+        "views": 238,
+        "engagementSec": 9142,
+        "engagementSecPerView": 38.41
+      },
+      "desktop": {
+        "views": 206,
+        "engagementSec": 9200,
+        "engagementSecPerView": 44.66
+      },
+      "other": {
+        "views": 2,
+        "engagementSec": 38,
+        "engagementSecPerView": 19
+      }
+    },
+    "features-index": {
+      "all": {
+        "views": 8,
+        "engagementSec": 54,
+        "engagementSecPerView": 6.75
+      },
+      "mobile": {
+        "views": 3,
+        "engagementSec": 29,
+        "engagementSecPerView": 9.67
+      },
+      "desktop": {
+        "views": 5,
+        "engagementSec": 25,
+        "engagementSecPerView": 5
+      },
+      "other": {
+        "views": 0,
+        "engagementSec": 0,
+        "engagementSecPerView": null
+      }
+    },
+    "journal": {
+      "all": {
+        "views": 319,
+        "engagementSec": 15893,
+        "engagementSecPerView": 49.82
+      },
+      "mobile": {
+        "views": 252,
+        "engagementSec": 11446,
+        "engagementSecPerView": 45.42
+      },
+      "desktop": {
+        "views": 64,
+        "engagementSec": 4285,
+        "engagementSecPerView": 66.95
+      },
+      "other": {
+        "views": 3,
+        "engagementSec": 162,
+        "engagementSecPerView": 54
+      }
+    },
+    "journal-index": {
+      "all": {
+        "views": 7,
+        "engagementSec": 635,
+        "engagementSecPerView": 90.71
+      },
+      "mobile": {
+        "views": 3,
+        "engagementSec": 67,
+        "engagementSecPerView": 22.33
+      },
+      "desktop": {
+        "views": 4,
+        "engagementSec": 568,
+        "engagementSecPerView": 142
+      },
+      "other": {
+        "views": 0,
+        "engagementSec": 0,
+        "engagementSecPerView": null
+      }
+    },
+    "other": {
+      "all": {
+        "views": 3,
+        "engagementSec": 12,
+        "engagementSecPerView": 4
+      },
+      "mobile": {
+        "views": 0,
+        "engagementSec": 0,
+        "engagementSecPerView": null
+      },
+      "desktop": {
+        "views": 3,
+        "engagementSec": 12,
+        "engagementSecPerView": 4
+      },
+      "other": {
+        "views": 0,
+        "engagementSec": 0,
+        "engagementSecPerView": null
+      }
+    }
+  },
+  "events": {
+    "feature_store_click": {
+      "total": 125,
+      "device": {
+        "mobile": 76,
+        "desktop": 49,
+        "other": 0
+      },
+      "pageType": {
+        "feature": 125
+      },
+      "cell": {
+        "feature|mobile": 76,
+        "feature|desktop": 49
+      }
+    },
+    "modal_open": {
+      "total": 36,
+      "device": {
+        "mobile": 31,
+        "desktop": 5,
+        "other": 0
+      },
+      "pageType": {
+        "top": 36
+      },
+      "cell": {
+        "top|mobile": 31,
+        "top|desktop": 5
+      }
+    },
+    "outbound_click": {
+      "total": 115,
+      "device": {
+        "mobile": 78,
+        "desktop": 35,
+        "other": 2
+      },
+      "pageType": {
+        "journal": 40,
+        "feature": 14,
+        "top": 9,
+        "store": 50,
+        "hub": 2
+      },
+      "cell": {
+        "journal|mobile": 28,
+        "feature|mobile": 14,
+        "top|mobile": 9,
+        "journal|desktop": 11,
+        "store|mobile": 26,
+        "store|desktop": 23,
+        "hub|desktop": 1,
+        "hub|mobile": 1,
+        "journal|other": 1,
+        "store|other": 1
+      }
+    },
+    "cta_gmap_click": {
+      "total": 33,
+      "device": {
+        "mobile": 21,
+        "desktop": 10,
+        "other": 2
+      },
+      "pageType": {
+        "journal": 18,
+        "top": 3,
+        "store": 12
+      },
+      "cell": {
+        "journal|mobile": 11,
+        "top|mobile": 3,
+        "journal|desktop": 6,
+        "store|mobile": 7,
+        "store|desktop": 4,
+        "journal|other": 1,
+        "store|other": 1
+      }
+    },
+    "cta_click": {
+      "total": 52,
+      "device": {
+        "mobile": 32,
+        "desktop": 20,
+        "other": 0
+      },
+      "pageType": {
+        "feature": 14,
+        "store": 37,
+        "hub": 1
+      },
+      "cell": {
+        "feature|mobile": 14,
+        "store|mobile": 18,
+        "store|desktop": 19,
+        "hub|desktop": 1
+      }
+    },
+    "search": {
+      "total": 15,
+      "device": {
+        "mobile": 11,
+        "desktop": 4,
+        "other": 0
+      },
+      "pageType": {
+        "top": 15
+      },
+      "cell": {
+        "top|mobile": 11,
+        "top|desktop": 4
+      }
+    },
+    "fav_add": {
+      "total": 4,
+      "device": {
+        "mobile": 4,
+        "desktop": 0,
+        "other": 0
+      },
+      "pageType": {
+        "top": 4
+      },
+      "cell": {
+        "top|mobile": 4
+      }
+    },
+    "fav_remove": {
+      "total": 4,
+      "device": {
+        "mobile": 4,
+        "desktop": 0,
+        "other": 0
+      },
+      "pageType": {
+        "top": 4
+      },
+      "cell": {
+        "top|mobile": 4
+      }
+    },
+    "internal_link_click": {
+      "total": 16,
+      "device": {
+        "mobile": 8,
+        "desktop": 8,
+        "other": 0
+      },
+      "pageType": {
+        "feature": 10,
+        "top": 1,
+        "journal": 5
+      },
+      "cell": {
+        "feature|desktop": 8,
+        "feature|mobile": 2,
+        "top|mobile": 1,
+        "journal|mobile": 5
+      }
+    },
+    "call_lookup": {
+      "total": 4,
+      "device": {
+        "mobile": 3,
+        "desktop": 1,
+        "other": 0
+      },
+      "pageType": {
+        "top": 3,
+        "store": 1
+      },
+      "cell": {
+        "top|mobile": 3,
+        "store|desktop": 1
+      }
+    },
+    "cta_call_click": {
+      "total": 4,
+      "device": {
+        "mobile": 3,
+        "desktop": 1,
+        "other": 0
+      },
+      "pageType": {
+        "top": 3,
+        "store": 1
+      },
+      "cell": {
+        "top|mobile": 3,
+        "store|desktop": 1
+      }
+    },
+    "filter_apply": {
+      "total": 2,
+      "device": {
+        "mobile": 0,
+        "desktop": 2,
+        "other": 0
+      },
+      "pageType": {
+        "top": 2
+      },
+      "cell": {
+        "top|desktop": 2
+      }
+    },
+    "cta_reserve": {
+      "total": 1,
+      "device": {
+        "mobile": 1,
+        "desktop": 0,
+        "other": 0
+      },
+      "pageType": {
+        "journal": 1
+      },
+      "cell": {
+        "journal|mobile": 1
+      }
+    },
+    "feedback_open": {
+      "total": 1,
+      "device": {
+        "mobile": 1,
+        "desktop": 0,
+        "other": 0
+      },
+      "pageType": {
+        "top": 1
+      },
+      "cell": {
+        "top|mobile": 1
+      }
+    },
+    "hub_store_click": {
+      "total": 1,
+      "device": {
+        "mobile": 1,
+        "desktop": 0,
+        "other": 0
+      },
+      "pageType": {
+        "hub": 1
+      },
+      "cell": {
+        "hub|mobile": 1
+      }
+    },
+    "journal_store_click": {
+      "total": 5,
+      "device": {
+        "mobile": 3,
+        "desktop": 2,
+        "other": 0
+      },
+      "pageType": {
+        "journal": 5
+      },
+      "cell": {
+        "journal|desktop": 2,
+        "journal|mobile": 3
+      }
+    },
+    "sort_change": {
+      "total": 2,
+      "device": {
+        "mobile": 1,
+        "desktop": 1,
+        "other": 0
+      },
+      "pageType": {
+        "top": 2
+      },
+      "cell": {
+        "top|desktop": 1,
+        "top|mobile": 1
+      }
+    }
+  },
+  "eventSessions": {
+    "outbound_click": {
+      "eventCount": 115,
+      "sessions": 81,
+      "device": {
+        "mobile": {
+          "eventCount": 78,
+          "sessions": 56
+        },
+        "desktop": {
+          "eventCount": 35,
+          "sessions": 23
+        },
+        "other": {
+          "eventCount": 2,
+          "sessions": 2
+        }
+      }
+    },
+    "feature_store_click": {
+      "eventCount": 125,
+      "sessions": 72,
+      "device": {
+        "mobile": {
+          "eventCount": 76,
+          "sessions": 38
+        },
+        "desktop": {
+          "eventCount": 49,
+          "sessions": 34
+        },
+        "other": {
+          "eventCount": 0,
+          "sessions": 0
+        }
+      }
+    },
+    "cta_click": {
+      "eventCount": 52,
+      "sessions": 32,
+      "device": {
+        "mobile": {
+          "eventCount": 32,
+          "sessions": 20
+        },
+        "desktop": {
+          "eventCount": 20,
+          "sessions": 12
+        },
+        "other": {
+          "eventCount": 0,
+          "sessions": 0
+        }
+      }
+    },
+    "modal_open": {
+      "eventCount": 36,
+      "sessions": 13,
+      "device": {
+        "mobile": {
+          "eventCount": 31,
+          "sessions": 9
+        },
+        "desktop": {
+          "eventCount": 5,
+          "sessions": 4
+        },
+        "other": {
+          "eventCount": 0,
+          "sessions": 0
+        }
+      }
+    },
+    "cta_gmap_click": {
+      "eventCount": 33,
+      "sessions": 31,
+      "device": {
+        "mobile": {
+          "eventCount": 21,
+          "sessions": 20
+        },
+        "desktop": {
+          "eventCount": 10,
+          "sessions": 9
+        },
+        "other": {
+          "eventCount": 2,
+          "sessions": 2
+        }
+      }
+    },
+    "search": {
+      "eventCount": 15,
+      "sessions": 9,
+      "device": {
+        "mobile": {
+          "eventCount": 11,
+          "sessions": 6
+        },
+        "desktop": {
+          "eventCount": 4,
+          "sessions": 3
+        },
+        "other": {
+          "eventCount": 0,
+          "sessions": 0
+        }
+      }
+    },
+    "internal_link_click": {
+      "eventCount": 16,
+      "sessions": 12,
+      "device": {
+        "mobile": {
+          "eventCount": 8,
+          "sessions": 7
+        },
+        "desktop": {
+          "eventCount": 8,
+          "sessions": 5
+        },
+        "other": {
+          "eventCount": 0,
+          "sessions": 0
+        }
+      }
+    },
+    "fav_add": {
+      "eventCount": 4,
+      "sessions": 2,
+      "device": {
+        "mobile": {
+          "eventCount": 4,
+          "sessions": 2
+        },
+        "desktop": {
+          "eventCount": 0,
+          "sessions": 0
+        },
+        "other": {
+          "eventCount": 0,
+          "sessions": 0
+        }
+      }
+    },
+    "fav_remove": {
+      "eventCount": 4,
+      "sessions": 2,
+      "device": {
+        "mobile": {
+          "eventCount": 4,
+          "sessions": 2
+        },
+        "desktop": {
+          "eventCount": 0,
+          "sessions": 0
+        },
+        "other": {
+          "eventCount": 0,
+          "sessions": 0
+        }
+      }
+    },
+    "call_lookup": {
+      "eventCount": 4,
+      "sessions": 4,
+      "device": {
+        "mobile": {
+          "eventCount": 3,
+          "sessions": 3
+        },
+        "desktop": {
+          "eventCount": 1,
+          "sessions": 1
+        },
+        "other": {
+          "eventCount": 0,
+          "sessions": 0
+        }
+      }
+    },
+    "cta_call_click": {
+      "eventCount": 4,
+      "sessions": 4,
+      "device": {
+        "mobile": {
+          "eventCount": 3,
+          "sessions": 3
+        },
+        "desktop": {
+          "eventCount": 1,
+          "sessions": 1
+        },
+        "other": {
+          "eventCount": 0,
+          "sessions": 0
+        }
+      }
+    },
+    "journal_store_click": {
+      "eventCount": 5,
+      "sessions": 5,
+      "device": {
+        "mobile": {
+          "eventCount": 3,
+          "sessions": 3
+        },
+        "desktop": {
+          "eventCount": 2,
+          "sessions": 2
+        },
+        "other": {
+          "eventCount": 0,
+          "sessions": 0
+        }
+      }
+    },
+    "filter_apply": {
+      "eventCount": 2,
+      "sessions": 2,
+      "device": {
+        "mobile": {
+          "eventCount": 0,
+          "sessions": 0
+        },
+        "desktop": {
+          "eventCount": 2,
+          "sessions": 2
+        },
+        "other": {
+          "eventCount": 0,
+          "sessions": 0
+        }
+      }
+    },
+    "cta_reserve": {
+      "eventCount": 1,
+      "sessions": 1,
+      "device": {
+        "mobile": {
+          "eventCount": 1,
+          "sessions": 1
+        },
+        "desktop": {
+          "eventCount": 0,
+          "sessions": 0
+        },
+        "other": {
+          "eventCount": 0,
+          "sessions": 0
+        }
+      }
+    },
+    "feedback_open": {
+      "eventCount": 1,
+      "sessions": 1,
+      "device": {
+        "mobile": {
+          "eventCount": 1,
+          "sessions": 1
+        },
+        "desktop": {
+          "eventCount": 0,
+          "sessions": 0
+        },
+        "other": {
+          "eventCount": 0,
+          "sessions": 0
+        }
+      }
+    },
+    "hub_store_click": {
+      "eventCount": 1,
+      "sessions": 1,
+      "device": {
+        "mobile": {
+          "eventCount": 1,
+          "sessions": 1
+        },
+        "desktop": {
+          "eventCount": 0,
+          "sessions": 0
+        },
+        "other": {
+          "eventCount": 0,
+          "sessions": 0
+        }
+      }
+    },
+    "sort_change": {
+      "eventCount": 2,
+      "sessions": 2,
+      "device": {
+        "mobile": {
+          "eventCount": 1,
+          "sessions": 1
+        },
+        "desktop": {
+          "eventCount": 1,
+          "sessions": 1
+        },
+        "other": {
+          "eventCount": 0,
+          "sessions": 0
+        }
+      }
+    }
+  },
+  "reservation": {
+    "total": 65,
+    "device": {
+      "mobile": 44,
+      "desktop": 21,
+      "other": 0
+    },
+    "pageType": {
+      "journal": 5,
+      "feature": 18,
+      "top": 3,
+      "store": 37,
+      "hub": 2
+    },
+    "cell": {
+      "journal|mobile": 4,
+      "feature|mobile": 18,
+      "top|mobile": 3,
+      "journal|desktop": 1,
+      "store|mobile": 18,
+      "store|desktop": 19,
+      "hub|desktop": 1,
+      "hub|mobile": 1,
+      "journal|other": 0,
+      "store|other": 0
+    }
+  },
+  "lowCount": {
+    "threshold": 30,
+    "events": {
+      "modal_open": [
+        "top|desktop"
+      ],
+      "outbound_click": [
+        "feature|mobile",
+        "hub|desktop",
+        "hub|mobile",
+        "journal|desktop",
+        "journal|mobile",
+        "journal|other",
+        "store|desktop",
+        "store|mobile",
+        "store|other",
+        "top|mobile"
+      ],
+      "cta_gmap_click": [
+        "journal|desktop",
+        "journal|mobile",
+        "journal|other",
+        "store|desktop",
+        "store|mobile",
+        "store|other",
+        "top|mobile"
+      ],
+      "cta_click": [
+        "feature|mobile",
+        "hub|desktop",
+        "store|desktop",
+        "store|mobile"
+      ],
+      "search": [
+        "top|desktop",
+        "top|mobile"
+      ],
+      "fav_add": [
+        "top|mobile"
+      ],
+      "fav_remove": [
+        "top|mobile"
+      ],
+      "internal_link_click": [
+        "feature|desktop",
+        "feature|mobile",
+        "journal|mobile",
+        "top|mobile"
+      ],
+      "call_lookup": [
+        "store|desktop",
+        "top|mobile"
+      ],
+      "cta_call_click": [
+        "store|desktop",
+        "top|mobile"
+      ],
+      "filter_apply": [
+        "top|desktop"
+      ],
+      "cta_reserve": [
+        "journal|mobile"
+      ],
+      "feedback_open": [
+        "top|mobile"
+      ],
+      "hub_store_click": [
+        "hub|mobile"
+      ],
+      "journal_store_click": [
+        "journal|desktop",
+        "journal|mobile"
+      ],
+      "sort_change": [
+        "top|desktop",
+        "top|mobile"
+      ]
+    },
+    "reservation": [
+      "feature|mobile",
+      "hub|desktop",
+      "hub|mobile",
+      "journal|desktop",
+      "journal|mobile",
+      "store|desktop",
+      "store|mobile",
+      "top|mobile"
+    ]
+  },
+  "notes": [],
+  "landingDimension": "landingPagePlusQueryString"
+}
