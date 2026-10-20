@@ -418,7 +418,7 @@
 
 ### [ISSUE-149] 掲載店の予約送客を店舗別・経路別に計測し、自分たち側だけで予約申告を受ける出口を作る
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **due**: 2026-10-16
 - **category**: 計測
@@ -431,6 +431,7 @@
   1. `npm test` と `audit_inline_js_syntax.js --check`・`audit_design_system.js --check` が通る（PR 時点で確認済み）
   2. 2026-10-16 に `data/store_referrals.json` の `stores` に店名つきの送客が入っていること、`totals.exits.tabelog` が 0 でないか、0 なら GA4 の `cta_click`（link_domain=tabelog.com）を直接見て原因を書く
   3. 同日、`reserve_report_yes` / `reserve_report_no` が GA4 に1件以上届いているかを記録する（0 件でも失敗にしない。件数をそのまま残す）
+- **確認結果（2026-10-21）**: `data/store_referrals.json`（生成 10/20）で stores 46店に店名つきの送客が入っている。`totals.exits` は hotpepper 72・tabelog 11（0でない）・tel 4・合計87。`reserve_report_yes`/`no` は 0 件（失敗にしない記録）。acceptance 2・3 を満たした
 - **関連**: [[ISSUE-150]] [[ISSUE-151]] [[ISSUE-152]] [[ISSUE-153]]／[[SEO-089]]（予約ドメインの outbound_click）／[[SEO-105]]（電話CTA）
 
 ### [ISSUE-150] 週次レポートの「予約送客 上位の店」を GAS 本体に反映する
