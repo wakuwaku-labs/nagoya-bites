@@ -18,8 +18,10 @@ const N = require('./lib/note_browser');
     if (check) { console.log('note: 未ログインです。node scripts/note_login.js を実行してください'); process.exitCode = 1; return; }
     console.log('開いた窓で note にログインしてください（最大10分待ちます）');
     await page.goto('https://note.com/login', { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => !/\/login/.test(location.pathname), { timeout: 600000, polling: 1000 });
+    // Google・X・Apple の画面に移っている間は待ち続け、note に戻って /login を離れたら成功とみなす
+    await page.waitForFunction(() => /(^|\.)note\.com$/.test(location.hostname) && !/\/login|\/oauth/.test(location.pathname), { timeout: 600000, polling: 1000 });
     await new Promise((r) => setTimeout(r, 3000));
+    if (!(await N.isLoggedIn(page))) throw new Error('ログイン状態が保存されませんでした');
     console.log('note: ログインを確認しました。保存先: ' + N.PROFILE_DIR);
   } finally { await browser.close(); }
 })().catch((e) => { console.error('note_login 失敗:', e.message); process.exit(1); });
