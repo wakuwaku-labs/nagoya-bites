@@ -1,5 +1,36 @@
 status: in_progress
 
+# note への自動投稿を始める（2026-10-21〜）
+
+## 目的
+- 日次ジャーナルを note にも自動で出し、note 経由の流入を作る（オーナー 2026-10-21）
+
+## 完了条件
+- 毎朝、記事公開後に note へ下書き（のちに公開）が自動で入り、元記事へ UTM つきで戻れる
+- 検査（言い方・数字・UTM）に落ちた日は送らず、理由が残る
+
+## できていること
+- 第1段（外部送信なし）: `data/note_post_policy.json`（mode=dry-run）・`scripts/lib/note_draft.js`・`scripts/build_note_draft.js`・`tests/note_draft.test.js`（2件通過）・ADR 0054・registry 行。2026-10-21 の記事で下書き生成・検査通過を確認
+- 本文は抜粋（導入＋最初の節＋ポイント）＋元記事リンク。全文の二重掲載を避ける既定
+
+## 次にやること
+1. 【本人】note の利用規約の確認と、投稿用アカウントのログイン（公式の投稿 API は見当たらない）
+2. 送信部: puppeteer（導入済み）で note エディタに「下書き保存」まで自動化（mode=draft）。ログイン状態は Mac のプロファイルに保存
+3. 毎朝の流れへ接続（run_journal_local.sh の公開後）＋見張り役（X 版 x-post-watchdog 相当）
+4. 数日 draft で運用し、問題なければ live を本人に確認
+
+## 試したが駄目だったこと
+- なし（WebSearch で規約本文は未確認）
+
+## 守るルール・判断メモ
+- 公開・送信は本人の OK が出るまで mode を上げない。文面に「業界人が選んだ」等を書かない（検査済み）
+
+## 関連ファイル
+- data/note_post_policy.json・scripts/lib/note_draft.js・scripts/build_note_draft.js・docs/decisions/0054-note-draft-excerpt.md・docs/daily-posts/README.md
+
+---
+# 前の作業（GA4 閲覧数の調査・未完。次の手順は下に残す）
+
 # 閲覧数の下がりの調査と、日次レポートの対象日の是正（2026-10-21〜）
 
 （前のメモ「UI・UX のアニメーション導入計画」は status: done。中身は git 履歴の直前の HANDOFF.md と docs/animation-plan-2026-10.md）
