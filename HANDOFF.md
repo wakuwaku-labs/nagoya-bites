@@ -22,6 +22,7 @@ status: in_progress
 ## 試したが駄目だったこと
 - なし（WebSearch で規約本文は未確認）
 - 2026-10-21 Chrome で note.com/notes/new を開いたが未ログイン（ログイン画面）。ログインは本人作業
+- 2026-10-21 送信部は書き終えたが未検証。ログイン後に窓を閉じると未ログインに戻る（セッション Cookie とみられる）→ note_login.js が Cookie を ~/.config/nagoya-bites/note-cookies.json に保存し開くたびに復元する形に修正。再ログイン待ち。通ったら `node scripts/post_note.js --date 2026-10-21 --mode draft` で下書き1本を試す
 
 ## 守るルール・判断メモ
 - 公開・送信は本人の OK が出るまで mode を上げない。文面に「業界人が選んだ」等を書かない（検査済み）
