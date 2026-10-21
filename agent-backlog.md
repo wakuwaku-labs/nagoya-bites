@@ -8904,6 +8904,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-10-21 | Orchestrator(routine) | 安全タスク調査 — ready 全18件を精査した結果、実装可能な安全タスクはゼロ（前日と同じ状況）。全件が未到来の期日またはオーナー操作待ち。正常終了（0件処理は許容）。 | ⏸ 実装なし |
 | 2026-10-20 | Orchestrator(routine) | 安全タスク調査 — ready 全18件を精査した結果、実装可能な安全タスクはゼロ。内訳: 未到来の期日(SEO-148/11-06・SEO-140/11-15・SEO-141/11-30・SEO-126/11-15・SEO-130/11-15・SEO-123/11-15・SEO-128/11-20・SEO-129/11-20・ISSUE-172/11-09・ISSUE-186/11-09・ISSUE-179/11-08・ISSUE-192会席/11-14・ISSUE-192Places/11-15・SEO-116/12-15) / オーナー操作待ち(ISSUE-165 Instagram確認・ISSUE-151 予約計測判断・SEO-142 sameAs URL確認・SEO-098 Instagram UTM)。正常終了（0件処理は許容）。 | ⏸ 実装なし |
 | 2026-10-15 | Marketer(routine) | SEO-125 実装完了 — `data/gsc_metrics.json`（2026-10-14T21:19Z・28日）から area_hub 31本・95表示・1クリック・平均順位14.3 を `docs/kpi-weekly.md` に記録。`docs/qa/hub-impressions-baseline-2026-10-15.json`（774本）を更新（ジャンル14本・条件17本・エリア0本に表示あり）。全条件ページは公開31〜60日未満のため11-15の noindex 判定は11-13以降に実施。status: ready → done | ✅ 本コミット |
 | 2026-10-04 | Orchestrator(routine) | SEO-112 done化: pagesFetched=3156・pageTypes/homeQueries実在確認（2026-10-03 GSC）。homeQueriesは指名検索→Strategic Skip | ✅ backlog更新 |
