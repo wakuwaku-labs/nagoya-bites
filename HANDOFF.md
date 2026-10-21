@@ -25,6 +25,7 @@ status: in_progress
 - 2026-10-21 送信部は書き終えたが未検証。ログイン後に窓を閉じると未ログインに戻る（セッション Cookie とみられる）→ note_login.js が Cookie を ~/.config/nagoya-bites/note-cookies.json に保存し開くたびに復元する形に修正。再ログイン待ち。通ったら `node scripts/post_note.js --date 2026-10-21 --mode draft` で下書き1本を試す
 
 ## 守るルール・判断メモ
+- Google ログインは自動操作の窓で拒否される（accounts.google.com/v3/signin/rejected・2026-10-21 実測）。メール/パスワードでのログインを既定にした（autopilot の自動回答＝推奨案。本人の明示回答ではない。X/Apple や普段の Chrome を使う方式は未採用）
 - 公開・送信は本人の OK が出るまで mode を上げない。文面に「業界人が選んだ」等を書かない（検査済み）
 
 ## 関連ファイル
