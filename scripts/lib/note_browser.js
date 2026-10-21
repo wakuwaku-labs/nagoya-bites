@@ -11,6 +11,7 @@ async function launch({ headless }) {
   return puppeteer.launch({
     executablePath: CHROME, headless, userDataDir: PROFILE_DIR,
     defaultViewport: headless ? { width: 1280, height: 900 } : null,
+    ignoreDefaultArgs: headless ? [] : ['--enable-automation'], // 本人がログインする窓では「自動操作中」の表示を出さない（Google ログインが通らないことがある）
     args: ['--no-first-run', '--no-default-browser-check'],
   });
 }
