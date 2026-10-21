@@ -21,11 +21,12 @@ const N = require('./lib/note_browser');
     // Google・X・Apple の画面に移っている間は待ち続け、note に戻って /login を離れたら成功とみなす。
     // 画面遷移で waitForFunction が壊れることがあるので、自分で一定間隔に見に行く
     const end = Date.now() + 600000;
-    let ok = false;
+    let ok = false, tick = 0;
     while (Date.now() < end && !ok) {
       await new Promise((r) => setTimeout(r, 2000));
       if (!browser.connected) throw new Error('ログイン窓が閉じられました。ログインが終わる前に閉じないでください');
       const pages = await browser.pages();
+      if (++tick % 15 === 0) console.log('待機中の画面: ' + pages.map((p) => { try { const u = new URL(p.url()); return u.hostname + u.pathname; } catch { return p.url(); } }).join(' | '));
       ok = pages.some((p) => { try { const u = new URL(p.url()); return /(^|\.)note\.com$/.test(u.hostname) && !/\/login|\/oauth/.test(u.pathname); } catch { return false; } });
     }
     if (!ok) throw new Error('10分以内にログインが終わりませんでした');
