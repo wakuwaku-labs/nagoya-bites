@@ -31,6 +31,8 @@ const N = require('./lib/note_browser');
     if (!ok) throw new Error('10分以内にログインが終わりませんでした');
     await new Promise((r) => setTimeout(r, 3000));
     if (!(await N.isLoggedIn(page))) throw new Error('ログイン状態が保存されませんでした');
+    const n = await N.saveCookies(page);
+    console.log(`note: Cookie ${n}件を保存しました`);
     console.log('note: ログインを確認しました。保存先: ' + N.PROFILE_DIR);
   } finally { await browser.close(); }
 })().catch((e) => { console.error('note_login 失敗:', e.message); process.exit(1); });

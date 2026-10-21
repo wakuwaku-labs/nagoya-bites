@@ -30,6 +30,7 @@ function editorLines(body) {
 }
 
 async function fillEditor(page, draft) {
+  await B.restoreCookies(page);
   await page.goto('https://editor.note.com/new', { waitUntil: 'networkidle2', timeout: 60000 });
   if (/login/.test(page.url())) throw new Error('未ログイン（node scripts/note_login.js が必要）');
   const title = await page.waitForSelector('textarea[placeholder*="タイトル"], [placeholder*="タイトル"]', { timeout: 30000 });
