@@ -18,8 +18,17 @@ const N = require('./lib/note_browser');
     if (check) { console.log('note: 未ログインです。node scripts/note_login.js を実行してください'); process.exitCode = 1; return; }
     console.log('開いた窓で note にログインしてください（最大10分待ちます）');
     await page.goto('https://note.com/login', { waitUntil: 'domcontentloaded' });
-    // Google・X・Apple の画面に移っている間は待ち続け、note に戻って /login を離れたら成功とみなす
-    await page.waitForFunction(() => /(^|\.)note\.com$/.test(location.hostname) && !/\/login|\/oauth/.test(location.pathname), { timeout: 600000, polling: 1000 });
+    // Google・X・Apple の画面に移っている間は待ち続け、note に戻って /login を離れたら成功とみなす。
+    // 画面遷移で waitForFunction が壊れることがあるので、自分で一定間隔に見に行く
+    const end = Date.now() + 600000;
+    let ok = false;
+    while (Date.now() < end && !ok) {
+      await new Promise((r) => setTimeout(r, 2000));
+      if (!browser.connected) throw new Error('ログイン窓が閉じられました。ログインが終わる前に閉じないでください');
+      const pages = await browser.pages();
+      ok = pages.some((p) => { try { const u = new URL(p.url()); return /(^|\.)note\.com$/.test(u.hostname) && !/\/login|\/oauth/.test(u.pathname); } catch { return false; } });
+    }
+    if (!ok) throw new Error('10分以内にログインが終わりませんでした');
     await new Promise((r) => setTimeout(r, 3000));
     if (!(await N.isLoggedIn(page))) throw new Error('ログイン状態が保存されませんでした');
     console.log('note: ログインを確認しました。保存先: ' + N.PROFILE_DIR);
