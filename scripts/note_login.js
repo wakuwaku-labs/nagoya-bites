@@ -18,6 +18,13 @@ const N = require('./lib/note_browser');
     if (check) { console.log('note: 未ログインです。node scripts/note_login.js を実行してください'); process.exitCode = 1; return; }
     console.log('開いた窓で note にログインしてください（最大10分待ちます）');
     await page.goto('https://note.com/login', { waitUntil: 'domcontentloaded' });
+    // 裏で起動した窓は他のアプリの後ろに隠れるので、前面に出し、通知も出す
+    for (const p of await browser.pages()) if (p !== page) await p.close().catch(() => {});
+    await page.bringToFront();
+    try {
+      const { execFileSync } = require('child_process');
+      execFileSync('osascript', ['-e', 'tell application "Google Chrome" to activate', '-e', 'display notification "note にログインしてください（この窓です）" with title "NAGOYA BITES"'], { timeout: 10000 });
+    } catch { /* 通知に失敗しても続ける */ }
     // Google・X・Apple の画面に移っている間は待ち続け、note に戻って /login を離れたら成功とみなす。
     // 画面遷移で waitForFunction が壊れることがあるので、自分で一定間隔に見に行く
     const end = Date.now() + 600000;
