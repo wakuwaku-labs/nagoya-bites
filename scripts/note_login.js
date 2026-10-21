@@ -30,8 +30,8 @@ const N = require('./lib/note_browser');
     }
     if (!ok) throw new Error('10分以内にログインが終わりませんでした');
     await new Promise((r) => setTimeout(r, 3000));
+    const n = await N.saveCookies(page); // 古い Cookie で上書きされる前に、いまの状態を先に保存する
     if (!(await N.isLoggedIn(page))) throw new Error('ログイン状態が保存されませんでした');
-    const n = await N.saveCookies(page);
     console.log(`note: Cookie ${n}件を保存しました`);
     console.log('note: ログインを確認しました。保存先: ' + N.PROFILE_DIR);
   } finally { await browser.close(); }
