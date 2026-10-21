@@ -56097,7 +56097,7 @@
     "storeName": "TRUNK COFFEE",
     "kind": "tabelog",
     "area": "東区",
-    "checkedAt": "2026-10-14T00:16:49.616Z"
+    "checkedAt": "2026-10-21T19:24:54.831Z"
   },
   "bfbc67e3a5d091455e954c58ad59f32d": {
     "ok": false,
@@ -56107,7 +56107,7 @@
     "storeName": "コメダ珈琲 本店",
     "kind": "tabelog",
     "area": "昭和区",
-    "checkedAt": "2026-10-13T07:43:05.647Z"
+    "checkedAt": "2026-10-21T19:24:50.104Z"
   },
   "2abc3ae17ee18e215a16db965a51f87e": {
     "ok": false,
@@ -120637,7 +120637,7 @@
     "storeName": "LA VAGABONDE -ラ・ヴァガボンド-",
     "kind": "tabelog",
     "area": "名古屋市中区千代田",
-    "checkedAt": "2026-10-13T00:18:44.576Z"
+    "checkedAt": "2026-10-21T19:24:44.262Z"
   },
   "c5e8d8d6c469aefd2238632f892a6b04": {
     "ok": true,
@@ -124676,5 +124676,57 @@
     "kind": "hotpepper",
     "area": "栄(ミナミ)/矢場町/大須/上前津",
     "checkedAt": "2026-10-20T12:35:09.614Z"
+  },
+  "2097af3e4176a780dac0e66faaf31f6a": {
+    "ok": false,
+    "reason": "fetch-error",
+    "error": "HTTP 403",
+    "url": "https://tabelog.com/aichi/A2301/A230107/23058864/",
+    "storeName": "覚王山カフェ Ji.Coo. (ジクー)",
+    "kind": "tabelog",
+    "area": "名古屋市千種区",
+    "checkedAt": "2026-10-21T19:24:38.305Z"
+  },
+  "df3b83add7cff36827161181fe291a83": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "炭焼うなぎとしゃぶしゃぶ ふじさん",
+    "shopState": "【10/8 OPEN】",
+    "closed": false,
+    "storeName": "炭焼うなぎとしゃぶしゃぶ ふじさん 名駅店",
+    "title": "炭焼うなぎとしゃぶしゃぶ ふじさん(名古屋駅/居酒屋)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004090812/",
+    "kind": "hotpepper",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-10-21T19:25:01.313Z"
+  },
+  "adfba50a0743a37a6ac2a1ad37d97419": {
+    "ok": false,
+    "reason": "name-mismatch",
+    "sim": 0.35,
+    "matchedName": "焼肉 徳川苑のご予約 - 久屋大通/焼肉・ホルモン",
+    "shopState": null,
+    "closed": false,
+    "storeName": "焼肉 徳川苑",
+    "title": "焼肉 徳川苑のご予約 - 久屋大通/焼肉・ホルモン",
+    "url": "https://www.hotpepper.jp/strJ001276642/",
+    "kind": "hotpepper",
+    "area": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+    "checkedAt": "2026-10-21T19:25:07.865Z"
+  },
+  "aa4b942f2af18e5dee7bbbd0d6e999d4": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "宴会 貸切　英吉利西屋(エゲレスヤ) 本店　栄 伏見",
+    "shopState": null,
+    "closed": false,
+    "storeName": "宴会 貸切　英吉利西屋(エゲレスヤ) 本店　栄 伏見",
+    "title": "宴会 貸切　英吉利西屋(エゲレスヤ) 本店　栄 伏見(伏見駅/居酒屋)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004678947/",
+    "kind": "hotpepper",
+    "area": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+    "checkedAt": "2026-10-21T19:25:13.902Z"
   }
 }
