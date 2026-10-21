@@ -29,6 +29,8 @@ status: in_progress
 - 方針転換: 自動操作の窓では Google ログイン不可・パスワード有無は未確認（「できない」の理由への自動回答は本人の回答ではない）。普段の Chrome（Claude in Chrome）で本人が Google ログインし、拡張経由で下書きを作る案に切替中。毎朝の無人運転には不向き（Chrome 起動が前提）→ 後で再設計
 - 2026-10-21 夜: Claude in Chrome（別プロファイル）で本人が Google ログイン済みになった。未ログイン時の保存は `draft_save` が 201 で本文に error `not_login`（HTTP が成功でも本文で失敗する・UI は「下書きの保存に失敗しました」）。ログイン後に新規作成 editor.note.com/new を開くと真っ白のまま読み込みが終わらない（3回再現・原因未特定）。エディタへの流し込み（title は textarea に native setter＋input、本文は ProseMirror へ text/html の paste イベント）は動作確認済み。保存は JS の click でなく実クリックが必要かは未確認
 - 無人運転は Chrome 起動が前提の拡張方式に不向き。候補: ログイン済み Cookie を専用プロファイルへ複製（認証情報に触れるので実行前に本人の了承）
+- 2026-10-22 00:59 下書き保存に成功（下書き ID n05b5a2fb7763・NAGOYA BITES アカウント・Claude in Chrome 経由・公開はしていない）。白い作成画面の原因は、メール認証が未完了の別アカウント（vide太郎・iCloud メール）でログインしていたため。NAGOYA BITES で入り直すと /notes/new が editor.note.com/notes/<id>/edit/ に飛び、流し込み→実クリックの「下書き保存」→ draft_save の本文 result:true で保存できた（HTTP は常に 201 なので本文の result を見る）
+- 次: 毎朝の無人運転の方式（puppeteer の専用プロファイルへ Google ログインは拒否される。ログイン済み Cookie の複製は本人の了承が要る）。scripts/post_note.js の画面操作は Claude in Chrome で確かめた部品（textarea・ProseMirror・「下書き保存」「公開に進む」）に合わせて再点検する
 - 公開・送信は本人の OK が出るまで mode を上げない。文面に「業界人が選んだ」等を書かない（検査済み）
 
 ## 関連ファイル
