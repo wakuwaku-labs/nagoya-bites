@@ -19,7 +19,7 @@ function copyFromChrome() {
   const fs = require('fs');
   const os = require('os');
   const path = require('path');
-  const src = path.join(os.homedir(), 'Library/Application Support/Google/Chrome', process.env.NOTE_CHROME_PROFILE || 'Default', 'Cookies');
+  const src = path.join(os.homedir(), 'Library/Application Support/Google/Chrome', process.env.NOTE_CHROME_PROFILE || (() => { try { return require('./lib/note_draft').loadPolicy(path.join(__dirname, '..')).account.chromeProfile; } catch { return null; } })() || 'Default', 'Cookies');
   const dstDir = path.join(N.PROFILE_DIR, 'Default');
   fs.mkdirSync(dstDir, { recursive: true });
   const dst = path.join(dstDir, 'Cookies');
