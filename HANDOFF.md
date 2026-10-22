@@ -33,7 +33,8 @@ status: in_progress
 - 次: 毎朝の無人運転の方式（puppeteer の専用プロファイルへ Google ログインは拒否される。ログイン済み Cookie の複製は本人の了承が要る）。scripts/post_note.js の画面操作は Claude in Chrome で確かめた部品（textarea・ProseMirror・「下書き保存」「公開に進む」）に合わせて再点検する
 - 2026-10-22 方式A（本人了承）: `node scripts/note_login.js --from-chrome` で普段の Chrome の note.com の Cookie だけを専用プロファイルへ複製（暗号化のまま・値は読まない）。_note_session_v5 は永続（期限 2027-01）で、以前の「閉じると消える」推測は誤り（本当の原因は Google ログイン拒否）。puppeteer は --use-mock-keychain を外さないと復号できない
 - 2026-10-22 `node scripts/post_note.js --date 2026-10-21 --mode draft` が通った（下書き nb20482482b6b・応答 result:true を確認・台帳 data/note_post_log.json）。画面なし（headless）は下書き作成 API が 403 で拒否されるため窓ありで動かす（30秒ほど窓が出る）。editor.note.com/new 直打ちは白いまま→note.com/notes/new から入る。note に同じ記事の下書きが3本（n05b5a2fb7763・nb20482482b6b・空の n62962c4b7829）→本人が1本残して削除
-- 次: 毎朝の記事公開の流れへ接続（run_journal_local.sh の後ろ）＋見張り役。Cookie の更新（期限 2027-01 または note 側の失効）で未ログインになったら Issue で知らせる
+- 2026-10-22 run_journal_local.sh の最終 push 後に post_note.js を非ブロッキングで接続（policy mode=draft）。失敗は macOS 通知（GitHub Issue の見張り役は未実装）。台帳は .gitignore（作業ツリーを汚さないため）。窓が毎朝30秒ほど出る→本人の許容は未確認
+- 次(旧): 毎朝の記事公開の流れへ接続（run_journal_local.sh の後ろ）＋見張り役。Cookie の更新（期限 2027-01 または note 側の失効）で未ログインになったら Issue で知らせる
 - 公開・送信は本人の OK が出るまで mode を上げない。文面に「業界人が選んだ」等を書かない（検査済み）
 
 ## 関連ファイル
