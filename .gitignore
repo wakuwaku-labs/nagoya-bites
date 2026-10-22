@@ -17,3 +17,5 @@ journal/drafts/
 # ログディレクトリ自体を残骸と誤認しstash退避→ログ出力先が消えて claude 実行時のリダイレクトが
 # 失敗する事故が起きる。2026-07-25 実発生）
 .local-logs/
+data/note_drafts/
+data/note_post_log.json

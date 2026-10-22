@@ -1,5 +1,48 @@
 status: in_progress
 
+# note への自動投稿を始める（2026-10-21〜）
+
+## 目的
+- 日次ジャーナルを note にも自動で出し、note 経由の流入を作る（オーナー 2026-10-21）
+
+## 完了条件
+- 毎朝、記事公開後に note へ下書き（のちに公開）が自動で入り、元記事へ UTM つきで戻れる
+- 検査（言い方・数字・UTM）に落ちた日は送らず、理由が残る
+
+## できていること
+- 第1段（外部送信なし）: `data/note_post_policy.json`（mode=dry-run）・`scripts/lib/note_draft.js`・`scripts/build_note_draft.js`・`tests/note_draft.test.js`（2件通過）・ADR 0054・registry 行。2026-10-21 の記事で下書き生成・検査通過を確認
+- 本文は抜粋（導入＋最初の節＋ポイント）＋元記事リンク。全文の二重掲載を避ける既定
+
+## 次にやること
+1. 【本人】note の利用規約の確認と、投稿用アカウントのログイン（公式の投稿 API は見当たらない）
+2. 送信部: puppeteer（導入済み）で note エディタに「下書き保存」まで自動化（mode=draft）。ログイン状態は Mac のプロファイルに保存
+3. 毎朝の流れへ接続（run_journal_local.sh の公開後）＋見張り役（X 版 x-post-watchdog 相当）
+4. 数日 draft で運用し、問題なければ live を本人に確認
+
+## 試したが駄目だったこと
+- なし（WebSearch で規約本文は未確認）
+- 2026-10-21 Chrome で note.com/notes/new を開いたが未ログイン（ログイン画面）。ログインは本人作業
+- 2026-10-21 送信部は書き終えたが未検証。ログイン後に窓を閉じると未ログインに戻る（セッション Cookie とみられる）→ note_login.js が Cookie を ~/.config/nagoya-bites/note-cookies.json に保存し開くたびに復元する形に修正。再ログイン待ち。通ったら `node scripts/post_note.js --date 2026-10-21 --mode draft` で下書き1本を試す
+
+## 守るルール・判断メモ
+- Google ログインは自動操作の窓で拒否される（accounts.google.com/v3/signin/rejected・2026-10-21 実測）。メール/パスワードでのログインを既定にした（autopilot の自動回答＝推奨案。本人の明示回答ではない。X/Apple や普段の Chrome を使う方式は未採用）
+- 方針転換: 自動操作の窓では Google ログイン不可・パスワード有無は未確認（「できない」の理由への自動回答は本人の回答ではない）。普段の Chrome（Claude in Chrome）で本人が Google ログインし、拡張経由で下書きを作る案に切替中。毎朝の無人運転には不向き（Chrome 起動が前提）→ 後で再設計
+- 2026-10-21 夜: Claude in Chrome（別プロファイル）で本人が Google ログイン済みになった。未ログイン時の保存は `draft_save` が 201 で本文に error `not_login`（HTTP が成功でも本文で失敗する・UI は「下書きの保存に失敗しました」）。ログイン後に新規作成 editor.note.com/new を開くと真っ白のまま読み込みが終わらない（3回再現・原因未特定）。エディタへの流し込み（title は textarea に native setter＋input、本文は ProseMirror へ text/html の paste イベント）は動作確認済み。保存は JS の click でなく実クリックが必要かは未確認
+- 無人運転は Chrome 起動が前提の拡張方式に不向き。候補: ログイン済み Cookie を専用プロファイルへ複製（認証情報に触れるので実行前に本人の了承）
+- 2026-10-22 00:59 下書き保存に成功（下書き ID n05b5a2fb7763・NAGOYA BITES アカウント・Claude in Chrome 経由・公開はしていない）。白い作成画面の原因は、メール認証が未完了の別アカウント（vide太郎・iCloud メール）でログインしていたため。NAGOYA BITES で入り直すと /notes/new が editor.note.com/notes/<id>/edit/ に飛び、流し込み→実クリックの「下書き保存」→ draft_save の本文 result:true で保存できた（HTTP は常に 201 なので本文の result を見る）
+- 次: 毎朝の無人運転の方式（puppeteer の専用プロファイルへ Google ログインは拒否される。ログイン済み Cookie の複製は本人の了承が要る）。scripts/post_note.js の画面操作は Claude in Chrome で確かめた部品（textarea・ProseMirror・「下書き保存」「公開に進む」）に合わせて再点検する
+- 2026-10-22 方式A（本人了承）: `node scripts/note_login.js --from-chrome` で普段の Chrome の note.com の Cookie だけを専用プロファイルへ複製（暗号化のまま・値は読まない）。_note_session_v5 は永続（期限 2027-01）で、以前の「閉じると消える」推測は誤り（本当の原因は Google ログイン拒否）。puppeteer は --use-mock-keychain を外さないと復号できない
+- 2026-10-22 `node scripts/post_note.js --date 2026-10-21 --mode draft` が通った（下書き nb20482482b6b・応答 result:true を確認・台帳 data/note_post_log.json）。画面なし（headless）は下書き作成 API が 403 で拒否されるため窓ありで動かす（30秒ほど窓が出る）。editor.note.com/new 直打ちは白いまま→note.com/notes/new から入る。note に同じ記事の下書きが3本（n05b5a2fb7763・nb20482482b6b・空の n62962c4b7829）→本人が1本残して削除
+- 2026-10-22 run_journal_local.sh の最終 push 後に post_note.js を非ブロッキングで接続（policy mode=draft）。失敗は macOS 通知（GitHub Issue の見張り役は未実装）。台帳は .gitignore（作業ツリーを汚さないため）。窓が毎朝30秒ほど出る→本人の許容は未確認
+- 次(旧): 毎朝の記事公開の流れへ接続（run_journal_local.sh の後ろ）＋見張り役。Cookie の更新（期限 2027-01 または note 側の失効）で未ログインになったら Issue で知らせる
+- 公開・送信は本人の OK が出るまで mode を上げない。文面に「業界人が選んだ」等を書かない（検査済み）
+
+## 関連ファイル
+- data/note_post_policy.json・scripts/lib/note_draft.js・scripts/build_note_draft.js・docs/decisions/0054-note-draft-excerpt.md・docs/daily-posts/README.md
+
+---
+# 前の作業（GA4 閲覧数の調査・未完。次の手順は下に残す）
+
 # 閲覧数の下がりの調査と、日次レポートの対象日の是正（2026-10-21〜）
 
 （前のメモ「UI・UX のアニメーション導入計画」は status: done。中身は git 履歴の直前の HANDOFF.md と docs/animation-plan-2026-10.md）
