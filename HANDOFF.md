@@ -43,6 +43,8 @@ status: in_progress
 
 - 2026-10-22 事故: 普段の Chrome が vide太郎(bide_taro) で入っており、Cookie 複製で別アカウントに公開された。#662 で投稿前にアカウント名(NAGOYA BITES)を検査。今日の分は NAGOYA BITES に入り直し後 `node scripts/note_login.js --from-chrome` → `node scripts/post_note.js --date 2026-10-22` で出し直す
 
+- 2026-10-22 NAGOYA BITES で公開成功（https://note.com/nagoya_bites/n/n52ce457c2e17）。アカウント切替は私がやる: Claude in Chrome で note をログアウト→/login の Google ボタン→自動で NAGOYA BITES→`node scripts/note_login.js --from-chrome`（最大4回再試行）。パスワード入力は不可なので Google 側が切れたら本人作業
+
 ## 関連ファイル
 - data/note_post_policy.json・scripts/lib/note_draft.js・scripts/build_note_draft.js・docs/decisions/0054-note-draft-excerpt.md・docs/daily-posts/README.md
 

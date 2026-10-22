@@ -32,8 +32,15 @@ function copyFromChrome() {
 
 (async () => {
   if (process.argv.includes('--from-chrome')) {
-    const r = copyFromChrome();
-    if (r !== 'ok') { console.error('note: ' + r); process.exit(1); }
+    // Chrome は Cookie をディスクへ少し遅れて書く（ログイン直後は未ログインに見える）。最大4回、20秒おきに複製し直す
+    let ok = false;
+    for (let i = 0; i < 4 && !ok; i++) {
+      if (i) await new Promise((r) => setTimeout(r, 20000));
+      const r = copyFromChrome();
+      if (r !== 'ok') { if (i === 3) { console.error('note: ' + r); process.exit(1); } continue; }
+      const b = await N.launch({ headless: true });
+      try { ok = await N.isLoggedIn(await b.newPage()); } finally { await b.close(); }
+    }
     console.log('note: 普段の Chrome から note の Cookie を複製しました。確認します…');
     process.argv.push('--check');
   }
