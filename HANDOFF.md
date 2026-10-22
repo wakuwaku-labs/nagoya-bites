@@ -31,6 +31,9 @@ status: in_progress
 - 無人運転は Chrome 起動が前提の拡張方式に不向き。候補: ログイン済み Cookie を専用プロファイルへ複製（認証情報に触れるので実行前に本人の了承）
 - 2026-10-22 00:59 下書き保存に成功（下書き ID n05b5a2fb7763・NAGOYA BITES アカウント・Claude in Chrome 経由・公開はしていない）。白い作成画面の原因は、メール認証が未完了の別アカウント（vide太郎・iCloud メール）でログインしていたため。NAGOYA BITES で入り直すと /notes/new が editor.note.com/notes/<id>/edit/ に飛び、流し込み→実クリックの「下書き保存」→ draft_save の本文 result:true で保存できた（HTTP は常に 201 なので本文の result を見る）
 - 次: 毎朝の無人運転の方式（puppeteer の専用プロファイルへ Google ログインは拒否される。ログイン済み Cookie の複製は本人の了承が要る）。scripts/post_note.js の画面操作は Claude in Chrome で確かめた部品（textarea・ProseMirror・「下書き保存」「公開に進む」）に合わせて再点検する
+- 2026-10-22 方式A（本人了承）: `node scripts/note_login.js --from-chrome` で普段の Chrome の note.com の Cookie だけを専用プロファイルへ複製（暗号化のまま・値は読まない）。_note_session_v5 は永続（期限 2027-01）で、以前の「閉じると消える」推測は誤り（本当の原因は Google ログイン拒否）。puppeteer は --use-mock-keychain を外さないと復号できない
+- 2026-10-22 `node scripts/post_note.js --date 2026-10-21 --mode draft` が通った（下書き nb20482482b6b・応答 result:true を確認・台帳 data/note_post_log.json）。画面なし（headless）は下書き作成 API が 403 で拒否されるため窓ありで動かす（30秒ほど窓が出る）。editor.note.com/new 直打ちは白いまま→note.com/notes/new から入る。note に同じ記事の下書きが3本（n05b5a2fb7763・nb20482482b6b・空の n62962c4b7829）→本人が1本残して削除
+- 次: 毎朝の記事公開の流れへ接続（run_journal_local.sh の後ろ）＋見張り役。Cookie の更新（期限 2027-01 または note 側の失効）で未ログインになったら Issue で知らせる
 - 公開・送信は本人の OK が出るまで mode を上げない。文面に「業界人が選んだ」等を書かない（検査済み）
 
 ## 関連ファイル
