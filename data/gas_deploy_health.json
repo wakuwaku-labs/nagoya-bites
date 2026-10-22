@@ -2,8 +2,8 @@
   "version": 1,
   "_comment": "GAS 反映状況の痕跡。triage ルーチンが毎回（レポートが無い日も）書き、コミットで Mac の外＝GitHub へ出す。gas-deploy-watchdog.yml がこれを読み、旧コードのままの状態が続いたら Issue を起票する（＝オーナーにメール）。判定は data/gas_deploy_policy.json の痕跡だけで行い、自己申告は使わない（CLAUDE.md 制約10）。",
   "last_run": {
-    "date": "2026-10-17",
-    "recorded_at": "2026-10-17T23:45:53.139Z",
+    "date": "2026-10-21",
+    "recorded_at": "2026-10-22T23:48:07.607Z",
     "status": "ok",
     "reason": null,
     "verdict": "deployed",
@@ -1359,6 +1359,89 @@
       },
       "numeric_reference_skipped": null,
       "recorded_at": "2026-10-17T23:45:53.133Z"
+    },
+    {
+      "date": "2026-10-17",
+      "kind": "weekly",
+      "verdict": "deployed",
+      "missing_fixes": [],
+      "evidence": [
+        {
+          "key": "reserve_cta_dedup_label",
+          "fix_id": "ISSUE-152",
+          "verdict": "deployed",
+          "line": "📅 予約ボタン: 43回（予約サイトへのリンクを含む・同じクリックは1回）"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "indeterminate"
+        }
+      ],
+      "numeric_reference": null,
+      "numeric_reference_skipped": "参照値の日付 2026-10-20 が レポートが名乗る対象日 2026-10-17 と一致しないため数値判定をしない",
+      "recorded_at": "2026-10-22T23:48:07.558Z"
+    },
+    {
+      "date": "2026-10-20",
+      "kind": "daily",
+      "verdict": "deployed",
+      "missing_fixes": [],
+      "evidence": [
+        {
+          "key": "settled_slice_label",
+          "fix_id": "SEO-076",
+          "verdict": "deployed",
+          "line": "【読まれ方（確定値・2026-10-20）】"
+        },
+        {
+          "key": "reserve_cta_dedup_label",
+          "fix_id": "ISSUE-152",
+          "verdict": "deployed",
+          "line": "📅 予約ボタン押した: 8回（予約サイトへのリンクを含む・同じクリックは1回）"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "deployed",
+          "line": "レポート 23% vs GA4実測 22.5%（差 0.5pt / 許容 15pt）"
+        }
+      ],
+      "numeric_reference": {
+        "date": "2026-10-20",
+        "bounceRate": 0.225,
+        "sessions": 102
+      },
+      "numeric_reference_skipped": null,
+      "recorded_at": "2026-10-22T23:48:07.512Z"
+    },
+    {
+      "date": "2026-10-21",
+      "kind": "daily",
+      "verdict": "deployed",
+      "missing_fixes": [],
+      "evidence": [
+        {
+          "key": "settled_slice_label",
+          "fix_id": "SEO-076",
+          "verdict": "deployed",
+          "line": "【読まれ方（確定値・2026-10-21）】"
+        },
+        {
+          "key": "reserve_cta_dedup_label",
+          "fix_id": "ISSUE-152",
+          "verdict": "deployed",
+          "line": "📅 予約ボタン押した: 7回（予約サイトへのリンクを含む・同じクリックは1回）"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "indeterminate"
+        }
+      ],
+      "numeric_reference": null,
+      "numeric_reference_skipped": "参照値の日付 2026-10-20 が レポートが名乗る対象日 2026-10-21 と一致しないため数値判定をしない",
+      "recorded_at": "2026-10-22T23:48:07.603Z"
     }
   ],
   "deploys": [
