@@ -9,7 +9,34 @@
  */
 const N = require('./lib/note_browser');
 
+/**
+ * --from-chrome: 本人が普段の Chrome で note にログイン済みなら、その note.com の Cookie だけを専用プロファイルへ複製する
+ * （Google ログインは自動操作の窓では拒否されるため・2026-10-22 本人の了承: 方式A）。他のサイトの Cookie は複製しない。
+ * 複製した Cookie は暗号化されたまま（Chrome 自身が実物のキーチェーンで復号する）。値は読まない・表示しない。
+ */
+function copyFromChrome() {
+  const { execFileSync } = require('child_process');
+  const fs = require('fs');
+  const os = require('os');
+  const path = require('path');
+  const src = path.join(os.homedir(), 'Library/Application Support/Google/Chrome', process.env.NOTE_CHROME_PROFILE || 'Default', 'Cookies');
+  const dstDir = path.join(N.PROFILE_DIR, 'Default');
+  fs.mkdirSync(dstDir, { recursive: true });
+  const dst = path.join(dstDir, 'Cookies');
+  for (const f of [dst, dst + '-wal', dst + '-shm', dst + '-journal']) fs.rmSync(f, { force: true });
+  execFileSync('sqlite3', [src, `.backup '${dst}'`]); // 使用中でも整合したコピーが取れる
+  execFileSync('sqlite3', [dst, "delete from cookies where host_key not like '%note.com'; vacuum;"]);
+  const n = execFileSync('sqlite3', [dst, "select count(*) from cookies where name='_note_session_v5'"], { encoding: 'utf8' }).trim();
+  return n === '1' ? 'ok' : 'note のログイン Cookie が普段の Chrome に見つかりません（先に Chrome で note にログインしてください）';
+}
+
 (async () => {
+  if (process.argv.includes('--from-chrome')) {
+    const r = copyFromChrome();
+    if (r !== 'ok') { console.error('note: ' + r); process.exit(1); }
+    console.log('note: 普段の Chrome から note の Cookie を複製しました。確認します…');
+    process.argv.push('--check');
+  }
   const check = process.argv.includes('--check');
   const browser = await N.launch({ headless: check });
   const page = await browser.newPage();

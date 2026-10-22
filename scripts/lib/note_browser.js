@@ -38,22 +38,25 @@ async function launch({ headless }) {
   return puppeteer.launch({
     executablePath: CHROME, headless, userDataDir: PROFILE_DIR,
     defaultViewport: headless ? { width: 1280, height: 900 } : null,
-    ignoreDefaultArgs: headless ? [] : ['--enable-automation'], // 本人がログインする窓では「自動操作中」の表示を出さない（Google ログインが通らないことがある）
+    // puppeteer の既定は偽のキーチェーン（--use-mock-keychain）で、複製した Cookie を復号できない。実物のキーチェーンを使う
+    ignoreDefaultArgs: ['--use-mock-keychain', '--password-store=basic', ...(headless ? [] : ['--enable-automation'])], // 本人がログインする窓では「自動操作中」の表示を出さない（Google ログインが通らないことがある）
     args: ['--no-first-run', '--no-default-browser-check'],
   });
 }
 
-/** 画面内のボタン・リンクを文字で探して押す。見つからなければ false。 */
+/** 画面内のボタン・リンクを文字で探し、本物のマウス操作で押す。見つからなければ false。 */
 async function clickByText(page, texts, { timeout = 15000 } = {}) {
   const end = Date.now() + timeout;
   while (Date.now() < end) {
-    const hit = await page.evaluate((ts) => {
+    const box = await page.evaluate((ts) => {
       const els = [...document.querySelectorAll('button, a, [role="button"]')];
       const el = els.find((e) => !e.disabled && ts.some((t) => (e.innerText || '').replace(/\s+/g, '').includes(t)));
-      if (!el) return false;
-      el.scrollIntoView({ block: 'center' }); el.click(); return true;
+      if (!el) return null;
+      el.scrollIntoView({ block: 'center' });
+      const r = el.getBoundingClientRect();
+      return { x: r.x + r.width / 2, y: r.y + r.height / 2 };
     }, texts);
-    if (hit) return true;
+    if (box) { await page.mouse.click(box.x, box.y); return true; }
     await new Promise((r) => setTimeout(r, 500));
   }
   return false;

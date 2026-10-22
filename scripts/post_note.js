@@ -31,8 +31,10 @@ function editorLines(body) {
 
 async function fillEditor(page, draft) {
   await B.restoreCookies(page);
-  await page.goto('https://editor.note.com/new', { waitUntil: 'networkidle2', timeout: 60000 });
-  if (/login/.test(page.url())) throw new Error('未ログイン（node scripts/note_login.js が必要）');
+  // editor.note.com/new を直接開くと真っ白のまま止まる（2026-10-22 実測）。note.com/notes/new から入ると下書き ID つきの編集画面へ移る
+  await page.goto('https://note.com/notes/new', { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await page.waitForFunction(() => /\/login/.test(location.href) || /editor\.note\.com\/notes\/n[0-9a-f]+\/edit/.test(location.href), { timeout: 60000 });
+  if (/login/.test(page.url())) throw new Error('未ログイン（node scripts/note_login.js --from-chrome が必要）');
   const title = await page.waitForSelector('textarea[placeholder*="タイトル"], [placeholder*="タイトル"]', { timeout: 30000 });
   await title.click(); await page.keyboard.type(draft.title, { delay: 5 });
   const body = await page.waitForSelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]', { timeout: 15000 });
@@ -45,8 +47,11 @@ async function fillEditor(page, draft) {
 }
 
 async function saveDraft(page) {
+  // HTTP は成功（201）でも本文の error / result で失敗を返すので、応答の本文で判定する
+  const reply = page.waitForResponse((r) => r.request().method() === 'POST' && /text_notes\/draft_save/.test(r.url()), { timeout: 20000 });
   if (!(await B.clickByText(page, ['下書き保存']))) throw new Error('「下書き保存」ボタンが見つからない');
-  await sleep(3000);
+  const body = await (await reply).text();
+  if (!/"result":\s*true/.test(body)) throw new Error('下書き保存が拒否された: ' + body.slice(0, 120));
   const m = /editor\.note\.com\/notes\/(n[0-9a-f]+)/.exec(page.url());
   return { note_key: m ? m[1] : null, url: page.url() };
 }
@@ -79,7 +84,8 @@ async function publish(page, draft) {
   const tags = (/^タグ: (.*)$/m.exec(md) || [, ''])[1].split(' / ').filter(Boolean);
   const draft = { title: /^# (.*)$/m.exec(md)[1], tags, body: md.split('\n---\n').slice(1).join('\n---\n').trim() };
 
-  const browser = await B.launch({ headless: true });
+  // 画面なし（headless）だと note の下書き作成が 403 で拒否される（2026-10-22 実測）。普通の窓で動かす（30秒ほど窓が出る）
+  const browser = await B.launch({ headless: false });
   const page = await browser.newPage();
   try {
     await fillEditor(page, draft);
