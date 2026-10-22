@@ -51,6 +51,8 @@ status: in_progress
 
 - 2026-10-23 見出し画像の方針（本人: 図解でなく写真入りのこだわった画像が希望・既存画像は外さなくてよい）。案: ジャンル別の AI 生成『イメージ』写真6〜8枚を Canva で作り、題を重ねて自動合成。詰まり: Canva の生成結果は縮小版(198x100)しか取れず原寸の書き出しは本人のダウンロードが要る／ブラウザ拡張が未接続。policy eyecatch=false のまま。ログイン: 専用窓(note-profile-own)での NAGOYA BITES ログインがまだ保存されていない（匿名セッションのまま）→ 本人が窓で再ログイン後、窓を開いたまま Cookie を確認
 
+- 2026-10-23 ログイン復旧は私が Claude in Chrome で実施（vide太郎ログアウト→/login の Google ボタン→自動で NAGOYA BITES→`node scripts/note_login.js --from-chrome`）。パスワード入力は不要。切れる原因は本人が普段の Chrome で note を別アカウントへ切替えること。専用窓方式(--own)は保存されず廃止扱い。10/22 の見出し画像は policy eyecatch=false で外れた。未決: 見出し画像の写真案の可否
+
 ## 関連ファイル
 - data/note_post_policy.json・scripts/lib/note_draft.js・scripts/build_note_draft.js・docs/decisions/0054-note-draft-excerpt.md・docs/daily-posts/README.md
 
