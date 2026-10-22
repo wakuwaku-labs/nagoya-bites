@@ -14,7 +14,7 @@ test('excerpt: 最初の節とポイントだけ載せ、残りは元記事へ�
   const d = N.buildNoteDraft(entry, html, policy);
   assert.match(d.body, /## 節1/);
   assert.doesNotMatch(d.body, /節2/);
-  assert.match(d.body, /残り1節/);
+  assert.match(d.body, /この先は元記事で読めます/);
   assert.match(d.body, /\*\*17:00\*\*/);
   assert.match(d.body, /utm_source=note/);
   assert.ok(d.tags.includes('伏見'));
