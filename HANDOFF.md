@@ -45,6 +45,8 @@ status: in_progress
 
 - 2026-10-22 NAGOYA BITES で公開成功（https://note.com/nagoya_bites/n/n52ce457c2e17）。アカウント切替は私がやる: Claude in Chrome で note をログアウト→/login の Google ボタン→自動で NAGOYA BITES→`node scripts/note_login.js --from-chrome`（最大4回再試行）。パスワード入力は不可なので Google 側が切れたら本人作業
 
+- 2026-10-22 note: 本文は HTML 貼り付けで見出し・箇条書きに整形し、元記事は写真つきリンクカード（#666）。見出し画像は題から自前生成して自動アップロード（#667・scripts/lib/note_eyecatch.js）。公開済みの更新は `post_note.js --date D --update <note key>`。他者の写真は規約上アップロードしない。残り: 翌朝の実行確認・GitHub Issue の見張り
+
 ## 関連ファイル
 - data/note_post_policy.json・scripts/lib/note_draft.js・scripts/build_note_draft.js・docs/decisions/0054-note-draft-excerpt.md・docs/daily-posts/README.md
 
