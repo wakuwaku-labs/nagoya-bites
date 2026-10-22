@@ -31,6 +31,19 @@ function copyFromChrome() {
 }
 
 (async () => {
+  // --own: 自動操作でない普通の Chrome 窓を専用プロファイルで開く。本人が NAGOYA BITES でログインすると、その状態が
+  //        普段の Chrome のアカウント切替・ログアウトから独立して残る（2026-10-22: 普段の Chrome の Cookie 複製は、本人が別アカウントに
+  //        切り替えるたびに無効になり、3回止まった）。ログイン後は --own-close で窓を閉じて確かめる
+  if (process.argv.includes('--own')) {
+    require('child_process').spawn('open', ['-na', 'Google Chrome', '--args', `--user-data-dir=${N.PROFILE_DIR}`, '--no-first-run', '--no-default-browser-check', 'https://note.com/login'], { stdio: 'ignore', detached: true }).unref();
+    console.log('note: 専用の Chrome 窓を開きました。NAGOYA BITES でログインしてください');
+    return;
+  }
+  if (process.argv.includes('--own-close')) {
+    try { require('child_process').execFileSync('pkill', ['-f', `user-data-dir=${N.PROFILE_DIR}`]); } catch {}
+    await new Promise((r) => setTimeout(r, 2500));
+    process.argv.push('--check');
+  }
   if (process.argv.includes('--from-chrome')) {
     // Chrome は Cookie をディスクへ少し遅れて書く（ログイン直後は未ログインに見える）。最大4回、20秒おきに複製し直す
     let ok = false;

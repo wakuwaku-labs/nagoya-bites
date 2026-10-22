@@ -47,6 +47,8 @@ status: in_progress
 
 - 2026-10-22 note: 本文は HTML 貼り付けで見出し・箇条書きに整形し、元記事は写真つきリンクカード（#666）。見出し画像は題から自前生成して自動アップロード（#667・scripts/lib/note_eyecatch.js）。公開済みの更新は `post_note.js --date D --update <note key>`。他者の写真は規約上アップロードしない。残り: 翌朝の実行確認・GitHub Issue の見張り
 
+- 2026-10-22 夜 判断(autopilot の自動回答＝本人の回答ではない): 見出し画像は図解が不評のため A（付けない・末尾の写真カードのみ・policy eyecatch=false）。ログイン方式を変更: 普段の Chrome の Cookie 複製は本人のアカウント切替で無効になり3回止まったため、専用プロファイル note-profile-own に普通の Chrome 窓で本人が NAGOYA BITES にログイン（`node scripts/note_login.js --own` → ログイン後 `--own-close`）。残: 本人のログイン・10-22 の記事から見出し画像を外す（`post_note.js --date 2026-10-22 --update n52ce457c2e17`）
+
 ## 関連ファイル
 - data/note_post_policy.json・scripts/lib/note_draft.js・scripts/build_note_draft.js・docs/decisions/0054-note-draft-excerpt.md・docs/daily-posts/README.md
 

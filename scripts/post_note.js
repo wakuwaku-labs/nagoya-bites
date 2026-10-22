@@ -61,7 +61,17 @@ async function writeBody(page, draft) {
 }
 
 /** 見出し画像（題・日付・ブランド名だけの自前の図）を入れる。他者の写真は使わない。失敗しても投稿は止めない（画像なしで続ける）。 */
-async function setEyecatch(page, draft, date) {
+async function removeEyecatch(page) {
+  // 既に付いている見出し画像を外す（画像の右上の×）
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.mouse.move(590, 220); await sleep(600);
+  await page.mouse.click(866, 133); await sleep(1500);
+  const left = await page.evaluate(() => !!document.querySelector('img[src*="rectangle_large_type"]'));
+  console.log('note: 見出し画像 ' + (left ? 'を外せませんでした' : 'を外しました'));
+}
+
+async function setEyecatch(page, draft, date, enabled = true) {
+  if (!enabled) return removeEyecatch(page);
   try {
     const png = await E.makeEyecatch(draft.title, date, null, page.browser());
     await page.evaluate(() => window.scrollTo(0, 0));
@@ -94,7 +104,7 @@ async function fillEditor(page, draft, date) {
   const body = await page.waitForSelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]', { timeout: 15000 });
   await body.click();
   await writeBody(page, draft);
-  await setEyecatch(page, draft, date);
+  if (N.loadPolicy(ROOT).eyecatch !== false) await setEyecatch(page, draft, date);
 }
 
 async function saveDraft(page) {
@@ -131,7 +141,7 @@ async function updatePublished(page, key, draft, date) {
   const body = await page.waitForSelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]', { timeout: 30000 });
   await body.click(); await page.keyboard.down('Meta'); await page.keyboard.press('KeyA'); await page.keyboard.up('Meta'); await page.keyboard.press('Backspace');
   await writeBody(page, draft);
-  await setEyecatch(page, draft, date);
+  await setEyecatch(page, draft, date, N.loadPolicy(ROOT).eyecatch !== false);
   if (!(await B.clickByText(page, ['公開に進む']))) throw new Error('「公開に進む」ボタンが見つからない');
   await page.waitForFunction(() => /\/publish\//.test(location.href), { timeout: 20000 });
   await sleep(2000);

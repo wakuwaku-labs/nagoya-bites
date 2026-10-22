@@ -4,7 +4,7 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 
-const PROFILE_DIR = process.env.NOTE_PROFILE_DIR || path.join(os.homedir(), '.config/nagoya-bites/note-profile');
+const PROFILE_DIR = process.env.NOTE_PROFILE_DIR || path.join(os.homedir(), '.config/nagoya-bites/note-profile-own');
 const COOKIES = process.env.NOTE_COOKIES || path.join(os.homedir(), '.config/nagoya-bites/note-cookies.json');
 const CHROME = process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 
