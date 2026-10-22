@@ -41,6 +41,8 @@ status: in_progress
 
 - 2026-10-22 15:30 本人の「今投稿して」で初の公開に成功: https://note.com/notes/n8fc72c27db14 （published・タグ2件）。落ちた原因は誘導文の『残りN節』が記事に無い数字として検査に落ちたこと→数字を外した。Cookie が一度失効していたため --from-chrome で再複製。
 
+- 2026-10-22 事故: 普段の Chrome が vide太郎(bide_taro) で入っており、Cookie 複製で別アカウントに公開された。#662 で投稿前にアカウント名(NAGOYA BITES)を検査。今日の分は NAGOYA BITES に入り直し後 `node scripts/note_login.js --from-chrome` → `node scripts/post_note.js --date 2026-10-22` で出し直す
+
 ## 関連ファイル
 - data/note_post_policy.json・scripts/lib/note_draft.js・scripts/build_note_draft.js・docs/decisions/0054-note-draft-excerpt.md・docs/daily-posts/README.md
 
