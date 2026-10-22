@@ -23,10 +23,40 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const readLog = () => { try { return JSON.parse(fs.readFileSync(LOG, 'utf8')); } catch { return { entries: [] }; } };
 const writeLog = (l) => fs.writeFileSync(LOG, JSON.stringify(l, null, 2) + '\n');
 
-/** エディタに入れる行へ。リンクと強調は外す（入力ショートカットで崩れないように）。 */
-function editorLines(body) {
-  return body.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1').replace(/\*\*([^*]+)\*\*/g, '$1')
-    .split('\n').filter((l) => l.trim() !== '');
+const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const inline = (t) => esc(t).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+
+/** 本文（Markdown 風）を、note のエディタが見出し・箇条書きとして受け取れる HTML へ。「元記事: URL」の URL は別に返す（カードにするため）。 */
+function bodyToHtml(body) {
+  const html = []; let list = false, cardUrl = null;
+  const close = () => { if (list) { html.push('</ul>'); list = false; } };
+  for (const raw of body.split('\n')) {
+    const l = raw.trim(); if (!l) continue;
+    let m;
+    if ((m = /^(.*?):\s*(https?:\/\/\S+)$/.exec(l))) { close(); html.push(`<p>${inline(m[1])}</p>`); cardUrl = m[2]; continue; }
+    if ((m = /^##\s+(.*)$/.exec(l))) { close(); html.push(`<h2>${inline(m[1])}</h2>`); continue; }
+    if ((m = /^[-・]\s+(.*)$/.exec(l))) { if (!list) { html.push('<ul>'); list = true; } html.push(`<li>${inline(m[1].replace(/\[([^\]]+)\]\([^)]+\)/g, '$1'))}</li>`); continue; }
+    close(); html.push(`<p>${inline(l.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1'))}</p>`);
+  }
+  close();
+  return { html: html.join(''), cardUrl };
+}
+
+async function writeBody(page, draft) {
+  const { html, cardUrl } = bodyToHtml(draft.body);
+  // 見出し・箇条書きは、HTML を貼り付ける形でエディタに渡すと正しく変換される（キー入力だと「##」が記号のまま残る）
+  await page.evaluate((h) => {
+    const el = document.querySelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]');
+    el.focus();
+    const dt = new DataTransfer(); dt.setData('text/html', h); dt.setData('text/plain', el.innerText);
+    el.dispatchEvent(new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true }));
+  }, html);
+  await sleep(1500);
+  // 元記事の URL は URL だけの行で Enter すると、写真つきのリンクカードになる
+  // 貼り付けの直後は、カーソルが貼った内容の最後にある（クリックし直すと途中に戻るので、しない）
+  await page.keyboard.press('Enter');
+  if (cardUrl) { await page.keyboard.type(cardUrl, { delay: 2 }); await page.keyboard.press('Enter'); await sleep(3000); }
+  await sleep(1500);
 }
 
 async function fillEditor(page, draft) {
@@ -39,11 +69,7 @@ async function fillEditor(page, draft) {
   await title.click(); await page.keyboard.type(draft.title, { delay: 5 });
   const body = await page.waitForSelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]', { timeout: 15000 });
   await body.click();
-  for (const line of editorLines(draft.body)) {
-    await page.keyboard.type(line, { delay: 2 });
-    await page.keyboard.press('Enter');
-  }
-  await sleep(1500);
+  await writeBody(page, draft);
 }
 
 async function saveDraft(page) {
@@ -74,6 +100,20 @@ async function publish(page, draft) {
   return { url: page.url() };
 }
 
+/** 公開済みの記事を、同じ URL のまま今の形（見出し・箇条書き・カード）に直す: node scripts/post_note.js --date D --update nXXXX */
+async function updatePublished(page, key, draft) {
+  await page.goto(`https://editor.note.com/notes/${key}/edit/`, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  const body = await page.waitForSelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]', { timeout: 30000 });
+  await body.click(); await page.keyboard.down('Meta'); await page.keyboard.press('KeyA'); await page.keyboard.up('Meta'); await page.keyboard.press('Backspace');
+  await writeBody(page, draft);
+  if (!(await B.clickByText(page, ['公開に進む']))) throw new Error('「公開に進む」ボタンが見つからない');
+  await page.waitForFunction(() => /\/publish\//.test(location.href), { timeout: 20000 });
+  await sleep(2000);
+  if (!(await B.clickByText(page, ['更新する']))) throw new Error('「更新する」ボタンが見つからない');
+  // 更新後は /publish/ のまま「記事をシェアしてみましょう」が出る
+  await page.waitForFunction(() => !/\/publish\//.test(location.href) || document.body.innerText.includes('シェアしてみましょう'), { timeout: 30000 });
+}
+
 (async () => {
   const a = process.argv.slice(2);
   const arg = (k) => (a.includes(k) ? a[a.indexOf(k) + 1] : null);
@@ -87,7 +127,8 @@ async function publish(page, draft) {
   if (mode === 'dry-run') return console.log(`note[dry-run] ${out.date} 検査通過。送りません (${out.file})`);
   const log = readLog();
   const prev = log.entries.find((e) => e.slug === out.slug && ['draft', 'live'].includes(e.status));
-  if (prev && (prev.status === 'live' || mode !== 'live')) return console.log('note: 送信済み ' + out.slug + '（' + prev.status + '）');
+  const upd = arg('--update');
+  if (!upd && prev && (prev.status === 'live' || mode !== 'live')) return console.log('note: 送信済み ' + out.slug + '（' + prev.status + '）');
 
   const md = fs.readFileSync(path.join(ROOT, out.file), 'utf8');
   const tags = (/^タグ: (.*)$/m.exec(md) || [, ''])[1].split(' / ').filter(Boolean);
@@ -102,6 +143,7 @@ async function publish(page, draft) {
     const who = await page.evaluate(async () => { const r = await fetch('/api/v2/current_user', { credentials: 'include' }); return r.ok ? (await r.json()).data : null; });
     const want = (policy.account && policy.account.nickname) || 'NAGOYA BITES';
     if (!who || who.nickname !== want) throw new Error(`投稿先のアカウントが違います（今: ${who ? who.nickname : '未ログイン'} / 必要: ${want}）。普段の Chrome で ${want} にログインし直して node scripts/note_login.js --from-chrome`);
+    if (upd) { await updatePublished(page, upd, draft); return console.log(`note[update] ${out.slug} を ${upd} に反映しました`); }
     let url;
     if (prev) { // 下書きは保存済み（前回、公開で失敗した）。同じ下書きを開き直して公開だけやり直す（下書きを増やさない）
       await page.goto(prev.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
