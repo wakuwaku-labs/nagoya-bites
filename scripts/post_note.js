@@ -15,6 +15,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 const N = require('./lib/note_draft');
 const B = require('./lib/note_browser');
+const E = require('./lib/note_eyecatch');
 
 const ROOT = path.resolve(__dirname, '..');
 const LOG = path.join(ROOT, 'data/note_post_log.json');
@@ -59,7 +60,30 @@ async function writeBody(page, draft) {
   await sleep(1500);
 }
 
-async function fillEditor(page, draft) {
+/** 見出し画像（題・日付・ブランド名だけの自前の図）を入れる。他者の写真は使わない。失敗しても投稿は止めない（画像なしで続ける）。 */
+async function setEyecatch(page, draft, date) {
+  try {
+    const png = await E.makeEyecatch(draft.title, date, null, page.browser());
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.mouse.click(298, 120); // タイトル上の丸い画像アイコン（画面幅1200・高さ900で固定している）
+    await sleep(800);
+    const [chooser] = await Promise.all([page.waitForFileChooser({ timeout: 8000 }), B.clickByText(page, ['画像をアップロード'], { timeout: 5000 })]);
+    await chooser.accept([png]);
+    await sleep(2500);
+    await sleep(1500);
+    // 切り抜きの確認（キャンセル／保存）。「下書き保存」を押さないよう、文字が「保存」だけのボタンを探す
+    const box = await page.evaluate(() => {
+      const b = [...document.querySelectorAll('button')].find((e) => (e.innerText || '').trim() === '保存');
+      if (!b) return null; const r = b.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 };
+    });
+    if (box) await page.mouse.click(box.x, box.y);
+    await sleep(3500);
+    const has = await page.evaluate(() => !!document.querySelector('img[src*="assets.st-note.com"], img[src*="note-eyecatch"]'));
+    console.log('note: 見出し画像 ' + (has ? 'を入れました' : 'は入ったか確認できません'));
+  } catch (e) { console.error('note: 見出し画像は入れられませんでした（本文だけで続けます）: ' + e.message); }
+}
+
+async function fillEditor(page, draft, date) {
   await B.restoreCookies(page);
   // editor.note.com/new を直接開くと真っ白のまま止まる（2026-10-22 実測）。note.com/notes/new から入ると下書き ID つきの編集画面へ移る
   await page.goto('https://note.com/notes/new', { waitUntil: 'domcontentloaded', timeout: 60000 });
@@ -70,6 +94,7 @@ async function fillEditor(page, draft) {
   const body = await page.waitForSelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]', { timeout: 15000 });
   await body.click();
   await writeBody(page, draft);
+  await setEyecatch(page, draft, date);
 }
 
 async function saveDraft(page) {
@@ -101,11 +126,12 @@ async function publish(page, draft) {
 }
 
 /** 公開済みの記事を、同じ URL のまま今の形（見出し・箇条書き・カード）に直す: node scripts/post_note.js --date D --update nXXXX */
-async function updatePublished(page, key, draft) {
+async function updatePublished(page, key, draft, date) {
   await page.goto(`https://editor.note.com/notes/${key}/edit/`, { waitUntil: 'domcontentloaded', timeout: 60000 });
   const body = await page.waitForSelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]', { timeout: 30000 });
   await body.click(); await page.keyboard.down('Meta'); await page.keyboard.press('KeyA'); await page.keyboard.up('Meta'); await page.keyboard.press('Backspace');
   await writeBody(page, draft);
+  await setEyecatch(page, draft, date);
   if (!(await B.clickByText(page, ['公開に進む']))) throw new Error('「公開に進む」ボタンが見つからない');
   await page.waitForFunction(() => /\/publish\//.test(location.href), { timeout: 20000 });
   await sleep(2000);
@@ -137,20 +163,21 @@ async function updatePublished(page, key, draft) {
   // 画面なし（headless）だと note の下書き作成が 403 で拒否される（2026-10-22 実測）。普通の窓で動かす（30秒ほど窓が出る）
   const browser = await B.launch({ headless: false });
   const page = await browser.newPage();
+  await page.setViewport({ width: 1200, height: 900 });
   try {
     // 別のアカウントで投稿しない（2026-10-22 に vide太郎で公開してしまった）。名前が違えば何も書かずに止める
     await page.goto('https://note.com/dashboard', { waitUntil: 'domcontentloaded', timeout: 60000 });
     const who = await page.evaluate(async () => { const r = await fetch('/api/v2/current_user', { credentials: 'include' }); return r.ok ? (await r.json()).data : null; });
     const want = (policy.account && policy.account.nickname) || 'NAGOYA BITES';
     if (!who || who.nickname !== want) throw new Error(`投稿先のアカウントが違います（今: ${who ? who.nickname : '未ログイン'} / 必要: ${want}）。普段の Chrome で ${want} にログインし直して node scripts/note_login.js --from-chrome`);
-    if (upd) { await updatePublished(page, upd, draft); return console.log(`note[update] ${out.slug} を ${upd} に反映しました`); }
+    if (upd) { await updatePublished(page, upd, draft, out.date); return console.log(`note[update] ${out.slug} を ${upd} に反映しました`); }
     let url;
     if (prev) { // 下書きは保存済み（前回、公開で失敗した）。同じ下書きを開き直して公開だけやり直す（下書きを増やさない）
       await page.goto(prev.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
       await page.waitForSelector('textarea', { timeout: 30000 });
       url = prev.url;
     } else {
-      await fillEditor(page, draft);
+      await fillEditor(page, draft, out.date);
       url = (await saveDraft(page)).url;
       log.entries.push({ slug: out.slug, date: out.date, status: 'draft', url, at: new Date().toISOString() });
       writeLog(log); // 公開で失敗しても、保存済みの下書きを台帳に残す
