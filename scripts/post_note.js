@@ -97,6 +97,11 @@ async function publish(page, draft) {
   const browser = await B.launch({ headless: false });
   const page = await browser.newPage();
   try {
+    // 別のアカウントで投稿しない（2026-10-22 に vide太郎で公開してしまった）。名前が違えば何も書かずに止める
+    await page.goto('https://note.com/dashboard', { waitUntil: 'domcontentloaded', timeout: 60000 });
+    const who = await page.evaluate(async () => { const r = await fetch('/api/v2/current_user', { credentials: 'include' }); return r.ok ? (await r.json()).data : null; });
+    const want = (policy.account && policy.account.nickname) || 'NAGOYA BITES';
+    if (!who || who.nickname !== want) throw new Error(`投稿先のアカウントが違います（今: ${who ? who.nickname : '未ログイン'} / 必要: ${want}）。普段の Chrome で ${want} にログインし直して node scripts/note_login.js --from-chrome`);
     let url;
     if (prev) { // 下書きは保存済み（前回、公開で失敗した）。同じ下書きを開き直して公開だけやり直す（下書きを増やさない）
       await page.goto(prev.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
