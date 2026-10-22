@@ -1,7 +1,7 @@
 {
   "_comment": "note 自動投稿（P-note）の運用ルールの正本。scripts/lib/note_draft.js と scripts/build_note_draft.js が読む。挙動の変更はこのファイルで行い、スクリプトは触らない。判断の記録は docs/decisions/0054-note-draft-excerpt.md",
   "version": 1,
-  "mode": "draft",
+  "mode": "live",
   "modeHelp": "off = 何もしない / dry-run = note 用の下書きを作って検査するだけ（note に送らない）/ draft = note に『下書き』として保存する（公開はオーナーが note の画面で押す）/ live = note に公開まで行う。draft・live に上げるのは、note の利用規約の確認とログインの用意（オーナー作業）のあと、オーナーの OK を得てから",
   "siteBase": "https://nagoya-bites.com",
   "utm": { "source": "note", "medium": "social" },

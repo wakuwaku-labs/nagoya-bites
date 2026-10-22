@@ -58,11 +58,19 @@ async function saveDraft(page) {
 
 async function publish(page, draft) {
   if (!(await B.clickByText(page, ['公開に進む']))) throw new Error('「公開に進む」ボタンが見つからない');
-  await sleep(3000);
-  const tagInput = await page.$('input[placeholder*="ハッシュタグ"], input[placeholder*="タグ"]');
-  if (tagInput) for (const t of draft.tags) { await tagInput.type(t); await page.keyboard.press('Enter'); await sleep(300); }
+  await page.waitForFunction(() => /\/publish\//.test(location.href), { timeout: 20000 });
+  await sleep(2000);
+  // タグは本人が選んだ基本タグ＋地名だけを入れる（note の候補タグ「#00」などは選ばない）
+  const tagInput = await page.waitForSelector('input[placeholder*="ハッシュタグ"]', { timeout: 15000 });
+  for (const t of draft.tags) { await tagInput.type(t, { delay: 30 }); await page.keyboard.press('Enter'); await sleep(400); }
+  const added = await page.evaluate((tags) => tags.filter((t) => document.body.innerText.includes('#' + t)).length, draft.tags);
+  if (added < Math.min(1, draft.tags.length)) throw new Error('タグが入りませんでした');
+  // 公開は取り消しにくいので、押す直前にもう一度だけ確認する（投稿ボタンが無ければここで止まる）
   if (!(await B.clickByText(page, ['投稿する']))) throw new Error('「投稿する」ボタンが見つからない');
-  await sleep(5000);
+  // 投稿後は /publish/ を離れる。離れなければ失敗（確認の画面が出た場合も含む）
+  await page.waitForFunction(() => !/\/publish\//.test(location.href), { timeout: 30000 })
+    .catch(async () => { if (!(await B.clickByText(page, ['投稿する', 'OK'], { timeout: 3000 }))) throw new Error('投稿が完了しませんでした'); await page.waitForFunction(() => !/\/publish\//.test(location.href), { timeout: 30000 }); });
+  await sleep(2000);
   return { url: page.url() };
 }
 
@@ -78,7 +86,8 @@ async function publish(page, draft) {
   if (!out.ok) { console.error('note: 検査に落ちたので送りません: ' + out.failures.join(' ')); process.exit(1); }
   if (mode === 'dry-run') return console.log(`note[dry-run] ${out.date} 検査通過。送りません (${out.file})`);
   const log = readLog();
-  if (log.entries.some((e) => e.slug === out.slug && ['draft', 'live'].includes(e.status))) return console.log('note: 送信済み ' + out.slug);
+  const prev = log.entries.find((e) => e.slug === out.slug && ['draft', 'live'].includes(e.status));
+  if (prev && (prev.status === 'live' || mode !== 'live')) return console.log('note: 送信済み ' + out.slug + '（' + prev.status + '）');
 
   const md = fs.readFileSync(path.join(ROOT, out.file), 'utf8');
   const tags = (/^タグ: (.*)$/m.exec(md) || [, ''])[1].split(' / ').filter(Boolean);
@@ -88,11 +97,21 @@ async function publish(page, draft) {
   const browser = await B.launch({ headless: false });
   const page = await browser.newPage();
   try {
-    await fillEditor(page, draft);
-    const saved = await saveDraft(page);
-    let status = 'draft', url = saved.url;
+    let url;
+    if (prev) { // 下書きは保存済み（前回、公開で失敗した）。同じ下書きを開き直して公開だけやり直す（下書きを増やさない）
+      await page.goto(prev.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+      await page.waitForSelector('textarea', { timeout: 30000 });
+      url = prev.url;
+    } else {
+      await fillEditor(page, draft);
+      url = (await saveDraft(page)).url;
+      log.entries.push({ slug: out.slug, date: out.date, status: 'draft', url, at: new Date().toISOString() });
+      writeLog(log); // 公開で失敗しても、保存済みの下書きを台帳に残す
+    }
+    let status = 'draft';
     if (mode === 'live') { url = (await publish(page, draft)).url; status = 'live'; }
-    log.entries.push({ slug: out.slug, date: out.date, status, url, at: new Date().toISOString() });
+    const rec = log.entries.find((e) => e.slug === out.slug);
+    Object.assign(rec, { status, url, at: new Date().toISOString() });
     writeLog(log);
     console.log(`note[${mode}] ${out.slug} → ${status} ${url}`);
   } catch (e) {
