@@ -49,6 +49,8 @@ status: in_progress
 
 - 2026-10-22 夜 判断(autopilot の自動回答＝本人の回答ではない): 見出し画像は図解が不評のため A（付けない・末尾の写真カードのみ・policy eyecatch=false）。ログイン方式を変更: 普段の Chrome の Cookie 複製は本人のアカウント切替で無効になり3回止まったため、専用プロファイル note-profile-own に普通の Chrome 窓で本人が NAGOYA BITES にログイン（`node scripts/note_login.js --own` → ログイン後 `--own-close`）。残: 本人のログイン・10-22 の記事から見出し画像を外す（`post_note.js --date 2026-10-22 --update n52ce457c2e17`）
 
+- 2026-10-23 見出し画像の方針（本人: 図解でなく写真入りのこだわった画像が希望・既存画像は外さなくてよい）。案: ジャンル別の AI 生成『イメージ』写真6〜8枚を Canva で作り、題を重ねて自動合成。詰まり: Canva の生成結果は縮小版(198x100)しか取れず原寸の書き出しは本人のダウンロードが要る／ブラウザ拡張が未接続。policy eyecatch=false のまま。ログイン: 専用窓(note-profile-own)での NAGOYA BITES ログインがまだ保存されていない（匿名セッションのまま）→ 本人が窓で再ログイン後、窓を開いたまま Cookie を確認
+
 ## 関連ファイル
 - data/note_post_policy.json・scripts/lib/note_draft.js・scripts/build_note_draft.js・docs/decisions/0054-note-draft-excerpt.md・docs/daily-posts/README.md
 
