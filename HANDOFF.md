@@ -37,6 +37,8 @@ status: in_progress
 - 次(旧): 毎朝の記事公開の流れへ接続（run_journal_local.sh の後ろ）＋見張り役。Cookie の更新（期限 2027-01 または note 側の失効）で未ログインになったら Issue で知らせる
 - 公開・送信は本人の OK が出るまで mode を上げない。文面に「業界人が選んだ」等を書かない（検査済み）
 
+- 2026-10-22 本人が「B」（試運転なしで翌朝から公開まで自動）を選択。policy mode=live（#658）。公開画面は実機で部品確認のみ（投稿は未実施）。公開失敗時は同じ下書きから再試行。未了: 初回の実機結果の確認・GitHub Issue の見張り・reCAPTCHA が出た場合は自動で突破せず止まる
+
 ## 関連ファイル
 - data/note_post_policy.json・scripts/lib/note_draft.js・scripts/build_note_draft.js・docs/decisions/0054-note-draft-excerpt.md・docs/daily-posts/README.md
 
