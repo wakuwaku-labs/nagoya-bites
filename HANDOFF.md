@@ -101,3 +101,5 @@ status: in_progress
 
 - 2026-10-19 夜: Linear 課題消化。P-567/471/446/184/472/473/445/177 を Done（#633〜#639）。P-177 は place-status.yml を本番で1回実行済み（100件・閉業1件=日々担々 守山店は『決められない』で記録）。P-169 はオーナーが推奨（ブランド共通は残す）で進めると回答、350件の判定が未着手＝次回子課題に分けて着手
 - 2026-10-19 深夜: P-169 を実装（#641）。アカウント名が別支店の地名を含み掲載店に無い48件のみ外す（data/ig_account_reviewed.json・scripts/clear_wrong_ig_accounts.js・夜間QA ig-account-review）。残り約265件は掲載続行。P-601（日々担々 守山店の再確認・11-18）を起票
+
+- 2026-10-23 アカウント切替の独立化: Chrome に別プロフィール「Profile 1」を作成済み（note 未ログイン）。本人が Profile 1 で NAGOYA BITES にログイン後、policy の account.chromeProfile=\"Profile 1\" にして `node scripts/note_login.js --from-chrome`。以後 Default で vide太郎に切り替えても投稿は影響を受けない。Profile 1 には Claude in Chrome 拡張が無く私は操作できない。複製元の指定は #672 で対応済み。それまでは Default が NAGOYA BITES の状態を保つ（現在 NAGOYA BITES を確認）
