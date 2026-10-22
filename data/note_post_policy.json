@@ -4,17 +4,26 @@
   "mode": "live",
   "modeHelp": "off = 何もしない / dry-run = note 用の下書きを作って検査するだけ（note に送らない）/ draft = note に『下書き』として保存する（公開はオーナーが note の画面で押す）/ live = note に公開まで行う。draft・live に上げるのは、note の利用規約の確認とログインの用意（オーナー作業）のあと、オーナーの OK を得てから",
   "siteBase": "https://nagoya-bites.com",
-  "utm": { "source": "note", "medium": "social" },
+  "utm": {
+    "source": "note",
+    "medium": "social"
+  },
   "body": {
     "mode": "excerpt",
     "modeHelp": "excerpt = 導入文＋最初の見出しの節＋『知っておきたいポイント』だけを note に載せ、続きは元記事へ誘導する / full = 全文。全文を載せると同じ文章が2か所に出て、検索で note が先に出るおそれがあるため excerpt を既定にした（0054）",
     "sections": 1
   },
   "tags": {
-    "base": ["名古屋グルメ", "名古屋"],
+    "base": [
+      "名古屋グルメ",
+      "名古屋"
+    ],
     "max": 8
   },
   "footer": "この記事は NAGOYA BITES のジャーナルの一部です。続きと紹介した店の詳しい情報は、元の記事で読めます。",
   "titleMax": 100,
-  "bodyMaxChars": 20000
+  "bodyMaxChars": 20000,
+  "account": {
+    "nickname": "NAGOYA BITES"
+  }
 }
