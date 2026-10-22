@@ -21,5 +21,10 @@
 - 対策: 1日1本・自社の記事だけ・抜粋＋元記事リンク（同じ文の大量投稿をしない）・ログインは本人が窓で行う・待ちを入れて人の速さで操作。まず draft（公開は本人）で運用し、問題なければ live
 - 送信は公式 API ではなく画面操作（scripts/post_note.js）。note の画面が変わると動かなくなる → 失敗時は画面の写真を残して終了コード1
 
+## 2026-10-22 の更新（本人了承: 方式A）
+- ログイン: Google は自動操作の窓で拒否される。普段の Chrome の note.com の Cookie だけを専用プロファイルへ複製（`note_login.js --from-chrome`・暗号化のまま・値は読まない）
+- 実行: 画面なしだと下書き作成 API が 403 → 窓ありで動かす。`note.com/notes/new` から入る（`editor.note.com/new` 直打ちは白いまま）。成否は draft_save の応答本文 `result:true` で判定（HTTP は常に 201）
+- 運用: mode=draft。run_journal_local.sh の最終 push 後に非ブロッキングで送る。公開は本人が note の画面で押す
+
 ## 次に必要なこと（本人作業を含む）
 note の利用規約の確認、投稿用アカウントのログイン、draft へ上げる OK。

@@ -934,4 +934,16 @@ if ! git log origin/main --oneline -1 -- "journal/${TODAY_JST}-"*.html >/dev/nul
 fi
 
 log "🚀 main へ push 完了（origin に本日記事の commit を確認）。"
+
+# note への下書き保存（docs/decisions/0054）。非ブロッキング: 失敗しても公開済みの記事には影響しない。
+# mode は data/note_post_policy.json（off / dry-run / draft / live）。窓が30秒ほど出る（画面なしだと note が 403 で拒否するため）。
+# 台帳 data/note_post_log.json は .gitignore 済み（push 後に作業ツリーを汚して翌日の pull を壊さないため）
+NOTE_MODE=$(node -e "console.log(require('./data/note_post_policy.json').mode)" 2>/dev/null || echo off)
+if [ "$NOTE_MODE" = "draft" ] || [ "$NOTE_MODE" = "live" ]; then
+  log "note へ送信（post_note.js・mode=${NOTE_MODE}）"
+  if ! run_with_timeout 300 caffeinate -s -i -d -u node scripts/post_note.js --date "$TODAY_JST" >>"$LOG" 2>&1; then
+    log "⚠️ note への送信に失敗（非ブロッキング）。画面の写真: ~/.config/nagoya-bites/note-fail/"
+    notify "note 下書き失敗" "ログ: $LOG。未ログインなら node scripts/note_login.js --from-chrome"
+  fi
+fi
 exit 0
