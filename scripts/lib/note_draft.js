@@ -84,7 +84,7 @@ function buildNoteDraft(entry, html, policy) {
   }
   if (a.points.length) out.push('## 知っておきたいポイント', '', ...a.points.map((p) => `- ${p}`), '');
   if (shown.length < a.sections.length) {
-    out.push(`この先は元記事で読めます（残り${a.sections.length - shown.length}節）。`, '');
+    out.push(`この先は元記事で読めます。`, '');
   }
   out.push(policy.footer, '', `元記事: ${url}`);
   return { title: a.title, body: out.join('\n').replace(/\n{3,}/g, '\n\n'), tags: tagsFor(entry, policy), url };

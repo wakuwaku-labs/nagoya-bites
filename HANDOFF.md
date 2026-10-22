@@ -39,6 +39,8 @@ status: in_progress
 
 - 2026-10-22 本人が「B」（試運転なしで翌朝から公開まで自動）を選択。policy mode=live（#658）。公開画面は実機で部品確認のみ（投稿は未実施）。公開失敗時は同じ下書きから再試行。未了: 初回の実機結果の確認・GitHub Issue の見張り・reCAPTCHA が出た場合は自動で突破せず止まる
 
+- 2026-10-22 15:30 本人の「今投稿して」で初の公開に成功: https://note.com/notes/n8fc72c27db14 （published・タグ2件）。落ちた原因は誘導文の『残りN節』が記事に無い数字として検査に落ちたこと→数字を外した。Cookie が一度失効していたため --from-chrome で再複製。
+
 ## 関連ファイル
 - data/note_post_policy.json・scripts/lib/note_draft.js・scripts/build_note_draft.js・docs/decisions/0054-note-draft-excerpt.md・docs/daily-posts/README.md
 
