@@ -65,14 +65,38 @@ function utmUrl(entry, policy) {
   return u.toString();
 }
 
-/** タグ: 基本タグ＋題名に出る地名（ハッシュ無しで返す。note の入力欄に1つずつ入れる）。 */
-function tagsFor(entry, policy) {
-  const areas = ['栄', '錦', '伏見', '名駅', '金山', '大須', '今池', '覚王山', '千種', '星ヶ丘', '藤が丘', '上前津', '丸の内', '矢場町', '新栄', '八事', '本山'];
-  const hit = areas.filter((a) => String(entry.title).includes(a));
-  return [...new Set([...policy.tags.base, ...hit])].slice(0, policy.tags.max);
+/** 記事の店（store_ids）を data/stores.json から引く。無い・読めないときは空（タグが減るだけで止めない）。 */
+function storesOf(entry, root = ROOT) {
+  const ids = new Set(entry.store_ids || []);
+  if (!ids.size) return [];
+  try {
+    return JSON.parse(fs.readFileSync(path.join(root, 'data/stores.json'), 'utf8')).filter((s) => ids.has(s['店舗ID']));
+  } catch { return []; }
 }
 
-function buildNoteDraft(entry, html, policy) {
+/**
+ * タグ（ハッシュ無しで返す。note の入力欄に1つずつ入れる）。note 公式ヘルプの目安「5つぐらい」「種類・テーマ・シリーズ・関連語で付ける」に合わせ、
+ * 基本タグ → 地名1つ（題名、無ければ店のエリア）→ テーマ（題名の語・店のジャンル）→ 埋め草（グルメ）の順に max 個まで（docs/decisions/0055）。
+ * 記事に無い語は付けない（関係の無いタグを足すと、ハッシュタグのページで読者を裏切る）。
+ */
+function tagsFor(entry, policy, stores = []) {
+  const t = policy.tags;
+  const title = String(entry.title || '');
+  // 題名の前に出る語ほど記事の主題に近いので、出てくる位置の順に選ぶ（同じ位置なら長い語＝「栄生」を「栄」より先に）
+  const byPosition = (list, keyOf) => list.map((x) => ({ x, at: title.indexOf(keyOf(x)), len: keyOf(x).length }))
+    .filter((m) => m.at >= 0).sort((a, b) => a.at - b.at || b.len - a.len).map((m) => m.x);
+  const words = t.areaWords || [];
+  const area = byPosition(words, (w) => w)[0]
+    || [...words].sort((a, b) => b.length - a.length).find((w) => stores.some((s) => String(s['エリア'] || '').includes(w)));
+  const topics = byPosition(Object.entries(t.titleTopics || {}), ([word]) => word).map(([, tag]) => tag);
+  for (const s of stores) if ((t.genreTopics || {})[s['ジャンル']]) topics.push(t.genreTopics[s['ジャンル']]);
+  const head = [...new Set([...t.base, ...(area ? [area] : [])])];
+  const picked = [...head, ...[...new Set(topics)].filter((x) => !head.includes(x)).slice(0, t.maxTopics ?? 2)];
+  for (const f of t.fill || []) if (picked.length < t.max && !picked.includes(f)) picked.push(f);
+  return picked.slice(0, t.max);
+}
+
+function buildNoteDraft(entry, html, policy, stores = storesOf(entry)) {
   const a = parseArticle(html);
   const take = policy.body.mode === 'full' ? a.sections.length : policy.body.sections;
   const shown = a.sections.slice(0, take);
@@ -87,7 +111,7 @@ function buildNoteDraft(entry, html, policy) {
     out.push(`この先は元記事で読めます。`, '');
   }
   out.push(policy.footer, '', `元記事: ${url}`);
-  return { title: a.title, body: out.join('\n').replace(/\n{3,}/g, '\n\n'), tags: tagsFor(entry, policy), url };
+  return { title: a.title, body: out.join('\n').replace(/\n{3,}/g, '\n\n'), tags: tagsFor(entry, policy, stores), url };
 }
 
 /** 落ちた理由の配列（空なら通過）。 */
@@ -108,4 +132,4 @@ function validateNoteDraft(draft, { policy, articleText, root = ROOT }) {
   return f;
 }
 
-module.exports = { loadPolicy, parseArticle, buildNoteDraft, validateNoteDraft, utmUrl, tagsFor, htmlToText };
+module.exports = { loadPolicy, parseArticle, buildNoteDraft, validateNoteDraft, utmUrl, tagsFor, storesOf, htmlToText };

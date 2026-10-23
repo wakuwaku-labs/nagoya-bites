@@ -87,6 +87,29 @@ function hashtagsFor(entry, policy) {
   return tags.slice(0, Math.max(0, policy.maxHashtags || 0));
 }
 
+/**
+ * 投稿の前に待つ秒数を決める（純粋関数・data/x_post_policy.json の postSlot）。
+ * date が JST の今日でなければ 0（過去の日の手動実行・やり直し）／土日は 0／枠が無ければ 0／
+ * 今が枠の時刻より前なら差の秒数／過ぎていれば 0。
+ * 返り値: { waitSeconds, slot, reason }（reason = wait / not_today / weekend / no_slot / passed）
+ */
+function planWait({ policy, date, now = new Date() }) {
+  const jst = new Date(now.getTime() + 9 * 3600000); // UTC の getter で JST の値が読める
+  const today = jst.toISOString().slice(0, 10);
+  const day = jst.getUTCDay();
+  const weekend = day === 0 || day === 6;
+  const ps = (policy && policy.postSlot) || {};
+  const slot = weekend ? ps.weekend : ps.weekday;
+  if (date !== today) return { waitSeconds: 0, slot: slot || null, reason: 'not_today' };
+  if (!slot) return { waitSeconds: 0, slot: null, reason: weekend ? 'weekend' : 'no_slot' };
+  const m = /^(\d{1,2}):(\d{2})$/.exec(String(slot));
+  if (!m) return { waitSeconds: 0, slot, reason: 'no_slot' };
+  const target = Date.UTC(jst.getUTCFullYear(), jst.getUTCMonth(), jst.getUTCDate(), Number(m[1]), Number(m[2]));
+  const diff = Math.ceil((target - jst.getTime()) / 1000);
+  if (diff <= 0) return { waitSeconds: 0, slot, reason: 'passed' };
+  return { waitSeconds: diff, slot, reason: 'wait' };
+}
+
 /** X の文面に限って題名の言い方を置き換える（data/x_post_policy.json の titleRewrites）。 */
 function rewriteTitle(title, policy) {
   let t = String(title || '').trim();
@@ -436,7 +459,7 @@ const HUMAN_ACTION_ERRORS = new Set(['auth', 'forbidden', 'payment']);
 
 module.exports = {
   ROOT, LOG_REL, HEALTH_REL, HUMAN_ACTION_ERRORS,
-  weightedLength, loadPolicy, articleUrl, utmUrl, areaHashtag, hashtagsFor, rewriteTitle, buildTemplatePost,
+  weightedLength, loadPolicy, articleUrl, utmUrl, areaHashtag, hashtagsFor, planWait, rewriteTitle, buildTemplatePost,
   DRAFT_DIR, draftPath, loadDraft, checkDraft, draftReplies, validateReplies, buildDraftPost, insiderPoints, buildPointPosts, postCandidates,
   htmlToText, normalizeDigits, numbersMissingFromArticle, wordingViolations, validatePost,
   readLog, writeJson, alreadyPosted, recentTexts, oauthHeader, classifyError, pct,

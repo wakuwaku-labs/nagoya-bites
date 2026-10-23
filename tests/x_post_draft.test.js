@@ -80,10 +80,10 @@ test('保存した文面の投稿: 本文＋URL（utm_content=型）＋ハッシ
   assert.ok(b.ok);
   assert.ok(b.text.startsWith(GOOD.body + '\n\nhttps://nagoya-bites.com/journal/2026-10-15-ikeshita-test.html?'));
   assert.ok(b.url.includes('utm_campaign=2026-10-15-ikeshita-test&utm_content=number'));
-  assert.deepStrictEqual(b.hashtags, ['#名古屋グルメ', '#池下']);
+  assert.deepStrictEqual(b.hashtags, ['#名古屋グルメ']);
   const long = X.buildDraftPost({ ...GOOD, body: 'あ'.repeat(120) }, entry, policy);
   assert.ok(long.ok && long.weighted <= 280);
-  assert.ok(long.hashtags.length < 2);
+  assert.ok(long.hashtags.length <= 1);
   assert.deepStrictEqual(X.validatePost(b.text, { entry, policy, articleText: ARTICLE_TEXT, root: REAL_ROOT }), []);
 });
 

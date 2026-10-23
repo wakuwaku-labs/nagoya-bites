@@ -334,6 +334,23 @@
 - **進捗（2026-10-13）**: 1〜3 は済み（`scripts/check_x_post_health.js`・`x-post-watchdog.yml`・判断の記録 0027。見張り役は mode=live のときだけ鳴る）。4（`social-watchdog.yml` の文言）は本番に切り替えるときに直す
 
 
+### [SNS-006] note と X の出し方を変えた効果を、2週間後に始める前の数字と比べる
+
+- **priority**: P2 → **status**: ready
+- **due**: 2026-11-07
+- **detected**: 2026-10-24
+- **category**: SNS / 計測
+- **owner**: Marketer
+- **source**: オーナー依頼（2026-10-24）「note や X の投稿は媒体ごとに多く見られる方法がある。しっかり調べた上で実践して」
+- **背景**: 2026-10-24 に X を平日 12:00 投稿・保存した文面を待つ・ハッシュタグ1個に、note のタグを5個前後にした（`docs/decisions/0055-sns-reach-practices.md`・調査は `docs/sns-reach-research-2026-10.md`）。始める前の数字は X @NAGOYABITES がフォロワー 0・投稿ごとの表示 3〜19 回・いいね 0、note nagoya_bites がフォロワー 0・スキ 0〜3
+- **acceptance**:
+  1. 2026-10-24〜11-06 の X の投稿ごとの表示・いいねと、note の記事ごとのスキを表にして `docs/sns-reach-research-2026-10.md` に追記している
+  2. GA4 の `utm_source=x` と `utm_source=note` のセッション数を、10-10〜10-23 と 10-24〜11-06 で比べた数字がある（`scripts/ga4_baseline.js` などの確定値で）
+  3. 平日の 12:00 投稿と土日の朝の投稿で表示に差があるかを書き、ADR 0055 の「見直す条件」に照らして続けるか変えるかを決めている
+  4. X の投稿のうち保存した文面（draft）が使われた日の割合を `data/x_post_log.json` から数えている（定型に落ちた日が 0 になっているか）
+- **関連**: [[SNS-001]]・[[SNS-004]]
+
+
 ### [DSN-008] トップ・検索結果・店舗詳細を、アイコンと短い言葉で直感的に操作できる見た目に整える
 
 - **priority**: P1 → **status**: done

@@ -15,7 +15,15 @@
   "baseHashtags": [
     "#名古屋グルメ"
   ],
-  "maxHashtags": 2,
+  "maxHashtags": 1,
+  "maxHashtagsHelp": "2026-10-24 に 2 個から 1 個（#名古屋グルメ だけ）にした。題名の地名（#栄 など）は本文に必ず入るので X の検索に掛かり、タグにしなくても拾われる。X の所有者 Musk 氏が 2026 年に「ハッシュタグは不要」と発言したこともあり、付けるのは地域を示す基本の1個に絞る。areaHashtagWords は消さない（note 側の使用を予定・areaHashtag() の挙動は変えていない）",
+  "postSlot": {
+    "weekday": "12:00",
+    "weekend": null,
+    "draftWaitMinutes": 15,
+    "maxWaitMinutes": 300
+  },
+  "postSlotHelp": "投稿する時刻（JST）。weekday = 平日（月〜金）はこの時刻まで待ってから投稿 / weekend = null は土日は待たず公開の直後に投稿。根拠は総務省「令和7年度 情報通信メディアの利用時間と情報行動に関する調査」の時間帯別ネット利用の行為者率: 平日 9時台 22.5%・12時台 34.2%・21時台 40.1%、休日 9時台 25.3%・10時台 26.0%・12時台 23.7%。平日は昼（12時台）が朝の約1.5倍。休日は時間帯による差が小さいので待たない。夜（21時台）は最も高いが、GitHub の1ジョブは最長6時間で、定時実行は数時間遅れる（実測5時間）ため確実に狙えず選ばなかった。draftWaitMinutes = 待ったあとに保存した文面（data/x_post_drafts/<date>.json）がまだ無いとき、1分おきに main を取り込み直して最大この分数だけ文面を待つ（Mac 側は記事の公開の後に文面を別コミットで push するため、起動時には無いことがある。2026-10-21・22 に定型へ落ちた原因）。届かなければ今までどおり定型で投稿する。0 で待たない。maxWaitMinutes = 枠まで眠る長さの上限（x-post.yml の timeout-minutes 330 から文面待ちと投稿の時間を引いた値。早朝に公開された日は枠より早めに出す）。手動実行（workflow_dispatch）で post_now を選ぶと枠を待たない。待つ処理は scripts/x_post_wait.js、枠の計算は scripts/lib/x_post.js の planWait()",
   "titleRewrites": [
     {
       "pattern": "を業界人が読む",
