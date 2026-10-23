@@ -10,6 +10,11 @@ name: NAGOYA BITES — X 自動投稿
 #   ジャーナルの公開（launchd が data/journal_published.json を push）を起点にすると数分で動ける。
 #   定時実行はその取りこぼし（Pages の反映待ちで送れなかった等）のやり直し用。
 #
+# なぜ待つか（2026-10-24）:
+#   平日は昼（12時台）が朝より見られる（総務省の時間帯別ネット利用。根拠は policy の postSlotHelp）ので、
+#   scripts/x_post_wait.js が 12:00 JST まで眠る（土日は待たない）。眠ったあとに main を取り込み直すので、
+#   記事の公開より後に push される保存した文面も拾える（待たないと定型に落ちた日があった）。
+#
 # 二重投稿を防ぐ仕組みは scripts/post_journal_to_x.js の先頭に書いてある（台帳・同時に1つ・X の重複拒否）。
 
 on:
@@ -30,6 +35,11 @@ on:
         type: boolean
         required: false
         default: false
+      post_now:
+        description: '平日でも 12:00 JST の投稿枠を待たずに今すぐ出す（手動のやり直し用）'
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -41,7 +51,7 @@ concurrency:
 jobs:
   post:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 330   # 早朝に公開された日でも 12:00 JST まで眠れる長さ（GitHub の上限は 360）
     steps:
       - uses: actions/checkout@v4
         with:
@@ -51,6 +61,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      - name: 投稿枠まで待つ（平日は 12:00 JST・最新の文面を取り込む）
+        env:
+          INPUT_DATE: ${{ github.event.inputs.date }}
+          INPUT_POST_NOW: ${{ github.event.inputs.post_now }}
+        run: |
+          ARGS=""
+          if [ -n "$INPUT_DATE" ]; then ARGS="--date $INPUT_DATE"; fi
+          if [ "$INPUT_POST_NOW" = "true" ]; then ARGS="$ARGS --now"; fi
+          node scripts/x_post_wait.js $ARGS
 
       - name: 投稿（または試運転）
         id: post

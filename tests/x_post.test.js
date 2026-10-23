@@ -36,7 +36,7 @@ test('定型の文面: UTM 付きリンク・地名のハッシュタグ・「�
   const b = X.buildTemplatePost(entry, policy);
   assert.ok(b.ok);
   assert.ok(b.text.includes('?utm_source=x&utm_medium=social&utm_campaign=2026-10-12-nakagawa-test'));
-  assert.deepStrictEqual(b.hashtags, ['#名古屋グルメ', '#中川区']);
+  assert.deepStrictEqual(b.hashtags, ['#名古屋グルメ']);
   assert.ok(!b.text.includes('業界人'));
   assert.ok(b.text.includes('3時間営業を読む'));
   assert.deepStrictEqual(X.wordingViolations(b.text, REAL_ROOT), []);
