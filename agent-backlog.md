@@ -936,7 +936,7 @@
   - 結果（2026-10-09・#445 合流後のビルド 37892873716 の後）: main で J003450558 は data/stores.json・stores/J003450558.html・sitemap.xml・index.html・stores/area/yabacho-osu の4本のどれにも無い（達成条件3）。`node scripts/audit_store_liveness.js` は掲載不可の閉店店なし。移転先の掲載は [[ISSUE-179]]（P-180・11-08）で決める。
 ### [ISSUE-179] 移転先（熱田区池内町4-1）の「創作料理まるゆ」を掲載するか決め、載せるなら実在検証を通して足す
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
 - **detected**: 2026-10-09
 - **due**: 2026-11-08
 - **category**: content / data-quality
@@ -953,6 +953,7 @@
   2. 載せる場合は、`data/manual_stores.json` に必須フィールドを一次情報だけで入れる。一次情報は、公式の発信と Google の店舗情報。おすすめポイントに推測を書かない
   3. 載せる場合は、`fetch_manual_store_photos.js` の三重検証を通す（店名・名古屋の住所・飲食店の業態）
   4. 載せる場合は、`data/closed_stores.json` の錦3丁目の記録に移転先の掲載が引っかからないことを、ビルドのログで確かめる
+- **結果（2026-10-23・Orchestrator routine）**: 掲載決定。追加条件を満たす（Google 評価 4.8 ≥ 4.2 ✓・移転先での継続営業という実在根拠 ✓）。`data/manual_stores.json` に 店名「まるゆ」・エリア「熱田」・一次情報（Instagram・Google店舗情報）のみで追記。`fetch_manual_store_photos.js` の三重検証 → 一致度1・オーナー写真採用（places-owner）。build.js で closed_stores.json の J003450558（錦3丁目）エントリとの衝突なしを確認（エリア違い・HP ID なし）。index.html の反映はオーナー環境での build.js 実行時に完了する。
 
 ### [ISSUE-180] 特集の本文が誘導ページ（古い ID）を指す10件を、今の店舗ページと予約導線へそろえる
 
