@@ -1,0 +1,451 @@
+{
+  "date": "2026-10-23",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄・久屋大通のハロウィン、スノーピークカフェでデート前に食べてランタンの抽選へ（10/24）",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 89,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 15,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (予約,シーン,価格帯) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 164字 +4",
+          "title 46字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「デート」+4",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      },
+      "gate_note": "89点（自動公開ライン 100点）。主な不足: topicality -10 / uniqueness -5 / recency -3"
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄・久屋大通の野外映画10/25、一般1,800円に1,000円分の券。スノーピークカフェで家族の昼",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 15,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (予約,シーン,価格帯) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 128字 +4",
+          "title 50字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -10 / uniqueness -5 / search_intent -4"
+    },
+    {
+      "id": "c4",
+      "title_draft": "久屋大通パーク「ROCCA & FRIENDS」のハロウィンパーラー、クレープで女子会の前に",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 17,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "女子会",
+          "feature": "features/girls-party.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (時期,予約,シーン) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 123字 +4",
+          "title 46字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「女子会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -8 / search_intent -6 / uniqueness -5"
+    },
+    {
+      "id": "c3",
+      "title_draft": "久屋大通「月あかり はなれ」秋の接待に、完全個室3〜28名と予算4,000円",
+      "verdict": "HOLD",
+      "total": 60,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 17,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (予約,シーン,価格帯) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 101字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「接待」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "鶴舞公園秋まつり（11/15まで）、週末の公園と鶴舞駅周辺の昼ごはん",
+      "verdict": "HOLD",
+      "total": 51,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "鶴舞・八事",
+          "feature": "stores/area/tsurumai-yagoto/index.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (需要,予約,シーン) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 82字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「鶴舞」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "89点（自動公開ライン 100点）。主な不足: topicality -10 / uniqueness -5 / recency -3",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "栄・久屋大通のハロウィン、スノーピークカフェでデート前に食べてランタンの抽選へ（10/24）",
+      "lead_draft": "10月24日（土）、久屋大通公園の「Hisaya Halloween 2026」でスカイランタンが上がる。18時からの先着400名で、参加券は抽選会の参加賞から選ぶ方式だ。抽選1回には公園内の対象店で税込2,500円の利用が要る。つまり食事が先になる。料理L.O.19時のスノーピークカフェを例に、予約と時間の組み方を整理する。",
+      "angle": "ランタン参加の条件（対象店で税込2,500円＝抽選1回）をスノーピークカフェの税込価格（バーガー1,518円・1,738円）で価格帯の読み方として示し、料理L.O.19時・閉店20時とランタン18〜20時の重なりから『先に食べる』予約の時間帯とデート・家族のシーン適性を読む",
+      "main_store": {
+        "name": "スノーピークカフェ 久屋大通公園店",
+        "id": "J003388128",
+        "area": "栄・久屋大通",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（Hisaya-odori Park DESIGN CENTER）「Hisaya Halloween 2026」開催",
+          "url": "https://prtimes.jp/main/html/rd/p/000000021.000088451.html",
+          "date": "2026-10-19"
+        },
+        {
+          "label": "いこーよ「願いを描いたランタンが夕暮れに一斉点灯！名古屋ヒサヤオオドオリパークのハロウィン」",
+          "url": "https://report.iko-yo.net/articles/34899",
+          "date": "2026-10-19"
+        },
+        {
+          "label": "リセマム（PR TIMES 転載）",
+          "url": "https://resemom.jp/release/prtimes/20261019/221269.html",
+          "date": "2026-10-19"
+        },
+        {
+          "label": "ホットペッパー スノーピークカフェ 久屋大通公園店（営業時間・席数）",
+          "url": "https://www.hotpepper.jp/strJ003388128/"
+        },
+        {
+          "label": "ホットペッパー スノーピークカフェ 久屋大通公園店（料理メニュー・税込価格）",
+          "url": "https://www.hotpepper.jp/strJ003388128/food/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "栄・久屋大通の野外映画10/25、一般1,800円に1,000円分の券。スノーピークカフェで家族の昼",
+      "lead_draft": "10月25日（日）、久屋大通公園の芝生で「映画 えんとつ町のプペル」の野外上映がある。一般1,800円と小中高生1,500円のチケットには、1,000円分のフード＆ショッピングチケットが付く。映画の前の昼をどう組むか、公園内の店の価格帯と営業時間から読む。",
+      "angle": "野外映画のチケット価格（一般1,800円・券1,000円分付）を価格帯の読み方として分解し、スノーピークカフェのキッズバーガー770円などの価格と日曜の営業時間から家族・デートのシーン別に予約の要否を読む",
+      "main_store": {
+        "name": "スノーピークカフェ 久屋大通公園店",
+        "id": "J003388128",
+        "area": "栄・久屋大通",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（Hisaya-odori Park DESIGN CENTER）「Hisaya Halloween 2026」開催",
+          "url": "https://prtimes.jp/main/html/rd/p/000000021.000088451.html",
+          "date": "2026-10-19"
+        },
+        {
+          "label": "いこーよ「願いを描いたランタンが夕暮れに一斉点灯！名古屋ヒサヤオオドオリパークのハロウィン」",
+          "url": "https://report.iko-yo.net/articles/34899",
+          "date": "2026-10-19"
+        },
+        {
+          "label": "リセマム（PR TIMES 転載）",
+          "url": "https://resemom.jp/release/prtimes/20261019/221269.html",
+          "date": "2026-10-19"
+        },
+        {
+          "label": "ホットペッパー スノーピークカフェ 久屋大通公園店（営業時間・席数）",
+          "url": "https://www.hotpepper.jp/strJ003388128/"
+        },
+        {
+          "label": "ホットペッパー スノーピークカフェ 久屋大通公園店（料理メニュー・税込価格）",
+          "url": "https://www.hotpepper.jp/strJ003388128/food/"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "久屋大通「月あかり はなれ」秋の接待に、完全個室3〜28名と予算4,000円",
+      "lead_draft": "10月下旬から11月は、年末の宴会の前に接待の席が増える時期だ。久屋大通駅から2分の「月あかり はなれ」は完全個室を3名から28名まで用意する。予算4,000円前後の店で接待を組むときの見方を整理する。",
+      "angle": "秋の接待シーズンに、完全個室の人数幅と予算4,000円の価格帯から、予約の取り方と接待のシーン適性を読む",
+      "main_store": {
+        "name": "月あかり はなれ",
+        "id": "J003850468",
+        "area": "久屋大通",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 月あかり はなれ",
+          "url": "https://www.hotpepper.jp/strJ003850468/"
+        },
+        {
+          "label": "食べログ 月あかり はなれ",
+          "url": "https://tabelog.com/aichi/A2301/A230103/23090264/"
+        },
+        {
+          "label": "Instagram 月あかり",
+          "url": "https://www.instagram.com/tsuki_akari_official/",
+          "date": ""
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "久屋大通パーク「ROCCA & FRIENDS」のハロウィンパーラー、クレープで女子会の前に",
+      "lead_draft": "久屋大通公園の「Hisaya Halloween 2026」に合わせ、RAYARD の各店がハロウィン限定メニューを出す。発表で名前が挙がったクレープ店 ROCCA & FRIENDS の企画を軸に、公園で甘いものを食べる時間の取り方を整理する。",
+      "angle": "ハロウィン限定メニューの時期と混雑の山から、女子会・家族のシーンで並ぶ時間を避ける予約のない店の使い方を読む",
+      "main_store": {
+        "name": "ROCCA & FRIENDS CREPERIE to TEA 名古屋店",
+        "id": "",
+        "area": "栄・久屋大通",
+        "genre": "クレープ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（Hisaya-odori Park DESIGN CENTER）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000021.000088451.html",
+          "date": "2026-10-19"
+        },
+        {
+          "label": "いこーよ",
+          "url": "https://report.iko-yo.net/articles/34899",
+          "date": "2026-10-19"
+        },
+        {
+          "label": "Instagram ROCCA & FRIENDS 名古屋",
+          "url": "https://www.instagram.com/rocca.creperie.nagoya/",
+          "date": ""
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "鶴舞公園秋まつり（11/15まで）、週末の公園と鶴舞駅周辺の昼ごはん",
+      "lead_draft": "鶴舞公園で10月10日から11月15日まで秋まつりが続いている。週末ごとに体験企画がある一方、飲食の出店情報は少ない。鶴舞駅周辺で昼を食べる時間の取り方を整理する。",
+      "angle": "秋まつりの週末に公園周辺の昼の需要が集中する時間帯と、家族のシーンでの予約の要否を読む",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "鶴舞",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "名古屋コンシェルジュ 鶴舞公園秋まつり2026",
+          "url": "https://www.nagoya-info.jp/event/detail/1415/",
+          "date": ""
+        },
+        {
+          "label": "ウォーカープラス 鶴舞公園秋まつり",
+          "url": "https://www.walkerplus.com/event/ar0623e608169/data.html",
+          "date": ""
+        }
+      ]
+    }
+  ]
+}
