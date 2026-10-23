@@ -11,7 +11,34 @@ const B = require('./note_browser');
 
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-function html(title, date) {
+/** assets/note-eyecatch の写真から、日付で決まる1枚を選ぶ（同じ日は同じ写真）。写真が無ければ null（題だけの図に倒す）。 */
+function pickPhoto(date) {
+  const dir = path.join(__dirname, '..', '..', 'assets', 'note-eyecatch');
+  let files = [];
+  try { files = fs.readdirSync(dir).filter((f) => /\.(jpe?g|png)$/i.test(f)).sort(); } catch { /* 無ければ図に倒す */ }
+  if (!files.length) return null;
+  const n = Number(String(date).replace(/\D/g, '')) || 0;
+  return path.join(dir, files[n % files.length]);
+}
+
+function html(title, date, photo) {
+  const size = title.length > 44 ? 46 : title.length > 30 ? 54 : 62;
+  if (!photo) return htmlPlain(title, date);
+  const src = `data:image/${/png$/i.test(photo) ? 'png' : 'jpeg'};base64,${fs.readFileSync(photo).toString('base64')}`;
+  return `<!doctype html><meta charset="utf-8"><style>
+  html,body{margin:0}
+  .c{width:1280px;height:670px;position:relative;overflow:hidden;background:#241c10 url(${src}) center 68%/cover no-repeat;
+     font-family:"Hiragino Mincho ProN","Hiragino Sans","Yu Mincho",serif;color:#fff}
+  .g{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(20,12,4,.45) 0,rgba(20,12,4,0) 28%,rgba(20,12,4,0) 42%,rgba(20,12,4,.88) 100%)}
+  .k{position:absolute;left:56px;top:40px;font-family:"Hiragino Sans","Yu Gothic",sans-serif;font-size:26px;letter-spacing:.18em;font-weight:600;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+  h1{position:absolute;left:56px;right:56px;bottom:74px;margin:0;font-size:${size}px;line-height:1.36;font-weight:700;letter-spacing:.02em;text-shadow:0 2px 10px rgba(0,0,0,.55)}
+  .f{position:absolute;left:56px;right:56px;bottom:28px;display:flex;justify-content:space-between;font-family:"Hiragino Sans","Yu Gothic",sans-serif;font-size:22px;color:rgba(255,255,255,.88)}
+  </style><div class="c"><div class="g"></div><div class="k">NAGOYA BITES JOURNAL</div><h1>${esc(title)}</h1>
+  <div class="f"><span>${esc(date)} ／ 名古屋の飲食店ジャーナル</span><span>※写真はイメージです</span></div></div>`;
+}
+
+function htmlPlain(title, date) {
+
   const size = title.length > 44 ? 50 : title.length > 30 ? 58 : 66;
   return `<!doctype html><meta charset="utf-8"><style>
   html,body{margin:0}
@@ -35,11 +62,11 @@ async function makeEyecatch(title, date, outPath, browser) {
   try {
     const page = await br.newPage();
     await page.setViewport({ width: 1280, height: 670 });
-    await page.setContent(html(title, date));
+    await page.setContent(html(title, date, pickPhoto(date)));
     await page.screenshot({ path: out, clip: { x: 0, y: 0, width: 1280, height: 670 } });
     await page.close();
   } finally { if (own) await br.close(); }
   return out;
 }
 
-module.exports = { makeEyecatch, html };
+module.exports = { makeEyecatch, html, pickPhoto };

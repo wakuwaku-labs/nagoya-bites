@@ -142,12 +142,13 @@ async function updatePublished(page, key, draft, date) {
   await body.click(); await page.keyboard.down('Meta'); await page.keyboard.press('KeyA'); await page.keyboard.up('Meta'); await page.keyboard.press('Backspace');
   await writeBody(page, draft);
   await setEyecatch(page, draft, date, N.loadPolicy(ROOT).eyecatch !== false);
+  await sleep(3000); // 画像の反映・自動保存が終わる前に進むと「タイトル、本文を入力してください」と出る
   if (!(await B.clickByText(page, ['公開に進む']))) throw new Error('「公開に進む」ボタンが見つからない');
   await page.waitForFunction(() => /\/publish\//.test(location.href), { timeout: 20000 });
   await sleep(2000);
   if (!(await B.clickByText(page, ['更新する']))) throw new Error('「更新する」ボタンが見つからない');
   // 更新後は /publish/ のまま「記事をシェアしてみましょう」が出る
-  await page.waitForFunction(() => !/\/publish\//.test(location.href) || document.body.innerText.includes('シェアしてみましょう'), { timeout: 30000 });
+  await page.waitForFunction(() => !/\/publish\//.test(location.href) || /シェアしてみましょう|記事が公開されました/.test(document.body.innerText), { timeout: 30000 });
 }
 
 (async () => {
@@ -180,6 +181,11 @@ async function updatePublished(page, key, draft, date) {
     const who = await page.evaluate(async () => { const r = await fetch('/api/v2/current_user', { credentials: 'include' }); return r.ok ? (await r.json()).data : null; });
     const want = (policy.account && policy.account.nickname) || 'NAGOYA BITES';
     if (!who || who.nickname !== want) throw new Error(`投稿先のアカウントが違います（今: ${who ? who.nickname : '未ログイン'} / 必要: ${want}）。普段の Chrome で ${want} にログインし直して node scripts/note_login.js --from-chrome`);
+    // 台帳は作業場所ごとに別なので、note 側の公開済みの題とも照らして二重投稿を防ぐ（2026-10-23 朝の自動投稿と手動が重なった）
+    if (!upd && !prev) {
+      const dup = await page.evaluate(async (u, t) => { try { const j = await (await fetch(`/api/v2/creators/${u}/contents?kind=note&page=1`, { credentials: 'include' })).json(); const c = (j.data && j.data.contents) || []; const hit = c.find((x) => (x.name || '').trim() === t.trim() && x.status === 'published'); return hit ? hit.noteUrl || hit.key : null; } catch { return null; } }, who.urlname, draft.title);
+      if (dup) return console.log(`note: 同じ題の公開済みの記事があるため送りません（${dup}）`);
+    }
     if (upd) { await updatePublished(page, upd, draft, out.date); return console.log(`note[update] ${out.slug} を ${upd} に反映しました`); }
     let url;
     if (prev) { // 下書きは保存済み（前回、公開で失敗した）。同じ下書きを開き直して公開だけやり直す（下書きを増やさない）
