@@ -1,8 +1,20 @@
 {
-  "date": "2026-10-23",
-  "head": "a633c229485c26da9d3d13c3bdd858a808575807",
-  "verdict": "FAIL",
-  "findings": [],
+  "date": "2026-10-24",
+  "head": "623a24d892d03f2b05df445ec2a0f26eaf071210",
+  "verdict": "WARN",
+  "findings": [
+    {
+      "category": "Security",
+      "owner": "DataKeeper",
+      "id": "QA-SEC-NPM-AUDIT",
+      "sev": "soft",
+      "priority": "P2",
+      "title": "npm 依存に既知脆弱性 1 件（critical 0 / high 1 / moderate 0）",
+      "body": "`npm audit --omit=dev` 結果。\n- acceptance: 破壊的変更の無い範囲で `npm audit fix`／高リスクは個別精査／残存はリスク受容理由を記録／次回QAで推移を追跡（制約4: サイト用新依存は追加しない）"
+    }
+  ],
   "created": [],
-  "existing": []
+  "existing": [
+    "QA-SEC-NPM-AUDIT"
+  ]
 }
