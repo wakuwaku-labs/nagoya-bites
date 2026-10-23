@@ -105,3 +105,5 @@ status: in_progress
 - 2026-10-23 アカウント切替の独立化: Chrome に別プロフィール「Profile 1」を作成済み（note 未ログイン）。本人が Profile 1 で NAGOYA BITES にログイン後、policy の account.chromeProfile=\"Profile 1\" にして `node scripts/note_login.js --from-chrome`。以後 Default で vide太郎に切り替えても投稿は影響を受けない。Profile 1 には Claude in Chrome 拡張が無く私は操作できない。複製元の指定は #672 で対応済み。それまでは Default が NAGOYA BITES の状態を保つ（現在 NAGOYA BITES を確認）
 
 - 2026-10-23 本人の「今投稿して」で 10/23 分を NAGOYA BITES で公開: https://note.com/nagoya_bites/n/n878c4d62136a
+
+- 2026-10-23 夜: 見出し画像を写真入りに変更（policy eyecatch=true）。写真は Canva で作った AI 画像を assets/note-eyecatch/ に置き、日付で1枚選んで題を重ねる（※写真はイメージです）。Canva の無料枠が尽き写真は居酒屋1枚のみ。create-design(LinkedIn Post)の jpg 書き出しは原寸(2880x2304)で取れる（generate-image は縮小のみ）。枠が戻ったら ジャンル別に追加。朝9時の自動投稿(n1a04370ade88)に見出しを反映済み。事故: 朝の自動投稿に気づかず手動で二重に公開(n878c4d62136a)→note側の公開済み題と照合して重複を止める処理を追加。重複記事の削除は本人判断（公開済みは UI から消せない）
