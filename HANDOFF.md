@@ -38,6 +38,7 @@ status: in_progress
 - X の夜（21時台が最多）は、GitHub の1ジョブ6時間の上限と定時実行の約5時間の遅れで確実に狙えないため採らない。平日12:00・土日は待たない
 - X の文面にリンクは残す（返信に移しても費用同じ・減点の根拠なし）。画像は付けない（付けると写真つきのリンクカードが消える・HotPepper 写真は規約で不可）
 - note のタグは記事の題名か店のデータにある語だけ（関係の無いタグはスパム扱いの恐れ）
+- 2026-10-24 07:0x 見出し画像（ne0697f4a39e2）の扱いを選択式で聞いたが、autopilot が推奨案「外す」を自動回答した。公開中の記事を変える操作で本人の明示の了承ではないため実行せず、P-668 で本人の判断を待つ
 
 ## 関連ファイル
 - data/x_post_policy.json・scripts/lib/x_post.js・scripts/x_post_wait.js・.github/workflows/x-post.yml・data/note_post_policy.json・scripts/lib/note_draft.js
