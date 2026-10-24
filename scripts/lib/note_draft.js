@@ -59,6 +59,11 @@ function parseArticle(html) {
 
 /** 本文のうち「文言: URL」だけの行。post_note.js がこの URL をリンクカードにする（元記事の行）。クレジットの行はこの形にしない */
 const CARD_LINE = /^(.*?):\s*(https?:\/\/\S+)$/;
+/** 見出し画像の写真のクレジットの行の頭 */
+const PHOTO_CREDIT = '見出し画像: ';
+
+/** 本文から写真のクレジットの行を外す（写真を見出し画像に入れられなかった日に、無い写真のクレジットを載せない） */
+const dropPhotoCredit = (body) => String(body).split('\n').filter((l) => !l.startsWith(PHOTO_CREDIT)).join('\n').replace(/\n{3,}/g, '\n\n');
 
 /**
  * note の見出し画像に使える、記事に載せた店の実物写真（ヒーロー → 本文の順で最初の1枚）。無ければ null。
@@ -140,7 +145,7 @@ function buildNoteDraft(entry, html, policy, stores = storesOf(entry)) {
   }
   // 見出し画像に記事の写真を使うときは、記事と同じクレジット（発行元・リリースの URL）を本文にも書く（URL は行の最後。リンクカードにしない）
   const photo = policy.eyecatch === false ? null : articlePhoto(html, policy);
-  if (photo) out.push(`見出し画像: ${photo.credit} ${photo.creditUrl}`, '');
+  if (photo) out.push(`${PHOTO_CREDIT}${photo.credit} ${photo.creditUrl}`, '');
   out.push(policy.footer, '', `元記事: ${url}`);
   return { title: a.title, body: out.join('\n').replace(/\n{3,}/g, '\n\n'), tags: tagsFor(entry, policy, stores), url, photo };
 }
@@ -163,4 +168,4 @@ function validateNoteDraft(draft, { policy, articleText, root = ROOT }) {
   return f;
 }
 
-module.exports = { loadPolicy, parseArticle, articlePhoto, buildNoteDraft, validateNoteDraft, utmUrl, tagsFor, storesOf, htmlToText, CARD_LINE };
+module.exports = { loadPolicy, parseArticle, articlePhoto, buildNoteDraft, validateNoteDraft, utmUrl, tagsFor, storesOf, htmlToText, CARD_LINE, dropPhotoCredit };

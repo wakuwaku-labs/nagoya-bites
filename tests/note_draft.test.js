@@ -91,3 +91,13 @@ test('見出し写真: 本文に記事と同じクレジットを書き、元記
   // 見出し画像を使わない設定なら、写真もクレジットも付けない
   assert.strictEqual(N.buildNoteDraft(entry, withPhoto, { ...policy, eyecatch: false }).photo, null);
 });
+
+test('見出し写真: 写真を入れられなかった日は、本文からクレジットの行だけを外す', () => {
+  const withPhoto = html.replace('<div class="art-body">', fig('hero', 'press', PR) + '<div class="art-body">');
+  const d = N.buildNoteDraft(entry, withPhoto, policy);
+  const body = N.dropPhotoCredit(d.body);
+  assert.doesNotMatch(body, /見出し画像:/);
+  assert.match(body, /元記事: https:\/\/nagoya-bites\.com/);
+  assert.doesNotMatch(body, /\n{3,}/);
+  assert.strictEqual(N.dropPhotoCredit(N.buildNoteDraft(entry, html, policy).body), N.buildNoteDraft(entry, html, policy).body);
+});
