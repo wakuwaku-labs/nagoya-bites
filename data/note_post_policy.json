@@ -3,6 +3,8 @@
   "version": 1,
   "mode": "live",
   "modeHelp": "off = 何もしない / dry-run = note 用の下書きを作って検査するだけ（note に送らない）/ draft = note に『下書き』として保存する（公開はオーナーが note の画面で押す）/ live = note に公開まで行う。draft・live に上げるのは、note の利用規約の確認とログインの用意（オーナー作業）のあと、オーナーの OK を得てから",
+  "liveSince": "2026-10-22",
+  "liveSinceHelp": "公開まで自動にした日（#658）。見張り役（note-post-watchdog.yml）はこの日以降の記事だけを見る",
   "siteBase": "https://nagoya-bites.com",
   "utm": {
     "source": "note",
@@ -141,13 +143,20 @@
   "titleMax": 100,
   "bodyMaxChars": 20000,
   "account": {
-    "nickname": "NAGOYA BITES"
+    "nickname": "NAGOYA BITES",
+    "urlname": "nagoya_bites"
   },
   "eyecatch": true,
   "eyecatchPhoto": {
     "sources": ["press"],
     "hosts": ["prcdn.freetls.fastly.net", "prtimes.jp"],
     "help": "note の見出し画像に使ってよい『店の実物の写真』の出どころ。記事（ヒーロー → 本文の順）に載せた写真のうち、ここにある出どころ・配信元の写真だけを、加工せずに note へ上げる。note に上げる＝note のサーバーへの複製なので、規約で許されるものだけにする（docs/decisions/0056）: press＝PR TIMES 企業規約 第6条3項で報道目的の利用が許諾。hotpepper（リクルート Webサービス規約が加工・複製保存・再配信を禁止）と places（Google Maps Platform が保存を禁止）は入れない。該当が無い日は題だけの図にする（無関係な写真は使わない・2026-10-24 オーナー指摘）。クレジット（発行元とリリースの URL）が無い写真は使わない"
+  },
+  "liveSince": "2026-10-24",
+  "watchdog": {
+    "rssUrl": "https://note.com/nagoya_bites/rss",
+    "graceHours": 3,
+    "help": "記事の公開（published_at）から graceHours を過ぎても note の RSS に出ていなければ GitHub Issue で知らせる（scripts/check_note_post_health.js）。未ログイン・検査落ちは猶予を待たない"
   },
   "tagsHelp": "note のハッシュタグ。note 公式ヘルプ「より多くのひとに書いた記事を読んでもらうために」（2026-09-17 更新）の『タグは5つぐらいが効果的』『どのようなタイプの記事か・何のテーマか・シリーズ名・関連ワードで付ける』に合わせる（1記事の上限は10個・ハイフン不可）。順番: base → 地名1つ（題名に出る語。無ければ店のエリア）→ テーマ最大 maxTopics 個（題名の語 titleTopics → 店のジャンル genreTopics）→ max に満たなければ fill。記事に無い語は付けない。語の対応を変えるときはここだけを直す（docs/decisions/0055）"
 }
