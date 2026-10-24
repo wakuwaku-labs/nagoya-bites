@@ -34,6 +34,43 @@ scripts/lib/note_browser.js / scripts/post_note.js / scripts/note_login.js / doc
 
 # 前の作業（note の見出し画像を店の実物写真にする・done）
 
+# note のログインを普段の Chrome から切り離し、切れていたら自分で入り直す（2026-10-24〜）
+
+## 目的
+本人が普段の Chrome で note を別アカウント（vide太郎）に切り替えたりログアウトしたりしても、毎朝の note 投稿が止まらないようにする。
+
+## 完了条件
+- 専用プロファイルのログインが普段の Chrome と別のもの（_note_session_v5 の作成時刻が違う）
+- 未ログイン・別アカウントのとき、投稿の前に自分で NAGOYA BITES に入り直す。入れなければ投稿せずに理由つきで止まる
+- テストが通り、main に入っている
+
+## できていること
+- 原因: 専用プロファイルのログインは Default の複製（作成時刻 05:30:46 が一致）。写しで実験し、note のログアウトは「そのログインと複製」だけを切ることを確認（copy3 は 401・Google から別に入った copy2 は残った）
+- 専用プロファイルは Chrome 自体が Google にログイン済み（Google の Cookie を消しても入れた）→ note の「Google」を押すだけで NAGOYA BITES に入れる
+- 実装: scripts/lib/note_browser.js に currentUser / loginWithGoogle / ensureAccount。post_note.js は投稿前に ensureAccount。note_login.js に --google、--check はアカウント名も見る。ADR 0057
+- 写しで確認: 未ログイン→入り直し成功／vide太郎→入り直し成功（本人の Profile 1 の vide太郎 は切れていない）／Google を止めると投稿せず理由つきで止まる
+- 本番の専用プロファイルを --google で入り直し（作成 15:40:20・Default は 05:30:46 のまま）。--check と投稿前の確認を本番で1回ずつ実行して NAGOYA BITES
+- npm test 1888/1888
+
+- PR #687 をマージ（d0cb6bf87c）
+- 明朝の取り込みを別の作業場所で試した: ~/nagoya-bites の main（origin より2つ先・c10aaeafb9/bd3e87e178）は run_journal_local.sh で rebase が衝突するが、続く merge で取り込め、中身は origin/main と同じ（差分0行）
+
+## 次にやること
+- 10-25 朝の note 投稿のログ（~/nagoya-bites/.local-logs の journal ログ）で「入り直します」が出ていないか・公開できたかを見る
+- P-638（note 投稿の失敗を GitHub Issue で知らせる見張り役・~/nagoya-bites の feat/note-post-watchdog に未 push の d28ac56d08）を main に合わせて入れる。#676〜#686 と post_note.js・run_journal_local.sh が重なるので取り込み直しが要る
+
+## 試したが駄目だったこと
+- clickByText(['Google']) では押せない（ボタンは絵だけで、文字は別の要素）。aria-label・href まで見て探す
+
+## 守るルール・判断メモ
+- note の Cookie は手元で消すだけ。note のログアウトは押さない（本人の Chrome のログインを切らない）
+- 自動 commit（Autopilot）が前の作業の文面でコミットした（ae984a6eb1）。PR はスカッシュで入れるので main には残らない
+
+## 関連ファイル
+scripts/lib/note_browser.js / scripts/post_note.js / scripts/note_login.js / docs/decisions/0057-note-login-own-google-session.md / docs/decisions/0054-note-draft-excerpt.md
+
+# 前の作業（note の見出し画像を店の実物写真にする・done）
+
 # note の見出し画像を店の実物写真にする（2026-10-24〜）
 
 ## 目的
