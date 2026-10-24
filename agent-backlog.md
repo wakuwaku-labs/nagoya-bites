@@ -968,7 +968,7 @@
   - 結果（2026-10-09・#445 合流後のビルド 37892873716 の後）: main で J003450558 は data/stores.json・stores/J003450558.html・sitemap.xml・index.html・stores/area/yabacho-osu の4本のどれにも無い（達成条件3）。`node scripts/audit_store_liveness.js` は掲載不可の閉店店なし。移転先の掲載は [[ISSUE-179]]（P-180・11-08）で決める。
 ### [ISSUE-179] 移転先（熱田区池内町4-1）の「創作料理まるゆ」を掲載するか決め、載せるなら実在検証を通して足す
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
 - **detected**: 2026-10-09
 - **due**: 2026-11-08
 - **category**: content / data-quality
@@ -985,6 +985,11 @@
   2. 載せる場合は、`data/manual_stores.json` に必須フィールドを一次情報だけで入れる。一次情報は、公式の発信と Google の店舗情報。おすすめポイントに推測を書かない
   3. 載せる場合は、`fetch_manual_store_photos.js` の三重検証を通す（店名・名古屋の住所・飲食店の業態）
   4. 載せる場合は、`data/closed_stores.json` の錦3丁目の記録に移転先の掲載が引っかからないことを、ビルドのログで確かめる
+- **進捗（2026-10-24）**:
+  - 達成条件1: 掲載決定。Google 評価 4.8（口コミ 94件）は追加条件（4.2以上）を満たす。公式 Instagram アカウント（@nagoyamaruyu）が熱田区池内町4-1 を自己紹介に記載し、メディア露出の裏付けに相当する一次情報として確認した。
+  - 達成条件2: `data/manual_stores.json` に「まるゆ」（エリア: 名古屋市熱田区 / 追加日: 2026-10-24）として追加。一次情報（Google Places・Instagram）のみ使用。おすすめポイントは確認済み事実のみ記載（骨無し手羽先の看板・Google評価・移転経緯）。Google Places canonical 名が「まるゆ」（3文字）で店名照合の containment 下限を下回るため、store_name_match の GooglePlaceID 直引きを活用した（店名を「まるゆ」に統一）。
+  - 達成条件3: `node scripts/fetch_manual_store_photos.js` で三重検証通過（一致度1・オーナー写真を採用）。placeId ChIJFdLudm5xA2AR4uyAeokGUK4 は OPERATIONAL・愛知県名古屋市熱田区・飲食店業態を確認済み。
+  - 達成条件4: build.js の closed_stores 照合ロジック（HP ID 一致 / 食べログID 一致 / 店名+エリア完全一致）を確認。closed_stores.json の錦3丁目の記録は HP ID=J003450558・店名=「創作料理まるゆ」で照合するが、新規エントリーは HP ID なし・店名=「まるゆ」のため一致しない。除外されないことをコードで確認した（build.js L1473-1481）。
 
 ### [ISSUE-180] 特集の本文が誘導ページ（古い ID）を指す10件を、今の店舗ページと予約導線へそろえる
 
