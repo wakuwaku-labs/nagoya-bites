@@ -34,7 +34,7 @@ function bodyToHtml(body) {
   for (const raw of body.split('\n')) {
     const l = raw.trim(); if (!l) continue;
     let m;
-    if ((m = /^(.*?):\s*(https?:\/\/\S+)$/.exec(l))) { close(); html.push(`<p>${inline(m[1])}</p>`); cardUrl = m[2]; continue; }
+    if ((m = N.CARD_LINE.exec(l))) { close(); html.push(`<p>${inline(m[1])}</p>`); cardUrl = m[2]; continue; }
     if ((m = /^##\s+(.*)$/.exec(l))) { close(); html.push(`<h2>${inline(m[1])}</h2>`); continue; }
     if ((m = /^[-・]\s+(.*)$/.exec(l))) { if (!list) { html.push('<ul>'); list = true; } html.push(`<li>${inline(m[1].replace(/\[([^\]]+)\]\([^)]+\)/g, '$1'))}</li>`); continue; }
     close(); html.push(`<p>${inline(l.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1'))}</p>`);
@@ -60,20 +60,45 @@ async function writeBody(page, draft) {
   await sleep(1500);
 }
 
-/** 見出し画像（題・日付・ブランド名だけの自前の図）を入れる。他者の写真は使わない。失敗しても投稿は止めない（画像なしで続ける）。 */
+/** 題の上に付いている見出し画像の位置（無ければ null）。本文中の画像と取り違えないよう、画面上部の幅の広い画像だけを見る */
+const eyecatchBox = (page) => page.evaluate(() => {
+  const img = [...document.querySelectorAll('img')].find((i) => { const r = i.getBoundingClientRect(); return r.width > 400 && r.top < 300 && /st-note\.com|^blob:|^data:/.test(i.src); });
+  if (!img) return null; const r = img.getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height };
+});
+
 async function removeEyecatch(page) {
-  // 既に付いている見出し画像を外す（画像の右上の×）
+  // 既に付いている見出し画像を外す（画像の右上の×。2026-10-24 の画面では画像の右上 32px 四方のボタン）
   await page.evaluate(() => window.scrollTo(0, 0));
-  await page.mouse.move(590, 220); await sleep(600);
-  await page.mouse.click(866, 133); await sleep(1500);
-  const left = await page.evaluate(() => !!document.querySelector('img[src*="rectangle_large_type"]'));
+  const box = await eyecatchBox(page);
+  if (!box) return console.log('note: 見出し画像は付いていません');
+  await page.mouse.move(box.x + box.w / 2, box.y + box.h / 2); await sleep(600);
+  const x = await page.evaluate((b) => {
+    const btn = [...document.querySelectorAll('button')].find((e) => { const r = e.getBoundingClientRect(); return r.width > 0 && r.width < 60 && r.left > b.x + b.w / 2 && r.right <= b.x + b.w + 4 && r.top >= b.y - 4 && r.bottom < b.y + b.h / 2; });
+    if (!btn) return null; const r = btn.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 };
+  }, box);
+  await page.mouse.click(x ? x.x : box.x + box.w - 32, x ? x.y : box.y + 32); await sleep(1500);
+  const left = await eyecatchBox(page);
   console.log('note: 見出し画像 ' + (left ? 'を外せませんでした' : 'を外しました'));
+  if (left) throw new Error('付いていた見出し画像を外せませんでした');
 }
 
+/** 見出し画像の素材: 記事に載せた店の実物写真（規約で上げてよいものだけ・加工しない）。無い日・取れない日は題と日付だけの図（docs/decisions/0056） */
+async function eyecatchFile(page, draft, date) {
+  if (draft.photo) {
+    try { const f = E.downloadPhoto(draft.photo, date); console.log('note: 見出し画像は記事の写真（店の実物）を使います'); return { file: f, kind: 'photo' }; }
+    catch (e) { console.error('note: 記事の写真を取れなかったので、題だけの図にします: ' + e.message); }
+  } else console.log('note: 記事に note へ上げてよい店の写真が無いので、見出し画像は題だけの図にします');
+  return { file: await E.makeEyecatch(draft.title, date, null, page.browser()), kind: 'card' };
+}
+
+/** 見出し画像を入れる（付いていれば外してから入れ替える）。入れたものを 'photo' / 'card' で返し、入れられなければ null（投稿は止めない）。 */
 async function setEyecatch(page, draft, date, enabled = true) {
-  if (!enabled) return removeEyecatch(page);
+  if (!enabled) return removeEyecatch(page).then(() => null, (e) => { console.error('note: ' + e.message); return null; });
+  let got = null;
   try {
-    const png = await E.makeEyecatch(draft.title, date, null, page.browser());
+    got = await eyecatchFile(page, draft, date);
+    const png = got.file;
+    if (await eyecatchBox(page)) await removeEyecatch(page);
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.mouse.click(298, 120); // タイトル上の丸い画像アイコン（画面幅1200・高さ900で固定している）
     await sleep(800);
@@ -88,9 +113,11 @@ async function setEyecatch(page, draft, date, enabled = true) {
     });
     if (box) await page.mouse.click(box.x, box.y);
     await sleep(3500);
-    const has = await page.evaluate(() => !!document.querySelector('img[src*="assets.st-note.com"], img[src*="note-eyecatch"]'));
+    const has = !!(await eyecatchBox(page));
     console.log('note: 見出し画像 ' + (has ? 'を入れました' : 'は入ったか確認できません'));
-  } catch (e) { console.error('note: 見出し画像は入れられませんでした（本文だけで続けます）: ' + e.message); }
+    return has ? got.kind : null;
+  } catch (e) { console.error('note: 見出し画像は入れられませんでした（本文だけで続けます）: ' + e.message); return null; }
+  finally { if (got && got.kind === 'photo') fs.rmSync(got.file, { force: true }); }
 }
 
 async function fillEditor(page, draft, date) {
@@ -164,7 +191,9 @@ async function updatePublished(page, key, draft, date) {
   const body = await page.waitForSelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]', { timeout: 30000 });
   await body.click(); await page.keyboard.down('Meta'); await page.keyboard.press('KeyA'); await page.keyboard.up('Meta'); await page.keyboard.press('Backspace');
   await writeBody(page, draft);
-  await setEyecatch(page, draft, date, N.loadPolicy(ROOT).eyecatch !== false);
+  const kind = await setEyecatch(page, draft, date, N.loadPolicy(ROOT).eyecatch !== false);
+  // 本文には記事の写真のクレジットを書いたので、写真に入れ替えられなかったら更新しない（公開中の記事はそのまま残る）
+  if (draft.photo && kind !== 'photo') throw new Error('見出し画像を記事の写真に入れ替えられなかったので、更新しません');
   await sleep(3000); // 画像の反映・自動保存が終わる前に進むと「タイトル、本文を入力してください」と出る
   if (!(await B.clickByText(page, ['公開に進む']))) throw new Error('「公開に進む」ボタンが見つからない');
   await page.waitForFunction(() => /\/publish\//.test(location.href), { timeout: 20000 });
@@ -192,7 +221,8 @@ async function updatePublished(page, key, draft, date) {
 
   const md = fs.readFileSync(path.join(ROOT, out.file), 'utf8');
   const tags = (/^タグ: (.*)$/m.exec(md) || [, ''])[1].split(' / ').filter(Boolean);
-  const draft = { title: /^# (.*)$/m.exec(md)[1], tags, body: md.split('\n---\n').slice(1).join('\n---\n').trim() };
+  const head = md.split('\n---\n')[0];
+  const draft = { title: /^# (.*)$/m.exec(md)[1], tags, photo: (/^見出し写真: (https:\/\/\S+)$/m.exec(head) || [])[1] || null, body: md.split('\n---\n').slice(1).join('\n---\n').trim() };
 
   // 画面なし（headless）だと note の下書き作成が 403 で拒否される（2026-10-22 実測）。普通の窓で動かす（30秒ほど窓が出る）
   const browser = await B.launch({ headless: false });

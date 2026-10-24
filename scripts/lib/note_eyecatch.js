@@ -1,44 +1,41 @@
 'use strict';
 /**
- * note の見出し画像（アイキャッチ）を、記事の題から自前で作る（1280x670 PNG）。
- * 他者の写真（ホットペッパー等）は複製・再配信できないので使わない。題・日付・ブランド名だけの図なので権利の問題がない。
+ * note の見出し画像（アイキャッチ）の素材を用意する（docs/decisions/0056）。
+ * - 記事に載せた店の実物写真（規約で note に上げてよい出どころだけ。note_draft.js の articlePhoto が選ぶ）は、
+ *   加工せずにそのまま取ってくる（downloadPhoto）。
+ * - それが無い日は、記事の題と日付だけの図を作る（makeEyecatch・1280x670 PNG）。店と関係の無い写真は使わない
+ *   （以前は共通の居酒屋の写真を毎日使い、別の店の記事にも同じ写真が出ていた・2026-10-24 オーナー指摘）。
  * 書体は端末にあるものだけを指す（CLAUDE.md 制約12 の方針に合わせる）。
  */
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const { execFileSync } = require('child_process');
 const B = require('./note_browser');
 
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-/** assets/note-eyecatch の写真から、日付で決まる1枚を選ぶ（同じ日は同じ写真）。写真が無ければ null（題だけの図に倒す）。 */
-function pickPhoto(date) {
-  const dir = path.join(__dirname, '..', '..', 'assets', 'note-eyecatch');
-  let files = [];
-  try { files = fs.readdirSync(dir).filter((f) => /\.(jpe?g|png)$/i.test(f)).sort(); } catch { /* 無ければ図に倒す */ }
-  if (!files.length) return null;
-  const n = Number(String(date).replace(/\D/g, '')) || 0;
-  return path.join(dir, files[n % files.length]);
+/** PR TIMES の画像は、配信元が用意している縮小版（幅1920）を取る（原寸は数MBになる。縮小は配信元が行い、こちらでは加工しない） */
+function photoUrl(src) {
+  const u = new URL(src);
+  if (u.hostname === 'prcdn.freetls.fastly.net' && !u.search) u.search = '?width=1920&quality=85&format=jpeg&fit=bounds';
+  return u.toString();
 }
 
-function html(title, date, photo) {
-  const size = title.length > 44 ? 46 : title.length > 30 ? 54 : 62;
-  if (!photo) return htmlPlain(title, date);
-  const src = `data:image/${/png$/i.test(photo) ? 'png' : 'jpeg'};base64,${fs.readFileSync(photo).toString('base64')}`;
-  return `<!doctype html><meta charset="utf-8"><style>
-  html,body{margin:0}
-  .c{width:1280px;height:670px;position:relative;overflow:hidden;background:#241c10 url(${src}) center 68%/cover no-repeat;
-     font-family:"Hiragino Mincho ProN","Hiragino Sans","Yu Mincho",serif;color:#fff}
-  .g{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(20,12,4,.45) 0,rgba(20,12,4,0) 28%,rgba(20,12,4,0) 42%,rgba(20,12,4,.88) 100%)}
-  .k{position:absolute;left:56px;top:40px;font-family:"Hiragino Sans","Yu Gothic",sans-serif;font-size:26px;letter-spacing:.18em;font-weight:600;text-shadow:0 1px 6px rgba(0,0,0,.6)}
-  h1{position:absolute;left:56px;right:56px;bottom:74px;margin:0;font-size:${size}px;line-height:1.36;font-weight:700;letter-spacing:.02em;text-shadow:0 2px 10px rgba(0,0,0,.55)}
-  .f{position:absolute;left:56px;right:56px;bottom:28px;display:flex;justify-content:space-between;font-family:"Hiragino Sans","Yu Gothic",sans-serif;font-size:22px;color:rgba(255,255,255,.88)}
-  </style><div class="c"><div class="g"></div><div class="k">NAGOYA BITES JOURNAL</div><h1>${esc(title)}</h1>
-  <div class="f"><span>${esc(date)} ／ 名古屋の飲食店ジャーナル</span><span>※写真はイメージです</span></div></div>`;
+/** 写真を一時ファイルに取ってきてパスを返す（リポジトリには置かない）。画像でなければ止める */
+function downloadPhoto(src, date, outDir = os.tmpdir()) {
+  const out = path.join(outDir, `nb-note-photo-${date}.jpg`);
+  execFileSync('curl', ['-fsSL', '--max-time', '30', '-A', 'NAGOYA-BITES-editorial/1.0 (+https://nagoya-bites.com)', '-o', out, photoUrl(src)]);
+  const head = fs.readFileSync(out).subarray(0, 4);
+  const isJpeg = head[0] === 0xff && head[1] === 0xd8;
+  const isPng = head[0] === 0x89 && head.toString('latin1', 1, 4) === 'PNG';
+  if (!isJpeg && !isPng) { fs.rmSync(out, { force: true }); throw new Error('取ってきたものが画像ではありません'); }
+  if (isPng) { const png = out.replace(/\.jpg$/, '.png'); fs.renameSync(out, png); return png; }
+  return out;
 }
 
-function htmlPlain(title, date) {
-
+/** 題と日付だけの図（店の実物写真が使えない日の見出し画像） */
+function html(title, date) {
   const size = title.length > 44 ? 50 : title.length > 30 ? 58 : 66;
   return `<!doctype html><meta charset="utf-8"><style>
   html,body{margin:0}
@@ -62,11 +59,11 @@ async function makeEyecatch(title, date, outPath, browser) {
   try {
     const page = await br.newPage();
     await page.setViewport({ width: 1280, height: 670 });
-    await page.setContent(html(title, date, pickPhoto(date)));
+    await page.setContent(html(title, date));
     await page.screenshot({ path: out, clip: { x: 0, y: 0, width: 1280, height: 670 } });
     await page.close();
   } finally { if (own) await br.close(); }
   return out;
 }
 
-module.exports = { makeEyecatch, html, pickPhoto };
+module.exports = { makeEyecatch, html, downloadPhoto, photoUrl };
