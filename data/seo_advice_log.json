@@ -4170,6 +4170,66 @@
       "brand_reason": "[レポート10-18・未処理分] 重複（同KWの新規特集を 10-05週次/10-06/10-09〜10-11/10-13/10-15/10-18 に判定済み）。features/date.html（title「名古屋 デートディナーおすすめ10選」）が既存で index.html からもリンク済み。同KWの新規特集は自己カニバリ。押上げは SEO-122（done）で実施済み",
       "category": null,
       "fingerprint": "5bccf954d7b3853f"
+    },
+    {
+      "id": null,
+      "date": "2026-10-24",
+      "source": "line-daily",
+      "advice": "🟢 訪問者88人に対し予約クリック6回(6.8%)と好調。👉 最も閲覧された特集 nagoya-solo-dining と nagoya-sweets の冒頭に予約ボタンを強調して配置する。",
+      "verdict": "duplicate",
+      "brand_reason": "[レポート10-22] 重複（solo-dining の冒頭予約CTAを 10-02/10-03/10-05週次/10-07〜10-09 に判定済み・冒頭CTAは SEO-042 で統合済み）。予約クリックは母数数十で日々の振れが大きく根拠にならない（制約10）。予約を受け付けない店を含む特集で予約ボタンを一律に強調すると誤誘導（制約7）。",
+      "category": null,
+      "fingerprint": "7373b3462758bc7a"
+    },
+    {
+      "id": null,
+      "date": "2026-10-24",
+      "source": "line-daily",
+      "advice": "🟡 「ウルフ ギャング 名古屋 レビュー」の検索順位8.0位を改善。👉 特集か日次記事でこのKWに言及し、店舗詳細ページへのリンクを設置する。",
+      "verdict": "duplicate",
+      "brand_reason": "[レポート10-22] 重複（同KWを 10-16・10-17 に却下済み・理由は変わらず）。単一店名クエリは公式サイト・Googleマップに譲る Strategic Skip の面。店名KW順位を取りに行く記事は日次ジャーナルの採点ゲート（出典のある話題で選ぶ）と編集独立性の趣旨に反し、店舗ページは gen-store-pages.js が毎日再生成するため手書き追記は消える。",
+      "category": null,
+      "fingerprint": "c799681f10e72d75"
+    },
+    {
+      "id": null,
+      "date": "2026-10-24",
+      "source": "line-daily",
+      "advice": "🟡 Bing32%・Yahoo18%の流入も無視できない。👉 features/ と journal/ 記事のタイトル・見出しに多様なキーワードをバランス良く含める。",
+      "verdict": "duplicate",
+      "brand_reason": "[レポート10-22] 重複（Bing向けKW推測でのタイトル書換えを 08-20/08-21/09-10 に却下済み・SEO-071）。Bing Webmaster Tools 接続（SEO-067）がオーナー操作待ちで Bing 側の実データが無く、当て推量での書換えは制約10に反する。「バランス良く」は具体性のない汎用論。検索流入内訳の Bing・Yahoo 比率が高いのは既知の傾向。",
+      "category": null,
+      "fingerprint": "b49191742690bfb6"
+    },
+    {
+      "id": null,
+      "date": "2026-10-24",
+      "source": "line-weekly",
+      "advice": "🔴 予約クリック率6.4%と好調だが43回に留まる。👉 トップの店舗詳細モーダルと journal/ の予約ボタン(cta_reserve)の色を変え、CTAを「今すぐ予約」に強化する。",
+      "verdict": "duplicate",
+      "brand_reason": "[週次 2026-10-11〜10-17・10-23処理済みの再取得] 重複（予約ボタンの色変更を 10-02〜10-18、急かす文言を 09-30 に判定済み）。急かす文言は送客サイト的な煽りで編集独立の信頼担保と相反（制約7）。色はデザインシステム（DSN-001）でトークン管理済みで、週43回の母数では色の差を検出できない（制約10）。",
+      "category": null,
+      "fingerprint": "616e623829194e37"
+    },
+    {
+      "id": null,
+      "date": "2026-10-24",
+      "source": "line-weekly",
+      "advice": "🟡 「名古屋 デート ディナー」が平均10.6位。👉 features/ に名古屋デートディナー特集を新規作成しトップからリンクする。",
+      "verdict": "duplicate",
+      "brand_reason": "[週次 2026-10-11〜10-17・再取得] 重複（同KWの新規特集を 10-05週次〜10-23 に繰り返し判定済み）。features/date.html が既存で index.html からもリンク済み。同KWの新規特集は自己カニバリ。押上げは SEO-122（done）で実施済み。",
+      "category": null,
+      "fingerprint": "9f45dc67c6c3c44d"
+    },
+    {
+      "id": null,
+      "date": "2026-10-24",
+      "source": "line-weekly",
+      "advice": "🟢 店舗詳細を開いたのが116回で約17%。👉 トップの各店舗カードに魅力的な写真やキャッチコピーを追加し、モーダルへの誘導を強化する。",
+      "verdict": "duplicate",
+      "brand_reason": "[週次 2026-10-11〜10-17・再取得] 重複かつ実装済み（店舗カードの推薦文・写真の同旨を 08-11 SEO-053(done)/08-14/08-16/10-23 に判定済み）。カードにはおすすめポイントと写真が既にある。流入の多くは特集・ジャーナルへの検索着地で、訪問者数を分母にした店舗詳細率は導線の弱さを示さない。",
+      "category": null,
+      "fingerprint": "5c0486626bdc09dc"
     }
   ]
 }
