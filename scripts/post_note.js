@@ -215,6 +215,14 @@ async function updatePublished(page, key, draft, date) {
     let url;
     if (prev) { // 下書きは保存済み（前回、公開で失敗した）。下書きを増やさず、同じ下書きの公開だけやり直す
       url = prev.url;
+      // 前回、公開までは済んだのに台帳を書く前に落ちていた場合は、公開し直さず台帳だけ直す（二重に出さない）
+      const key = (/notes\/(n[0-9a-f]+)/.exec(prev.url) || [])[1];
+      const done = key && await page.evaluate(async (k) => { try { const r = await fetch(`/api/v3/notes/${k}`, { credentials: 'include' }); const j = r.ok ? await r.json() : null; return !!(j && j.data && j.data.status === 'published'); } catch { return false; } }, key);
+      if (done) {
+        Object.assign(prev, { status: 'live', url: `https://note.com/${who.urlname}/n/${key}`, at: new Date().toISOString() });
+        writeLog(log);
+        return console.log(`note: ${out.slug} は公開済みでした。台帳だけ直しました ${prev.url}`);
+      }
     } else {
       await fillEditor(page, draft, out.date);
       url = (await saveDraft(page)).url;
