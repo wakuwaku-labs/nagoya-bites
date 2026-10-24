@@ -216,6 +216,8 @@ Linear課題を指定されたら、[初心者向けLinearガイド](docs/linear
          b. 記事の sources[] にそのリリースURLを入れる（＝報道目的である証跡。ゲートが照合）
          c. クレジットに発行企業名とリリースURLを明記する
          d. 加工しない・self-host しない（参照に留める＝複製保存を避ける）
+            ※ note の見出し画像だけは、記事に載せたリリース写真を加工せずに note へ上げる（クレジットは本文・
+              ホットペッパー/Places の写真は規約で上げられない・docs/decisions/0056）
          e. CGパースは実写として扱わない（使うならキャプションに「イメージパース」と明記）
        取得: `node scripts/fetch_press_release_photo.js <リリースURL>`
        ⚠️ 規約を確認していない配信元（digitalpr.jp 等）の画像を「報道だから使える」と

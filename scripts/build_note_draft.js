@@ -36,8 +36,8 @@ function main(argv) {
   const dir = path.join(ROOT, 'data/note_drafts');
   fs.mkdirSync(dir, { recursive: true });
   const file = path.join(dir, `${date}.md`);
-  fs.writeFileSync(file, `# ${draft.title}\n\nタグ: ${draft.tags.join(' / ')}\n\n---\n\n${draft.body}\n`);
-  const result = { date, slug: entry.slug, mode: policy.mode, ok: failures.length === 0, failures, chars: draft.body.length, file: path.relative(ROOT, file) };
+  fs.writeFileSync(file, `# ${draft.title}\n\nタグ: ${draft.tags.join(' / ')}\n${draft.photo ? `見出し写真: ${draft.photo.src}\n` : ''}\n---\n\n${draft.body}\n`);
+  const result = { date, slug: entry.slug, mode: policy.mode, ok: failures.length === 0, failures, chars: draft.body.length, photo: draft.photo ? draft.photo.src : null, file: path.relative(ROOT, file) };
   console.log(json ? JSON.stringify(result, null, 2) : `note[${policy.mode}] ${date} ${result.ok ? '通過' : '不合格 ' + failures.join(' ')} (${result.chars}字) → ${result.file}`);
   if (!result.ok) process.exitCode = 1;
 }

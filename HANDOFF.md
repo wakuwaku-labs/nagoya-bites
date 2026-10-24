@@ -1,4 +1,39 @@
-status: done
+status: in_progress
+
+# note の見出し画像を店の実物写真にする（2026-10-24〜）
+
+## 目的
+- オーナー指摘（2026-10-24）「今日のハウス・オブ・モンの投稿は、画像が昨日と同じで全く関係のない画像。店の実際の画像を使うようにしてほしい」
+
+## 完了条件
+- note の見出し画像が、規約で使える店の実物写真（記事に載せたプレスリリースの写真）になり、無い日は店と関係の無い写真を出さない
+- 今日（10-24）の note 記事 n11f684d2cdfc の見出し画像がハウス・オブ・モンの実物写真に替わっている（API の eyecatch で確認）
+- テストが通り、main に入り、ビルドが成功している
+
+## できていること
+- 原因: #676 の見出し画像は assets/note-eyecatch/izakaya.jpg（焼き鳥とビール・※写真はイメージです）の1枚だけを毎日使っていた。10-23・10-24 の note はどちらもこの写真（scratchpad/eyecatch/a.png・b.png で確認）
+- 規約（調査役が一次情報で確認）: PR TIMES 企業規約 第6条3項＝報道目的の利用を許諾（加工・複製の定めなし）／ホットペッパー Webサービス規約＝加工・再配信・複製保存を禁止／Google Places＝保存を禁止／note 規約は 403 で読めず
+- 直近45本で、プレスリリースの写真が記事にあった日は13日
+- 実装（ブランチ wakuwaku-labs/note-eyecatch-real-photo）: note_draft.js の articlePhoto（記事のヒーロー → 本文の順に press の写真・配信元とクレジットの URL が必須）、本文にクレジットの行、note_eyecatch.js の downloadPhoto（PR TIMES の配信元の縮小版・画像でなければ止める・一時ファイル）、写真が無い日は題だけの図、izakaya.jpg を削除、post_note.js で付いている画像を外して入れ替える（--update で写真に替えられなければ更新しない）。ADR 0056・CLAUDE.md の優先3 に1行・registry・backlog SNS-008
+
+## 次にやること
+1. npm test → 今日の記事を `--update n11f684d2cdfc` で差し替え → API で確認
+2. PR → マージ → ビルドの確認 → ~/nagoya-bites の main を進める（毎朝の実行が新しいコードを使うように）
+3. SNS-008 は Linear P-669 に作成済み
+
+## 試したが駄目だったこと
+- なし
+
+## 守るルール・判断メモ
+- 見出し画像の写真は加工しない（題を重ねない）。PR TIMES の規約は加工を禁じていないが、CLAUDE.md の条件 d に合わせた（ADR 0056）
+- 写真が無い日は題だけの図（生成画像・共通の写真は使わない＝店の実物ではない）
+- 昨日（10-23）の note 記事も居酒屋写真のまま。ホットペッパーの写真なので実物には替えられない。題だけの図に替えるかは本人に確認する（公開中の記事の変更・依頼の範囲外）
+
+## 関連ファイル
+- data/note_post_policy.json（eyecatchPhoto）・scripts/lib/note_draft.js・scripts/lib/note_eyecatch.js・scripts/post_note.js・tests/note_draft.test.js・tests/note_eyecatch.test.js・docs/decisions/0056-note-eyecatch-real-store-photo.md
+
+---
+# 前の作業（note と X を、媒体ごとの多く見られる出し方に合わせる・done）
 
 # note と X を、媒体ごとの「多く見られる出し方」に合わせる（2026-10-24〜）
 
