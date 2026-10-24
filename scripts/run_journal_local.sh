@@ -948,7 +948,7 @@ if [ "$NOTE_MODE" = "draft" ] || [ "$NOTE_MODE" = "live" ]; then
     sleep 60
     if ! run_with_timeout 300 caffeinate -s -i -d -u node scripts/post_note.js --date "$TODAY_JST" >>"$LOG" 2>&1; then
       log "⚠️ note への送信に失敗（非ブロッキング）。画面の写真: ~/.config/nagoya-bites/note-fail/"
-      notify "note 下書き失敗" "ログ: $LOG。未ログインなら node scripts/note_login.js --from-chrome"
+      notify "note 下書き失敗" "ログ: $LOG。未ログインなら node scripts/note_login.js --google"
     fi
   fi
 fi

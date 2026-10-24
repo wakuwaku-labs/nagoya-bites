@@ -121,8 +121,8 @@ async function ensureAccount(page, want) {
   const before = await currentUser(page);
   if (before && before.nickname === want) return before;
   console.log(`note: いまのログインは ${before ? before.nickname : '未ログイン'} です。専用の窓の Google ログインで ${want} に入り直します`);
-  const r = await loginWithGoogle(page);
-  const who = await currentUser(page);
+  const r = await loginWithGoogle(page).catch((e) => ({ ok: false, at: e.message }));
+  const who = await currentUser(page).catch(() => null);
   if (who && who.nickname === want) { console.log(`note: ${want} に入り直しました`); return who; }
   throw new Error(`投稿先のアカウントが違います（今: ${who ? who.nickname : '未ログイン'} / 必要: ${want}）。Google での入り直しも通りませんでした（${r.ok ? '別のアカウントに入った' : r.at}）。node scripts/note_login.js --google を試し、だめなら node scripts/note_login.js --own で本人が ${want} にログイン`);
 }

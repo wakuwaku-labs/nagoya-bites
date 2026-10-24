@@ -23,6 +23,7 @@
 
 ## 2026-10-22 の更新（本人了承: 方式A）
 - ログイン: Google は自動操作の窓で拒否される。普段の Chrome の note.com の Cookie だけを専用プロファイルへ複製（`note_login.js --from-chrome`・暗号化のまま・値は読まない）
+  - 2026-10-24 置き換え: 複製したログインは本人の Chrome と同じもので、本人が切り替えると一緒に切れた。いまは専用プロファイルが自分の Google ログインで入る（0057）
 - 実行: 画面なしだと下書き作成 API が 403 → 窓ありで動かす。`note.com/notes/new` から入る（`editor.note.com/new` 直打ちは白いまま）。成否は draft_save の応答本文 `result:true` で判定（HTTP は常に 201）
 - 運用: mode=draft。run_journal_local.sh の最終 push 後に非ブロッキングで送る。公開は本人が note の画面で押す
 
