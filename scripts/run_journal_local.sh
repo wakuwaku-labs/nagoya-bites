@@ -942,8 +942,14 @@ NOTE_MODE=$(node -e "console.log(require('./data/note_post_policy.json').mode)" 
 if [ "$NOTE_MODE" = "draft" ] || [ "$NOTE_MODE" = "live" ]; then
   log "note へ送信（post_note.js・mode=${NOTE_MODE}）"
   if ! run_with_timeout 300 caffeinate -s -i -d -u node scripts/post_note.js --date "$TODAY_JST" >>"$LOG" 2>&1; then
-    log "⚠️ note への送信に失敗（非ブロッキング）。画面の写真: ~/.config/nagoya-bites/note-fail/"
-    notify "note 下書き失敗" "ログ: $LOG。未ログインなら node scripts/note_login.js --from-chrome"
+    # 1回だけやり直す。下書きを保存できていれば同じ下書きを開き直して公開だけやり直す（下書きは増えない。
+    # 公開まで済んでいた場合は「投稿する」が無いので二重には出ない）。2026-10-24 は公開に進めず下書きのまま残った
+    log "note への送信に失敗。60秒後に1回だけやり直します"
+    sleep 60
+    if ! run_with_timeout 300 caffeinate -s -i -d -u node scripts/post_note.js --date "$TODAY_JST" >>"$LOG" 2>&1; then
+      log "⚠️ note への送信に失敗（非ブロッキング）。画面の写真: ~/.config/nagoya-bites/note-fail/"
+      notify "note 下書き失敗" "ログ: $LOG。未ログインなら node scripts/note_login.js --from-chrome"
+    fi
   fi
 fi
 exit 0
