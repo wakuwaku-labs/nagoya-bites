@@ -19,7 +19,7 @@ status: in_progress
 ## 次にやること
 1. npm test → 今日の記事を `--update n11f684d2cdfc` で差し替え → API で確認
 2. PR → マージ → ビルドの確認 → ~/nagoya-bites の main を進める（毎朝の実行が新しいコードを使うように）
-3. SNS-008 を Linear へ同期
+3. SNS-008 は Linear P-669 に作成済み
 
 ## 試したが駄目だったこと
 - なし
