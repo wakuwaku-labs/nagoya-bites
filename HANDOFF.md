@@ -1,4 +1,4 @@
-status: in_progress
+status: done
 
 # note のログインを普段の Chrome から切り離し、切れていたら自分で入り直す（2026-10-24〜）
 
@@ -18,8 +18,11 @@ status: in_progress
 - 本番の専用プロファイルを --google で入り直し（作成 15:40:20・Default は 05:30:46 のまま）。--check と投稿前の確認を本番で1回ずつ実行して NAGOYA BITES
 - npm test 1888/1888
 
+- PR #687 をマージ（d0cb6bf87c）
+- 明朝の取り込みを別の作業場所で試した: ~/nagoya-bites の main（origin より2つ先・c10aaeafb9/bd3e87e178）は run_journal_local.sh で rebase が衝突するが、続く merge で取り込め、中身は origin/main と同じ（差分0行）
+
 ## 次にやること
-- PR を作ってマージ（ビルドが止まっていないか確認してから）
+- 10-25 朝の note 投稿のログ（~/nagoya-bites/.local-logs の journal ログ）で「入り直します」が出ていないか・公開できたかを見る
 - P-638（note 投稿の失敗を GitHub Issue で知らせる見張り役・~/nagoya-bites の feat/note-post-watchdog に未 push の d28ac56d08）を main に合わせて入れる。#676〜#686 と post_note.js・run_journal_local.sh が重なるので取り込み直しが要る
 
 ## 試したが駄目だったこと
