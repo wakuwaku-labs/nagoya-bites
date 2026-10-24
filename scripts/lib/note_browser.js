@@ -68,4 +68,63 @@ async function isLoggedIn(page) {
   return !/\/login/.test(page.url());
 }
 
-module.exports = { saveCookies, restoreCookies, PROFILE_DIR, launch, clickByText, isLoggedIn };
+const isNote = (u) => { try { return /(^|\.)note\.com$/.test(new URL(u).hostname); } catch { return false; } };
+
+/** いまログインしている note のアカウント（未ログインなら null）。 */
+async function currentUser(page) {
+  // editor.note.com など別の画面からだと note.com の API を呼べない（別のオリジン）ので、note.com を開いてから聞く
+  if ((() => { try { return new URL(page.url()).hostname !== 'note.com'; } catch { return true; } })()) await page.goto('https://note.com/', { waitUntil: 'domcontentloaded', timeout: 45000 });
+  return page.evaluate(async () => { const r = await fetch('https://note.com/api/v2/current_user', { credentials: 'include' }); return r.ok ? (await r.json()).data : null; }).catch(() => null);
+}
+
+/**
+ * 専用プロファイルの中だけで note に入り直す。プロファイルに残っている Google のログインで「Google」を押すと、
+ * 自動で NAGOYA BITES に入れる（2026-10-24 実測）。普段の Chrome から複製したログインは本人の Chrome と同じもので、
+ * 本人が普段の Chrome で別アカウントに切り替えると一緒に切れていた。こちらで入り直したログインは専用プロファイルだけの
+ * ものになる。note の Cookie は手元で消すだけ（note のログアウトは押さない）なので、本人の Chrome のログインはそのまま。
+ * 返り値: { ok, at }（at は最後に見ていた画面。失敗の理由を書くため）
+ */
+async function loginWithGoogle(page) {
+  fs.rmSync(COOKIES, { force: true }); // 古い書き出しを戻して、入り直したログインを上書きしないように
+  const cdp = await page.createCDPSession();
+  const { cookies } = await cdp.send('Network.getAllCookies');
+  for (const c of cookies.filter((c) => /(^|\.)note\.com$/.test(c.domain.replace(/^\./, '')))) {
+    await cdp.send('Network.deleteCookies', { name: c.name, domain: c.domain, path: c.path });
+  }
+  await page.goto('https://note.com/login', { waitUntil: 'networkidle2', timeout: 45000 });
+  // Google のボタンは絵だけで、ボタン自身の文字に「Google」が無い（下の文字は別の要素）。aria-label・href まで見て探す
+  const box = await page.evaluate(() => {
+    const el = [...document.querySelectorAll('button, a, [role="button"]')].find((e) => /google/i.test((e.getAttribute('aria-label') || '') + (e.innerText || '') + (e.getAttribute('href') || '')));
+    if (!el) return null;
+    el.scrollIntoView({ block: 'center' });
+    const r = el.getBoundingClientRect();
+    return { x: r.x + r.width / 2, y: r.y + r.height / 2 };
+  });
+  if (!box) return { ok: false, at: 'note のログイン画面に Google のボタンが見つかりません' };
+  await page.mouse.click(box.x, box.y);
+  const where = (p) => { try { const u = new URL(p.url()); return u.hostname + u.pathname; } catch { return p.url(); } };
+  const end = Date.now() + 60000;
+  let pages = [page];
+  while (Date.now() < end) {
+    await new Promise((r) => setTimeout(r, 2000));
+    pages = await page.browser().pages();
+    if (pages.some((p) => isNote(p.url()) && !/\/login|\/oauth|\/auth/.test(new URL(p.url()).pathname))) return { ok: true, at: pages.map(where).join(' | ') };
+  }
+  return { ok: false, at: pages.map(where).join(' | ') };
+}
+
+/**
+ * 投稿する前に、note のアカウントが want（policy の account.nickname）か確かめる。未ログイン・別アカウントなら
+ * loginWithGoogle で入り直してもう一度確かめる。だめなら投稿せずに止める（2026-10-22 に vide太郎 で公開した）。
+ */
+async function ensureAccount(page, want) {
+  const before = await currentUser(page);
+  if (before && before.nickname === want) return before;
+  console.log(`note: いまのログインは ${before ? before.nickname : '未ログイン'} です。専用の窓の Google ログインで ${want} に入り直します`);
+  const r = await loginWithGoogle(page).catch((e) => ({ ok: false, at: e.message }));
+  const who = await currentUser(page).catch(() => null);
+  if (who && who.nickname === want) { console.log(`note: ${want} に入り直しました`); return who; }
+  throw new Error(`投稿先のアカウントが違います（今: ${who ? who.nickname : '未ログイン'} / 必要: ${want}）。Google での入り直しも通りませんでした（${r.ok ? '別のアカウントに入った' : r.at}）。node scripts/note_login.js --google を試し、だめなら node scripts/note_login.js --own で本人が ${want} にログイン`);
+}
+
+module.exports = { saveCookies, restoreCookies, PROFILE_DIR, COOKIES, launch, clickByText, isLoggedIn, currentUser, loginWithGoogle, ensureAccount };

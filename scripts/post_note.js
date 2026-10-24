@@ -130,7 +130,7 @@ async function fillEditor(page, draft, date) {
   // editor.note.com/new を直接開くと真っ白のまま止まる（2026-10-22 実測）。note.com/notes/new から入ると下書き ID つきの編集画面へ移る
   await page.goto('https://note.com/notes/new', { waitUntil: 'domcontentloaded', timeout: 60000 });
   await page.waitForFunction(() => /\/login/.test(location.href) || /editor\.note\.com\/notes\/n[0-9a-f]+\/edit/.test(location.href), { timeout: 60000 });
-  if (/login/.test(page.url())) throw new Error('未ログイン（node scripts/note_login.js --from-chrome が必要）');
+  if (/login/.test(page.url())) throw new Error('未ログイン（node scripts/note_login.js --google が必要）');
   const title = await page.waitForSelector('textarea[placeholder*="タイトル"], [placeholder*="タイトル"]', { timeout: 30000 });
   await title.click(); await page.keyboard.type(draft.title, { delay: 5 });
   const body = await page.waitForSelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]', { timeout: 15000 });
@@ -238,9 +238,8 @@ async function updatePublished(page, key, draft, date) {
   try {
     // 別のアカウントで投稿しない（2026-10-22 に vide太郎で公開してしまった）。名前が違えば何も書かずに止める
     await page.goto('https://note.com/dashboard', { waitUntil: 'domcontentloaded', timeout: 60000 });
-    const who = await page.evaluate(async () => { const r = await fetch('/api/v2/current_user', { credentials: 'include' }); return r.ok ? (await r.json()).data : null; });
-    const want = (policy.account && policy.account.nickname) || 'NAGOYA BITES';
-    if (!who || who.nickname !== want) throw new Error(`投稿先のアカウントが違います（今: ${who ? who.nickname : '未ログイン'} / 必要: ${want}）。普段の Chrome で ${want} にログインし直して node scripts/note_login.js --from-chrome`);
+    // 未ログイン・別アカウントなら、専用の窓の中で Google ログインから入り直す（本人が普段の Chrome で切り替えても止まらないように）
+    const who = await B.ensureAccount(page, (policy.account && policy.account.nickname) || 'NAGOYA BITES');
     // 台帳は作業場所ごとに別なので、note 側の公開済みの題とも照らして二重投稿を防ぐ（2026-10-23 朝の自動投稿と手動が重なった）
     if (!upd && !prev) {
       const dup = await page.evaluate(async (u, t) => { try { const j = await (await fetch(`/api/v2/creators/${u}/contents?kind=note&page=1`, { credentials: 'include' })).json(); const c = (j.data && j.data.contents) || []; const hit = c.find((x) => (x.name || '').trim() === t.trim() && x.status === 'published'); return hit ? hit.noteUrl || hit.key : null; } catch { return null; } }, who.urlname, draft.title);
