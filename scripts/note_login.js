@@ -5,7 +5,9 @@
  * （~/.config/nagoya-bites/note-profile）に保存され、以後の自動投稿が使う。
  * 認証情報はこのスクリプトも Claude も受け取らない（本人が窓の中で入力する）。
  *   node scripts/note_login.js          # 窓を開く。ログインできたら自動で閉じる（最大10分待つ）
- *   node scripts/note_login.js --check  # ログイン済みか確かめるだけ（窓は出さない）
+ *   node scripts/note_login.js --check  # ログイン済みか・どのアカウントかを確かめるだけ（窓は出さない）
+ *   node scripts/note_login.js --google # 専用プロファイルの Google ログインで NAGOYA BITES に入り直す（30秒ほど窓が出る）。
+ *                                       # 普段の Chrome と別のログインになるので、本人が普段の Chrome で切り替えても切れない（ADR 0057）
  */
 const N = require('./lib/note_browser');
 
@@ -23,7 +25,7 @@ function copyFromChrome() {
   const dstDir = path.join(N.PROFILE_DIR, 'Default');
   fs.mkdirSync(dstDir, { recursive: true });
   const dst = path.join(dstDir, 'Cookies');
-  for (const f of [dst, dst + '-wal', dst + '-shm', dst + '-journal']) fs.rmSync(f, { force: true });
+  for (const f of [dst, dst + '-wal', dst + '-shm', dst + '-journal', N.COOKIES]) fs.rmSync(f, { force: true }); // 古い書き出しが複製を上書きしないように
   execFileSync('sqlite3', [src, `.backup '${dst}'`]); // 使用中でも整合したコピーが取れる
   execFileSync('sqlite3', [dst, "delete from cookies where host_key not like '%note.com'; vacuum;"]);
   const n = execFileSync('sqlite3', [dst, "select count(*) from cookies where name='_note_session_v5'"], { encoding: 'utf8' }).trim();
@@ -44,6 +46,19 @@ function copyFromChrome() {
     await new Promise((r) => setTimeout(r, 2500));
     process.argv.push('--check');
   }
+  const want = (() => { try { return require('./lib/note_draft').loadPolicy(require('path').join(__dirname, '..')).account.nickname; } catch { return null; } })() || 'NAGOYA BITES';
+  if (process.argv.includes('--google')) {
+    const b = await N.launch({ headless: false });
+    try {
+      const page = await b.newPage();
+      const r = await N.loginWithGoogle(page);
+      const who = await N.currentUser(page);
+      if (who && who.nickname === want) return console.log(`note: ${want} に入り直しました（専用プロファイルだけのログイン）`);
+      console.error(`note: 入り直せませんでした（今: ${who ? who.nickname : '未ログイン'} / ${r.at}）。node scripts/note_login.js --own で本人が ${want} にログインしてください`);
+      process.exitCode = 1;
+    } finally { await b.close(); }
+    return;
+  }
   if (process.argv.includes('--from-chrome')) {
     // Chrome は Cookie をディスクへ少し遅れて書く（ログイン直後は未ログインに見える）。最大4回、20秒おきに複製し直す
     let ok = false;
@@ -61,8 +76,13 @@ function copyFromChrome() {
   const browser = await N.launch({ headless: check });
   const page = await browser.newPage();
   try {
-    if (await N.isLoggedIn(page)) { console.log('note: ログイン済みです'); return; }
-    if (check) { console.log('note: 未ログインです。node scripts/note_login.js を実行してください'); process.exitCode = 1; return; }
+    if (await N.isLoggedIn(page)) {
+      const who = await N.currentUser(page);
+      if (who && who.nickname === want) { console.log(`note: ログイン済みです（${want}）`); return; }
+      console.log(`note: ログインしているのは ${who ? who.nickname : '（確かめられません）'} です。node scripts/note_login.js --google で ${want} に入り直してください`);
+      process.exitCode = 1; return;
+    }
+    if (check) { console.log('note: 未ログインです。node scripts/note_login.js --google を実行してください'); process.exitCode = 1; return; }
     console.log('開いた窓で note にログインしてください（最大10分待ちます）');
     await page.goto('https://note.com/login', { waitUntil: 'domcontentloaded' });
     // 裏で起動した窓は他のアプリの後ろに隠れるので、前面に出し、通知も出す
