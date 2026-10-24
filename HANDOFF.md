@@ -21,9 +21,10 @@ status: done
 - PR #687 をマージ（d0cb6bf87c）
 - 明朝の取り込みを別の作業場所で試した: ~/nagoya-bites の main（origin より2つ先・c10aaeafb9/bd3e87e178）は run_journal_local.sh で rebase が衝突するが、続く merge で取り込め、中身は origin/main と同じ（差分0行）
 
+- P-638（note 投稿の失敗を GitHub Issue で知らせる見張り役）を main に取り込み（d28ac56d08 を今の main に合わせた）。直し方の文を --google に、0054 の古い「見出し画像なし」の記述を 0056 に合わせた。重複題で送らなかった日・公開済みで台帳だけ直した日も結果を記録。liveSince=2026-10-24。npm test 1897/1897。本番の専用窓で post_note --mode draft を1回通し、二重に出さず結果を記録できた
+
 ## 次にやること
-- 10-25 朝の note 投稿のログ（~/nagoya-bites/.local-logs の journal ログ）で「入り直します」が出ていないか・公開できたかを見る
-- P-638（note 投稿の失敗を GitHub Issue で知らせる見張り役・~/nagoya-bites の feat/note-post-watchdog に未 push の d28ac56d08）を main に合わせて入れる。#676〜#686 と post_note.js・run_journal_local.sh が重なるので取り込み直しが要る
+- 10-25 朝の note 投稿のログ（~/nagoya-bites/.local-logs の journal ログ）で「入り直します」が出ていないか・公開できたかを見る。13:00 の note-post-watchdog が緑か見る
 
 ## 試したが駄目だったこと
 - clickByText(['Google']) では押せない（ボタンは絵だけで、文字は別の要素）。aria-label・href まで見て探す

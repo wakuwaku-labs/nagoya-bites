@@ -24,6 +24,17 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const readLog = () => { try { return JSON.parse(fs.readFileSync(LOG, 'utf8')); } catch { return { entries: [] }; } };
 const writeLog = (l) => fs.writeFileSync(LOG, JSON.stringify(l, null, 2) + '\n');
 
+// 最後の結果を GitHub の見張り役（note-post-watchdog.yml）へ運ぶ。run_journal_local.sh が push する。
+// 台帳（gitignore）と違い追跡するファイルなので、1件だけを上書きする（差分を小さく保つ）
+const HEALTH = path.join(ROOT, 'data/note_post_health.json');
+function recordHealth(run) {
+  const doc = { _comment: '日次ジャーナルの note 投稿の最後の結果（scripts/post_note.js が書き、run_journal_local.sh が push する）。見張り役は .github/workflows/note-post-watchdog.yml' };
+  doc.last_run = { error_class: null, reason: null, url: null, ...run, recorded_at: new Date().toISOString() };
+  fs.writeFileSync(HEALTH, JSON.stringify(doc, null, 2) + '\n');
+}
+/** 失敗の分類。login = 人が直すしかない（未ログイン・別アカウント）。 */
+const errorClass = (msg) => (/アカウントが違います|未ログイン|not_login/.test(msg) ? 'login' : /timeout|Timeout|タイムアウト/.test(msg) ? 'timeout' : 'other');
+
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const inline = (t) => esc(t).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 
@@ -216,13 +227,27 @@ async function updatePublished(page, key, draft, date) {
   const mode = arg('--mode') || policy.mode;
   if (mode === 'off') return console.log('note: mode=off');
   // 下書きの生成と検査は build_note_draft.js と同じ判定を使う
-  const out = JSON.parse(execFileSync('node', [path.join(__dirname, 'build_note_draft.js'), '--json', ...(date ? ['--date', date] : [])], { encoding: 'utf8' }));
-  if (!out.ok) { console.error('note: 検査に落ちたので送りません: ' + out.failures.join(' ')); process.exit(1); }
+  // 検査に落ちると build_note_draft.js は終了コード 1 を返す（execFileSync は例外になる）ので、出力から結果を読む
+  let out;
+  try {
+    out = JSON.parse(execFileSync('node', [path.join(__dirname, 'build_note_draft.js'), '--json', ...(date ? ['--date', date] : [])], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }));
+  } catch (e) {
+    try { out = JSON.parse(e.stdout); } catch { out = null; }
+    if (!out) { console.error('note: 下書きを作れません: ' + String(e.stderr || e.message).trim()); process.exitCode = 1; return; }
+  }
+  const record = !arg('--update') && mode !== 'dry-run';
+  if (!out.ok) {
+    if (record) recordHealth({ date: out.date, slug: out.slug, result: 'blocked', reason: '検査に落ちた: ' + out.failures.join(' ') });
+    console.error('note: 検査に落ちたので送りません: ' + out.failures.join(' ')); process.exitCode = 1; return;
+  }
   if (mode === 'dry-run') return console.log(`note[dry-run] ${out.date} 検査通過。送りません (${out.file})`);
   const log = readLog();
   const prev = log.entries.find((e) => e.slug === out.slug && ['draft', 'live'].includes(e.status));
   const upd = arg('--update');
-  if (!upd && prev && (prev.status === 'live' || mode !== 'live')) return console.log('note: 送信済み ' + out.slug + '（' + prev.status + '）');
+  if (!upd && prev && (prev.status === 'live' || mode !== 'live')) {
+    recordHealth({ date: out.date, slug: out.slug, result: prev.status, url: prev.url });
+    return console.log('note: 送信済み ' + out.slug + '（' + prev.status + '）');
+  }
 
   const md = fs.readFileSync(path.join(ROOT, out.file), 'utf8');
   const tags = (/^タグ: (.*)$/m.exec(md) || [, ''])[1].split(' / ').filter(Boolean);
@@ -230,7 +255,11 @@ async function updatePublished(page, key, draft, date) {
   const draft = { title: /^# (.*)$/m.exec(md)[1], tags, photo: (/^見出し写真: (https:\/\/\S+)$/m.exec(head) || [])[1] || null, body: md.split('\n---\n').slice(1).join('\n---\n').trim() };
 
   // 画面なし（headless）だと note の下書き作成が 403 で拒否される（2026-10-22 実測）。普通の窓で動かす（30秒ほど窓が出る）
-  const browser = await B.launch({ headless: false });
+  let browser;
+  try { browser = await B.launch({ headless: false }); } catch (e) {
+    if (record) recordHealth({ date: out.date, slug: out.slug, result: 'failed', error_class: errorClass(e.message), reason: '窓を開けない: ' + e.message.slice(0, 280) });
+    console.error('note: 窓を開けません: ' + e.message); process.exitCode = 1; return;
+  }
   const page = await browser.newPage();
   await page.setViewport({ width: 1200, height: 900 });
   // 保存後に編集画面から開き直すとき「このページを離れますか」が出ても止まらないようにする（保存は済んでいる）
@@ -243,7 +272,10 @@ async function updatePublished(page, key, draft, date) {
     // 台帳は作業場所ごとに別なので、note 側の公開済みの題とも照らして二重投稿を防ぐ（2026-10-23 朝の自動投稿と手動が重なった）
     if (!upd && !prev) {
       const dup = await page.evaluate(async (u, t) => { try { const j = await (await fetch(`/api/v2/creators/${u}/contents?kind=note&page=1`, { credentials: 'include' })).json(); const c = (j.data && j.data.contents) || []; const hit = c.find((x) => (x.name || '').trim() === t.trim() && x.status === 'published'); return hit ? hit.noteUrl || hit.key : null; } catch { return null; } }, who.urlname, draft.title);
-      if (dup) return console.log(`note: 同じ題の公開済みの記事があるため送りません（${dup}）`);
+      if (dup) {
+        if (record) recordHealth({ date: out.date, slug: out.slug, result: 'live', url: dup });
+        return console.log(`note: 同じ題の公開済みの記事があるため送りません（${dup}）`);
+      }
     }
     if (upd) { await updatePublished(page, upd, draft, out.date); return console.log(`note[update] ${out.slug} を ${upd} に反映しました`); }
     let url;
@@ -255,6 +287,7 @@ async function updatePublished(page, key, draft, date) {
       if (done) {
         Object.assign(prev, { status: 'live', url: `https://note.com/${who.urlname}/n/${key}`, at: new Date().toISOString() });
         writeLog(log);
+        if (record) recordHealth({ date: out.date, slug: out.slug, result: 'live', url: prev.url });
         return console.log(`note: ${out.slug} は公開済みでした。台帳だけ直しました ${prev.url}`);
       }
     } else {
@@ -268,10 +301,12 @@ async function updatePublished(page, key, draft, date) {
     const rec = log.entries.find((e) => e.slug === out.slug);
     Object.assign(rec, { status, url, at: new Date().toISOString() });
     writeLog(log);
+    if (record) recordHealth({ date: out.date, slug: out.slug, result: status, url });
     console.log(`note[${mode}] ${out.slug} → ${status} ${url}`);
   } catch (e) {
     const dir = path.join(os.homedir(), '.config/nagoya-bites/note-fail'); fs.mkdirSync(dir, { recursive: true });
     const shot = path.join(dir, `${out.date}.png`); await page.screenshot({ path: shot }).catch(() => {});
+    if (record) recordHealth({ date: out.date, slug: out.slug, result: 'failed', error_class: errorClass(e.message), reason: e.message.slice(0, 300) });
     console.error(`note: 送信失敗 ${e.message}（画面: ${shot}）`); process.exitCode = 1;
   } finally { await browser.close(); }
 })();
