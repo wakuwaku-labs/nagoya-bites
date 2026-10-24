@@ -1,0 +1,454 @@
+{
+  "date": "2026-10-24",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄・コンラッド名古屋『ハウス・オブ・モン』デートと一人飲みのバー",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 87,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        },
+        {
+          "kw": "バー",
+          "feature": "features/nagoya-bar-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 19日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,予約,シーン,デート,一人飲み) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 153字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「デート」+4",
+          "タイトルにジャンル語「バー」+2"
+        ]
+      },
+      "gate_note": "87点（自動公開ライン 100点）。主な不足: recency -13 / topicality -10"
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄・コンラッド名古屋40階の鮨懐石『蒼流』24席を接待で使う",
+      "verdict": "HOLD",
+      "total": 72,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 85日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (席,予約,シーン,接待) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 110字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「鮨」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "今池『今池焼鳥 B7』名古屋コーチンのコースをデートで",
+      "verdict": "HOLD",
+      "total": 68,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        },
+        {
+          "kw": "焼き鳥",
+          "feature": "features/nagoya-yakitori-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 71日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 7件 (価格帯,コース,席,予約,シーン,デート,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 102字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「今池」+4",
+          "タイトルにシーン語「デート」+4",
+          "タイトルにジャンル語「焼鳥」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "栄『めしや 浮世ばなれ』おばんざいと和牛しゃぶしゃぶのコース",
+      "verdict": "HOLD",
+      "total": 61,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,コース,予約,シーン,接待) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 81字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「接待」+1",
+          "タイトルにジャンル語「和牛」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "栄『昼だけうなぎ屋』11時〜14時だけの営業を読む",
+      "verdict": "HOLD",
+      "total": 59,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "ひつまぶし",
+          "feature": "features/nagoya-hitsumabushi.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,一人飲み,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 83字 +4",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「うなぎ」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "87点（自動公開ライン 100点）。主な不足: recency -13 / topicality -10",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "栄・コンラッド名古屋『ハウス・オブ・モン』デートと一人飲みのバー",
+      "lead_draft": "コンラッド名古屋40階のルーフトップバー「ハウス・オブ・モン（HOUSE OF MON）」は、宿泊していなくても入れる。ただし予約は宿泊者だけで、ほかは来店順。生ビール1,500円からの表示価格は税・サービス料込みで、110席・週末DJ・月火定休。土曜の夜にデートで使う前に、入り方と1杯目の選び方を読む。",
+      "angle": "税サ込みの価格帯（生1,500円・グラスワイン1,800円〜）と、宿泊者以外は予約不可で来店順という席の取り方、110席のカウンターとテラスでデート・一人飲みのどちらに向くかのシーン適性を読む",
+      "main_store": {
+        "name": "ハウス・オブ・モン (HOUSE OF MON)",
+        "id": "house-of-mon",
+        "area": "栄",
+        "genre": "バー（ルーフトップ）"
+      },
+      "sources": [
+        {
+          "label": "コンラッド名古屋 プレスリリース（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000005.000179859.html",
+          "date": "2026-07-08"
+        },
+        {
+          "label": "ハウス・オブ・モン 公式ページ",
+          "url": "https://conrad-nagoya.hiltonjapan.co.jp/restaurants/house-of-mon"
+        },
+        {
+          "label": "ハウス・オブ・モン ドリンクメニュー（公式PDF）",
+          "url": "https://cms.hiltonjapan.co.jp/wp-content/uploads/sites/8/2026/09/08122422/Houseofmon_Drink.pdf",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "ケンチェラーラ「名古屋・栄が誇る天空バー『ハウス・オブ・モン』」",
+          "url": "https://kencellara.com/entry/housw-of-mon",
+          "date": "2026-10-05"
+        },
+        {
+          "label": "サカエ経済新聞「家紋から店名を名付けたルーフトップバー」",
+          "url": "https://sakae.keizai.biz/photoflash/5862/",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "コンラッド名古屋 プレスリリース（ホリデーアフタヌーンティー・PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000008.000179859.html",
+          "date": "2026-09-29"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄・コンラッド名古屋40階の鮨懐石『蒼流』24席を接待で使う",
+      "lead_draft": "コンラッド名古屋40階の鮨懐石「蒼流」は24席。水・木が定休で、ディナーは17:30〜22:30。同じ階には鉄板懐石の蒼焔とルーフトップバーが並ぶ。接待で鮨懐石を選ぶとき、席数と定休日から予約の取り方をどう組むかを読む。",
+      "angle": "24席という席数と水木定休から、接待での予約の取り方と、同じ40階のバーへ流れる二軒目のシーン設計を読む",
+      "main_store": {
+        "name": "蒼流 (SŌRYŪ)",
+        "id": "",
+        "area": "栄",
+        "genre": "日本料理（鮨懐石）"
+      },
+      "sources": [
+        {
+          "label": "コンラッド名古屋 プレスリリース（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000005.000179859.html",
+          "date": "2026-07-08"
+        },
+        {
+          "label": "トラベル Watch",
+          "url": "https://travel.watch.impress.co.jp/docs/news/2130077.html",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "コンラッド名古屋 レストラン公式",
+          "url": "https://conrad-nagoya.hiltonjapan.co.jp/restaurants"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "今池『今池焼鳥 B7』名古屋コーチンのコースをデートで",
+      "lead_draft": "大阪の会社が名古屋1号店に選んだのは栄でも名駅でもなく今池だった。2026年8月14日に開いた「今池焼鳥 B7」は名古屋コーチンと旬の魚のコースを出す。コースの価格帯と席の作りから、デートに向くかを読む。",
+      "angle": "コース中心の価格帯と、今池を選んだ出店立地から席の回転と予約の取り方、デート向きかのシーン適性を読む",
+      "main_store": {
+        "name": "今池焼鳥 B7",
+        "id": "",
+        "area": "今池",
+        "genre": "焼鳥"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES",
+          "url": "https://prtimes.jp/main/html/rd/p/000000022.000132079.html",
+          "date": "2026-08-14"
+        },
+        {
+          "label": "ベストカレンダー",
+          "url": "https://bestcalendar.jp/press/142274",
+          "date": "2026-08-14"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "栄『めしや 浮世ばなれ』おばんざいと和牛しゃぶしゃぶのコース",
+      "lead_draft": "栄の「めしや 浮世ばなれ」は、見た目の美しいコースで話題のおばんざいと和牛しゃぶしゃぶの店。コースの価格帯と予約の取り方から、女子会と接待のどちらに向くかを読む。",
+      "angle": "コースの価格帯と予約の取り方から、女子会・接待のシーン適性を読む",
+      "main_store": {
+        "name": "めしや 浮世ばなれ",
+        "id": "",
+        "area": "栄",
+        "genre": "居酒屋・和牛しゃぶしゃぶ"
+      },
+      "sources": [
+        {
+          "label": "Retty",
+          "url": "https://retty.me/theme/101062300/"
+        },
+        {
+          "label": "TableCheck",
+          "url": "https://www.tablecheck.com/meshiya-ukiyobanare"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "栄『昼だけうなぎ屋』11時〜14時だけの営業を読む",
+      "lead_draft": "栄3丁目の「昼だけうなぎ屋 栄本店」は11:00〜14:00の昼だけ営業するうなぎ専門店。3時間営業で成り立たせる価格帯と回転の設計を、一人で昼に入る使い方から読む。",
+      "angle": "3時間営業の回転と価格帯、一人飲みならぬ一人昼の使い方",
+      "main_store": {
+        "name": "昼だけうなぎ屋 栄本店",
+        "id": "",
+        "area": "栄",
+        "genre": "うなぎ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES",
+          "url": "https://prtimes.jp/main/html/rd/p/000000040.000145487.html"
+        },
+        {
+          "label": "san-tatsu",
+          "url": "https://san-tatsu.jp/pressrelease/499222/"
+        }
+      ]
+    }
+  ]
+}
