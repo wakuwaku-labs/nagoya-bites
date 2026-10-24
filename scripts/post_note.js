@@ -117,9 +117,32 @@ async function saveDraft(page) {
   return { note_key: m ? m[1] : null, url: page.url() };
 }
 
+/**
+ * 保存した下書きを開き直し、題・本文が入っていることを確かめる（公開の前に必ず通す）。
+ * 見出し画像を入れた直後の画面は、題も本文も見えているのに note 側では空のままで、「公開に進む」で
+ * 「タイトル、本文を入力してください」と出て止まる（2026-10-24 朝に公開できず下書きのまま残った）。
+ * 開き直すと保存した中身から始まるので公開できる。中身が無ければ空の記事を出さないよう止める。
+ */
+async function openDraft(page, url) {
+  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await page.waitForSelector('textarea', { timeout: 30000 });
+  await page.waitForSelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]', { timeout: 15000 });
+  await sleep(2000);
+  const got = await page.evaluate(() => {
+    const t = document.querySelector('textarea'); const b = document.querySelector('.ProseMirror');
+    return { title: t ? t.value.trim() : '', body: b ? b.innerText.trim().length : 0, eyecatch: !!document.querySelector('img[src*="rectangle_large_type"]') };
+  });
+  if (!got.title || got.body < 100) throw new Error(`保存した下書きの中身が足りないので公開しません（題 ${got.title ? 'あり' : 'なし'}・本文 ${got.body} 字）`);
+  console.log(`note: 保存した下書きを確認（本文 ${got.body} 字・見出し画像 ${got.eyecatch ? 'あり' : 'なし'}）`);
+}
+
 async function publish(page, draft) {
   if (!(await B.clickByText(page, ['公開に進む']))) throw new Error('「公開に進む」ボタンが見つからない');
-  await page.waitForFunction(() => /\/publish\//.test(location.href), { timeout: 20000 });
+  // 進めないときは note が出した文言を理由に載せる（ログを開かなくても原因が分かるように）
+  await page.waitForFunction(() => /\/publish\//.test(location.href), { timeout: 20000 }).catch(async (e) => {
+    const shown = await page.evaluate(() => (document.body.innerText.match(/タイトル、本文を入力してください|[^\n]*(失敗|エラー)[^\n]*/) || [''])[0]).catch(() => '');
+    throw new Error(shown ? `公開画面に進めません（note の表示: ${shown.trim()}）` : e.message);
+  });
   await sleep(2000);
   // タグは本人が選んだ基本タグ＋地名だけを入れる（note の候補タグ「#00」などは選ばない）
   const tagInput = await page.waitForSelector('input[placeholder*="ハッシュタグ"]', { timeout: 15000 });
@@ -175,6 +198,8 @@ async function updatePublished(page, key, draft, date) {
   const browser = await B.launch({ headless: false });
   const page = await browser.newPage();
   await page.setViewport({ width: 1200, height: 900 });
+  // 保存後に編集画面から開き直すとき「このページを離れますか」が出ても止まらないようにする（保存は済んでいる）
+  page.on('dialog', (d) => { if (d.type() === 'beforeunload') d.accept().catch(() => {}); });
   try {
     // 別のアカウントで投稿しない（2026-10-22 に vide太郎で公開してしまった）。名前が違えば何も書かずに止める
     await page.goto('https://note.com/dashboard', { waitUntil: 'domcontentloaded', timeout: 60000 });
@@ -188,9 +213,7 @@ async function updatePublished(page, key, draft, date) {
     }
     if (upd) { await updatePublished(page, upd, draft, out.date); return console.log(`note[update] ${out.slug} を ${upd} に反映しました`); }
     let url;
-    if (prev) { // 下書きは保存済み（前回、公開で失敗した）。同じ下書きを開き直して公開だけやり直す（下書きを増やさない）
-      await page.goto(prev.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
-      await page.waitForSelector('textarea', { timeout: 30000 });
+    if (prev) { // 下書きは保存済み（前回、公開で失敗した）。下書きを増やさず、同じ下書きの公開だけやり直す
       url = prev.url;
     } else {
       await fillEditor(page, draft, out.date);
@@ -199,7 +222,7 @@ async function updatePublished(page, key, draft, date) {
       writeLog(log); // 公開で失敗しても、保存済みの下書きを台帳に残す
     }
     let status = 'draft';
-    if (mode === 'live') { url = (await publish(page, draft)).url; status = 'live'; }
+    if (mode === 'live') { await openDraft(page, url); url = (await publish(page, draft)).url; status = 'live'; }
     const rec = log.entries.find((e) => e.slug === out.slug);
     Object.assign(rec, { status, url, at: new Date().toISOString() });
     writeLog(log);
