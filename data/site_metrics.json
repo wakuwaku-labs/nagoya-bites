@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-24T06:14:26.148Z",
+  "generatedAt": "2026-10-24T06:25:27.208Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2007,
-    "pageViews": 2820,
-    "sessions": 2225,
+    "activeUsers": 2012,
+    "pageViews": 2825,
+    "sessions": 2229,
     "avgSessionDuration": 112,
     "bounceRate": 0.303,
     "pagesPerSession": 1.27
@@ -17,7 +17,7 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1692,
+      "organic": 1697,
       "direct": 385,
       "social": 16,
       "ai_assistant": 114,
@@ -39,12 +39,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 761
+      "sessions": 764
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 605
+      "sessions": 606
     },
     {
       "source": "(direct)",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 309
+      "sessions": 310
     },
     {
       "source": "chatgpt.com",
@@ -205,12 +205,12 @@
     },
     {
       "path": "/features/nagoya-autumn-2026.html",
-      "pageViews": 76,
-      "sessions": 72
+      "pageViews": 77,
+      "sessions": 73
     }
   ],
   "cta": {
-    "outboundClicks": 211,
+    "outboundClicks": 212,
     "ctaClickRate": 9.5,
     "byDomain": [
       {
@@ -231,7 +231,7 @@
       },
       {
         "domain": "www.instagram.com",
-        "clicks": 18
+        "clicks": 19
       },
       {
         "domain": "prtimes.jp",
@@ -280,7 +280,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 146,
+      "organic": 147,
       "direct": 49,
       "social": 0,
       "ai_assistant": 16,
@@ -288,7 +288,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 8.6,
+    "ctaClickRate_organic": 8.7,
     "ctaClickRate_direct": 12.7,
     "ctaClickRate_social": 0,
     "byPage": [
@@ -1143,7 +1143,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2007,
+    "value": 2012,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
