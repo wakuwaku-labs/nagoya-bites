@@ -92,11 +92,11 @@ async function eyecatchFile(page, draft, date) {
 }
 
 /** 見出し画像を入れる（付いていれば外してから入れ替える）。入れたものを 'photo' / 'card' で返し、入れられなければ null（投稿は止めない）。 */
-async function setEyecatch(page, draft, date, enabled = true) {
+async function setEyecatch(page, draft, date, enabled = true, prepared = null) {
   if (!enabled) return removeEyecatch(page).then(() => null, (e) => { console.error('note: ' + e.message); return null; });
   let got = null;
   try {
-    got = await eyecatchFile(page, draft, date);
+    got = prepared || await eyecatchFile(page, draft, date);
     const png = got.file;
     if (await eyecatchBox(page)) await removeEyecatch(page);
     await page.evaluate(() => window.scrollTo(0, 0));
@@ -121,6 +121,11 @@ async function setEyecatch(page, draft, date, enabled = true) {
 }
 
 async function fillEditor(page, draft, date) {
+  // 見出し画像の素材は本文を書く前に用意する。記事の写真を取れなかった日は、本文から写真のクレジットの行を外す
+  const eye = N.loadPolicy(ROOT).eyecatch !== false
+    ? await eyecatchFile(page, draft, date).catch((e) => { console.error('note: 見出し画像を用意できませんでした（本文だけで続けます）: ' + e.message); return null; })
+    : null;
+  const text = !eye || eye.kind !== 'photo' ? { ...draft, body: N.dropPhotoCredit(draft.body) } : draft;
   await B.restoreCookies(page);
   // editor.note.com/new を直接開くと真っ白のまま止まる（2026-10-22 実測）。note.com/notes/new から入ると下書き ID つきの編集画面へ移る
   await page.goto('https://note.com/notes/new', { waitUntil: 'domcontentloaded', timeout: 60000 });
@@ -130,8 +135,8 @@ async function fillEditor(page, draft, date) {
   await title.click(); await page.keyboard.type(draft.title, { delay: 5 });
   const body = await page.waitForSelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]', { timeout: 15000 });
   await body.click();
-  await writeBody(page, draft);
-  if (N.loadPolicy(ROOT).eyecatch !== false) await setEyecatch(page, draft, date);
+  await writeBody(page, text);
+  if (eye) await setEyecatch(page, draft, date, true, eye);
 }
 
 async function saveDraft(page) {

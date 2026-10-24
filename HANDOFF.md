@@ -1,4 +1,4 @@
-status: in_progress
+status: done
 
 # note の見出し画像を店の実物写真にする（2026-10-24〜）
 
@@ -16,10 +16,16 @@ status: in_progress
 - 直近45本で、プレスリリースの写真が記事にあった日は13日
 - 実装（ブランチ wakuwaku-labs/note-eyecatch-real-photo）: note_draft.js の articlePhoto（記事のヒーロー → 本文の順に press の写真・配信元とクレジットの URL が必須）、本文にクレジットの行、note_eyecatch.js の downloadPhoto（PR TIMES の配信元の縮小版・画像でなければ止める・一時ファイル）、写真が無い日は題だけの図、izakaya.jpg を削除、post_note.js で付いている画像を外して入れ替える（--update で写真に替えられなければ更新しない）。ADR 0056・CLAUDE.md の優先3 に1行・registry・backlog SNS-008
 
+- npm test 1887/1887。10-24 の note 記事 n11f684d2cdfc を `--update` で差し替え、API の eyecatch がハウス・オブ・モンの実物写真（屋上の夕景とカクテル）に替わり、クレジットの行・元記事のカード・タグ5個・UTM が残ることを確認
+- PR #685 をマージ（20a28b19fe）。SNS-008 は Linear P-669（担当・期限 11-07・Todo・ラベルあり）
+- ~/nagoya-bites の main は前の作業の取り込み記録（c10aaeafb9・autopilot の合流とみられる）で origin より2つ先だが、中身は同じ。明朝の pull --rebase を別の作業場所で試し、origin/main（#685 込み）と同じになることを確認（reset はしない）
+- 追い直し（#686）: 新しく投稿する朝は本文を書く前に見出し画像の素材を用意し、記事の写真を取れなかった日は本文からクレジットの行を外す（無い写真のクレジットを載せない）。素材づくりの失敗では投稿を止めない
+- 居酒屋写真が残るのは 10-23 の記事 n1a04370ade88 だけ（10-22 は見出し画像なし）。題だけの図の見本: scratchpad/eyecatch/card_1023.png
+
 ## 次にやること
-1. npm test → 今日の記事を `--update n11f684d2cdfc` で差し替え → API で確認
-2. PR → マージ → ビルドの確認 → ~/nagoya-bites の main を進める（毎朝の実行が新しいコードを使うように）
-3. SNS-008 は Linear P-669 に作成済み
+1. 10-25 朝の note を確認（記事に press の写真があれば実物写真、無ければ題だけの図。~/nagoya-bites/data/note_post_log.json と API の eyecatch）
+2. 本人が了承したら 10-23 の記事を `node scripts/post_note.js --date 2026-10-23 --update n1a04370ade88` で題だけの図に替える
+3. 11-07 に P-664（効果比較）・P-669（実物写真を使えた日の割合）
 
 ## 試したが駄目だったこと
 - なし
