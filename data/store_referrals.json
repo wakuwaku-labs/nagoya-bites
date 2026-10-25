@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T06:47:50.886Z",
+  "generatedAt": "2026-10-25T19:15:39.903Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -8,18 +8,18 @@
   },
   "totals": {
     "exits": {
-      "hotpepper": 83,
+      "hotpepper": 82,
       "tabelog": 15,
       "tel": 4,
       "other": 0,
-      "total": 102
+      "total": 101
     },
     "reports": {
       "yes": 0,
       "no": 1
     }
   },
-  "unattributedExits": 12,
+  "unattributedExits": 11,
   "month": {
     "start": "2026-10-01",
     "totals": {
@@ -1197,9 +1197,9 @@
     "geoSearch": "現在地: トップの「現在地」ボタンを押した回数と結果（granted・denied・unsupported・error）。位置・エリア名は送っていない"
   },
   "actions": {
-    "reserve": 98,
+    "reserve": 97,
     "reserveBySite": {
-      "hotpepper": 83,
+      "hotpepper": 82,
       "tabelog": 15,
       "other": 0
     },
