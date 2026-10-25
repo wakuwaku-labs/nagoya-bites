@@ -1,0 +1,433 @@
+{
+  "date": "2026-10-25",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "本山『Laughs ラフス』一人飲みとデートに、カウンター8席と小皿",
+      "verdict": "PASS",
+      "total": 101,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "覚王山",
+          "feature": "features/nagoya-kakuozan.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 9件 (価格帯,コース,席,予約,シーン,デート,アラカルト,一人飲み,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 167字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「本山」+4",
+          "タイトルにシーン語「デート」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "名東区・西山商店街『ピッツェリア ベーロ』一人ランチにナポリピッツァ",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 91,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,予約,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 141字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "91点（自動公開ライン 100点）。主な不足: search_intent -10 / topicality -5 / brand_fit -4"
+    },
+    {
+      "id": "c3",
+      "title_draft": "野並『拉麺あるひ』名古屋コーチンの鶏清湯を一人ランチで",
+      "verdict": "HOLD",
+      "total": 84,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 126字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「緑区・天白区」+1",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "四間道『わだ福』覚王山発のとんかつ専門店が西区に",
+      "verdict": "HOLD",
+      "total": 79,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "覚王山",
+          "feature": "features/nagoya-kakuozan.html"
+        },
+        {
+          "kw": "とんかつ",
+          "feature": "features/nagoya-tonkatsu.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,予約,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 75字 +2",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「覚王山」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「とんかつ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "大曽根駅前『大久手山本屋』味噌煮込みうどんの新店",
+      "verdict": "HOLD",
+      "total": 74,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "味噌煮込みうどん",
+          "feature": "features/nagoya-miso-nikomi-udon.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,席,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 62字 +2",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大曽根」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「味噌煮込みうどん」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "本山『Laughs ラフス』一人飲みとデートに、カウンター8席と小皿",
+      "lead_draft": "本山・猫洞通に2026年10月19日に開いた「西洋小料理とワイン Laughs（ラフス）」は、カウンター8席とテーブル4席だけの12席。コースも飲み放題も置かず、600円台の小皿から4,000円台の肉料理までをアラカルトで組む。予算の目安7,000〜9,000円をどう使い分けるか、席と予約の作りから一人飲みとデートでの使い方を読む。",
+      "angle": "コースなしのアラカルト価格帯（小皿600〜880円・肉料理2,640〜4,300円）と、カウンター8席＋テーブル4席の席構成、当日21時までのネット予約、来店ピーク19時までという繁忙の偏りから、一人飲みとデートのシーン適性を読む",
+      "main_store": {
+        "name": "Laughs ラフス",
+        "id": "J004698214",
+        "area": "本山・覚王山・藤が丘",
+        "genre": "イタリアン・フレンチ"
+      },
+      "sources": [
+        {
+          "label": "開店閉店.com 西洋小料理とワイン Laughs（10/19開店）",
+          "url": "https://kaiten-heiten-24.com/wine-laughs/",
+          "date": "2026-10-19"
+        },
+        {
+          "label": "号外NET 名古屋市名東区・千種区（オープン日決定の追記）",
+          "url": "https://nagoyameito-chikusa.goguynet.jp/2026/09/03/laughs/",
+          "date": "2026-10-11"
+        },
+        {
+          "label": "ちくさん 開店・閉店（Laughs が本山・猫洞通にオープン）",
+          "url": "https://chiku-san.com/category/open-close/",
+          "date": "2026-10-11"
+        },
+        {
+          "label": "ホットペッパーグルメ 西洋小料理とワイン Laughs（席数・営業時間・予算）",
+          "url": "https://www.hotpepper.jp/strJ004698214/",
+          "date": "2026-10-02"
+        },
+        {
+          "label": "Laughs 公式Instagram（10/19グランドオープンの告知）",
+          "url": "https://www.instagram.com/p/DeTRdEHzHZd/",
+          "date": "2026-10-10"
+        },
+        {
+          "label": "Laughs 公式Instagram（湯種フォカッチャの試作）",
+          "url": "https://www.instagram.com/p/DZHXmLUSae-/",
+          "date": "2026-06-03"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "名東区・西山商店街『ピッツェリア ベーロ』一人ランチにナポリピッツァ",
+      "lead_draft": "名東区・西山商店街に2026年9月18日に開いたナポリピッツァ専門店「Pizzeria Bélo（ピッツェリア ベーロ）」。マルゲリータは1,080円、注文と会計は入店時、受け取りと返却は自分で行う予約なしの小さな店だ。薪窯の一枚をこの価格帯で出せる理由を、席と回転の作りから読む。",
+      "angle": "セルフ方式・予約なしの席運用と薪窯1分半の回転が、マルゲリータ1,080円の価格帯を支える仕組みを読み、一人ランチと家族の早い夕食のシーン適性を示す",
+      "main_store": {
+        "name": "Pizzeria Bélo",
+        "id": "",
+        "area": "名東区",
+        "genre": "ピザ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 ピッツェリア ベーロ",
+          "url": "https://jouhou.nagoya/pizzeria-belo/",
+          "date": "2026-10-24"
+        },
+        {
+          "label": "号外NET 名古屋市名東区・千種区",
+          "url": "https://nagoyameito-chikusa.goguynet.jp/2026/08/17/belo/",
+          "date": "2026-08-17"
+        },
+        {
+          "label": "楽天ぐるなび Pizzeria Bélo",
+          "url": "https://r.gnavi.co.jp/98bg7en90000/"
+        },
+        {
+          "label": "食べログ ピッツェリア ベーロ",
+          "url": "https://tabelog.com/aichi/A2301/A230111/23097545/"
+        },
+        {
+          "label": "Pizzeria Bélo 公式Instagram（開店日の告知）",
+          "url": "https://www.instagram.com/p/DW3Qt-yj_OF/",
+          "date": "2026-04-08"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "野並『拉麺あるひ』名古屋コーチンの鶏清湯を一人ランチで",
+      "lead_draft": "天白区・野並駅2番出口のすぐ北に2026年10月22日に開いた「拉麺あるひ」。名古屋コーチンの鶏ガラで炊く鶏清湯と鶏白湯を、炊き方・かえし・トッピングの組み合わせで選ぶ。鶏清湯 塩は1,100円。約20席で昼夜の二部営業、食後の甘味まで置く作りを読む。",
+      "angle": "名古屋コーチン鶏ガラ100%のスープ原価と1,100円の価格帯、約20席・昼夜二部の回転、一人ランチのシーン適性を読む",
+      "main_store": {
+        "name": "拉麺あるひ",
+        "id": "",
+        "area": "天白区",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 拉麺あるひ",
+          "url": "https://jouhou.nagoya/ramen-arch/",
+          "date": "2026-10-23"
+        },
+        {
+          "label": "開店閉店.com 拉麺あるひ 野並店",
+          "url": "https://kaiten-heiten-24.com/aruhi-nonami/",
+          "date": "2026-10-22"
+        },
+        {
+          "label": "モノログ愛知 拉麺あるひ 野並店 求人",
+          "url": "https://monoloog.net/aichi/?p=13728",
+          "date": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "四間道『わだ福』覚王山発のとんかつ専門店が西区に",
+      "lead_draft": "覚王山発のとんかつ専門店「わだ福」が西区・四間道に店を出した。古い町並みの残る四間道で、とんかつ専門店がどんな席と価格帯で昼と夜をまかなうのかを読む。",
+      "angle": "とんかつ専門店の価格帯と席、観光客の多い四間道での予約と回転",
+      "main_store": {
+        "name": "わだ福",
+        "id": "",
+        "area": "西区",
+        "genre": "とんかつ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 開店一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "大曽根駅前『大久手山本屋』味噌煮込みうどんの新店",
+      "lead_draft": "味噌煮込みうどんの「大久手山本屋」が大曽根駅前に新しい店を開いた。駅前の立地で、昼の一人客と夜の家族客をどう受けるかを読む。",
+      "angle": "味噌煮込みうどんの価格帯と駅前の席、昼の回転",
+      "main_store": {
+        "name": "大久手山本屋 大曽根",
+        "id": "",
+        "area": "大曽根",
+        "genre": "うどん"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 開店一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-10-24"
+        }
+      ]
+    }
+  ]
+}
