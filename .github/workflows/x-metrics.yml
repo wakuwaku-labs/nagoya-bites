@@ -1,0 +1,79 @@
+name: NAGOYA BITES — X の数字の取得
+
+# 毎日1回、X の数字（フォロワー・投稿ごとの表示回数・いいね等）を data/x_metrics.json に積む。
+#   Ondine の SNS 画面が raw.githubusercontent.com からこの JSON を読む。
+#   費用: 1回 約 $0.02、月の上限 $1.00（150円）。scripts/fetch_x_metrics.js の関所が守る。
+#   時刻 21:40 UTC = 06:40 JST（他の定時処理の 21:00 / 12:00 UTC と重ならない）。
+
+on:
+  schedule:
+    - cron: '40 21 * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: '同じ UTC 日のスナップショットがあっても取り直す'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: x-metrics
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: X の数字を取得
+        id: fetch
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+          INPUT_FORCE: ${{ github.event.inputs.force }}
+        run: |
+          ARGS=""
+          if [ "$INPUT_FORCE" = "true" ]; then ARGS="--force"; fi
+          set +e
+          node scripts/fetch_x_metrics.js $ARGS
+          echo "exit=$?" >> "$GITHUB_OUTPUT"
+          set -e
+
+      - name: 結果をコミット（失敗の記録も残す）
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/x_metrics.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "変更なし"
+            exit 0
+          fi
+          git commit -m "chore: X の数字を更新 [skip actions]"
+          # 日次ビルドなどの bot コミットと重なることがあるので、取り込み直して最大5回やり直す
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            echo "push 失敗（試行 ${i}/5）。$((i * 5))秒待って再試行します"
+            sleep $((i * 5))
+          done
+          echo "::error::data/x_metrics.json を push できませんでした"
+          exit 1
+
+      - name: 取得に失敗したときはジョブを失敗にする
+        if: steps.fetch.outputs.exit != '0'
+        run: |
+          echo "::error::X の数字を取得できませんでした。理由は data/x_metrics.json の last_run を見てください"
+          exit 1

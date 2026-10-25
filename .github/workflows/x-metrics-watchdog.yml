@@ -1,0 +1,92 @@
+name: NAGOYA BITES — X の数字の取得の見張り
+
+# 最後の成功が 36 時間より古い、または error / budget のまま 1 日続いたら Issue を立てる（重複させない）。
+# 直ったら自動で閉じる。判定は scripts/check_x_metrics_health.js。
+# 通知テスト: workflow_dispatch の test=true で「[通知テスト] X の数字の見張り」Issue を1件立てる（test_close=true で閉じる）。
+
+on:
+  schedule:
+    - cron: '50 22 * * *'  # 07:50 JST 意図（取得の約 1 時間後）
+  workflow_dispatch:
+    inputs:
+      test:
+        description: '通知テスト: 試験の Issue を立てる'
+        type: boolean
+        required: false
+        default: false
+      test_close:
+        description: '通知テスト: 試験の Issue を閉じる'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 判定
+        run: |
+          node scripts/check_x_metrics_health.js --json > /tmp/x-metrics-health.json
+          node -e "const r=require('/tmp/x-metrics-health.json');console.log(r.ok?'OK':r.issue_body)"
+
+      - name: Issue を起票・更新・クローズ
+        uses: actions/github-script@v7
+        env:
+          TEST: ${{ github.event.inputs.test }}
+          TEST_CLOSE: ${{ github.event.inputs.test_close }}
+        with:
+          script: |
+            const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('/tmp/x-metrics-health.json', 'utf8'));
+            const { owner, repo } = context.repo;
+            const label = 'x-metrics-watchdog';
+            const ensureLabel = async () => {
+              try { await github.rest.issues.getLabel({ owner, repo, name: label }); }
+              catch (_) { await github.rest.issues.createLabel({ owner, repo, name: label, color: 'd73a4a', description: 'X の数字の取得の見張り（x-metrics-watchdog.yml）' }); }
+            };
+            const { data: issues } = await github.rest.issues.listForRepo({ owner, repo, state: 'open', labels: label, per_page: 20 });
+            const TEST_TITLE = '[通知テスト] X の数字の見張り';
+            if (process.env.TEST_CLOSE === 'true') {
+              for (const i of issues.filter(i => i.title === TEST_TITLE)) {
+                await github.rest.issues.update({ owner, repo, issue_number: i.number, state: 'closed' });
+                core.info(`試験の Issue #${i.number} を閉じました`);
+              }
+              return;
+            }
+            if (process.env.TEST === 'true') {
+              await ensureLabel();
+              const { data: c } = await github.rest.issues.create({ owner, repo, title: TEST_TITLE, labels: [label],
+                body: '通知が届くことの試験です。確認したらすぐ閉じます。対応は不要です。' });
+              core.warning(`試験の Issue #${c.number} を起票しました`);
+              return;
+            }
+            const existing = issues.find(i => i.title.startsWith('🔴 X の数字'));
+            if (r.ok) {
+              if (existing) {
+                await github.rest.issues.createComment({ owner, repo, issue_number: existing.number, body: '✅ 復旧を確認しました。自動でクローズします。' });
+                await github.rest.issues.update({ owner, repo, issue_number: existing.number, state: 'closed' });
+              } else { core.info('問題なし'); }
+              return;
+            }
+            const title = '🔴 X の数字の取得が止まっています';
+            if (existing) {
+              await github.rest.issues.update({ owner, repo, issue_number: existing.number, title, body: r.issue_body });
+              core.info(`Issue #${existing.number} の本文を更新しました`);
+            } else {
+              await ensureLabel();
+              const { data: c } = await github.rest.issues.create({ owner, repo, title, body: r.issue_body, labels: [label] });
+              core.warning(`Issue #${c.number} を起票しました`);
+            }
