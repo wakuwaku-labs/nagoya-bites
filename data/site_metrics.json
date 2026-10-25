@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-25T19:15:48.727Z",
+  "generatedAt": "2026-10-25T20:25:40.020Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2057,
-    "pageViews": 2886,
-    "sessions": 2275,
-    "avgSessionDuration": 111.4,
+    "activeUsers": 2061,
+    "pageViews": 2893,
+    "sessions": 2279,
+    "avgSessionDuration": 111.5,
     "bounceRate": 0.304,
     "pagesPerSession": 1.27
   },
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1747,
-      "direct": 383,
+      "organic": 1752,
+      "direct": 384,
       "social": 16,
       "ai_assistant": 115,
       "referral": 28,
@@ -39,12 +39,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 809
+      "sessions": 812
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 599
+      "sessions": 600
     },
     {
       "source": "(direct)",
@@ -74,7 +74,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 17
+      "sessions": 18
     },
     {
       "source": "duckduckgo",
@@ -102,6 +102,11 @@
       "sessions": 7
     },
     {
+      "source": "ecosia.org",
+      "medium": "organic",
+      "sessions": 3
+    },
+    {
       "source": "ig",
       "medium": "social",
       "sessions": 3
@@ -120,11 +125,6 @@
       "source": "grid",
       "medium": "(not set)",
       "sessions": 3
-    },
-    {
-      "source": "ecosia.org",
-      "medium": "organic",
-      "sessions": 2
     },
     {
       "source": "facebook.com",
@@ -190,8 +190,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 366,
-      "sessions": 347
+      "pageViews": 367,
+      "sessions": 348
     },
     {
       "path": "/",
@@ -215,12 +215,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 211,
+    "outboundClicks": 212,
     "ctaClickRate": 9.3,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 76
+        "clicks": 77
       },
       {
         "domain": "tabelog.com",
@@ -285,7 +285,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 149,
+      "organic": 150,
       "direct": 47,
       "social": 0,
       "ai_assistant": 15,
@@ -293,8 +293,8 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 8.5,
-    "ctaClickRate_direct": 12.3,
+    "ctaClickRate_organic": 8.6,
+    "ctaClickRate_direct": 12.2,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -915,8 +915,8 @@
         "clicks": 1
       },
       {
-        "path": "/stores/J004402690.html",
-        "domain": "tabelog.com",
+        "path": "/stores/J004402326.html",
+        "domain": "www.hotpepper.jp",
         "clicks": 1
       }
     ],
@@ -1126,24 +1126,24 @@
         "clicks": 1
       },
       {
-        "path": "/stores/J004402690.html",
+        "path": "/stores/J004402326.html",
         "clicks": 1
       }
     ],
     "reservationClicks": 96,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
-      "ctaEvents": 26,
-      "reservationOutbound": 33,
-      "naiveSum": 59,
-      "deduped": 36,
-      "overlap": 23,
+      "ctaEvents": 27,
+      "reservationOutbound": 34,
+      "naiveSum": 61,
+      "deduped": 37,
+      "overlap": 24,
       "bySite": [
         {
           "site": "hotpepper.jp",
-          "cta": 22,
-          "outbound": 22,
-          "deduped": 25
+          "cta": 23,
+          "outbound": 23,
+          "deduped": 26
         },
         {
           "site": "tabelog.com",
@@ -1156,7 +1156,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2057,
+    "value": 2061,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

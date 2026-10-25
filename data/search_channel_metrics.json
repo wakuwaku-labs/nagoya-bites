@@ -1,34 +1,34 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-10-25T19:15:52.403Z",
+  "generatedAt": "2026-10-25T20:25:42.937Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 2289,
+  "total_sessions": 2295,
   "engines": [
     {
       "key": "google",
       "label": "Google",
-      "sessions": 809,
-      "pct": 35.3,
+      "sessions": 812,
+      "pct": 35.4,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 809
+          "sessions": 812
         }
       ]
     },
     {
       "key": "bing",
       "label": "Bing",
-      "sessions": 602,
+      "sessions": 603,
       "pct": 26.3,
       "sources": [
         {
           "source": "bing",
           "medium": "organic",
-          "sessions": 599
+          "sessions": 600
         },
         {
           "source": "cn.bing.com",
@@ -40,7 +40,7 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 342,
+      "sessions": 343,
       "pct": 14.9,
       "sources": [
         {
@@ -51,7 +51,7 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 17
+          "sessions": 18
         }
       ]
     },
@@ -59,7 +59,7 @@
       "key": "yahoo",
       "label": "Yahoo!",
       "sessions": 324,
-      "pct": 14.2,
+      "pct": 14.1,
       "sources": [
         {
           "source": "yahoo",
@@ -119,7 +119,7 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 66,
+      "sessions": 67,
       "pct": 2.9,
       "sources": [
         {
@@ -143,14 +143,14 @@
           "sessions": 7
         },
         {
-          "source": "grid",
-          "medium": "(not set)",
+          "source": "ecosia.org",
+          "medium": "organic",
           "sessions": 3
         },
         {
-          "source": "ecosia.org",
-          "medium": "organic",
-          "sessions": 2
+          "source": "grid",
+          "medium": "(not set)",
+          "sessions": 3
         },
         {
           "source": "websearch.rakuten.co.jp",
@@ -222,25 +222,25 @@
     }
   ],
   "search_only": {
-    "total": 1865,
+    "total": 1869,
     "share": [
       {
         "key": "google",
         "label": "Google",
-        "sessions": 809,
+        "sessions": 812,
         "pct_of_search": 43.4
       },
       {
         "key": "bing",
         "label": "Bing",
-        "sessions": 602,
+        "sessions": 603,
         "pct_of_search": 32.3
       },
       {
         "key": "yahoo",
         "label": "Yahoo!",
         "sessions": 324,
-        "pct_of_search": 17.4
+        "pct_of_search": 17.3
       },
       {
         "key": "ai_assistant",
@@ -260,12 +260,12 @@
     "from": "2026-10-24",
     "to": "2026-10-25",
     "delta": {
-      "google": 13,
-      "bing": 3,
-      "direct": -1,
-      "yahoo": 3,
+      "google": 24,
+      "bing": -8,
+      "direct": 0,
+      "yahoo": 7,
       "ai_assistant": 1,
-      "other": 0,
+      "other": -1,
       "social": 0,
       "duckduckgo": 0
     }
@@ -273,7 +273,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 809 セッションのみ。Bing(602) + 生成AI(115) の 717 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 812 セッションのみ。Bing(603) + 生成AI(115) の 718 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
