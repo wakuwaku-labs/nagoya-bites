@@ -1,5 +1,84 @@
 status: done
 
+# note のログインを普段の Chrome から切り離し、切れていたら自分で入り直す（2026-10-24〜）
+
+## 目的
+本人が普段の Chrome で note を別アカウント（vide太郎）に切り替えたりログアウトしたりしても、毎朝の note 投稿が止まらないようにする。
+
+## 完了条件
+- 専用プロファイルのログインが普段の Chrome と別のもの（_note_session_v5 の作成時刻が違う）
+- 未ログイン・別アカウントのとき、投稿の前に自分で NAGOYA BITES に入り直す。入れなければ投稿せずに理由つきで止まる
+- テストが通り、main に入っている
+
+## できていること
+- 原因: 専用プロファイルのログインは Default の複製（作成時刻 05:30:46 が一致）。写しで実験し、note のログアウトは「そのログインと複製」だけを切ることを確認（copy3 は 401・Google から別に入った copy2 は残った）
+- 専用プロファイルは Chrome 自体が Google にログイン済み（Google の Cookie を消しても入れた）→ note の「Google」を押すだけで NAGOYA BITES に入れる
+- 実装: scripts/lib/note_browser.js に currentUser / loginWithGoogle / ensureAccount。post_note.js は投稿前に ensureAccount。note_login.js に --google、--check はアカウント名も見る。ADR 0057
+- 写しで確認: 未ログイン→入り直し成功／vide太郎→入り直し成功（本人の Profile 1 の vide太郎 は切れていない）／Google を止めると投稿せず理由つきで止まる
+- 本番の専用プロファイルを --google で入り直し（作成 15:40:20・Default は 05:30:46 のまま）。--check と投稿前の確認を本番で1回ずつ実行して NAGOYA BITES
+- npm test 1888/1888
+
+- PR #687 をマージ（d0cb6bf87c）
+- 明朝の取り込みを別の作業場所で試した: ~/nagoya-bites の main（origin より2つ先・c10aaeafb9/bd3e87e178）は run_journal_local.sh で rebase が衝突するが、続く merge で取り込め、中身は origin/main と同じ（差分0行）
+
+- P-638（note 投稿の失敗を GitHub Issue で知らせる見張り役）を main に取り込み（d28ac56d08 を今の main に合わせた）。直し方の文を --google に、0054 の古い「見出し画像なし」の記述を 0056 に合わせた。重複題で送らなかった日・公開済みで台帳だけ直した日も結果を記録。liveSince=2026-10-24。npm test 1897/1897。本番の専用窓で post_note --mode draft を1回通し、二重に出さず結果を記録できた
+
+## 次にやること
+- 10-25 朝の note 投稿のログ（~/nagoya-bites/.local-logs の journal ログ）で「入り直します」が出ていないか・公開できたかを見る。13:00 の note-post-watchdog が緑か見る
+
+## 試したが駄目だったこと
+- clickByText(['Google']) では押せない（ボタンは絵だけで、文字は別の要素）。aria-label・href まで見て探す
+
+## 守るルール・判断メモ
+- note の Cookie は手元で消すだけ。note のログアウトは押さない（本人の Chrome のログインを切らない）
+- 自動 commit（Autopilot）が前の作業の文面でコミットした（ae984a6eb1）。PR はスカッシュで入れるので main には残らない
+
+## 関連ファイル
+scripts/lib/note_browser.js / scripts/post_note.js / scripts/note_login.js / docs/decisions/0057-note-login-own-google-session.md / docs/decisions/0054-note-draft-excerpt.md
+
+# 前の作業（note の見出し画像を店の実物写真にする・done）
+
+# note の見出し画像を店の実物写真にする（2026-10-24〜）
+
+## 目的
+- オーナー指摘（2026-10-24）「今日のハウス・オブ・モンの投稿は、画像が昨日と同じで全く関係のない画像。店の実際の画像を使うようにしてほしい」
+
+## 完了条件
+- note の見出し画像が、規約で使える店の実物写真（記事に載せたプレスリリースの写真）になり、無い日は店と関係の無い写真を出さない
+- 今日（10-24）の note 記事 n11f684d2cdfc の見出し画像がハウス・オブ・モンの実物写真に替わっている（API の eyecatch で確認）
+- テストが通り、main に入り、ビルドが成功している
+
+## できていること
+- 原因: #676 の見出し画像は assets/note-eyecatch/izakaya.jpg（焼き鳥とビール・※写真はイメージです）の1枚だけを毎日使っていた。10-23・10-24 の note はどちらもこの写真（scratchpad/eyecatch/a.png・b.png で確認）
+- 規約（調査役が一次情報で確認）: PR TIMES 企業規約 第6条3項＝報道目的の利用を許諾（加工・複製の定めなし）／ホットペッパー Webサービス規約＝加工・再配信・複製保存を禁止／Google Places＝保存を禁止／note 規約は 403 で読めず
+- 直近45本で、プレスリリースの写真が記事にあった日は13日
+- 実装（ブランチ wakuwaku-labs/note-eyecatch-real-photo）: note_draft.js の articlePhoto（記事のヒーロー → 本文の順に press の写真・配信元とクレジットの URL が必須）、本文にクレジットの行、note_eyecatch.js の downloadPhoto（PR TIMES の配信元の縮小版・画像でなければ止める・一時ファイル）、写真が無い日は題だけの図、izakaya.jpg を削除、post_note.js で付いている画像を外して入れ替える（--update で写真に替えられなければ更新しない）。ADR 0056・CLAUDE.md の優先3 に1行・registry・backlog SNS-008
+
+- npm test 1887/1887。10-24 の note 記事 n11f684d2cdfc を `--update` で差し替え、API の eyecatch がハウス・オブ・モンの実物写真（屋上の夕景とカクテル）に替わり、クレジットの行・元記事のカード・タグ5個・UTM が残ることを確認
+- PR #685 をマージ（20a28b19fe）。SNS-008 は Linear P-669（担当・期限 11-07・Todo・ラベルあり）
+- ~/nagoya-bites の main は前の作業の取り込み記録（c10aaeafb9・autopilot の合流とみられる）で origin より2つ先だが、中身は同じ。明朝の pull --rebase を別の作業場所で試し、origin/main（#685 込み）と同じになることを確認（reset はしない）
+- 追い直し（#686）: 新しく投稿する朝は本文を書く前に見出し画像の素材を用意し、記事の写真を取れなかった日は本文からクレジットの行を外す（無い写真のクレジットを載せない）。素材づくりの失敗では投稿を止めない
+- 居酒屋写真が残るのは 10-23 の記事 n1a04370ade88 だけ（10-22 は見出し画像なし）。題だけの図の見本: scratchpad/eyecatch/card_1023.png
+
+## 次にやること
+1. 10-25 朝の note を確認（記事に press の写真があれば実物写真、無ければ題だけの図。~/nagoya-bites/data/note_post_log.json と API の eyecatch）
+2. 本人が了承したら 10-23 の記事を `node scripts/post_note.js --date 2026-10-23 --update n1a04370ade88` で題だけの図に替える
+3. 11-07 に P-664（効果比較）・P-669（実物写真を使えた日の割合）
+
+## 試したが駄目だったこと
+- なし
+
+## 守るルール・判断メモ
+- 見出し画像の写真は加工しない（題を重ねない）。PR TIMES の規約は加工を禁じていないが、CLAUDE.md の条件 d に合わせた（ADR 0056）
+- 写真が無い日は題だけの図（生成画像・共通の写真は使わない＝店の実物ではない）
+- 昨日（10-23）の note 記事も居酒屋写真のまま。ホットペッパーの写真なので実物には替えられない。題だけの図に替えるかは本人に確認する（公開中の記事の変更・依頼の範囲外）
+
+## 関連ファイル
+- data/note_post_policy.json（eyecatchPhoto）・scripts/lib/note_draft.js・scripts/lib/note_eyecatch.js・scripts/post_note.js・tests/note_draft.test.js・tests/note_eyecatch.test.js・docs/decisions/0056-note-eyecatch-real-store-photo.md
+
+---
+# 前の作業（note と X を、媒体ごとの多く見られる出し方に合わせる・done）
+
 # note と X を、媒体ごとの「多く見られる出し方」に合わせる（2026-10-24〜）
 
 ## 目的

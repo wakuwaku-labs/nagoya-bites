@@ -158,6 +158,8 @@ push_health() {
   [ -e "data/journal_stash_alert.json" ] && git add data/journal_stash_alert.json >>"$LOG" 2>&1
   # 失敗・HOLD の日に使った Places の回数も main の集計へ届ける（P-436）
   [ -e "$PLACES_LOCAL_USAGE_FILE" ] && git add "$PLACES_LOCAL_USAGE_FILE" >>"$LOG" 2>&1
+  # note 投稿の最後の結果（失敗の理由）を GitHub の見張り役（note-post-watchdog.yml）へ運ぶ
+  [ -e "data/note_post_health.json" ] && git add data/note_post_health.json >>"$LOG" 2>&1
   git diff --staged --quiet && return 0
   git -c user.name="NAGOYA BITES Daily" -c user.email="daily@nagoya-bites" \
       commit -m "chore(journal): ローカル実行状態を記録 ${TODAY_JST:-unknown} [skip actions]" \
@@ -948,8 +950,10 @@ if [ "$NOTE_MODE" = "draft" ] || [ "$NOTE_MODE" = "live" ]; then
     sleep 60
     if ! run_with_timeout 300 caffeinate -s -i -d -u node scripts/post_note.js --date "$TODAY_JST" >>"$LOG" 2>&1; then
       log "⚠️ note への送信に失敗（非ブロッキング）。画面の写真: ~/.config/nagoya-bites/note-fail/"
-      notify "note 下書き失敗" "ログ: $LOG。未ログインなら node scripts/note_login.js --from-chrome"
+      notify "note 下書き失敗" "ログ: $LOG。未ログインなら node scripts/note_login.js --google"
     fi
   fi
+  # 成否を data/note_post_health.json に書いたので push する（Mac の通知は補助。主経路は見張り役の Issue）
+  push_health
 fi
 exit 0

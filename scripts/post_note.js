@@ -24,6 +24,17 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const readLog = () => { try { return JSON.parse(fs.readFileSync(LOG, 'utf8')); } catch { return { entries: [] }; } };
 const writeLog = (l) => fs.writeFileSync(LOG, JSON.stringify(l, null, 2) + '\n');
 
+// 最後の結果を GitHub の見張り役（note-post-watchdog.yml）へ運ぶ。run_journal_local.sh が push する。
+// 台帳（gitignore）と違い追跡するファイルなので、1件だけを上書きする（差分を小さく保つ）
+const HEALTH = path.join(ROOT, 'data/note_post_health.json');
+function recordHealth(run) {
+  const doc = { _comment: '日次ジャーナルの note 投稿の最後の結果（scripts/post_note.js が書き、run_journal_local.sh が push する）。見張り役は .github/workflows/note-post-watchdog.yml' };
+  doc.last_run = { error_class: null, reason: null, url: null, ...run, recorded_at: new Date().toISOString() };
+  fs.writeFileSync(HEALTH, JSON.stringify(doc, null, 2) + '\n');
+}
+/** 失敗の分類。login = 人が直すしかない（未ログイン・別アカウント）。 */
+const errorClass = (msg) => (/アカウントが違います|未ログイン|not_login/.test(msg) ? 'login' : /timeout|Timeout|タイムアウト/.test(msg) ? 'timeout' : 'other');
+
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const inline = (t) => esc(t).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 
@@ -34,7 +45,7 @@ function bodyToHtml(body) {
   for (const raw of body.split('\n')) {
     const l = raw.trim(); if (!l) continue;
     let m;
-    if ((m = /^(.*?):\s*(https?:\/\/\S+)$/.exec(l))) { close(); html.push(`<p>${inline(m[1])}</p>`); cardUrl = m[2]; continue; }
+    if ((m = N.CARD_LINE.exec(l))) { close(); html.push(`<p>${inline(m[1])}</p>`); cardUrl = m[2]; continue; }
     if ((m = /^##\s+(.*)$/.exec(l))) { close(); html.push(`<h2>${inline(m[1])}</h2>`); continue; }
     if ((m = /^[-・]\s+(.*)$/.exec(l))) { if (!list) { html.push('<ul>'); list = true; } html.push(`<li>${inline(m[1].replace(/\[([^\]]+)\]\([^)]+\)/g, '$1'))}</li>`); continue; }
     close(); html.push(`<p>${inline(l.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1'))}</p>`);
@@ -60,20 +71,45 @@ async function writeBody(page, draft) {
   await sleep(1500);
 }
 
-/** 見出し画像（題・日付・ブランド名だけの自前の図）を入れる。他者の写真は使わない。失敗しても投稿は止めない（画像なしで続ける）。 */
+/** 題の上に付いている見出し画像の位置（無ければ null）。本文中の画像と取り違えないよう、画面上部の幅の広い画像だけを見る */
+const eyecatchBox = (page) => page.evaluate(() => {
+  const img = [...document.querySelectorAll('img')].find((i) => { const r = i.getBoundingClientRect(); return r.width > 400 && r.top < 300 && /st-note\.com|^blob:|^data:/.test(i.src); });
+  if (!img) return null; const r = img.getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height };
+});
+
 async function removeEyecatch(page) {
-  // 既に付いている見出し画像を外す（画像の右上の×）
+  // 既に付いている見出し画像を外す（画像の右上の×。2026-10-24 の画面では画像の右上 32px 四方のボタン）
   await page.evaluate(() => window.scrollTo(0, 0));
-  await page.mouse.move(590, 220); await sleep(600);
-  await page.mouse.click(866, 133); await sleep(1500);
-  const left = await page.evaluate(() => !!document.querySelector('img[src*="rectangle_large_type"]'));
+  const box = await eyecatchBox(page);
+  if (!box) return console.log('note: 見出し画像は付いていません');
+  await page.mouse.move(box.x + box.w / 2, box.y + box.h / 2); await sleep(600);
+  const x = await page.evaluate((b) => {
+    const btn = [...document.querySelectorAll('button')].find((e) => { const r = e.getBoundingClientRect(); return r.width > 0 && r.width < 60 && r.left > b.x + b.w / 2 && r.right <= b.x + b.w + 4 && r.top >= b.y - 4 && r.bottom < b.y + b.h / 2; });
+    if (!btn) return null; const r = btn.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 };
+  }, box);
+  await page.mouse.click(x ? x.x : box.x + box.w - 32, x ? x.y : box.y + 32); await sleep(1500);
+  const left = await eyecatchBox(page);
   console.log('note: 見出し画像 ' + (left ? 'を外せませんでした' : 'を外しました'));
+  if (left) throw new Error('付いていた見出し画像を外せませんでした');
 }
 
-async function setEyecatch(page, draft, date, enabled = true) {
-  if (!enabled) return removeEyecatch(page);
+/** 見出し画像の素材: 記事に載せた店の実物写真（規約で上げてよいものだけ・加工しない）。無い日・取れない日は題と日付だけの図（docs/decisions/0056） */
+async function eyecatchFile(page, draft, date) {
+  if (draft.photo) {
+    try { const f = E.downloadPhoto(draft.photo, date); console.log('note: 見出し画像は記事の写真（店の実物）を使います'); return { file: f, kind: 'photo' }; }
+    catch (e) { console.error('note: 記事の写真を取れなかったので、題だけの図にします: ' + e.message); }
+  } else console.log('note: 記事に note へ上げてよい店の写真が無いので、見出し画像は題だけの図にします');
+  return { file: await E.makeEyecatch(draft.title, date, null, page.browser()), kind: 'card' };
+}
+
+/** 見出し画像を入れる（付いていれば外してから入れ替える）。入れたものを 'photo' / 'card' で返し、入れられなければ null（投稿は止めない）。 */
+async function setEyecatch(page, draft, date, enabled = true, prepared = null) {
+  if (!enabled) return removeEyecatch(page).then(() => null, (e) => { console.error('note: ' + e.message); return null; });
+  let got = null;
   try {
-    const png = await E.makeEyecatch(draft.title, date, null, page.browser());
+    got = prepared || await eyecatchFile(page, draft, date);
+    const png = got.file;
+    if (await eyecatchBox(page)) await removeEyecatch(page);
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.mouse.click(298, 120); // タイトル上の丸い画像アイコン（画面幅1200・高さ900で固定している）
     await sleep(800);
@@ -88,23 +124,30 @@ async function setEyecatch(page, draft, date, enabled = true) {
     });
     if (box) await page.mouse.click(box.x, box.y);
     await sleep(3500);
-    const has = await page.evaluate(() => !!document.querySelector('img[src*="assets.st-note.com"], img[src*="note-eyecatch"]'));
+    const has = !!(await eyecatchBox(page));
     console.log('note: 見出し画像 ' + (has ? 'を入れました' : 'は入ったか確認できません'));
-  } catch (e) { console.error('note: 見出し画像は入れられませんでした（本文だけで続けます）: ' + e.message); }
+    return has ? got.kind : null;
+  } catch (e) { console.error('note: 見出し画像は入れられませんでした（本文だけで続けます）: ' + e.message); return null; }
+  finally { if (got && got.kind === 'photo') fs.rmSync(got.file, { force: true }); }
 }
 
 async function fillEditor(page, draft, date) {
+  // 見出し画像の素材は本文を書く前に用意する。記事の写真を取れなかった日は、本文から写真のクレジットの行を外す
+  const eye = N.loadPolicy(ROOT).eyecatch !== false
+    ? await eyecatchFile(page, draft, date).catch((e) => { console.error('note: 見出し画像を用意できませんでした（本文だけで続けます）: ' + e.message); return null; })
+    : null;
+  const text = !eye || eye.kind !== 'photo' ? { ...draft, body: N.dropPhotoCredit(draft.body) } : draft;
   await B.restoreCookies(page);
   // editor.note.com/new を直接開くと真っ白のまま止まる（2026-10-22 実測）。note.com/notes/new から入ると下書き ID つきの編集画面へ移る
   await page.goto('https://note.com/notes/new', { waitUntil: 'domcontentloaded', timeout: 60000 });
   await page.waitForFunction(() => /\/login/.test(location.href) || /editor\.note\.com\/notes\/n[0-9a-f]+\/edit/.test(location.href), { timeout: 60000 });
-  if (/login/.test(page.url())) throw new Error('未ログイン（node scripts/note_login.js --from-chrome が必要）');
+  if (/login/.test(page.url())) throw new Error('未ログイン（node scripts/note_login.js --google が必要）');
   const title = await page.waitForSelector('textarea[placeholder*="タイトル"], [placeholder*="タイトル"]', { timeout: 30000 });
   await title.click(); await page.keyboard.type(draft.title, { delay: 5 });
   const body = await page.waitForSelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]', { timeout: 15000 });
   await body.click();
-  await writeBody(page, draft);
-  if (N.loadPolicy(ROOT).eyecatch !== false) await setEyecatch(page, draft, date);
+  await writeBody(page, text);
+  if (eye) await setEyecatch(page, draft, date, true, eye);
 }
 
 async function saveDraft(page) {
@@ -164,7 +207,9 @@ async function updatePublished(page, key, draft, date) {
   const body = await page.waitForSelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]', { timeout: 30000 });
   await body.click(); await page.keyboard.down('Meta'); await page.keyboard.press('KeyA'); await page.keyboard.up('Meta'); await page.keyboard.press('Backspace');
   await writeBody(page, draft);
-  await setEyecatch(page, draft, date, N.loadPolicy(ROOT).eyecatch !== false);
+  const kind = await setEyecatch(page, draft, date, N.loadPolicy(ROOT).eyecatch !== false);
+  // 本文には記事の写真のクレジットを書いたので、写真に入れ替えられなかったら更新しない（公開中の記事はそのまま残る）
+  if (draft.photo && kind !== 'photo') throw new Error('見出し画像を記事の写真に入れ替えられなかったので、更新しません');
   await sleep(3000); // 画像の反映・自動保存が終わる前に進むと「タイトル、本文を入力してください」と出る
   if (!(await B.clickByText(page, ['公開に進む']))) throw new Error('「公開に進む」ボタンが見つからない');
   await page.waitForFunction(() => /\/publish\//.test(location.href), { timeout: 20000 });
@@ -182,20 +227,39 @@ async function updatePublished(page, key, draft, date) {
   const mode = arg('--mode') || policy.mode;
   if (mode === 'off') return console.log('note: mode=off');
   // 下書きの生成と検査は build_note_draft.js と同じ判定を使う
-  const out = JSON.parse(execFileSync('node', [path.join(__dirname, 'build_note_draft.js'), '--json', ...(date ? ['--date', date] : [])], { encoding: 'utf8' }));
-  if (!out.ok) { console.error('note: 検査に落ちたので送りません: ' + out.failures.join(' ')); process.exit(1); }
+  // 検査に落ちると build_note_draft.js は終了コード 1 を返す（execFileSync は例外になる）ので、出力から結果を読む
+  let out;
+  try {
+    out = JSON.parse(execFileSync('node', [path.join(__dirname, 'build_note_draft.js'), '--json', ...(date ? ['--date', date] : [])], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }));
+  } catch (e) {
+    try { out = JSON.parse(e.stdout); } catch { out = null; }
+    if (!out) { console.error('note: 下書きを作れません: ' + String(e.stderr || e.message).trim()); process.exitCode = 1; return; }
+  }
+  const record = !arg('--update') && mode !== 'dry-run';
+  if (!out.ok) {
+    if (record) recordHealth({ date: out.date, slug: out.slug, result: 'blocked', reason: '検査に落ちた: ' + out.failures.join(' ') });
+    console.error('note: 検査に落ちたので送りません: ' + out.failures.join(' ')); process.exitCode = 1; return;
+  }
   if (mode === 'dry-run') return console.log(`note[dry-run] ${out.date} 検査通過。送りません (${out.file})`);
   const log = readLog();
   const prev = log.entries.find((e) => e.slug === out.slug && ['draft', 'live'].includes(e.status));
   const upd = arg('--update');
-  if (!upd && prev && (prev.status === 'live' || mode !== 'live')) return console.log('note: 送信済み ' + out.slug + '（' + prev.status + '）');
+  if (!upd && prev && (prev.status === 'live' || mode !== 'live')) {
+    recordHealth({ date: out.date, slug: out.slug, result: prev.status, url: prev.url });
+    return console.log('note: 送信済み ' + out.slug + '（' + prev.status + '）');
+  }
 
   const md = fs.readFileSync(path.join(ROOT, out.file), 'utf8');
   const tags = (/^タグ: (.*)$/m.exec(md) || [, ''])[1].split(' / ').filter(Boolean);
-  const draft = { title: /^# (.*)$/m.exec(md)[1], tags, body: md.split('\n---\n').slice(1).join('\n---\n').trim() };
+  const head = md.split('\n---\n')[0];
+  const draft = { title: /^# (.*)$/m.exec(md)[1], tags, photo: (/^見出し写真: (https:\/\/\S+)$/m.exec(head) || [])[1] || null, body: md.split('\n---\n').slice(1).join('\n---\n').trim() };
 
   // 画面なし（headless）だと note の下書き作成が 403 で拒否される（2026-10-22 実測）。普通の窓で動かす（30秒ほど窓が出る）
-  const browser = await B.launch({ headless: false });
+  let browser;
+  try { browser = await B.launch({ headless: false }); } catch (e) {
+    if (record) recordHealth({ date: out.date, slug: out.slug, result: 'failed', error_class: errorClass(e.message), reason: '窓を開けない: ' + e.message.slice(0, 280) });
+    console.error('note: 窓を開けません: ' + e.message); process.exitCode = 1; return;
+  }
   const page = await browser.newPage();
   await page.setViewport({ width: 1200, height: 900 });
   // 保存後に編集画面から開き直すとき「このページを離れますか」が出ても止まらないようにする（保存は済んでいる）
@@ -203,13 +267,15 @@ async function updatePublished(page, key, draft, date) {
   try {
     // 別のアカウントで投稿しない（2026-10-22 に vide太郎で公開してしまった）。名前が違えば何も書かずに止める
     await page.goto('https://note.com/dashboard', { waitUntil: 'domcontentloaded', timeout: 60000 });
-    const who = await page.evaluate(async () => { const r = await fetch('/api/v2/current_user', { credentials: 'include' }); return r.ok ? (await r.json()).data : null; });
-    const want = (policy.account && policy.account.nickname) || 'NAGOYA BITES';
-    if (!who || who.nickname !== want) throw new Error(`投稿先のアカウントが違います（今: ${who ? who.nickname : '未ログイン'} / 必要: ${want}）。普段の Chrome で ${want} にログインし直して node scripts/note_login.js --from-chrome`);
+    // 未ログイン・別アカウントなら、専用の窓の中で Google ログインから入り直す（本人が普段の Chrome で切り替えても止まらないように）
+    const who = await B.ensureAccount(page, (policy.account && policy.account.nickname) || 'NAGOYA BITES');
     // 台帳は作業場所ごとに別なので、note 側の公開済みの題とも照らして二重投稿を防ぐ（2026-10-23 朝の自動投稿と手動が重なった）
     if (!upd && !prev) {
       const dup = await page.evaluate(async (u, t) => { try { const j = await (await fetch(`/api/v2/creators/${u}/contents?kind=note&page=1`, { credentials: 'include' })).json(); const c = (j.data && j.data.contents) || []; const hit = c.find((x) => (x.name || '').trim() === t.trim() && x.status === 'published'); return hit ? hit.noteUrl || hit.key : null; } catch { return null; } }, who.urlname, draft.title);
-      if (dup) return console.log(`note: 同じ題の公開済みの記事があるため送りません（${dup}）`);
+      if (dup) {
+        if (record) recordHealth({ date: out.date, slug: out.slug, result: 'live', url: dup });
+        return console.log(`note: 同じ題の公開済みの記事があるため送りません（${dup}）`);
+      }
     }
     if (upd) { await updatePublished(page, upd, draft, out.date); return console.log(`note[update] ${out.slug} を ${upd} に反映しました`); }
     let url;
@@ -221,6 +287,7 @@ async function updatePublished(page, key, draft, date) {
       if (done) {
         Object.assign(prev, { status: 'live', url: `https://note.com/${who.urlname}/n/${key}`, at: new Date().toISOString() });
         writeLog(log);
+        if (record) recordHealth({ date: out.date, slug: out.slug, result: 'live', url: prev.url });
         return console.log(`note: ${out.slug} は公開済みでした。台帳だけ直しました ${prev.url}`);
       }
     } else {
@@ -234,10 +301,12 @@ async function updatePublished(page, key, draft, date) {
     const rec = log.entries.find((e) => e.slug === out.slug);
     Object.assign(rec, { status, url, at: new Date().toISOString() });
     writeLog(log);
+    if (record) recordHealth({ date: out.date, slug: out.slug, result: status, url });
     console.log(`note[${mode}] ${out.slug} → ${status} ${url}`);
   } catch (e) {
     const dir = path.join(os.homedir(), '.config/nagoya-bites/note-fail'); fs.mkdirSync(dir, { recursive: true });
     const shot = path.join(dir, `${out.date}.png`); await page.screenshot({ path: shot }).catch(() => {});
+    if (record) recordHealth({ date: out.date, slug: out.slug, result: 'failed', error_class: errorClass(e.message), reason: e.message.slice(0, 300) });
     console.error(`note: 送信失敗 ${e.message}（画面: ${shot}）`); process.exitCode = 1;
   } finally { await browser.close(); }
 })();

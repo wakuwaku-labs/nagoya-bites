@@ -1,0 +1,81 @@
+name: NAGOYA BITES — note 自動投稿の見張り
+
+# P-638（docs/decisions/0054）
+#   日次ジャーナルの note 版は Mac の run_journal_local.sh の最後で投稿するので、Mac の通知だけでは
+#   Mac ごと止まった日に気づけない（ISSUE-084 原則1・2）。GitHub から note の RSS を読み、公開済みの記事が
+#   note に出ていなければ、Mac が push した data/note_post_health.json の理由つきで GitHub Issue（＝オーナーにメール）を出す。
+#   判定は scripts/check_note_post_health.js（mode が live でなければ何もしない）。
+#   続いている間は Issue の本文を書き換えるだけで、コメントもジョブの失敗もしない（オオカミ少年化させない）。
+#   note に記事が出たのを確認したら自動で閉じる。ジャーナルが休みの日は鳴らさない（それは journal-watchdog.yml の役目）。
+
+on:
+  schedule:
+    - cron: '0 4 * * *'   # 13:00 JST 意図（朝の投稿の後）
+    - cron: '0 12 * * *'  # 21:00 JST 意図（昼に出し直した分の確認・自動クローズ）
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: note の RSS を取る
+        run: |
+          url=$(node -e "console.log(require('./data/note_post_policy.json').watchdog.rssUrl)")
+          # 読めなかった日は空のまま進む（判定側が Mac の記録で代える。取得の一時的な失敗で鳴らさない）
+          curl -sS -m 30 --retry 2 -A "Mozilla/5.0 (nagoya-bites note-post-watchdog)" -o /tmp/note-rss.xml "$url" || : > /tmp/note-rss.xml
+          echo "RSS: $(wc -c < /tmp/note-rss.xml) bytes"
+
+      - name: 判定
+        run: |
+          set +e
+          node scripts/check_note_post_health.js --rss /tmp/note-rss.xml --json > /tmp/note-post-health.json
+          set -e
+          node -e "const r=require('/tmp/note-post-health.json');console.log(r.ok?'OK ('+r.status+'・RSS '+r.rss+')':r.issue_body)"
+
+      - name: Issue を起票・更新・クローズ
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('/tmp/note-post-health.json', 'utf8'));
+            const { owner, repo } = context.repo;
+            const label = 'note-post-watchdog';
+            const { data: issues } = await github.rest.issues.listForRepo({ owner, repo, state: 'open', labels: label, per_page: 20 });
+            const existing = issues.find(i => i.title.startsWith('🔴 note 自動投稿'));
+            if (r.ok) {
+              if (existing) {
+                await github.rest.issues.createComment({ owner, repo, issue_number: existing.number,
+                  body: `✅ note に記事が出たのを確認しました（JST ${r.today}・${r.status}）。自動でクローズします。` });
+                await github.rest.issues.update({ owner, repo, issue_number: existing.number, state: 'closed' });
+              } else {
+                core.info(`問題なし（${r.status}）`);
+              }
+              return;
+            }
+            const kinds = [...new Set(r.problems.map(p => p.error_class || p.kind))].join('・');
+            const title = `🔴 note 自動投稿が止まっています（${kinds}・最新 ${r.problems[0].date}）`;
+            if (existing) {
+              await github.rest.issues.update({ owner, repo, issue_number: existing.number, title, body: r.issue_body });
+              core.info(`Issue #${existing.number} の本文を更新しました`);
+            } else {
+              try {
+                await github.rest.issues.getLabel({ owner, repo, name: label });
+              } catch (_) {
+                await github.rest.issues.createLabel({ owner, repo, name: label, color: 'd73a4a', description: 'note 自動投稿の見張り（note-post-watchdog.yml）' });
+              }
+              const { data: created } = await github.rest.issues.create({ owner, repo, title, body: r.issue_body, labels: [label] });
+              core.warning(`Issue #${created.number} を起票しました`);
+            }

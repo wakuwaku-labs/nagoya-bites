@@ -1,35 +1,35 @@
 {
-  "generatedAt": "2026-10-24T04:18:17.612Z",
+  "generatedAt": "2026-10-24T20:17:17.718Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1999,
-    "pageViews": 2811,
-    "sessions": 2217,
-    "avgSessionDuration": 112.3,
-    "bounceRate": 0.303,
+    "activeUsers": 2039,
+    "pageViews": 2852,
+    "sessions": 2251,
+    "avgSessionDuration": 111.1,
+    "bounceRate": 0.305,
     "pagesPerSession": 1.27
   },
   "dailyReference": {
-    "date": "2026-10-22",
-    "sessions": 96,
-    "bounceRate": 0.333,
-    "pageViews": 130
+    "date": "2026-10-23",
+    "sessions": 91,
+    "bounceRate": 0.308,
+    "pageViews": 116
   },
   "channels": {
     "sessions": {
-      "organic": 1684,
-      "direct": 385,
+      "organic": 1724,
+      "direct": 382,
       "social": 16,
       "ai_assistant": 114,
       "referral": 29,
       "paid": 0,
-      "other": 0
+      "other": 1
     },
     "pct": {
-      "organic": 75.6,
-      "direct": 17.3,
+      "organic": 76.1,
+      "direct": 16.9,
       "social": 0.7,
-      "ai_assistant": 5.1,
+      "ai_assistant": 5,
       "referral": 1.3,
       "paid": 0,
       "other": 0
@@ -39,22 +39,22 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 757
+      "sessions": 785
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 601
+      "sessions": 607
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 325
+      "sessions": 324
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 309
+      "sessions": 315
     },
     {
       "source": "chatgpt.com",
@@ -69,7 +69,7 @@
     {
       "source": "unknown",
       "medium": "(not set)",
-      "sessions": 27
+      "sessions": 25
     },
     {
       "source": "(not set)",
@@ -177,6 +177,11 @@
       "sessions": 1
     },
     {
+      "source": "trend_today",
+      "medium": "",
+      "sessions": 1
+    },
+    {
       "source": "us.search.yahoo.com",
       "medium": "referral",
       "sessions": 1
@@ -185,13 +190,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 360,
-      "sessions": 338
+      "pageViews": 365,
+      "sessions": 343
     },
     {
       "path": "/",
-      "pageViews": 116,
-      "sessions": 107
+      "pageViews": 114,
+      "sessions": 104
     },
     {
       "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
@@ -199,27 +204,27 @@
       "sessions": 79
     },
     {
+      "path": "/features/nagoya-autumn-2026.html",
+      "pageViews": 79,
+      "sessions": 75
+    },
+    {
       "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
       "pageViews": 78,
       "sessions": 76
-    },
-    {
-      "path": "/features/nagoya-autumn-2026.html",
-      "pageViews": 76,
-      "sessions": 72
     }
   ],
   "cta": {
-    "outboundClicks": 211,
+    "outboundClicks": 214,
     "ctaClickRate": 9.5,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 76
+        "clicks": 78
       },
       {
         "domain": "tabelog.com",
-        "clicks": 33
+        "clicks": 35
       },
       {
         "domain": "maps.google.com",
@@ -231,7 +236,7 @@
       },
       {
         "domain": "www.instagram.com",
-        "clicks": 18
+        "clicks": 17
       },
       {
         "domain": "prtimes.jp",
@@ -280,16 +285,16 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 146,
-      "direct": 49,
+      "organic": 151,
+      "direct": 47,
       "social": 0,
       "ai_assistant": 16,
       "referral": 0,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 8.7,
-    "ctaClickRate_direct": 12.7,
+    "ctaClickRate_organic": 8.8,
+    "ctaClickRate_direct": 12.3,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -317,10 +322,6 @@
         "clicks": 9
       },
       {
-        "path": "/journal/2026-09-24-kurumamichi-pizzeria-mimi-counter12.html",
-        "clicks": 6
-      },
-      {
         "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
         "clicks": 6
       },
@@ -339,6 +340,10 @@
       {
         "path": "/journal/2026-10-06-sakae-hilton-inplace33-autumn-buffet.html",
         "clicks": 5
+      },
+      {
+        "path": "/journal/2026-09-24-kurumamichi-pizzeria-mimi-counter12.html",
+        "clicks": 4
       },
       {
         "path": "/stores/J001147583.html",
@@ -460,11 +465,6 @@
         "clicks": 5
       },
       {
-        "path": "/journal/2026-09-24-kurumamichi-pizzeria-mimi-counter12.html",
-        "domain": "www.instagram.com",
-        "clicks": 5
-      },
-      {
         "path": "/journal/2026-09-29-sakae-tsukemen-tou-counter12.html",
         "domain": "maps.google.com",
         "clicks": 5
@@ -473,6 +473,11 @@
         "path": "/stores/J001147583.html",
         "domain": "www.hotpepper.jp",
         "clicks": 4
+      },
+      {
+        "path": "/journal/2026-09-24-kurumamichi-pizzeria-mimi-counter12.html",
+        "domain": "www.instagram.com",
+        "clicks": 3
       },
       {
         "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
@@ -755,6 +760,11 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J000989122.html",
+        "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J001022379.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -870,6 +880,16 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J003763757.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J003785077.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J003828115.html",
         "domain": "www.google.com",
         "clicks": 1
@@ -897,21 +917,6 @@
       {
         "path": "/stores/J004402690.html",
         "domain": "tabelog.com",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J004402690.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J004422360.html",
-        "domain": "www.instagram.com",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J004444760.html",
-        "domain": "www.hotpepper.jp",
         "clicks": 1
       }
     ],
@@ -981,10 +986,6 @@
         "clicks": 2
       },
       {
-        "path": "/stores/J004402690.html",
-        "clicks": 2
-      },
-      {
         "path": "/features/nagoya-cafe.html",
         "clicks": 1
       },
@@ -1045,6 +1046,10 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J000989122.html",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J001022379.html",
         "clicks": 1
       },
@@ -1097,6 +1102,14 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J003763757.html",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J003785077.html",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J003828115.html",
         "clicks": 1
       },
@@ -1113,37 +1126,37 @@
         "clicks": 1
       },
       {
-        "path": "/stores/J004444760.html",
+        "path": "/stores/J004402690.html",
         "clicks": 1
       }
     ],
-    "reservationClicks": 96,
+    "reservationClicks": 97,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
-      "ctaEvents": 36,
-      "reservationOutbound": 44,
-      "naiveSum": 80,
-      "deduped": 49,
-      "overlap": 31,
+      "ctaEvents": 33,
+      "reservationOutbound": 40,
+      "naiveSum": 73,
+      "deduped": 43,
+      "overlap": 30,
       "bySite": [
         {
           "site": "hotpepper.jp",
-          "cta": 34,
-          "outbound": 32,
-          "deduped": 37
+          "cta": 29,
+          "outbound": 29,
+          "deduped": 32
         },
         {
           "site": "tabelog.com",
-          "cta": 2,
-          "outbound": 12,
-          "deduped": 12
+          "cta": 4,
+          "outbound": 11,
+          "deduped": 11
         }
       ]
     }
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1999,
+    "value": 2039,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

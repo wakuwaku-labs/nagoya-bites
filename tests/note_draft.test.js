@@ -49,3 +49,55 @@ test('タグ: 記事の店は data/stores.json の店舗IDで引く（無い ID 
   assert.deepStrictEqual(N.storesOf({ store_ids: ['__no_such_id__'] }), []);
   assert.deepStrictEqual(N.storesOf({}), []);
 });
+
+// 見出し画像に使える店の実物写真（docs/decisions/0056）
+const fig = (kind, source, src, cap = '写真: 提供 テスト社（<a href="https://prtimes.jp/main/html/rd/p/1.html">プレスリリース</a>より）') =>
+  `<figure class="art-${kind}-img" data-${kind === 'hero' ? 'hero' : 'photo'}-source="${source}" data-${kind === 'hero' ? 'hero' : 'photo'}-store="店A">\n  <img src="${src}" alt="x">\n  <figcaption class="art-img-credit">${cap}</figcaption>\n</figure>`;
+const PR = 'https://prcdn.freetls.fastly.net/release_image/1/2/a.jpg';
+const HP = 'https://imgfp.hotp.jp/IMGH/00/86/P1/P1.jpg';
+
+test('見出し写真: プレスリリースの写真（ヒーロー優先）だけを、クレジットつきで選ぶ', () => {
+  const p = N.articlePhoto(fig('body', 'press', PR + '?b') + fig('hero', 'press', PR), policy);
+  assert.strictEqual(p.src, PR);
+  assert.strictEqual(p.kind, 'hero');
+  assert.strictEqual(p.credit, '提供 テスト社（プレスリリースより）');
+  assert.strictEqual(p.creditUrl, 'https://prtimes.jp/main/html/rd/p/1.html');
+  assert.strictEqual(p.store, '店A');
+  // ヒーローがホットペッパー（規約で note に上げられない）なら、本文のプレスリリースの写真を使う
+  assert.strictEqual(N.articlePhoto(fig('hero', 'hotpepper', HP) + fig('body', 'press', PR), policy).kind, 'body');
+});
+
+test('見出し写真: ホットペッパー・Places・配信元の違う画像・クレジットの無い写真は使わない', () => {
+  assert.strictEqual(N.articlePhoto(fig('hero', 'hotpepper', HP), policy), null);
+  assert.strictEqual(N.articlePhoto(fig('hero', 'places', 'https://lh3.googleusercontent.com/x.jpg'), policy), null);
+  assert.strictEqual(N.articlePhoto(fig('hero', 'press', 'https://example.com/a.jpg'), policy), null);
+  assert.strictEqual(N.articlePhoto(fig('hero', 'press', PR, '写真: 提供 テスト社'), policy), null);
+  assert.strictEqual(N.articlePhoto(html, policy), null);
+});
+
+test('見出し写真: 本文に記事と同じクレジットを書き、元記事の行だけがリンクカードになる', () => {
+  const withPhoto = html.replace('<div class="art-body">', fig('hero', 'press', PR) + '<div class="art-body">');
+  const d = N.buildNoteDraft(entry, withPhoto, policy);
+  assert.strictEqual(d.photo.src, PR);
+  const credit = d.body.split('\n').find((l) => l.startsWith('見出し画像: '));
+  assert.strictEqual(credit, '見出し画像: 提供 テスト社（プレスリリースより） https://prtimes.jp/main/html/rd/p/1.html');
+  assert.doesNotMatch(credit, N.CARD_LINE);
+  assert.match(d.body.split('\n').pop(), N.CARD_LINE);
+  assert.deepStrictEqual(N.validateNoteDraft(d, { policy, articleText: N.htmlToText(withPhoto) }), []);
+  // 写真の無い記事は従来どおり（クレジットの行を足さない）
+  const plain = N.buildNoteDraft(entry, html, policy);
+  assert.strictEqual(plain.photo, null);
+  assert.doesNotMatch(plain.body, /見出し画像/);
+  // 見出し画像を使わない設定なら、写真もクレジットも付けない
+  assert.strictEqual(N.buildNoteDraft(entry, withPhoto, { ...policy, eyecatch: false }).photo, null);
+});
+
+test('見出し写真: 写真を入れられなかった日は、本文からクレジットの行だけを外す', () => {
+  const withPhoto = html.replace('<div class="art-body">', fig('hero', 'press', PR) + '<div class="art-body">');
+  const d = N.buildNoteDraft(entry, withPhoto, policy);
+  const body = N.dropPhotoCredit(d.body);
+  assert.doesNotMatch(body, /見出し画像:/);
+  assert.match(body, /元記事: https:\/\/nagoya-bites\.com/);
+  assert.doesNotMatch(body, /\n{3,}/);
+  assert.strictEqual(N.dropPhotoCredit(N.buildNoteDraft(entry, html, policy).body), N.buildNoteDraft(entry, html, policy).body);
+});

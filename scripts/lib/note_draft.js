@@ -57,6 +57,39 @@ function parseArticle(html) {
   return { title: inline(titleHtml), lead, sections, points };
 }
 
+/** 本文のうち「文言: URL」だけの行。post_note.js がこの URL をリンクカードにする（元記事の行）。クレジットの行はこの形にしない */
+const CARD_LINE = /^(.*?):\s*(https?:\/\/\S+)$/;
+/** 見出し画像の写真のクレジットの行の頭 */
+const PHOTO_CREDIT = '見出し画像: ';
+
+/** 本文から写真のクレジットの行を外す（写真を見出し画像に入れられなかった日に、無い写真のクレジットを載せない） */
+const dropPhotoCredit = (body) => String(body).split('\n').filter((l) => !l.startsWith(PHOTO_CREDIT)).join('\n').replace(/\n{3,}/g, '\n\n');
+
+/**
+ * note の見出し画像に使える、記事に載せた店の実物写真（ヒーロー → 本文の順で最初の1枚）。無ければ null。
+ * 使えるのは policy.eyecatchPhoto の出どころ・配信元で、クレジット（発行元とリリースの URL）があるものだけ（docs/decisions/0056）。
+ * 写真の帰属（その記事の店か）は記事を作るときの判定（scripts/lib/hero_photo_gate.js）を通ったものなので、ここでは選び直さない。
+ */
+function articlePhoto(html, policy) {
+  const rule = policy.eyecatchPhoto || {};
+  const sources = rule.sources || [];
+  const hosts = rule.hosts || [];
+  const figs = [...String(html).matchAll(/<figure class="art-(hero|body)-img"([^>]*)>([\s\S]*?)<\/figure>/g)]
+    .sort((a, b) => (a[1] === b[1] ? 0 : a[1] === 'hero' ? -1 : 1));
+  for (const [, kind, attrs, inner] of figs) {
+    const source = (/data-(?:hero|photo)-source="([^"]*)"/.exec(attrs) || [])[1];
+    const src = decode((/<img [^>]*src="(https:\/\/[^"]+)"/.exec(inner) || [])[1] || '');
+    const cap = (/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/.exec(inner) || [])[1] || '';
+    const creditUrl = decode((/<a [^>]*href="(https:\/\/[^"]+)"/.exec(cap) || [])[1] || '');
+    let host = '';
+    try { host = new URL(src).hostname; } catch { /* src が無い */ }
+    if (!sources.includes(source) || !hosts.some((h) => host === h || host.endsWith('.' + h)) || !creditUrl) continue;
+    const credit = inline(cap.replace(/<a [^>]*>([\s\S]*?)<\/a>/gi, '$1')).replace(/^写真[:：]\s*/, '');
+    return { kind, source, src, credit, creditUrl, store: decode((/data-(?:hero|photo)-store="([^"]*)"/.exec(attrs) || [])[1] || '') };
+  }
+  return null;
+}
+
 function utmUrl(entry, policy) {
   const u = new URL(`${String(policy.siteBase).replace(/\/+$/, '')}/journal/${entry.slug}.html`);
   u.searchParams.set('utm_source', policy.utm.source);
@@ -110,8 +143,11 @@ function buildNoteDraft(entry, html, policy, stores = storesOf(entry)) {
   if (shown.length < a.sections.length) {
     out.push(`この先は元記事で読めます。`, '');
   }
+  // 見出し画像に記事の写真を使うときは、記事と同じクレジット（発行元・リリースの URL）を本文にも書く（URL は行の最後。リンクカードにしない）
+  const photo = policy.eyecatch === false ? null : articlePhoto(html, policy);
+  if (photo) out.push(`${PHOTO_CREDIT}${photo.credit} ${photo.creditUrl}`, '');
   out.push(policy.footer, '', `元記事: ${url}`);
-  return { title: a.title, body: out.join('\n').replace(/\n{3,}/g, '\n\n'), tags: tagsFor(entry, policy, stores), url };
+  return { title: a.title, body: out.join('\n').replace(/\n{3,}/g, '\n\n'), tags: tagsFor(entry, policy, stores), url, photo };
 }
 
 /** 落ちた理由の配列（空なら通過）。 */
@@ -132,4 +168,4 @@ function validateNoteDraft(draft, { policy, articleText, root = ROOT }) {
   return f;
 }
 
-module.exports = { loadPolicy, parseArticle, buildNoteDraft, validateNoteDraft, utmUrl, tagsFor, storesOf, htmlToText };
+module.exports = { loadPolicy, parseArticle, articlePhoto, buildNoteDraft, validateNoteDraft, utmUrl, tagsFor, storesOf, htmlToText, CARD_LINE, dropPhotoCredit };
