@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T00:29:39.353Z",
+  "generatedAt": "2026-10-26T19:17:57.166Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -8,11 +8,11 @@
   },
   "totals": {
     "exits": {
-      "hotpepper": 83,
+      "hotpepper": 82,
       "tabelog": 15,
       "tel": 4,
       "other": 0,
-      "total": 102
+      "total": 101
     },
     "reports": {
       "yes": 0,
@@ -24,11 +24,11 @@
     "start": "2026-10-01",
     "totals": {
       "exits": {
-        "hotpepper": 79,
+        "hotpepper": 80,
         "tabelog": 15,
         "tel": 4,
         "other": 0,
-        "total": 98
+        "total": 99
       },
       "reports": {
         "yes": 0,
@@ -308,24 +308,6 @@
       }
     },
     {
-      "store_name": "全室水槽個室 柳橋 AONO（アオノ）名古屋駅店",
-      "exits": {
-        "hotpepper": 2,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 2
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 1,
-        "reportsYes": 0
-      }
-    },
-    {
       "store_name": "鮨赤酢かぶと",
       "exits": {
         "hotpepper": 2,
@@ -438,6 +420,24 @@
       "exits": {
         "hotpepper": 0,
         "tabelog": 1,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "mulligan マリガン 丸の内店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
         "tel": 0,
         "other": 0,
         "total": 1
@@ -686,24 +686,6 @@
       }
     },
     {
-      "store_name": "ちゃんこ九重",
-      "exits": {
-        "hotpepper": 1,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 1
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 0,
-        "reportsYes": 0
-      }
-    },
-    {
       "store_name": "つなぎや 名古屋栄店",
       "exits": {
         "hotpepper": 1,
@@ -939,6 +921,24 @@
     },
     {
       "store_name": "焼肉 福 錦通り店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "全室水槽個室 柳橋 AONO（アオノ）名古屋駅店",
       "exits": {
         "hotpepper": 1,
         "tabelog": 0,
@@ -1215,19 +1215,19 @@
     "geoSearch": "現在地: トップの「現在地」ボタンを押した回数と結果（granted・denied・unsupported・error）。位置・エリア名は送っていない"
   },
   "actions": {
-    "reserve": 98,
+    "reserve": 97,
     "reserveBySite": {
-      "hotpepper": 83,
+      "hotpepper": 82,
       "tabelog": 15,
       "other": 0
     },
     "tel": 4,
-    "map": 56
+    "map": 57
   },
   "map": {
-    "total": 56,
+    "total": 57,
     "unattributed": 6,
-    "stores": 23,
+    "stores": 22,
     "top": [
       {
         "store_name": "なかがわ 街仲食堂 by ジーバーFOOD",
@@ -1235,7 +1235,7 @@
       },
       {
         "store_name": "うな祥",
-        "count": 6
+        "count": 8
       },
       {
         "store_name": "ちひろ菓子店 新栄葵店",
@@ -1271,15 +1271,15 @@
       }
     ],
     "byLocation": {
-      "(not set)": 33,
-      "store_page": 12,
+      "(not set)": 32,
+      "store_page": 14,
       "journal_store_card": 4,
       "store_page_bar": 4,
       "modal_cta": 3
     },
     "byLinkKind": {
-      "(not set)": 37,
-      "place_id": 11,
+      "(not set)": 36,
+      "place_id": 13,
       "search": 8
     }
   },
