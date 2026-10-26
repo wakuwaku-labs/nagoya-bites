@@ -1,0 +1,406 @@
+{
+  "date": "2026-10-26",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "丸の内のフレンチ『BISTRO DIA』ほか3店、デート・ランチ・二次会に",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 92,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        },
+        {
+          "kw": "フレンチ",
+          "feature": "features/nagoya-french-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 6件 (新店,比較,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 174字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「丸の内」+4",
+          "タイトルにシーン語「デート」+4",
+          "タイトルにジャンル語「フレンチ」+2"
+        ]
+      },
+      "gate_note": "92点（自動公開ライン 100点）。主な不足: topicality -13 / recency -3 / writability -2"
+    },
+    {
+      "id": "c5",
+      "title_draft": "野並『拉麺あるひ』名古屋コーチンの鶏清湯、天白区の新店を一人ランチで",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "緑区・天白区",
+          "feature": "stores/area/midori-tempaku/index.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 3件 (シーン,価格帯,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 105字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「天白区」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "星ヶ丘三越の食品フロアに新店8店、名古屋初のティーブレイクと手土産の価格帯",
+      "verdict": "HOLD",
+      "total": 77,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 4件 (新店,比較,エリア,価格帯) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 127字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "丸の内『SALON de M』21時からの二次会、生演奏とセット料金のおばんざい",
+      "verdict": "HOLD",
+      "total": 77,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 8,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 3件 (シーン,価格帯,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 125字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「丸の内」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "丸の内『Restaurant Live the DIA』11月2日開業、10席のライブカウンターで記念日",
+      "verdict": "HOLD",
+      "total": 76,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 4,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "誕生日",
+          "feature": "features/birthday.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 3件 (予約,シーン,価格帯) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 139字 +4",
+          "title 52字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「丸の内」+4",
+          "タイトルにシーン語「記念日」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "92点（自動公開ライン 100点）。主な不足: topicality -13 / recency -3 / writability -2",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "weekly_digest",
+      "title_draft": "丸の内のフレンチ『BISTRO DIA』ほか3店、デート・ランチ・二次会に",
+      "lead_draft": "名古屋・丸の内3丁目の同じ建物に、フランス料理を軸にした3店が開く。1階の「BISTRO DIA」と「SALON de M」は2026年10月26日、2階の「Restaurant Live the DIA」は11月2日。昼のデリプレート1,980円、夜のビストロ、21時からのサロン、10席のコースと、時間帯で店が替わる作りを価格帯と予約から読む。",
+      "angle": "同じ建物の新店3店を比較し、1階カウンターを17:30〜20:30はビストロ・21時からはセット料金のサロンに切り替える席の回転、ランチ1,980円と480円からのおばんざいの価格帯、10席コースの予約の取り方を、一人ランチ・デート・二次会のシーン別に読む",
+      "main_store": {
+        "name": "BISTRO DIA",
+        "id": "",
+        "area": "丸の内",
+        "genre": "フレンチ・ビストロ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES 北浜キャピタルパートナーズ（丸の内に3店舗・開業日と営業内容）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000055.000061259.html",
+          "date": "2026-10-22"
+        },
+        {
+          "label": "食べログ ビストロ ダイア（新栄町・閉店表示）",
+          "url": "https://tabelog.com/aichi/A2301/A230104/23042388/"
+        },
+        {
+          "label": "Google マップ 名古屋市中区丸の内3丁目16-20",
+          "url": "https://www.google.com/maps/search/?api=1&query=35.1747608%2C136.9045847"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "weekly_digest",
+      "title_draft": "星ヶ丘三越の食品フロアに新店8店、名古屋初のティーブレイクと手土産の価格帯",
+      "lead_draft": "星ヶ丘三越の地下1階・1階の食品フロアが改装され、10月21日と28日に8店が新しく入る。名古屋初出店のティーブレイクはクッキー5個540円から。資生堂パーラーの花椿ビスケット2,700円、福砂屋のカステラ1,566円と、手土産の価格帯を店ごとに比べる。",
+      "angle": "同じ食品フロアの新店8店を比較し、手土産の価格帯（540円〜5,400円）と星ヶ丘エリアの買い方を読む",
+      "main_store": {
+        "name": "ティーブレイク 星ヶ丘三越",
+        "id": "",
+        "area": "星ヶ丘",
+        "genre": "スイーツ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 星ヶ丘三越の食品フロアがリニューアル",
+          "url": "https://jouhou.nagoya/hoshigaoka-mitsukoshi-renewal2026/",
+          "date": "2026-10-25"
+        },
+        {
+          "label": "星ヶ丘三越 公式サイト",
+          "url": "https://www.mitsukoshi.mistore.jp/hoshigaoka.html"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "weekly_digest",
+      "title_draft": "丸の内『SALON de M』21時からの二次会、生演奏とセット料金のおばんざい",
+      "lead_draft": "名古屋・丸の内3丁目に10月26日に開く「SALON de M」は、同じ1階で夕方まで営業するビストロのあと、21時から店を開ける。セット料金でお酒とフレンチおばんざいを選び、ピアノとサックスの生演奏が1日2回入る。二次会の受け皿としての作りを読む。",
+      "angle": "21時からのセット料金制という価格帯と、同じカウンターをビストロから引き継ぐ席の回転、二次会のシーン適性",
+      "main_store": {
+        "name": "SALON de M",
+        "id": "",
+        "area": "丸の内",
+        "genre": "バー"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES 北浜キャピタルパートナーズ（丸の内に3店舗）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000055.000061259.html",
+          "date": "2026-10-22"
+        },
+        {
+          "label": "Google マップ 名古屋市中区丸の内3丁目16-20",
+          "url": "https://www.google.com/maps/search/?api=1&query=35.1747608%2C136.9045847"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "weekly_digest",
+      "title_draft": "丸の内『Restaurant Live the DIA』11月2日開業、10席のライブカウンターで記念日",
+      "lead_draft": "名古屋・丸の内3丁目の2階に、11月2日、10席のライブカウンターでフランス料理のコースを出す「Restaurant Live the DIA」が開く。愛知・岐阜・三重の食材を中心に全10品、アルコールとノンアルコールのペアリングも用意する。予約の取り方と記念日の使い方を読む。",
+      "angle": "10席のカウンターという席数と予約、コースとペアリングの価格帯を記念日・接待のシーンで読む",
+      "main_store": {
+        "name": "Restaurant Live the DIA",
+        "id": "",
+        "area": "丸の内",
+        "genre": "フレンチ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES 北浜キャピタルパートナーズ（丸の内に3店舗）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000055.000061259.html",
+          "date": "2026-10-22"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "weekly_digest",
+      "title_draft": "野並『拉麺あるひ』名古屋コーチンの鶏清湯、天白区の新店を一人ランチで",
+      "lead_draft": "天白区・野並駅のすぐ北に2026年10月22日に開いた「拉麺あるひ」。名古屋コーチンの鶏ガラで炊く鶏清湯と鶏白湯を、炊き方とかえしで選ぶ。鶏清湯 塩は1,100円。昼夜の二部営業の新店を、価格帯と回転から読む。",
+      "angle": "鶏清湯1,100円の価格帯と昼夜二部営業の回転、一人ランチのシーン",
+      "main_store": {
+        "name": "拉麺あるひ",
+        "id": "",
+        "area": "天白区",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 拉麺あるひ",
+          "url": "https://jouhou.nagoya/ramen-arch/",
+          "date": "2026-10-23"
+        },
+        {
+          "label": "開店閉店.com 拉麺あるひ 野並店",
+          "url": "https://kaiten-heiten-24.com/aruhi-nonami/",
+          "date": "2026-10-22"
+        }
+      ]
+    }
+  ]
+}
