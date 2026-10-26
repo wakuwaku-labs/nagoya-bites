@@ -1,0 +1,89 @@
+{
+  "status": "OK",
+  "editorReason": "コンラッド名古屋31階に位置し、洗練された空間と上質なサービスが魅力。パノラマビューと共に、ハリー・ウィンストンとのコラボアフタヌーンティーや夜のジャズ生演奏など、特別な体験を提供。ラグジュアリーホテルラウンジとして認知されています。",
+  "insiderNote": "ヒルトンのラグジュアリーブランド「コンラッド名古屋」の一部として、上質な空間とサービスを追求。ハリー・ウィンストンとのコラボや総料理長統括のメニューなど、ホテルならではの体験価値を提供しています。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFYlxxuoW8qXzXNsq6cGgGXA4n0oesIvWbLYwIbzq-JB1vj8-sG7sm_kO0jWUkLUYcWtt_gLRft4E6MRVxHqbda7Z2BNN7UNT7QFgaLSsajFKSvGPcwqBpSiaYiax5xAozxVd2r_a5TIQ-MtXynn_JWKZhjN4E=",
+      "snippet_quote": "コンラッド名古屋の31階に位置するロビーラウンジ＆バー「サンドロップ」は、31階からのパノラマビューと自然光に包まれた開放的な空間が特徴です。夜にはジャズの生演奏で優雅なひとときを演出しています。",
+      "supports": "コンラッド名古屋31階に位置すること、パノラマビュー、ジャズ生演奏、洗練された空間"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEHBdWb22zD5JAzkhfA2KLTNlaNTBu7DrmgHDU4uZDlE-RQwx6HFQvf1TDcSUxm55wJ_KNO136uaDxIezFBcvMlaZcwqNrioT-SFKT27JZED1PZTaNaqNJPCGHZat4wVpzP63F_ygJo5HZ0ZxhG",
+      "snippet_quote": "コンラッド名古屋 31Fに位置するサンドロップは、31階からのパノラマビューと自然光に包まれた開放的な空間が特徴です。夜は柔らかな照明とジャズの生演奏が楽しめる落ち着いたバーとして、時間帯によって異なる雰囲気を提供しています。",
+      "supports": "コンラッド名古屋31階に位置すること、パノラマビュー、ジャズ生演奏、洗練された空間、ラグジュアリーホテルラウンジとしての認知"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGTBUsHuVVgGIMUZWERxgjFZZ6V9-6wGVFSwZn5PPzcKtfX4tkJH5AfH_PjFpGw6vMbGqo_ub14Om4N3AQs4qlF8VNVGIJEZcmlcH3SCue4AQyIz_4TcfoIJE9FlcRKlYzk7ILMdG04K_Cmnfw=",
+      "snippet_quote": "世界最高峰のジュエラー「ハリー・ウィンストン」とのコラボレーションなど、特別な体験を提供しています。",
+      "supports": "ハリー・ウィンストンとのコラボアフタヌーンティー"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEM9XPK6XkNSppsMoPfG27tPq_w-odeYSHojSY0diuFq9y8XBr5BaSJC-zgPYyWGwSbToDQI8J8os_hTp7VJuny0hzDzj3h1aU9gcEyF6BlnL1k7W2O6OlAcpsymypc-7UKclMBoBIgO8Qe2rh3wvvKfJK8",
+      "snippet_quote": "世界最高峰のジュエラー「ハリー・ウィンストン」とのコラボレーションなど、特別な体験を提供しています。",
+      "supports": "ハリー・ウィンストンとのコラボアフタヌーンティー"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE1I0IoF7JfUbHXgw5RJ6AjmihfGx9gihI0PjevOgAHv8-t1R5i3NSIFhPjCO-VFtH30z1hQA5E6ZQXD-AUy4HlVSQvCAyXgTRXJuL8suvBvFi4_NTtZVigywCZ7-w553d_3joFwQ==",
+      "snippet_quote": "アフタヌーンティー専門サイトのTeafolioにも掲載されており、ラグジュアリーホテルラウンジとして認知されています。",
+      "supports": "ラグジュアリーホテルラウンジとしての認知"
+    }
+  ],
+  "warnings": [
+    "1件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「サンドロップ (SUNDROP)」は、コンラッド名古屋の31階に位置するロビーラウンジ＆バーです。\n\n**店主のこだわり（ホテルとしてのこだわり）:**\nサンドロップは、ヒルトンのラグジュアリーブランドであるコンラッド名古屋の一部として、洗練された上質な空間とサービスを提供することにこだわっています。自然光が降り注ぐエレガントなロビーラウンジで、一日を通して心地よく過ごせるリラックスした雰囲気作りを重視しています。また、世界各地から着想を得た料理やドリンクを提供し、夜にはジャズの生演奏で優雅なひとときを演出しています。特にアフタヌーンティーでは、世界最高峰のジュエラー「ハリー・ウィンストン」とのコラボレーションなど、特別な体験を提供しています。厳選された国内外の茶葉を使用するなど、細部にわたる品質へのこだわりが見られます。\n\n**提供スタイルの特徴:**\nサンドロップは、31階からのパノラマビューと自然光に包まれた開放的な空間が特徴です。昼間は明るくエレガントなラウンジとして、夜は柔らかな照明とジャズの生演奏が楽しめる落ち着いたバーとして、時間帯によって異なる雰囲気を提供しています。\n提供されるメニューとしては、世界各地から着想を得た料理やドリンクのほか、特にアフタヌーンティーが充実しており、美しく仕立てられたペストリーやケーキ、厳選された国内外の茶葉、コーヒー、カフェインフリードリンクなどが楽しめます。バーでは、禁酒法以前のクラシックカクテル、シャンパン、長期熟成の希少なウイスキーなどが取り揃えられています。\n\n**地元グルメメディアでの紹介:**\nサンドロップは、コンラッド名古屋の開業時にサカエ経済新聞で紹介されています。 また、レストラン予約サイトのTableCheckやアフタヌーンティー専門サイトのTeafolioにも掲載されており、ラグジュアリーホテルラウンジとして認知されています。\n\n**料理人としての評価:**\nコンラッド名古屋全体の総料理長は佐藤弘二氏が務めており、イタリアンから本格和食まで幅広いジャンルを統括しています。 しかし、サンドロップに特化した料理人個人の評価や、特定の料理人がサンドロップのメニューを監修しているといった具体的な情報は見つかりませんでした。サンドロップの提供するアフタヌーンティーや軽食、バーメニューは、総料理長の統括のもと、ホテル全体の調理チームやペストリーシェフによって提供されていると考えられます。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFYlxxuoW8qXzXNsq6cGgGXA4n0oesIvWbLYwIbzq-JB1vj8-sG7sm_kO0jWUkLUYcWtt_gLRft4E6MRVxHqbda7Z2BNN7UNT7QFgaLSsajFKSvGPcwqBpSiaYiax5xAozxVd2r_a5TIQ-MtXynn_JWKZhjN4E=",
+        "title": "hiltonjapan.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEHBdWb22zD5JAzkhfA2KLTNlaNTBu7DrmgHDU4uZDlE-RQwx6HFQvf1TDcSUxm55wJ_KNO136uaDxIezFBcvMlaZcwqNrioT-SFKT27JZED1PZTaNaqNJPCGHZat4wVpzP63F_ygJo5HZ0ZxhG",
+        "title": "tablecheck.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGTBUsHuVVgGIMUZWERxgjFZZ6V9-6wGVFSwZn5PPzcKtfX4tkJH5AfH_PjFpGw6vMbGqo_ub14Om4N3AQs4qlF8VNVGIJEZcmlcH3SCue4AQyIz_4TcfoIJE9FlcRKlYzk7ILMdG04K_Cmnfw=",
+        "title": "yokochannel.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEM9XPK6XkNSppsMoPfG27tPq_w-odeYSHojSY0diuFq9y8XBr5BaSJC-zgPYyWGwSbToDQI8J8os_hTp7VJuny0hzDzj3h1aU9gcEyF6BlnL1k7W2O6OlAcpsymypc-7UKclMBoBIgO8Qe2rh3wvvKfJK8",
+        "title": "impress.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEioKfhC0gzoih9H7lIDaGu-igiJf-Ui32WoCyZ1w2AVFT6e3atiQHRh5NxiGdLLPvGCkAtbAoBaUIUcGi4TN7ebo3aqDxxMiW7AhuA8DStjdKsfzurc2hm5yVQsyFBcJ70r7SeAdefRpiloQYw",
+        "title": "hiltonjapan.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGenARQQXN2FqVUeFb1SWlFChcppCmCFjZXfxeG9knMbaqsVVSfkNLQIxfd9EaRCmKIy6DfP6bYJiTCHpnVAQH79aOJreyhKgLfBz4daf4vNJt-DvlP-Ft-5qIUWPZEKH2WIw==",
+        "title": "hiltonjapan.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE1I0IoF7JfUbHXgw5RJ6AjmihfGx9gihI0PjevOgAHv8-t1R5i3NSIFhPjCO-VFtH30z1hQA5E6ZQXD-AUy4HlVSQvCAyXgTRXJuL8suvBvFi4_NTtZVigywCZ7-w553d_3joFwQ==",
+        "title": "teafolio.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH8zCSrQJQkqnFk4SEPF_JIe7J27JqftPjx-bwKqIci8zYFySzkmnaDrQECz1os8SDhhw0BuDsPzXtrDODWSIEY7NtTJjnhXJvDmkCeJ88Pte6MMxU7JCzvnnOUel68_UlrcSwU8A==",
+        "title": "hpcj.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGf-vUxSlRTDG0tQhz-2aZHLB5CDFus_25ZB4iqLchkq4TT281eMaqtCnLpF7t_7yrq074yc35fGTv9CF-4viD6Tx0uxajv4Jiu5ORotZ0KfghC88nI6d_CjtJ1gArZV2CrCsU=",
+        "title": "keizai.biz"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGixsbX2l0nqYMoVHciakvMy5OdvBve1BIY4a_ReZx0BHrbL0bFV3NsdJb4Qd9my5lsDdjv2cKPI_ltXKvpUIry1qBon06QXniDMphgSrFu5vQ7fNs1znI4YypjAm5eXlg2fIjvs42yeS6nZ6sMKFhO",
+        "title": "ameblo.jp"
+      }
+    ]
+  },
+  "store_id": "manual_サンドロップ(sundrop)",
+  "store_name": "サンドロップ (SUNDROP)",
+  "area": "栄",
+  "genre": "カフェ・バー（ロビーラウンジ）",
+  "rating": "",
+  "generated_at": "2026-10-26T22:26:58.081Z"
+}

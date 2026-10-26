@@ -1,0 +1,50 @@
+{
+  "status": "OK",
+  "editorReason": "複数の地元グルメメディアで紹介されており、その注目度の高さが伺える。NAGOYA BITESでも取り上げられるなど、業界からの評価も高い。",
+  "insiderNote": "複数の地元グルメメディアで連続して紹介されており、その注目度は高い。NAGOYA BITESでも取り上げられている。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGBR31mWB9bNpARwnVh5GxveZxitiwHuTtXWF4jcFQYcbqdl2P3LeP1sib9rw3Qn2fwVnxaM1QbpKI_q6Toqvq7tMwy2F4Og4M37iFTtyKIsJ_JBOmvdzr29xUK4quh",
+      "snippet_quote": "2026年5月時点で、「Walker+」「日刊KELLY」「名古屋情報通」の3媒体で連続して掲載されています。",
+      "supports": "複数の地元グルメメディアで紹介されている事実"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHxdUsWySxrJw4m_CkzupVtEA5Eeul8vGXHh9hLcfbGnUP2KWSIHFU3lGZ4RDlw3ouOdfLbyB_ahEq0Y9TnHibQnaz6QAQAR8ziMtkY0TM4JBnRX5h41fl2G9e1z5Bfi9PmXoy9gKf3ktFPb5P4-vowJ2p8sR13",
+      "snippet_quote": "現役の飲食店マネージャーが編集する名古屋・愛知専門グルメガイド「NAGOYA BITES」でも紹介されています。",
+      "supports": "NAGOYA BITESで紹介されている事実の補強"
+    }
+  ],
+  "warnings": [
+    "1件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「かき氷 うと（栄マルエイガレリア店）」について、Google検索で得られた業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「かき氷 うと」は、天然水から作る繊細な氷と、フルーツを贅沢に使った自家製ソースにこだわっています。果物本来の味わいを活かし、甘すぎない仕上がりを追求している点が特徴です。旬の果物（桃・苺・メロンなど）と3種類の自家製ソースの組み合わせが、店舗の業態の核となっています。\n\n**提供スタイルの特徴**\n提供スタイルとしては、2段構造の高さがある盛り付けが特徴として知られています。サイズはかなり大きく、ソースがトレーに垂れるほど豪快に盛り付けられています。氷全体にソースがしっかりと絡められており、トロッとしたふわふわの口当たりが楽しめます。また、かき氷の中にもソースと果物が隠されており、最後まで濃厚な味わいを保つことができます。ベースソースとして「ミルク」「レアチーズ」「ヨーグルト」から好みの組み合わせを選べるほか、追加トッピングのマスカルポーネ（+200円）で味の変化を楽しむことも推奨されています。注文は卓上のQRコードを読み込んで送信するスタイルで、セルフコーナーには温かいお茶が用意されている点も特徴です。\n\n**地元グルメメディアでの紹介**\n2026年5月時点で、「Walker+」「日刊KELLY」「名古屋情報通」の3媒体で連続して掲載されています。また、現役の飲食店マネージャーが編集する名古屋・愛知専門グルメガイド「NAGOYA BITES」でも紹介されています。\n\n**料理人としての評価**\n検索した情報からは、「かき氷 うと（栄マルエイガレリア店）」の店主や料理人個人の具体的な評価に関する直接的な記述は見つかりませんでした。店舗のコンセプトや提供されるかき氷の品質、メディアでの紹介は確認できましたが、料理人としての専門的な評価には言及されていません。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGBR31mWB9bNpARwnVh5GxveZxitiwHuTtXWF4jcFQYcbqdl2P3LeP1sib9rw3Qn2fwVnxaM1QbpKI_q6Toqvq7tMwy2F4Og4M37iFTtyKIsJ_JBOmvdzr29xUK4quh",
+        "title": "jouhou.nagoya"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHcqOFc7Fxt_2ejfU7rgX5Wv2Ly_eA_bZxYVH2MpTwpR6Av1lQCGXyjSXXtYxwiCuZSVuds6EFCS1bkDu64jGslpBncxfqhZyhgrf2HXyt807qcY4-ESvhawxrMsWMsvbuH2URpZy5IrChzCpZzn2dIMX9nvVUeD2f306NTteI=",
+        "title": "nagoya-bites.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEPdG7pAY-88ifia2vy3wdY9Q5spaHP03Vyl2l0vVo8heEipLbrhXjTQLV7i4zjVrS3H2Hb7aTma5gJYA_nVwDs-q2TMPfVITkgzdtwltGc_XijFAXBgxR1-6hjzHiqp551qfGIOExtiwXhSU0EKDNmIoFb5M_DpMWh9tU=",
+        "title": "tiktok.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHxdUsWySxrJw4m_CkzupVtEA5Eeul8vGXHh9hLcfbGnUP2KWSIHFU3lGZ4RDlw3ouOdfLbyB_ahEq0Y9TnHibQnaz6QAQAR8ziMtkY0TM4JBnRX5h41fl2G9e1z5Bfi9PmXoy9gKf3ktFPb5P4-vowJ2p8sR13",
+        "title": "nagoya-bites.com"
+      }
+    ]
+  },
+  "store_id": "manual_かき氷うと（栄マルエイガレリア店）",
+  "store_name": "かき氷 うと（栄マルエイガレリア店）",
+  "area": "中区 栄",
+  "genre": "かき氷・スイーツ",
+  "rating": "",
+  "generated_at": "2026-10-26T22:26:28.359Z"
+}
