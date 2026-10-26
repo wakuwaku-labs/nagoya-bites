@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-26T19:18:06.142Z",
+  "generatedAt": "2026-10-26T22:20:31.458Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2133,
-    "pageViews": 2985,
-    "sessions": 2352,
+    "activeUsers": 2135,
+    "pageViews": 2989,
+    "sessions": 2354,
     "avgSessionDuration": 110.5,
     "bounceRate": 0.301,
     "pagesPerSession": 1.27
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1817,
-      "direct": 388,
+      "organic": 1819,
+      "direct": 389,
       "social": 17,
       "ai_assistant": 118,
       "referral": 30,
@@ -39,7 +39,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 839
+      "sessions": 840
     },
     {
       "source": "bing",
@@ -49,7 +49,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 334
+      "sessions": 335
     },
     {
       "source": "(direct)",
@@ -69,7 +69,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 23
+      "sessions": 24
     },
     {
       "source": "unknown",
@@ -210,12 +210,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 212,
+    "outboundClicks": 213,
     "ctaClickRate": 9,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 77
+        "clicks": 78
       },
       {
         "domain": "tabelog.com",
@@ -281,7 +281,7 @@
     "note": null,
     "byChannel": {
       "organic": 152,
-      "direct": 45,
+      "direct": 46,
       "social": 0,
       "ai_assistant": 15,
       "referral": 0,
@@ -289,7 +289,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 8.4,
-    "ctaClickRate_direct": 11.6,
+    "ctaClickRate_direct": 11.8,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -405,11 +405,11 @@
         "clicks": 2
       },
       {
-        "path": "/stores/J003649439.html",
+        "path": "/stores/J003624222.html",
         "clicks": 2
       },
       {
-        "path": "/stores/J003672535.html",
+        "path": "/stores/J003649439.html",
         "clicks": 2
       }
     ],
@@ -865,6 +865,11 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J003624222.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J003763757.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -907,11 +912,6 @@
       {
         "path": "/stores/J004402690.html",
         "domain": "tabelog.com",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J004402690.html",
-        "domain": "www.hotpepper.jp",
         "clicks": 1
       }
     ],
@@ -981,7 +981,7 @@
         "clicks": 2
       },
       {
-        "path": "/stores/J004402690.html",
+        "path": "/stores/J003624222.html",
         "clicks": 2
       },
       {
@@ -1093,10 +1093,6 @@
         "clicks": 1
       },
       {
-        "path": "/stores/J003624222.html",
-        "clicks": 1
-      },
-      {
         "path": "/stores/J003763757.html",
         "clicks": 1
       },
@@ -1123,22 +1119,26 @@
       {
         "path": "/stores/J004402326.html",
         "clicks": 1
+      },
+      {
+        "path": "/stores/J004402690.html",
+        "clicks": 1
       }
     ],
     "reservationClicks": 96,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
-      "ctaEvents": 26,
-      "reservationOutbound": 28,
-      "naiveSum": 54,
-      "deduped": 31,
-      "overlap": 23,
+      "ctaEvents": 27,
+      "reservationOutbound": 29,
+      "naiveSum": 56,
+      "deduped": 32,
+      "overlap": 24,
       "bySite": [
         {
           "site": "hotpepper.jp",
-          "cta": 22,
-          "outbound": 20,
-          "deduped": 23
+          "cta": 23,
+          "outbound": 21,
+          "deduped": 24
         },
         {
           "site": "tabelog.com",
@@ -1151,7 +1151,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2133,
+    "value": 2135,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

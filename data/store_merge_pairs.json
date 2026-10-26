@@ -1,7 +1,7 @@
 {
   "_note": "ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない",
-  "mergedCount": 65,
-  "absorbedCount": 67,
+  "mergedCount": 66,
+  "absorbedCount": 69,
   "skippedCount": 4,
   "merged": [
     {
@@ -1431,6 +1431,13 @@
           "ホットペッパーID": "",
           "placeId": "ChIJfyDhFHBwA2ARxHVSoaIFQBk",
           "slug": "ji-coo"
+        },
+        {
+          "店名": "覚王山カフェ Ji.Coo. (ジクー)",
+          "エリア": "名古屋市千種区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJfyDhFHBwA2ARxHVSoaIFQBk",
+          "slug": "ji-coo"
         }
       ],
       "filledFields": [
@@ -1438,8 +1445,13 @@
         "おすすめポイント",
         "キュレーター",
         "トレンド情報源",
+        "今日の話題",
+        "今日の話題媒体数",
+        "今日の話題順位",
+        "今日の話題鮮度",
         "編集部推薦",
         "話題スコア",
+        "話題ハイライト",
         "話題フラグ",
         "追加日",
         "選定理由",
@@ -1760,6 +1772,36 @@
       ],
       "filledFields": [
         "おすすめシーン"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "名古屋コーチン鶏料理 清水",
+        "エリア": "名古屋市中村区",
+        "ホットペッパーID": "",
+        "placeId": "ChIJ7-5vrzh3A2ARPOFFoNC-dpI",
+        "slug": "store-e5908de58fa4e5b1"
+      },
+      "absorbed": [
+        {
+          "店名": "名古屋コーチン鶏料理 清水 名古屋店",
+          "エリア": "名古屋市中村区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJ7-5vrzh3A2ARPOFFoNC-dpI",
+          "slug": "store-e5908de58fa4e5b1"
+        }
+      ],
+      "filledFields": [
+        "Instagram",
+        "おすすめシーン",
+        "おすすめポイント",
+        "トレンド情報源",
+        "価格帯目安",
+        "追加日",
+        "選定理由"
       ]
     }
   ],
