@@ -8957,6 +8957,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-10-26 | Orchestrator(routine) | 安全タスク調査 — ready 全19件を精査した結果、実装可能な安全タスクはゼロ。内訳: 未到来の期日(SNS-006/11-07・SNS-008 Editor目視必須・SEO-148/11-06・SEO-140/11-15・SEO-141/11-30・SEO-126/11-15・SEO-123/11-15・SEO-128/11-20・SEO-129/11-20・ISSUE-172/11-09・ISSUE-186/11-09・ISSUE-192会席/11-14・ISSUE-192Places/11-15・SEO-116/12-15) / オーナー操作待ち(ISSUE-165 Instagram確認・ISSUE-151 予約計測判断・SEO-142 sameAs URL確認・SEO-098 Instagram UTM・SNS-007 note見出し画像). SNS-008はBuilder実装部あるがEditor目視（「販促バナーでないかを目で選ぶ」CLAUDE.md必須）のため自動不可。正常終了（0件処理は許容）。 | ⏸ 実装なし |
 | 2026-10-25 | Orchestrator(routine) | SEO-130 実装完了 — `scripts/identify_noindex_candidates.js` を新規作成、`data/noindex_candidates.json` に 127 件の noindex,follow 候補を出力（A基準9件・B基準118件）。JS構文監査 exit 0。実際の noindex 適用は SEO-140（2026-11-15）で判断。 | ✅ 本コミット |
 | 2026-10-21 | Orchestrator(routine) | 安全タスク調査 — ready 全18件を精査した結果、実装可能な安全タスクはゼロ（前日と同じ状況）。全件が未到来の期日またはオーナー操作待ち。正常終了（0件処理は許容）。 | ⏸ 実装なし |
 | 2026-10-20 | Orchestrator(routine) | 安全タスク調査 — ready 全18件を精査した結果、実装可能な安全タスクはゼロ。内訳: 未到来の期日(SEO-148/11-06・SEO-140/11-15・SEO-141/11-30・SEO-126/11-15・SEO-130/11-15・SEO-123/11-15・SEO-128/11-20・SEO-129/11-20・ISSUE-172/11-09・ISSUE-186/11-09・ISSUE-179/11-08・ISSUE-192会席/11-14・ISSUE-192Places/11-15・SEO-116/12-15) / オーナー操作待ち(ISSUE-165 Instagram確認・ISSUE-151 予約計測判断・SEO-142 sameAs URL確認・SEO-098 Instagram UTM)。正常終了（0件処理は許容）。 | ⏸ 実装なし |
