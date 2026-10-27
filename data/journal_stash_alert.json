@@ -2,6 +2,14 @@
   "_note": "ジャーナル起動時に他ルーチンの未コミット差分が検出された記録（SEO-104）",
   "entries": [
     {
+      "detected_at": "2026-10-27T09:00:08.904+09:00",
+      "files": [
+        ".agents/skills/source-command-solve-next/"
+      ],
+      "action": "skipped_stash",
+      "message": "ジャーナルは退避せず続行。`git stash pop` 等の手動操作は不要。他ルーチンが書いたとみられる差分。"
+    },
+    {
       "detected_at": "2026-10-26T09:00:09.120+09:00",
       "files": [
         "data/note_post_health.json",
@@ -239,14 +247,6 @@
         "scripts/generate_daily_draft.js",
         "scripts/lib/hero_photo_gate.js",
         "scripts/lib/journal_photos.js"
-      ],
-      "action": "skipped_stash",
-      "message": "ジャーナルは退避せず続行。`git stash pop` 等の手動操作は不要。他ルーチンが書いたとみられる差分。"
-    },
-    {
-      "detected_at": "2026-09-27T09:00:03.459+09:00",
-      "files": [
-        "scripts/generate_daily_draft.js"
       ],
       "action": "skipped_stash",
       "message": "ジャーナルは退避せず続行。`git stash pop` 等の手動操作は不要。他ルーチンが書いたとみられる差分。"
