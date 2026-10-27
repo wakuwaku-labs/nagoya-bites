@@ -1,0 +1,437 @@
+{
+  "date": "2026-10-27",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "野並『拉麺あるひ』天白区のラーメンをコスパで読む、名古屋コーチンの鶏清湯1,100円",
+      "verdict": "PASS",
+      "total": 101,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "緑区・天白区",
+          "feature": "stores/area/midori-tempaku/index.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 3件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 120字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「天白区」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "天白区・野並の新しいラーメン店、鶏白湯と鶏清湯を選ぶ注文と夜の営業時間",
+      "verdict": "HOLD",
+      "total": 82,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 18,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "緑区・天白区",
+          "feature": "stores/area/midori-tempaku/index.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (席,回転) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 126字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「天白区」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "名東区・西山商店街『ピッツェリア ベーロ』薪窯ピッツァ1,080円と15席のセルフ式",
+      "verdict": "HOLD",
+      "total": 82,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 13,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,シーン,デート,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 116字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "今池焼鳥 B7、大阪の会社が名古屋1号店に今池を選んだ焼き鳥のコース",
+      "verdict": "HOLD",
+      "total": 68,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "焼き鳥",
+          "feature": "features/nagoya-yakitori-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 7件 (価格帯,コース,席,予約,シーン,接待,デート) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 112字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「今池」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「焼き鳥」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "四間道『わだ福』覚王山のとんかつ店が西区に出した2店目",
+      "verdict": "HOLD",
+      "total": 51,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 4,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "覚王山",
+          "feature": "features/nagoya-kakuozan.html"
+        },
+        {
+          "kw": "とんかつ",
+          "feature": "features/nagoya-tonkatsu.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,シーン,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 86字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「覚王山」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「とんかつ」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "野並『拉麺あるひ』天白区のラーメンをコスパで読む、名古屋コーチンの鶏清湯1,100円",
+      "lead_draft": "2026年10月22日、桜通線・野並駅2番出口のすぐ北に「拉麺あるひ」が開いた。名古屋コーチンの鶏ガラだけで炊く鶏清湯の塩が1,100円、特製にしても1,580円。約20席・昼夜営業・駐車場2台という設計から、この一杯の値段と使い方を読む。",
+      "angle": "名古屋コーチン100%の鶏清湯1,100円が鶏白湯の相場の価格帯のどこにいるか、約20席と昼夜の営業で回転をどう取るか、一人ランチと車で来る家族のどちらのシーンに向くかを読む",
+      "main_store": {
+        "name": "拉麺あるひ",
+        "id": "",
+        "area": "天白区・野並",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「名古屋コーチンの旨味広がるラーメン店『拉麺あるひ』天白区・野並駅前にオープン」",
+          "url": "https://jouhou.nagoya/ramen-arch/",
+          "date": "2026-10-23"
+        },
+        {
+          "label": "拉麺あるひ 公式Instagram（開店日の投稿）",
+          "url": "https://www.instagram.com/p/DezD4xJJzs9/",
+          "date": "2026-10-22"
+        },
+        {
+          "label": "拉麺あるひ 公式Instagram（駐車場の案内）",
+          "url": "https://www.instagram.com/p/DevZIgLCYDE/",
+          "date": "2026-10-20"
+        },
+        {
+          "label": "拉麺あるひ 公式Instagram（店名とコンセプト）",
+          "url": "https://www.instagram.com/p/DeQooTupNjE/",
+          "date": "2026-10-08"
+        },
+        {
+          "label": "愛知県「愛知県産の畜産物」（名古屋コーチン）",
+          "url": "https://www.pref.aichi.jp/soshiki/engei/aichisan-chikusan.html",
+          "date": "2026-06-15"
+        },
+        {
+          "label": "なごやじん「名古屋・愛知の鶏白湯ラーメン9選」",
+          "url": "https://nagoyajin.nagoya/nagoya-toripaitan-ramen-guide/",
+          "date": "2026-08-09"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "天白区・野並の新しいラーメン店、鶏白湯と鶏清湯を選ぶ注文と夜の営業時間",
+      "lead_draft": "野並駅前に10月22日に開いたラーメン店は、白湯と清湯という炊き方の逆な2つのスープを並べ、かえしとトッピングまで客に選ばせる。昼は14時30分ラストオーダー、夜の時間は媒体と公式で表記が違う。行く前に何を確かめればよいかを、店の運営の面から整理する。",
+      "angle": "炊き方が逆の2つのスープを並べる仕込みと、約20席の回転、昼と夜の営業時間の確かめ方を読む",
+      "main_store": {
+        "name": "拉麺あるひ",
+        "id": "",
+        "area": "天白区・野並",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/ramen-arch/",
+          "date": "2026-10-23"
+        },
+        {
+          "label": "拉麺あるひ 公式Instagram（開店日の投稿）",
+          "url": "https://www.instagram.com/p/DezD4xJJzs9/",
+          "date": "2026-10-22"
+        },
+        {
+          "label": "拉麺あるひ 公式Instagram（駐車場の案内）",
+          "url": "https://www.instagram.com/p/DevZIgLCYDE/",
+          "date": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "名東区・西山商店街『ピッツェリア ベーロ』薪窯ピッツァ1,080円と15席のセルフ式",
+      "lead_draft": "名東区の西山商店街に9月18日に開いたピッツェリア ベーロは、ナポリの薪窯でマルゲリータを1,080円で焼く。席はテーブルのみ約15席、注文と会計は入店時、受け取りと返却はセルフ。商店街の小さな店がこの価格で薪窯を回す仕組みを読む。",
+      "angle": "薪窯ピッツァ1,080円の価格帯と、約15席・入店時会計・セルフ式で回転を上げる運営、ランチとデートのどちらのシーンに向くかを読む",
+      "main_store": {
+        "name": "ピッツェリア ベーロ",
+        "id": "",
+        "area": "名東区",
+        "genre": "イタリアン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「ピッツェリア ベーロ」",
+          "url": "https://jouhou.nagoya/pizzeria-belo/",
+          "date": "2026-10-24"
+        },
+        {
+          "label": "ピッツェリア ベーロ 公式Instagram",
+          "url": "https://www.instagram.com/pizzeria.be_lo/"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "今池焼鳥 B7、大阪の会社が名古屋1号店に今池を選んだ焼き鳥のコース",
+      "lead_draft": "大阪の会社が名古屋1号店の場所に栄でも名駅でもなく今池を選んだ焼鳥店「今池焼鳥 B7」。名古屋コーチンと銘柄鶏、旬の魚を軸にしたコースで、8月14日に開いた。客単価7,000円を超える焼き鳥のコースが今池で成り立つかを読む。",
+      "angle": "焼き鳥のコースの価格帯と、今池という立地での予約と席の埋め方、接待とデートのシーンを読む",
+      "main_store": {
+        "name": "今池焼鳥 B7",
+        "id": "",
+        "area": "今池",
+        "genre": "焼き鳥"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES",
+          "url": "https://prtimes.jp/main/html/rd/p/000000022.000132079.html"
+        },
+        {
+          "label": "ベストカレンダー",
+          "url": "https://bestcalendar.jp/press/142274"
+        },
+        {
+          "label": "Bシリーズ公式",
+          "url": "https://base.fc-bseries.com/b7-imaike-yakitori"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "四間道『わだ福』覚王山のとんかつ店が西区に出した2店目",
+      "lead_draft": "覚王山のとんかつ店が四間道に2店目を出した。円頓寺・四間道は観光客と近隣の会社員が混ざる町で、覚王山とは客の顔ぶれが違う。とんかつの価格帯と昼の回転をどう合わせるかを読む。",
+      "angle": "とんかつの価格帯と昼の回転、観光と会社員のシーンの違いを読む",
+      "main_store": {
+        "name": "わだ福 四間道店",
+        "id": "",
+        "area": "四間道",
+        "genre": "とんかつ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/wadafuku-shikemichi/"
+        }
+      ]
+    }
+  ]
+}
