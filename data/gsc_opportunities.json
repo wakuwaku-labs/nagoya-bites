@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-27T00:29:01.724Z",
+  "generatedAt": "2026-10-27T19:15:11.468Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -16,32 +16,32 @@
       },
       {
         "query": "リサールコーヒー 名古屋",
-        "impressions": 303,
+        "impressions": 308,
         "clicks": 3,
         "position": 9.2,
-        "ctr": 0.99,
+        "ctr": 0.97,
         "expectedCtr": 2.7,
-        "missedClicks": 5.3
+        "missedClicks": 5.5
       }
     ],
     "ctrFixGeoless": [
       {
-        "query": "キミトテ",
-        "impressions": 353,
-        "clicks": 4,
-        "position": 9.6,
-        "ctr": 1.13,
-        "expectedCtr": 2.6,
-        "missedClicks": 5.3
-      },
-      {
         "query": "ひものや官兵衛 伏見",
-        "impressions": 321,
+        "impressions": 328,
         "clicks": 9,
         "position": 6.6,
-        "ctr": 2.8,
+        "ctr": 2.74,
         "expectedCtr": 4.4,
-        "missedClicks": 5.1
+        "missedClicks": 5.4
+      },
+      {
+        "query": "キミトテ",
+        "impressions": 359,
+        "clicks": 4,
+        "position": 9.6,
+        "ctr": 1.11,
+        "expectedCtr": 2.6,
+        "missedClicks": 5.4
       },
       {
         "query": "ひものや官兵衛伏見",
@@ -59,67 +59,67 @@
     "ctrFix": [
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 956,
-        "clicks": 15,
-        "position": 7,
-        "ctr": 1.57,
-        "expectedCtr": 4,
-        "missedClicks": 23.2
+        "impressions": 1004,
+        "clicks": 16,
+        "position": 6.9,
+        "ctr": 1.59,
+        "expectedCtr": 4.1,
+        "missedClicks": 25.2
       },
       {
         "page": "/stores/J004660861.html",
-        "impressions": 902,
-        "clicks": 10,
+        "impressions": 908,
+        "clicks": 11,
         "position": 8.5,
-        "ctr": 1.11,
+        "ctr": 1.21,
         "expectedCtr": 3,
-        "missedClicks": 17
+        "missedClicks": 16.3
       },
       {
         "page": "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
-        "impressions": 1022,
+        "impressions": 1067,
         "clicks": 30,
-        "position": 7,
-        "ctr": 2.94,
-        "expectedCtr": 4,
-        "missedClicks": 10.8
+        "position": 7.1,
+        "ctr": 2.81,
+        "expectedCtr": 3.9,
+        "missedClicks": 11.8
       },
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 851,
+        "impressions": 864,
         "clicks": 13,
         "position": 9,
-        "ctr": 1.53,
+        "ctr": 1.5,
         "expectedCtr": 2.8,
-        "missedClicks": 10.8
+        "missedClicks": 11.2
       },
       {
         "page": "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
-        "impressions": 859,
-        "clicks": 24,
-        "position": 7.1,
-        "ctr": 2.79,
-        "expectedCtr": 3.9,
-        "missedClicks": 9.7
+        "impressions": 934,
+        "clicks": 25,
+        "position": 7.2,
+        "ctr": 2.68,
+        "expectedCtr": 3.8,
+        "missedClicks": 10.8
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 1655,
+        "impressions": 1675,
         "clicks": 20,
-        "position": 15.5,
-        "ctr": 1.21,
-        "upsideClicks": 26.3
+        "position": 16,
+        "ctr": 1.19,
+        "upsideClicks": 27
       },
       {
         "page": "/features/date.html",
-        "impressions": 605,
+        "impressions": 627,
         "clicks": 12,
-        "position": 11,
-        "ctr": 1.98,
-        "upsideClicks": 5
+        "position": 10.9,
+        "ctr": 1.91,
+        "upsideClicks": 5.6
       }
     ]
   },
