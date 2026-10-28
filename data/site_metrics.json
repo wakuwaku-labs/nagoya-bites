@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-28T19:17:24.890Z",
+  "generatedAt": "2026-10-28T22:14:16.754Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2348,
-    "pageViews": 3252,
-    "sessions": 2581,
-    "avgSessionDuration": 113.8,
-    "bounceRate": 0.295,
+    "activeUsers": 2359,
+    "pageViews": 3267,
+    "sessions": 2596,
+    "avgSessionDuration": 113.4,
+    "bounceRate": 0.296,
     "pagesPerSession": 1.26
   },
   "dailyReference": {
@@ -17,13 +17,13 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1972,
-      "direct": 441,
+      "organic": 1983,
+      "direct": 444,
       "social": 18,
-      "ai_assistant": 135,
+      "ai_assistant": 136,
       "referral": 28,
       "paid": 0,
-      "other": 0
+      "other": 1
     },
     "pct": {
       "organic": 76,
@@ -39,27 +39,27 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 909
+      "sessions": 916
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 685
+      "sessions": 687
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 388
+      "sessions": 389
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 359
+      "sessions": 361
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 86
+      "sessions": 87
     },
     {
       "source": "openai",
@@ -67,14 +67,14 @@
       "sessions": 42
     },
     {
-      "source": "unknown",
+      "source": "(not set)",
       "medium": "(not set)",
       "sessions": 19
     },
     {
-      "source": "(not set)",
+      "source": "unknown",
       "medium": "(not set)",
-      "sessions": 17
+      "sessions": 19
     },
     {
       "source": "duckduckgo",
@@ -185,23 +185,28 @@
       "source": "us.search.yahoo.com",
       "medium": "referral",
       "sessions": 1
+    },
+    {
+      "source": "history",
+      "medium": "",
+      "sessions": 1
     }
   ],
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 394,
-      "sessions": 372
+      "pageViews": 397,
+      "sessions": 375
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
       "pageViews": 136,
-      "sessions": 132
+      "sessions": 133
     },
     {
       "path": "/",
-      "pageViews": 111,
-      "sessions": 100
+      "pageViews": 112,
+      "sessions": 101
     },
     {
       "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
@@ -215,12 +220,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 247,
+    "outboundClicks": 248,
     "ctaClickRate": 9.6,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 83
+        "clicks": 84
       },
       {
         "domain": "www.google.com",
@@ -281,7 +286,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 172,
+      "organic": 173,
       "direct": 55,
       "social": 1,
       "ai_assistant": 19,
@@ -290,7 +295,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 8.7,
-    "ctaClickRate_direct": 12.5,
+    "ctaClickRate_direct": 12.4,
     "ctaClickRate_social": 5.6,
     "byPage": [
       {
@@ -1144,7 +1149,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2348,
+    "value": 2359,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
