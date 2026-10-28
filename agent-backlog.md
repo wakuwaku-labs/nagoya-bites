@@ -465,7 +465,8 @@
 
 ### [ISSUE-149] 掲載店の予約送客を店舗別・経路別に計測し、自分たち側だけで予約申告を受ける出口を作る
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-10-28
 - **detected**: 2026-10-09
 - **due**: 2026-10-16
 - **category**: 計測
@@ -478,6 +479,7 @@
   1. `npm test` と `audit_inline_js_syntax.js --check`・`audit_design_system.js --check` が通る（PR 時点で確認済み）
   2. 2026-10-16 に `data/store_referrals.json` の `stores` に店名つきの送客が入っていること、`totals.exits.tabelog` が 0 でないか、0 なら GA4 の `cta_click`（link_domain=tabelog.com）を直接見て原因を書く
   3. 同日、`reserve_report_yes` / `reserve_report_no` が GA4 に1件以上届いているかを記録する（0 件でも失敗にしない。件数をそのまま残す）
+- **結果（2026-10-28・Builder/Orchestrator routine）**: 受け入れ条件を全件確認済み。①npm test・audit_inline_js_syntax --check・audit_design_system --check は PR 合流時（2026-10-09）に通過済み。②data/store_referrals.json（生成日2026-10-27）の stores 65店に店名つきの送客が入り、totals.exits.tabelog=15（0でない）。③totals.reports.yes=0・no=1（"0件でも失敗にしない"条件に沿って記録）。実装は完結しており done 化する。
 - **関連**: [[ISSUE-150]] [[ISSUE-151]] [[ISSUE-152]] [[ISSUE-153]]／[[SEO-089]]（予約ドメインの outbound_click）／[[SEO-105]]（電話CTA）
 
 ### [ISSUE-150] 週次レポートの「予約送客 上位の店」を GAS 本体に反映する
@@ -3943,6 +3945,17 @@
 
 - **2026-10-09 追記（SEO分析・次の打ち手を固定）**: GSC 28日（09-10〜10-07）で「名古屋駅 一人飲み」は 56 表示・4 クリックで `nagoya-solo-dining` に 10.3 位で着地し、`meieki-hitori-nomi` はページ全体で 13 表示・4 クリック・15.5 位。名駅版が親の特集と同じ検索で食い合っている。次の打ち手は (1) solo-dining 本文の名駅の記述から名駅版へ「名古屋駅の一人飲み」の語でリンクする (2) 名駅版を solo-dining と同じ型（エリア節・見出し・選定理由）に厚くする。栄版の新設は GSC に「栄 一人飲み」の表示が出てから。計画全体は [[SEO-116]]・`docs/seo-strategy-2026-10.md`
 - **2026-10-10 実施（次の打ち手 (1)）**: `features/nagoya-solo-dining.html` の「業界人が一人で通う10店」のリード（名古屋駅エリアを中心に選んだと書いている段落）から、`features/meieki-hitori-nomi.html` へ「名古屋駅の一人飲み（出口別ガイド）」の語でリンクした（`internal_link_click`・block=feature_body で計測）。名駅版は既に6店・出口別ミニマップ・業界人の視点・FAQ を持つため (2) の厚くする作業は効果を見てから。効果は GSC の「名古屋駅 一人飲み」の着地ページと両ページの順位で 4 週後（11-07 ごろ）に見る
+
+- **2026-10-28 進捗確認（Orchestrator routine）**: 出典: `data/gsc_metrics.json`（生成2026-10-27・28日窓 09-29〜10-26）。
+  | 指標（28日窓） | 2026-10-06版 | 2026-10-28版（現状） |
+  |---|---|---|
+  | `名古屋駅 一人飲み` 表示/クリック/順位 | 72 / 5 / 10.2 | 115 / 9 / 11.2 |
+  | `名古屋 一人飲み` 表示/クリック/順位 | 274 / 27 / 5.2 | 304 / 53 / 4.3 |
+  | `meieki-hitori-nomi.html` 表示/クリック/順位 | 13 / 4 / 15.5 | 23 / 2 / 13.7 |
+  | `nagoya-solo-dining.html` 表示/クリック/順位 | 2,133 / 150 / 7.0 | 2,681 / 241 / 6.4 |
+  - **クローズ判定**: `meieki-hitori-nomi.html` の表示 23件 < 30件（10-06に設定したガードレール閾値）のため **今回はクローズしない**（サンプル不足）。`名古屋駅 一人飲み` の順位は 10.2 → 11.2（微悪化だが28日窓の移動で前後半のばらつきが大きく「悪化」と断定できるレベルではない）
+  - **2026-10-10 の内部リンク追加効果**: 追加から18日経過。GSCの28日窓には追加前のデータも混じるため、4週経過後（**2026-11-07 ごろ**）の純粋な効果判定を予定どおり実施する。それまでは導線追加・位置変更をしない（2026-09-19/09-20 追記の順序どおり）
+  - **次回チェック日**: **2026-11-07**（内部リンク追加4週後。表示30件以上が貯まっている前提で効果判定を行い、`名古屋駅 一人飲み` が10位圏内に入らず展開先の表示も30未満なら「勝てないと判明した」として率直にクローズする）
 
 
 ### [SEO-084] 特集48本の店舗リンクがクリック計測を持たず、「店舗詳細クリック0回」という助言が毎日そこから再生産されている（SEO-072 の残り穴）
@@ -8970,6 +8983,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-10-28 | Orchestrator(routine) | ISSUE-149 done化 — store_referrals.json（生成日2026-10-27）で全acceptance確認：①npm test/構文監査はPR合流時通過済み ②stores=65・totals.exits.tabelog=15（0でない）③totals.reports.yes=0・no=1（"0件でも失敗にしない"条件に沿って記録）。実装完結につきdone化した。 | ✅ 本コミット |
 | 2026-10-26 | Orchestrator(routine) | 安全タスク調査 — ready 全19件を精査した結果、実装可能な安全タスクはゼロ。内訳: 未到来の期日(SNS-006/11-07・SNS-008 Editor目視必須・SEO-148/11-06・SEO-140/11-15・SEO-141/11-30・SEO-126/11-15・SEO-123/11-15・SEO-128/11-20・SEO-129/11-20・ISSUE-172/11-09・ISSUE-186/11-09・ISSUE-192会席/11-14・ISSUE-192Places/11-15・SEO-116/12-15) / オーナー操作待ち(ISSUE-165 Instagram確認・ISSUE-151 予約計測判断・SEO-142 sameAs URL確認・SEO-098 Instagram UTM・SNS-007 note見出し画像). SNS-008はBuilder実装部あるがEditor目視（「販促バナーでないかを目で選ぶ」CLAUDE.md必須）のため自動不可。正常終了（0件処理は許容）。 | ⏸ 実装なし |
 | 2026-10-25 | Orchestrator(routine) | SEO-130 実装完了 — `scripts/identify_noindex_candidates.js` を新規作成、`data/noindex_candidates.json` に 127 件の noindex,follow 候補を出力（A基準9件・B基準118件）。JS構文監査 exit 0。実際の noindex 適用は SEO-140（2026-11-15）で判断。 | ✅ 本コミット |
 | 2026-10-21 | Orchestrator(routine) | 安全タスク調査 — ready 全18件を精査した結果、実装可能な安全タスクはゼロ（前日と同じ状況）。全件が未到来の期日またはオーナー操作待ち。正常終了（0件処理は許容）。 | ⏸ 実装なし |
