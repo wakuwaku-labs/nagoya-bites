@@ -130,6 +130,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   </div>
 
   <form id="contact-form" class="contact-form" novalidate>
+    <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
     <div class="field">
       <label for="name">お名前 <span>*</span></label>
       <input type="text" id="name" name="name" placeholder="山田 太郎" required autocomplete="name">
@@ -228,6 +229,9 @@ var msgSuccess = document.getElementById('msg-success');
 var msgError   = document.getElementById('msg-error');
 
 form.addEventListener('submit', function(e) {
+  // ボット対策: honeypot が埋まっていれば黙って無視、連続送信は60秒空ける（Formspree の送信枠を守る）
+  if ((form.querySelector('[name=_gotcha]') || {}).value) { e.preventDefault(); return; }
+  if (window._ctLastSent && Date.now() - window._ctLastSent < 60000) { e.preventDefault(); return; }
   e.preventDefault();
 
   var name     = form.name.value.trim();
@@ -249,6 +253,7 @@ form.addEventListener('submit', function(e) {
   msgSuccess.classList.remove('show');
   msgError.classList.remove('show');
 
+  window._ctLastSent = Date.now();
   fetch(FORMSPREE_ENDPOINT, {
     method: 'POST',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
