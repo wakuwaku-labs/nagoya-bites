@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-28T12:32:23.795Z",
+  "generatedAt": "2026-10-28T12:44:38.305Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2379,
-    "pageViews": 3304,
-    "sessions": 2622,
+    "activeUsers": 2381,
+    "pageViews": 3306,
+    "sessions": 2624,
     "avgSessionDuration": 114,
     "bounceRate": 0.297,
     "pagesPerSession": 1.26
@@ -17,7 +17,7 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1978,
+      "organic": 1980,
       "direct": 476,
       "social": 18,
       "ai_assistant": 133,
@@ -26,8 +26,8 @@
       "other": 0
     },
     "pct": {
-      "organic": 75,
-      "direct": 18.1,
+      "organic": 75.1,
+      "direct": 18,
       "social": 0.7,
       "ai_assistant": 5,
       "referral": 1.2,
@@ -44,7 +44,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 688
+      "sessions": 689
     },
     {
       "source": "(direct)",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 360
+      "sessions": 361
     },
     {
       "source": "chatgpt.com",
@@ -195,8 +195,8 @@
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 132,
-      "sessions": 128
+      "pageViews": 133,
+      "sessions": 129
     },
     {
       "path": "/",
@@ -205,8 +205,8 @@
     },
     {
       "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
-      "pageViews": 88,
-      "sessions": 86
+      "pageViews": 89,
+      "sessions": 87
     },
     {
       "path": "/features/nagoya-autumn-2026.html",
@@ -215,8 +215,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 245,
-    "ctaClickRate": 9.3,
+    "outboundClicks": 246,
+    "ctaClickRate": 9.4,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -236,7 +236,7 @@
       },
       {
         "domain": "prtimes.jp",
-        "clicks": 24
+        "clicks": 25
       },
       {
         "domain": "www.instagram.com",
@@ -285,7 +285,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 170,
+      "organic": 171,
       "direct": 57,
       "social": 1,
       "ai_assistant": 17,
@@ -299,7 +299,7 @@
     "byPage": [
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-        "clicks": 22
+        "clicks": 23
       },
       {
         "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
@@ -422,7 +422,7 @@
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
         "domain": "prtimes.jp",
-        "clicks": 18
+        "clicks": 19
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -1144,7 +1144,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2379,
+    "value": 2381,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
