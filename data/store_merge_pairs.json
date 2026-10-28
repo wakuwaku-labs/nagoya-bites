@@ -513,28 +513,6 @@
         "name_exact"
       ],
       "kept": {
-        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J004026741",
-        "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
-        "slug": "J004026741"
-      },
-      "absorbed": [
-        {
-          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J004026739",
-          "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
-          "slug": "J004026739"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
-        "name_exact"
-      ],
-      "kept": {
         "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店",
         "エリア": "名古屋（名古屋駅/西区/中村区）",
         "ホットペッパーID": "J004026742",
@@ -576,6 +554,28 @@
     },
     {
       "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004026741",
+        "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
+        "slug": "J004026741"
+      },
+      "absorbed": [
+        {
+          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J004026739",
+          "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
+          "slug": "J004026739"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
         "placeid_match"
       ],
       "kept": {
@@ -601,23 +601,23 @@
         "placeid_match"
       ],
       "kept": {
-        "店名": "那古野 しば福や 名駅店",
+        "店名": "食堂　灯ル",
         "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J003671888",
-        "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
-        "slug": "J003671888"
+        "ホットペッパーID": "J004558213",
+        "placeId": "ChIJdeQdfAB3A2ARQelG2x-FIUQ",
+        "slug": "J004558213"
       },
       "absorbed": [
         {
-          "店名": "那古野 しば福や 名駅店 (なごの しばふくや めいえきてん)",
+          "店名": "食堂 灯ル",
           "エリア": "名古屋市中村区",
           "ホットペッパーID": "",
-          "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
-          "slug": "store-e982a3e58fa4e987"
+          "placeId": "ChIJdeQdfAB3A2ARQelG2x-FIUQ",
+          "slug": "store-e9a39fe5a08220e7"
         }
       ],
       "filledFields": [
-        "Instagram",
+        "mediaFeatures",
         "おすすめシーン",
         "おすすめポイント",
         "キュレーター",
@@ -628,7 +628,8 @@
         "話題フラグ",
         "追加日",
         "選定理由",
-        "食べログURL"
+        "食べログURL",
+        "食べログ評価"
       ]
     },
     {
@@ -678,23 +679,23 @@
         "placeid_match"
       ],
       "kept": {
-        "店名": "食堂　灯ル",
+        "店名": "那古野 しば福や 名駅店",
         "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J004558213",
-        "placeId": "ChIJdeQdfAB3A2ARQelG2x-FIUQ",
-        "slug": "J004558213"
+        "ホットペッパーID": "J003671888",
+        "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
+        "slug": "J003671888"
       },
       "absorbed": [
         {
-          "店名": "食堂 灯ル",
+          "店名": "那古野 しば福や 名駅店 (なごの しばふくや めいえきてん)",
           "エリア": "名古屋市中村区",
           "ホットペッパーID": "",
-          "placeId": "ChIJdeQdfAB3A2ARQelG2x-FIUQ",
-          "slug": "store-e9a39fe5a08220e7"
+          "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
+          "slug": "store-e982a3e58fa4e987"
         }
       ],
       "filledFields": [
-        "mediaFeatures",
+        "Instagram",
         "おすすめシーン",
         "おすすめポイント",
         "キュレーター",
@@ -705,8 +706,7 @@
         "話題フラグ",
         "追加日",
         "選定理由",
-        "食べログURL",
-        "食べログ評価"
+        "食べログURL"
       ]
     },
     {
@@ -732,30 +732,6 @@
       "filledFields": [
         "Instagram",
         "おすすめポイント"
-      ]
-    },
-    {
-      "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "鳥正",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J003624313",
-        "placeId": "ChIJ1VXM9_t3A2ARmd1PEvRCRaw",
-        "slug": "J003624313"
-      },
-      "absorbed": [
-        {
-          "店名": "鳥正 名古屋",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J001286820",
-          "placeId": "ChIJ1VXM9_t3A2ARmd1PEvRCRaw",
-          "slug": "J001286820"
-        }
-      ],
-      "filledFields": [
-        "キャッチ"
       ]
     },
     {
@@ -816,6 +792,30 @@
     },
     {
       "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "鳥正",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J003624313",
+        "placeId": "ChIJ1VXM9_t3A2ARmd1PEvRCRaw",
+        "slug": "J003624313"
+      },
+      "absorbed": [
+        {
+          "店名": "鳥正 名古屋",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J001286820",
+          "placeId": "ChIJ1VXM9_t3A2ARmd1PEvRCRaw",
+          "slug": "J001286820"
+        }
+      ],
+      "filledFields": [
+        "キャッチ"
+      ]
+    },
+    {
+      "reasons": [
         "placeid_match"
       ],
       "kept": {
@@ -853,30 +853,6 @@
         "name_exact"
       ],
       "kept": {
-        "店名": "大成園 錦店",
-        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-        "ホットペッパーID": "J003411722",
-        "placeId": "ChIJ3X-mhNV2A2ARlZ0ARRrUrlE",
-        "slug": "J003411722"
-      },
-      "absorbed": [
-        {
-          "店名": "大成園 錦店",
-          "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "ホットペッパーID": "J004698866",
-          "placeId": "",
-          "slug": "J004698866"
-        }
-      ],
-      "filledFields": [
-        "サブジャンル"
-      ]
-    },
-    {
-      "reasons": [
-        "name_exact"
-      ],
-      "kept": {
         "店名": "松軒亭",
         "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
         "ホットペッパーID": "J004576942",
@@ -905,6 +881,30 @@
         "選定理由",
         "食べログURL",
         "食べログ評価"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "大成園 錦店",
+        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+        "ホットペッパーID": "J003411722",
+        "placeId": "ChIJ3X-mhNV2A2ARlZ0ARRrUrlE",
+        "slug": "J003411722"
+      },
+      "absorbed": [
+        {
+          "店名": "大成園 錦店",
+          "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+          "ホットペッパーID": "J004698866",
+          "placeId": "",
+          "slug": "J004698866"
+        }
+      ],
+      "filledFields": [
+        "サブジャンル"
       ]
     },
     {
