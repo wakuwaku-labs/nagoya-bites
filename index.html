@@ -2055,6 +2055,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
         <div class="ir-form-wrap" id="m-insider-form" hidden>
           <p class="ir-form-intro">飲食業界で経験のある方向けの投稿フォームです。送信後、編集部が内容を確認したうえで掲載します（即時公開ではありません）。</p>
           <form id="ir-form" novalidate>
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
             <div class="ir-form-grid">
               <div class="ir-field full">
                 <label for="ir-reviewer">お名前（ペンネーム可）<span class="req">必須</span></label>
@@ -6431,6 +6432,9 @@ function copyShareLink() {
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
+    // ボット対策: honeypot が埋まっていれば黙って無視、連続送信は60秒空ける（Formspree の送信枠を守る）
+    if ((form.querySelector('[name=_gotcha]') || {}).value) return;
+    if (window._irLastSent && Date.now() - window._irLastSent < 60000) return;
     var store = window._irCurrentStore || {name: '', area: '', hpId: ''};
     var reviewer = (document.getElementById('ir-reviewer').value || '').trim();
     var genre = (document.getElementById('ir-genre').value || '').trim();
@@ -6455,6 +6459,7 @@ function copyShareLink() {
       email: (document.getElementById('ir-email').value || '').trim(),
       submittedAt: new Date().toISOString()
     };
+    window._irLastSent = Date.now();
     submitBtn.disabled = true;
     var originalLabel = submitBtn.textContent;
     submitBtn.textContent = '送信中…';
