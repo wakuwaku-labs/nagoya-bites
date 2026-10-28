@@ -1,0 +1,400 @@
+{
+  "date": "2026-10-28",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅の居酒屋『そら豆』ソファ席、デート・女子会で会計が上がる理由",
+      "verdict": "PASS",
+      "total": 110,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 4件 (人件費,回転,構造,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 166字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「デート」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "名古屋でデートの席選び、カウンター・テーブル・ソファの違い",
+      "verdict": "HOLD",
+      "total": 82,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 2件 (回転,構造) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 134字 +4",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「名駅」+1",
+          "タイトルにシーン語「デート」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "矢場町の地下居酒屋『五と二』、ガラス張りの52席を読む",
+      "verdict": "HOLD",
+      "total": 72,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 3件 (人件費,回転,構造) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 106字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "名駅・ささしまの宴会、2.5時間の飲み放題コースを90分で出たら",
+      "verdict": "HOLD",
+      "total": 71,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 4,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 8日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 3件 (人件費,回転,構造) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 126字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「宴会」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [
+    {
+      "id": "c4",
+      "title_draft": "藤が丘のバーで一人飲み、10席の店の作りで分かること",
+      "verdict": "DISQUALIFIED",
+      "total": 0,
+      "disqualified_reasons": [
+        "同一コラムの再掲 (COL-OPS-004, 2026-08-19)"
+      ],
+      "breakdown": null
+    }
+  ],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "industry_insider",
+      "column_id": "COL-SEAT-004",
+      "title_draft": "名駅の居酒屋『そら豆』ソファ席、デート・女子会で会計が上がる理由",
+      "lead_draft": "ソファ席に座ると会計が上がる。その正体は席の値段ではなく、座っている時間の長さだ。米コーネル大が1,413件の会計を調べた研究では、壁際の長いソファ席は滞在が最も長いのに、1分あたりの支出は最も低かった。名駅の居酒屋『そら豆 名古屋』のソファ席と個室の予約の決まりを、先週10月24日に丸の内で開いた無人カフェの値付けと並べて読む。",
+      "angle": "ソファ席の会計が上がる構造を、滞在時間と1分あたりの支出・回転・人件費の3つで分け、繁忙期の予約でソファ席を取る手順まで読む",
+      "main_store": {
+        "name": "そら豆 名古屋",
+        "id": "J000020826",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（ウッドデザインパーク）セルフカフェ丸の内店 10月24日オープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000001173.000045400.html",
+          "date": "2026-10-27"
+        },
+        {
+          "label": "ホットペッパーグルメ そら豆 名古屋 お席",
+          "url": "https://www.hotpepper.jp/strJ000020826/appearance/",
+          "date": "2025-08-21"
+        },
+        {
+          "label": "Kimes & Robson (2004) The Impact of Restaurant Table Characteristics on Meal Duration and Spending, Cornell Hotel and Restaurant Administration Quarterly 45(4)",
+          "url": "https://ecommons.cornell.edu/server/api/core/bitstreams/e4a944d8-bdad-4220-9281-df8203ba1e8c/content",
+          "date": "2004-11-01"
+        },
+        {
+          "label": "CCC SHARE LOUNGE 文喫 栄 2026年8月29日オープン",
+          "url": "https://www.ccc.co.jp/news/press/20260826_009688.html",
+          "date": "2026-08-26"
+        },
+        {
+          "label": "note（Lipple）コメダ珈琲店の「くつろぎ」は設計だった",
+          "url": "https://note.com/risa_lipple/n/n81f0c2910203",
+          "date": "2026-08-10"
+        },
+        {
+          "label": "note（勝田耕司）カフェの「滞在時間」が長くなる店",
+          "url": "https://note.com/koji_katsuta/n/n2e2871cba995",
+          "date": "2026-05-04"
+        },
+        {
+          "label": "テンポスフードメディア 店内家具の選び方",
+          "url": "https://foodmedia.tenpos.com/management/44766/",
+          "date": "2025-09-12"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "industry_insider",
+      "column_id": "COL-SEAT-007",
+      "title_draft": "名古屋でデートの席選び、カウンター・テーブル・ソファの違い",
+      "lead_draft": "デートの店で、カウンターとテーブルとソファのどれを選ぶか。席の種類ごとに滞在時間と1分あたりの支出が違うことは、米コーネル大の会計データでも示されている。名駅の居酒屋のソファ席の予約の決まりと、10月に名古屋で開いた店の席の作りから、二人で話しやすい席の選び方を読む。",
+      "angle": "席タイプ別の滞在時間と回転の構造から、デートで話しやすい席の選び方を読む",
+      "main_store": {
+        "name": "そら豆 名古屋",
+        "id": "J000020826",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES セルフカフェ丸の内店",
+          "url": "https://prtimes.jp/main/html/rd/p/000001173.000045400.html",
+          "date": "2026-10-27"
+        },
+        {
+          "label": "ホットペッパーグルメ そら豆 名古屋 お席",
+          "url": "https://www.hotpepper.jp/strJ000020826/appearance/",
+          "date": "2025-08-21"
+        },
+        {
+          "label": "Kimes & Robson (2004) Cornell HRAQ",
+          "url": "https://ecommons.cornell.edu/server/api/core/bitstreams/e4a944d8-bdad-4220-9281-df8203ba1e8c/content",
+          "date": "2004-11-01"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "industry_insider",
+      "column_id": "COL-OPS-003",
+      "title_draft": "名駅・ささしまの宴会、2.5時間の飲み放題コースを90分で出たら",
+      "lead_draft": "10月26日にグローバルゲート3階で開いた『くろ凪』は、飲み放題2.5時間つき9品のコースを5,300円からにしている。時間制のコースを早めに切り上げたとき、会計は変わるのか。時間で区切る店の回転と人件費の考え方から、宴会の幹事が決めておくことを読む。",
+      "angle": "時間制コースの回転と人件費の構造から、早く出たときの会計を読む",
+      "main_store": {
+        "name": "くろ凪 ささしまライブグローバルゲート店",
+        "id": "",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "名古屋イベントナビ くろ凪 10/26開店",
+          "url": "https://nagoya.8agarage.co.jp/kuronagi-global-gate-1026/",
+          "date": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "industry_insider",
+      "column_id": "COL-OPS-004",
+      "title_draft": "藤が丘のバーで一人飲み、10席の店の作りで分かること",
+      "lead_draft": "藤が丘駅から徒歩2分に10月28日、6.4坪・10席のバー『お酒の美術館 藤が丘店』が開く。カウンター8席とテーブル1卓という作りは、一人で寄る客を前提にしている。チャージなし・1杯500円からという値付けと席の数から、一人飲みを歓迎する店の見分け方を読む。",
+      "angle": "席数とチャージの構造、回転の考え方から一人飲みを歓迎する店を見分ける",
+      "main_store": {
+        "name": "お酒の美術館 藤が丘店",
+        "id": "",
+        "area": "藤が丘",
+        "genre": "バー"
+      },
+      "sources": [
+        {
+          "label": "prerele NBG お酒の美術館 藤が丘店 10/28 OPEN",
+          "url": "https://www.prerele.com/releases/detail/54236",
+          "date": "2026-10-22"
+        },
+        {
+          "label": "名古屋イベントナビ お酒の美術館 藤が丘店",
+          "url": "https://nagoya.8agarage.co.jp/osakeno-museum-fujigaoka/",
+          "date": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "industry_insider",
+      "column_id": "COL-SEAT-006",
+      "title_draft": "矢場町の地下居酒屋『五と二』、ガラス張りの52席を読む",
+      "lead_draft": "10月30日、矢場町駅から徒歩約3分の地下に、串カツと寿司の居酒屋『矢場町鮨食人 五と二』が開く。ガラス張りの地下テナントで52席。地下の店が外からどう見えるかに手をかける理由を、席の作りと回転の考え方から読む。",
+      "angle": "地下テナントの席の構造と回転、人件費から外の見え方に手をかける理由を読む",
+      "main_store": {
+        "name": "矢場町鮨食人 五と二",
+        "id": "",
+        "area": "矢場町",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "財経新聞（ぐっとくるダイニング）五と二 10月30日オープン",
+          "url": "https://www.zaikei.co.jp/releases/3684499/",
+          "date": "2026-10-27"
+        }
+      ]
+    }
+  ]
+}
