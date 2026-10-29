@@ -1,0 +1,392 @@
+{
+  "date": "2026-10-29",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄・セントラルパーク『CHITAKA』とんかつ知多家の新店を一人飲みと昼1,280円で読む",
+      "verdict": "PASS",
+      "total": 100,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "とんかつ",
+          "feature": "features/nagoya-tonkatsu.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,シーン,一人飲み,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 168字 +4",
+          "title 45字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「とんかつ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄の地下街『CHITAKA』とんかつを通し営業で、15〜19時のドリンク半額は何のためか",
+      "verdict": "HOLD",
+      "total": 83,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "とんかつ",
+          "feature": "features/nagoya-tonkatsu.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 7日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (席,繁忙,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 137字 +4",
+          "title 44字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「とんかつ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "栄『CHITAKA』のテイクアウト、塩むすび190円と弁当1,380円を昼だけ売る理由",
+      "verdict": "HOLD",
+      "total": 77,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 8,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 7日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,席,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 118字 +4",
+          "title 43字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "矢場町『中国菜クザン』10月20日開店の中華を、価格帯と席で読む",
+      "verdict": "HOLD",
+      "total": 56,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "中華",
+          "feature": "features/nagoya-chinese-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,予約,シーン,デート,一人飲み) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 101字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「中華」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [
+    {
+      "id": "c3",
+      "title_draft": "栄駅1分『ちゃんこ九重』宴会と忘年会に、個室5室とちゃんこコース5,000円を読む",
+      "verdict": "DISQUALIFIED",
+      "total": 0,
+      "disqualified_reasons": [
+        "同一店舗の再掲 (J004698662, 2026-09-26)"
+      ],
+      "breakdown": null
+    }
+  ],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "栄・セントラルパーク『CHITAKA』とんかつ知多家の新店を一人飲みと昼1,280円で読む",
+      "lead_draft": "10月29日、栄・セントラルパーク地下街に「土鍋ごはん×とんかつ CHITAKA」が開店した。1988年創業の「とんかつ知多家」の新ブランドで、40席のうち14席がカウンター、注文はスマホのQRコード。昼は1,280円の御膳から、夜は土鍋で炊く白飯と豆皿の御膳になる。昼と夜で何が値段の差になっているのかを、メニューと営業時間から読む。",
+      "angle": "昼1,280円→豆皿仕立て1,680円→夜2,380円の価格帯の段差が何の対価か、カウンター14席・QR注文の席と回転の設計、15〜19時の繁忙の谷に置いたドリンク半額、一人飲みと一人ランチのシーン適性",
+      "main_store": {
+        "name": "土鍋ごはん×とんかつ CHITAKA",
+        "id": "",
+        "area": "栄",
+        "genre": "とんかつ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（チタカ・インターナショナル・フーズ）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000050.000023738.html",
+          "date": "2026-10-21"
+        },
+        {
+          "label": "NAGOYAJIN",
+          "url": "https://nagoyajin.nagoya/sakae-chitaka-central-park-20261029/",
+          "date": "2026-10-22"
+        },
+        {
+          "label": "セントラルパーク公式お知らせ",
+          "url": "https://www.centralpark.co.jp/event/%e5%9c%9f%e9%8d%8b%e3%81%94%e3%81%af%e3%82%93x%e3%81%a8%e3%82%93%e3%81%8b%e3%81%a4%e3%80%80chitaka%e3%80%8010%e6%9c%88%e4%b8%8b%e6%97%acopen%ef%bc%81/",
+          "date": "2026-09-11"
+        },
+        {
+          "label": "CHITAKA 公式Instagram",
+          "url": "https://www.instagram.com/chitaka_2026/",
+          "date": "2026-10-23"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄の地下街『CHITAKA』とんかつを通し営業で、15〜19時のドリンク半額は何のためか",
+      "lead_draft": "栄・セントラルパーク地下街に10月29日に開いた「土鍋ごはん×とんかつ CHITAKA」は、11時から21時半まで中休みなしで開ける。開店記念のドリンク半額は15時から19時に限られている。昼と夜のあいだの時間をどう埋めるつもりなのかを、営業時間とメニューの組み方から読む。",
+      "angle": "通し営業の繁忙の谷（15〜19時）に置いた記念企画、QR注文とカウンター席で回転を上げる設計、昼だけのテイクアウト",
+      "main_store": {
+        "name": "土鍋ごはん×とんかつ CHITAKA",
+        "id": "",
+        "area": "栄",
+        "genre": "とんかつ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（チタカ・インターナショナル・フーズ）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000050.000023738.html",
+          "date": "2026-10-21"
+        },
+        {
+          "label": "セントラルパーク公式お知らせ",
+          "url": "https://www.centralpark.co.jp/event/%e5%9c%9f%e9%8d%8b%e3%81%94%e3%81%af%e3%82%93x%e3%81%a8%e3%82%93%e3%81%8b%e3%81%a4%e3%80%80chitaka%e3%80%8010%e6%9c%88%e4%b8%8b%e6%97%acopen%ef%bc%81/",
+          "date": "2026-09-11"
+        },
+        {
+          "label": "NAGOYAJIN",
+          "url": "https://nagoyajin.nagoya/sakae-chitaka-central-park-20261029/",
+          "date": "2026-10-22"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "栄駅1分『ちゃんこ九重』宴会と忘年会に、個室5室とちゃんこコース5,000円を読む",
+      "lead_draft": "10月16日、栄駅2番出口から徒歩1分のホテル5階に「ちゃんこ九重」が開店した。54席に個室が5室、コースは5,000円と6,000円、飲み放題は2,000円から付けられる。忘年会の予約が動き始める時期に、鍋の宴会がどの人数と予算に合うのかを読む。",
+      "angle": "コース5,000円・6,000円と飲み放題+2,000円の価格帯、個室5室・54席の宴会の席割り、11月からのランチと予約の取り方",
+      "main_store": {
+        "name": "ちゃんこ九重",
+        "id": "J004698662",
+        "area": "栄",
+        "genre": "ちゃんこ鍋"
+      },
+      "sources": [
+        {
+          "label": "NAGOYAJIN",
+          "url": "https://nagoyajin.nagoya/sakae-chanko-kokonoe-open-20261016/",
+          "date": "2026-10-28"
+        },
+        {
+          "label": "PR TIMES（TKP）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000561.000024137.html",
+          "date": "2026-09-25"
+        },
+        {
+          "label": "食べログ 中区ニューオープン",
+          "url": "https://tabelog.com/aichi/C23106/rstLst/cond16-00-00/"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "矢場町『中国菜クザン』10月20日開店の中華を、価格帯と席で読む",
+      "lead_draft": "10月20日、矢場町駅から徒歩8分の場所に「中国菜クザン」が開店した。新店一覧に名前が出たばかりで、まだ紹介記事が少ない。ホットペッパーの掲載情報をもとに、価格帯と席の使い方、どんな場面に向くかを読む。",
+      "angle": "中華の価格帯と席数、予約の取り方、デートと一人飲みのシーン",
+      "main_store": {
+        "name": "中国菜　クザン",
+        "id": "J004678934",
+        "area": "栄",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "食べログ 中区ニューオープン",
+          "url": "https://tabelog.com/aichi/C23106/rstLst/cond16-00-00/"
+        },
+        {
+          "label": "ホットペッパー",
+          "url": "https://www.hotpepper.jp/strJ004678934/"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "栄『CHITAKA』のテイクアウト、塩むすび190円と弁当1,380円を昼だけ売る理由",
+      "lead_draft": "栄・セントラルパーク地下街の「土鍋ごはん×とんかつ CHITAKA」は、昼の時間帯だけロースかつ弁当1,380円と土鍋ごはんの塩むすび190円を持ち帰りで売る。店内の席数は40席。持ち帰りを昼に限った理由を、席と時間帯の使い方から読む。",
+      "angle": "持ち帰りを昼に限る席と回転の考え方、弁当と店内御膳の価格帯の差",
+      "main_store": {
+        "name": "土鍋ごはん×とんかつ CHITAKA",
+        "id": "",
+        "area": "栄",
+        "genre": "とんかつ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（チタカ・インターナショナル・フーズ）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000050.000023738.html",
+          "date": "2026-10-21"
+        },
+        {
+          "label": "NAGOYAJIN",
+          "url": "https://nagoyajin.nagoya/sakae-chitaka-central-park-20261029/",
+          "date": "2026-10-22"
+        }
+      ]
+    }
+  ]
+}
