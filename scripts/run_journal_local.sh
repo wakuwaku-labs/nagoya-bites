@@ -504,14 +504,14 @@ fi
 # 認証切れは本番生成を回す前に判る。先に確かめれば、原因が「認証」だと確定した
 # 状態で即座に HOLD でき、長い生成ログの中に埋もれない。
 log "claude 認証プリフライトを実行（サブスク認証の有効性を確認）"
-PREFLIGHT_OUT=$(caffeinate -s -i -d -u "$CLAUDE_BIN" --print "ok" --allowedTools "$CLAUDE_ALLOWED_TOOLS" 2>&1)
+PREFLIGHT_OUT=$(caffeinate -s -i -d -u "$CLAUDE_BIN" --print "ok" --permission-mode dontAsk --allowedTools "$CLAUDE_ALLOWED_TOOLS" 2>&1)
 PREFLIGHT_RC=$?
 if [ "$PREFLIGHT_RC" != "0" ]; then
   echo "$PREFLIGHT_OUT" >>"$LOG"
   # 利用上限なら解除まで待って、プリフライトからやり直す（ISSUE-184）
   if usage_limit_wait "$PREFLIGHT_OUT" "プリフライト"; then
     log "claude 認証プリフライトをやり直します"
-    PREFLIGHT_OUT=$(caffeinate -s -i -d -u "$CLAUDE_BIN" --print "ok" --allowedTools "$CLAUDE_ALLOWED_TOOLS" 2>&1)
+    PREFLIGHT_OUT=$(caffeinate -s -i -d -u "$CLAUDE_BIN" --print "ok" --permission-mode dontAsk --allowedTools "$CLAUDE_ALLOWED_TOOLS" 2>&1)
     PREFLIGHT_RC=$?
     [ "$PREFLIGHT_RC" != "0" ] && echo "$PREFLIGHT_OUT" >>"$LOG"
   fi
@@ -611,7 +611,7 @@ if [ "$SKIP_CLAUDE" = "0" ]; then
     # AC電源でなければ -s は無効化される（man caffeinate）ため、上で記録した電源状態の
     # 警告と併せて運用すること。
     run_with_timeout "$CLAUDE_TIMEOUT_SEC" \
-      caffeinate -s -i -d -u "$CLAUDE_BIN" --print "$PROMPT" --allowedTools "$CLAUDE_ALLOWED_TOOLS"
+      caffeinate -s -i -d -u "$CLAUDE_BIN" --print "$PROMPT" --permission-mode dontAsk --allowedTools "$CLAUDE_ALLOWED_TOOLS"
     CLAUDE_RC=$?
     log "claude 終了コード: ${CLAUDE_RC}"
     if [ "$CLAUDE_RC" = "0" ]; then

@@ -109,7 +109,7 @@ MAX_ATTEMPTS=3
 ATTEMPT=1
 while :; do
   log "claude 生成を開始（試行 ${ATTEMPT}/${MAX_ATTEMPTS}・対象日 ${TARGET}）"
-  "$CLAUDE_BIN" --print "$PROMPT" --allowedTools "$CLAUDE_ALLOWED_TOOLS" >>"$LOG" 2>&1
+  "$CLAUDE_BIN" --print "$PROMPT" --permission-mode dontAsk --allowedTools "$CLAUDE_ALLOWED_TOOLS" >>"$LOG" 2>&1
   RC=$?
   log "claude 終了コード: ${RC}"
   [ "$RC" = "0" ] && break
