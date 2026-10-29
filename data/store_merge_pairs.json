@@ -1,7 +1,7 @@
 {
   "_note": "ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない",
-  "mergedCount": 65,
-  "absorbedCount": 68,
+  "mergedCount": 64,
+  "absorbedCount": 67,
   "skippedCount": 4,
   "merged": [
     {
@@ -91,36 +91,6 @@
         }
       ],
       "filledFields": [
-        "タグ"
-      ]
-    },
-    {
-      "reasons": [
-        "placeid_match"
-      ],
-      "kept": {
-        "店名": "炭火焼肉flower フラワー 名古屋駅前店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J004699058",
-        "placeId": "ChIJX4H6RUF3A2ARMrue7oeTNZI",
-        "slug": "J004699058"
-      },
-      "absorbed": [
-        {
-          "店名": "炭火焼肉 flower フラワー 名古屋駅前店",
-          "エリア": "名古屋駅",
-          "ホットペッパーID": "J001258795",
-          "placeId": "ChIJX4H6RUF3A2ARMrue7oeTNZI",
-          "slug": "J001258795"
-        }
-      ],
-      "filledFields": [
-        "Instagram",
-        "Instagram投稿URL",
-        "editorReason",
-        "insiderNote",
-        "visitStatus",
-        "おすすめポイント",
         "タグ"
       ]
     },
@@ -532,28 +502,6 @@
     },
     {
       "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "居酒屋 権兵衛 名駅店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J003649512",
-        "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
-        "slug": "J003649512"
-      },
-      "absorbed": [
-        {
-          "店名": "権兵衛 名駅南店",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J004403777",
-          "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
-          "slug": "J004403777"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
         "name_exact"
       ],
       "kept": {
@@ -576,6 +524,63 @@
     },
     {
       "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "居酒屋 権兵衛 名駅店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J003649512",
+        "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
+        "slug": "J003649512"
+      },
+      "absorbed": [
+        {
+          "店名": "権兵衛 名駅南店",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J004403777",
+          "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
+          "slug": "J004403777"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "那古野 しば福や 名駅店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J003671888",
+        "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
+        "slug": "J003671888"
+      },
+      "absorbed": [
+        {
+          "店名": "那古野 しば福や 名駅店 (なごの しばふくや めいえきてん)",
+          "エリア": "名古屋市中村区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
+          "slug": "store-e982a3e58fa4e987"
+        }
+      ],
+      "filledFields": [
+        "Instagram",
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "価格帯目安",
+        "編集部推薦",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由",
+        "食べログURL"
+      ]
+    },
+    {
+      "reasons": [
         "placeid_match"
       ],
       "kept": {
@@ -595,42 +600,6 @@
         }
       ],
       "filledFields": []
-    },
-    {
-      "reasons": [
-        "placeid_match"
-      ],
-      "kept": {
-        "店名": "食堂　灯ル",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J004558213",
-        "placeId": "ChIJdeQdfAB3A2ARQelG2x-FIUQ",
-        "slug": "J004558213"
-      },
-      "absorbed": [
-        {
-          "店名": "食堂 灯ル",
-          "エリア": "名古屋市中村区",
-          "ホットペッパーID": "",
-          "placeId": "ChIJdeQdfAB3A2ARQelG2x-FIUQ",
-          "slug": "store-e9a39fe5a08220e7"
-        }
-      ],
-      "filledFields": [
-        "mediaFeatures",
-        "おすすめシーン",
-        "おすすめポイント",
-        "キュレーター",
-        "トレンド情報源",
-        "価格帯目安",
-        "編集部推薦",
-        "話題スコア",
-        "話題フラグ",
-        "追加日",
-        "選定理由",
-        "食べログURL",
-        "食べログ評価"
-      ]
     },
     {
       "reasons": [
@@ -672,41 +641,6 @@
         "禁煙",
         "経度",
         "緯度"
-      ]
-    },
-    {
-      "reasons": [
-        "placeid_match"
-      ],
-      "kept": {
-        "店名": "那古野 しば福や 名駅店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J003671888",
-        "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
-        "slug": "J003671888"
-      },
-      "absorbed": [
-        {
-          "店名": "那古野 しば福や 名駅店 (なごの しばふくや めいえきてん)",
-          "エリア": "名古屋市中村区",
-          "ホットペッパーID": "",
-          "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
-          "slug": "store-e982a3e58fa4e987"
-        }
-      ],
-      "filledFields": [
-        "Instagram",
-        "おすすめシーン",
-        "おすすめポイント",
-        "キュレーター",
-        "トレンド情報源",
-        "価格帯目安",
-        "編集部推薦",
-        "話題スコア",
-        "話題フラグ",
-        "追加日",
-        "選定理由",
-        "食べログURL"
       ]
     },
     {
@@ -819,6 +753,42 @@
         "placeid_match"
       ],
       "kept": {
+        "店名": "食堂　灯ル",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004558213",
+        "placeId": "ChIJdeQdfAB3A2ARQelG2x-FIUQ",
+        "slug": "J004558213"
+      },
+      "absorbed": [
+        {
+          "店名": "食堂 灯ル",
+          "エリア": "名古屋市中村区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJdeQdfAB3A2ARQelG2x-FIUQ",
+          "slug": "store-e9a39fe5a08220e7"
+        }
+      ],
+      "filledFields": [
+        "mediaFeatures",
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "価格帯目安",
+        "編集部推薦",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由",
+        "食べログURL",
+        "食べログ評価"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
         "店名": "勝手口河内屋",
         "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
         "ホットペッパーID": "J004698880",
@@ -885,30 +855,6 @@
     },
     {
       "reasons": [
-        "name_exact"
-      ],
-      "kept": {
-        "店名": "大成園 錦店",
-        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-        "ホットペッパーID": "J003411722",
-        "placeId": "ChIJ3X-mhNV2A2ARlZ0ARRrUrlE",
-        "slug": "J003411722"
-      },
-      "absorbed": [
-        {
-          "店名": "大成園 錦店",
-          "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "ホットペッパーID": "J004698866",
-          "placeId": "",
-          "slug": "J004698866"
-        }
-      ],
-      "filledFields": [
-        "サブジャンル"
-      ]
-    },
-    {
-      "reasons": [
         "placeid_match"
       ],
       "kept": {
@@ -968,6 +914,74 @@
         "name_exact"
       ],
       "kept": {
+        "店名": "大成園 錦店",
+        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+        "ホットペッパーID": "J003411722",
+        "placeId": "ChIJ3X-mhNV2A2ARlZ0ARRrUrlE",
+        "slug": "J003411722"
+      },
+      "absorbed": [
+        {
+          "店名": "大成園 錦店",
+          "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+          "ホットペッパーID": "J004698866",
+          "placeId": "",
+          "slug": "J004698866"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "ジガー バー シルクロード",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J004493224",
+        "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
+        "slug": "J004493224"
+      },
+      "absorbed": [
+        {
+          "店名": "ジガー バー シルクロード",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J000015124",
+          "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
+          "slug": "J000015124"
+        }
+      ],
+      "filledFields": [
+        "Instagram"
+      ]
+    },
+    {
+      "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "シャンタムール",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J000015669",
+        "placeId": "ChIJnRXJZdBwA2ARAOIm4uhh9wU",
+        "slug": "J000015669"
+      },
+      "absorbed": [
+        {
+          "店名": "シャンタムール サウス",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J004591503",
+          "placeId": "ChIJnRXJZdBwA2ARAOIm4uhh9wU",
+          "slug": "J004591503"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
         "店名": "韓炉 HANRO 名古屋栄店",
         "エリア": "栄(ミナミ)/矢場町/大須/上前津",
         "ホットペッパーID": "J004591229",
@@ -1014,28 +1028,6 @@
         "owner_confirmed"
       ],
       "kept": {
-        "店名": "シャンタムール",
-        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J000015669",
-        "placeId": "ChIJnRXJZdBwA2ARAOIm4uhh9wU",
-        "slug": "J000015669"
-      },
-      "absorbed": [
-        {
-          "店名": "シャンタムール サウス",
-          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J004591503",
-          "placeId": "ChIJnRXJZdBwA2ARAOIm4uhh9wU",
-          "slug": "J004591503"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
         "店名": "Reconnaissance ルコネッサンス",
         "エリア": "栄(ミナミ)/矢場町/大須/上前津",
         "ホットペッパーID": "J004402690",
@@ -1065,30 +1057,6 @@
         "追加日",
         "選定理由",
         "食べログURL"
-      ]
-    },
-    {
-      "reasons": [
-        "name_exact"
-      ],
-      "kept": {
-        "店名": "ジガー バー シルクロード",
-        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J004493224",
-        "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
-        "slug": "J004493224"
-      },
-      "absorbed": [
-        {
-          "店名": "ジガー バー シルクロード",
-          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J000015124",
-          "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
-          "slug": "J000015124"
-        }
-      ],
-      "filledFields": [
-        "Instagram"
       ]
     },
     {
@@ -1299,6 +1267,30 @@
         "owner_confirmed"
       ],
       "kept": {
+        "店名": "ハチ鶏 大曽根駅店",
+        "エリア": "大曽根･千種･今池･池下･守山区",
+        "ホットペッパーID": "J001216971",
+        "placeId": "ChIJc8D7gfdxA2AROZRWioj_A-g",
+        "slug": "J001216971"
+      },
+      "absorbed": [
+        {
+          "店名": "ハチ鶏 大曽根",
+          "エリア": "大曽根･千種･今池･池下･守山区",
+          "ホットペッパーID": "J004026527",
+          "placeId": "ChIJc8D7gfdxA2AROZRWioj_A-g",
+          "slug": "J004026527"
+        }
+      ],
+      "filledFields": [
+        "食べ放題"
+      ]
+    },
+    {
+      "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
         "店名": "大久手山本屋 大曽根店",
         "エリア": "大曽根･千種･今池･池下･守山区",
         "ホットペッパーID": "J004698526",
@@ -1321,30 +1313,6 @@
         "営業状況",
         "情報源URL",
         "追加日"
-      ]
-    },
-    {
-      "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "ハチ鶏 大曽根駅店",
-        "エリア": "大曽根･千種･今池･池下･守山区",
-        "ホットペッパーID": "J001216971",
-        "placeId": "ChIJc8D7gfdxA2AROZRWioj_A-g",
-        "slug": "J001216971"
-      },
-      "absorbed": [
-        {
-          "店名": "ハチ鶏 大曽根",
-          "エリア": "大曽根･千種･今池･池下･守山区",
-          "ホットペッパーID": "J004026527",
-          "placeId": "ChIJc8D7gfdxA2AROZRWioj_A-g",
-          "slug": "J004026527"
-        }
-      ],
-      "filledFields": [
-        "食べ放題"
       ]
     },
     {

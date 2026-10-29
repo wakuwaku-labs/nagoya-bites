@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-29T00:17:31.584Z",
+  "generatedAt": "2026-10-29T05:47:16.996Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2362,
-    "pageViews": 3270,
-    "sessions": 2599,
-    "avgSessionDuration": 113.3,
-    "bounceRate": 0.296,
+    "activeUsers": 2394,
+    "pageViews": 3312,
+    "sessions": 2633,
+    "avgSessionDuration": 113.2,
+    "bounceRate": 0.297,
     "pagesPerSession": 1.26
   },
   "dailyReference": {
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1984,
-      "direct": 446,
+      "organic": 2010,
+      "direct": 455,
       "social": 18,
-      "ai_assistant": 136,
+      "ai_assistant": 137,
       "referral": 28,
       "paid": 0,
       "other": 1
     },
     "pct": {
       "organic": 75.9,
-      "direct": 17.1,
+      "direct": 17.2,
       "social": 0.7,
       "ai_assistant": 5.2,
       "referral": 1.1,
@@ -39,27 +39,27 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 917
+      "sessions": 924
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 687
+      "sessions": 696
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 391
+      "sessions": 400
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 361
+      "sessions": 371
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 87
+      "sessions": 88
     },
     {
       "source": "openai",
@@ -195,8 +195,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 397,
-      "sessions": 375
+      "pageViews": 401,
+      "sessions": 379
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -210,8 +210,8 @@
     },
     {
       "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
-      "pageViews": 89,
-      "sessions": 87
+      "pageViews": 90,
+      "sessions": 88
     },
     {
       "path": "/features/nagoya-autumn-2026.html",
@@ -220,12 +220,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 248,
+    "outboundClicks": 251,
     "ctaClickRate": 9.5,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 84
+        "clicks": 85
       },
       {
         "domain": "www.google.com",
@@ -233,7 +233,7 @@
       },
       {
         "domain": "tabelog.com",
-        "clicks": 35
+        "clicks": 36
       },
       {
         "domain": "maps.google.com",
@@ -245,7 +245,7 @@
       },
       {
         "domain": "www.instagram.com",
-        "clicks": 14
+        "clicks": 15
       },
       {
         "domain": "jouhou.nagoya",
@@ -286,16 +286,16 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 173,
+      "organic": 175,
       "direct": 55,
       "social": 1,
-      "ai_assistant": 19,
+      "ai_assistant": 20,
       "referral": 0,
       "paid": 0,
       "other": 0
     },
     "ctaClickRate_organic": 8.7,
-    "ctaClickRate_direct": 12.3,
+    "ctaClickRate_direct": 12.1,
     "ctaClickRate_social": 5.6,
     "byPage": [
       {
@@ -308,7 +308,7 @@
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 13
+        "clicks": 14
       },
       {
         "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
@@ -428,7 +428,7 @@
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
         "domain": "tabelog.com",
-        "clicks": 13
+        "clicks": 14
       },
       {
         "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
@@ -716,6 +716,11 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J000016206.html",
+        "domain": "www.instagram.com",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J000025289.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -914,17 +919,12 @@
         "path": "/stores/J003828684.html",
         "domain": "tabelog.com",
         "clicks": 1
-      },
-      {
-        "path": "/stores/J004004985.html",
-        "domain": "tabelog.com",
-        "clicks": 1
       }
     ],
     "reservationClicksByPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 13
+        "clicks": 14
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -1117,10 +1117,6 @@
       {
         "path": "/stores/J003828684.html",
         "clicks": 1
-      },
-      {
-        "path": "/stores/J004004985.html",
-        "clicks": 1
       }
     ],
     "reservationClicks": 98,
@@ -1149,7 +1145,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2362,
+    "value": 2394,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
