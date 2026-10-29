@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-28T22:14:16.754Z",
+  "generatedAt": "2026-10-29T00:17:31.584Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2359,
-    "pageViews": 3267,
-    "sessions": 2596,
-    "avgSessionDuration": 113.4,
+    "activeUsers": 2362,
+    "pageViews": 3270,
+    "sessions": 2599,
+    "avgSessionDuration": 113.3,
     "bounceRate": 0.296,
     "pagesPerSession": 1.26
   },
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1983,
-      "direct": 444,
+      "organic": 1984,
+      "direct": 446,
       "social": 18,
       "ai_assistant": 136,
       "referral": 28,
@@ -26,8 +26,8 @@
       "other": 1
     },
     "pct": {
-      "organic": 76,
-      "direct": 17,
+      "organic": 75.9,
+      "direct": 17.1,
       "social": 0.7,
       "ai_assistant": 5.2,
       "referral": 1.1,
@@ -39,7 +39,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 916
+      "sessions": 917
     },
     {
       "source": "bing",
@@ -49,7 +49,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 389
+      "sessions": 391
     },
     {
       "source": "yahoo",
@@ -221,7 +221,7 @@
   ],
   "cta": {
     "outboundClicks": 248,
-    "ctaClickRate": 9.6,
+    "ctaClickRate": 9.5,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -295,7 +295,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 8.7,
-    "ctaClickRate_direct": 12.4,
+    "ctaClickRate_direct": 12.3,
     "ctaClickRate_social": 5.6,
     "byPage": [
       {
@@ -1149,7 +1149,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2359,
+    "value": 2362,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
