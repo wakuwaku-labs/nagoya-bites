@@ -19,6 +19,10 @@
 
 set -uo pipefail
 
+# 2026-10-29（統合計画 0-d）: 全許可（--dangerously-skip-permissions）をやめ、日次ジャーナルに要る道具だけを許可する。
+# push は含めない（commit/push はこのラッパーが行う）。許可外の道具は無人実行では拒否される。
+CLAUDE_ALLOWED_TOOLS="Read,Write,Edit,Glob,Grep,WebSearch,WebFetch,Bash(node:*),Bash(mv:*),Bash(mkdir:*),Bash(ls:*),Bash(cat:*),Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git add:*),Bash(git commit:*)"
+
 REPO="/Users/katagirijakutou/nagoya-bites"
 CLAUDE_BIN="/Users/katagirijakutou/.local/bin/claude"
 LOG_DIR="${REPO}/.local-logs"
@@ -105,7 +109,7 @@ MAX_ATTEMPTS=3
 ATTEMPT=1
 while :; do
   log "claude 生成を開始（試行 ${ATTEMPT}/${MAX_ATTEMPTS}・対象日 ${TARGET}）"
-  "$CLAUDE_BIN" --print "$PROMPT" --dangerously-skip-permissions >>"$LOG" 2>&1
+  "$CLAUDE_BIN" --print "$PROMPT" --allowedTools "$CLAUDE_ALLOWED_TOOLS" >>"$LOG" 2>&1
   RC=$?
   log "claude 終了コード: ${RC}"
   [ "$RC" = "0" ] && break

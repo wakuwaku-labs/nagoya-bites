@@ -8,7 +8,7 @@
 #   1. 事前チェック: unmerged/conflict 残置や rebase 進行中なら即時 fail（誤生成を防ぐ）
 #   2. origin/main を取り込む（失敗したら即時 fail。silentに進めない）
 #   3. 既公開ならスキップ
-#   4. claude --print --dangerously-skip-permissions で生成
+#   4. claude --print --allowedTools（最小の道具）で生成
 #   5. published.json 登録を検証（未登録なら fail）
 #   6. ラッパー側で journal 関連を surgical に add → commit → push（claude の承認待ちに依存しない）
 #   7. push が rejected なら 1 度だけ origin/main を取り込み直して retry（rebase→衝突なら merge・ISSUE-187）
@@ -24,6 +24,10 @@
 #   - git push 権限（SSH）が通っている
 
 set -uo pipefail
+
+# 2026-10-29（統合計画 0-d）: 全許可（--dangerously-skip-permissions）をやめ、日次ジャーナルに要る道具だけを許可する。
+# push は含めない（commit/push はこのラッパーが行う）。許可外の道具は無人実行では拒否される。
+CLAUDE_ALLOWED_TOOLS="Read,Write,Edit,Glob,Grep,WebSearch,WebFetch,Bash(node:*),Bash(mv:*),Bash(mkdir:*),Bash(ls:*),Bash(cat:*),Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git add:*),Bash(git commit:*)"
 
 REPO="/Users/katagirijakutou/nagoya-bites"
 CLAUDE_BIN="/Users/katagirijakutou/.local/bin/claude"
@@ -500,14 +504,14 @@ fi
 # 認証切れは本番生成を回す前に判る。先に確かめれば、原因が「認証」だと確定した
 # 状態で即座に HOLD でき、長い生成ログの中に埋もれない。
 log "claude 認証プリフライトを実行（サブスク認証の有効性を確認）"
-PREFLIGHT_OUT=$(caffeinate -s -i -d -u "$CLAUDE_BIN" --print "ok" --dangerously-skip-permissions 2>&1)
+PREFLIGHT_OUT=$(caffeinate -s -i -d -u "$CLAUDE_BIN" --print "ok" --allowedTools "$CLAUDE_ALLOWED_TOOLS" 2>&1)
 PREFLIGHT_RC=$?
 if [ "$PREFLIGHT_RC" != "0" ]; then
   echo "$PREFLIGHT_OUT" >>"$LOG"
   # 利用上限なら解除まで待って、プリフライトからやり直す（ISSUE-184）
   if usage_limit_wait "$PREFLIGHT_OUT" "プリフライト"; then
     log "claude 認証プリフライトをやり直します"
-    PREFLIGHT_OUT=$(caffeinate -s -i -d -u "$CLAUDE_BIN" --print "ok" --dangerously-skip-permissions 2>&1)
+    PREFLIGHT_OUT=$(caffeinate -s -i -d -u "$CLAUDE_BIN" --print "ok" --allowedTools "$CLAUDE_ALLOWED_TOOLS" 2>&1)
     PREFLIGHT_RC=$?
     [ "$PREFLIGHT_RC" != "0" ] && echo "$PREFLIGHT_OUT" >>"$LOG"
   fi
@@ -600,14 +604,14 @@ if [ "$SKIP_CLAUDE" = "0" ]; then
   MAX_CLAUDE_ATTEMPTS=3
   CLAUDE_ATTEMPT=1
   while :; do
-    log "claude 生成を開始（サブスク認証・--dangerously-skip-permissions・試行 ${CLAUDE_ATTEMPT}/${MAX_CLAUDE_ATTEMPTS}）"
+    log "claude 生成を開始（サブスク認証・許可は最小の道具のみ・試行 ${CLAUDE_ATTEMPT}/${MAX_CLAUDE_ATTEMPTS}）"
     # この試行の出力だけを見て利用上限を判定するため、ログの位置を覚えておく（ISSUE-184）
     ATTEMPT_LOG_START=$(wc -c < "$LOG" | tr -d ' ')
     # caffeinate -s -i -d -u で生成中のスリープ（アイドル・蓋閉じ[AC時]・ディスプレイ）を防ぐ。
     # AC電源でなければ -s は無効化される（man caffeinate）ため、上で記録した電源状態の
     # 警告と併せて運用すること。
     run_with_timeout "$CLAUDE_TIMEOUT_SEC" \
-      caffeinate -s -i -d -u "$CLAUDE_BIN" --print "$PROMPT" --dangerously-skip-permissions
+      caffeinate -s -i -d -u "$CLAUDE_BIN" --print "$PROMPT" --allowedTools "$CLAUDE_ALLOWED_TOOLS"
     CLAUDE_RC=$?
     log "claude 終了コード: ${CLAUDE_RC}"
     if [ "$CLAUDE_RC" = "0" ]; then
