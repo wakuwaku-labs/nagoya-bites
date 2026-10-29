@@ -244,9 +244,10 @@
 
 ### [SNS-001] 日次ジャーナルの公開後に、X へ記事の紹介を毎日自動で投稿する
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **due**: 2026-10-31
 - **detected**: 2026-10-12
+- **resolved**: 2026-10-29
 - **category**: SNS / 自動化
 - **owner**: Builder / Marketer
 - **source**: オーナー依頼（2026-10-12）「Xへの発信を自動で行いたい。アカウントはあるので、毎日のジャーナルをもとに投稿まで全て自動で。まず計画書を、確認事項と現状調査をしっかり行ったうえで作って」
@@ -261,6 +262,7 @@
   4. 投稿できなかった日に原因つきの GitHub Issue が届き、復旧で自動クローズされる
 - **関連**: [[SEO-055]]／[[SEO-098]]／`docs/sns-utm-convention.md`
 - **進捗（2026-10-13）**: オーナーの「進められる分は進めて」で、X に送らない試運転（`mode: dry-run`）の形で SNS-003 と SNS-005 の大半を実装。残りは鍵の登録（SNS-002）→ 試運転の確認 → 初回投稿 → 本番（SNS-004）
+- **完了確認（2026-10-29）**: 子課題 SNS-002/SNS-003/SNS-004/SNS-005 すべてdone。`data/x_post_log.json` に UTM付き投稿が15件連続記録済み（acceptance②③）。`x-post-watchdog.yml` 稼働中（acceptance④）。全acceptance達成済みのためdone化。
 
 
 ### [SNS-002] X の開発者アプリを作り、投稿用の鍵を GitHub Secrets に登録する（オーナー作業）
@@ -300,9 +302,10 @@
 
 ### [SNS-004] X 投稿のワークフローを試運転3日のあと本番にする
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **due**: 2026-10-31
 - **detected**: 2026-10-12
+- **resolved**: 2026-10-29
 - **category**: SNS / 自動化
 - **owner**: Builder
 - **source**: オーナー依頼（2026-10-12）「Xへの発信を自動で行いたい。アカウントはあるので、毎日のジャーナルをもとに投稿まで全て自動で。まず計画書を、確認事項と現状調査をしっかり行ったうえで作って」
@@ -314,6 +317,7 @@
   4. 定時の本番に切り替えた後、7日続けて1日1件投稿されている
 - **関連**: [[SNS-001]]・[[SNS-002]]・[[SNS-003]]
 - **進捗（2026-10-13）**: `x-post.yml` を試運転（dry-run）で合流。鍵が無くても動き、Summary に送る予定の文面が出る。残りは試運転の確認・初回投稿・本番切り替え
+- **完了確認（2026-10-29）**: `data/x_post_policy.json` の mode=live（2026-10-15 切替）。`data/x_post_log.json` に 2026-10-14〜2026-10-28 の15件連続投稿を確認（acceptance④の7日連続を超過）。全acceptance達成済みのためdone化。
 
 
 ### [SNS-005] X 投稿の心拍と見張り役を作り、判断の記録と古い方針の文言を直す
@@ -8983,6 +8987,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-10-29 | Orchestrator(routine) | SNS-004 done化 — `data/x_post_policy.json` mode=live（2026-10-15切替）、`data/x_post_log.json` に2026-10-14〜10-28の15件連続投稿を確認。7日連続acceptance超過・全acceptance達成。 | ✅ 本コミット |
+| 2026-10-29 | Orchestrator(routine) | SNS-001 done化 — 子課題SNS-002〜005全done、UTM付き投稿15件連続記録済み、watchdog稼働中。全acceptance達成。 | ✅ 本コミット |
 | 2026-10-28 | Orchestrator(routine) | ISSUE-149 done化 — store_referrals.json（生成日2026-10-27）で全acceptance確認：①npm test/構文監査はPR合流時通過済み ②stores=65・totals.exits.tabelog=15（0でない）③totals.reports.yes=0・no=1（"0件でも失敗にしない"条件に沿って記録）。実装完結につきdone化した。 | ✅ 本コミット |
 | 2026-10-26 | Orchestrator(routine) | 安全タスク調査 — ready 全19件を精査した結果、実装可能な安全タスクはゼロ。内訳: 未到来の期日(SNS-006/11-07・SNS-008 Editor目視必須・SEO-148/11-06・SEO-140/11-15・SEO-141/11-30・SEO-126/11-15・SEO-123/11-15・SEO-128/11-20・SEO-129/11-20・ISSUE-172/11-09・ISSUE-186/11-09・ISSUE-192会席/11-14・ISSUE-192Places/11-15・SEO-116/12-15) / オーナー操作待ち(ISSUE-165 Instagram確認・ISSUE-151 予約計測判断・SEO-142 sameAs URL確認・SEO-098 Instagram UTM・SNS-007 note見出し画像). SNS-008はBuilder実装部あるがEditor目視（「販促バナーでないかを目で選ぶ」CLAUDE.md必須）のため自動不可。正常終了（0件処理は許容）。 | ⏸ 実装なし |
 | 2026-10-25 | Orchestrator(routine) | SEO-130 実装完了 — `scripts/identify_noindex_candidates.js` を新規作成、`data/noindex_candidates.json` に 127 件の noindex,follow 候補を出力（A基準9件・B基準118件）。JS構文監査 exit 0。実際の noindex 適用は SEO-140（2026-11-15）で判断。 | ✅ 本コミット |
