@@ -64,6 +64,21 @@ try {
   const vc = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'view_counts.json'), 'utf8'));
   viewCounts = vc.counts || {};
 } catch (_) {}
+
+// SEO-129: GSC 表示上位 300 の店舗ページをボーナス候補に加える
+let gscImpressions = {};
+try {
+  const gsc = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'gsc_metrics.json'), 'utf8'));
+  const storePagesTop300 = (gsc.pages || [])
+    .filter(p => p.page && /\/stores\/\w+\.html/.test(p.page))
+    .sort((a, b) => (b.impressions || 0) - (a.impressions || 0))
+    .slice(0, 300);
+  for (const p of storePagesTop300) {
+    const m = p.page.match(/\/stores\/([\w]+)\.html/);
+    if (m) gscImpressions[m[1]] = p.impressions || 0;
+  }
+} catch (_) {}
+
 const norm = s => String(s || '').replace(/\s|　/g, '').toLowerCase();
 const haveReason = new Set();
 for (const s of stores) {
@@ -75,6 +90,9 @@ function priorityScore(s) {
   if (vw > 0) v += 100000 + vw * 1000;
   if (s['編集部推薦'] === true || s['編集部推薦'] === 'TRUE') v += 50000;
   if (s['話題フラグ'] === true || s['話題フラグ'] === 'TRUE') v += 20000;
+  // SEO-129: GSC 表示上位 300 の店舗ページはスコアを上積みする
+  const storeId = s['ホットペッパーID'] || '';
+  if (gscImpressions[storeId]) v += 10000 + Math.min(gscImpressions[storeId] * 10, 30000);
   const rating = parseFloat(s['Google評価']) || 0;
   const reviews = parseInt(s['口コミ数'] || 0, 10);
   if (rating >= 4.5 && reviews >= 100) v += 5000;

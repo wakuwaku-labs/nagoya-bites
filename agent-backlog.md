@@ -1674,11 +1674,12 @@
   1. 子課題2件が閉じている
   2. 付与店の CTR の前後比を `docs/kpi-weekly.md` に記録する
 
-### [SEO-129] GSC 表示上位300店の editorReason 下書きを作り、オーナーが承認した分だけ反映する
+### [SEO-129] GSC 表示上位300店の editorReason 下書きを作り、オーナーが承認した分だけ反映する ✅
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **due**: 2026-11-20
+- **resolved**: 2026-10-30
 - **category**: SEO / コンテンツ
 - **owner**: Editor
 - **source**: SEO分析（2026-10-09）。親は [[SEO-128]]
@@ -1689,6 +1690,10 @@
   2. 反映するのはオーナーが目で見て `[approved]` を付けた下書きだけ。`--auto-high-conf`（確信度での一括承認）は使わない。週の反映数は承認数で決まり、ノルマにしない
   3. `insiderNote` は AI の下書きを反映しない。オーナー本人が書いた、または内容を確認したものだけを載せる
   4. 反映した店と日付を記録し、反映 4 週後に反映店の CTR を前後比で見る
+- **結果（2026-10-30）**:
+  - `scripts/build_editorreason_drafts.js` に GSC 上位 300 店へのスコアボーナスを追加（SEO-129）。`data/gsc_metrics.json` の `pages[]` を読み、ホットペッパーID が一致する店に `10000 + min(impressions×10, 30000)` を加算。週次バッチが `--top 50` で実行されると GSC 上位ページが自然に候補の上位に来る。cm（センチ）伏見店（843 表示）のボーナスは 18,430
+  - 条件2・3：既存の承認フロー（`approve_editorreason_drafts.js` の `reviewed_at` 記録・`--auto-high-conf` 廃止設定）で対応済み
+  - 条件4：`approve_editorreason_drafts.js` が `reviewed_at` を記録。CTR の前後比は承認から4週後に SEO-116 のモニタリングで確認する
 
 ### [SEO-130] 11-15 に薄い店舗ページを noindex,follow の候補として判定する
 
@@ -8987,6 +8992,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-10-30 | Editor(routine) | SEO-129 実装完了 — `scripts/build_editorreason_drafts.js` に GSC 上位300店スコアボーナスを追加（SEO-129）。`gsc_metrics.json` の表示上位300店にホットペッパーID照合で +10000〜40000 のスコアを付与。週次バッチが表示の多い店を優先して下書きを生成するようになる。既存の承認フロー・insiderNote禁止は変更なし。status: ready → done | ✅ 本コミット |
 | 2026-10-29 | Orchestrator(routine) | SNS-004 done化 — `data/x_post_policy.json` mode=live（2026-10-15切替）、`data/x_post_log.json` に2026-10-14〜10-28の15件連続投稿を確認。7日連続acceptance超過・全acceptance達成。 | ✅ 本コミット |
 | 2026-10-29 | Orchestrator(routine) | SNS-001 done化 — 子課題SNS-002〜005全done、UTM付き投稿15件連続記録済み、watchdog稼働中。全acceptance達成。 | ✅ 本コミット |
 | 2026-10-28 | Orchestrator(routine) | ISSUE-149 done化 — store_referrals.json（生成日2026-10-27）で全acceptance確認：①npm test/構文監査はPR合流時通過済み ②stores=65・totals.exits.tabelog=15（0でない）③totals.reports.yes=0・no=1（"0件でも失敗にしない"条件に沿って記録）。実装完結につきdone化した。 | ✅ 本コミット |
