@@ -6,7 +6,7 @@
  * その日の data/gsc_metrics.json（build.yml が日次で更新）を突き合わせる。
  *   changed      … title を規則（agents/editor.md「title の前30字…」）どおりに直した過去記事
  *   reference    … 上位20本のうち、書き換えなかった記事（比較の参照）
- *   new_articles … changedOn より後に公開した記事（生成の規則が効いているか）
+ *   new_articles … changedOn より後に公開した記事（生成の規則が効いているか）。excludeFromNewArticles の記事は除く
  *   journal      … ジャーナル全体（pageTypes.journal）
  * それぞれの表示・クリック・CTR・平均順位（表示で加重）を、基線と今で並べる。
  * gsc_metrics.json の pages は上位500ページだけなので、表示の少ない記事は数に入らないことがある（missing に出す）。
@@ -45,15 +45,17 @@ function report(exp, gsc) {
       missing: entries.filter(e => !now.has(e.path)).map(e => e.path),
     };
   };
+  // 別の施策で title を書き換えた新規記事は、生成の規則の効き目に混ぜない（excludeFromNewArticles）
+  const excluded = new Set((exp.excludeFromNewArticles || []).map(e => e.path));
   const newRows = [...now.entries()]
-    .filter(([p]) => { const m = p.match(/^journal\/(\d{4}-\d{2}-\d{2})-/); return m && m[1] > exp.changedOn; })
+    .filter(([p]) => { const m = p.match(/^journal\/(\d{4}-\d{2}-\d{2})-/); return m && m[1] > exp.changedOn && !excluded.has(p); })
     .map(([, r]) => r);
   return {
     baselineRange: exp.baseline.dateRange,
     currentRange: gsc.dateRange,
     changed: group(exp.pages.filter(e => e.changed)),
     reference: group(exp.pages.filter(e => !e.changed)),
-    new_articles: { now: aggregate(newRows) },
+    new_articles: { now: aggregate(newRows), excluded: [...excluded] },
     journal: { before: exp.baseline.journal, now: (gsc.pageTypes || {}).journal || null },
   };
 }
