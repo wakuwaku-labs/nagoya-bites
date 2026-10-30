@@ -1680,6 +1680,7 @@
 - **detected**: 2026-10-09
 - **due**: 2026-11-20
 - **resolved**: 2026-10-30
+- **resolved_by**: 16cd9147 (PR #705)
 - **category**: SEO / コンテンツ
 - **owner**: Editor
 - **source**: SEO分析（2026-10-09）。親は [[SEO-128]]
