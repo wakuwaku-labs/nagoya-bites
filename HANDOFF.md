@@ -1,4 +1,4 @@
-status: in_progress
+status: done
 
 # 検索のクリック率が低い記事の題と説明文を書き直す（Ondine #1066・事業責任者の施策 #1・2026-10-30）
 
@@ -7,7 +7,7 @@ status: in_progress
 
 ## 完了条件
 - 書き直しを台帳（data/search_ctr_rewrites.json）に before/after・基線つきで残し、`node scripts/search_ctr_rewrite.js --check` が一致
-- node --test tests/*.test.js がすべて通り、main に合流して push・本番で新しい題が出る
+- node --test tests/*.test.js がすべて通り、main に合流して push・本番で新しい題が出る（済: 1914件 pass・a27d416492・本番6本で確認・Ondine 報告 #1326）
 
 ## できていること
 - 6本: ジャーナル5本（ひものや官兵衛・さく蛸・ちひろ菓子店・炭火酒場COWCOW・お台所 六六堂）は title・og:title・description・og:description、手羽先特集は説明文だけ（題は ADR 0033 で P-334 まで持ち越し）
