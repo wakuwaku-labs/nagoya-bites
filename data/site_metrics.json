@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-30T19:12:32.890Z",
+  "generatedAt": "2026-10-30T21:58:31.419Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2509,
-    "pageViews": 3503,
-    "sessions": 2771,
+    "activeUsers": 2517,
+    "pageViews": 3513,
+    "sessions": 2781,
     "avgSessionDuration": 112.8,
     "bounceRate": 0.305,
     "pagesPerSession": 1.26
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2112,
-      "direct": 461,
+      "organic": 2116,
+      "direct": 467,
       "social": 30,
-      "ai_assistant": 151,
+      "ai_assistant": 152,
       "referral": 29,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 75.9,
-      "direct": 16.6,
+      "organic": 75.7,
+      "direct": 16.7,
       "social": 1.1,
       "ai_assistant": 5.4,
       "referral": 1,
@@ -44,17 +44,17 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 744
+      "sessions": 745
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 409
+      "sessions": 414
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 389
+      "sessions": 392
     },
     {
       "source": "chatgpt.com",
@@ -64,7 +64,7 @@
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 42
+      "sessions": 43
     },
     {
       "source": "unknown",
@@ -79,7 +79,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 15
+      "sessions": 16
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -185,13 +185,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 417,
-      "sessions": 395
+      "pageViews": 418,
+      "sessions": 396
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 165,
-      "sessions": 158
+      "pageViews": 166,
+      "sessions": 159
     },
     {
       "path": "/",
@@ -285,7 +285,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 9.4,
-    "ctaClickRate_direct": 12.8,
+    "ctaClickRate_direct": 12.6,
     "ctaClickRate_social": 13.3,
     "byPage": [
       {
@@ -1131,7 +1131,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2509,
+    "value": 2517,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
