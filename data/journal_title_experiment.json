@@ -298,5 +298,27 @@
       "beforeFront": "シーン語（記事にある「宴会」）",
       "reason": "前30字にシーン語（記事にある「宴会」）が無い"
     }
+  ],
+  "excludeFromNewArticles": [
+    {
+      "path": "journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
+      "why": "2026-10-30 に Ondine #1066 で title と説明文を書き換えた（data/search_ctr_rewrites.json の ondine-1066）。生成の規則の効き目に混ぜない"
+    },
+    {
+      "path": "journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
+      "why": "2026-10-30 に Ondine #1066 で title と説明文を書き換えた（data/search_ctr_rewrites.json の ondine-1066）。生成の規則の効き目に混ぜない"
+    },
+    {
+      "path": "journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
+      "why": "2026-10-30 に Ondine #1066 で title と説明文を書き換えた（data/search_ctr_rewrites.json の ondine-1066）。生成の規則の効き目に混ぜない"
+    },
+    {
+      "path": "journal/2026-10-19-sakae-sumibi-sakaba-cowcow.html",
+      "why": "2026-10-30 に Ondine #1066 で title と説明文を書き換えた（data/search_ctr_rewrites.json の ondine-1066）。生成の規則の効き目に混ぜない"
+    },
+    {
+      "path": "journal/2026-10-17-sakae-rokurokudou-settai-enkai-wine-cellar.html",
+      "why": "2026-10-30 に Ondine #1066 で title と説明文を書き換えた（data/search_ctr_rewrites.json の ondine-1066）。生成の規則の効き目に混ぜない"
+    }
   ]
 }
