@@ -2,132 +2,6 @@
   "_doc": "HotPepper グルメサーチの取得の記録（ISSUE-143）。build.js が回ごとに足す（直近30回）。available は API の件数（results_available）、fetched は取れた店の数、smallAreas は上限（1,000件）を超えたため小エリアごとに取り直した数。確認は node scripts/hotpepper_fetch_report.js",
   "runs": [
     {
-      "at": "2026-10-24T04:21:13.859Z",
-      "total": 5820,
-      "areas": [
-        {
-          "code": "Y200",
-          "name": "名古屋（名古屋駅/西区/中村区）",
-          "available": 1175,
-          "viaMiddleArea": 1000,
-          "smallAreas": 6,
-          "errors": [],
-          "fetched": 1175,
-          "missing": 0
-        },
-        {
-          "code": "Y205",
-          "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "available": 882,
-          "viaMiddleArea": 882,
-          "smallAreas": 0,
-          "errors": [],
-          "fetched": 882,
-          "missing": 0
-        },
-        {
-          "code": "Y210",
-          "name": "栄(ミナミ)/矢場町/大須/上前津",
-          "available": 980,
-          "viaMiddleArea": 980,
-          "smallAreas": 0,
-          "errors": [],
-          "fetched": 980,
-          "missing": 0
-        },
-        {
-          "code": "Y215",
-          "name": "金山・神宮前・熱田区",
-          "available": 329,
-          "viaMiddleArea": 329,
-          "smallAreas": 0,
-          "errors": [],
-          "fetched": 329,
-          "missing": 0
-        },
-        {
-          "code": "Y216",
-          "name": "鶴舞・八事・御器所",
-          "available": 175,
-          "viaMiddleArea": 175,
-          "smallAreas": 0,
-          "errors": [],
-          "fetched": 175,
-          "missing": 0
-        },
-        {
-          "code": "Y220",
-          "name": "大曽根･千種･今池･池下･守山区",
-          "available": 603,
-          "viaMiddleArea": 603,
-          "smallAreas": 0,
-          "errors": [],
-          "fetched": 603,
-          "missing": 0
-        },
-        {
-          "code": "Y221",
-          "name": "緑区・南区・天白区・瑞穂区",
-          "available": 409,
-          "viaMiddleArea": 409,
-          "smallAreas": 0,
-          "errors": [],
-          "fetched": 409,
-          "missing": 0
-        },
-        {
-          "code": "Y222",
-          "name": "本山・覚王山・藤が丘",
-          "available": 257,
-          "viaMiddleArea": 257,
-          "smallAreas": 0,
-          "errors": [],
-          "fetched": 257,
-          "missing": 0
-        },
-        {
-          "code": "Y224",
-          "name": "中川区・港区",
-          "available": 241,
-          "viaMiddleArea": 241,
-          "smallAreas": 0,
-          "errors": [],
-          "fetched": 241,
-          "missing": 0
-        },
-        {
-          "code": "Y225",
-          "name": "名古屋市その他",
-          "available": 5,
-          "viaMiddleArea": 5,
-          "smallAreas": 0,
-          "errors": [],
-          "fetched": 5,
-          "missing": 0
-        },
-        {
-          "code": "Y271",
-          "name": "草津市・守山市",
-          "available": 226,
-          "viaMiddleArea": 226,
-          "smallAreas": 0,
-          "errors": [],
-          "fetched": 226,
-          "missing": 0
-        },
-        {
-          "code": "Y437",
-          "name": "伏見桃山・伏見区・京都市郊外",
-          "available": 538,
-          "viaMiddleArea": 538,
-          "smallAreas": 0,
-          "errors": [],
-          "fetched": 538,
-          "missing": 0
-        }
-      ]
-    },
-    {
       "at": "2026-10-24T06:17:28.650Z",
       "total": 5821,
       "areas": [
@@ -3687,6 +3561,132 @@
           "smallAreas": 0,
           "errors": [],
           "fetched": 997,
+          "missing": 0
+        },
+        {
+          "code": "Y215",
+          "name": "金山・神宮前・熱田区",
+          "available": 327,
+          "viaMiddleArea": 327,
+          "smallAreas": 0,
+          "errors": [],
+          "fetched": 327,
+          "missing": 0
+        },
+        {
+          "code": "Y216",
+          "name": "鶴舞・八事・御器所",
+          "available": 177,
+          "viaMiddleArea": 177,
+          "smallAreas": 0,
+          "errors": [],
+          "fetched": 177,
+          "missing": 0
+        },
+        {
+          "code": "Y220",
+          "name": "大曽根･千種･今池･池下･守山区",
+          "available": 604,
+          "viaMiddleArea": 604,
+          "smallAreas": 0,
+          "errors": [],
+          "fetched": 604,
+          "missing": 0
+        },
+        {
+          "code": "Y221",
+          "name": "緑区・南区・天白区・瑞穂区",
+          "available": 409,
+          "viaMiddleArea": 409,
+          "smallAreas": 0,
+          "errors": [],
+          "fetched": 409,
+          "missing": 0
+        },
+        {
+          "code": "Y222",
+          "name": "本山・覚王山・藤が丘",
+          "available": 258,
+          "viaMiddleArea": 258,
+          "smallAreas": 0,
+          "errors": [],
+          "fetched": 258,
+          "missing": 0
+        },
+        {
+          "code": "Y224",
+          "name": "中川区・港区",
+          "available": 242,
+          "viaMiddleArea": 242,
+          "smallAreas": 0,
+          "errors": [],
+          "fetched": 242,
+          "missing": 0
+        },
+        {
+          "code": "Y225",
+          "name": "名古屋市その他",
+          "available": 5,
+          "viaMiddleArea": 5,
+          "smallAreas": 0,
+          "errors": [],
+          "fetched": 5,
+          "missing": 0
+        },
+        {
+          "code": "Y271",
+          "name": "草津市・守山市",
+          "available": 224,
+          "viaMiddleArea": 224,
+          "smallAreas": 0,
+          "errors": [],
+          "fetched": 224,
+          "missing": 0
+        },
+        {
+          "code": "Y437",
+          "name": "伏見桃山・伏見区・京都市郊外",
+          "available": 542,
+          "viaMiddleArea": 542,
+          "smallAreas": 0,
+          "errors": [],
+          "fetched": 542,
+          "missing": 0
+        }
+      ]
+    },
+    {
+      "at": "2026-10-30T11:29:23.898Z",
+      "total": 5857,
+      "areas": [
+        {
+          "code": "Y200",
+          "name": "名古屋（名古屋駅/西区/中村区）",
+          "available": 1188,
+          "viaMiddleArea": 1000,
+          "smallAreas": 6,
+          "errors": [],
+          "fetched": 1188,
+          "missing": 0
+        },
+        {
+          "code": "Y205",
+          "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+          "available": 885,
+          "viaMiddleArea": 885,
+          "smallAreas": 0,
+          "errors": [],
+          "fetched": 885,
+          "missing": 0
+        },
+        {
+          "code": "Y210",
+          "name": "栄(ミナミ)/矢場町/大須/上前津",
+          "available": 996,
+          "viaMiddleArea": 996,
+          "smallAreas": 0,
+          "errors": [],
+          "fetched": 996,
           "missing": 0
         },
         {
