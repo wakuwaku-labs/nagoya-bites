@@ -1,0 +1,405 @@
+{
+  "date": "2026-10-30",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "台中夜市2026（久屋大通）を食べ歩き 大須の台湾屋台 SARIKAKAも出店",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "食べ歩き",
+          "feature": "features/osu-food-walk.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (時期,需要,繁忙,予約,シーン) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 168字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「食べ歩き」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "97点（自動公開ライン 100点）。主な不足: topicality -5 / brand_fit -4 / writability -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "久屋大通の台湾・台中夜市2026、グルメ16店を4日間で回る",
+      "verdict": "HOLD",
+      "total": 73,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 2件 (時期,需要) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 145字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "名古屋のボジョレー・ヌーヴォー2026は11月19日解禁、予約の時期",
+      "verdict": "HOLD",
+      "total": 52,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 4件 (時期,需要,予約,仕入れ) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 123字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "名古屋の新そばは11月から、産地表示のある蕎麦店の選び方",
+      "verdict": "HOLD",
+      "total": 43,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 4,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (旬,時期,仕入れ) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 89字 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "久屋大通の11月イベント、ダムSAKEフェスタと韓国フェスティバルの時期",
+      "verdict": "HOLD",
+      "total": 40,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 3,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 2件 (時期,需要) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 83字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "97点（自動公開ライン 100点）。主な不足: topicality -5 / brand_fit -4 / writability -2",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "台中夜市2026（久屋大通）を食べ歩き 大須の台湾屋台 SARIKAKAも出店",
+      "lead_draft": "10月31日から11月3日まで、久屋大通公園エディオン久屋広場で「台湾・台中夜市2026」が開かれる。公式サイトの出店一覧ではグルメ16店。大須で台湾屋台を営むSARIKAKAも17・18番ブースでルーロー飯やジーパイを出す。大須の店は夕方18時に閉まる日が多いが、夜市は21時まで。4日間のどこで行くかを、時間と人出の山から整理した。",
+      "angle": "大須の常設店（18時閉店が中心）と夜市（21時まで）の営業時間の差、4日間で平日は11/2(月)だけという需要と繁忙の山、予約不要の屋台で最終日は20時までという時期から、食べ歩きのシーンと時間帯を選ぶ",
+      "main_store": {
+        "name": "台湾屋台 SARIKAKA",
+        "id": "J001294187",
+        "area": "大須",
+        "genre": "台湾料理"
+      },
+      "sources": [
+        {
+          "label": "名古屋市「台湾・台中夜市2026」の開催について",
+          "url": "https://www.city.nagoya.jp/kankou/kankouinfo/1013741/1050644.html",
+          "date": "2026-09-17"
+        },
+        {
+          "label": "台湾・台中夜市2026 in 名古屋 公式サイト（出店者一覧）",
+          "url": "https://kato-hidehiko.asia/taichung-yeshi/",
+          "date": "2026-10-29"
+        },
+        {
+          "label": "台湾屋台 SARIKAKA 公式Instagram（台中夜市の出店告知）",
+          "url": "https://www.instagram.com/p/DfFTNtUku3G/",
+          "date": "2026-10-29"
+        },
+        {
+          "label": "名古屋情報通「台湾・台中夜市」10月31日から11月3日まで開催",
+          "url": "https://jouhou.nagoya/taiwan-night-marche2026/",
+          "date": "2026-10-29"
+        },
+        {
+          "label": "名古屋コンシェルジュ「台湾・台中夜市2026」",
+          "url": "https://www.nagoya-info.jp/event/detail/664/"
+        },
+        {
+          "label": "ホットペッパーグルメ 台湾屋台 SARIKAKA",
+          "url": "https://www.hotpepper.jp/strJ001294187/"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "久屋大通の台湾・台中夜市2026、グルメ16店を4日間で回る",
+      "lead_draft": "10月31日から11月3日まで、久屋大通公園エディオン久屋広場で台湾・台中夜市2026が開かれる。入場無料で、公式サイトの出店一覧ではグルメ16店と物販16店。2019年の名古屋市と台中市の観光パートナー都市協定を記念する催しで、2020年から毎年続いている。開催時間と人出の山を整理した。",
+      "angle": "グルメ16店の屋台を4日間のどの時期・時間に回るか、需要の山と雨天決行を踏まえて整理する",
+      "main_store": {
+        "name": "台湾・台中夜市2026",
+        "id": "",
+        "area": "久屋大通",
+        "genre": "イベント"
+      },
+      "sources": [
+        {
+          "label": "名古屋市「台湾・台中夜市2026」の開催について",
+          "url": "https://www.city.nagoya.jp/kankou/kankouinfo/1013741/1050644.html",
+          "date": "2026-09-17"
+        },
+        {
+          "label": "台湾・台中夜市2026 in 名古屋 公式サイト",
+          "url": "https://kato-hidehiko.asia/taichung-yeshi/",
+          "date": "2026-10-29"
+        },
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/taiwan-night-marche2026/",
+          "date": "2026-10-29"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "名古屋のボジョレー・ヌーヴォー2026は11月19日解禁、予約の時期",
+      "lead_draft": "2026年のボジョレー・ヌーヴォーの解禁日は11月19日（木）。名古屋で解禁日にグラスで飲める店を選ぶなら、予約はいつ動けばよいか。解禁が平日の木曜に当たる今年の需要の山と、店側の仕入れの都合を整理する。名古屋での解禁イベントの告知はまだ少ない。",
+      "angle": "解禁日が平日木曜に当たる年の需要と予約の時期、ワインの仕入れ量の読み方",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": "ワイン"
+      },
+      "sources": [
+        {
+          "label": "Precious「ボジョレー・ヌーヴォー」",
+          "url": "https://precious.jp/articles/-/51151"
+        },
+        {
+          "label": "All About ボジョレー・ヌーヴォー",
+          "url": "https://allabout.co.jp/gm/gl/29742/"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "名古屋の新そばは11月から、産地表示のある蕎麦店の選び方",
+      "lead_draft": "秋の新そばの時期に入った。名古屋の蕎麦店では、北海道・福井・群馬など産地を明記して新そばを出す店がある。産地が切り替わる時期と、仕入れの都合で提供が日替わりになる理由を整理する。",
+      "angle": "新そばの旬と産地切り替えの時期、仕入れの都合が提供日に出る理由",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": "蕎麦"
+      },
+      "sources": [
+        {
+          "label": "食べログまとめ 秋の新蕎麦・蕎麦産地表示のある名古屋の蕎麦屋",
+          "url": "https://tabelog.com/matome/17817/"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "久屋大通の11月イベント、ダムSAKEフェスタと韓国フェスティバルの時期",
+      "lead_draft": "11月の久屋大通公園は週末ごとに催しが続く。11月7・8日はダム熟成酒の飲み比べ、14・15日は韓国フェスティバル。どの週末にどの需要が集まるか、時期ごとに整理する。",
+      "angle": "11月の週末ごとのイベントの時期と需要の山を整理する",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "久屋大通",
+        "genre": "イベント"
+      },
+      "sources": [
+        {
+          "label": "久屋大通公園 イベント情報",
+          "url": "https://www.hisayaodoripark.com/"
+        },
+        {
+          "label": "ウォーカープラス 名古屋の食べるイベント 2026年11月",
+          "url": "https://www.walkerplus.com/event_list/11/ar0623100/nagoya/eg1003/"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}
