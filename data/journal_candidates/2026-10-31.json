@@ -1,0 +1,415 @@
+{
+  "date": "2026-10-31",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄・矢場町『鮨食人 五と二』一人飲みと宴会に、1貫142円からの寿司と串カツ",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 95,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 7件 (価格帯,コース,席,予約,シーン,アラカルト,一人飲み) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 163字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "タイトルにジャンル語「寿司」+2"
+        ]
+      },
+      "gate_note": "95点（自動公開ライン 100点）。主な不足: topicality -10 / recency -3 / writability -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "矢場町『鮨食人 五と二』飲み放題はコースだけ、4,000円と6,000円の差を読む",
+      "verdict": "HOLD",
+      "total": 84,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,コース,予約,アラカルト) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 143字 +4",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「鮨」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "矢場町の新店『鮨食人 五と二』は32席か52席か、宴会の人数を決める前に読む",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (席,予約) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 125字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「宴会」+4",
+          "タイトルにジャンル語「鮨」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "伏見『旬饗あたらよ』10月23日開店の日本料理、夜1万円台の使いどころ",
+      "verdict": "HOLD",
+      "total": 36,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 4,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (接待) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 91字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「接待」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "桜山『ULI』ワインとケーキの店が10月27日に開店",
+      "verdict": "HOLD",
+      "total": 35,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 4,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (デート) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 82字 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "95点（自動公開ライン 100点）。主な不足: topicality -10 / recency -3 / writability -2",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "栄・矢場町『鮨食人 五と二』一人飲みと宴会に、1貫142円からの寿司と串カツ",
+      "lead_draft": "2026年10月30日、矢場町駅から徒歩約3分の地下1階に「矢場町 鮨食人 五と二」が開店した。赤酢シャリの寿司を1貫142円から、串カツを1本109円から頼める居酒屋で、飲み放題は4,000円からのコースにだけ付く。カウンターで1貫ずつ頼む一人飲みと、2時間飲み放題の少人数宴会のどちらに向くかを、品書きと席の作りから読む。",
+      "angle": "1貫・1本単位のアラカルトと飲み放題付きコースの価格帯の分かれ目を、カウンター席・最大15人の席の作り・予約の取り方・L.O.23時から読み、一人飲みと宴会のシーン適性を示す",
+      "main_store": {
+        "name": "鮨食人 五と二 矢場町",
+        "id": "J004634384",
+        "area": "栄(ミナミ)/矢場町/大須/上前津",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社ぐっとくるダイニング）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000006.000183692.html",
+          "date": "2026-10-27"
+        },
+        {
+          "label": "グルメプレス",
+          "url": "https://gourmetpress.net/1491419/",
+          "date": "2026-10-27"
+        },
+        {
+          "label": "店舗公式サイト",
+          "url": "https://gotoniyaba.owst.jp/"
+        },
+        {
+          "label": "ホットペッパー（品書き）",
+          "url": "https://www.hotpepper.jp/strJ004634384/food/"
+        },
+        {
+          "label": "食べログ",
+          "url": "https://tabelog.com/aichi/A2301/A230103/23097730/"
+        },
+        {
+          "label": "運営会社 ぐっとくるダイニング",
+          "url": "https://good-crew-dining.com/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "矢場町『鮨食人 五と二』飲み放題はコースだけ、4,000円と6,000円の差を読む",
+      "lead_draft": "10月30日に開店した矢場町の「鮨食人 五と二」は、飲み放題を単品で付けられず、2時間飲み放題付きのコース4本（4,000円・4,500円・5,000円・6,000円）でだけ選べる。料理はアラカルトなら握り1貫142円から。コースとアラカルトのどちらが得かを、品数と価格帯から整理する。",
+      "angle": "飲み放題付きコース4本の価格帯と品数、アラカルトの原価感、予約締切の違いから、宴会で選ぶコースを読む",
+      "main_store": {
+        "name": "鮨食人 五と二 矢場町",
+        "id": "J004634384",
+        "area": "栄(ミナミ)/矢場町/大須/上前津",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社ぐっとくるダイニング）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000006.000183692.html",
+          "date": "2026-10-27"
+        },
+        {
+          "label": "ホットペッパー（コース）",
+          "url": "https://www.hotpepper.jp/strJ004634384/course/"
+        },
+        {
+          "label": "店舗公式サイト",
+          "url": "https://gotoniyaba.owst.jp/"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "矢場町の新店『鮨食人 五と二』は32席か52席か、宴会の人数を決める前に読む",
+      "lead_draft": "10月30日開店の「矢場町 鮨食人 五と二」は、リリースでは52席、公式サイトとホットペッパー・食べログでは32席・最大宴会15人と、掲載が分かれている。カウンターと2〜4名テーブルの店で、何人までなら宴会が組めるのかを、席と予約の情報から整理する。",
+      "angle": "席数の掲載の食い違いと最大宴会15人・貸切20人以下の条件から、宴会の人数と予約の取り方を読む",
+      "main_store": {
+        "name": "鮨食人 五と二 矢場町",
+        "id": "J004634384",
+        "area": "栄(ミナミ)/矢場町/大須/上前津",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社ぐっとくるダイニング）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000006.000183692.html",
+          "date": "2026-10-27"
+        },
+        {
+          "label": "食べログ",
+          "url": "https://tabelog.com/aichi/A2301/A230103/23097730/"
+        },
+        {
+          "label": "店舗公式サイト",
+          "url": "https://gotoniyaba.owst.jp/"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "伏見『旬饗あたらよ』10月23日開店の日本料理、夜1万円台の使いどころ",
+      "lead_draft": "伏見駅の近くに10月23日、日本料理と居酒屋を掲げる「旬饗あたらよ」が開店した。食べログの予算表示は夜1万円台。接待に向くかどうかを判断するには、席の作りとコースの中身の確認が要る。",
+      "angle": "夜1万円台の予算表示から、接待・会食での使いどころを読む",
+      "main_store": {
+        "name": "旬饗あたらよ",
+        "id": "",
+        "area": "伏見",
+        "genre": "日本料理"
+      },
+      "sources": [
+        {
+          "label": "食べログ 名古屋市 新規オープン",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "桜山『ULI』ワインとケーキの店が10月27日に開店",
+      "lead_draft": "桜山駅の近くに10月27日、ワインバーとケーキを掲げる「ULI」が開店した。食べログの予算表示は1,000円未満。ケーキとワインを1軒で頼める店の使いどころを探る。",
+      "angle": "ワインバーとケーキの組み合わせから、デートの二軒目の使い方を読む",
+      "main_store": {
+        "name": "ULI",
+        "id": "",
+        "area": "桜山",
+        "genre": "ワインバー"
+      },
+      "sources": [
+        {
+          "label": "食べログ 名古屋市 新規オープン",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/"
+        }
+      ]
+    }
+  ]
+}
