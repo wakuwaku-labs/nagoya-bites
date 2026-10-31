@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30T21:58:23.864Z",
+  "generatedAt": "2026-10-31T14:35:16.829Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -8,11 +8,11 @@
   },
   "totals": {
     "exits": {
-      "hotpepper": 103,
+      "hotpepper": 107,
       "tabelog": 16,
       "tel": 4,
       "other": 0,
-      "total": 123
+      "total": 127
     },
     "reports": {
       "yes": 0,
@@ -24,11 +24,11 @@
     "start": "2026-10-01",
     "totals": {
       "exits": {
-        "hotpepper": 103,
+        "hotpepper": 107,
         "tabelog": 16,
         "tel": 4,
         "other": 0,
-        "total": 123
+        "total": 127
       },
       "reports": {
         "yes": 0,
@@ -294,6 +294,24 @@
       "exits": {
         "hotpepper": 1,
         "tabelog": 1,
+        "tel": 0,
+        "other": 0,
+        "total": 2
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 2,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "ひつまぶし 名古屋 備長 大名古屋ビルヂング店",
+      "exits": {
+        "hotpepper": 2,
+        "tabelog": 0,
         "tel": 0,
         "other": 0,
         "total": 2
@@ -776,6 +794,24 @@
       }
     },
     {
+      "store_name": "しゃぶしゃぶいちばん 名駅南店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "ステーキハウス キッチンリボン",
       "exits": {
         "hotpepper": 0,
@@ -830,7 +866,7 @@
       }
     },
     {
-      "store_name": "ひつまぶし 名古屋 備長 大名古屋ビルヂング店",
+      "store_name": "ひつまぶし 名古屋 備長 ラシック店",
       "exits": {
         "hotpepper": 1,
         "tabelog": 0,
@@ -1280,6 +1316,24 @@
       }
     },
     {
+      "store_name": "八かく庵 名古屋セントラルタワーズ店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "飛騨牛焼肉 安福本店 名東区店",
       "exits": {
         "hotpepper": 1,
@@ -1413,19 +1467,19 @@
     "geoSearch": "現在地: トップの「現在地」ボタンを押した回数と結果（granted・denied・unsupported・error）。位置・エリア名は送っていない"
   },
   "actions": {
-    "reserve": 119,
+    "reserve": 123,
     "reserveBySite": {
-      "hotpepper": 103,
+      "hotpepper": 107,
       "tabelog": 16,
       "other": 0
     },
     "tel": 4,
-    "map": 83
+    "map": 85
   },
   "map": {
-    "total": 83,
+    "total": 85,
     "unattributed": 6,
-    "stores": 38,
+    "stores": 39,
     "top": [
       {
         "store_name": "うな祥",
@@ -1436,12 +1490,12 @@
         "count": 12
       },
       {
-        "store_name": "ちひろ菓子店 新栄葵店",
+        "store_name": "BISTRO DIA",
         "count": 6
       },
       {
-        "store_name": "BISTRO DIA",
-        "count": 5
+        "store_name": "ちひろ菓子店 新栄葵店",
+        "count": 6
       },
       {
         "store_name": "燈 tou",
@@ -1470,15 +1524,15 @@
     ],
     "byLocation": {
       "(not set)": 31,
-      "store_page": 28,
-      "journal_store_card": 15,
+      "store_page": 29,
+      "journal_store_card": 16,
       "store_page_bar": 6,
       "modal_cta": 3
     },
     "byLinkKind": {
       "(not set)": 38,
-      "place_id": 23,
-      "search": 22
+      "search": 24,
+      "place_id": 23
     }
   },
   "callLookup": {

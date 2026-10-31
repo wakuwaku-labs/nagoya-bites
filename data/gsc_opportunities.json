@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30T21:58:35.186Z",
+  "generatedAt": "2026-10-31T14:40:10.186Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -7,41 +7,41 @@
     "ctrFix": [
       {
         "query": "じゃんけんポーカー今池店 レビュー",
-        "impressions": 1900,
+        "impressions": 1939,
         "clicks": 5,
         "position": 7.7,
         "ctr": 0.26,
         "expectedCtr": 3.4,
-        "missedClicks": 60.4
+        "missedClicks": 61.7
       }
     ],
     "ctrFixGeoless": [
       {
         "query": "ひものや官兵衛 伏見",
-        "impressions": 365,
-        "clicks": 9,
-        "position": 6.6,
-        "ctr": 2.47,
-        "expectedCtr": 4.4,
-        "missedClicks": 7
+        "impressions": 391,
+        "clicks": 12,
+        "position": 6.5,
+        "ctr": 3.07,
+        "expectedCtr": 4.5,
+        "missedClicks": 5.6
       },
       {
         "query": "キミトテ",
-        "impressions": 345,
+        "impressions": 343,
         "clicks": 4,
         "position": 9.6,
-        "ctr": 1.16,
+        "ctr": 1.17,
         "expectedCtr": 2.6,
         "missedClicks": 5
       },
       {
         "query": "ビストロランプール",
-        "impressions": 267,
+        "impressions": 291,
         "clicks": 4,
-        "position": 8.2,
-        "ctr": 1.5,
+        "position": 8.3,
+        "ctr": 1.37,
         "expectedCtr": 3.1,
-        "missedClicks": 4.3
+        "missedClicks": 5
       }
     ],
     "rankPush": []
@@ -50,58 +50,49 @@
     "ctrFix": [
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 1048,
-        "clicks": 17,
-        "position": 7,
-        "ctr": 1.62,
-        "expectedCtr": 4,
-        "missedClicks": 24.9
+        "impressions": 1064,
+        "clicks": 15,
+        "position": 7.1,
+        "ctr": 1.41,
+        "expectedCtr": 3.9,
+        "missedClicks": 26.7
       },
       {
         "page": "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
-        "impressions": 1019,
+        "impressions": 1054,
         "clicks": 25,
-        "position": 7.3,
-        "ctr": 2.45,
-        "expectedCtr": 3.8,
-        "missedClicks": 13.3
-      },
-      {
-        "page": "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
-        "impressions": 1181,
-        "clicks": 34,
-        "position": 7.1,
-        "ctr": 2.88,
-        "expectedCtr": 3.9,
-        "missedClicks": 12.3
+        "position": 7.4,
+        "ctr": 2.37,
+        "expectedCtr": 3.7,
+        "missedClicks": 13.8
       },
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 882,
-        "clicks": 13,
+        "impressions": 884,
+        "clicks": 12,
         "position": 9.1,
-        "ctr": 1.47,
+        "ctr": 1.36,
         "expectedCtr": 2.8,
-        "missedClicks": 11.5
+        "missedClicks": 12.5
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 1530,
+        "impressions": 1460,
         "clicks": 20,
-        "position": 16.6,
-        "ctr": 1.31,
-        "upsideClicks": 22.8
+        "position": 17,
+        "ctr": 1.37,
+        "upsideClicks": 20.9
       },
       {
         "page": "/features/date.html",
-        "impressions": 660,
-        "clicks": 15,
+        "impressions": 673,
+        "clicks": 16,
         "position": 10.7,
-        "ctr": 2.27,
-        "upsideClicks": 3.5
+        "ctr": 2.38,
+        "upsideClicks": 2.8
       }
     ]
   },
@@ -110,12 +101,12 @@
     "queryCtrFix": 1,
     "queryCtrFixGeoless": 3,
     "queryRankPush": 0,
-    "pageCtrFix": 4,
+    "pageCtrFix": 3,
     "pageRankPush": 2,
     "topPageCtrFix": [
       "/features/nagoya-tebasaki.html",
       "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
-      "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html"
+      "/journal/2026-08-04-sakae-leesar-coffee.html"
     ]
   }
 }

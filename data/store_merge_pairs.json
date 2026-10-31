@@ -1,7 +1,7 @@
 {
   "_note": "ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない",
-  "mergedCount": 64,
-  "absorbedCount": 67,
+  "mergedCount": 63,
+  "absorbedCount": 66,
   "skippedCount": 4,
   "merged": [
     {
@@ -480,6 +480,28 @@
     },
     {
       "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "炭火焼 鰻籠",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004493228",
+        "placeId": "ChIJX4-hv7lvA2ARg1EOQ5XbI58",
+        "slug": "J004493228"
+      },
+      "absorbed": [
+        {
+          "店名": "炭火焼　鰻籠",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J003603009",
+          "placeId": "ChIJX4-hv7lvA2ARg1EOQ5XbI58",
+          "slug": "J003603009"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
         "owner_confirmed"
       ],
       "kept": {
@@ -505,28 +527,6 @@
         "name_exact"
       ],
       "kept": {
-        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J004026741",
-        "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
-        "slug": "J004026741"
-      },
-      "absorbed": [
-        {
-          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J004026739",
-          "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
-          "slug": "J004026739"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
-        "name_exact"
-      ],
-      "kept": {
         "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店",
         "エリア": "名古屋（名古屋駅/西区/中村区）",
         "ホットペッパーID": "J004026742",
@@ -540,28 +540,6 @@
           "ホットペッパーID": "J004026737",
           "placeId": "ChIJW42pcAB3A2AR89zDL1dQ4Dk",
           "slug": "J004026737"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
-        "placeid_match"
-      ],
-      "kept": {
-        "店名": "炭火焼 鰻籠",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J004493228",
-        "placeId": "ChIJX4-hv7lvA2ARg1EOQ5XbI58",
-        "slug": "J004493228"
-      },
-      "absorbed": [
-        {
-          "店名": "炭火焼　鰻籠",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J003603009",
-          "placeId": "ChIJX4-hv7lvA2ARg1EOQ5XbI58",
-          "slug": "J003603009"
         }
       ],
       "filledFields": []
@@ -600,6 +578,28 @@
         "選定理由",
         "食べログURL"
       ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004026741",
+        "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
+        "slug": "J004026741"
+      },
+      "absorbed": [
+        {
+          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J004026739",
+          "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
+          "slug": "J004026739"
+        }
+      ],
+      "filledFields": []
     },
     {
       "reasons": [
@@ -670,28 +670,6 @@
     },
     {
       "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "Cafe & Bar ゆきっち",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J003850472",
-        "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
-        "slug": "J003850472"
-      },
-      "absorbed": [
-        {
-          "店名": "Cafe & Bar ゆきっち はなれ",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J003850482",
-          "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
-          "slug": "J003850482"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
         "name_exact"
       ],
       "kept": {
@@ -723,6 +701,28 @@
         "選定理由",
         "食べログURL"
       ]
+    },
+    {
+      "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "Cafe & Bar ゆきっち",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J003850472",
+        "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
+        "slug": "J003850472"
+      },
+      "absorbed": [
+        {
+          "店名": "Cafe & Bar ゆきっち はなれ",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J003850482",
+          "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
+          "slug": "J003850482"
+        }
+      ],
+      "filledFields": []
     },
     {
       "reasons": [
@@ -914,22 +914,24 @@
         "name_exact"
       ],
       "kept": {
-        "店名": "大成園 錦店",
-        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-        "ホットペッパーID": "J003411722",
-        "placeId": "ChIJ3X-mhNV2A2ARlZ0ARRrUrlE",
-        "slug": "J003411722"
+        "店名": "韓炉 HANRO 名古屋栄店",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J004591229",
+        "placeId": "",
+        "slug": "J004591229"
       },
       "absorbed": [
         {
-          "店名": "大成園 錦店",
-          "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-          "ホットペッパーID": "J004698866",
+          "店名": "韓炉 HANRO 名古屋栄店",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J004699066",
           "placeId": "",
-          "slug": "J004698866"
+          "slug": "J004699066"
         }
       ],
-      "filledFields": []
+      "filledFields": [
+        "サブジャンル"
+      ]
     },
     {
       "reasons": [
@@ -958,23 +960,23 @@
         "name_exact"
       ],
       "kept": {
-        "店名": "韓炉 HANRO 名古屋栄店",
+        "店名": "ジガー バー シルクロード",
         "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J004591229",
-        "placeId": "",
-        "slug": "J004591229"
+        "ホットペッパーID": "J004493224",
+        "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
+        "slug": "J004493224"
       },
       "absorbed": [
         {
-          "店名": "韓炉 HANRO 名古屋栄店",
+          "店名": "ジガー バー シルクロード",
           "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J004699066",
-          "placeId": "",
-          "slug": "J004699066"
+          "ホットペッパーID": "J000015124",
+          "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
+          "slug": "J000015124"
         }
       ],
       "filledFields": [
-        "サブジャンル"
+        "Instagram"
       ]
     },
     {
@@ -998,30 +1000,6 @@
         }
       ],
       "filledFields": []
-    },
-    {
-      "reasons": [
-        "name_exact"
-      ],
-      "kept": {
-        "店名": "ジガー バー シルクロード",
-        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J004493224",
-        "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
-        "slug": "J004493224"
-      },
-      "absorbed": [
-        {
-          "店名": "ジガー バー シルクロード",
-          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J000015124",
-          "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
-          "slug": "J000015124"
-        }
-      ],
-      "filledFields": [
-        "Instagram"
-      ]
     },
     {
       "reasons": [
@@ -1061,30 +1039,6 @@
     },
     {
       "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "レストラン ロワール フレンチ 名古屋東急ホテル 栄",
-        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J003916519",
-        "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
-        "slug": "J003916519"
-      },
-      "absorbed": [
-        {
-          "店名": "レストラン ロワール 鉄板焼",
-          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J003916520",
-          "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
-          "slug": "J003916520"
-        }
-      ],
-      "filledFields": [
-        "Instagram"
-      ]
-    },
-    {
-      "reasons": [
         "name_exact"
       ],
       "kept": {
@@ -1117,6 +1071,30 @@
         "経度",
         "緯度",
         "駐車場"
+      ]
+    },
+    {
+      "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "レストラン ロワール フレンチ 名古屋東急ホテル 栄",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J003916519",
+        "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
+        "slug": "J003916519"
+      },
+      "absorbed": [
+        {
+          "店名": "レストラン ロワール 鉄板焼",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J003916520",
+          "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
+          "slug": "J003916520"
+        }
+      ],
+      "filledFields": [
+        "Instagram"
       ]
     },
     {
@@ -1720,7 +1698,7 @@
         "placeid_match"
       ],
       "kept": {
-        "店名": "名古屋コーチン鶏料理 清水",
+        "店名": "名古屋コーチン鶏料理 清水 名古屋店",
         "エリア": "名古屋市中村区",
         "ホットペッパーID": "",
         "placeId": "ChIJ7-5vrzh3A2ARPOFFoNC-dpI",
@@ -1728,7 +1706,7 @@
       },
       "absorbed": [
         {
-          "店名": "名古屋コーチン鶏料理 清水 名古屋店",
+          "店名": "名古屋コーチン鶏料理 清水",
           "エリア": "名古屋市中村区",
           "ホットペッパーID": "",
           "placeId": "ChIJ7-5vrzh3A2ARPOFFoNC-dpI",
@@ -1736,13 +1714,9 @@
         }
       ],
       "filledFields": [
-        "Instagram",
         "おすすめシーン",
-        "おすすめポイント",
         "トレンド情報源",
-        "価格帯目安",
-        "追加日",
-        "選定理由"
+        "話題スコア"
       ]
     }
   ],
