@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-31T14:35:16.829Z",
+  "generatedAt": "2026-10-31T19:14:15.265Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -8,31 +8,31 @@
   },
   "totals": {
     "exits": {
-      "hotpepper": 107,
+      "hotpepper": 102,
       "tabelog": 16,
       "tel": 4,
       "other": 0,
-      "total": 127
+      "total": 122
     },
     "reports": {
       "yes": 0,
       "no": 1
     }
   },
-  "unattributedExits": 10,
+  "unattributedExits": 3,
   "month": {
-    "start": "2026-10-01",
+    "start": "2026-11-01",
     "totals": {
       "exits": {
-        "hotpepper": 107,
-        "tabelog": 16,
-        "tel": 4,
+        "hotpepper": 0,
+        "tabelog": 0,
+        "tel": 0,
         "other": 0,
-        "total": 127
+        "total": 0
       },
       "reports": {
         "yes": 0,
-        "no": 1
+        "no": 0
       }
     }
   },
@@ -51,7 +51,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 5,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -69,7 +69,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 5,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -87,7 +87,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 5,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -105,7 +105,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 5,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -123,7 +123,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 3,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -141,7 +141,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 3,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -159,7 +159,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 3,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -177,7 +177,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 3,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -195,7 +195,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 3,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -213,7 +213,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 2,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -231,7 +231,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 2,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -249,7 +249,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 2,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -267,7 +267,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 2,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -285,7 +285,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 2,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -303,7 +303,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 2,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -321,7 +321,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 2,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -339,7 +339,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 2,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -357,7 +357,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 2,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -375,7 +375,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 2,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -393,7 +393,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 2,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -411,7 +411,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 2,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -429,7 +429,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -447,7 +447,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -465,7 +465,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -483,7 +483,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -501,7 +501,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -519,7 +519,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -537,7 +537,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -555,7 +555,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -573,7 +573,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -591,7 +591,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -609,7 +609,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -627,7 +627,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -645,7 +645,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -663,7 +663,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -681,7 +681,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -699,7 +699,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -717,7 +717,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -735,7 +735,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -753,7 +753,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -771,7 +771,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -789,7 +789,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -807,7 +807,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -825,7 +825,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -843,7 +843,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -861,7 +861,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -879,7 +879,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -897,7 +897,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -915,7 +915,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -933,7 +933,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -951,7 +951,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -969,7 +969,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -987,7 +987,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1005,7 +1005,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1023,7 +1023,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1041,7 +1041,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1059,7 +1059,25 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "酔いどれ 名古屋駅前店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1077,7 +1095,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1095,7 +1113,7 @@
         "no": 1
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1113,7 +1131,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1131,7 +1149,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1149,7 +1167,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1167,7 +1185,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1185,7 +1203,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1203,7 +1221,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1221,7 +1239,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1239,7 +1257,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1257,7 +1275,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1275,7 +1293,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1293,7 +1311,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1311,7 +1329,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1329,7 +1347,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1347,7 +1365,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1365,7 +1383,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1383,7 +1401,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1401,7 +1419,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1419,7 +1437,25 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "和風ラザニア専門店Y",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1437,7 +1473,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1455,7 +1491,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 0,
         "reportsYes": 0
       }
     }
@@ -1467,23 +1503,23 @@
     "geoSearch": "現在地: トップの「現在地」ボタンを押した回数と結果（granted・denied・unsupported・error）。位置・エリア名は送っていない"
   },
   "actions": {
-    "reserve": 123,
+    "reserve": 118,
     "reserveBySite": {
-      "hotpepper": 107,
+      "hotpepper": 102,
       "tabelog": 16,
       "other": 0
     },
     "tel": 4,
-    "map": 85
+    "map": 89
   },
   "map": {
-    "total": 85,
+    "total": 89,
     "unattributed": 6,
     "stores": 39,
     "top": [
       {
         "store_name": "うな祥",
-        "count": 13
+        "count": 15
       },
       {
         "store_name": "なかがわ 街仲食堂 by ジーバーFOOD",
@@ -1518,21 +1554,21 @@
         "count": 2
       },
       {
-        "store_name": "cafe molly",
-        "count": 1
+        "store_name": "酔いどれ 名古屋駅前店",
+        "count": 2
       }
     ],
     "byLocation": {
+      "store_page": 33,
       "(not set)": 31,
-      "store_page": 29,
       "journal_store_card": 16,
       "store_page_bar": 6,
       "modal_cta": 3
     },
     "byLinkKind": {
       "(not set)": 38,
-      "search": 24,
-      "place_id": 23
+      "search": 26,
+      "place_id": 25
     }
   },
   "callLookup": {
