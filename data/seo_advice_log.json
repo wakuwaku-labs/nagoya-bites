@@ -4420,6 +4420,46 @@
       "brand_reason": "10-26 に全項目を判定済みの同一メールの再取得（新しい週次は未着）。総括は比較週が+59%の突出週だったため新規起票せず、助言3件は重複・実装済み。新規起票なし。",
       "category": null,
       "fingerprint": "f4ef6d58e56b8a50"
+    },
+    {
+      "id": null,
+      "date": "2026-11-01",
+      "source": "line-daily",
+      "advice": "[レポート10-30] 🟡 予約クリック率8.9%・予約11回。👉 index.htmlの全店舗リストで予約導線(cta_click)を目立つ色・大きさに変更しファーストビュー視認性を高める",
+      "verdict": "duplicate",
+      "brand_reason": "重複（予約ボタンの色・視認性は 08-24〜10-31 に繰り返し判定済み：赤ブランドカラーで実装済み・DSN-001でトークン管理。助言自身が8.9%を高いと認めており自己矛盾、単日母数では視認性の信号にならない＝制約10）",
+      "category": null,
+      "fingerprint": "8a841c10473a8b9f"
+    },
+    {
+      "id": null,
+      "date": "2026-11-01",
+      "source": "line-daily",
+      "advice": "[レポート10-30] 🟡 検索流入71%。👉 features/・journal/で「さく蛸 黒川」「キミトテ」をタイトル・見出しに含め店舗詳細への導線を強化",
+      "verdict": "duplicate",
+      "brand_reason": "重複（単一店名のナビゲーショナルクエリは公式・Googleマップに譲る Strategic Skip。09-29〜10-31 に同旨を判定済み。さく蛸 黒川は10-18にジャーナル公開済み、stores/ は gen-store-pages.js が店名を title/h1 に出力済み）",
+      "category": null,
+      "fingerprint": "7297e4f8287a87e4"
+    },
+    {
+      "id": null,
+      "date": "2026-11-01",
+      "source": "line-daily",
+      "advice": "[レポート10-30] 🟢 1.3ページ/訪問。👉 nagoya-solo-dining・marunouchi-bistro-diaの記事に関連features/・stores/への内部リンクを追加",
+      "verdict": "duplicate",
+      "brand_reason": "重複・実装済み寄り（特集・ジャーナル末尾の関連記事リンクは SEO-002 done・SEO-012、同旨を 09-26/10-13/10-17/10-23/10-26 に判定済み）。1.3ページ/訪問は検索初回訪問が大半の構造で9月から横ばい、新規の悪化ではない",
+      "category": null,
+      "fingerprint": "74e9b533afe2a3b5"
+    },
+    {
+      "id": null,
+      "date": "2026-11-01",
+      "source": "line-weekly",
+      "advice": "[週次 2026-10-18〜10-24・10-26/10-28/10-29/10-31処理済みの再取得] 訪問587人-13%・閲覧843-12%（減速）＋助言3件",
+      "verdict": "duplicate",
+      "brand_reason": "10-26 に全項目を判定済みの同一メールの再取得（10-25〜10-31分の新しい週次は未着）。総括は比較週が+59%の突出週だったため新規起票せず、助言3件は重複・実装済み。新規起票なし。",
+      "category": null,
+      "fingerprint": "e8b13b6244b8fc34"
     }
   ]
 }
