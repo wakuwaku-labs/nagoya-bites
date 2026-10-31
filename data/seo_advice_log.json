@@ -4380,6 +4380,46 @@
       "brand_reason": "10-26 に全項目を判定済みの同一メールの再取得。新規起票なし。",
       "category": null,
       "fingerprint": "29738ae31c106dc4"
+    },
+    {
+      "id": null,
+      "date": "2026-10-31",
+      "source": "line-daily",
+      "advice": "[レポート10-29] 🟡 予約クリック率4.8%。👉 index.htmlとstores/の予約ボタンを目立つ色に変更し視認性を高める",
+      "verdict": "duplicate",
+      "brand_reason": "重複（予約ボタンの色・視認性は 08-24〜10-29 に繰り返し判定済み：赤ブランドカラーで実装済み・DSN-001でトークン管理。増分なし）",
+      "category": null,
+      "fingerprint": "bd23795dbcf0b8a0"
+    },
+    {
+      "id": null,
+      "date": "2026-10-31",
+      "source": "line-daily",
+      "advice": "[レポート10-29] 🟡 検索流入69%。👉 さく蛸 黒川・キミトテ等のKWで stores/ の見出し・本文に地域名と店名を含める",
+      "verdict": "duplicate",
+      "brand_reason": "重複（単一店名のナビゲーショナルクエリは公式・Googleマップに譲る Strategic Skip。09-29〜10-29 に同旨を判定済み。stores/ は gen-store-pages.js が地域名+店名を既に出力）",
+      "category": null,
+      "fingerprint": "232e6b4b784c1d3f"
+    },
+    {
+      "id": null,
+      "date": "2026-10-31",
+      "source": "line-daily",
+      "advice": "[レポート10-29] 🟢 日次記事が20回閲覧でトップ。👉 journal/ の予約導線(cta_reserve)の文言を「今すぐ予約！」等に具体化",
+      "verdict": "duplicate",
+      "brand_reason": "重複（予約導線の文言変更は 08-24〜10-29 に判定済み。煽り文言は編集独立・信頼トーンに合わず、導線自体は実装済みで増分なし）",
+      "category": null,
+      "fingerprint": "74569ab8793b0460"
+    },
+    {
+      "id": null,
+      "date": "2026-10-31",
+      "source": "line-weekly",
+      "advice": "[週次 2026-10-18〜10-24・10-26/10-28/10-29処理済みの再取得] 訪問587人-13%・閲覧843-12%（減速中）＋助言3件（トップFVのシーン別導線／キミトテ・リサールコーヒーKW記事／TOP5への内部リンク）",
+      "verdict": "duplicate",
+      "brand_reason": "10-26 に全項目を判定済みの同一メールの再取得（新しい週次は未着）。総括は比較週が+59%の突出週だったため新規起票せず、助言3件は重複・実装済み。新規起票なし。",
+      "category": null,
+      "fingerprint": "f4ef6d58e56b8a50"
     }
   ]
 }
