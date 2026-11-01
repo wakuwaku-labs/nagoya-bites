@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-31T21:01:58.757Z",
+  "generatedAt": "2026-11-01T00:15:17.748Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2572,
-    "pageViews": 3596,
-    "sessions": 2881,
-    "avgSessionDuration": 110.5,
-    "bounceRate": 0.314,
+    "activeUsers": 2578,
+    "pageViews": 3602,
+    "sessions": 2889,
+    "avgSessionDuration": 110.2,
+    "bounceRate": 0.316,
     "pagesPerSession": 1.25
   },
   "dailyReference": {
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2163,
-      "direct": 472,
+      "organic": 2166,
+      "direct": 475,
       "social": 31,
       "ai_assistant": 165,
       "referral": 27,
@@ -26,8 +26,8 @@
       "other": 0
     },
     "pct": {
-      "organic": 75.7,
-      "direct": 16.5,
+      "organic": 75.6,
+      "direct": 16.6,
       "social": 1.1,
       "ai_assistant": 5.8,
       "referral": 0.9,
@@ -39,22 +39,22 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 988
+      "sessions": 989
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 744
+      "sessions": 745
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 418
+      "sessions": 421
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 411
+      "sessions": 412
     },
     {
       "source": "chatgpt.com",
@@ -286,7 +286,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 9.3,
-    "ctaClickRate_direct": 11.9,
+    "ctaClickRate_direct": 11.8,
     "ctaClickRate_social": 12.9,
     "byPage": [
       {
@@ -1136,7 +1136,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2572,
+    "value": 2578,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
