@@ -1,0 +1,360 @@
+{
+  "date": "2026-11-01",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c2",
+      "title_draft": "栄『poool』ランドマーク名古屋栄13階のカフェと眺めの席",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 87,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 13,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,シーン,デート) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 145字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      },
+      "gate_note": "87点（自動公開ライン 100点）。主な不足: topicality -12 / brand_fit -4 / search_intent -4"
+    },
+    {
+      "id": "c1",
+      "title_draft": "名東区・西山商店街『ピッツェリア ベーロ』一人ランチと家族に",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 86,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 22,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 8日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,予約,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 155字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "86点（自動公開ライン 100点）。主な不足: search_intent -10 / recency -7 / brand_fit -4"
+    },
+    {
+      "id": "c4",
+      "title_draft": "栄・名古屋栄三越『すしの美登利』行列の寿司店と海鮮ひつまぶし",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,予約,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 98字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「寿司」+2"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -17 / brand_fit -4 / search_intent -4"
+    },
+    {
+      "id": "c3",
+      "title_draft": "11月3日の珈琲博覧日、久屋大通公園に東海の35店",
+      "verdict": "HOLD",
+      "total": 66,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 4,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 8日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (時期,需要,繁忙,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 124字 +4",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [
+    {
+      "id": "c5",
+      "title_draft": "名駅『六厘舎』JR名古屋駅1番線の期間限定つけめん",
+      "verdict": "DISQUALIFIED",
+      "total": 0,
+      "disqualified_reasons": [
+        "同一店舗の再掲 (六厘舎 JR名古屋駅1番線 in pending, 2026-08-21)"
+      ],
+      "breakdown": null
+    }
+  ],
+  "selected_id": "c2",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "87点（自動公開ライン 100点）。主な不足: topicality -12 / brand_fit -4 / search_intent -4",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "名東区・西山商店街『ピッツェリア ベーロ』一人ランチと家族に",
+      "lead_draft": "2026年9月18日、名東区の西山商店街に開いた「ピッツェリア ベーロ」は、薪窯で焼くマルゲリータが1,080円。席はテーブルだけの16席で予約は受けず、注文と会計は入店時、受け取りと返却は客が自分でするセルフ式だ。この値段で薪窯を回す運営の作りと、一人ランチや家族の早めの夕食に向くかを、品書きと席から読む。",
+      "angle": "マルゲリータ1,080円からの価格帯と、予約なし16席・入店時会計のセルフ式で回転を保つ運営、一人ランチと家族のシーンに向くかを読む",
+      "main_store": {
+        "name": "ピッツェリア ベーロ",
+        "id": "",
+        "area": "名東区",
+        "genre": "ピザ・イタリアン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「西山商店街にオープン！ナポリピッツァ専門店『ピッツェリア ベーロ』」",
+          "url": "https://jouhou.nagoya/pizzeria-belo/",
+          "date": "2026-10-24"
+        },
+        {
+          "label": "ピッツェリア ベーロ 公式Instagram（11月の営業案内・10月下旬の投稿）",
+          "url": "https://www.instagram.com/p/De8fNr7oPfY/"
+        },
+        {
+          "label": "ピッツェリア ベーロ 公式Instagram（トリュフ & ポルチーニ）",
+          "url": "https://www.instagram.com/p/Dd3Ov2tT__B/",
+          "date": "2026-09-29"
+        },
+        {
+          "label": "食べログ ピッツェリア ベーロ（席数・予約・駐車場・オープン日）",
+          "url": "https://tabelog.com/aichi/A2301/A230111/23097545/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄『poool』ランドマーク名古屋栄13階のカフェと眺めの席",
+      "lead_draft": "ザ・ランドマーク名古屋栄の13階に、札幌の会社が運営するカフェ「poool」がある。地上の正面玄関からではなくオフィス用のエレベーターで12階へ上がり、階段で13階へ。60席、カフェラテ650円、22時まで開いている。たどり着きにくい場所のカフェが、栄の中心でどんな使われ方をするかを読む。",
+      "angle": "カフェラテ650円の価格帯と60席・22時までの営業、デートと一人作業のシーンに向くかを読む",
+      "main_store": {
+        "name": "poool",
+        "id": "",
+        "area": "栄",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「知らないとたどり着けない！栄中心部からの眺めを楽しめるカフェ『poool』」",
+          "url": "https://jouhou.nagoya/poool-nagoya/",
+          "date": "2026-10-27"
+        },
+        {
+          "label": "poool Nagoya 公式Instagram",
+          "url": "https://www.instagram.com/pooolpooolpoool_nagoya/"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "11月3日の珈琲博覧日、久屋大通公園に東海の35店",
+      "lead_draft": "11月3日、久屋大通公園のケヤキヒロバとシバフヒロバで「珈琲博覧日」が開かれる。東海圏に実店舗を持つコーヒー店35店が集まり、テーマは「コーヒーの多様性」。昨年は約1万2000人が来た。文化の日の昼に、どの時間に行けば列を避けて何杯飲めるかを読む。",
+      "angle": "文化の日の需要と時期、列の繁忙と回転、家族のシーンを読む",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "久屋大通",
+        "genre": "コーヒー"
+      },
+      "sources": [
+        {
+          "label": "栄経済新聞「久屋で『珈琲博覧日』 東海圏の35店が集結」",
+          "url": "https://sakae.keizai.biz/headline/4019/",
+          "date": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "栄・名古屋栄三越『すしの美登利』行列の寿司店と海鮮ひつまぶし",
+      "lead_draft": "10月31日、名古屋栄三越に東京の寿司店「すしの美登利」が開いた。店舗限定の「三つ星にぎり」と「海鮮ひつまぶし」を出す。行列で知られる店が百貨店の中に入ると、予約と席の回し方はどう変わるかを読む。",
+      "angle": "握りの価格帯と予約・席の回転、一人ランチと家族のシーンを読む",
+      "main_store": {
+        "name": "すしの美登利 名古屋栄三越店",
+        "id": "",
+        "area": "栄",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "栄経済新聞「名古屋栄三越に『すしの美登利』」",
+          "url": "https://sakae.keizai.biz/headline/4021/"
+        },
+        {
+          "label": "名古屋情報通「すしの美登利」",
+          "url": "https://jouhou.nagoya/sushi-no-midori/",
+          "date": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "名駅『六厘舎』JR名古屋駅1番線の期間限定つけめん",
+      "lead_draft": "JR名古屋駅の使われていない1番線に、東京のつけめん店「六厘舎」が11月29日まで期間限定で出ている。入るには入場券か乗車券が要る。つけめん1,080円からと約60席で、乗り換えの合間に寄れるかを読む。",
+      "angle": "つけめん1,080円の価格帯と約60席の回転、一人ランチのシーンを読む",
+      "main_store": {
+        "name": "六厘舎 JR名古屋駅1番線",
+        "id": "",
+        "area": "名駅",
+        "genre": "つけめん"
+      },
+      "sources": [
+        {
+          "label": "名駅経済新聞「JR名古屋駅1番線につけめん専門店『六厘舎』期間限定店」",
+          "url": "https://meieki.keizai.biz/headline/3798/",
+          "date": "2026-08-20"
+        }
+      ]
+    }
+  ]
+}
