@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-01T19:16:20.547Z",
+  "generatedAt": "2026-11-01T21:44:28.427Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2607,
-    "pageViews": 3641,
-    "sessions": 2873,
-    "avgSessionDuration": 112.9,
+    "activeUsers": 2610,
+    "pageViews": 3647,
+    "sessions": 2875,
+    "avgSessionDuration": 113.3,
     "bounceRate": 0.302,
     "pagesPerSession": 1.27
   },
@@ -17,9 +17,9 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2189,
-      "direct": 469,
-      "social": 35,
+      "organic": 2191,
+      "direct": 470,
+      "social": 36,
       "ai_assistant": 177,
       "referral": 28,
       "paid": 0,
@@ -39,12 +39,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1008
+      "sessions": 1009
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 740
+      "sessions": 741
     },
     {
       "source": "yahoo",
@@ -54,7 +54,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 416
+      "sessions": 417
     },
     {
       "source": "chatgpt.com",
@@ -137,6 +137,11 @@
       "sessions": 3
     },
     {
+      "source": "facebook.com",
+      "medium": "referral",
+      "sessions": 2
+    },
+    {
       "source": "teams.public.onecdn.static.microsoft",
       "medium": "referral",
       "sessions": 2
@@ -154,11 +159,6 @@
     {
       "source": "copilot.com",
       "medium": "(not set)",
-      "sessions": 1
-    },
-    {
-      "source": "facebook.com",
-      "medium": "referral",
       "sessions": 1
     },
     {
@@ -190,13 +190,13 @@
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 183,
+      "pageViews": 185,
       "sessions": 173
     },
     {
       "path": "/",
-      "pageViews": 108,
-      "sessions": 97
+      "pageViews": 109,
+      "sessions": 98
     },
     {
       "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
@@ -281,8 +281,8 @@
       "other": 0
     },
     "ctaClickRate_organic": 9.4,
-    "ctaClickRate_direct": 12.2,
-    "ctaClickRate_social": 22.9,
+    "ctaClickRate_direct": 12.1,
+    "ctaClickRate_social": 22.2,
     "byPage": [
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -1135,7 +1135,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2607,
+    "value": 2610,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
