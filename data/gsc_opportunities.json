@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-01T00:31:57.880Z",
+  "generatedAt": "2026-11-01T19:16:23.966Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -7,31 +7,31 @@
     "ctrFix": [
       {
         "query": "じゃんけんポーカー今池店 レビュー",
-        "impressions": 1939,
+        "impressions": 1975,
         "clicks": 5,
         "position": 7.7,
-        "ctr": 0.26,
+        "ctr": 0.25,
         "expectedCtr": 3.4,
-        "missedClicks": 61.7
+        "missedClicks": 63
       }
     ],
     "ctrFixGeoless": [
       {
-        "query": "ひものや官兵衛 伏見",
-        "impressions": 391,
-        "clicks": 12,
-        "position": 6.5,
-        "ctr": 3.07,
-        "expectedCtr": 4.5,
-        "missedClicks": 5.6
-      },
-      {
         "query": "ビストロランプール",
-        "impressions": 291,
+        "impressions": 296,
         "clicks": 4,
         "position": 8.3,
-        "ctr": 1.37,
+        "ctr": 1.35,
         "expectedCtr": 3.1,
+        "missedClicks": 5.1
+      },
+      {
+        "query": "ひものや官兵衛 伏見",
+        "impressions": 400,
+        "clicks": 13,
+        "position": 6.5,
+        "ctr": 3.25,
+        "expectedCtr": 4.5,
         "missedClicks": 5
       },
       {
@@ -50,49 +50,49 @@
     "ctrFix": [
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 1027,
-        "clicks": 14,
-        "position": 7.1,
-        "ctr": 1.36,
-        "expectedCtr": 3.9,
-        "missedClicks": 26.3
+        "impressions": 1090,
+        "clicks": 15,
+        "position": 7,
+        "ctr": 1.38,
+        "expectedCtr": 4,
+        "missedClicks": 28.6
       },
       {
         "page": "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
-        "impressions": 1054,
+        "impressions": 1105,
         "clicks": 25,
-        "position": 7.4,
-        "ctr": 2.37,
-        "expectedCtr": 3.7,
-        "missedClicks": 13.8
+        "position": 7.5,
+        "ctr": 2.26,
+        "expectedCtr": 3.6,
+        "missedClicks": 14.8
       },
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 842,
+        "impressions": 868,
         "clicks": 12,
         "position": 9.1,
-        "ctr": 1.43,
+        "ctr": 1.38,
         "expectedCtr": 2.8,
-        "missedClicks": 11.3
+        "missedClicks": 12.1
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 1392,
+        "impressions": 1414,
         "clicks": 18,
-        "position": 17,
-        "ctr": 1.29,
-        "upsideClicks": 21
+        "position": 17.1,
+        "ctr": 1.27,
+        "upsideClicks": 21.6
       },
       {
         "page": "/features/date.html",
-        "impressions": 633,
+        "impressions": 654,
         "clicks": 14,
         "position": 10.7,
-        "ctr": 2.21,
-        "upsideClicks": 3.7
+        "ctr": 2.14,
+        "upsideClicks": 4.3
       }
     ]
   },
