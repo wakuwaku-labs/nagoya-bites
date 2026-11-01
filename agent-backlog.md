@@ -147,8 +147,9 @@
 
 ### [ISSUE-192] 会席の特集の候補が枠に 1 店足りなくなる（評価の関門の後）のを、11 月の入れ替えの後に確かめる
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
 - **due**: 2026-11-14
+- **resolved**: 2026-11-01
 - **detected**: 2026-10-15
 - **category**: 特集 / データ
 - **owner**: Editor
@@ -160,6 +161,7 @@
   1. 11 月の入れ替えの後、会席の特集の題・h1・ItemList・店カードの件数が一致している（`node scripts/sync_feature_counts.js --check` が 0）
   2. 候補が足りないままなら、特集の選定の条件（`data/feature_rosters.json`）を本文・FAQ の約束を崩さずに見直すか、9 店のままにするかを決め、決めたことを課題のコメントに残す
 - **関連**: [[MEO-003]]／`data/feature_rosters.json`／判断の記録 0011
+- **決定（2026-11-01）**: 9店のままとする。`懐石|会席|京料理` ゲートを緩めると品質が下がるため、`data/feature_rosters.json` の `slots` を 10 → 9 に更新。`sync_feature_counts.js --check` → 0件・`refresh_feature_rosters.js --check` → 全対象でプール充足 ✓。HTML はすでに「おすすめ9選」表記。
 
 ### [ISSUE-193] 「現在地」で絞り込んだ後に GA4 がエリア名入りの URL（#q=）を受け取っているかを数え、扱いを決める
 
