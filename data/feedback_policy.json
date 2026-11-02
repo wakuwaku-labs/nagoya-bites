@@ -8,7 +8,7 @@
     "sweep_query": "from:formspree.io newer_than:14d in:anywhere",
     "sweep_when": "primary_query が0件のとき（＋ primary が1件以上でも、月初1日は棚卸しとして任意で実行してよい）",
     "window_rationale": "窓は『処理する量』ではなく『取りこぼしを回収できる期間』。msg_id 台帳（feedback_log.json）との突合で再処理は完全に防げる（same_message=完全スキップ）ため、窓を狭くする利点は無く、広くするほど偽陰性が翌日以降に自動回収される。2d→7d はこの一点のための変更。",
-    "sweep_rationale": "Gmail の検索は既定で迷惑メール/ゴミ箱を除外する。Formspree の自動通知は迷惑メール判定を受けうるため、0件時のみ in:anywhere で確認する。件名タグの表記ゆれ（_subject 変更・転送での改変）も from: で拾える。",
+    "sweep_rationale": "Gmail の検索は既定でゴミ箱を除外するため、0件時のみ in:anywhere で確認する。件名タグの表記ゆれ（_subject 変更・転送での改変）も from: で拾える。迷惑メールはこの経路では見えない（Gmail MCP は in:anywhere でも迷惑メールを除外し、in:spam も結果を返さない・2026-11-03 確認）。",
     "retry_on_empty": {
       "enabled": true,
       "max_attempts": 2,
@@ -70,13 +70,14 @@
     "Linear同期に失敗してもbacklog起票済みの旨を残して正常終了する"
   ],
   "known_residual_risk": {
-    "description": "Formspree に届いたのに Gmail に一度も配送されなかった投稿は、Gmail 側をいくら広く引いても検出できない（検知器と収集経路が同一系統のため）。独立した突合には Formspree の submissions API が要る。",
+    "description": "Formspree に届いたのに Gmail に一度も配送されなかった投稿は、Gmail 側をいくら広く引いても検出できない（検知器と収集経路が同一系統のため）。迷惑メールに振り分けられた投稿も Gmail MCP からは検出できない。独立した突合には Formspree の submissions API が要る。",
+    "mitigation_status": "2026-11-03 確認: 月1回の自動リマインド（nagoya-bites-feedback-formspree-crosscheck-monthly）はスケジューラ上で削除済みで、実行は 2026-09-01 の1回だけ。いまは突合が行われていない。",
     "ticket": "ISSUE-094",
     "status": "wont_fix（2026-08-20）",
     "why_wont_fix": "Formspree の submissions API は Free/Personal プランには含まれず、Professional プラン（$30/月〜）が必要（外部の料金比較情報で確認・formspree.io/plans はログイン無しでは参照不可）。月額課金の是非はオーナー本人の契約判断であり、エージェントは判断・実行できない（制約8＝マネタイズ/支出はユーザー承認が前提）。",
     "mitigation_automated_free": "docs/feedback-triage-runbook.md『この設計が守れていない失敗』に、Formspree ダッシュボードの提出履歴（Free プランでも30日分は無料で閲覧可）を月1回目視で feedback_log.json の件数と突合する運用を明記（acceptance で当初から想定されていた無料フォールバック）。",
     "mitigation_optional_owner_action": "Formspree Free プランは『2つの連携通知メール』を無料で設定できる（フォーム設定 → Notifications → 2つ目の宛先を追加）。宛先を wakato1251999@gmail.com とは別のメールアドレス（別プロバイダ推奨）にすると、片方のアカウントの迷惑メール判定・フィルタ・障害だけでは投稿が消えなくなる。検知ではなく予防（冗長化）だが、無料でリスクを直接下げられる。設定はオーナー本人のFormspreeアカウント操作が必要なため未実施。"
   },
-  "updated": "2026-08-20",
+  "updated": "2026-11-03",
   "related_plan": "消費者フィードバック自動改善ループ新設（2026-07-27）/ Gmail検索の偽陰性対策 ISSUE-089（2026-08-17）"
 }

@@ -59,8 +59,10 @@ NAGOYA BITES のブランド総合フィルター（Moat / Strategic Skip）に�
    再処理は 4 の台帳突合で完全に防げるので、窓を狭める利点は無い。
 3. **0件だったら、そこで終わらせない**:
    - a. `sweep_query`（既定 `from:formspree.io newer_than:14d in:anywhere`）で引き直す。
-     Gmail の検索は既定で**迷惑メール／ゴミ箱を除外する**ため、`in:anywhere` でそこも見る。
+     Gmail の検索は既定で**ゴミ箱を除外する**ため、`in:anywhere` でそこも見る。
      件名タグの表記ゆれも `from:` なら拾える。
+     ⚠️ **迷惑メールはこの経路では見えない**。Gmail MCP は `in:anywhere` でも迷惑メールを除外し、
+     `in:spam` も結果を返さない（2026-11-03 確認）。「0件」は「迷惑メールにも無い」を意味しない。
    - b. それでも0件なら、**時間差を空けて `primary_query` をもう一度**投げる（`retry_on_empty`）。
      `sleep` で待たず、**Step 1（CLAUDE.md の読み込み）と `--report` の健診を先に済ませてから**
      投げ直すこと。実測ではこの程度の時間差で復旧した。
@@ -267,9 +269,12 @@ node scripts/feedback_triage.js --health-write '{"status":"gmail_error","reason"
   検出できない（検知器と収集経路が同じ系統のため）。独立した突合には Formspree の submissions API が要るが、
   これは Free/Personal プランに含まれず Professional プラン（$30/月〜）が必要と判明した。月額課金は
   オーナー本人の契約判断（制約8）であり、エージェントは実施しない。**status: wont_fix** として確定する。
+  **迷惑メールに振り分けられた投稿**も同じく Gmail MCP からは検出できない（Step 0 の 3-a）。
 
-- **無料の代替運用（月1回・オーナー実施・自動リマインド化済み）**: Formspree ダッシュボードは Free
-  プランでも直近30日分の提出履歴を無料で閲覧できる。ローカルスケジュールタスク
+- **無料の代替運用（月1回・オーナー実施）**:
+  ⚠️ **自動リマインドは停止中**（2026-11-03 確認）。下記のタスクはスケジューラ上で削除済みで、実行は
+  2026-09-01 の1回だけ。いまは通知が届かず、この突合は行われていない。以下はタスクが動く場合の説明。
+  Formspree ダッシュボードは Free プランでも直近30日分の提出履歴を無料で閲覧できる。ローカルスケジュールタスク
   `nagoya-bites-feedback-formspree-crosscheck-monthly`（毎月1日 09:00・
   `~/.claude/scheduled-tasks/nagoya-bites-feedback-formspree-crosscheck-monthly/SKILL.md`）が
   `node scripts/feedback_triage.js --report --days 30` の件数を添えてオーナーへ通知するので、
