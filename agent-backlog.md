@@ -47,6 +47,23 @@
   5. `npm test`・`node scripts/audit_design_system.js --check`・`node scripts/audit_store_link_identity.js` が通る
 - **files**: `scripts/fetch_manual_store_photos.js`, `data/pending_stores.json`, `scripts/merge_pending_stores.js`
 
+### [SEO-152] 日次トリアージが動かなかった日を検知して通知し、未判定のレポートを窓の外へ落とさない
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-11-03
+- **due**: 2026-11-17
+- **category**: ops / 監視
+- **owner**: Builder
+- **source**: 日次SEOトリアージ 2026-11-03 の最終チェックで検出（internal-audit）。助言由来ではなくループ自身の欠陥
+- **brand-filter**: ✅ 適合 — 自動処理の失敗を当人の外へ届ける（制約11）。サイトの見た目と店舗データには触らない
+- **背景**: Gmail で見つかった日次レポート 26 通（件名 10-02〜10-31）を `data/seo_advice_log.json` と件数で突き合わせると、10-23・10-25・10-28 の 3 通が 11-03 まで判定されず、10-18・10-20・10-21 の 3 通は 10-23 にまとめて判定されていた。後から判定した 3 通の 9 項目はすべて重複で、失った採用はない。原因は 2 つ: 日次の取得は `newer_than:2d` の「最新スレッド」だけなので、定期実行が 1 回抜けるとその日のレポートは二度と読まれない。週次には `.github/workflows/seo-triage-weekly-watchdog.yml` があるが、日次には見張りが無く誰にも届かない。
+- **acceptance**:
+  1. 日次の判定ログ（`source: "line-daily"`）が決めた日数より古くなると、GitHub Issue でオーナーにメールが届く。`scripts/check_seo_triage_weekly_health.js` を流用し、閾値は引数で変える
+  2. 復旧すると Issue が自動で閉じる（CLAUDE.md の監視の原則 6）。失敗させた入力で 1 回届くことを確かめる
+  3. `.claude/commands/seo-triage.md` は自動で編集できないので、窓の中の未判定レポートをすべて読む手順の案を `docs/` に書き、オーナーの手で反映する依頼を添える
+  4. `npm test` が通る
+- **files**: `scripts/check_seo_triage_weekly_health.js`, `.github/workflows/seo-triage-weekly-watchdog.yml`, `.claude/commands/seo-triage.md`
+
 ### [MEO-001] 店のデータの正しさ・送客の数え方・検索流入の棚卸しを進める（旧 MEO 計画・改訂版）
 
 - **priority**: P1 → **status**: in_progress

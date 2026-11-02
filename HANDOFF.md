@@ -16,6 +16,7 @@ status: done
 
 ## 次にやること
 - SEO-150 → SEO-151 は `/solve-next` の別ゲートで着手する（このループでは実装しない）
+- 日次の判定が止まっても誰にも届かない問題は SEO-152 に起票した
 
 ## 試したが駄目だったこと
 - なし（`--apply` は `--skip` なしで最後まで通る。同期後の差分は 0 件）
@@ -23,7 +24,7 @@ status: done
 ## 守るルール・判断メモ
 - 起票先はこの定期タスクの指示どおり Linear にした（このリポジトリに `.ondine.json` は無い）
 - 写真の無い店を出さないオーナー判断（2026-09-02）と照合の基準は変えない
-- 日次レポートが届いた日に判定ログが無い日（10-25・10-27・10-30・11-02）がある。定期実行の取りこぼしは `desktop-scheduler-drops-catchup-runs` のメモのとおりで、レポートの窓（`newer_than:2d`）を外れると判定されない
+- 突き合わせた範囲: Gmail で見つかった日次レポート 26 通（件名 10-02〜10-31）。判定ログと件数が合い、未判定は残っていない。件名 10-11・10-19 は Gmail で見つからず未確認（10-12・10-13 も見つからないが、この 2 日分はログに判定がある）
 
 ## 関連ファイル
 `agent-backlog.md`、`data/seo_advice_log.json`、`data/linear_sync_state.json`、`scripts/merge_pending_stores.js`、`scripts/fetch_manual_store_photos.js`、`scripts/sync_backlog_to_linear.js`、`docs/decisions/0051-places-api-caching-compliance.md`
