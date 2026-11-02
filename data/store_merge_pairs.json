@@ -1,8 +1,8 @@
 {
   "_note": "ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない",
-  "mergedCount": 63,
-  "absorbedCount": 66,
-  "skippedCount": 4,
+  "mergedCount": 64,
+  "absorbedCount": 67,
+  "skippedCount": 6,
   "merged": [
     {
       "reasons": [
@@ -1698,6 +1698,34 @@
         "placeid_match"
       ],
       "kept": {
+        "店名": "レミニセンス（Reminiscence）",
+        "エリア": "名古屋市東区",
+        "ホットペッパーID": "",
+        "placeId": "ChIJEbARMC13A2ARd_ybO79h7-8",
+        "slug": "reminiscence"
+      },
+      "absorbed": [
+        {
+          "店名": "Reminiscence / レミニセンス",
+          "エリア": "名古屋市東区筒井",
+          "ホットペッパーID": "",
+          "placeId": "ChIJEbARMC13A2ARd_ybO79h7-8",
+          "slug": "reminiscence"
+        }
+      ],
+      "filledFields": [
+        "おすすめシーン",
+        "おすすめポイント",
+        "追加日",
+        "選定理由",
+        "食べログURL"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
         "店名": "名古屋コーチン鶏料理 清水 名古屋店",
         "エリア": "名古屋市中村区",
         "ホットペッパーID": "",
@@ -1748,6 +1776,18 @@
     {
       "names": [
         "レミニセンス (Reminiscence)",
+        "Reminiscence / レミニセンス"
+      ],
+      "hpIds": [
+        "",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "transitive_ward_conflict"
+    },
+    {
+      "names": [
+        "レミニセンス (Reminiscence)",
         "レミニセンス（Reminiscence）"
       ],
       "hpIds": [
@@ -1756,6 +1796,18 @@
       ],
       "reason": "placeid_match",
       "blocker": "transitive_ward_conflict"
+    },
+    {
+      "names": [
+        "レミニセンス",
+        "Reminiscence / レミニセンス"
+      ],
+      "hpIds": [
+        "",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "ward_conflict"
     },
     {
       "names": [
