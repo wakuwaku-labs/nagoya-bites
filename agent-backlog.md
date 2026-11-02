@@ -1631,9 +1631,11 @@
   1. `docs/kpi-weekly.md` の「ハブ判定の基線 — 2026-10-15」に記録。表示が出たハブ 31 本（2026-10-08 の 27 本から +4）、28日表示 95、クリック 1、平均順位 14.3。出典: `gsc_metrics.json`（生成 2026-10-14T21:19Z、期間 2026-09-16〜10-13）。
   2. `docs/qa/hub-impressions-baseline-2026-10-15.json`（774 本）を生成。表示があったのはジャンル 97 本中 14 本・条件 667 本中 17 本・エリア 10 本中 0 本。全ページ公開日は 2026-09-14 または 2026-10-14 で、11-15 時点でまだ 60 日に達しないため「公開 60 日で表示 0」の判定は 11-13 以降に実施。
 
-### [SEO-126] 11-15 に条件ページのインデックス対象を決め、外すものを noindex,follow にする
+### [SEO-126] 11-15 に条件ページのインデックス対象を決め、外すものを noindex,follow にする ✅
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-11-02
+- **resolved_by**: commit 6da81b81 / PR #714
 - **detected**: 2026-10-09
 - **due**: 2026-11-15
 - **category**: SEO / 技術
@@ -1645,6 +1647,7 @@
   1. 条件ページのうち (i) 掲載 15 軒未満 (ii) 親ジャンルページの上位 60 店との重複 80% 以上 (iii) 公開 60 日で GSC 表示 0 のどれかに当たるものを決定的に判定する。閾値は policy JSON、結果は manifest の `indexable` に持つ
   2. 当たるページを noindex,follow にし、sitemap から外す。削除せず、内部リンクは残す
   3. 判定した本数（対象・除外）を記録する
+- **結果（2026-11-02）**: 688条件ページ中498本をnoindex,follow（i軒数不足265本・ii重複≥80%で233本・iii公開60日+GSC表示0は0本）、174本がインデックス対象。sitemap.xml は282エントリに削減。policy.json に noindex 閾値追加、manifest に indexable フィールド付与。条件iii（2026-11-13以降から効き始める）は次回 gen_area_genre_pages.js 実行時に自動適用。
 
 ### [SEO-127] 忘年会シーズンに向けて banquet.html を幹事視点で強化する（新規特集は作らない）
 
@@ -8989,6 +8992,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-11-02 | Builder(/solve-next) | SEO-126 実装・デプロイ — 688条件ページ中498本をnoindex,follow（i軒数不足265本・ii重複≥80%233本・iii公開60日+GSC表示0は0本）。174本インデックス対象。sitemap.xml 282エントリに削減。policy.json に noindex 閾値追加、manifest に indexable フィールド付与。PR #714 | ✅ commit 6da81b81 |
 | 2026-10-29 | Orchestrator(routine) | SNS-004 done化 — `data/x_post_policy.json` mode=live（2026-10-15切替）、`data/x_post_log.json` に2026-10-14〜10-28の15件連続投稿を確認。7日連続acceptance超過・全acceptance達成。 | ✅ 本コミット |
 | 2026-10-29 | Orchestrator(routine) | SNS-001 done化 — 子課題SNS-002〜005全done、UTM付き投稿15件連続記録済み、watchdog稼働中。全acceptance達成。 | ✅ 本コミット |
 | 2026-10-28 | Orchestrator(routine) | ISSUE-149 done化 — store_referrals.json（生成日2026-10-27）で全acceptance確認：①npm test/構文監査はPR合流時通過済み ②stores=65・totals.exits.tabelog=15（0でない）③totals.reports.yes=0・no=1（"0件でも失敗にしない"条件に沿って記録）。実装完結につきdone化した。 | ✅ 本コミット |
