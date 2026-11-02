@@ -73,5 +73,11 @@
     "applyToConditions": ["group-30", "nomihodai", "koshitsu"],
     "applyToGenres": ["izakaya", "yakiniku"]
   },
-  "sitemap": { "hubPriority": "0.7", "conditionPriority": "0.6", "changefreq": "weekly" }
+  "sitemap": { "hubPriority": "0.7", "conditionPriority": "0.6", "changefreq": "weekly" },
+  "noindex": {
+    "_note": "条件ページのnoindex判定閾値（SEO-126）。minStores未満・parentOverlapThreshold以上の重複・minDaysBeforeImpressionCheck日以上経過でGSC表示0 のいずれかを満たすと noindex,follow。閾値変更はこのファイルのみで行う",
+    "minStores": 15,
+    "parentOverlapThreshold": 0.8,
+    "minDaysBeforeImpressionCheck": 60
+  }
 }
