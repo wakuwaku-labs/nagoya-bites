@@ -4530,6 +4530,96 @@
       "brand_reason": "振替採用（SEO-150・SEO-151）。書かれた打ち手は、さく蛸が data/stores.json にも stores/ にも無いのでできない。原因は写真の照合で落ちて非表示になること（merge_pending_stores.js）で、非表示31店のうち19店に記事があり、その記事が直近28日の検索クリックの9.2%以上を受けている。店名KWの記事を増やすのではなく、実在検証を通した店を店舗データへ入れる施策なので Moat（構造化データ層）を伸ばし、順位を歪めない。写真の無い店を出さないオーナー判断と照合の基準は変えない",
       "category": "SEO",
       "fingerprint": "2d5f3374e51c48f3"
+    },
+    {
+      "id": null,
+      "date": "2026-11-03",
+      "source": "line-daily",
+      "advice": "[レポート10-23・定期実行が動かず未処理だった分] 🟢 予約クリック率4.6%・予約4回。👉 トップ・nagoya-solo-diningで予約ボタン(cta_click)をより目立つ位置・デザインにする",
+      "verdict": "duplicate",
+      "brand_reason": "重複（予約ボタンを目立たせる同旨を 10-02〜11-03 に判定済み）。助言自身が好調と認めており、1日4回の母数では配置の差を検出できない（制約10）。色や配置は DSN-001 経由でしか変えない",
+      "category": null,
+      "fingerprint": "ee209314bf898c1e"
+    },
+    {
+      "id": null,
+      "date": "2026-11-03",
+      "source": "line-daily",
+      "advice": "[レポート10-23・定期実行が動かず未処理だった分] 🟡 Google検索29訪問。👉 「キミトテ」等のKWに対応するstores/の静的店舗ページに特集・日次記事への内部リンクを追記",
+      "verdict": "duplicate",
+      "brand_reason": "重複（店名KWの同旨を 09-29〜11-03 に判定済み）。単一店名のナビゲーショナルクエリは公式・Googleマップに譲る Strategic Skip。店舗ページの関連リンクは scripts/lib/related_stores.js と SEO-147 の範囲",
+      "category": null,
+      "fingerprint": "df5939be63b0f43e"
+    },
+    {
+      "id": null,
+      "date": "2026-11-03",
+      "source": "line-daily",
+      "advice": "[レポート10-23・定期実行が動かず未処理だった分] 🟢 人気TOP5に特集2件。👉 nagoya-solo-dining・nagoya-autumn-2026の見出し・写真でSNS投稿を増やし店舗詳細への導線を強化",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SNS投稿の同旨を 09-25〜10-26 に判定済み・SEO-093/098/101 に集約）。SNS投稿はリポジトリ外の運用で、このループの実装対象ではない",
+      "category": null,
+      "fingerprint": "504f28e0af187a05"
+    },
+    {
+      "id": null,
+      "date": "2026-11-03",
+      "source": "line-daily",
+      "advice": "[レポート10-25・定期実行が動かず未処理だった分] 🟡 予約転換率1.7%・予約1回。👉 人気特集とstores/に「いますぐ予約」ボタンを大きく表示しCTAを強化",
+      "verdict": "duplicate",
+      "brand_reason": "重複（予約CTAを強める同旨を 10-02〜11-03 に判定済み）。訪問60人・1回は日々の振れの範囲で、週では4.6%（制約10）。煽る文言は編集独立の信頼と相反（制約7）",
+      "category": null,
+      "fingerprint": "a064f1b42df9b9c4"
+    },
+    {
+      "id": null,
+      "date": "2026-11-03",
+      "source": "line-daily",
+      "advice": "[レポート10-25・定期実行が動かず未処理だった分] 🟢 1.3ページ/訪問。👉 人気特集の下部に「この特集を読んだ人はこちらも見ています」として他の特集・関連店舗へのリンクを3件ずつ追加",
+      "verdict": "duplicate",
+      "brand_reason": "重複・実装済み寄り（特集末尾の関連リンクは SEO-002 done・SEO-012、同旨を 09-26〜11-03 に判定済み）。実際の閲覧履歴に基づかない『読んだ人はこちらも』の表現は事実と異なるので使わない（制約7）",
+      "category": null,
+      "fingerprint": "97fa143674c5cab7"
+    },
+    {
+      "id": null,
+      "date": "2026-11-03",
+      "source": "line-daily",
+      "advice": "[レポート10-25・定期実行が動かず未処理だった分] 🟡 SNS流入0%。👉 停止中のSNS原稿生成を再開し、InstagramとFacebookで毎日投稿を再開",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SNS投稿の同旨を 09-25〜10-26 に判定済み）。SNS投稿はリポジトリ外の運用で UTM で測る方針で、SNS原稿の停止とは結びつけない。X の自動投稿は 2026-10-15 から稼働中",
+      "category": null,
+      "fingerprint": "03f2ffc94a32cd30"
+    },
+    {
+      "id": null,
+      "date": "2026-11-03",
+      "source": "line-daily",
+      "advice": "[レポート10-28・定期実行が動かず未処理だった分] 🟡 予約率4.8%。👉 index.html・features/・journal/の予約ボタン(cta_click/cta_reserve)を色変更・文言調整でさらに目立たせる",
+      "verdict": "duplicate",
+      "brand_reason": "重複（予約ボタンを目立たせる同旨を 10-02〜11-03 に判定済み）。助言自身が良好と認めている。色や文言は DSN-001 経由でしか変えない",
+      "category": null,
+      "fingerprint": "12558d3883d6abca"
+    },
+    {
+      "id": null,
+      "date": "2026-11-03",
+      "source": "line-daily",
+      "advice": "[レポート10-28・定期実行が動かず未処理だった分] 🟡 検索流入78%。👉 stores/の「さく蛸 黒川」のタイトルとディスクリプションにKWを含め、モーダルの説明文も強化",
+      "verdict": "duplicate",
+      "brand_reason": "重複。さく蛸の店舗ページとモーダルは存在しないので、書かれた打ち手はできない。原因への対応は SEO-150/151 に集約。記事の題は #1066 で 10-30 に書き直し済みで 11-13 に比較する",
+      "category": null,
+      "fingerprint": "de7b20b15f663a4f"
+    },
+    {
+      "id": null,
+      "date": "2026-11-03",
+      "source": "line-daily",
+      "advice": "[レポート10-28・定期実行が動かず未処理だった分] 🟢 日次記事がTOP5に3件。👉 2026-10-26-marunouchi-bistro-diaの見出しと写真でInstagram等に発信",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SNS投稿の同旨を 09-25〜10-26 に判定済み）。SNS投稿はリポジトリ外の運用で、このループの実装対象ではない。記事の X 投稿は自動で行っている",
+      "category": null,
+      "fingerprint": "48f70f1057102d66"
     }
   ]
 }

@@ -19,7 +19,7 @@
 - **背景**:
   - 日次ジャーナルが扱った新店は `data/pending_stores.json` に入るが、`scripts/merge_pending_stores.js:98` が「写真URLが空で写真失敗理由あり」の店を外す。2026-11-02 のビルドの記録は `pending_stores: 90件追加 / 17件既存 / 写真取得未了で非表示31件`（手動店は別に 55 件）
   - 非表示 31 店のうち 19 店に記事がある（記事は 14 本）。その記事が、直近 28 日（10-05〜11-01）の Google 検索クリック 934 回のうち少なくとも 86 回（9.2%）を受けている。これらの記事のカードから店舗ページへは進めない
-  - 例: 「さく蛸 黒川」（表示 409・8.4 位）、BISTRO DIA、リサールコーヒー。過去の判定ログ（10-26〜11-01）の「さく蛸は stores/ の静的ページが title/h1 に店名を出している」は誤りだった（`data/stores.json` にも `stores/` にも無い）
+  - 例: 「さく蛸 黒川」（表示 409・8.4 位）、BISTRO DIA、リサールコーヒー。過去の判定ログ（10-28〜11-01）の「さく蛸は stores/ の静的ページが title/h1 に店名を出している」は誤りだった（`data/stores.json` にも `stores/` にも無い）
   - 落ちた理由は 30 店が `name-mismatch`、1 店が `out-of-area`。ただし `scripts/fetch_manual_store_photos.js` の `name-mismatch` は「候補が 1 件も無い」（315 行）と「別の名前の候補が出た」（317 行）を区別せず、候補名と一致度は画面の表示だけで残らない。表記ゆれで落ちたのか、Google に未登録なのかを後から確かめられない（CLAUDE.md 品質ゲート原則1）
   - さく蛸は、記事の店名が「さく蛸 黒川店」、食べログの店名が「さく蛸 北区黒川交差点店」。Google 側の店名は未確認
 - **acceptance**:
@@ -244,9 +244,9 @@
   - 達成条件1: Places ポリシーページ（2026-10-13 更新版）から原文引用・URL 付きで記録した。Maps Platform Service Specific Terms は WebFetch で完全取得できず（途中で切断）。`docs/decisions/0051-places-api-caching-compliance.md` に記録
   - 達成条件2: places_resolved.json の4項目（placeId・name・formatted_address・fetchedAt）と stores.json の2項目（Google評価・口コミ数）の一覧を ADR に作成
   - 達成条件3: placeId と fetchedAt/rejected は「合う」。name・formatted_address・Google評価・口コミ数は「決められない」（Service Specific Terms の allowed exceptions を確認できていないため）
-  - 達成条件4: 「決められない」項目について、選択肢A〜D と費用を ADR に記載。オーナー判断依頼として [[ISSUE-192]] を起票（Service Specific Terms を確認して判断を頼む）
+  - 達成条件4: 「決められない」項目について、選択肢A〜D と費用を ADR に記載。オーナー判断依頼として [[ISSUE-194]] を起票（Service Specific Terms を確認して判断を頼む）
 
-### [ISSUE-192] Places 規約の「allowed exceptions」の内容を確認し、Google 側データの保存継続可否をオーナーに判断してもらう
+### [ISSUE-194] Places 規約の「allowed exceptions」の内容を確認し、Google 側データの保存継続可否をオーナーに判断してもらう
 
 - **priority**: P2 → **status**: ready
 - **due**: 2026-11-15

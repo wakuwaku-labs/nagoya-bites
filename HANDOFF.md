@@ -10,19 +10,20 @@ status: done
 
 ## できていること
 - 7 項目を判定した: 採用 1（課題 2 本: SEO-150＝P-779、SEO-151＝P-780・P-779 の子）、却下 3、重複 3
+- 定期実行が動かず判定されていなかった日次レポート 10-23・10-25・10-28 の 9 項目も判定した。すべて重複で、新しい採用なし
 - 判明: 記事の主役でも、写真の照合で落ちると店舗データから外れる（非表示 31 店・記事 14 本・直近 28 日の検索クリックの 9.2% 以上）。過去のログの「さく蛸は stores/ にページがある」は誤りで、今回のログで訂正した
+- 同期の不具合 2 件を直した: アーカイブ済みの課題で `--apply` が止まらない（`duplicateNeedsSync`）／同じ番号だった Places の課題を `[ISSUE-194]`（P-781）に振り直し、P-474 は会席の題で Done になった
 
 ## 次にやること
 - SEO-150 → SEO-151 は `/solve-next` の別ゲートで着手する（このループでは実装しない）
-- 同期の不具合 2 件は別タスクとして提案済み（下記）
 
 ## 試したが駄目だったこと
-- `sync_backlog_to_linear.js --apply` は `mark-duplicate` の P-28（Linear でアーカイブ済み）で止まる。作成と更新はその前に終わるので今回の課題は反映済み。残りの 5 件はそのまま
+- なし（`--apply` は `--skip` なしで最後まで通る。同期後の差分は 0 件）
 
 ## 守るルール・判断メモ
-- `[ISSUE-192]` が backlog に 2 つあり（会席 done／Places 規約 ready）、どちらも P-474 に対応する。`--apply` すると題と状態を上書きするので `--skip P-474` で外した。P-474 は Linear で Todo のまま（会席は完了済み）
 - 起票先はこの定期タスクの指示どおり Linear にした（このリポジトリに `.ondine.json` は無い）
 - 写真の無い店を出さないオーナー判断（2026-09-02）と照合の基準は変えない
+- 日次レポートが届いた日に判定ログが無い日（10-25・10-27・10-30・11-02）がある。定期実行の取りこぼしは `desktop-scheduler-drops-catchup-runs` のメモのとおりで、レポートの窓（`newer_than:2d`）を外れると判定されない
 
 ## 関連ファイル
-`agent-backlog.md`、`data/seo_advice_log.json`、`data/linear_sync_state.json`、`scripts/merge_pending_stores.js`、`scripts/fetch_manual_store_photos.js`
+`agent-backlog.md`、`data/seo_advice_log.json`、`data/linear_sync_state.json`、`scripts/merge_pending_stores.js`、`scripts/fetch_manual_store_photos.js`、`scripts/sync_backlog_to_linear.js`、`docs/decisions/0051-places-api-caching-compliance.md`

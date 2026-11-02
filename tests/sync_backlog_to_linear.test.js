@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { buildPlan } = require('../scripts/sync_backlog_to_linear');
+const { buildPlan, duplicateNeedsSync } = require('../scripts/sync_backlog_to_linear');
 
 const state = (ids = {}) => ({ issues: ids, workspaceName: 'test', duplicateImports: [] });
 const defaults = { projectName: 'Nagoya Bites', assigneeName: 'owner', dueDateDaysByPriority: { P1: 7, P2: 14 }, krLabelRules: [], roleLabels: { prefix: '担当:', roles: [], ownerActionLabel: '担当:オーナー作業', ownerActionKeywords: [] } };
@@ -98,4 +98,22 @@ test("Linear が完了で backlog も done なら何も出さない", () => {
   const tasks = [task("ISSUE-1", "done", "P1")];
   const live = new Map([liveIssue("P-1", "completed", "Done", 2)]);
   assert.equal(buildPlan(tasks, live, state({ "ISSUE-1": { identifier: "P-1" } }), defaults, "").length, 0);
+});
+
+test('アーカイブ済みの課題が絡む重複は同期しない（Entity is archived で止まらない）', () => {
+  const dup = { identifier: 'P-28', canonical: 'P-20', title: '重複' };
+  const issue = { state: { type: 'duplicate' }, title: '重複' };
+  assert.equal(duplicateNeedsSync(dup, issue, [], new Map([liveIssue('P-28')])), false, '正本がアーカイブ済み');
+  assert.equal(duplicateNeedsSync(dup, issue, [], new Map([liveIssue('P-20')])), false, '重複の側がアーカイブ済み');
+});
+
+test('両方が一覧にある重複は、状態・題・関連のどれかが違えば同期する', () => {
+  const dup = { identifier: 'P-28', canonical: 'P-20', title: '重複' };
+  const live = new Map([liveIssue('P-28'), liveIssue('P-20')]);
+  const ok = { state: { type: 'duplicate' }, title: '重複' };
+  const rel = [{ relationship: 'duplicateOf', relatedIssue: { identifier: 'P-20' } }];
+  assert.equal(duplicateNeedsSync(dup, ok, rel, live), false);
+  assert.equal(duplicateNeedsSync(dup, ok, [], live), true, '関連なし');
+  assert.equal(duplicateNeedsSync(dup, { state: { type: 'unstarted' }, title: '重複' }, rel, live), true, '状態違い');
+  assert.equal(duplicateNeedsSync(dup, { state: { type: 'duplicate' }, title: '別' }, rel, live), true, '題違い');
 });

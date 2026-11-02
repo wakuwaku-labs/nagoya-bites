@@ -121,6 +121,13 @@ function listAllIssues(read = readJson, maxPages = 50) {
  * @param {string}   md         - raw backlog markdown (for description extraction)
  * @returns {object[]} plan items with action, task, identifier, status, priority
  */
+// アーカイブ済みの課題は書き換えられない（Entity is archived）ので、どちらかが一覧に無ければ同期しない。
+function duplicateNeedsSync(duplicate, issue, relations, liveIssues) {
+  if (!liveIssues.has(duplicate.identifier) || !liveIssues.has(duplicate.canonical)) return false;
+  const related = (relations || []).some(r => r.relationship === 'duplicateOf' && r.relatedIssue?.identifier === duplicate.canonical);
+  return issue.state?.type !== 'duplicate' || issue.title !== duplicate.title || !related;
+}
+
 function buildPlan(tasks, liveIssues, state, defaults, md) {
   const active = tasks.filter(t => stateFor[t.status]);
   const plan = [];
@@ -173,8 +180,7 @@ function main() {
     try {
       const context = readJson(['linear', 'issue', duplicate.identifier, '--relations', '--workspace', WORKSPACE, '--json']);
       const issue = context.issue;
-      const related = (context.relations || []).some(r => r.relationship === 'duplicateOf' && r.relatedIssue?.identifier === duplicate.canonical);
-      if (issue.state?.type !== 'duplicate' || issue.title !== duplicate.title || !related) {
+      if (duplicateNeedsSync(duplicate, issue, context.relations, liveIssues)) {
         plan.push({ action: 'mark-duplicate', task: { id: duplicate.source_id, title: duplicate.title },
           identifier: duplicate.identifier, status: 'Duplicate', priority: null });
       }
@@ -277,4 +283,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { isValidDueDate, missingCreateFields, withCreateDefaults, listAllIssues, buildPlan };
+module.exports = { isValidDueDate, missingCreateFields, withCreateDefaults, listAllIssues, buildPlan, duplicateNeedsSync };
