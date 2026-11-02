@@ -1,0 +1,440 @@
+{
+  "date": "2026-11-02",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅『鎌倉紅谷』クルミッ子が常設に、バターのいとこも 手土産は予算で",
+      "verdict": "PASS",
+      "total": 104,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 5件 (新店,動向,比較,シーン,価格帯) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 149字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄三越9階『すしの美登利』10月31日開店、行列の読み方と価格帯",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 87,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 6件 (新店,比較,エリア,予約,シーン,価格帯) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 135字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "87点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -6 / brand_fit -4"
+    },
+    {
+      "id": "c3",
+      "title_draft": "矢場町『sanrio house 名古屋PARCO店』全国初のカフェ、予約60分制",
+      "verdict": "HOLD",
+      "total": 83,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 6件 (新店,エリア,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 155字 +4",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "栄の居酒屋『定番チューン。』青魚が軸の新店、4,000円台の使い方",
+      "verdict": "HOLD",
+      "total": 61,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 6件 (新店,比較,エリア,予約,シーン,価格帯) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 135字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「一人飲み」+1",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "新栄町『をかし Japanese Bar』11月2日開店の日本酒バー、2軒目の価格帯",
+      "verdict": "HOLD",
+      "total": 54,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 4,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "バー",
+          "feature": "features/nagoya-bar-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 5件 (新店,エリア,予約,シーン,価格帯) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 145字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「バー」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "weekly_digest",
+      "title_draft": "名駅『鎌倉紅谷』クルミッ子が常設に、バターのいとこも 手土産は予算で",
+      "lead_draft": "JR名古屋タカシマヤ地下1階の和洋菓子売場が2026年10月30日に新しくなり、東海地区初出店の『鎌倉紅谷』『バターのいとこ』、地元の『菓匠 花桔梗と一朶』、名古屋駅地区で唯一の『シーキューブ』が並んだ。1個320円の生はなどらから3,240円の羽二重ロールまで、予算と渡す相手で4店を選び分ける。",
+      "angle": "同じ売場に開いた新店4店を比較し、1枚378円から箱6,210円までの価格帯と1枚単価、各日50セット・100個の限定数と販売期間、催事から常設へ移る動向を、自分用・職場・帰省の手土産のシーン別に読む",
+      "main_store": {
+        "name": "鎌倉紅谷 ジェイアール名古屋タカシマヤ店",
+        "id": "",
+        "area": "名駅",
+        "genre": "和菓子"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES ジェイアール東海高島屋（和洋菓子売場のオープニング商品）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000512.000047031.html",
+          "date": "2026-10-22"
+        },
+        {
+          "label": "PR TIMES GOODNEWS（バターのいとこ 名古屋店）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000100.000086049.html",
+          "date": "2026-10-13"
+        },
+        {
+          "label": "鎌倉紅谷 公式（新店舗オープンのお知らせ）",
+          "url": "https://beniya-ajisai.co.jp/news/post_news/20199/",
+          "date": "2026-09-16"
+        },
+        {
+          "label": "メ〜テレ（Yahoo!ニュース）開店当日の報道",
+          "url": "https://news.yahoo.co.jp/articles/c103204f00c65d90aed664d9189ab53ed8e7b712",
+          "date": "2026-10-30"
+        },
+        {
+          "label": "ナゴヤト（4店の商品と場所）",
+          "url": "https://nagoyato.com/posts/20343",
+          "date": "2026-10-25"
+        },
+        {
+          "label": "X 名古屋情報通（6月の期間限定出店）",
+          "url": "https://x.com/nagoya_jouhou/status/2064282597862326581",
+          "date": "2026-06-09"
+        },
+        {
+          "label": "X 名古屋グルメ探偵（5月の松坂屋への出店）",
+          "url": "https://x.com/gourmet_nagoya/status/2054405811234025728",
+          "date": "2026-05-13"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "weekly_digest",
+      "title_draft": "栄三越9階『すしの美登利』10月31日開店、行列の読み方と価格帯",
+      "lead_draft": "名古屋栄三越の9階に2026年10月31日、『すしの美登利』が開いた。営業は11時から21時で、ラストオーダーは20時30分。名駅の店と栄の店で使い分けられるのか、百貨店のレストラン階という立地が待ち時間と昼夜の使い方をどう変えるのかを、公開されている情報から整理する。",
+      "angle": "栄エリアの百貨店レストラン階に開いた新店を名駅の既存店と比較し、価格帯と予約の扱い、昼夜のシーンを読む",
+      "main_store": {
+        "name": "すしの美登利 名古屋栄三越店",
+        "id": "",
+        "area": "栄",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通（すしの美登利）",
+          "url": "https://jouhou.nagoya/sushi-no-midori/",
+          "date": "2026-10-31"
+        },
+        {
+          "label": "愛知スポット（名古屋栄三越の2026年秋リニューアル）",
+          "url": "https://www.aichispot.com/mitsukosi-renewal2026-sakae-open/",
+          "date": "2026-10-11"
+        },
+        {
+          "label": "食べログ 名古屋市のニューオープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "weekly_digest",
+      "title_draft": "矢場町『sanrio house 名古屋PARCO店』全国初のカフェ、予約60分制",
+      "lead_draft": "名古屋PARCO西館地下1階に2026年10月29日、全国初のカフェブースを併設した『sanrio house 名古屋PARCO店』が開いた。事前予約の60分制で1人1品以上、イートインのみ。クレープ790円から1,680円、ミニパフェ1,580円という価格帯と予約の取り方を、友人同士や親子のシーン別に読む。",
+      "angle": "矢場町エリアの新店カフェを、クレープ790円から1,680円の価格帯、60分制の予約と回転、シーン別に読む",
+      "main_store": {
+        "name": "sanrio house 名古屋PARCO店",
+        "id": "",
+        "area": "矢場町",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "ナゴヤト（sanrio house 名古屋PARCO店）",
+          "url": "https://nagoyato.com/posts/20467",
+          "date": "2026-10-29"
+        },
+        {
+          "label": "名古屋情報通（サンリオハウス）",
+          "url": "https://jouhou.nagoya/sanrio-house-open/",
+          "date": "2026-10-30"
+        },
+        {
+          "label": "食べログ 名古屋市のニューオープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "weekly_digest",
+      "title_draft": "栄の居酒屋『定番チューン。』青魚が軸の新店、4,000円台の使い方",
+      "lead_draft": "栄の『青魚と居酒屋料理 定番チューン。』が2026年10月31日に開いた。食べログの夜の価格帯は4,000円台で、青魚を軸にした居酒屋料理という珍しい打ち出しの店だ。同じ週に開いた栄周辺の居酒屋と比べ、仕事帰りの少人数や一人飲みのシーンで使えるのかを、公開情報から読む。",
+      "angle": "栄エリアの新店居酒屋を価格帯と予約、少人数のシーンで比較して読む",
+      "main_store": {
+        "name": "定番チューン",
+        "id": "J004723769",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "食べログ 名古屋市のニューオープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/"
+        },
+        {
+          "label": "食べログ 名古屋市中区のニューオープン一覧",
+          "url": "https://tabelog.com/aichi/C23106/rstLst/cond16-00-00/"
+        },
+        {
+          "label": "ホットペッパー 名古屋の店舗一覧",
+          "url": "https://www.hotpepper.jp/SA33/Y200/lastminute/"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "weekly_digest",
+      "title_draft": "新栄町『をかし Japanese Bar』11月2日開店の日本酒バー、2軒目の価格帯",
+      "lead_draft": "新栄町駅の近くに2026年11月2日、日本酒バー『をかし Japanese Bar』が開いた。食べログの価格帯は夜6,000円台から、昼2,000円台の表示で、バーとしては昼の営業も読み取れる。ただし公開情報はまだ少なく、席数や予約の方法は確認できていない。二軒目の選択肢になるのかを読む。",
+      "angle": "新栄町エリアの新店日本酒バーを価格帯と予約、二軒目のシーンで読む",
+      "main_store": {
+        "name": "をかし Japanese Bar",
+        "id": "",
+        "area": "新栄町",
+        "genre": "日本酒バー"
+      },
+      "sources": [
+        {
+          "label": "食べログ 名古屋市のニューオープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/"
+        }
+      ]
+    }
+  ]
+}
