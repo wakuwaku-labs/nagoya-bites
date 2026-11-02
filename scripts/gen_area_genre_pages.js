@@ -301,7 +301,7 @@ const HUB_STYLE = `
 .hub-table th:last-child,.hub-table td:last-child{text-align:right;font-variant-numeric:tabular-nums;}
 </style>`;
 
-function renderShell({ depth, active, breadcrumb, title, desc, canonicalPath, jsonLdList, bodyHtml, styleExtra }) {
+function renderShell({ depth, active, breadcrumb, title, desc, canonicalPath, jsonLdList, bodyHtml, styleExtra, robots }) {
   const p = siteChrome.prefix(depth);
   const canonical = `${BASE_URL}/${canonicalPath}`;
   const jsonLd = jsonLdList.map(j => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n');
@@ -314,6 +314,7 @@ ${gaSnippet()}
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${canonical}">
+${robots ? `<meta name="robots" content="${esc(robots)}">` : ''}
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:type" content="website">
@@ -437,7 +438,7 @@ function breadcrumbLd(items) {
   };
 }
 
-function renderListingPage(page, siblingConditions, policy, TRUST_POLICY) {
+function renderListingPage(page, siblingConditions, policy, TRUST_POLICY, indexable) {
   const isCondition = page.type === 'condition';
   const sorted = sortForDisplay(page.stores);
   const shown = sorted.slice(0, policy.maxCards);
@@ -586,6 +587,7 @@ ${faqHtml}
     depth: 3, active: 'top', breadcrumb,
     title: titleFor(page), desc: descriptionFor(page), canonicalPath: page.url,
     jsonLdList, bodyHtml: body, styleExtra: HUB_STYLE,
+    robots: indexable === false ? 'noindex,follow' : undefined,
   });
 }
 
@@ -662,10 +664,48 @@ function prepare() {
 }
 
 /** 1ページ分の HTML（種類で書き分ける）。prepare() の後に呼ぶ */
-function renderHubPage(page, pages, policy, TRUST_POLICY) {
+function renderHubPage(page, pages, policy, TRUST_POLICY, indexable) {
   if (page.type === 'root') return renderRootPage({ pages }, policy);
   if (page.type === 'area') return renderAreaPage(page, pages, policy);
-  return renderListingPage(page, policy.conditions, policy, TRUST_POLICY);
+  return renderListingPage(page, policy.conditions, policy, TRUST_POLICY, indexable);
+}
+
+/**
+ * 条件ページのインデックス可否を判定する（SEO-126）。
+ * (i) count < noindex.minStores
+ * (ii) 親ジャンルページ上位 maxCards 店との重複 >= noindex.parentOverlapThreshold
+ * (iii) 公開 >= noindex.minDaysBeforeImpressionCheck 日かつ GSC 表示 0
+ * いずれかを満たすと false（noindex,follow）。条件ページ以外は常に true。
+ * @returns {boolean}
+ */
+function computeIndexable(page, genreStoresByKey, gscImpressionsByPath, prevManifestByPath, today, policy) {
+  if (page.type !== 'condition') return true;
+  const ni = policy.noindex;
+  if (!ni) return true;
+
+  // (i) 軒数不足
+  if (page.stores.length < ni.minStores) return false;
+
+  // (ii) 親ジャンルページ上位との重複率
+  const genreStores = genreStoresByKey.get(`${page.area.slug}::${page.genre.slug}`) || [];
+  if (genreStores.length > 0 && page.stores.length > 0) {
+    const topSet = new Set(sortForDisplay(genreStores).slice(0, policy.maxCards));
+    const inTop = page.stores.filter(s => topSet.has(s)).length;
+    if (inTop / page.stores.length >= ni.parentOverlapThreshold) return false;
+  }
+
+  // (iii) 公開 60 日以上かつ GSC 表示 0
+  const prev = prevManifestByPath.get(page.url);
+  const firstPublished = prev && prev.firstPublished;
+  if (firstPublished) {
+    const ageDays = (today - new Date(firstPublished)) / 86400000;
+    if (ageDays >= ni.minDaysBeforeImpressionCheck) {
+      const impressions = gscImpressionsByPath.get(page.url) || 0;
+      if (impressions === 0) return false;
+    }
+  }
+
+  return true;
 }
 
 function main() {
@@ -675,12 +715,33 @@ function main() {
   const prevManifest = fs.existsSync(MANIFEST_PATH) ? JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8')) : { pages: [] };
   const prevBySlug = new Map((prevManifest.pages || []).map(p => [p.path, p]));
 
+  // SEO-126: noindex 判定の材料
+  const GSC_PATH = path.join(ROOT, 'data', 'gsc_metrics.json');
+  const gscImpressionsByPath = new Map();
+  if (fs.existsSync(GSC_PATH)) {
+    const gsc = JSON.parse(fs.readFileSync(GSC_PATH, 'utf8'));
+    for (const hp of (gsc.hubPages || [])) {
+      const p = hp.page.replace(/^https?:\/\/nagoya-bites\.com\//, '');
+      gscImpressionsByPath.set(p, hp.impressions || 0);
+    }
+  }
+  const genreStoresByKey = new Map();
+  for (const p of pages) {
+    if (p.type === 'genre') genreStoresByKey.set(`${p.area.slug}::${p.genre.slug}`, p.stores);
+  }
+  const today = new Date();
+
   const manifestPages = [];
   let written = 0, unchanged = 0;
+  let noindexCount = 0, indexableCount = 0;
   const onDiskExpected = new Set();
 
   for (const page of limited) {
-    let html = renderHubPage(page, pages, policy, TRUST_POLICY);
+    const indexable = computeIndexable(page, genreStoresByKey, gscImpressionsByPath, prevBySlug, today, policy);
+    if (page.type === 'condition') {
+      if (indexable) indexableCount++; else noindexCount++;
+    }
+    let html = renderHubPage(page, pages, policy, TRUST_POLICY, indexable);
 
     const absPath = path.join(ROOT, page.url);
     onDiskExpected.add(page.url);
@@ -696,6 +757,7 @@ function main() {
       firstPublished: (prev && prev.firstPublished) || new Date().toISOString().slice(0, 10),
       updated: pageUpdated,
       status: 'active',
+      ...(page.type === 'condition' ? { indexable } : {}),
     };
     manifestPages.push(entry);
 
@@ -747,12 +809,20 @@ function main() {
   let sitemapResult = { updated: false };
   if (!DRY_RUN && !LIMIT) {
     const updatedByPath = new Map(manifestPages.map(m => [m.path, m.updated]));
-    sitemapResult = rewriteSitemap(limited.filter(p => manifestPages.find(m => m.path === p.url && m.status === 'active')), policy, updatedByPath);
+    // noindex ページは sitemap から除外する（SEO-126）
+    sitemapResult = rewriteSitemap(
+      limited.filter(p => {
+        const m = manifestPages.find(m => m.path === p.url && m.status === 'active');
+        return m && m.indexable !== false;
+      }),
+      policy, updatedByPath,
+    );
   }
 
   console.log(JSON.stringify({
     ok: true, dry_run: DRY_RUN, planned: pages.length, written, unchanged,
     stubbed: stubbed.length, removed: removed.length, sitemap: sitemapResult,
+    noindex: { condition_noindex: noindexCount, condition_indexable: indexableCount },
   }, null, 1));
 
   if (CHECK) {
