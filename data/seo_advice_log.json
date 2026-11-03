@@ -4660,6 +4660,46 @@
       "brand_reason": "同じメールの再取得。判定は同日の前回実行のとおり（採用 SEO-150/151、却下3）。次の週次はまだ届いていない",
       "category": null,
       "fingerprint": "9c078d8c4429947f"
+    },
+    {
+      "id": null,
+      "date": "2026-11-04",
+      "source": "line-daily",
+      "advice": "[レポート11-02] 🟢 予約クリック率11.2%（訪問116人・13回）。👉 人気ページTOP5の全ページにファーストビューで目立つ「予約ボタン」を設置",
+      "verdict": "duplicate",
+      "brand_reason": "重複（予約ボタンを目立たせる同旨を 10-02〜11-03 に判定済み。判定器は語の違いで false を返したが主旨は同じ）。助言自身が良好と認めており、1日116人・13回では配置の差を検出できない（制約10）。TOP5 には記事・特集・トップが混在し、店を選ぶ前の最初の画面に予約を置くと編集の順序が崩れる。色や配置は DSN-001 経由でしか変えない",
+      "category": null,
+      "fingerprint": "6769eef92a22e3a7"
+    },
+    {
+      "id": null,
+      "date": "2026-11-04",
+      "source": "line-daily",
+      "advice": "[レポート11-02] 🟡 検索流入80%・8〜20位のKWが複数。👉 「さく蛸 黒川」「キミトテ」「リサールコーヒー 名古屋」の記事を見直し、タイトルやディスクリプションにキーワードを入れる",
+      "verdict": "duplicate",
+      "brand_reason": "重複・対応済みで比較待ち（店名KWの同旨を 09-29〜11-03 に判定済み）。実測: さく蛸の記事は #1066 で 10-30 に題と説明文を書き直し 11-13 に比較（表示1245・順位7.8）。リサールの記事は題に語が既にあり SEO-137/148 で 11-06 に比較（表示830・順位9.2・CTR1.2%）。キミトテは stores/kimitote.html の題に店名があり記事ではない（表示618・順位10.1）。比較の前に題を変えると前後比が取れなくなる（GSCループの原則）",
+      "category": null,
+      "fingerprint": "09a5fffd028a7163"
+    },
+    {
+      "id": null,
+      "date": "2026-11-04",
+      "source": "line-daily",
+      "advice": "[レポート11-02] 🟢 1.2ページ/訪問。👉 nagoya-solo-dining と 2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia に関連する別の記事へのリンクを3件ずつ追加して回遊を促す",
+      "verdict": "duplicate",
+      "brand_reason": "重複・実装済み（同じ2ページの同旨を 11-03 に判定済み）。実測: nagoya-solo-dining は記事・特集へ20本（うちジャーナル4本）と「関連する特集記事」があり、marunouchi の記事は nagoya-french-guide・sakae・nagoya-gourmet-guide と関連記事を持つ。1.2ページ/訪問は検索の初回訪問が大半の構造で、リンク本数の不足を示す証拠がない（制約10）",
+      "category": null,
+      "fingerprint": "ff9db5cb7d79a28c"
+    },
+    {
+      "id": null,
+      "date": "2026-11-04",
+      "source": "line-weekly",
+      "advice": "[週次 2026-10-25〜10-31・11-04 の再取得] 訪問811人+38%・閲覧1107+31%と助言3件（電話ボタン削除・回遊・さく蛸）",
+      "verdict": "duplicate",
+      "brand_reason": "同じメールの再取得。判定は 11-03 の実行のとおり（採用 SEO-150/151、却下3）。次の週次はまだ届いていない",
+      "category": null,
+      "fingerprint": "945244ce58fbc86c"
     }
   ]
 }

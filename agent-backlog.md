@@ -62,7 +62,7 @@
   2. 復旧すると Issue が自動で閉じる（CLAUDE.md の監視の原則 6）。失敗させた入力で 1 回届くことを確かめる
   3. `.claude/commands/seo-triage.md` は自動で編集できないので、窓の中の未判定レポートをすべて読む手順の案を `docs/` に書き、オーナーの手で反映する依頼を添える
   4. `npm test` が通る
-  5. 手順の検索語から絵文字を外す。2026-11-03 に実測: `subject:"📊 NAGOYA BITES 日次レポート"` は期間を外しても 0 件、`subject:"NAGOYA BITES 日次レポート"` は同じ条件で 2 件（週次も同じ）。手順のとおりに検索すると、メールがあるのに「見つからない」で終わる。`.claude/commands/seo-triage.md`・`seo-triage-weekly.md` と定期実行の指示文の 3 か所が対象
+  5. 手順の検索語から絵文字を外す。2026-11-03 に実測: `subject:"📊 NAGOYA BITES 日次レポート"` は期間を外しても 0 件、`subject:"NAGOYA BITES 日次レポート"` は同じ条件で 2 件（週次も同じ）。手順のとおりに検索すると、メールがあるのに「見つからない」で終わる。`.claude/commands/seo-triage.md`・`seo-triage-weekly.md` と定期実行の指示文の 3 か所が対象 2026-11-04 は絵文字つきの同じ検索語で日次 2 件・週次 1 件が返った（同じ語でも結果が日によって変わる）
 - **files**: `scripts/check_seo_triage_weekly_health.js`, `.github/workflows/seo-triage-weekly-watchdog.yml`, `.claude/commands/seo-triage.md`, `.claude/commands/seo-triage-weekly.md`
 
 ### [MEO-001] 店のデータの正しさ・送客の数え方・検索流入の棚卸しを進める（旧 MEO 計画・改訂版）
