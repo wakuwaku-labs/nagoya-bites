@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-03T00:14:26.795Z",
+  "generatedAt": "2026-11-03T00:34:28.568Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2677,
-    "pageViews": 3742,
+    "activeUsers": 2680,
+    "pageViews": 3747,
     "sessions": 2969,
-    "avgSessionDuration": 112,
+    "avgSessionDuration": 112.1,
     "bounceRate": 0.305,
     "pagesPerSession": 1.26
   },
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2265,
-      "direct": 473,
+      "organic": 2268,
+      "direct": 475,
       "social": 41,
       "ai_assistant": 179,
       "referral": 28,
@@ -27,7 +27,7 @@
     },
     "pct": {
       "organic": 75.8,
-      "direct": 15.8,
+      "direct": 15.9,
       "social": 1.4,
       "ai_assistant": 6,
       "referral": 0.9,
@@ -39,7 +39,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1043
+      "sessions": 1044
     },
     {
       "source": "bing",
@@ -49,7 +49,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 430
+      "sessions": 431
     },
     {
       "source": "(direct)",
@@ -69,7 +69,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 22
+      "sessions": 24
     },
     {
       "source": "x",
@@ -82,14 +82,14 @@
       "sessions": 17
     },
     {
-      "source": "unknown",
-      "medium": "(not set)",
+      "source": "duckduckgo",
+      "medium": "organic",
       "sessions": 16
     },
     {
-      "source": "duckduckgo",
-      "medium": "organic",
-      "sessions": 15
+      "source": "unknown",
+      "medium": "(not set)",
+      "sessions": 16
     },
     {
       "source": "note",
@@ -191,12 +191,12 @@
     {
       "path": "/features/nagoya-solo-dining.html",
       "pageViews": 449,
-      "sessions": 422
+      "sessions": 423
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 197,
-      "sessions": 186
+      "pageViews": 199,
+      "sessions": 188
     },
     {
       "path": "/",
@@ -215,12 +215,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 319,
-    "ctaClickRate": 10.7,
+    "outboundClicks": 321,
+    "ctaClickRate": 10.8,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 112
+        "clicks": 114
       },
       {
         "domain": "www.google.com",
@@ -277,7 +277,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 211,
+      "organic": 213,
       "direct": 62,
       "social": 9,
       "ai_assistant": 36,
@@ -285,7 +285,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.3,
+    "ctaClickRate_organic": 9.4,
     "ctaClickRate_direct": 13.1,
     "ctaClickRate_social": 22,
     "byPage": [
@@ -727,6 +727,11 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J000027413.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J000643944.html",
         "domain": "tabelog.com",
         "clicks": 1
@@ -867,6 +872,11 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J001277921.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J001283397.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -898,16 +908,6 @@
       },
       {
         "path": "/stores/J003366509.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J003389502.html",
-        "domain": "www.google.com",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J003432311.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
       }
@@ -1034,6 +1034,10 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J000027413.html",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J000643944.html",
         "clicks": 1
       },
@@ -1102,6 +1106,10 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J001277921.html",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J001283397.html",
         "clicks": 1
       },
@@ -1120,13 +1128,9 @@
       {
         "path": "/stores/J003366509.html",
         "clicks": 1
-      },
-      {
-        "path": "/stores/J003432311.html",
-        "clicks": 1
       }
     ],
-    "reservationClicks": 116,
+    "reservationClicks": 117,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 45,
@@ -1152,7 +1156,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2677,
+    "value": 2680,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

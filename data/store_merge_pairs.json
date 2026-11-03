@@ -2,7 +2,7 @@
   "_note": "ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない",
   "mergedCount": 64,
   "absorbedCount": 67,
-  "skippedCount": 6,
+  "skippedCount": 15,
   "merged": [
     {
       "reasons": [
@@ -1763,6 +1763,66 @@
     },
     {
       "names": [
+        "さかえ酒房",
+        "さかえ酒房 SHUBO"
+      ],
+      "hpIds": [
+        "J004470629",
+        "J004724266"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "俵家商店 マルコメ栄 2階店",
+        "俵家商店 マルコメ 栄店"
+      ],
+      "hpIds": [
+        "J000963931",
+        "J004723849"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "焼肉はなび 栄",
+        "焼肉はなび"
+      ],
+      "hpIds": [
+        "J003828556",
+        "J004723381"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "炊き肉屋 しじみ倶楽部 名駅店",
+        "炊き肉屋 しじみ倶楽部"
+      ],
+      "hpIds": [
+        "J004723438",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "no_corroboration"
+    },
+    {
+      "names": [
+        "今池焼鳥 B7 ビーセブン",
+        "今池焼鳥 B7"
+      ],
+      "hpIds": [
+        "J004723867",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "no_corroboration"
+    },
+    {
+      "names": [
         "燈 tou",
         "つけ麺 燈 tou"
       ],
@@ -1784,6 +1844,18 @@
       ],
       "reason": "placeid_match",
       "blocker": "transitive_ward_conflict"
+    },
+    {
+      "names": [
+        "レミニセンス (Reminiscence)",
+        "Reminiscence (レミニセンス)"
+      ],
+      "hpIds": [
+        "",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "ward_conflict"
     },
     {
       "names": [
@@ -1812,6 +1884,42 @@
     {
       "names": [
         "レミニセンス",
+        "Reminiscence (レミニセンス)"
+      ],
+      "hpIds": [
+        "",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "transitive_ward_conflict"
+    },
+    {
+      "names": [
+        "レミニセンス",
+        "レミニセンス（Reminiscence）"
+      ],
+      "hpIds": [
+        "",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "ward_conflict"
+    },
+    {
+      "names": [
+        "Reminiscence / レミニセンス",
+        "Reminiscence (レミニセンス)"
+      ],
+      "hpIds": [
+        "",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "ward_conflict"
+    },
+    {
+      "names": [
+        "Reminiscence (レミニセンス)",
         "レミニセンス（Reminiscence）"
       ],
       "hpIds": [
