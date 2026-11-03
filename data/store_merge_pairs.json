@@ -1,8 +1,8 @@
 {
   "_note": "ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない",
-  "mergedCount": 64,
-  "absorbedCount": 67,
-  "skippedCount": 15,
+  "mergedCount": 65,
+  "absorbedCount": 68,
+  "skippedCount": 14,
   "merged": [
     {
       "reasons": [
@@ -283,6 +283,36 @@
     },
     {
       "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "焼肉はなび 栄",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J004723381",
+        "placeId": "ChIJww43SgBxA2AR9EuZ7xnZHAo",
+        "slug": "J004723381"
+      },
+      "absorbed": [
+        {
+          "店名": "焼肉はなび 栄",
+          "エリア": "栄",
+          "ホットペッパーID": "J003828556",
+          "placeId": "ChIJww43SgBxA2AR9EuZ7xnZHAo",
+          "slug": "J003828556"
+        }
+      ],
+      "filledFields": [
+        "Instagram",
+        "Instagram投稿URL",
+        "editorReason",
+        "insiderNote",
+        "visitStatus",
+        "おすすめポイント",
+        "タグ"
+      ]
+    },
+    {
+      "reasons": [
         "placeid_match"
       ],
       "kept": {
@@ -480,50 +510,6 @@
     },
     {
       "reasons": [
-        "name_exact"
-      ],
-      "kept": {
-        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J004026742",
-        "placeId": "ChIJW42pcAB3A2AR89zDL1dQ4Dk",
-        "slug": "J004026742"
-      },
-      "absorbed": [
-        {
-          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J004026737",
-          "placeId": "ChIJW42pcAB3A2AR89zDL1dQ4Dk",
-          "slug": "J004026737"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
-        "name_exact"
-      ],
-      "kept": {
-        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J004026741",
-        "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
-        "slug": "J004026741"
-      },
-      "absorbed": [
-        {
-          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J004026739",
-          "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
-          "slug": "J004026739"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
         "placeid_match"
       ],
       "kept": {
@@ -559,6 +545,50 @@
     },
     {
       "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "居酒屋 権兵衛 名駅店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J003649512",
+        "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
+        "slug": "J003649512"
+      },
+      "absorbed": [
+        {
+          "店名": "権兵衛 名駅南店",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J004403777",
+          "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
+          "slug": "J004403777"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004026741",
+        "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
+        "slug": "J004026741"
+      },
+      "absorbed": [
+        {
+          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J004026739",
+          "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
+          "slug": "J004026739"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
         "placeid_match"
       ],
       "kept": {
@@ -581,22 +611,22 @@
     },
     {
       "reasons": [
-        "owner_confirmed"
+        "name_exact"
       ],
       "kept": {
-        "店名": "居酒屋 権兵衛 名駅店",
+        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店",
         "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J003649512",
-        "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
-        "slug": "J003649512"
+        "ホットペッパーID": "J004026742",
+        "placeId": "ChIJW42pcAB3A2AR89zDL1dQ4Dk",
+        "slug": "J004026742"
       },
       "absorbed": [
         {
-          "店名": "権兵衛 名駅南店",
+          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店",
           "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J004403777",
-          "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
-          "slug": "J004403777"
+          "ホットペッパーID": "J004026737",
+          "placeId": "ChIJW42pcAB3A2AR89zDL1dQ4Dk",
+          "slug": "J004026737"
         }
       ],
       "filledFields": []
@@ -670,6 +700,28 @@
     },
     {
       "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "Cafe & Bar ゆきっち",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J003850472",
+        "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
+        "slug": "J003850472"
+      },
+      "absorbed": [
+        {
+          "店名": "Cafe & Bar ゆきっち はなれ",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J003850482",
+          "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
+          "slug": "J003850482"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
         "name_exact"
       ],
       "kept": {
@@ -701,28 +753,6 @@
         "選定理由",
         "食べログURL"
       ]
-    },
-    {
-      "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "Cafe & Bar ゆきっち",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J003850472",
-        "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
-        "slug": "J003850472"
-      },
-      "absorbed": [
-        {
-          "店名": "Cafe & Bar ゆきっち はなれ",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J003850482",
-          "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
-          "slug": "J003850482"
-        }
-      ],
-      "filledFields": []
     },
     {
       "reasons": [
@@ -957,28 +987,6 @@
     },
     {
       "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "Sei Felice セイフェリーチェ",
-        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J003763458",
-        "placeId": "ChIJAW-TmB5xA2ARC35S7Lm0sK0",
-        "slug": "J003763458"
-      },
-      "absorbed": [
-        {
-          "店名": "Seifelice セイフェリーチェ 栄",
-          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J003917091",
-          "placeId": "ChIJAW-TmB5xA2ARC35S7Lm0sK0",
-          "slug": "J003917091"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
         "name_exact"
       ],
       "kept": {
@@ -1000,6 +1008,28 @@
       "filledFields": [
         "サブジャンル"
       ]
+    },
+    {
+      "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "Sei Felice セイフェリーチェ",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J003763458",
+        "placeId": "ChIJAW-TmB5xA2ARC35S7Lm0sK0",
+        "slug": "J003763458"
+      },
+      "absorbed": [
+        {
+          "店名": "Seifelice セイフェリーチェ 栄",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J003917091",
+          "placeId": "ChIJAW-TmB5xA2ARC35S7Lm0sK0",
+          "slug": "J003917091"
+        }
+      ],
+      "filledFields": []
     },
     {
       "reasons": [
@@ -1369,8 +1399,13 @@
         "おすすめポイント",
         "キュレーター",
         "トレンド情報源",
+        "今日の話題",
+        "今日の話題媒体数",
+        "今日の話題順位",
+        "今日の話題鮮度",
         "編集部推薦",
         "話題スコア",
+        "話題ハイライト",
         "話題フラグ",
         "追加日",
         "選定理由",
@@ -1781,18 +1816,6 @@
       "hpIds": [
         "J000963931",
         "J004723849"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "焼肉はなび 栄",
-        "焼肉はなび"
-      ],
-      "hpIds": [
-        "J003828556",
-        "J004723381"
       ],
       "reason": "placeid_match",
       "blocker": "hp_distinct"

@@ -485,7 +485,10 @@
     "title": "スパゲッティハウス ヨコイ 錦店 - 栄（名古屋）/パスタ | 食べログ",
     "kind": "tabelog",
     "area": "錦",
-    "checkedAt": "2026-09-03T09:46:08.258Z"
+    "checkedAt": "2026-09-03T09:46:08.258Z",
+    "lastAttemptAt": "2026-11-03T19:29:52.219Z",
+    "lastAttemptReason": "fetch-error",
+    "lastAttemptError": "HTTP 403"
   },
   "d53d9ee747492165aba1754314185630": {
     "ok": false,
@@ -589,7 +592,10 @@
     "title": "グリルつばき - 名鉄名古屋/ステーキ | 食べログ",
     "kind": "tabelog",
     "area": "名古屋市中村区",
-    "checkedAt": "2026-09-03T09:46:54.391Z"
+    "checkedAt": "2026-09-03T09:46:54.391Z",
+    "lastAttemptAt": "2026-11-03T19:29:56.361Z",
+    "lastAttemptReason": "fetch-error",
+    "lastAttemptError": "HTTP 403"
   },
   "bc8d3e2183c6e6efd03f859e94cbbd2b": {
     "ok": false,
@@ -628,7 +634,10 @@
     "title": "LIGNINのご予約 - 栄（名古屋）/創作料理 | 食べログ",
     "kind": "tabelog",
     "area": "名古屋市中区栄",
-    "checkedAt": "2026-09-03T09:47:10.506Z"
+    "checkedAt": "2026-09-03T09:47:10.506Z",
+    "lastAttemptAt": "2026-11-03T19:30:01.763Z",
+    "lastAttemptReason": "fetch-error",
+    "lastAttemptError": "HTTP 403"
   },
   "fd610e5cb9c4a4dbc02690aa47c06d7c": {
     "ok": false,
@@ -126583,5 +126592,151 @@
     "kind": "tabelog",
     "area": "名古屋市東区",
     "checkedAt": "2026-11-02T00:49:42.184Z"
+  },
+  "a7af14cf2c5cc3488fce0dc79342b598": {
+    "ok": false,
+    "reason": "fetch-error",
+    "error": "HTTP 403",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23086519/",
+    "storeName": "ALLY'S garden Nagoya(ダイワロイネットホテル名古屋駅前店)",
+    "kind": "tabelog",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-03T19:29:41.900Z"
+  },
+  "69c83fc528370456952f8064f6bfdb8d": {
+    "ok": false,
+    "reason": "fetch-error",
+    "error": "HTTP 403",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23075734/",
+    "storeName": "Dining & Party HIYORI（アパホテル名古屋駅前南店）",
+    "kind": "tabelog",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-03T19:29:47.446Z"
+  },
+  "6dc03a832905555386b95d2407bf2a03": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "焼肉はなび 栄",
+    "shopState": null,
+    "closed": false,
+    "storeName": "焼肉はなび 栄",
+    "title": "焼肉はなび 栄(栄/韓国料理)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004723381/",
+    "kind": "hotpepper",
+    "area": "栄(ミナミ)/矢場町/大須/上前津",
+    "checkedAt": "2026-11-03T19:30:08.130Z"
+  },
+  "7d593f997f6befe621b1b3e0365ada94": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "ALLY'S PS NAGOYA",
+    "shopState": null,
+    "closed": false,
+    "storeName": "ALLY'S PS NAGOYA（ホテルthe b 名古屋店）",
+    "title": "ALLY'S PS NAGOYA（ホテルthe b 名古屋店）(栄/イタリアン・フレンチ)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004084001/",
+    "kind": "hotpepper",
+    "area": "栄(ミナミ)/矢場町/大須/上前津",
+    "checkedAt": "2026-11-03T19:30:13.504Z"
+  },
+  "8033209ea61c62f4e1025f0647ce5656": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "ALLY'S garden Nagoya(ダイワロイネットホテル名古屋駅前店)",
+    "shopState": null,
+    "closed": false,
+    "storeName": "ALLY'S garden Nagoya(ダイワロイネットホテル名古屋駅前店)",
+    "title": "ALLY'S garden Nagoya(ダイワロイネットホテル名古屋駅前店)(名古屋駅/カフェ・スイーツ)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ003676000/",
+    "kind": "hotpepper",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-03T19:30:18.664Z"
+  },
+  "db81f6d0bca74f2f212597797f8ebca4": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "SweetMacaroon スイートマカロン",
+    "shopState": null,
+    "closed": false,
+    "storeName": "SweetMacaroon スイートマカロン",
+    "title": "SweetMacaroon スイートマカロン(天白区その他/イタリアン・フレンチ)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ001274796/",
+    "kind": "hotpepper",
+    "area": "緑区・南区・天白区・瑞穂区",
+    "checkedAt": "2026-11-03T19:30:24.857Z"
+  },
+  "5fa33bde31d39236471f96f32549dc85": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "Nagoya Dining SAYURI ナゴヤダイニングサユリ",
+    "shopState": null,
+    "closed": false,
+    "storeName": "Nagoya Dining SAYURI ナゴヤダイニングサユリ",
+    "title": "Nagoya Dining SAYURI ナゴヤダイニングサユリ(名古屋駅/居酒屋)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004612963/",
+    "kind": "hotpepper",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-03T19:30:30.353Z"
+  },
+  "99e43a06ba02be3227721ec7a3b298e3": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "アンティキ Antichi",
+    "shopState": null,
+    "closed": false,
+    "storeName": "アンティキ Antichi",
+    "title": "アンティキ Antichi(久屋大通/イタリアン・フレンチ)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ003324849/",
+    "kind": "hotpepper",
+    "area": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+    "checkedAt": "2026-11-03T19:30:36.890Z"
+  },
+  "182d9db9a1b0aa2948a8d3398097dd7a": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "鮨 酒 肴 杉玉 名駅三丁目",
+    "shopState": null,
+    "closed": false,
+    "storeName": "鮨 酒 肴 杉玉 名駅三丁目",
+    "title": "鮨 酒 肴 杉玉 名駅三丁目(名古屋駅/居酒屋)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004577395/",
+    "kind": "hotpepper",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-03T19:30:42.972Z"
+  },
+  "13c3b59401920fb37ab996fb395941fd": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "Dining & Party HIYORI",
+    "shopState": null,
+    "closed": false,
+    "storeName": "Dining & Party HIYORI（アパホテル名古屋駅前南店）",
+    "title": "Dining & Party HIYORI（アパホテル名古屋駅前南店）(名古屋駅/ダイニングバー・バル)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004429014/",
+    "kind": "hotpepper",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-03T19:30:48.274Z"
+  },
+  "dcc3f44f041444d2c108490e911ca671": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "炊き肉屋 しじみ倶楽部 栄錦店",
+    "shopState": "【11/2 OPEN】",
+    "closed": false,
+    "storeName": "炊き肉屋 しじみ倶楽部 栄錦店",
+    "title": "炊き肉屋 しじみ倶楽部 栄錦店(錦/居酒屋)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004698452/",
+    "kind": "hotpepper",
+    "area": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+    "checkedAt": "2026-11-03T19:30:54.954Z"
   }
 }
