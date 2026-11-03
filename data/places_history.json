@@ -969,13 +969,41 @@
         "rating": 4.3,
         "total": 200,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:04.320Z",
+        "rating": 4.3,
+        "total": 251,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
+        "rating": 3,
+        "time": 1787478936,
+        "relativeTime": "2 か月前",
+        "textLen": 122,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "3b8fb8218e2fb8bd",
+        "authorNameHash": "c21cf23e9b2dcb6d",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1787449561,
+        "relativeTime": "2 か月前",
+        "textLen": 872,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "b9b6464d60ef4655",
+        "authorNameHash": "ca978112ca1bbdca",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 5,
         "time": 1785253115,
-        "relativeTime": "3 週間前",
+        "relativeTime": "3 か月前",
         "textLen": 664,
         "lang": "ja",
         "incentiveHit": false,
@@ -985,46 +1013,24 @@
       },
       {
         "rating": 4,
-        "time": 1783175132,
+        "time": 1788964923,
         "relativeTime": "1 か月前",
+        "textLen": 397,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1cfdcaa699a78088",
+        "authorNameHash": "74831bf043c2f48a",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1783175132,
+        "relativeTime": "4 か月前",
         "textLen": 445,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "529e6fee99b27a09",
         "authorNameHash": "834d79caa6e0efb1",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1785597665,
-        "relativeTime": "3 週間前",
-        "textLen": 643,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "36c4c8b16fa206d6",
-        "authorNameHash": "d02d60f19b2b7a72",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 4,
-        "time": 1772772897,
-        "relativeTime": "5 か月前",
-        "textLen": 62,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "d5c27e6e47b5f356",
-        "authorNameHash": "03b7c388cddb338b",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1779697491,
-        "relativeTime": "3 か月前",
-        "textLen": 463,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "6b088e9b3088b375",
-        "authorNameHash": "d2eeb0d2855efbc4",
         "textSignalsVersion": 2
       }
     ]
@@ -2476,33 +2482,69 @@
         "rating": 4.3,
         "total": 860,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:22.215Z",
+        "rating": 4.3,
+        "total": 1129,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
+        "rating": 4,
+        "time": 1773845425,
+        "relativeTime": "7 か月前",
+        "textLen": 924,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "129139262d28c783",
+        "authorNameHash": "ceefa928388f7986",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1774412658,
+        "relativeTime": "7 か月前",
+        "textLen": 457,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "2087956e4cbcbc62",
+        "authorNameHash": "92631ba1c4336ec9",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1774071654,
+        "relativeTime": "7 か月前",
+        "textLen": 421,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "a2e0a3caa0dd5187",
+        "authorNameHash": "f7f85613baae999c",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 5,
         "time": 1768734376,
-        "relativeTime": "4 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1768397819,
-        "relativeTime": "4 か月前"
-      },
-      {
-        "rating": 3,
-        "time": 1763853589,
-        "relativeTime": "6 か月前"
+        "relativeTime": "9 か月前",
+        "textLen": 416,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1168b19f24433415",
+        "authorNameHash": "735e751a2187d478",
+        "textSignalsVersion": 2
       },
       {
         "rating": 4,
-        "time": 1757148899,
-        "relativeTime": "8 か月前"
-      },
-      {
-        "rating": 4,
-        "time": 1760946682,
-        "relativeTime": "7 か月前"
+        "time": 1773835257,
+        "relativeTime": "7 か月前",
+        "textLen": 303,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "41f2c37ba879847e",
+        "authorNameHash": "64b4636d924d1c73",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -5734,33 +5776,69 @@
         "rating": 4.8,
         "total": 89,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:23.466Z",
+        "rating": 4.7,
+        "total": 117,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1772519417,
-        "relativeTime": "2 か月前"
+        "time": 1779422226,
+        "relativeTime": "5 か月前",
+        "textLen": 529,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "9c7c0a8075b6f65c",
+        "authorNameHash": "fabe95cc86984e86",
+        "textSignalsVersion": 2
       },
       {
         "rating": 5,
-        "time": 1762295628,
-        "relativeTime": "6 か月前"
+        "time": 1773895121,
+        "relativeTime": "7 か月前",
+        "textLen": 678,
+        "lang": "ja",
+        "incentiveHit": true,
+        "textHash": "63d1b4ec05382d3e",
+        "authorNameHash": "6c279966ae75e8dd",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1777299057,
+        "relativeTime": "6 か月前",
+        "textLen": 904,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "7e3020eb9586d66e",
+        "authorNameHash": "c2bd053aa04d6a62",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1785061634,
+        "relativeTime": "3 か月前",
+        "textLen": 342,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "a7eaebae137a2d51",
+        "authorNameHash": "36cd796ca287a36b",
+        "textSignalsVersion": 2
       },
       {
         "rating": 4,
-        "time": 1768690082,
-        "relativeTime": "4 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1766663551,
-        "relativeTime": "4 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1764939947,
-        "relativeTime": "5 か月前"
+        "time": 1782623959,
+        "relativeTime": "4 か月前",
+        "textLen": 673,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "bb6880511f310c75",
+        "authorNameHash": "a610c6405791e7c8",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -5992,33 +6070,69 @@
         "rating": 4.4,
         "total": 1549,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:23.942Z",
+        "rating": 4.4,
+        "total": 1808,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1771329519,
-        "relativeTime": "3 か月前"
+        "time": 1779378883,
+        "relativeTime": "5 か月前",
+        "textLen": 528,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "53921ad035febaca",
+        "authorNameHash": "ceefa928388f7986",
+        "textSignalsVersion": 2
       },
       {
         "rating": 5,
-        "time": 1770906632,
-        "relativeTime": "3 か月前"
+        "time": 1788907250,
+        "relativeTime": "1 か月前",
+        "textLen": 429,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "9d846c2b3232692b",
+        "authorNameHash": "331a37c60a2f07e9",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1775571374,
+        "relativeTime": "6 か月前",
+        "textLen": 423,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "9bb482f1e51539ac",
+        "authorNameHash": "2034093eb3b738e0",
+        "textSignalsVersion": 2
       },
       {
         "rating": 5,
-        "time": 1768951214,
-        "relativeTime": "4 か月前"
+        "time": 1778674825,
+        "relativeTime": "5 か月前",
+        "textLen": 240,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1449ab3e638ada09",
+        "authorNameHash": "56acaf309846ff0b",
+        "textSignalsVersion": 2
       },
       {
         "rating": 5,
-        "time": 1765336459,
-        "relativeTime": "5 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1763339839,
-        "relativeTime": "6 か月前"
+        "time": 1787063551,
+        "relativeTime": "2 か月前",
+        "textLen": 374,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "6025a9f504c9732e",
+        "authorNameHash": "27fa1aa3e495f46c",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -6029,33 +6143,69 @@
         "rating": 4.6,
         "total": 560,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:24.182Z",
+        "rating": 4.6,
+        "total": 570,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
+        "rating": 5,
+        "time": 1779678312,
+        "relativeTime": "5 か月前",
+        "textLen": 145,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "64fdc15681a92d7a",
+        "authorNameHash": "150a7d05bb218e2f",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1776766101,
+        "relativeTime": "6 か月前",
+        "textLen": 112,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "27dc459b40200042",
+        "authorNameHash": "c4c46560e6a95c4c",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 1,
         "time": 1770982689,
-        "relativeTime": "3 か月前"
+        "relativeTime": "8 か月前",
+        "textLen": 359,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "9ec873a6d9dc5d6a",
+        "authorNameHash": "37e4c22fb8ea25cc",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1776546946,
+        "relativeTime": "6 か月前",
+        "textLen": 206,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "162a5550d48f1082",
+        "authorNameHash": "46a3c29a6c754f26",
+        "textSignalsVersion": 2
       },
       {
         "rating": 5,
         "time": 1765057552,
-        "relativeTime": "5 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1760358033,
-        "relativeTime": "7 か月前"
-      },
-      {
-        "rating": 4,
-        "time": 1756216917,
-        "relativeTime": "8 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1756779906,
-        "relativeTime": "8 か月前"
+        "relativeTime": "11 か月前",
+        "textLen": 208,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "16d389721324f6f7",
+        "authorNameHash": "4f75c7738f705323",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -6325,33 +6475,69 @@
         "rating": 4.8,
         "total": 3315,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:24.944Z",
+        "rating": 4.8,
+        "total": 3622,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1765082294,
-        "relativeTime": "5 か月前"
+        "time": 1791190711,
+        "relativeTime": "4 週間前",
+        "textLen": 131,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "bb501bc63ef2d74b",
+        "authorNameHash": "f0933d3dd3bc261f",
+        "textSignalsVersion": 2
       },
       {
         "rating": 5,
-        "time": 1772008084,
-        "relativeTime": "2 か月前"
-      },
-      {
-        "rating": 3,
-        "time": 1769545761,
-        "relativeTime": "3 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1769228541,
-        "relativeTime": "3 か月前"
+        "time": 1789098998,
+        "relativeTime": "1 か月前",
+        "textLen": 896,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "901d9bd37c511b1d",
+        "authorNameHash": "353c4b78f70837b6",
+        "textSignalsVersion": 2
       },
       {
         "rating": 5,
-        "time": 1765967452,
-        "relativeTime": "5 か月前"
+        "time": 1775037799,
+        "relativeTime": "7 か月前",
+        "textLen": 184,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "fac552ac82cbdddb",
+        "authorNameHash": "0d342c8932cffaf3",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1791190672,
+        "relativeTime": "4 週間前",
+        "textLen": 179,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "943f602040c661ae",
+        "authorNameHash": "043a718774c572bd",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1771327320,
+        "relativeTime": "8 か月前",
+        "textLen": 73,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1e963cbd22625428",
+        "authorNameHash": "224178439fe0ad1e",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -6362,33 +6548,69 @@
         "rating": 4.6,
         "total": 1567,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:25.182Z",
+        "rating": 4.6,
+        "total": 1517,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
+        "rating": 4,
+        "time": 1777211103,
+        "relativeTime": "6 か月前",
+        "textLen": 269,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "c6f5e35bd4599645",
+        "authorNameHash": "565a68aacd7cbefd",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1775734153,
+        "relativeTime": "6 か月前",
+        "textLen": 300,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "fe26b20a4907156f",
+        "authorNameHash": "51f7409a71ff149a",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 5,
         "time": 1767144190,
-        "relativeTime": "4 か月前"
+        "relativeTime": "10 か月前",
+        "textLen": 222,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "3393244f55e52c81",
+        "authorNameHash": "9c94c31423158d09",
+        "textSignalsVersion": 2
       },
       {
         "rating": 5,
         "time": 1761383195,
-        "relativeTime": "6 か月前"
+        "relativeTime": "1 年前",
+        "textLen": 203,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "dec92ef67c456f93",
+        "authorNameHash": "d9916ef222805253",
+        "textSignalsVersion": 2
       },
       {
         "rating": 5,
         "time": 1772450647,
-        "relativeTime": "2 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1767009194,
-        "relativeTime": "4 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1768473079,
-        "relativeTime": "4 か月前"
+        "relativeTime": "8 か月前",
+        "textLen": 240,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "059c52d941133ef1",
+        "authorNameHash": "ee0ff09b6bcf31d2",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -6621,33 +6843,69 @@
         "rating": 4.3,
         "total": 44,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:25.430Z",
+        "rating": 4.3,
+        "total": 45,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 4,
         "time": 1761863436,
-        "relativeTime": "6 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1756308567,
-        "relativeTime": "8 か月前"
-      },
-      {
-        "rating": 4,
-        "time": 1768922088,
-        "relativeTime": "4 か月前"
+        "relativeTime": "1 年前",
+        "textLen": 362,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "3d071b1b94efb756",
+        "authorNameHash": "15e0e9991769e38e",
+        "textSignalsVersion": 2
       },
       {
         "rating": 4,
         "time": 1731575746,
-        "relativeTime": "1 年前"
+        "relativeTime": "1 年前",
+        "textLen": 514,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "3d3c10db6fd8d19b",
+        "authorNameHash": "e9a61521e1128cf6",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1756308567,
+        "relativeTime": "1 年前",
+        "textLen": 560,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "5588791a95ebd53d",
+        "authorNameHash": "b22c3ee64b4fa149",
+        "textSignalsVersion": 2
       },
       {
         "rating": 4,
-        "time": 1727870672,
-        "relativeTime": "1 年前"
+        "time": 1768922088,
+        "relativeTime": "9 か月前",
+        "textLen": 94,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "19d3fdce54eaf6fd",
+        "authorNameHash": "98ca892ecd61335c",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1770869891,
+        "relativeTime": "8 か月前",
+        "textLen": 144,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "31076ad04ecda728",
+        "authorNameHash": "fb0b60b8f4cce6b5",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -6658,33 +6916,69 @@
         "rating": 4.1,
         "total": 147,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:25.683Z",
+        "rating": 4.1,
+        "total": 149,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
+        "rating": 5,
+        "time": 1786492811,
+        "relativeTime": "2 か月前",
+        "textLen": 125,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "918a82279a439706",
+        "authorNameHash": "88ba81784e958cdb",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1774449627,
+        "relativeTime": "7 か月前",
+        "textLen": 204,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "00b42e60a7e62c56",
+        "authorNameHash": "46bc9faa43d216c7",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 4,
         "time": 1771983727,
-        "relativeTime": "2 か月前"
+        "relativeTime": "8 か月前",
+        "textLen": 301,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "7c512fd84976fd6f",
+        "authorNameHash": "46a3c29a6c754f26",
+        "textSignalsVersion": 2
       },
       {
         "rating": 4,
         "time": 1751625082,
-        "relativeTime": "10 か月前"
-      },
-      {
-        "rating": 4,
-        "time": 1737610437,
-        "relativeTime": "1 年前"
+        "relativeTime": "1 年前",
+        "textLen": 157,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "65ba1a1d7adad5a5",
+        "authorNameHash": "107177a9b8262c7a",
+        "textSignalsVersion": 2
       },
       {
         "rating": 5,
-        "time": 1765679568,
-        "relativeTime": "5 か月前"
-      },
-      {
-        "rating": 4,
-        "time": 1717422224,
-        "relativeTime": "1 年前"
+        "time": 1775718514,
+        "relativeTime": "6 か月前",
+        "textLen": 70,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "a037ba554c9e5c49",
+        "authorNameHash": "771aa1dbdc64dd4f",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -6806,33 +7100,69 @@
         "rating": 4.6,
         "total": 240,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:25.924Z",
+        "rating": 4.6,
+        "total": 244,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
+        "rating": 4,
+        "time": 1786422181,
+        "relativeTime": "2 か月前",
+        "textLen": 422,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "b6198b0af1d37d89",
+        "authorNameHash": "b77a2cbf0eca11d4",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 5,
         "time": 1771756728,
-        "relativeTime": "2 か月前"
+        "relativeTime": "8 か月前",
+        "textLen": 361,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "64720039a30331c0",
+        "authorNameHash": "9c781e24c916d400",
+        "textSignalsVersion": 2
       },
       {
         "rating": 4,
         "time": 1750997508,
-        "relativeTime": "10 か月前"
+        "relativeTime": "1 年前",
+        "textLen": 174,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "87a5f1d4dcc6b95c",
+        "authorNameHash": "3a2e9f71013094cc",
+        "textSignalsVersion": 2
       },
       {
         "rating": 5,
         "time": 1746537716,
-        "relativeTime": "1 年前"
+        "relativeTime": "1 年前",
+        "textLen": 246,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "dc610d9ff1350539",
+        "authorNameHash": "98a260cd84842fba",
+        "textSignalsVersion": 2
       },
       {
         "rating": 4,
         "time": 1743858595,
-        "relativeTime": "1 年前"
-      },
-      {
-        "rating": 5,
-        "time": 1768057576,
-        "relativeTime": "4 か月前"
+        "relativeTime": "1 年前",
+        "textLen": 117,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "255717ff6b9d94cf",
+        "authorNameHash": "ef06d345182892dd",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -7472,33 +7802,69 @@
         "rating": 4.7,
         "total": 886,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:26.182Z",
+        "rating": 4.8,
+        "total": 1375,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
+        "time": 1782651621,
+        "relativeTime": "4 か月前",
+        "textLen": 387,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "fcf67fba3af174b0",
+        "authorNameHash": "34a200e4f2ae23b2",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1787106386,
+        "relativeTime": "2 か月前",
+        "textLen": 335,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "c75d47cbb51fb297",
+        "authorNameHash": "4721eed505c851e3",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1780149757,
+        "relativeTime": "5 か月前",
+        "textLen": 1046,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "4078c45d9c52deed",
+        "authorNameHash": "eb055559fad28e85",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1766141706,
-        "relativeTime": "5 か月前"
+        "relativeTime": "10 か月前",
+        "textLen": 435,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "9fcadef842beba58",
+        "authorNameHash": "1362118f126a8783",
+        "textSignalsVersion": 2
       },
       {
-        "rating": 5,
-        "time": 1765338747,
-        "relativeTime": "5 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1770375213,
-        "relativeTime": "3 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1771064094,
-        "relativeTime": "3 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1764157317,
-        "relativeTime": "5 か月前"
+        "rating": 4,
+        "time": 1783691045,
+        "relativeTime": "3 か月前",
+        "textLen": 119,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "32455290e8597c2a",
+        "authorNameHash": "b271bf44dad6e4de",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -7794,33 +8160,69 @@
         "rating": 3.7,
         "total": 117,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:26.685Z",
+        "rating": 3.7,
+        "total": 120,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
+        "rating": 4,
+        "time": 1782091655,
+        "relativeTime": "4 か月前",
+        "textLen": 212,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "18d2cecf6fb006eb",
+        "authorNameHash": "a5c08e829bee1bec",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 2,
         "time": 1652747251,
-        "relativeTime": "4 年前"
+        "relativeTime": "4 年前",
+        "textLen": 773,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "59eefb9054547d75",
+        "authorNameHash": "97a82ae6b2999c07",
+        "textSignalsVersion": 2
       },
       {
         "rating": 4,
         "time": 1571328394,
-        "relativeTime": "6 年前"
+        "relativeTime": "7 年前",
+        "textLen": 284,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "fccbe0012766df93",
+        "authorNameHash": "034e0cf05804a9a8",
+        "textSignalsVersion": 2
       },
       {
         "rating": 3,
         "time": 1571344806,
-        "relativeTime": "6 年前"
+        "relativeTime": "7 年前",
+        "textLen": 123,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1e8334e704cbf787",
+        "authorNameHash": "4da33fd4b2fc09df",
+        "textSignalsVersion": 2
       },
       {
         "rating": 4,
         "time": 1601262521,
-        "relativeTime": "5 年前"
-      },
-      {
-        "rating": 3,
-        "time": 1575414882,
-        "relativeTime": "6 年前"
+        "relativeTime": "6 年前",
+        "textLen": 96,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "59a860ace84b452a",
+        "authorNameHash": "c66448566dc8ae5a",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -7868,33 +8270,69 @@
         "rating": 4.4,
         "total": 66,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:26.939Z",
+        "rating": 4.3,
+        "total": 72,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1771336094,
-        "relativeTime": "3 か月前"
+        "relativeTime": "8 か月前",
+        "textLen": 295,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "31fb0092e0772680",
+        "authorNameHash": "b0a1eab5f902df03",
+        "textSignalsVersion": 2
       },
       {
         "rating": 5,
         "time": 1771403609,
-        "relativeTime": "3 か月前"
+        "relativeTime": "8 か月前",
+        "textLen": 311,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "44663bed6c97cc12",
+        "authorNameHash": "cd165ef8279b933a",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 2,
+        "time": 1774197361,
+        "relativeTime": "7 か月前",
+        "textLen": 178,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "c7e4e699220a05e4",
+        "authorNameHash": "76cb4c7751598e59",
+        "textSignalsVersion": 2
       },
       {
         "rating": 5,
-        "time": 1768913707,
-        "relativeTime": "4 か月前"
+        "time": 1757663553,
+        "relativeTime": "1 年前",
+        "textLen": 285,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "f16c77e85464ba82",
+        "authorNameHash": "df20531e2498c447",
+        "textSignalsVersion": 2
       },
       {
-        "rating": 5,
-        "time": 1764335398,
-        "relativeTime": "5 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1759441312,
-        "relativeTime": "7 か月前"
+        "rating": 4,
+        "time": 1773746541,
+        "relativeTime": "7 か月前",
+        "textLen": 300,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "2864728de445a508",
+        "authorNameHash": "8ef3598424e40033",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -8201,33 +8639,69 @@
         "rating": 4.7,
         "total": 162,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:27.178Z",
+        "rating": 4.6,
+        "total": 167,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
+        "rating": 4,
+        "time": 1778775168,
+        "relativeTime": "5 か月前",
+        "textLen": 150,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "c848325cb8942052",
+        "authorNameHash": "5bdaf5df06dd9ea3",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1775833137,
+        "relativeTime": "6 か月前",
+        "textLen": 572,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "f6d5e400de217727",
+        "authorNameHash": "320a0041affbe2fa",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1778705706,
+        "relativeTime": "5 か月前",
+        "textLen": 183,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "6ca17e99023f8274",
+        "authorNameHash": "9c50bda7ecd72f58",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1759847499,
+        "relativeTime": "1 年前",
+        "textLen": 435,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "58ae71d38b6789b9",
+        "authorNameHash": "b97185ae5078f21e",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 5,
         "time": 1760018413,
-        "relativeTime": "7 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1759849483,
-        "relativeTime": "7 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1758729468,
-        "relativeTime": "7 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1760095889,
-        "relativeTime": "7 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1758460803,
-        "relativeTime": "8 か月前"
+        "relativeTime": "1 年前",
+        "textLen": 650,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "4a983979faf51244",
+        "authorNameHash": "200aa1038ded291e",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -8428,33 +8902,69 @@
         "rating": 4.7,
         "total": 76,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:27.650Z",
+        "rating": 4.7,
+        "total": 103,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
-        "rating": 5,
-        "time": 1763960968,
-        "relativeTime": "5 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1761781654,
-        "relativeTime": "6 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1762492678,
-        "relativeTime": "6 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1762961785,
-        "relativeTime": "6 か月前"
-      },
-      {
         "rating": 4,
-        "time": 1764248840,
-        "relativeTime": "5 か月前"
+        "time": 1781593399,
+        "relativeTime": "4 か月前",
+        "textLen": 288,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "835035e450d4b6de",
+        "authorNameHash": "2d5177d95a9c0fa4",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1783703900,
+        "relativeTime": "3 か月前",
+        "textLen": 935,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "3db2e12fa255f884",
+        "authorNameHash": "ceefa928388f7986",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1783662699,
+        "relativeTime": "3 か月前",
+        "textLen": 694,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "e17807cd35c00eae",
+        "authorNameHash": "98f16e633a3a4c1e",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1782282194,
+        "relativeTime": "4 か月前",
+        "textLen": 253,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "fb4bd51886048b23",
+        "authorNameHash": "aef23778cdf58a63",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1782654035,
+        "relativeTime": "4 か月前",
+        "textLen": 413,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "c2afe97e62a73f86",
+        "authorNameHash": "2034093eb3b738e0",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -8502,33 +9012,69 @@
         "rating": 4.7,
         "total": 1559,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:27.892Z",
+        "rating": 4.7,
+        "total": 1598,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
-        "rating": 3,
-        "time": 1765160318,
-        "relativeTime": "5 か月前"
-      },
-      {
-        "rating": 3,
-        "time": 1764649612,
-        "relativeTime": "5 か月前"
+        "rating": 4,
+        "time": 1752885947,
+        "relativeTime": "1 年前",
+        "textLen": 634,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "86bcaa1f5f5769ba",
+        "authorNameHash": "5282c7a1d1f6450b",
+        "textSignalsVersion": 2
       },
       {
         "rating": 4,
-        "time": 1764458054,
-        "relativeTime": "5 か月前"
-      },
-      {
-        "rating": 1,
-        "time": 1765106989,
-        "relativeTime": "5 か月前"
+        "time": 1753966679,
+        "relativeTime": "1 年前",
+        "textLen": 615,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "76a58819b673ccec",
+        "authorNameHash": "ebe3e6e69112b330",
+        "textSignalsVersion": 2
       },
       {
         "rating": 4,
         "time": 1758258203,
-        "relativeTime": "8 か月前"
+        "relativeTime": "1 年前",
+        "textLen": 411,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1e45f97a192cc17e",
+        "authorNameHash": "3c1bf06375a231a0",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1765160318,
+        "relativeTime": "10 か月前",
+        "textLen": 438,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "c67e47a9517efd89",
+        "authorNameHash": "fabe95cc86984e86",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1753948037,
+        "relativeTime": "1 年前",
+        "textLen": 459,
+        "lang": "ja",
+        "incentiveHit": true,
+        "textHash": "216aa369cbb22338",
+        "authorNameHash": "21ef18ab91f15d80",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -9538,24 +10084,30 @@
         "rating": 4.1,
         "total": 9,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:18.264Z",
+        "rating": 4.3,
+        "total": 11,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1783689427,
-        "relativeTime": "2 か月前",
-        "textLen": 132,
+        "time": 1792609392,
+        "relativeTime": "1 週間前",
+        "textLen": 63,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "d2b7bb3955e3f4fb",
-        "authorNameHash": "a1a97a7776ba2add",
+        "textHash": "abfde47412853841",
+        "authorNameHash": "58c921f168a4da12",
         "textSignalsVersion": 2
       },
       {
         "rating": 5,
         "time": 1775034340,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 73,
         "lang": "ja",
         "incentiveHit": false,
@@ -9566,7 +10118,7 @@
       {
         "rating": 1,
         "time": 1785088195,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 217,
         "lang": "ja",
         "incentiveHit": false,
@@ -9576,24 +10128,24 @@
       },
       {
         "rating": 5,
+        "time": 1783689427,
+        "relativeTime": "3 か月前",
+        "textLen": 132,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "d2b7bb3955e3f4fb",
+        "authorNameHash": "a1a97a7776ba2add",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1775033315,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 41,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "990746bd71da20f9",
         "authorNameHash": "6c21d0c0e381d9fd",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1775034563,
-        "relativeTime": "6 か月前",
-        "textLen": 28,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "8f6e19ce714751b7",
-        "authorNameHash": "fbb749fade42c031",
         "textSignalsVersion": 2
       }
     ]
@@ -19187,13 +19739,19 @@
         "rating": 4.3,
         "total": 6,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:18.515Z",
+        "rating": 4.3,
+        "total": 6,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1770767658,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 179,
         "lang": "ja",
         "incentiveHit": false,
@@ -19204,7 +19762,7 @@
       {
         "rating": 5,
         "time": 1770780842,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 318,
         "lang": "ja",
         "incentiveHit": false,
@@ -19215,7 +19773,7 @@
       {
         "rating": 5,
         "time": 1770858356,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 172,
         "lang": "ja",
         "incentiveHit": false,
@@ -19226,7 +19784,7 @@
       {
         "rating": 5,
         "time": 1770858985,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 157,
         "lang": "ja",
         "incentiveHit": false,
@@ -19237,7 +19795,7 @@
       {
         "rating": 5,
         "time": 1770272646,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 134,
         "lang": "ja",
         "incentiveHit": false,
@@ -26423,20 +26981,15 @@
         "rating": 4.1,
         "total": 97,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:18.760Z",
+        "rating": 4.1,
+        "total": 108,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
-      {
-        "rating": 4,
-        "time": 1788447973,
-        "relativeTime": "1 か月前",
-        "textLen": 145,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "6d24fc9b88ffcedf",
-        "authorNameHash": "cd24bb7ef636517d",
-        "textSignalsVersion": 2
-      },
       {
         "rating": 5,
         "time": 1780810564,
@@ -26449,36 +27002,47 @@
         "textSignalsVersion": 2
       },
       {
-        "rating": 5,
-        "time": 1781968583,
-        "relativeTime": "3 か月前",
-        "textLen": 363,
+        "rating": 4,
+        "time": 1792802472,
+        "relativeTime": "1 週間前",
+        "textLen": 187,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "a2216e3243103641",
-        "authorNameHash": "be780ffeb9371ba7",
+        "textHash": "d567044a8865b88e",
+        "authorNameHash": "da7585444d1a5ce0",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1788447973,
+        "relativeTime": "2 か月前",
+        "textLen": 145,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "6d24fc9b88ffcedf",
+        "authorNameHash": "cd24bb7ef636517d",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1791461932,
+        "relativeTime": "3 週間前",
+        "textLen": 919,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1b839c674fcbe9fe",
+        "authorNameHash": "b891d90ea65264aa",
         "textSignalsVersion": 2
       },
       {
         "rating": 5,
         "time": 1777381430,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 220,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "07bf77249556bce1",
         "authorNameHash": "1f83dc585e9d4712",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 3,
-        "time": 1781080046,
-        "relativeTime": "3 か月前",
-        "textLen": 316,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "86078741d875cbe2",
-        "authorNameHash": "d24e801341df9e67",
         "textSignalsVersion": 2
       }
     ]
@@ -33865,24 +34429,41 @@
         "rating": 4.4,
         "total": 98,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:19.003Z",
+        "rating": 4.4,
+        "total": 105,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
-        "rating": 5,
-        "time": 1784100694,
-        "relativeTime": "2 か月前",
-        "textLen": 216,
+        "rating": 4,
+        "time": 1792046224,
+        "relativeTime": "2 週間前",
+        "textLen": 88,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "fa1174129adc3403",
-        "authorNameHash": "5a4e5518ed9a769b",
+        "textHash": "bdfbeb2e93c91dc7",
+        "authorNameHash": "7fa1d720972ecacd",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1786611116,
+        "relativeTime": "2 か月前",
+        "textLen": 483,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "e49d84080a00d8c6",
+        "authorNameHash": "b2a62fb52fedc6c9",
         "textSignalsVersion": 2
       },
       {
         "rating": 5,
         "time": 1769516371,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 593,
         "lang": "ja",
         "incentiveHit": false,
@@ -33892,35 +34473,24 @@
       },
       {
         "rating": 5,
-        "time": 1769775055,
-        "relativeTime": "8 か月前",
-        "textLen": 419,
+        "time": 1784100694,
+        "relativeTime": "3 か月前",
+        "textLen": 216,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "dea12621941e80e0",
-        "authorNameHash": "37f5fe112c3a8db9",
+        "textHash": "fa1174129adc3403",
+        "authorNameHash": "5a4e5518ed9a769b",
         "textSignalsVersion": 2
       },
       {
         "rating": 5,
-        "time": 1769521905,
-        "relativeTime": "8 か月前",
-        "textLen": 354,
+        "time": 1764375031,
+        "relativeTime": "11 か月前",
+        "textLen": 886,
         "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "7a91a93434c4f3d9",
-        "authorNameHash": "5b9a4e5c892c488b",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1769426782,
-        "relativeTime": "8 か月前",
-        "textLen": 447,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "d312be11f2fa5577",
-        "authorNameHash": "ac042ecb65c5d320",
+        "incentiveHit": true,
+        "textHash": "5e943e575bcad31f",
+        "authorNameHash": "d811003ff5776ce3",
         "textSignalsVersion": 2
       }
     ]
@@ -36895,13 +37465,19 @@
         "rating": 4.3,
         "total": 453,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:19.245Z",
+        "rating": 4.3,
+        "total": 519,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1784112240,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 660,
         "lang": "ja",
         "incentiveHit": false,
@@ -36910,9 +37486,20 @@
         "textSignalsVersion": 2
       },
       {
+        "rating": 4,
+        "time": 1789391470,
+        "relativeTime": "1 か月前",
+        "textLen": 632,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "450858e5d1514ebc",
+        "authorNameHash": "9d1fd8ad687cbe96",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 5,
         "time": 1785198283,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 171,
         "lang": "ja",
         "incentiveHit": false,
@@ -36921,36 +37508,25 @@
         "textSignalsVersion": 2
       },
       {
-        "rating": 4,
-        "time": 1788698675,
-        "relativeTime": "4 週間前",
-        "textLen": 179,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "5dc8e5f2d1c230c3",
-        "authorNameHash": "47b3448a95c1d5d0",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 4,
-        "time": 1788081409,
-        "relativeTime": "1 か月前",
-        "textLen": 185,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "4f6aeadd23852197",
-        "authorNameHash": "e30ace3dc6c11fcf",
-        "textSignalsVersion": 2
-      },
-      {
         "rating": 5,
         "time": 1784375395,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 271,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "6bdd7fd65667fb65",
         "authorNameHash": "64636604c69c649e",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1789605025,
+        "relativeTime": "1 か月前",
+        "textLen": 381,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "68f9dc742d84cfe3",
+        "authorNameHash": "9f2e39a1365aa883",
         "textSignalsVersion": 2
       }
     ]
@@ -45504,13 +46080,19 @@
         "rating": 4.2,
         "total": 100,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:19.484Z",
+        "rating": 4.2,
+        "total": 101,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1781435473,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 373,
         "lang": "ja",
         "incentiveHit": false,
@@ -45521,7 +46103,7 @@
       {
         "rating": 5,
         "time": 1783139689,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 426,
         "lang": "ja",
         "incentiveHit": false,
@@ -45531,19 +46113,8 @@
       },
       {
         "rating": 5,
-        "time": 1779975387,
-        "relativeTime": "4 か月前",
-        "textLen": 681,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "856863a8af386844",
-        "authorNameHash": "c1212091aa78c007",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1779613833,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 436,
         "lang": "ja",
         "incentiveHit": false,
@@ -45554,12 +46125,23 @@
       {
         "rating": 4,
         "time": 1784774763,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 780,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "131e10ae37643743",
         "authorNameHash": "3474b8c5a9fce5f2",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1781524163,
+        "relativeTime": "4 か月前",
+        "textLen": 306,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "a8d9a2af865e2e92",
+        "authorNameHash": "9d1d7b69408f01d4",
         "textSignalsVersion": 2
       }
     ]
@@ -65413,13 +65995,19 @@
         "rating": 4.8,
         "total": 4,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:08.499Z",
+        "rating": 4.8,
+        "total": 4,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 4,
         "time": 1764939129,
-        "relativeTime": "10 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 111,
         "lang": "ja",
         "incentiveHit": false,
@@ -65430,7 +66018,7 @@
       {
         "rating": 5,
         "time": 1767118135,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 188,
         "lang": "ja",
         "incentiveHit": false,
@@ -65441,7 +66029,7 @@
       {
         "rating": 5,
         "time": 1764928474,
-        "relativeTime": "10 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 6,
         "lang": "ja",
         "incentiveHit": false,
@@ -65452,7 +66040,7 @@
       {
         "rating": 5,
         "time": 1764916868,
-        "relativeTime": "10 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -65518,13 +66106,19 @@
         "rating": 4.8,
         "total": 16,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:08.761Z",
+        "rating": 4.7,
+        "total": 18,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1779109557,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 931,
         "lang": "ja",
         "incentiveHit": false,
@@ -65535,7 +66129,7 @@
       {
         "rating": 4,
         "time": 1769495378,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 503,
         "lang": "ja",
         "incentiveHit": false,
@@ -65546,7 +66140,7 @@
       {
         "rating": 3,
         "time": 1776554262,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 442,
         "lang": "ja",
         "incentiveHit": false,
@@ -65557,7 +66151,7 @@
       {
         "rating": 5,
         "time": 1786187663,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 169,
         "lang": "ja",
         "incentiveHit": false,
@@ -65568,7 +66162,7 @@
       {
         "rating": 5,
         "time": 1765896107,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 275,
         "lang": "ja",
         "incentiveHit": false,
@@ -65845,24 +66439,19 @@
         "rating": 4.6,
         "total": 39,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:09.014Z",
+        "rating": 4.6,
+        "total": 44,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1780381268,
-        "relativeTime": "4 か月前",
-        "textLen": 655,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "6afbfe4409ea54fa",
-        "authorNameHash": "855e70f24918b2e6",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1783217482,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 427,
         "lang": "ja",
         "incentiveHit": false,
@@ -65871,36 +66460,47 @@
         "textSignalsVersion": 2
       },
       {
+        "rating": 3,
+        "time": 1791867257,
+        "relativeTime": "2 週間前",
+        "textLen": 163,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "ece2371f29f30004",
+        "authorNameHash": "3685a70127f6460d",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 5,
-        "time": 1782915418,
+        "time": 1789443778,
+        "relativeTime": "1 か月前",
+        "textLen": 433,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "a4f9cabcbe166ccb",
+        "authorNameHash": "01b4ff24e9556340",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1784558996,
         "relativeTime": "3 か月前",
-        "textLen": 266,
+        "textLen": 857,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "70ce1b59e3a91f83",
-        "authorNameHash": "ef05ba11942a79e2",
+        "textHash": "de89a931be74ced6",
+        "authorNameHash": "9d1fd8ad687cbe96",
         "textSignalsVersion": 2
       },
       {
         "rating": 5,
-        "time": 1779788261,
-        "relativeTime": "4 か月前",
-        "textLen": 367,
+        "time": 1789047462,
+        "relativeTime": "1 か月前",
+        "textLen": 354,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "57bf56f86affd3c3",
-        "authorNameHash": "3e90e947d39bb5f1",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1784690985,
-        "relativeTime": "2 か月前",
-        "textLen": 211,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "aa028d27ac9297d0",
-        "authorNameHash": "64636604c69c649e",
+        "textHash": "ce9f548ff46d8358",
+        "authorNameHash": "cd165ef8279b933a",
         "textSignalsVersion": 2
       }
     ]
@@ -66884,13 +67484,19 @@
         "rating": 4.8,
         "total": 26,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:09.261Z",
+        "rating": 4.8,
+        "total": 27,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1780115299,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 602,
         "lang": "ja",
         "incentiveHit": false,
@@ -66900,24 +67506,24 @@
       },
       {
         "rating": 5,
-        "time": 1776052418,
-        "relativeTime": "5 か月前",
-        "textLen": 450,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "d622b0709b3cce99",
-        "authorNameHash": "29f34e6533994bf3",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1782551523,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 546,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "07ef6e486b8c933e",
         "authorNameHash": "25639fb6cdaec739",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1776052418,
+        "relativeTime": "6 か月前",
+        "textLen": 450,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "d622b0709b3cce99",
+        "authorNameHash": "29f34e6533994bf3",
         "textSignalsVersion": 2
       },
       {
@@ -68097,13 +68703,19 @@
         "rating": 5,
         "total": 4,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:09.489Z",
+        "rating": 5,
+        "total": 5,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1774782121,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 80,
         "lang": "ja",
         "incentiveHit": false,
@@ -68114,7 +68726,7 @@
       {
         "rating": 5,
         "time": 1773925772,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 60,
         "lang": "ja",
         "incentiveHit": false,
@@ -68125,12 +68737,23 @@
       {
         "rating": 5,
         "time": 1781495806,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 100,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "4a09c0f5d2525526",
         "authorNameHash": "accfd368dceffcc7",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1791808906,
+        "relativeTime": "3 週間前",
+        "textLen": 118,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "d60724e2c421fa33",
+        "authorNameHash": "99ad4a8b60354683",
         "textSignalsVersion": 2
       },
       {
@@ -68460,13 +69083,19 @@
         "rating": 4.5,
         "total": 14,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:19.739Z",
+        "rating": 4.5,
+        "total": 14,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1768000017,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 82,
         "lang": "ja",
         "incentiveHit": false,
@@ -68751,6 +69380,12 @@
         "rating": 4.9,
         "total": 35,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:09.735Z",
+        "rating": 4.9,
+        "total": 35,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
@@ -68799,14 +69434,14 @@
         "textSignalsVersion": 2
       },
       {
-        "rating": 4,
-        "time": 1759505351,
+        "rating": 5,
+        "time": 1759588492,
         "relativeTime": "1 年前",
-        "textLen": 101,
+        "textLen": 119,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "baf36269e14502c1",
-        "authorNameHash": "8d3413b51b9b9324",
+        "textHash": "8d943c0bc93d9f5a",
+        "authorNameHash": "826434785b8eee23",
         "textSignalsVersion": 2
       }
     ]
@@ -69067,24 +69702,19 @@
         "rating": 4.7,
         "total": 30,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:09.974Z",
+        "rating": 4.6,
+        "total": 31,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1774345688,
-        "relativeTime": "6 か月前",
-        "textLen": 154,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "9f29e055c7b03e91",
-        "authorNameHash": "031ed4936a8ecf07",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1788174931,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 68,
         "lang": "ja",
         "incentiveHit": false,
@@ -69094,24 +69724,24 @@
       },
       {
         "rating": 5,
+        "time": 1774345688,
+        "relativeTime": "7 か月前",
+        "textLen": 154,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "9f29e055c7b03e91",
+        "authorNameHash": "031ed4936a8ecf07",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1774154399,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 106,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "0fe9ec858d723134",
         "authorNameHash": "035053b7963db35f",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 4,
-        "time": 1774446829,
-        "relativeTime": "6 か月前",
-        "textLen": 49,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "0a4ac47dcdf87e41",
-        "authorNameHash": "73ed6435522ab195",
         "textSignalsVersion": 2
       },
       {
@@ -69123,6 +69753,17 @@
         "incentiveHit": false,
         "textHash": "3c6a9f5d9f100849",
         "authorNameHash": "15e0e9991769e38e",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1616759051,
+        "relativeTime": "5 年前",
+        "textLen": 109,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "8e66f9845e0e2ca9",
+        "authorNameHash": "7d4a441c17c075cc",
         "textSignalsVersion": 2
       }
     ]
@@ -69209,13 +69850,19 @@
         "rating": 4.7,
         "total": 20,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:10.234Z",
+        "rating": 4.7,
+        "total": 20,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1784074109,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 689,
         "lang": "ja",
         "incentiveHit": false,
@@ -69226,7 +69873,7 @@
       {
         "rating": 4,
         "time": 1787662963,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 178,
         "lang": "ja",
         "incentiveHit": false,
@@ -69248,7 +69895,7 @@
       {
         "rating": 4,
         "time": 1665491224,
-        "relativeTime": "3 年前",
+        "relativeTime": "4 年前",
         "textLen": 156,
         "lang": "ja",
         "incentiveHit": false,
@@ -69669,29 +70316,24 @@
         "rating": 4.9,
         "total": 28,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:10.477Z",
+        "rating": 4.9,
+        "total": 28,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1775958745,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 651,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "a77849c5268e2933",
         "authorNameHash": "a1990e89736cb14c",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1777090282,
-        "relativeTime": "5 か月前",
-        "textLen": 184,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "e6898fe03f7b3425",
-        "authorNameHash": "a4e1cca15d40a7ec",
         "textSignalsVersion": 2
       },
       {
@@ -69703,6 +70345,17 @@
         "incentiveHit": false,
         "textHash": "9e95e52a20cb9c8a",
         "authorNameHash": "a69702496001d050",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1777090282,
+        "relativeTime": "6 か月前",
+        "textLen": 184,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "e6898fe03f7b3425",
+        "authorNameHash": "a4e1cca15d40a7ec",
         "textSignalsVersion": 2
       },
       {
@@ -70292,6 +70945,12 @@
         "rating": 4.8,
         "total": 24,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:10.716Z",
+        "rating": 4.8,
+        "total": 23,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
@@ -70320,7 +70979,7 @@
       {
         "rating": 5,
         "time": 1728209831,
-        "relativeTime": "1 年前",
+        "relativeTime": "2 年前",
         "textLen": 560,
         "lang": "ja",
         "incentiveHit": false,
@@ -70331,7 +70990,7 @@
       {
         "rating": 4,
         "time": 1763860997,
-        "relativeTime": "10 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 122,
         "lang": "ja",
         "incentiveHit": false,
@@ -70545,35 +71204,19 @@
         "rating": 4.7,
         "total": 40,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:11.037Z",
+        "rating": 4.7,
+        "total": 40,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1781966661,
-        "relativeTime": "3 か月前",
-        "textLen": 363,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "45cf09f1f2e2cde7",
-        "authorNameHash": "d127eab92880d966",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1778938482,
-        "relativeTime": "4 か月前",
-        "textLen": 545,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "9c27b49fdbe49ee2",
-        "authorNameHash": "35f7a20b05731279",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1776550832,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 257,
         "lang": "ja",
         "incentiveHit": false,
@@ -70584,7 +71227,7 @@
       {
         "rating": 5,
         "time": 1776931820,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 519,
         "lang": "ja",
         "incentiveHit": false,
@@ -70595,12 +71238,34 @@
       {
         "rating": 4,
         "time": 1776955204,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 255,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "5837e087a4bf9987",
         "authorNameHash": "75857337bd6bd162",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1777328909,
+        "relativeTime": "6 か月前",
+        "textLen": 204,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "8becb319b186fc97",
+        "authorNameHash": "5d6469c7fbfb7717",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1752077872,
+        "relativeTime": "1 年前",
+        "textLen": 993,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "8bfdc1eddaa6240a",
+        "authorNameHash": "77786d59a5a60d6c",
         "textSignalsVersion": 2
       }
     ]
@@ -70946,13 +71611,19 @@
         "rating": 4.9,
         "total": 14,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:11.291Z",
+        "rating": 4.9,
+        "total": 14,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1776904401,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 486,
         "lang": "ja",
         "incentiveHit": false,
@@ -70963,7 +71634,7 @@
       {
         "rating": 5,
         "time": 1772006757,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 471,
         "lang": "ja",
         "incentiveHit": false,
@@ -70974,7 +71645,7 @@
       {
         "rating": 4,
         "time": 1776262193,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 1092,
         "lang": "ja",
         "incentiveHit": false,
@@ -70985,7 +71656,7 @@
       {
         "rating": 5,
         "time": 1774404056,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 473,
         "lang": "ja",
         "incentiveHit": false,
@@ -70996,7 +71667,7 @@
       {
         "rating": 5,
         "time": 1774433638,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 501,
         "lang": "ja",
         "incentiveHit": false,
@@ -71352,24 +72023,19 @@
         "rating": 4.7,
         "total": 14,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:11.519Z",
+        "rating": 4.7,
+        "total": 14,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
-        "rating": 5,
-        "time": 1777397939,
-        "relativeTime": "5 か月前",
-        "textLen": 227,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "9b1e9148cab628ce",
-        "authorNameHash": "5cdd445c961db544",
-        "textSignalsVersion": 2
-      },
-      {
         "rating": 3,
         "time": 1764988696,
-        "relativeTime": "10 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 783,
         "lang": "ja",
         "incentiveHit": false,
@@ -71380,7 +72046,7 @@
       {
         "rating": 5,
         "time": 1765624927,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 96,
         "lang": "ja",
         "incentiveHit": false,
@@ -71390,8 +72056,19 @@
       },
       {
         "rating": 5,
+        "time": 1777397939,
+        "relativeTime": "6 か月前",
+        "textLen": 227,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "9b1e9148cab628ce",
+        "authorNameHash": "5cdd445c961db544",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1766759535,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 87,
         "lang": "ja",
         "incentiveHit": false,
@@ -71402,7 +72079,7 @@
       {
         "rating": 5,
         "time": 1766235520,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 25,
         "lang": "ja",
         "incentiveHit": false,
@@ -72013,24 +72690,19 @@
         "rating": 4.7,
         "total": 35,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:11.760Z",
+        "rating": 4.7,
+        "total": 34,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1769233668,
-        "relativeTime": "8 か月前",
-        "textLen": 130,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "ee39acb6b82521c5",
-        "authorNameHash": "cd0aa9856147b6c5",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1783057737,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 447,
         "lang": "ja",
         "incentiveHit": false,
@@ -72041,12 +72713,23 @@
       {
         "rating": 5,
         "time": 1764994788,
-        "relativeTime": "10 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 942,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "a8dc6342a2069102",
         "authorNameHash": "25639fb6cdaec739",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1769233668,
+        "relativeTime": "9 か月前",
+        "textLen": 130,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "ee39acb6b82521c5",
+        "authorNameHash": "cd0aa9856147b6c5",
         "textSignalsVersion": 2
       },
       {
@@ -72063,7 +72746,7 @@
       {
         "rating": 5,
         "time": 1786486527,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 155,
         "lang": "ja",
         "incentiveHit": false,
@@ -72129,13 +72812,19 @@
         "rating": 5,
         "total": 9,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:11.998Z",
+        "rating": 5,
+        "total": 11,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1779988787,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 67,
         "lang": "ja",
         "incentiveHit": false,
@@ -72157,7 +72846,7 @@
       {
         "rating": 5,
         "time": 1768651537,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 19,
         "lang": "ja",
         "incentiveHit": false,
@@ -72179,7 +72868,7 @@
       {
         "rating": 5,
         "time": 1768814802,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 32,
         "lang": "en",
         "incentiveHit": false,
@@ -72205,6 +72894,12 @@
       },
       {
         "ts": "2026-10-05T23:30:21.251Z",
+        "rating": 5,
+        "total": 4,
+        "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:12.241Z",
         "rating": 5,
         "total": 4,
         "businessStatus": "OPERATIONAL"
@@ -73447,13 +74142,30 @@
         "rating": 4.6,
         "total": 74,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:19.972Z",
+        "rating": 4.6,
+        "total": 75,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
+        "time": 1792362623,
+        "relativeTime": "2 週間前",
+        "textLen": 154,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "71ac9d954e552605",
+        "authorNameHash": "2404c2b9f3f509f1",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1772779922,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 244,
         "lang": "ja",
         "incentiveHit": false,
@@ -73475,7 +74187,7 @@
       {
         "rating": 5,
         "time": 1772776174,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 120,
         "lang": "ja",
         "incentiveHit": false,
@@ -73486,23 +74198,12 @@
       {
         "rating": 5,
         "time": 1772709489,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 262,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "4ce6d80ef64616b7",
         "authorNameHash": "1128aeaa8e15f7f4",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 4,
-        "time": 1772774986,
-        "relativeTime": "7 か月前",
-        "textLen": 208,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "783911ce464e7909",
-        "authorNameHash": "b4574e485a99430f",
         "textSignalsVersion": 2
       }
     ]
@@ -74613,13 +75314,19 @@
         "rating": 4.9,
         "total": 25,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:12.484Z",
+        "rating": 4.9,
+        "total": 25,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1779604251,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 250,
         "lang": "ja",
         "incentiveHit": false,
@@ -74630,7 +75337,7 @@
       {
         "rating": 5,
         "time": 1780657595,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 529,
         "lang": "ja",
         "incentiveHit": false,
@@ -74641,7 +75348,7 @@
       {
         "rating": 5,
         "time": 1773658532,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 617,
         "lang": "ja",
         "incentiveHit": false,
@@ -74651,24 +75358,24 @@
       },
       {
         "rating": 5,
-        "time": 1775895242,
+        "time": 1779594701,
         "relativeTime": "5 か月前",
-        "textLen": 318,
+        "textLen": 124,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "21bcb92abb66e607",
-        "authorNameHash": "625ee2040581b0cd",
+        "textHash": "11cfef7dcdd867af",
+        "authorNameHash": "0ef7f4fc609d3dec",
         "textSignalsVersion": 2
       },
       {
         "rating": 5,
-        "time": 1776092583,
-        "relativeTime": "5 か月前",
-        "textLen": 207,
+        "time": 1775309411,
+        "relativeTime": "7 か月前",
+        "textLen": 170,
         "lang": "ja",
-        "incentiveHit": true,
-        "textHash": "a2a1650731ff0250",
-        "authorNameHash": "7be50c758efd571d",
+        "incentiveHit": false,
+        "textHash": "17b9d654a2b5adbb",
+        "authorNameHash": "dfdfc1a9e289a6ec",
         "textSignalsVersion": 2
       }
     ]
@@ -75653,20 +76360,15 @@
         "rating": 4.6,
         "total": 5,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:12.721Z",
+        "rating": 4.6,
+        "total": 5,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
-      {
-        "rating": 3,
-        "time": 1774874341,
-        "relativeTime": "6 か月前",
-        "textLen": 129,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "9c90bb722bd5da47",
-        "authorNameHash": "e741eefb85a03495",
-        "textSignalsVersion": 2
-      },
       {
         "rating": 5,
         "time": 1770469581,
@@ -75679,9 +76381,20 @@
         "textSignalsVersion": 2
       },
       {
+        "rating": 3,
+        "time": 1774874341,
+        "relativeTime": "7 か月前",
+        "textLen": 129,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "9c90bb722bd5da47",
+        "authorNameHash": "e741eefb85a03495",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 5,
         "time": 1763043485,
-        "relativeTime": "10 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 56,
         "lang": "ja",
         "incentiveHit": false,
@@ -75703,7 +76416,7 @@
       {
         "rating": 5,
         "time": 1772402874,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -75922,13 +76635,19 @@
         "rating": 4.9,
         "total": 12,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:12.975Z",
+        "rating": 4.9,
+        "total": 13,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1777728095,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 260,
         "lang": "ja",
         "incentiveHit": false,
@@ -75939,7 +76658,7 @@
       {
         "rating": 5,
         "time": 1781175677,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 256,
         "lang": "ja",
         "incentiveHit": false,
@@ -75950,7 +76669,7 @@
       {
         "rating": 4,
         "time": 1774878297,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 239,
         "lang": "ja",
         "incentiveHit": false,
@@ -75971,13 +76690,13 @@
       },
       {
         "rating": 5,
-        "time": 1781310540,
-        "relativeTime": "3 か月前",
-        "textLen": 90,
+        "time": 1781711531,
+        "relativeTime": "4 か月前",
+        "textLen": 247,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "e71e42b7059be720",
-        "authorNameHash": "47aa4d633fd29f41",
+        "textHash": "8d8b5040ad586024",
+        "authorNameHash": "c64003cb4427be20",
         "textSignalsVersion": 2
       }
     ]
@@ -76112,6 +76831,12 @@
         "rating": 4.8,
         "total": 17,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:13.214Z",
+        "rating": 4.8,
+        "total": 17,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
@@ -76140,7 +76865,7 @@
       {
         "rating": 5,
         "time": 1730305407,
-        "relativeTime": "1 年前",
+        "relativeTime": "2 年前",
         "textLen": 125,
         "lang": "ja",
         "incentiveHit": false,
@@ -76735,13 +77460,19 @@
         "rating": 4.8,
         "total": 35,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:13.445Z",
+        "rating": 4.8,
+        "total": 46,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1780339437,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 79,
         "lang": "ja",
         "incentiveHit": false,
@@ -76752,7 +77483,7 @@
       {
         "rating": 5,
         "time": 1771659219,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 131,
         "lang": "ja",
         "incentiveHit": false,
@@ -76763,7 +77494,7 @@
       {
         "rating": 5,
         "time": 1766273874,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 89,
         "lang": "ja",
         "incentiveHit": false,
@@ -76773,24 +77504,24 @@
       },
       {
         "rating": 5,
-        "time": 1788089863,
-        "relativeTime": "1 か月前",
-        "textLen": 93,
+        "time": 1791360690,
+        "relativeTime": "3 週間前",
+        "textLen": 110,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "5ad5c5711d7556cf",
-        "authorNameHash": "33a61d3777cb0f87",
+        "textHash": "2abbd49200048217",
+        "authorNameHash": "b437327c37b72b38",
         "textSignalsVersion": 2
       },
       {
-        "rating": 5,
-        "time": 1767866138,
-        "relativeTime": "9 か月前",
-        "textLen": 46,
+        "rating": 4,
+        "time": 1791674466,
+        "relativeTime": "3 週間前",
+        "textLen": 89,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "b642b8d7608467a4",
-        "authorNameHash": "43646e7bb5b0930b",
+        "textHash": "bfba1bef45f43ce4",
+        "authorNameHash": "0cba157d9dd70c94",
         "textSignalsVersion": 2
       }
     ]
@@ -76888,13 +77619,19 @@
         "rating": 5,
         "total": 1,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:13.681Z",
+        "rating": 5,
+        "total": 1,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1779302405,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 25,
         "lang": "ja",
         "incentiveHit": false,
@@ -77034,6 +77771,12 @@
         "rating": 4.8,
         "total": 6,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:13.916Z",
+        "rating": 4.8,
+        "total": 6,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
@@ -77062,7 +77805,7 @@
       {
         "rating": 5,
         "time": 1762772082,
-        "relativeTime": "10 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 55,
         "lang": "ja",
         "incentiveHit": false,
@@ -77073,7 +77816,7 @@
       {
         "rating": 5,
         "time": 1781066476,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 326,
         "lang": "en",
         "incentiveHit": false,
@@ -77084,7 +77827,7 @@
       {
         "rating": 5,
         "time": 1772723478,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 50,
         "lang": "zh-Hant",
         "incentiveHit": false,
@@ -77381,13 +78124,19 @@
         "rating": 4.6,
         "total": 14,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:14.146Z",
+        "rating": 4.6,
+        "total": 16,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 4,
         "time": 1780655893,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 151,
         "lang": "ja",
         "incentiveHit": false,
@@ -77409,7 +78158,7 @@
       {
         "rating": 4,
         "time": 1766032296,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 159,
         "lang": "ja",
         "incentiveHit": false,
@@ -77644,6 +78393,12 @@
         "ts": "2026-10-05T23:30:24.268Z",
         "rating": 4.6,
         "total": 21,
+        "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:14.381Z",
+        "rating": 4.6,
+        "total": 22,
         "businessStatus": "OPERATIONAL"
       }
     ],
@@ -78063,13 +78818,19 @@
         "rating": 4.4,
         "total": 36,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:20.208Z",
+        "rating": 4.4,
+        "total": 37,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 3,
         "time": 1773285445,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 65,
         "lang": "ja",
         "incentiveHit": false,
@@ -78279,13 +79040,19 @@
         "rating": 4.9,
         "total": 22,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:14.630Z",
+        "rating": 4.8,
+        "total": 24,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1784706808,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 348,
         "lang": "ja",
         "incentiveHit": false,
@@ -78294,9 +79061,20 @@
         "textSignalsVersion": 2
       },
       {
+        "rating": 5,
+        "time": 1789201206,
+        "relativeTime": "1 か月前",
+        "textLen": 1191,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "ce1451d1762c269e",
+        "authorNameHash": "25639fb6cdaec739",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 4,
         "time": 1780998920,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 351,
         "lang": "ja",
         "incentiveHit": false,
@@ -78307,7 +79085,7 @@
       {
         "rating": 5,
         "time": 1778072528,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 609,
         "lang": "ja",
         "incentiveHit": false,
@@ -78318,23 +79096,12 @@
       {
         "rating": 5,
         "time": 1775961024,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 77,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "783ecf367519accb",
         "authorNameHash": "ed9b58be6b0c5ee8",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1774320757,
-        "relativeTime": "6 か月前",
-        "textLen": 205,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "4b3eeb27c97d1d75",
-        "authorNameHash": "a7dfc83313636130",
         "textSignalsVersion": 2
       }
     ]
@@ -78680,13 +79447,19 @@
         "rating": 4.9,
         "total": 36,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:14.867Z",
+        "rating": 4.8,
+        "total": 38,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1666874960,
-        "relativeTime": "3 年前",
+        "relativeTime": "4 年前",
         "textLen": 782,
         "lang": "ja",
         "incentiveHit": false,
@@ -78970,13 +79743,30 @@
         "rating": 4.7,
         "total": 12,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:15.114Z",
+        "rating": 4.7,
+        "total": 12,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
+        "rating": 5,
+        "time": 1786493584,
+        "relativeTime": "2 か月前",
+        "textLen": 649,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "6b87001beb587eec",
+        "authorNameHash": "25639fb6cdaec739",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 4,
         "time": 1770139548,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 205,
         "lang": "ja",
         "incentiveHit": false,
@@ -78987,7 +79777,7 @@
       {
         "rating": 5,
         "time": 1770699196,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 144,
         "lang": "ja",
         "incentiveHit": false,
@@ -78998,7 +79788,7 @@
       {
         "rating": 5,
         "time": 1765903650,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 95,
         "lang": "ja",
         "incentiveHit": false,
@@ -79009,23 +79799,12 @@
       {
         "rating": 5,
         "time": 1765630032,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 116,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "09ef30b096cdac58",
         "authorNameHash": "638ab5b1d30760c2",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 4,
-        "time": 1778820117,
-        "relativeTime": "4 か月前",
-        "textLen": 76,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "cfbe9ddcd3680d25",
-        "authorNameHash": "1ac0b9ad6563e576",
         "textSignalsVersion": 2
       }
     ]
@@ -79205,13 +79984,19 @@
         "rating": 5,
         "total": 41,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:15.348Z",
+        "rating": 5,
+        "total": 43,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1776963053,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 78,
         "lang": "ja",
         "incentiveHit": false,
@@ -79222,7 +80007,7 @@
       {
         "rating": 5,
         "time": 1771934253,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 70,
         "lang": "ja",
         "incentiveHit": false,
@@ -79233,7 +80018,7 @@
       {
         "rating": 5,
         "time": 1766408150,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 113,
         "lang": "ja",
         "incentiveHit": false,
@@ -79244,7 +80029,7 @@
       {
         "rating": 5,
         "time": 1768694947,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 108,
         "lang": "ja",
         "incentiveHit": false,
@@ -79254,13 +80039,13 @@
       },
       {
         "rating": 5,
-        "time": 1769331616,
-        "relativeTime": "8 か月前",
-        "textLen": 163,
+        "time": 1791353237,
+        "relativeTime": "3 週間前",
+        "textLen": 461,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "7d3d2dbefad1b0df",
-        "authorNameHash": "03b72a3e487ce254",
+        "textHash": "402e65fe78deb163",
+        "authorNameHash": "a4754f429cbadb37",
         "textSignalsVersion": 2
       }
     ]
@@ -79667,6 +80452,12 @@
         "rating": 5,
         "total": 3,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:15.589Z",
+        "rating": 5,
+        "total": 3,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
@@ -79724,13 +80515,19 @@
         "rating": 4.7,
         "total": 19,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:15.836Z",
+        "rating": 4.7,
+        "total": 21,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1782551996,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 962,
         "lang": "ja",
         "incentiveHit": false,
@@ -79741,7 +80538,7 @@
       {
         "rating": 5,
         "time": 1781957307,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 296,
         "lang": "ja",
         "incentiveHit": false,
@@ -79752,7 +80549,7 @@
       {
         "rating": 5,
         "time": 1772671007,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 185,
         "lang": "ja",
         "incentiveHit": false,
@@ -79763,7 +80560,7 @@
       {
         "rating": 5,
         "time": 1764316486,
-        "relativeTime": "10 か月前",
+        "relativeTime": "11 か月前",
         "textLen": 622,
         "lang": "ja",
         "incentiveHit": false,
@@ -79774,7 +80571,7 @@
       {
         "rating": 5,
         "time": 1771490110,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 161,
         "lang": "ja",
         "incentiveHit": false,
@@ -79840,13 +80637,19 @@
         "rating": 4.5,
         "total": 13,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:16.076Z",
+        "rating": 4.6,
+        "total": 15,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1776304555,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 124,
         "lang": "ja",
         "incentiveHit": false,
@@ -79868,7 +80671,7 @@
       {
         "rating": 5,
         "time": 1776691896,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 104,
         "lang": "ja",
         "incentiveHit": false,
@@ -79877,25 +80680,25 @@
         "textSignalsVersion": 2
       },
       {
+        "rating": 4,
+        "time": 1788986546,
+        "relativeTime": "1 か月前",
+        "textLen": 41,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "471a318d7e31731f",
+        "authorNameHash": "e238f538a8970a12",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 5,
         "time": 1775313926,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 62,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "fc10cf541026397d",
         "authorNameHash": "e410e110978429a2",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 4,
-        "time": 1790791670,
-        "relativeTime": "過去 1 週間以内",
-        "textLen": 46,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "edd74bfea5892721",
-        "authorNameHash": "f4c78ad40537c48f",
         "textSignalsVersion": 2
       }
     ]
@@ -84335,13 +85138,19 @@
         "rating": 4.6,
         "total": 7,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:16.318Z",
+        "rating": 4.6,
+        "total": 9,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1788310703,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 212,
         "lang": "ja",
         "incentiveHit": false,
@@ -84351,8 +85160,19 @@
       },
       {
         "rating": 5,
+        "time": 1788010779,
+        "relativeTime": "2 か月前",
+        "textLen": 185,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "f8e2dff653390519",
+        "authorNameHash": "f09a3b1419533e82",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1777902575,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 63,
         "lang": "ja",
         "incentiveHit": false,
@@ -84363,7 +85183,7 @@
       {
         "rating": 5,
         "time": 1782120383,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 58,
         "lang": "ja",
         "incentiveHit": false,
@@ -84372,25 +85192,14 @@
         "textSignalsVersion": 2
       },
       {
-        "rating": 2,
-        "time": 1789809651,
-        "relativeTime": "2 週間前",
-        "textLen": 93,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "2563ce2f064dcf0c",
-        "authorNameHash": "e30edd7464ee24b2",
-        "textSignalsVersion": 2
-      },
-      {
         "rating": 5,
-        "time": 1788010779,
-        "relativeTime": "1 か月前",
-        "textLen": 185,
+        "time": 1793353053,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 177,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "f8e2dff653390519",
-        "authorNameHash": "f09a3b1419533e82",
+        "textHash": "51e0c54708d7022c",
+        "authorNameHash": "b9d06b0b16bd8ecd",
         "textSignalsVersion": 2
       }
     ]
@@ -85006,13 +85815,19 @@
         "rating": 4.6,
         "total": 39,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:16.566Z",
+        "rating": 4.7,
+        "total": 40,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1780665108,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 180,
         "lang": "ja",
         "incentiveHit": false,
@@ -85023,7 +85838,7 @@
       {
         "rating": 5,
         "time": 1780070735,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 103,
         "lang": "ja",
         "incentiveHit": false,
@@ -85034,7 +85849,7 @@
       {
         "rating": 5,
         "time": 1777803971,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 75,
         "lang": "ja",
         "incentiveHit": false,
@@ -85045,7 +85860,7 @@
       {
         "rating": 5,
         "time": 1776878337,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 69,
         "lang": "ja",
         "incentiveHit": false,
@@ -85055,13 +85870,13 @@
       },
       {
         "rating": 5,
-        "time": 1777437594,
-        "relativeTime": "5 か月前",
-        "textLen": 119,
+        "time": 1777356168,
+        "relativeTime": "6 か月前",
+        "textLen": 93,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "38f0b8547275d043",
-        "authorNameHash": "c232af6aff9d6050",
+        "textHash": "fb56ae68898236b7",
+        "authorNameHash": "d70e7c34b60bf0d9",
         "textSignalsVersion": 2
       }
     ]
@@ -85940,6 +86755,12 @@
         "rating": 4.9,
         "total": 10,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:16.797Z",
+        "rating": 4.9,
+        "total": 10,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
@@ -85979,7 +86800,7 @@
       {
         "rating": 5,
         "time": 1602245082,
-        "relativeTime": "5 年前",
+        "relativeTime": "6 年前",
         "textLen": 45,
         "lang": "ja",
         "incentiveHit": false,
@@ -85990,7 +86811,7 @@
       {
         "rating": 5,
         "time": 1602209478,
-        "relativeTime": "5 年前",
+        "relativeTime": "6 年前",
         "textLen": 49,
         "lang": "ja",
         "incentiveHit": false,
@@ -88984,33 +89805,69 @@
         "rating": 4.7,
         "total": 3219,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:21.197Z",
+        "rating": 4.7,
+        "total": 3344,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
-        "rating": 3,
-        "time": 1764989905,
-        "relativeTime": "5 か月前"
+        "rating": 1,
+        "time": 1780835607,
+        "relativeTime": "4 か月前",
+        "textLen": 229,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "24f9ba47de039e9d",
+        "authorNameHash": "f55a2a357f2faba4",
+        "textSignalsVersion": 2
       },
       {
-        "rating": 4,
-        "time": 1763826422,
-        "relativeTime": "6 か月前"
+        "rating": 1,
+        "time": 1774951819,
+        "relativeTime": "7 か月前",
+        "textLen": 236,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "b3f7add9ee31404c",
+        "authorNameHash": "7f2f46856517f819",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1764989905,
+        "relativeTime": "11 か月前",
+        "textLen": 533,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "beb83472b6cce92a",
+        "authorNameHash": "d02d60f19b2b7a72",
+        "textSignalsVersion": 2
       },
       {
         "rating": 3,
         "time": 1758725144,
-        "relativeTime": "7 か月前"
+        "relativeTime": "1 年前",
+        "textLen": 452,
+        "lang": "ja",
+        "incentiveHit": true,
+        "textHash": "7ef5f79712a96d95",
+        "authorNameHash": "328b217026be1cb1",
+        "textSignalsVersion": 2
       },
       {
         "rating": 4,
-        "time": 1754747836,
-        "relativeTime": "9 か月前"
-      },
-      {
-        "rating": 4,
-        "time": 1753354781,
-        "relativeTime": "10 か月前"
+        "time": 1763826422,
+        "relativeTime": "11 か月前",
+        "textLen": 536,
+        "lang": "ja",
+        "incentiveHit": true,
+        "textHash": "c55aba70f6f150cc",
+        "authorNameHash": "320a0041affbe2fa",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -90661,20 +91518,15 @@
         "rating": 4.9,
         "total": 47,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:17.055Z",
+        "rating": 4.9,
+        "total": 50,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
-      {
-        "rating": 4,
-        "time": 1769874387,
-        "relativeTime": "8 か月前",
-        "textLen": 680,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "3857fd929714677f",
-        "authorNameHash": "b97185ae5078f21e",
-        "textSignalsVersion": 2
-      },
       {
         "rating": 5,
         "time": 1775563218,
@@ -90688,35 +91540,46 @@
       },
       {
         "rating": 5,
-        "time": 1776318299,
-        "relativeTime": "5 か月前",
-        "textLen": 67,
+        "time": 1790758793,
+        "relativeTime": "1 か月前",
+        "textLen": 59,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "817675ed6069b897",
-        "authorNameHash": "a72ee7cdcb362ef4",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1775563473,
-        "relativeTime": "6 か月前",
-        "textLen": 35,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "f9d499125665622f",
-        "authorNameHash": "8688e5eed70f826e",
+        "textHash": "92c62be27fe3dd94",
+        "authorNameHash": "6552bcbf12684801",
         "textSignalsVersion": 2
       },
       {
         "rating": 5,
         "time": 1782558208,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 189,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "fa5f8a236ebfaaed",
         "authorNameHash": "8134baf74683f913",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1769874387,
+        "relativeTime": "9 か月前",
+        "textLen": 680,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "3857fd929714677f",
+        "authorNameHash": "b97185ae5078f21e",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1782557797,
+        "relativeTime": "4 か月前",
+        "textLen": 55,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "0ec3340a957ce918",
+        "authorNameHash": "e104e77bb47cdb0e",
         "textSignalsVersion": 2
       }
     ]
@@ -90877,24 +91740,30 @@
         "rating": 4.4,
         "total": 49,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:20.445Z",
+        "rating": 4.4,
+        "total": 56,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1778195732,
-        "relativeTime": "5 か月前",
-        "textLen": 484,
+        "time": 1793071491,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 510,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "fe7ee12bec014ac0",
-        "authorNameHash": "948c835b302ed763",
+        "textHash": "4a98dd79973ee44f",
+        "authorNameHash": "2034093eb3b738e0",
         "textSignalsVersion": 2
       },
       {
         "rating": 5,
         "time": 1782911579,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 189,
         "lang": "ja",
         "incentiveHit": false,
@@ -90904,19 +91773,8 @@
       },
       {
         "rating": 5,
-        "time": 1776538456,
-        "relativeTime": "5 か月前",
-        "textLen": 816,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "1788f3ff58197759",
-        "authorNameHash": "e9a61521e1128cf6",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1781794220,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 678,
         "lang": "ja",
         "incentiveHit": false,
@@ -90927,12 +91785,23 @@
       {
         "rating": 5,
         "time": 1779111906,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 282,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "831cced2957f3423",
         "authorNameHash": "3d589ac96c56c0ad",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1776217169,
+        "relativeTime": "6 か月前",
+        "textLen": 94,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "7e78a8cd87033122",
+        "authorNameHash": "8062dd0520540357",
         "textSignalsVersion": 2
       }
     ]
@@ -91213,13 +92082,19 @@
         "rating": 4.6,
         "total": 20,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:17.313Z",
+        "rating": 4.6,
+        "total": 21,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 4,
         "time": 1770634697,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 137,
         "lang": "ja",
         "incentiveHit": false,
@@ -91229,19 +92104,8 @@
       },
       {
         "rating": 5,
-        "time": 1774447714,
-        "relativeTime": "6 か月前",
-        "textLen": 26,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "57cccf312ecd685e",
-        "authorNameHash": "d1e6ebf53d15e419",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1780626746,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 73,
         "lang": "ja",
         "incentiveHit": false,
@@ -91251,24 +92115,35 @@
       },
       {
         "rating": 5,
-        "time": 1772067351,
+        "time": 1774447714,
         "relativeTime": "7 か月前",
-        "textLen": 278,
+        "textLen": 26,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "d7d9271dc007c434",
-        "authorNameHash": "38f6c308d2ff73a9",
+        "textHash": "57cccf312ecd685e",
+        "authorNameHash": "d1e6ebf53d15e419",
         "textSignalsVersion": 2
       },
       {
         "rating": 5,
         "time": 1773491288,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 111,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "f13fbcbf6bb99f30",
         "authorNameHash": "d7b94e22b2637447",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1773333208,
+        "relativeTime": "7 か月前",
+        "textLen": 409,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "734423da39a700a3",
+        "authorNameHash": "01375005872a784d",
         "textSignalsVersion": 2
       }
     ]
@@ -91514,24 +92389,30 @@
         "rating": 5,
         "total": 13,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:17.559Z",
+        "rating": 5,
+        "total": 13,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1772745692,
-        "relativeTime": "7 か月前",
-        "textLen": 135,
+        "time": 1790350186,
+        "relativeTime": "1 か月前",
+        "textLen": 242,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "704966c4b6a6c57e",
-        "authorNameHash": "ca978112ca1bbdca",
+        "textHash": "10cb10d40f9233cb",
+        "authorNameHash": "9fc4e3524558c99c",
         "textSignalsVersion": 2
       },
       {
         "rating": 5,
         "time": 1766544799,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 1738,
         "lang": "ja",
         "incentiveHit": false,
@@ -91542,7 +92423,7 @@
       {
         "rating": 5,
         "time": 1772793317,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 144,
         "lang": "ja",
         "incentiveHit": false,
@@ -91552,24 +92433,24 @@
       },
       {
         "rating": 5,
-        "time": 1769829866,
-        "relativeTime": "8 か月前",
-        "textLen": 556,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "4af26402d7a7454b",
-        "authorNameHash": "de46465a90b1c7bc",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1766755394,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 322,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "d7d3ee898ea2757c",
         "authorNameHash": "ddddd47d9ed80b07",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1784809855,
+        "relativeTime": "3 か月前",
+        "textLen": 38,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "88e01594c5b78d09",
+        "authorNameHash": "8522d947db50ef20",
         "textSignalsVersion": 2
       }
     ]
@@ -91630,13 +92511,19 @@
         "rating": 4.7,
         "total": 23,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:17.793Z",
+        "rating": 4.7,
+        "total": 23,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1776323879,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 352,
         "lang": "ja",
         "incentiveHit": false,
@@ -91658,7 +92545,7 @@
       {
         "rating": 5,
         "time": 1777868401,
-        "relativeTime": "5 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 107,
         "lang": "ja",
         "incentiveHit": false,
@@ -96682,33 +97569,69 @@
         "rating": 4.7,
         "total": 124,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:20.708Z",
+        "rating": 4.7,
+        "total": 130,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
+        "rating": 4,
+        "time": 1782221296,
+        "relativeTime": "4 か月前",
+        "textLen": 327,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "ec07a42735ee778a",
+        "authorNameHash": "1931d736f5bb4268",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1781254423,
+        "relativeTime": "4 か月前",
+        "textLen": 285,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "e22043caf4049992",
+        "authorNameHash": "5b5571606db81913",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 3,
         "time": 1763133017,
-        "relativeTime": "6 か月前"
+        "relativeTime": "11 か月前",
+        "textLen": 150,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "640f45a571340299",
+        "authorNameHash": "d3f7341639daff7c",
+        "textSignalsVersion": 2
       },
       {
         "rating": 3,
         "time": 1749299788,
-        "relativeTime": "11 か月前"
-      },
-      {
-        "rating": 4,
-        "time": 1765164827,
-        "relativeTime": "5 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1696418284,
-        "relativeTime": "2 年前"
+        "relativeTime": "1 年前",
+        "textLen": 184,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "6a0b92d35499cb0f",
+        "authorNameHash": "be87dbfbbf6e24e2",
+        "textSignalsVersion": 2
       },
       {
         "rating": 4,
         "time": 1737189448,
-        "relativeTime": "1 年前"
+        "relativeTime": "1 年前",
+        "textLen": 154,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "24dc6ec00431dbce",
+        "authorNameHash": "0c2ba01a96c74b6d",
+        "textSignalsVersion": 2
       }
     ]
   },
@@ -194805,24 +195728,19 @@
         "rating": 4.1,
         "total": 35,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:04.559Z",
+        "rating": 4,
+        "total": 42,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
-        "rating": 5,
-        "time": 1783468826,
-        "relativeTime": "2 か月前",
-        "textLen": 519,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "88cb300e97cc0b55",
-        "authorNameHash": "5bb5675ea341a78a",
-        "textSignalsVersion": 2
-      },
-      {
         "rating": 3,
         "time": 1783820799,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 392,
         "lang": "ja",
         "incentiveHit": false,
@@ -194831,20 +195749,9 @@
         "textSignalsVersion": 2
       },
       {
-        "rating": 4,
-        "time": 1784263401,
-        "relativeTime": "1 か月前",
-        "textLen": 145,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "7d0a6dc859fee6b7",
-        "authorNameHash": "914ed7e947ebf6b2",
-        "textSignalsVersion": 2
-      },
-      {
         "rating": 5,
         "time": 1777003630,
-        "relativeTime": "4 か月前",
+        "relativeTime": "6 か月前",
         "textLen": 166,
         "lang": "ja",
         "incentiveHit": false,
@@ -194853,14 +195760,36 @@
         "textSignalsVersion": 2
       },
       {
-        "rating": 3,
-        "time": 1782262209,
+        "rating": 2,
+        "time": 1787543692,
         "relativeTime": "2 か月前",
-        "textLen": 157,
+        "textLen": 426,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "c93f4b9b3e9d67dc",
-        "authorNameHash": "aec4eca2c00b8377",
+        "textHash": "4722a20715aca327",
+        "authorNameHash": "0b38274d6e45d9da",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1783468826,
+        "relativeTime": "3 か月前",
+        "textLen": 519,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "88cb300e97cc0b55",
+        "authorNameHash": "5bb5675ea341a78a",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1788394152,
+        "relativeTime": "2 か月前",
+        "textLen": 312,
+        "lang": "ja",
+        "incentiveHit": true,
+        "textHash": "824e84ab72346dac",
+        "authorNameHash": "802857fca572528e",
         "textSignalsVersion": 2
       }
     ]
@@ -216466,13 +217395,19 @@
         "rating": 4.8,
         "total": 63,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:18.034Z",
+        "rating": 4.8,
+        "total": 69,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1787635705,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 364,
         "lang": "ja",
         "incentiveHit": false,
@@ -216482,8 +217417,19 @@
       },
       {
         "rating": 4,
+        "time": 1791257989,
+        "relativeTime": "3 週間前",
+        "textLen": 94,
+        "lang": "ja",
+        "incentiveHit": true,
+        "textHash": "695de5f2fde1e125",
+        "authorNameHash": "34ed119fa288c5e1",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
         "time": 1787629828,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 96,
         "lang": "ja",
         "incentiveHit": false,
@@ -216494,7 +217440,7 @@
       {
         "rating": 5,
         "time": 1788057021,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 122,
         "lang": "ja",
         "incentiveHit": false,
@@ -216505,23 +217451,12 @@
       {
         "rating": 4,
         "time": 1786155084,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 63,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "fb6322ef70871d64",
         "authorNameHash": "09ebeeb5854477b4",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1788406719,
-        "relativeTime": "1 か月前",
-        "textLen": 20,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": null,
-        "authorNameHash": "205c77035a3be26c",
         "textSignalsVersion": 2
       }
     ]
@@ -221157,13 +222092,41 @@
         "rating": 5,
         "total": 8,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:05.033Z",
+        "rating": 5,
+        "total": 8,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
+        "time": 1787501591,
+        "relativeTime": "2 か月前",
+        "textLen": 139,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "4cfc7da70369a854",
+        "authorNameHash": "9cb1bdfb35bf18f5",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1786421008,
+        "relativeTime": "2 か月前",
+        "textLen": 58,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "3ba8bce6a33a2a05",
+        "authorNameHash": "8ba14972ad75c479",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1786507654,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 155,
         "lang": "ja",
         "incentiveHit": false,
@@ -221174,7 +222137,7 @@
       {
         "rating": 5,
         "time": 1787024441,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 133,
         "lang": "ja",
         "incentiveHit": false,
@@ -221184,35 +222147,13 @@
       },
       {
         "rating": 5,
-        "time": 1786421008,
-        "relativeTime": "1 か月前",
-        "textLen": 58,
+        "time": 1786418869,
+        "relativeTime": "2 か月前",
+        "textLen": 62,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "3ba8bce6a33a2a05",
-        "authorNameHash": "8ba14972ad75c479",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1787501591,
-        "relativeTime": "1 か月前",
-        "textLen": 139,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "4cfc7da70369a854",
-        "authorNameHash": "9cb1bdfb35bf18f5",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1787058985,
-        "relativeTime": "1 か月前",
-        "textLen": 25,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "e7b8eacba59ce683",
-        "authorNameHash": "4868d28b8ba580c8",
+        "textHash": "367c27ce092dfc2b",
+        "authorNameHash": "d07229c400173aeb",
         "textSignalsVersion": 2
       }
     ]
@@ -221378,13 +222319,19 @@
         "rating": 4.6,
         "total": 11,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:05.274Z",
+        "rating": 4.5,
+        "total": 13,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1765798112,
-        "relativeTime": "9 か月前",
+        "relativeTime": "10 か月前",
         "textLen": 217,
         "lang": "ja",
         "incentiveHit": false,
@@ -221417,7 +222364,7 @@
       {
         "rating": 5,
         "time": 1770115655,
-        "relativeTime": "8 か月前",
+        "relativeTime": "9 か月前",
         "textLen": 201,
         "lang": "ja",
         "incentiveHit": false,
@@ -221428,7 +222375,7 @@
       {
         "rating": 5,
         "time": 1760445766,
-        "relativeTime": "11 か月前",
+        "relativeTime": "1 年前",
         "textLen": 86,
         "lang": "ja",
         "incentiveHit": false,
@@ -221512,62 +222459,68 @@
         "rating": 5,
         "total": 10,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:05.561Z",
+        "rating": 5,
+        "total": 12,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1790346158,
-        "relativeTime": "1 週間前",
-        "textLen": 26,
+        "time": 1789223642,
+        "relativeTime": "1 か月前",
+        "textLen": 35,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "8e0402e9042b6a82",
-        "authorNameHash": "84fac2e631746be3",
+        "textHash": "e03584f9fb36977d",
+        "authorNameHash": "1b56a0083d41d361",
         "textSignalsVersion": 2
       },
       {
         "rating": 5,
-        "time": 1790273396,
-        "relativeTime": "1 週間前",
-        "textLen": 74,
+        "time": 1788971631,
+        "relativeTime": "1 か月前",
+        "textLen": 27,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "452b2e26c9fd141c",
-        "authorNameHash": "6394336e00a52fa6",
+        "textHash": "434b6725e0dd3d25",
+        "authorNameHash": "6b6d9bc953652456",
         "textSignalsVersion": 2
       },
       {
         "rating": 5,
-        "time": 1790273056,
-        "relativeTime": "1 週間前",
-        "textLen": 141,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "9e6e77715e9d41e1",
-        "authorNameHash": "0371fa6c98f61574",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1789920715,
-        "relativeTime": "2 週間前",
+        "time": 1789223629,
+        "relativeTime": "1 か月前",
         "textLen": 16,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": null,
-        "authorNameHash": "4e327994be019309",
+        "authorNameHash": "1381125af25024ee",
         "textSignalsVersion": 2
       },
       {
         "rating": 5,
-        "time": 1789644161,
-        "relativeTime": "2 週間前",
-        "textLen": 33,
+        "time": 1793116314,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 82,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "62b083cb3c2af0d1",
-        "authorNameHash": "9025907d7e5c679a",
+        "textHash": "31f703009c3673ac",
+        "authorNameHash": "3d58167e1ef7f5aa",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1791292919,
+        "relativeTime": "3 週間前",
+        "textLen": 10,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": null,
+        "authorNameHash": "adc58154263eb9a9",
         "textSignalsVersion": 2
       }
     ]
@@ -221669,6 +222622,12 @@
         "rating": 5,
         "total": 2,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:05.796Z",
+        "rating": 5,
+        "total": 2,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
@@ -221686,7 +222645,7 @@
       {
         "rating": 5,
         "time": 1783014882,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 11,
         "lang": "ja",
         "incentiveHit": false,
@@ -221813,13 +222772,19 @@
         "rating": 3.8,
         "total": 68,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:06.046Z",
+        "rating": 3.8,
+        "total": 69,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 4,
         "time": 1771066326,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 291,
         "lang": "ja",
         "incentiveHit": false,
@@ -221880,24 +222845,19 @@
         "rating": 4.5,
         "total": 217,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:06.294Z",
+        "rating": 4.5,
+        "total": 222,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1782741283,
-        "relativeTime": "3 か月前",
-        "textLen": 634,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "c8701ba270898b78",
-        "authorNameHash": "2034093eb3b738e0",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1778671185,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 255,
         "lang": "ja",
         "incentiveHit": false,
@@ -221906,36 +222866,47 @@
         "textSignalsVersion": 2
       },
       {
+        "rating": 5,
+        "time": 1768742668,
+        "relativeTime": "9 か月前",
+        "textLen": 591,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "2d58427a6131f621",
+        "authorNameHash": "d02d60f19b2b7a72",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1778670596,
+        "relativeTime": "5 か月前",
+        "textLen": 216,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "c7a5295904670df6",
+        "authorNameHash": "2d612780c6de8388",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 4,
-        "time": 1778827947,
+        "time": 1789077627,
+        "relativeTime": "1 か月前",
+        "textLen": 683,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "f68ed9b4d75c5c94",
+        "authorNameHash": "0d359a065e3861f2",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1782741283,
         "relativeTime": "4 か月前",
-        "textLen": 324,
+        "textLen": 634,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "d8b3c0686eb81110",
-        "authorNameHash": "92631ba1c4336ec9",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1781346293,
-        "relativeTime": "3 か月前",
-        "textLen": 676,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "19031a68d6943040",
-        "authorNameHash": "1d436b67eb060a95",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1782795207,
-        "relativeTime": "3 か月前",
-        "textLen": 560,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "c7d6ff55e96fd0e4",
-        "authorNameHash": "c984fc5c4e2e40d8",
+        "textHash": "c8701ba270898b78",
+        "authorNameHash": "2034093eb3b738e0",
         "textSignalsVersion": 2
       }
     ]
@@ -222024,13 +222995,41 @@
         "rating": 4.3,
         "total": 8,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:06.524Z",
+        "rating": 4.3,
+        "total": 8,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
+        "rating": 1,
+        "time": 1788780528,
+        "relativeTime": "1 か月前",
+        "textLen": 75,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "4e8c5cd3e2860ca4",
+        "authorNameHash": "a1990e89736cb14c",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1789127273,
+        "relativeTime": "1 か月前",
+        "textLen": 26,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "e95f3fb3714bd137",
+        "authorNameHash": "8b0329c50be06184",
+        "textSignalsVersion": 2
+      },
+      {
         "rating": 5,
         "time": 1788773525,
-        "relativeTime": "4 週間前",
+        "relativeTime": "1 か月前",
         "textLen": 14,
         "lang": "ja",
         "incentiveHit": false,
@@ -222041,7 +223040,7 @@
       {
         "rating": 4,
         "time": 1790466289,
-        "relativeTime": "1 週間前",
+        "relativeTime": "1 か月前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -222052,34 +223051,12 @@
       {
         "rating": 4,
         "time": 1789347199,
-        "relativeTime": "3 週間前",
+        "relativeTime": "1 か月前",
         "textLen": 175,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "c37065842e8597cd",
         "authorNameHash": "cf5507691124bf74",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1789233754,
-        "relativeTime": "3 週間前",
-        "textLen": 95,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "414281e562783c74",
-        "authorNameHash": "579384ed76092955",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
-        "time": 1789127273,
-        "relativeTime": "3 週間前",
-        "textLen": 26,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "e95f3fb3714bd137",
-        "authorNameHash": "8b0329c50be06184",
         "textSignalsVersion": 2
       }
     ]
@@ -222091,24 +223068,19 @@
         "rating": 5,
         "total": 6,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:06.765Z",
+        "rating": 5,
+        "total": 6,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1789309914,
-        "relativeTime": "3 週間前",
-        "textLen": 18,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": null,
-        "authorNameHash": "c11ace625ef05512",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1789292536,
-        "relativeTime": "3 週間前",
+        "relativeTime": "1 か月前",
         "textLen": 23,
         "lang": "ja",
         "incentiveHit": false,
@@ -222118,8 +223090,19 @@
       },
       {
         "rating": 5,
+        "time": 1789309914,
+        "relativeTime": "1 か月前",
+        "textLen": 18,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": null,
+        "authorNameHash": "c11ace625ef05512",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1789199165,
-        "relativeTime": "3 週間前",
+        "relativeTime": "1 か月前",
         "textLen": 82,
         "lang": "ja",
         "incentiveHit": false,
@@ -222130,7 +223113,7 @@
       {
         "rating": 5,
         "time": 1789199120,
-        "relativeTime": "3 週間前",
+        "relativeTime": "1 か月前",
         "textLen": 30,
         "lang": "ja",
         "incentiveHit": false,
@@ -222141,7 +223124,7 @@
       {
         "rating": 5,
         "time": 1789198808,
-        "relativeTime": "3 週間前",
+        "relativeTime": "1 か月前",
         "textLen": 15,
         "lang": "ja",
         "incentiveHit": false,
@@ -222225,13 +223208,30 @@
         "rating": 5,
         "total": 2,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:06.998Z",
+        "rating": 5,
+        "total": 3,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
+        "time": 1792538640,
+        "relativeTime": "1 週間前",
+        "textLen": 60,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "e5b2bda3c40ef313",
+        "authorNameHash": "311dfc5d10a3baaa",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1790720979,
-        "relativeTime": "過去 1 週間以内",
+        "relativeTime": "1 か月前",
         "textLen": 13,
         "lang": "ja",
         "incentiveHit": false,
@@ -222242,7 +223242,7 @@
       {
         "rating": 5,
         "time": 1780464674,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 0,
         "lang": null,
         "incentiveHit": false,
@@ -222258,6 +223258,12 @@
         "ts": "2026-10-05T23:29:57.246Z",
         "rating": 4.7,
         "total": 20,
+        "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:07.240Z",
+        "rating": 4.6,
+        "total": 21,
         "businessStatus": "OPERATIONAL"
       }
     ],
@@ -222276,7 +223282,7 @@
       {
         "rating": 5,
         "time": 1779249604,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 90,
         "lang": "ja",
         "incentiveHit": false,
@@ -222460,13 +223466,19 @@
         "rating": 4.6,
         "total": 116,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:07.541Z",
+        "rating": 4.6,
+        "total": 120,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 4,
         "time": 1785558697,
-        "relativeTime": "2 か月前",
+        "relativeTime": "3 か月前",
         "textLen": 434,
         "lang": "ja",
         "incentiveHit": false,
@@ -222477,7 +223489,7 @@
       {
         "rating": 5,
         "time": 1760958568,
-        "relativeTime": "11 か月前",
+        "relativeTime": "1 年前",
         "textLen": 331,
         "lang": "ja",
         "incentiveHit": false,
@@ -222487,19 +223499,8 @@
       },
       {
         "rating": 4,
-        "time": 1774362258,
-        "relativeTime": "6 か月前",
-        "textLen": 401,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "d1d4d644315415fa",
-        "authorNameHash": "454349e422f05297",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 4,
         "time": 1771381723,
-        "relativeTime": "7 か月前",
+        "relativeTime": "8 か月前",
         "textLen": 273,
         "lang": "ja",
         "incentiveHit": false,
@@ -222508,14 +223509,25 @@
         "textSignalsVersion": 2
       },
       {
-        "rating": 5,
-        "time": 1746525148,
-        "relativeTime": "1 年前",
-        "textLen": 295,
+        "rating": 4,
+        "time": 1790170022,
+        "relativeTime": "1 か月前",
+        "textLen": 337,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "f77c8e8c7456c2ce",
-        "authorNameHash": "265c0ea6c78e2a57",
+        "textHash": "f7210d777d37c7ff",
+        "authorNameHash": "c3622fc07f1e990e",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1774362258,
+        "relativeTime": "7 か月前",
+        "textLen": 401,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "d1d4d644315415fa",
+        "authorNameHash": "454349e422f05297",
         "textSignalsVersion": 2
       }
     ]
@@ -222594,13 +223606,19 @@
         "rating": 4,
         "total": 11,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:07.775Z",
+        "rating": 4,
+        "total": 11,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
         "time": 1773588290,
-        "relativeTime": "6 か月前",
+        "relativeTime": "7 か月前",
         "textLen": 275,
         "lang": "ja",
         "incentiveHit": false,
@@ -222611,7 +223629,7 @@
       {
         "rating": 5,
         "time": 1782899002,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 83,
         "lang": "ja",
         "incentiveHit": false,
@@ -222622,7 +223640,7 @@
       {
         "rating": 2,
         "time": 1788794938,
-        "relativeTime": "4 週間前",
+        "relativeTime": "1 か月前",
         "textLen": 70,
         "lang": "ja",
         "incentiveHit": false,
@@ -222633,7 +223651,7 @@
       {
         "rating": 5,
         "time": 1783186926,
-        "relativeTime": "3 か月前",
+        "relativeTime": "4 か月前",
         "textLen": 93,
         "lang": "ja",
         "incentiveHit": false,
@@ -222643,13 +223661,13 @@
       },
       {
         "rating": 5,
-        "time": 1783235338,
-        "relativeTime": "3 か月前",
-        "textLen": 88,
+        "time": 1782916842,
+        "relativeTime": "4 か月前",
+        "textLen": 69,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "ddaaf51930326e8a",
-        "authorNameHash": "2f97bdaaea318671",
+        "textHash": "65252c21d46d7587",
+        "authorNameHash": "46dd4693de3a856f",
         "textSignalsVersion": 2
       }
     ]
@@ -222728,13 +223746,30 @@
         "rating": 2.9,
         "total": 51,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:08.019Z",
+        "rating": 3,
+        "total": 67,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
+        "time": 1787581923,
+        "relativeTime": "2 か月前",
+        "textLen": 577,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1f70fbfd83f60ad4",
+        "authorNameHash": "0b2b1f963e11fa65",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
         "time": 1788193466,
-        "relativeTime": "1 か月前",
+        "relativeTime": "2 か月前",
         "textLen": 85,
         "lang": "ja",
         "incentiveHit": false,
@@ -222744,46 +223779,35 @@
       },
       {
         "rating": 4,
-        "time": 1788233426,
+        "time": 1788830320,
         "relativeTime": "1 か月前",
+        "textLen": 483,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "fc21b218a6d4fc73",
+        "authorNameHash": "d25ece00493b032d",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1790827568,
+        "relativeTime": "1 か月前",
+        "textLen": 148,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "a88a7495f861085d",
+        "authorNameHash": "c8b526e7b4b9a6bd",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1788233426,
+        "relativeTime": "2 か月前",
         "textLen": 131,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "352f345f38818d99",
         "authorNameHash": "dae35bcd80a075f1",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 1,
-        "time": 1787962768,
-        "relativeTime": "1 か月前",
-        "textLen": 59,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "78815443ee16f3ce",
-        "authorNameHash": "6232913b8ecf203e",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 1,
-        "time": 1788431809,
-        "relativeTime": "1 か月前",
-        "textLen": 204,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "c66857a913d6b004",
-        "authorNameHash": "52514282e3726bfc",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 1,
-        "time": 1787823859,
-        "relativeTime": "1 か月前",
-        "textLen": 180,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "880810594468d13b",
-        "authorNameHash": "7bc5a1d9c055a962",
         "textSignalsVersion": 2
       }
     ]
@@ -222795,29 +223819,35 @@
         "rating": 4,
         "total": 676,
         "businessStatus": "OPERATIONAL"
+      },
+      {
+        "ts": "2026-11-03T00:13:08.259Z",
+        "rating": 3.9,
+        "total": 679,
+        "businessStatus": "OPERATIONAL"
       }
     ],
     "latestReviews": [
       {
         "rating": 5,
-        "time": 1775102099,
-        "relativeTime": "6 か月前",
-        "textLen": 320,
-        "lang": "ja",
-        "incentiveHit": false,
-        "textHash": "db62c1f2cdb2ad34",
-        "authorNameHash": "ea31ac1d48d1880b",
-        "textSignalsVersion": 2
-      },
-      {
-        "rating": 5,
         "time": 1779529959,
-        "relativeTime": "4 か月前",
+        "relativeTime": "5 か月前",
         "textLen": 325,
         "lang": "ja",
         "incentiveHit": false,
         "textHash": "d00b87e5d74b0e13",
         "authorNameHash": "dee2a1c7d1f3d3f0",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1786418302,
+        "relativeTime": "2 か月前",
+        "textLen": 346,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "d1e9509ac42996b4",
+        "authorNameHash": "9197dba489860294",
         "textSignalsVersion": 2
       },
       {
@@ -222833,24 +223863,24 @@
       },
       {
         "rating": 5,
-        "time": 1775358081,
-        "relativeTime": "6 か月前",
-        "textLen": 567,
+        "time": 1789905601,
+        "relativeTime": "1 か月前",
+        "textLen": 196,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "337126313e260413",
-        "authorNameHash": "b7ad5f1ff34baa2e",
+        "textHash": "f534d831b7c1c0fa",
+        "authorNameHash": "27ebad3efffb5fbf",
         "textSignalsVersion": 2
       },
       {
-        "rating": 2,
-        "time": 1770070688,
-        "relativeTime": "8 か月前",
-        "textLen": 79,
+        "rating": 4,
+        "time": 1774437607,
+        "relativeTime": "7 か月前",
+        "textLen": 145,
         "lang": "ja",
         "incentiveHit": false,
-        "textHash": "508e7bbfab9d2db0",
-        "authorNameHash": "d219477e01a70cf7",
+        "textHash": "354ff77cfea937cf",
+        "authorNameHash": "f6e10593cdb15343",
         "textSignalsVersion": 2
       }
     ]
@@ -226358,6 +227388,2003 @@
         "incentiveHit": false,
         "textHash": "434c2e9ffa0778a9",
         "authorNameHash": "888ef612b1be0483",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "manual:Reminiscence (レミニセンス)|名古屋市中区": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:25.493Z",
+        "rating": 4.5,
+        "total": 486,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1791797661,
+        "relativeTime": "3 週間前",
+        "textLen": 437,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "c3a3809751ce1d32",
+        "authorNameHash": "17ccc12e9bd22d19",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1786975454,
+        "relativeTime": "2 か月前",
+        "textLen": 376,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "97fb3242e67c4356",
+        "authorNameHash": "b82235c72af258c9",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1788840091,
+        "relativeTime": "1 か月前",
+        "textLen": 2638,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "9bd876cd4e99b6ad",
+        "authorNameHash": "ac6463608212c285",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1783473840,
+        "relativeTime": "3 か月前",
+        "textLen": 1249,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1d54fa0576345034",
+        "authorNameHash": "a391984a67809a1f",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1786711246,
+        "relativeTime": "2 か月前",
+        "textLen": 183,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "fb04c7fb2cb71288",
+        "authorNameHash": "f2099502fc395ed3",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "manual:炭焼 うな富士 白壁別邸|名古屋市東区": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:26.319Z",
+        "rating": 4.3,
+        "total": 1264,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1791797928,
+        "relativeTime": "3 週間前",
+        "textLen": 162,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "720e50b39f4bbd3e",
+        "authorNameHash": "b7c2b14e3e8e1124",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1780231297,
+        "relativeTime": "5 か月前",
+        "textLen": 357,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "5b9cf1851dbebd77",
+        "authorNameHash": "0ff8340c9d37ea9b",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1774070121,
+        "relativeTime": "7 か月前",
+        "textLen": 242,
+        "lang": "ja",
+        "incentiveHit": true,
+        "textHash": "98369a4fee0490e5",
+        "authorNameHash": "efd3b07daef9a7a7",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1770703057,
+        "relativeTime": "8 か月前",
+        "textLen": 1561,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "af3e5102a45a333f",
+        "authorNameHash": "23182602317e2548",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1781607546,
+        "relativeTime": "4 か月前",
+        "textLen": 345,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "ed2776fea22688ea",
+        "authorNameHash": "525d7464964d658b",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004723355": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:27.819Z",
+        "rating": 3.6,
+        "total": 33,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1759369821,
+        "relativeTime": "1 年前",
+        "textLen": 231,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "894bd4a2530e5167",
+        "authorNameHash": "343677762813eaeb",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1780770825,
+        "relativeTime": "4 か月前",
+        "textLen": 97,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "79dd4b1902280465",
+        "authorNameHash": "0e8347d250bfeb5a",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1757818121,
+        "relativeTime": "1 年前",
+        "textLen": 261,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "f2e875e4749169ea",
+        "authorNameHash": "d314682b8d928e3d",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1744377236,
+        "relativeTime": "1 年前",
+        "textLen": 270,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "58823a13b46b4976",
+        "authorNameHash": "58a0883f1d8a5232",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1722638420,
+        "relativeTime": "2 年前",
+        "textLen": 625,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "995f6183579ece78",
+        "authorNameHash": "c2585e6074a1c55f",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004724138": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:30.268Z",
+        "rating": 4.6,
+        "total": 31,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 4,
+        "time": 1793009532,
+        "relativeTime": "1 週間前",
+        "textLen": 16,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": null,
+        "authorNameHash": "907550d2c916ff94",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1793606201,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 100,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "c1ede44848e8f33d",
+        "authorNameHash": "4c3b3284e206c3db",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1793530878,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 23,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "c814b8c027f0960e",
+        "authorNameHash": "feceac1518a38e59",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1793507367,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 23,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "2923d41a7efcae28",
+        "authorNameHash": "74887eab14ddfd38",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1793434103,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 25,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "61790b8323f2e03d",
+        "authorNameHash": "a9e571593c16679c",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004723438": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:32.421Z",
+        "rating": 4.8,
+        "total": 139,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1783496209,
+        "relativeTime": "3 か月前",
+        "textLen": 731,
+        "lang": "ja",
+        "incentiveHit": true,
+        "textHash": "3cd7dc1e59def6e3",
+        "authorNameHash": "1e8d70cadfa3681b",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1784477171,
+        "relativeTime": "3 か月前",
+        "textLen": 233,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "56e176f30672e991",
+        "authorNameHash": "d039f1a0790a1e18",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1782055525,
+        "relativeTime": "4 か月前",
+        "textLen": 386,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "918a752d85541ac8",
+        "authorNameHash": "043db8a3d229971c",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1783253254,
+        "relativeTime": "4 か月前",
+        "textLen": 248,
+        "lang": "ja",
+        "incentiveHit": true,
+        "textHash": "f0aebb0e1ac62947",
+        "authorNameHash": "06b7ed3d98cacd62",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1780754263,
+        "relativeTime": "4 か月前",
+        "textLen": 127,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "bce326a9b21d1a2a",
+        "authorNameHash": "ea31ac1d48d1880b",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004678023": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:33.185Z",
+        "rating": 4.2,
+        "total": 18,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 4,
+        "time": 1778900059,
+        "relativeTime": "5 か月前",
+        "textLen": 156,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "a4f5bf8ad10226bc",
+        "authorNameHash": "06f294bfab3b231b",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1777796079,
+        "relativeTime": "6 か月前",
+        "textLen": 587,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "9506e03b8bbfa021",
+        "authorNameHash": "afbceba321fc30ea",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1778141696,
+        "relativeTime": "5 か月前",
+        "textLen": 872,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "15adf9805c654419",
+        "authorNameHash": "7b9358ae690e0530",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1769680423,
+        "relativeTime": "9 か月前",
+        "textLen": 355,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "16a0c5ee92f04392",
+        "authorNameHash": "9ccc17a891423977",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1762557136,
+        "relativeTime": "12 か月前",
+        "textLen": 630,
+        "lang": "ja",
+        "incentiveHit": true,
+        "textHash": "0a5dd3d3dafa2fb3",
+        "authorNameHash": "3edbcc15ad1b930d",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004723017": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:34.308Z",
+        "rating": 4.2,
+        "total": 45,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1755693411,
+        "relativeTime": "1 年前",
+        "textLen": 355,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "f3cd119963bedd04",
+        "authorNameHash": "78e0b1fdb55ecbc6",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 2,
+        "time": 1787638926,
+        "relativeTime": "2 か月前",
+        "textLen": 111,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1dd51f0731fb2112",
+        "authorNameHash": "b1e6bda2422a3e4f",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1632658940,
+        "relativeTime": "5 年前",
+        "textLen": 156,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "daa03b009ee40f75",
+        "authorNameHash": "b2e6e03057ce17e2",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1739664903,
+        "relativeTime": "1 年前",
+        "textLen": 33,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "35fa6289cf5b3957",
+        "authorNameHash": "924f9d1e04709558",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1729406602,
+        "relativeTime": "2 年前",
+        "textLen": 61,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "3c7600fdd259eee3",
+        "authorNameHash": "0a596ad237915f6b",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004726000": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:35.025Z",
+        "rating": 4.7,
+        "total": 115,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1785540264,
+        "relativeTime": "3 か月前",
+        "textLen": 761,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "5d4e5207186ef5d2",
+        "authorNameHash": "70e704c8f5da7d18",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1788846618,
+        "relativeTime": "1 か月前",
+        "textLen": 254,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "2ea6d54e55ef523d",
+        "authorNameHash": "98ca892ecd61335c",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1784638990,
+        "relativeTime": "3 か月前",
+        "textLen": 120,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "a1fe25a3b92c82ad",
+        "authorNameHash": "89a22579c21896a5",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1787665673,
+        "relativeTime": "2 か月前",
+        "textLen": 341,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "bb89626be511ccdd",
+        "authorNameHash": "151b30b542926346",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1787949151,
+        "relativeTime": "2 か月前",
+        "textLen": 81,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "f324ca2377154732",
+        "authorNameHash": "d5391fff2be0b11f",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004724346": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:35.717Z",
+        "rating": 4.6,
+        "total": 103,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1783822493,
+        "relativeTime": "3 か月前",
+        "textLen": 579,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "2d299fce11b88696",
+        "authorNameHash": "b76bfa762c489413",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1779945903,
+        "relativeTime": "5 か月前",
+        "textLen": 193,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "e418b645431fc965",
+        "authorNameHash": "4d27b34b3cb875c5",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1780951810,
+        "relativeTime": "4 か月前",
+        "textLen": 1423,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "82d9ff2a09827987",
+        "authorNameHash": "1fdd149634202f37",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1783123489,
+        "relativeTime": "4 か月前",
+        "textLen": 285,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "4f1ad38d36faeeab",
+        "authorNameHash": "55c962221bceadbd",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1740893626,
+        "relativeTime": "1 年前",
+        "textLen": 744,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "12b5b6296fda0e7f",
+        "authorNameHash": "8d8f469ed2ef36f5",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004723894": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:37.794Z",
+        "rating": 4.5,
+        "total": 74,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1784676637,
+        "relativeTime": "3 か月前",
+        "textLen": 291,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "9f2c28ee5b9d37bc",
+        "authorNameHash": "51977a90b0004234",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1784584280,
+        "relativeTime": "3 か月前",
+        "textLen": 146,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "7c3a5f0738c48fd9",
+        "authorNameHash": "87b92ec2e1b7b476",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1778046842,
+        "relativeTime": "6 か月前",
+        "textLen": 121,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "482d2b1ccdada7e8",
+        "authorNameHash": "2e2a660a63e6d04b",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1791454497,
+        "relativeTime": "3 週間前",
+        "textLen": 95,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "84cd13c6788dc8e4",
+        "authorNameHash": "dcb82ac1f537399e",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1787980162,
+        "relativeTime": "2 か月前",
+        "textLen": 119,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "88748448960aa4c8",
+        "authorNameHash": "386e6b61c7800720",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004723421": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:39.027Z",
+        "rating": 4.2,
+        "total": 38,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 4,
+        "time": 1603414410,
+        "relativeTime": "6 年前",
+        "textLen": 81,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "93bd1c765fdc824b",
+        "authorNameHash": "fa8730fca0a7ce5c",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1739657293,
+        "relativeTime": "1 年前",
+        "textLen": 265,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "b253c8e7bdd13f58",
+        "authorNameHash": "31022123491b43e7",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1773738983,
+        "relativeTime": "7 か月前",
+        "textLen": 20,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": null,
+        "authorNameHash": "6517cd7776e7293b",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1580983830,
+        "relativeTime": "6 年前",
+        "textLen": 182,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "2a0c6772483fcc3c",
+        "authorNameHash": "a91756730166cf9f",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1762655810,
+        "relativeTime": "11 か月前",
+        "textLen": 38,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "5fbd138f1db56fbf",
+        "authorNameHash": "3bff67616710be77",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004723090": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:39.767Z",
+        "rating": 4.7,
+        "total": 96,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 4,
+        "time": 1781769778,
+        "relativeTime": "4 か月前",
+        "textLen": 165,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "a0c8a3dcee29c2ee",
+        "authorNameHash": "48a53dc1729b0087",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1774012386,
+        "relativeTime": "7 か月前",
+        "textLen": 134,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "567003e6a2bcbce2",
+        "authorNameHash": "8729df5ae797f521",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1744292234,
+        "relativeTime": "1 年前",
+        "textLen": 289,
+        "lang": "ja",
+        "incentiveHit": true,
+        "textHash": "866e5cd0981fc3b5",
+        "authorNameHash": "9411b46d8bbbb54b",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1784376565,
+        "relativeTime": "3 か月前",
+        "textLen": 67,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "0c3bc38f4982ac80",
+        "authorNameHash": "30decdf427451393",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1784376602,
+        "relativeTime": "3 か月前",
+        "textLen": 53,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "48eeae7079ddb14d",
+        "authorNameHash": "bd18616a3bde0c52",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004724360": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:40.517Z",
+        "rating": 3.9,
+        "total": 1699,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 4,
+        "time": 1775910733,
+        "relativeTime": "6 か月前",
+        "textLen": 302,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "a3809c558d46f90a",
+        "authorNameHash": "9bd7dd41a863a4c7",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1787860002,
+        "relativeTime": "2 か月前",
+        "textLen": 1334,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "2bb3e9ccb3af545c",
+        "authorNameHash": "eb055559fad28e85",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1777985465,
+        "relativeTime": "6 か月前",
+        "textLen": 275,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "51745efa6da3782e",
+        "authorNameHash": "f389109a75938c19",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1781113562,
+        "relativeTime": "4 か月前",
+        "textLen": 182,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "e21f944c830dc430",
+        "authorNameHash": "809b69bae91fbcf0",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1781431849,
+        "relativeTime": "4 か月前",
+        "textLen": 121,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1bdc68e537920eed",
+        "authorNameHash": "3113fbd207702066",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004723381": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:41.171Z",
+        "rating": 4.8,
+        "total": 236,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1790547388,
+        "relativeTime": "1 か月前",
+        "textLen": 77,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "489e129ecfb45dc9",
+        "authorNameHash": "c86a11beabbf454b",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1788601220,
+        "relativeTime": "1 か月前",
+        "textLen": 308,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "fd0835abdcc5ca39",
+        "authorNameHash": "d4e68a6c464cffe9",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1730700288,
+        "relativeTime": "1 年前",
+        "textLen": 29,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "69169ceff004b611",
+        "authorNameHash": "57994b76cbf2a6e1",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1758549877,
+        "relativeTime": "1 年前",
+        "textLen": 26,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "68648920dcc3b91f",
+        "authorNameHash": "583540d517ade2f2",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1721041202,
+        "relativeTime": "2 年前",
+        "textLen": 129,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "763b8a0c9383de10",
+        "authorNameHash": "8cff95794905ec0a",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004723849": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:42.354Z",
+        "rating": 4.4,
+        "total": 360,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 4,
+        "time": 1758692591,
+        "relativeTime": "1 年前",
+        "textLen": 213,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "d1f2f438fa458e9d",
+        "authorNameHash": "b613d63ac3913b04",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1778935247,
+        "relativeTime": "5 か月前",
+        "textLen": 229,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "22123a1c0c00863d",
+        "authorNameHash": "ba804410e9373ebc",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1781441919,
+        "relativeTime": "4 か月前",
+        "textLen": 283,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "98786a632266b91c",
+        "authorNameHash": "a0cd8418efd03d7c",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1735266082,
+        "relativeTime": "1 年前",
+        "textLen": 376,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "aad01585fd7472b9",
+        "authorNameHash": "8b43b279c6620916",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1770537091,
+        "relativeTime": "8 か月前",
+        "textLen": 139,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "4a2b64fa3c0ba511",
+        "authorNameHash": "2bb3a7424af779bc",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004724266": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:43.491Z",
+        "rating": 4.1,
+        "total": 49,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1782337758,
+        "relativeTime": "4 か月前",
+        "textLen": 684,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "75cd752f76ee333d",
+        "authorNameHash": "ca978112ca1bbdca",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1783848084,
+        "relativeTime": "3 か月前",
+        "textLen": 404,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "e9828d5046c9120a",
+        "authorNameHash": "c7c4e1e7cf8562db",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1782042333,
+        "relativeTime": "4 か月前",
+        "textLen": 167,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "0ab9516b57f24754",
+        "authorNameHash": "01f73fe15f6e7c12",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1784027613,
+        "relativeTime": "3 か月前",
+        "textLen": 161,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "de80cb0dd7e7a35a",
+        "authorNameHash": "ebbdce5632401a90",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1775471626,
+        "relativeTime": "7 か月前",
+        "textLen": 172,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "51db0767b7b8fc8d",
+        "authorNameHash": "b850be85a6f805d0",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004723501": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:44.217Z",
+        "rating": 3.9,
+        "total": 67,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1792289502,
+        "relativeTime": "2 週間前",
+        "textLen": 714,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "359b01e51eda498b",
+        "authorNameHash": "06fe1cb260b74fc9",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1792340694,
+        "relativeTime": "2 週間前",
+        "textLen": 947,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "306bac8f646b8bb5",
+        "authorNameHash": "8578a16252842e25",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1792296791,
+        "relativeTime": "2 週間前",
+        "textLen": 544,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "89205beab2822d7a",
+        "authorNameHash": "0eea05cfbdfabff3",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1792386970,
+        "relativeTime": "2 週間前",
+        "textLen": 286,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "999eb67abcaed427",
+        "authorNameHash": "78e3c12d101660d7",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1792635150,
+        "relativeTime": "1 週間前",
+        "textLen": 140,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "d5c2a2f4d968168f",
+        "authorNameHash": "ca978112ca1bbdca",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004698723": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:46.348Z",
+        "rating": 4.6,
+        "total": 23,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 4,
+        "time": 1792464999,
+        "relativeTime": "1 週間前",
+        "textLen": 345,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "eb736d82e709ba0c",
+        "authorNameHash": "caf8c92514cb1315",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1792387735,
+        "relativeTime": "2 週間前",
+        "textLen": 71,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "cce3b128b63870cc",
+        "authorNameHash": "58a0b04e7105c52e",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1792675833,
+        "relativeTime": "1 週間前",
+        "textLen": 17,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": null,
+        "authorNameHash": "57994b76cbf2a6e1",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1792725028,
+        "relativeTime": "1 週間前",
+        "textLen": 23,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "a520a045af205a1b",
+        "authorNameHash": "fc99264034fe666a",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1793233593,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 393,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "f34e039e0a7e98a9",
+        "authorNameHash": "b275b567f5a3ecfc",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004612901": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:47.138Z",
+        "rating": 4.8,
+        "total": 4,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 4,
+        "time": 1781432386,
+        "relativeTime": "4 か月前",
+        "textLen": 245,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "4d853bf6a58178b5",
+        "authorNameHash": "0bab500005c5c696",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1783431324,
+        "relativeTime": "3 か月前",
+        "textLen": 239,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "f63c2042ea8245df",
+        "authorNameHash": "e20cbd64517a3876",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1788245197,
+        "relativeTime": "2 か月前",
+        "textLen": 242,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "b62b4accab16499e",
+        "authorNameHash": "11a647d4524079b5",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1791690525,
+        "relativeTime": "3 週間前",
+        "textLen": 0,
+        "lang": null,
+        "incentiveHit": false,
+        "textHash": null,
+        "authorNameHash": "16cdfa0734349fb3",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004723960": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:48.246Z",
+        "rating": 4.4,
+        "total": 39,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1786076358,
+        "relativeTime": "2 か月前",
+        "textLen": 107,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "ea0e672833899914",
+        "authorNameHash": "17f165d5a5ba695f",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1781491962,
+        "relativeTime": "4 か月前",
+        "textLen": 573,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "d4cf3b7943c4969e",
+        "authorNameHash": "c984fc5c4e2e40d8",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1784125018,
+        "relativeTime": "3 か月前",
+        "textLen": 99,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "ae10a42790ddf25c",
+        "authorNameHash": "5bdaf5df06dd9ea3",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1742622233,
+        "relativeTime": "1 年前",
+        "textLen": 971,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "3c8dfcc1d9d1e77b",
+        "authorNameHash": "25639fb6cdaec739",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1769159328,
+        "relativeTime": "9 か月前",
+        "textLen": 543,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "a4a659ef8d3f6903",
+        "authorNameHash": "58a0883f1d8a5232",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004723188": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:48.928Z",
+        "rating": null,
+        "total": null,
+        "businessStatus": "OPERATIONAL"
+      }
+    ]
+  },
+  "J004723286": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:50.184Z",
+        "rating": null,
+        "total": null,
+        "businessStatus": "OPERATIONAL"
+      }
+    ]
+  },
+  "J004723623": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:50.903Z",
+        "rating": 4.8,
+        "total": 12,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1792582201,
+        "relativeTime": "1 週間前",
+        "textLen": 100,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "15bc70c19c579f7f",
+        "authorNameHash": "feeb736fa591c8c7",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1792072852,
+        "relativeTime": "2 週間前",
+        "textLen": 63,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "dd32705ee0f75de4",
+        "authorNameHash": "a8f53c819173ae63",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1790691265,
+        "relativeTime": "1 か月前",
+        "textLen": 21,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": null,
+        "authorNameHash": "c6afc084dc45355b",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1793187668,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 0,
+        "lang": null,
+        "incentiveHit": false,
+        "textHash": null,
+        "authorNameHash": "2f04f2b709ef166e",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1792675677,
+        "relativeTime": "1 週間前",
+        "textLen": 84,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "108d20de0efd1ae4",
+        "authorNameHash": "b3cf740981fd9636",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J000390652": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:51.566Z",
+        "rating": 4.2,
+        "total": 117,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1780988255,
+        "relativeTime": "4 か月前",
+        "textLen": 98,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "789cc8a40a3950a0",
+        "authorNameHash": "9e69e732ab22aa71",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 1,
+        "time": 1783143945,
+        "relativeTime": "4 か月前",
+        "textLen": 99,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "c5848bd31fc34f65",
+        "authorNameHash": "f8d88b13496bb0d0",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1785270864,
+        "relativeTime": "3 か月前",
+        "textLen": 309,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "b927f0239f462904",
+        "authorNameHash": "62c66a7a5dd70c31",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1683370972,
+        "relativeTime": "3 年前",
+        "textLen": 162,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1e3251d2e7a1e95d",
+        "authorNameHash": "314d529eff59e055",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1686919458,
+        "relativeTime": "3 年前",
+        "textLen": 246,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "096aeb1b7b631bd4",
+        "authorNameHash": "4e3ab59890f3f3b2",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004723269": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:52.252Z",
+        "rating": 4.7,
+        "total": 17,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1784367204,
+        "relativeTime": "3 か月前",
+        "textLen": 653,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "3ff14751ebe2ca71",
+        "authorNameHash": "25639fb6cdaec739",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1778600483,
+        "relativeTime": "5 か月前",
+        "textLen": 158,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "723e99a23d532bad",
+        "authorNameHash": "7042b84492077184",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1777084958,
+        "relativeTime": "6 か月前",
+        "textLen": 92,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "b51bc16f5fa327e4",
+        "authorNameHash": "64ba01081d1a6d15",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1782049086,
+        "relativeTime": "4 か月前",
+        "textLen": 150,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "fce3012e3a5a2889",
+        "authorNameHash": "db1ad3048dd63577",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1777548036,
+        "relativeTime": "6 か月前",
+        "textLen": 137,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1b4b40c1ff0336d5",
+        "authorNameHash": "e1915414c67ee637",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004724342": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:52.922Z",
+        "rating": 4.8,
+        "total": 43,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1791881621,
+        "relativeTime": "2 週間前",
+        "textLen": 77,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "2418e8432dfa4bea",
+        "authorNameHash": "8693873cd8f8a2d9",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1791978949,
+        "relativeTime": "2 週間前",
+        "textLen": 168,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "d81e61452943fd6e",
+        "authorNameHash": "03fae0acecd3d4ce",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1791021449,
+        "relativeTime": "1 か月前",
+        "textLen": 99,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "afe96a67ceda417e",
+        "authorNameHash": "49c42d6c58fb7209",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1791127011,
+        "relativeTime": "4 週間前",
+        "textLen": 263,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "75e9cfa04612ce6b",
+        "authorNameHash": "c1a350ce4f8a7dec",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1792283348,
+        "relativeTime": "2 週間前",
+        "textLen": 212,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "19615c6dc7051dcf",
+        "authorNameHash": "fa15411dee5a7143",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004724083": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:53.600Z",
+        "rating": 5,
+        "total": 9,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1783685709,
+        "relativeTime": "3 か月前",
+        "textLen": 1005,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "30ac7cf8c4a373da",
+        "authorNameHash": "a1990e89736cb14c",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1786372798,
+        "relativeTime": "2 か月前",
+        "textLen": 188,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "b5cd3bc739aa0944",
+        "authorNameHash": "a69ae29b70099f0e",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1786173344,
+        "relativeTime": "2 か月前",
+        "textLen": 248,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "60fb00894446fd94",
+        "authorNameHash": "168145e13138e055",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1786663697,
+        "relativeTime": "2 か月前",
+        "textLen": 40,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "e0b00c349e005075",
+        "authorNameHash": "d9e8f129dca16359",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1793357200,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 369,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "c764122d4ce2b737",
+        "authorNameHash": "e1a1ccf7fb05f3c3",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004723867": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:54.313Z",
+        "rating": 4.6,
+        "total": 8,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1787410711,
+        "relativeTime": "2 か月前",
+        "textLen": 310,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "8426a3be1cbd7135",
+        "authorNameHash": "387e9d8de14830af",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1786712178,
+        "relativeTime": "2 か月前",
+        "textLen": 199,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "3c07307b6a8613f9",
+        "authorNameHash": "8b43b279c6620916",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1786973555,
+        "relativeTime": "2 か月前",
+        "textLen": 294,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "2ad761c3ed90bbed",
+        "authorNameHash": "fad96f9cb492c4d5",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1793106313,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 156,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "7b3d5402795e63b9",
+        "authorNameHash": "66a8ca3290b31c10",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1792862894,
+        "relativeTime": "1 週間前",
+        "textLen": 240,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "1b32a4c5730c0b5d",
+        "authorNameHash": "40a283f63fb0a5f5",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004724047": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:56.341Z",
+        "rating": 4.2,
+        "total": 1185,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 4,
+        "time": 1788697568,
+        "relativeTime": "1 か月前",
+        "textLen": 244,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "b722d0cfe615ced6",
+        "authorNameHash": "40be6a1bf86c2eaa",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1772608356,
+        "relativeTime": "8 か月前",
+        "textLen": 406,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "2932ff44be5a1cd6",
+        "authorNameHash": "7e9c0a9230a8b3f9",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1778932128,
+        "relativeTime": "5 か月前",
+        "textLen": 253,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "4e51905cd0287dc3",
+        "authorNameHash": "55098ba515afbd4d",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1780741684,
+        "relativeTime": "4 か月前",
+        "textLen": 132,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "f036d648e32cfd27",
+        "authorNameHash": "72d829b3a04c5f2d",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1762735476,
+        "relativeTime": "11 か月前",
+        "textLen": 215,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "4f57f23af1b40665",
+        "authorNameHash": "1fdbc74ccfd68d07",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004724132": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:57.034Z",
+        "rating": 4,
+        "total": 641,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 4,
+        "time": 1786682362,
+        "relativeTime": "2 か月前",
+        "textLen": 327,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "f7e93b354abab24e",
+        "authorNameHash": "b55849d00a0b0b91",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1778543355,
+        "relativeTime": "5 か月前",
+        "textLen": 231,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "d8b5022ae4db9fc5",
+        "authorNameHash": "b60b962cbe92e520",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1786177686,
+        "relativeTime": "2 か月前",
+        "textLen": 695,
+        "lang": "ja",
+        "incentiveHit": true,
+        "textHash": "de6383662354b11a",
+        "authorNameHash": "be839e7071167274",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 2,
+        "time": 1779179023,
+        "relativeTime": "5 か月前",
+        "textLen": 522,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "013c4ffc471ffd27",
+        "authorNameHash": "560230df785f9254",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1781840642,
+        "relativeTime": "4 か月前",
+        "textLen": 165,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "ed416b196d99d512",
+        "authorNameHash": "7f1d3828685ed55e",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "J004723124": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:12:58.195Z",
+        "rating": 5,
+        "total": 3,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1791761576,
+        "relativeTime": "3 週間前",
+        "textLen": 231,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "16b80f045084df51",
+        "authorNameHash": "2f09e201dd08a581",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1790004223,
+        "relativeTime": "1 か月前",
+        "textLen": 400,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "53e7b56617afc6b3",
+        "authorNameHash": "29fb380cc556cd40",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1789606663,
+        "relativeTime": "1 か月前",
+        "textLen": 86,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "f86257e387681128",
+        "authorNameHash": "a675f57e5784caad",
+        "textSignalsVersion": 2
+      }
+    ]
+  },
+  "manual:拉麺あるひ|緑区・南区・天白区・瑞穂区": {
+    "snapshots": [
+      {
+        "ts": "2026-11-03T00:13:00.307Z",
+        "rating": 3.9,
+        "total": 18,
+        "businessStatus": "OPERATIONAL"
+      }
+    ],
+    "latestReviews": [
+      {
+        "rating": 5,
+        "time": 1792637752,
+        "relativeTime": "1 週間前",
+        "textLen": 208,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "b7f57eaec2021915",
+        "authorNameHash": "9f28957c49fb051a",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 4,
+        "time": 1793438292,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 108,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "6d5de39388e7173d",
+        "authorNameHash": "3ce78439e26b1f8e",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1793361119,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 79,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "2500504722b5aed1",
+        "authorNameHash": "aa7d03d0f967c3bd",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 5,
+        "time": 1793271378,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 53,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "ecf99c5a2a227cc4",
+        "authorNameHash": "0dbde73dc73fe22b",
+        "textSignalsVersion": 2
+      },
+      {
+        "rating": 3,
+        "time": 1793105365,
+        "relativeTime": "過去 1 週間以内",
+        "textLen": 601,
+        "lang": "ja",
+        "incentiveHit": false,
+        "textHash": "e2c92903c36be57c",
+        "authorNameHash": "bf3c92a300eb5d33",
         "textSignalsVersion": 2
       }
     ]
