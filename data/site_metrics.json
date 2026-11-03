@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-02T19:14:35.504Z",
+  "generatedAt": "2026-11-03T00:14:26.795Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2661,
-    "pageViews": 3719,
-    "sessions": 2951,
-    "avgSessionDuration": 111.9,
-    "bounceRate": 0.304,
+    "activeUsers": 2677,
+    "pageViews": 3742,
+    "sessions": 2969,
+    "avgSessionDuration": 112,
+    "bounceRate": 0.305,
     "pagesPerSession": 1.26
   },
   "dailyReference": {
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2254,
-      "direct": 467,
+      "organic": 2265,
+      "direct": 473,
       "social": 41,
-      "ai_assistant": 177,
-      "referral": 27,
+      "ai_assistant": 179,
+      "referral": 28,
       "paid": 0,
       "other": 2
     },
     "pct": {
-      "organic": 75.9,
-      "direct": 15.7,
+      "organic": 75.8,
+      "direct": 15.8,
       "social": 1.4,
       "ai_assistant": 6,
       "referral": 0.9,
@@ -39,27 +39,27 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1039
+      "sessions": 1043
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 768
+      "sessions": 770
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 425
+      "sessions": 430
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 414
+      "sessions": 415
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 114
+      "sessions": 116
     },
     {
       "source": "openai",
@@ -67,19 +67,19 @@
       "sessions": 55
     },
     {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 22
+    },
+    {
       "source": "x",
       "medium": "social",
       "sessions": 21
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 17
-    },
-    {
       "source": "service.smt.docomo.ne.jp",
       "medium": "referral",
-      "sessions": 16
+      "sessions": 17
     },
     {
       "source": "unknown",
@@ -190,8 +190,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 446,
-      "sessions": 419
+      "pageViews": 449,
+      "sessions": 422
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -215,24 +215,24 @@
     }
   ],
   "cta": {
-    "outboundClicks": 310,
-    "ctaClickRate": 10.5,
+    "outboundClicks": 319,
+    "ctaClickRate": 10.7,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 106
+        "clicks": 112
       },
       {
         "domain": "www.google.com",
         "clicks": 64
       },
       {
-        "domain": "prtimes.jp",
-        "clicks": 41
+        "domain": "tabelog.com",
+        "clicks": 42
       },
       {
-        "domain": "tabelog.com",
-        "clicks": 39
+        "domain": "prtimes.jp",
+        "clicks": 41
       },
       {
         "domain": "maps.google.com",
@@ -278,15 +278,15 @@
     "note": null,
     "byChannel": {
       "organic": 211,
-      "direct": 58,
+      "direct": 62,
       "social": 9,
-      "ai_assistant": 31,
+      "ai_assistant": 36,
       "referral": 1,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.4,
-    "ctaClickRate_direct": 12.4,
+    "ctaClickRate_organic": 9.3,
+    "ctaClickRate_direct": 13.1,
     "ctaClickRate_social": 22,
     "byPage": [
       {
@@ -299,7 +299,7 @@
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 15
+        "clicks": 18
       },
       {
         "path": "/stores/J004090251.html",
@@ -334,6 +334,10 @@
         "clicks": 5
       },
       {
+        "path": "/stores/J003624222.html",
+        "clicks": 5
+      },
+      {
         "path": "/stores/J004612794.html",
         "clicks": 5
       },
@@ -343,10 +347,6 @@
       },
       {
         "path": "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
-        "clicks": 4
-      },
-      {
-        "path": "/stores/J003624222.html",
         "clicks": 4
       },
       {
@@ -382,6 +382,10 @@
         "clicks": 3
       },
       {
+        "path": "/stores/area/sakae/izakaya-nomihodai.html",
+        "clicks": 3
+      },
+      {
         "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
         "clicks": 2
       },
@@ -404,10 +408,6 @@
       {
         "path": "/stores/J000431352.html",
         "clicks": 2
-      },
-      {
-        "path": "/stores/J000644170.html",
-        "clicks": 2
       }
     ],
     "byPageDomain": [
@@ -419,7 +419,7 @@
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
         "domain": "tabelog.com",
-        "clicks": 15
+        "clicks": 18
       },
       {
         "path": "/stores/J004090251.html",
@@ -467,6 +467,11 @@
         "clicks": 5
       },
       {
+        "path": "/stores/J003624222.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 4
+      },
+      {
         "path": "/stores/J004612794.html",
         "domain": "www.hotpepper.jp",
         "clicks": 4
@@ -497,7 +502,7 @@
         "clicks": 3
       },
       {
-        "path": "/stores/J003624222.html",
+        "path": "/stores/area/sakae/izakaya-nomihodai.html",
         "domain": "www.hotpepper.jp",
         "clicks": 3
       },
@@ -902,20 +907,15 @@
         "clicks": 1
       },
       {
-        "path": "/stores/J003582119.html",
-        "domain": "www.google.com",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J003624222.html",
-        "domain": "tabelog.com",
+        "path": "/stores/J003432311.html",
+        "domain": "www.hotpepper.jp",
         "clicks": 1
       }
     ],
     "reservationClicksByPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 15
+        "clicks": 18
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -930,11 +930,11 @@
         "clicks": 5
       },
       {
-        "path": "/stores/J004612794.html",
+        "path": "/stores/J003624222.html",
         "clicks": 4
       },
       {
-        "path": "/stores/J003624222.html",
+        "path": "/stores/J004612794.html",
         "clicks": 4
       },
       {
@@ -943,6 +943,10 @@
       },
       {
         "path": "/features/nagoya-yakiniku-guide.html",
+        "clicks": 3
+      },
+      {
+        "path": "/stores/area/sakae/izakaya-nomihodai.html",
         "clicks": 3
       },
       {
@@ -1116,35 +1120,39 @@
       {
         "path": "/stores/J003366509.html",
         "clicks": 1
+      },
+      {
+        "path": "/stores/J003432311.html",
+        "clicks": 1
       }
     ],
-    "reservationClicks": 109,
+    "reservationClicks": 116,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
-      "ctaEvents": 42,
-      "reservationOutbound": 43,
-      "naiveSum": 85,
-      "deduped": 47,
+      "ctaEvents": 45,
+      "reservationOutbound": 46,
+      "naiveSum": 91,
+      "deduped": 53,
       "overlap": 38,
       "bySite": [
         {
           "site": "hotpepper.jp",
-          "cta": 41,
+          "cta": 44,
           "outbound": 37,
-          "deduped": 41
+          "deduped": 44
         },
         {
           "site": "tabelog.com",
           "cta": 1,
-          "outbound": 6,
-          "deduped": 6
+          "outbound": 9,
+          "deduped": 9
         }
       ]
     }
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2661,
+    "value": 2677,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

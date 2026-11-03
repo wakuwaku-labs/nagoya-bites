@@ -4,15 +4,15 @@
     "status": "ok",
     "quota_reached_streak": 0,
     "reason": "",
-    "api_calls": 3,
+    "api_calls": 5,
     "quota_day": "2026-11-02",
-    "api_calls_day": 3,
+    "api_calls_day": 8,
     "daily_budget": 200,
     "sku_month": "2026-11",
     "sku_calls_month": {
-      "textsearch": 20,
-      "details": 11,
-      "photo": 7
+      "textsearch": 23,
+      "details": 13,
+      "photo": 9
     },
     "sku_monthly_budget": {
       "textsearch": 4000,
@@ -21,21 +21,21 @@
     },
     "sku_exhausted": "",
     "skipped_by_daily_budget": false,
+    "responded": 5,
+    "failed": 0,
+    "attempted": 3,
+    "adopted": 2,
+    "recorded_at": "2026-11-03T00:19:15.669Z"
+  },
+  "hotpepper": {
+    "date": "2026-11-03",
+    "status": "ok",
+    "reason": "",
     "responded": 3,
     "failed": 0,
     "attempted": 3,
-    "adopted": 3,
-    "recorded_at": "2026-11-02T19:14:46.831Z"
-  },
-  "hotpepper": {
-    "date": "2026-11-02",
-    "status": "ok",
-    "reason": "",
-    "responded": 51,
-    "failed": 0,
-    "attempted": 51,
     "adopted": 0,
-    "recorded_at": "2026-11-02T00:40:11.421Z"
+    "recorded_at": "2026-11-03T00:19:18.183Z"
   },
   "journal_photos": {
     "sku_month": "2026-10",
