@@ -1,0 +1,433 @@
+{
+  "date": "2026-11-03",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c2",
+      "title_draft": "栄『定番チューン。』一人飲みと宴会に、〆さば食べ比べとアジフライ790円",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 99,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 22,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,コース,席,予約,シーン,一人飲み) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 107字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "99点（自動公開ライン 100点）。主な不足: brand_fit -4 / topicality -3 / writability -2"
+    },
+    {
+      "id": "c1",
+      "title_draft": "覚王山フレンチ『Amélie（アメリ）』デートに全10品9,900円、12席の予約制",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 94,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 22,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "覚王山",
+          "feature": "features/nagoya-kakuozan.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        },
+        {
+          "kw": "フレンチ",
+          "feature": "features/nagoya-french-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 9日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,予約,シーン,デート) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 128字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「覚王山」+4",
+          "タイトルにシーン語「デート」+4",
+          "タイトルにジャンル語「フレンチ」+2"
+        ]
+      },
+      "gate_note": "94点（自動公開ライン 100点）。主な不足: recency -7 / brand_fit -4 / topicality -3"
+    },
+    {
+      "id": "c3",
+      "title_draft": "今池『Music Cafe BASSLINE』デートに、チャージ600円と音楽の店を読む",
+      "verdict": "HOLD",
+      "total": 60,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,予約,シーン,デート) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 83字 +4",
+          "title 44字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「今池」+4",
+          "タイトルにシーン語「デート」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "新栄町『をかし Japanese Bar』一人飲みに、16席の日本酒バーとチャージ1,000円",
+      "verdict": "HOLD",
+      "total": 57,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 4,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "バー",
+          "feature": "features/nagoya-bar-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,シーン,一人飲み) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 90字 +4",
+          "title 47字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「バー」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "丸の内食堂 OTO 丸の内の夜だけの食堂、予算3,000円台を読む",
+      "verdict": "HOLD",
+      "total": 54,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 4,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,予約,シーン,一人飲み) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 89字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「丸の内」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c2",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "99点（自動公開ライン 100点）。主な不足: brand_fit -4 / topicality -3 / writability -2",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "覚王山フレンチ『Amélie（アメリ）』デートに全10品9,900円、12席の予約制",
+      "lead_draft": "2026年11月3日、覚王山と池下のあいだに12席のフランス料理店『Amélie』が開いた。全10品のコースは昼夜とも9,900円で、ワインは3杯4,400円、6杯7,700円。カウンター8席の位置と、昼夜3回の開始時刻を手がかりに、どう予約するかを読む。",
+      "angle": "全10品9,900円の価格帯とワイン3杯・6杯の差額、カウンター8席と4名卓の席の違い、開始時刻が決まった予約制、デートと記念日のシーン適性を読む",
+      "main_store": {
+        "name": "Amélie",
+        "id": "",
+        "area": "覚王山",
+        "genre": "フレンチ"
+      },
+      "sources": [
+        {
+          "label": "Amélie 公式Instagram（全10品9,900円・予約案内）",
+          "url": "https://www.instagram.com/p/De63Ivhk4yC/",
+          "date": "2026-10-25"
+        },
+        {
+          "label": "Amélie 公式Instagram（渥美サーモンのパイ包み）",
+          "url": "https://www.instagram.com/p/De1V4PhFJEO/",
+          "date": "2026-10-23"
+        },
+        {
+          "label": "号外NET 名古屋市名東区・千種区（開店の案内）",
+          "url": "https://nagoyameito-chikusa.goguynet.jp/2026/10/16/amelie/",
+          "date": "2026-10-16"
+        },
+        {
+          "label": "食べログ Amélie（席数・コース・営業時間）",
+          "url": "https://tabelog.com/aichi/A2301/A230106/23098076/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄『定番チューン。』一人飲みと宴会に、〆さば食べ比べとアジフライ790円",
+      "lead_draft": "2026年10月31日、栄3丁目に青魚を看板にした居酒屋『定番チューン。』が開いた。レアのアジフライ2切れ790円、お造り盛り1,890円。40席の店で単品とコースのどちらが得かを、お通しと飲み放題の値段から読む。",
+      "angle": "単品とコース6,800円の価格帯、40席の席の使い方と予約、一人飲みと宴会のシーン適性を読む",
+      "main_store": {
+        "name": "定番チューン",
+        "id": "J004723769",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "定番チューン。公式Instagram",
+          "url": "https://www.instagram.com/p/DfM-3QkpKoh/",
+          "date": "2026-11-01"
+        },
+        {
+          "label": "定番チューン。公式Instagram（開店前）",
+          "url": "https://www.instagram.com/p/De-mRiRpLRy/",
+          "date": "2026-10-26"
+        },
+        {
+          "label": "食べログ 定番チューン。",
+          "url": "https://tabelog.com/aichi/A2301/A230103/23098029/"
+        },
+        {
+          "label": "ホットペッパー 定番チューン。",
+          "url": "https://www.hotpepper.jp/strJ004723769/"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "今池『Music Cafe BASSLINE』デートに、チャージ600円と音楽の店を読む",
+      "lead_draft": "2026年10月31日、今池5丁目に音楽を聴かせる店『BASSLINE』が開いた。テーブルチャージ600円、平均予算3,500円、30席。席料のある店の使い方を読む。",
+      "angle": "チャージ600円と平均3,500円の価格帯、30席の席と予約、デートのシーン適性を読む",
+      "main_store": {
+        "name": "Music Cafe BASSLINE ベースライン",
+        "id": "J004698551",
+        "area": "今池",
+        "genre": "カフェバー"
+      },
+      "sources": [
+        {
+          "label": "食べログ ベースライン",
+          "url": "https://tabelog.com/aichi/A2301/A230106/23098317/"
+        },
+        {
+          "label": "ホットペッパー BASSLINE",
+          "url": "https://www.hotpepper.jp/strJ004698551/"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "新栄町『をかし Japanese Bar』一人飲みに、16席の日本酒バーとチャージ1,000円",
+      "lead_draft": "2026年11月2日、新栄町に16席の日本酒バー『をかし Japanese Bar』が開いた。昼14時から開き、17時からはチャージ1,000円。時間帯で変わる値段の読み方を書く。",
+      "angle": "チャージ1,000円の価格帯、カウンターの席、一人飲みのシーン適性を読む",
+      "main_store": {
+        "name": "をかし Japanese Bar",
+        "id": "",
+        "area": "新栄",
+        "genre": "日本酒バー"
+      },
+      "sources": [
+        {
+          "label": "食べログ をかし Japanese Bar",
+          "url": "https://tabelog.com/aichi/A2301/A230104/23098272/"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "丸の内食堂 OTO 丸の内の夜だけの食堂、予算3,000円台を読む",
+      "lead_draft": "2026年10月31日、丸の内2丁目に夜だけ開く『丸の内食堂 OTO』が開いた。17時から23時までの営業で、予算は3,000円台。公開された情報が少ない新店の使いどころを読む。",
+      "angle": "予算3,000円台の価格帯と予約、一人飲みのシーン適性を読む",
+      "main_store": {
+        "name": "丸の内食堂 OTO",
+        "id": "",
+        "area": "丸の内",
+        "genre": "食堂"
+      },
+      "sources": [
+        {
+          "label": "食べログ 丸の内食堂 OTO",
+          "url": "https://tabelog.com/aichi/A2301/A230102/23098292/"
+        }
+      ]
+    }
+  ]
+}
