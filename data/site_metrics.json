@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-03T19:21:16.204Z",
+  "generatedAt": "2026-11-03T22:58:00.344Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2729,
-    "pageViews": 3821,
-    "sessions": 2990,
+    "activeUsers": 2741,
+    "pageViews": 3834,
+    "sessions": 3004,
     "avgSessionDuration": 114.3,
     "bounceRate": 0.294,
     "pagesPerSession": 1.28
@@ -17,9 +17,9 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2313,
-      "direct": 475,
-      "social": 45,
+      "organic": 2323,
+      "direct": 477,
+      "social": 47,
       "ai_assistant": 187,
       "referral": 30,
       "paid": 0,
@@ -39,17 +39,17 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1059
+      "sessions": 1064
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 785
+      "sessions": 787
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 444
+      "sessions": 447
     },
     {
       "source": "(direct)",
@@ -69,12 +69,12 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 22
+      "sessions": 24
     },
     {
       "source": "x",
       "medium": "social",
-      "sessions": 21
+      "sessions": 23
     },
     {
       "source": "note",
@@ -180,13 +180,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 451,
-      "sessions": 427
+      "pageViews": 453,
+      "sessions": 429
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 205,
-      "sessions": 194
+      "pageViews": 206,
+      "sessions": 195
     },
     {
       "path": "/",
@@ -205,7 +205,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 326,
+    "outboundClicks": 328,
     "ctaClickRate": 10.9,
     "byDomain": [
       {
@@ -218,7 +218,7 @@
       },
       {
         "domain": "prtimes.jp",
-        "clicks": 42
+        "clicks": 44
       },
       {
         "domain": "tabelog.com",
@@ -263,8 +263,8 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 224,
-      "direct": 55,
+      "organic": 225,
+      "direct": 56,
       "social": 10,
       "ai_assistant": 36,
       "referral": 1,
@@ -272,12 +272,12 @@
       "other": 0
     },
     "ctaClickRate_organic": 9.7,
-    "ctaClickRate_direct": 11.6,
-    "ctaClickRate_social": 22.2,
+    "ctaClickRate_direct": 11.7,
+    "ctaClickRate_social": 21.3,
     "byPage": [
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-        "clicks": 50
+        "clicks": 52
       },
       {
         "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
@@ -400,7 +400,7 @@
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
         "domain": "prtimes.jp",
-        "clicks": 39
+        "clicks": 41
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -1146,7 +1146,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2729,
+    "value": 2741,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
