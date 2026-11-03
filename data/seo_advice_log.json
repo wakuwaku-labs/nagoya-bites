@@ -4620,6 +4620,46 @@
       "brand_reason": "重複（SNS投稿の同旨を 09-25〜10-26 に判定済み）。SNS投稿はリポジトリ外の運用で、このループの実装対象ではない。記事の X 投稿は自動で行っている",
       "category": null,
       "fingerprint": "48f70f1057102d66"
+    },
+    {
+      "id": null,
+      "date": "2026-11-03",
+      "source": "line-daily",
+      "advice": "[レポート11-01] 🟢 予約クリック率7.1%。👉 index.html・journal/・stores/の予約ボタンを目立つ色やアニメーションで強化し、ファーストビューに固定表示",
+      "verdict": "duplicate",
+      "brand_reason": "重複（予約ボタンを目立たせる同旨を 10-02〜11-03 に判定済み。判定器は語の違いで false を返したが主旨は同じ）。助言自身が良好と認めており、訪問85人・6回の母数では色や動きの差を検出できない（制約10）。色・動きはデザインシステム（DSN-001）経由でしか変えない",
+      "category": null,
+      "fingerprint": "4fc4dc7f9912a3f1"
+    },
+    {
+      "id": null,
+      "date": "2026-11-03",
+      "source": "line-daily",
+      "advice": "[レポート11-01] 🟡 「名古屋駅 一人飲み」平均11.2位。👉 features/に特化した特集記事を作成し、トップ・サイドバー・journal/から内部リンクを設置",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-28〜10-10 に同旨を判定済み）。受け皿 features/meieki-hitori-nomi.html が既にあり、新規作成は自己カニバリ。実測（GSC 10-06〜11-02）: 同KWは122表示・11クリック・11.3位、受け皿ページは17表示・0クリック・12.9位で nagoya-solo-dining と meieki.html から既にリンク済み。10-10 の内部リンク追加の効果判定は SEO-087 系で 2026-11-07 に予定済みなので、その前に手を足さない",
+      "category": null,
+      "fingerprint": "874e5d3740f039a3"
+    },
+    {
+      "id": null,
+      "date": "2026-11-03",
+      "source": "line-daily",
+      "advice": "[レポート11-01] 🟢 訪問85人に店舗詳細11回。👉 nagoya-solo-diningとデート特集の記事内に関連店舗へのリンクを増やし、feature_store_clickを意識して店舗詳細への遷移を促す",
+      "verdict": "rejected",
+      "brand_reason": "却下。実測で店舗へのリンクは nagoya-solo-dining 20本・date.html 32本あり、feature_store_click の計測も入っている。リンク不足を示す証拠がなく、1日85人の数字からは本数の不足と言えない（制約10）。関連の薄い店を足すと特集の選定基準が弱まり Moat（根拠つきの解釈）と逆向き",
+      "category": null,
+      "fingerprint": "7eac8bccaedb1eac"
+    },
+    {
+      "id": null,
+      "date": "2026-11-03",
+      "source": "line-weekly",
+      "advice": "[週次 2026-10-25〜10-31・11-03処理済みの再取得] 訪問811人+38%・閲覧1107+31%と助言3件（電話ボタン削除・回遊・さく蛸）",
+      "verdict": "duplicate",
+      "brand_reason": "同じメールの再取得。判定は同日の前回実行のとおり（採用 SEO-150/151、却下3）。次の週次はまだ届いていない",
+      "category": null,
+      "fingerprint": "9c078d8c4429947f"
     }
   ]
 }
