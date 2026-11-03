@@ -73,6 +73,8 @@ const BACKOFF_DAYS = {
   'photo-policy': [30, 60, 90],
   // Google 側で店を特定できない（閉店・未登録・別店しか出ない）。これも週では変わらない。
   'name-mismatch': [14, 30, 60],
+  // Google に該当なし（新店・未登録・店名が全く違う）。登録され次第解消するため短め。
+  'no-candidates': [7, 14, 30],
   'out-of-area': [30, 60, 90],
   'not-food': [30, 60, 90],
 };
@@ -374,7 +376,10 @@ async function fetchPhoto(name, area, cachedPlaceId, store = {}) {
     }
     if (best) break;
   }
-  if (!best) return { reason: lastReason, matchedName: lastMatchedName, sim: lastSim };
+  // 候補が1件も見つからなかった（Google に未登録・新店）と、候補は出たが別店だった、を区別する。
+  // 後者は表記ゆれの可能性があり再試行の間隔を変える（SEO-150）。
+  const finalReason = (lastReason === 'name-mismatch' && !lastMatchedName) ? 'no-candidates' : lastReason;
+  if (!best) return { reason: finalReason, matchedName: lastMatchedName, sim: lastSim };
 
   // ── 採用基準ゲート（data/photo_policy.json）──────────────────────────
   // Places の写真には「オーナーが上げた宣材」と「客が上げたスマホ写真」が混在し、
@@ -588,12 +593,17 @@ async function main() {
       if (apiHealth.responded > 0 && !apiHealth.quotaExhausted) {
         s['写真失敗回数'] = (Number(s['写真失敗回数']) || 0) + 1;
         s['写真失敗理由'] = r?.reason || 'unknown';
+        // 候補名と一致度を残す（「候補なし」と「別店マッチ」を後から区別するため・SEO-150）。
+        s['写真失敗_候補名'] = r?.matchedName || '';
+        s['写真失敗_一致度'] = r?.sim || 0;
       }
       const why = apiHealth.quotaExhausted
         // 上限超過で候補を引けなかっただけ。店名の判定結果ではないので、そう書かない
         // （旧実装は既定値の name-mismatch を表示し、一致度1の正しい候補まで
         //   「別店マッチ」と報告していた）
         ? '日次上限に到達して候補を取得できず → 次回に持ち越し'
+        : r?.reason === 'no-candidates'
+        ? `Google に候補なし（Google 未登録または新店）→ SVG維持`
         : r?.reason === 'name-mismatch'
         ? `別店マッチのため不採用（候補:「${r.matchedName}」一致度${r.sim}）→ SVG維持`
         : r?.reason === 'photo-policy'
