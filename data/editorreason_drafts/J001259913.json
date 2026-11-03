@@ -1,0 +1,102 @@
+{
+  "status": "OK",
+  "editorReason": "紀州備長炭で丁寧に焼き上げる本格焼き鳥を提供。ホットペッパーやぐるなびなど複数のグルメメディアに掲載され、ネット予約にも対応しており、高い集客力と利便性を兼ね備えています。",
+  "insiderNote": "奥美濃赤地鶏の刺身や紀州備長炭での焼き上げは、素材と技術へのこだわりを示す。豊富なドリンク、多様な席種、QR決済対応で幅広い客層に対応できる。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.9,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGzWVxlPjbpdWMvF6tqnDVNBs7kGcrAdMkqrQc_LrfVQJOSB19-XOZm3JRv6YcYYjP824lMyk7ESVkVCjSA8RHo3R-5gSx4Uj8XTLS_5qSLZyFyC0f52M9i",
+      "snippet_quote": "炭には紀州備長炭を使用し、鶏に備長炭の香りを乗せることで鶏の旨みを増し、火力の強い備長炭でしか味わえない焼き鳥を提供しています。",
+      "supports": "紀州備長炭の使用"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFx_Vm-QCYwfNDxMVQt2HLj9TmcU1MTAm-OzCWQzvqre6XXjvzk56g5kQzWlBCKeeYWduPZUKM6xM7ut8zJDr5zm7MK3iB-JrW2a6ak89n9p_f8WAT6RNYPOCTDbpoQJbGn2Ju2HCbMCWu9vlsMZm7hE9o=",
+      "snippet_quote": "焼き鳥は紀州備長炭で丁寧に焼き上げられ、特に白きもはレア感を残して焼き上げるのが特徴で、「抜群に美味しい」と評価されています。",
+      "supports": "紀州備長炭での焼き上げ"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFR5emgizvFa2uSNRr9gEWXt5rHfOBWCjK6QeqXiH76iI_yyTEDXyu461pBx_8h32rMsfMJML03Ne4p1OetrlpEk2ARoFATEO7FW_2MOsxip9X2gXiqp-Y4FOINSxud",
+      "snippet_quote": "「焼き鳥屋 鳥蔵」は、ホットペッパーグルメ、Retty、楽天ぐるなび、じゃらんnet、エキテン、ヒトサラといった複数の地元グルメメディアに掲載されており、ネット予約も可能です。",
+      "supports": "複数のグルメメディア掲載とネット予約対応"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGZlGSmJjlxl-PSWVkXSQMmiSHjKLJwfl9BKKIMbmjqngRoaXUYxWmJLGM9Q8OFKWqZRNVrvLp-hpnKwK2u_jtmRecbAKWl-QL6bfHk94yZLkFi2C50GoC56UdzMLE_Cfx8Dw==",
+      "snippet_quote": "「焼き鳥屋 鳥蔵」は、ホットペッパーグルメ、Retty、楽天ぐるなび、じゃらんnet、エキテン、ヒトサラといった複数の地元グルメメディアに掲載されており、ネット予約も可能です。",
+      "supports": "複数のグルメメディア掲載とネット予約対応"
+    }
+  ],
+  "warnings": [],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「焼き鳥屋 鳥蔵」について、Google検索で見つかった業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「焼き鳥屋 鳥蔵」は、素材にこだわりを持っています。特に「おくみの」奥美濃の赤地鶏を使用しており、朝引きした新鮮な赤鶏を丁寧に下処理しているため、白肝造りや赤鶏のタタキといった刺身でも楽しめるほど新鮮であるとされています。また、炭には紀州備長炭を使用し、鶏に備長炭の香りを乗せることで鶏の旨みを増し、火力の強い備長炭でしか味わえない焼き鳥を提供しています。自家製鶏ガラスープで仕込む水炊き鍋や鳥スープなど、鶏の出汁を楽しむメニューも提供しています。ドリンクは50種類以上、特に焼酎は30種類を取り揃えています。\n\n**提供スタイルの特徴**\n焼き鳥は紀州備長炭で丁寧に焼き上げられ、特に白きもはレア感を残して焼き上げるのが特徴で、「抜群に美味しい」と評価されています。串物は1品につき2本以上での注文が基本ですが、お任せ串盛（5本盛以上）も可能です。焼き鳥の他にも、串カツや自家製だし巻き玉子、鶏がらスープによる鶏なべなど、居酒屋メニューも豊富に提供しています。\n店内にはカウンター席があり、一人飲みにも対応しています。また、座敷席も用意されており、最大15名程度までの宴会にも利用できます。6名以上での貸切も可能です。提供が早いという口コミも見られます。全席喫煙可能で、Wi-Fiも利用できます。PayPayなどのQRコード決済にも対応しています。\n\n**地元グルメメディアでの紹介**\n「焼き鳥屋 鳥蔵」は、ホットペッパーグルメ、Retty、楽天ぐるなび、じゃらんnet、エキテン、ヒトサラといった複数の地元グルメメディアに掲載されており、ネット予約も可能です。\n\n**料理人としての評価**\n具体的な料理人個人の名前や、その人物に対する専門的な評価は見つかりませんでした。ただし、Rettyの口コミでは「店長と奥さんが親切な人で、いろいろ世話を焼いてくれて、更に楽しく飲めました」という接客に対する好意的な評価が見られます。料理については「素材とタレと焼き加減がいい。実にうまかった」という評価があります。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGzWVxlPjbpdWMvF6tqnDVNBs7kGcrAdMkqrQc_LrfVQJOSB19-XOZm3JRv6YcYYjP824lMyk7ESVkVCjSA8RHo3R-5gSx4Uj8XTLS_5qSLZyFyC0f52M9i",
+        "title": "yakitori-torizou.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE-t4bTUSSWrHxNtSgPWB-gDFx8SNrPpBoee-wl84p5ObiF7eu8Rr1njuMVUhf7rB3AYPxynq-5XJozjuBMDaJ0bH3sX3JJn2PHAk7jyHoFmr8vqj0pnqdAXcgJ973XzTw=",
+        "title": "yakitori-torizou.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFx_Vm-QCYwfNDxMVQt2HLj9TmcU1MTAm-OzCWQzvqre6XXjvzk56g5kQzWlBCKeeYWduPZUKM6xM7ut8zJDr5zm7MK3iB-JrW2a6ak89n9p_f8WAT6RNYPOCTDbpoQJbGn2Ju2HCbMCWu9vlsMZm7hE9o=",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFR5emgizvFa2uSNRr9gEWXt5rHfOBWCjK6QeqXiH76iI_yyTEDXyu461pBx_8h32rMsfMJML03Ne4p1OetrlpEk2ARoFATEO7FW_2MOsxip9X2gXiqp-Y4FOINSxud",
+        "title": "gnavi.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFXFDg5I6eq5WZTJ9Leb0mTi0dpx72tyY15sOPWY4a4bzmUCNLbIuRHw4vXyIq3p_LOC8Bre7leIMgVtcDUNwwa3RMWB0HFnmBSbjgdfyL4wfxUePQEVJfo-uIcPZs=",
+        "title": "yakitori-torizou.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGZlGSmJjlxl-PSWVkXSQMmiSHjKLJwfl9BKKIMbmjqngRoaXUYxWmJLGM9Q8OFKWqZRNVrvLp-hpnKwK2u_jtmRecbAKWl-QL6bfHk94yZLkFi2C50GoC56UdzMLE_Cfx8Dw==",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE6FuKKU5oGkNx6NmDKnOY1JLhunDvMrvD6j_k1DeKArTB1Uu-AByZKknvTuKNgbba_Vm8T6xi-n778K-SDcWumewSyoqUH6cAmMS5AX89dZVUAvcSFcUKVD68AiME=",
+        "title": "ekiten.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFAfB8D9mlHnP93-e6jLrDhKD4FpjSha3V0jDdsDEjFTYsP_CeOh5MwvcDEyXPznMo9pyDyWbg5Ptb2jrEiXkMN3z0bKhAMWX_OBJO_BpRdla4jYG9LGAcVWo1CZgtgjFQFk5HrpW56BqXkLElKj2S8vzXAyVQ1ujG40A==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFrE5YMtEkVd9JPcO-xe8p7KVN8SmdUrJ9yKw1MsV0J6-KxQj4lVzo_JQQI3BPSbzf8ES1ZhODkxTunL4UxV0xb_i0KeSlwXmRPzMMYjqVQelNAyhikXtrZZbFdT2JCKrlLYa9a5oKlry8sOoQuOcc=",
+        "title": "jalan.net"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFI1RpzE_Y4Nm9DK2CWT2UHAeXK2HcnBTkMxOJPE4B2PYYY4f5_Lq2v7X2Y9v3WShsNJLYIs_4REnli8IfHq170sxGOvkstKfNcS5DiYMxxi9VktGjEMH-46FtL1w0zzQBEiWcNJ9OkgFWQDDJmR9f8_5Uro8Hlt_s_J5-YpfZNKsHnVA==",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHR6bTlHiX3VtQzS-Nsh0AOQlYrq54nAaJGNxMsGzi3h8FRed6zrsICOr9Mb6tQzuv3N_F8YYjRNfiRb1rSrsJfXHLdp31pTzH0Czx0EDMn5F4Bzdh4carnoEz4HE6IqOXE-swP71hdDWA=",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFDPDBqnXY2-kJHXIXo5xuOLxsjFP6j7fd45zDdR9whj3Vhf-g2hNYlM7NJwdckSoibEmorHDM8qzX0_3AHvINdeOS0r7WZ7AiCrSJzzLsFYMkbvOC39WzZwqB7EJot6MM3ZsFECLQoXJ7WjA==",
+        "title": "navitime.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHFxi9sIo52Ll786jitK6y_qX1i4diBaIYeA4W0VlgUbKeYWMIIBz6Imus_rh0smr57a_8s1KcYFu7j7T4CM7VxsO46TocUYqkIRzut-5hZLWRr6e-gQpUnQ3KPdH-6yG0ck4Qaj8Hra66IkAxIiFURePa8a4Hq6pUNFA==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEto95dblBXuPvGPT6eWIfPf4Cn3VCzohQ9aEpwn5ePhb71hmIAdB4PZ3DqwadvpY0UKf67B6LrgJQq5tuSso71gdC-FV2_EwnQMVG0Mr8TKz0QA-jiOXwp9HnymK_rLS1Feg==",
+        "title": "gnavi.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH-BlrqIvBtVqQcbR3wTJlg7mj7G0iHA5SodbiA63ZbVFYFrMrjf3KPb6NQg4I3yKJziSDIFOfqpRQykdP1F-nnPz64wHFi-Runn1Fur5vDYgxazWQOxlclrptq32O5T4V_",
+        "title": "hitosara.com"
+      }
+    ]
+  },
+  "store_id": "J001259913",
+  "store_name": "焼き鳥屋 鳥蔵",
+  "area": "栄(ミナミ)/矢場町/大須/上前津",
+  "genre": "和食",
+  "rating": "4.6",
+  "generated_at": "2026-11-03T00:43:45.948Z"
+}

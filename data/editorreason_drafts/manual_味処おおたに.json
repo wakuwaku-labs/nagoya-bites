@@ -1,0 +1,116 @@
+{
+  "status": "OK",
+  "editorReason": "店主大谷氏が遊び心と新しさを追求し、異なる素材や調理法を融合させた和食を提供。一品ごとの満足度とコストパフォーマンスの高さが評価され、予約困難な人気店として地元に愛されています。",
+  "insiderNote": "大谷氏の遊び心ある和食は、異なる素材の融合と新しさを追求。オープンキッチンでのライブ感ある調理や、一品ごとの満足度とコスパの高さも魅力。ミシュラン星獲得実績も持つ実力派です。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFeOAaRTy0nVv4JGIaiz6NalmvBDI9S_rh60N8pmdTXxdPEwkBWYh8hf0_8PaSZYU_0U9f_yZLBP3-J9Vd-9LpbUBwocmH1Y1nDlSmreMOf2fTJkd_9xfzy8MIXTJ-dqCWflw==",
+      "snippet_quote": "店主の大谷有弘氏は、「自分のスタイルを探し求め、遊び心のある和食をめざし、異なる素材や調理法が融合して生まれるハーモニーを大切にしている」と語っています。料理にかける気概は、厨房を取り囲むカウンター席という店舗の構えからも感じられます。",
+      "supports": "店主の料理に対するこだわりとスタイル"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFGxKd2j9wza8J8E8SzyUSwdxqTPpkKRt1mP1u_RzMrw4gI-2dyE1ylvRHwqp2UD8-MujXjEM4gyavH2y5Gy0IPOos4sS5et46YSy3ivWjrq6edFgBYx3vLb3pU5YECuFDh7vBQ1-qjo7mV2IoFd0VaaQ2KaAwxUA==",
+      "snippet_quote": "Rettyの口コミには「完全よやさのお店はなかなか予約取れませんがそれだけ価値があるお店と言う事ですよね」、「値段以上のクオリティ」「予約困難店」という記述があり、予約が取りにくい人気店であることがうかがえます。",
+      "supports": "予約困難な人気店であること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEv68bcHHzdvEDHyIryqKWs-wXd62JG8ZcfdWhQ8ucDgRJgvRDPqMlObz5F5VUlfo3rvzuN4lskGmfPDxNZvBSCFzCOtgh7P-33M0VlX_qItNDi2JiHouIFGczkza1M8h9F7S-3xdEY0l119FkbtjqCTNA=",
+      "snippet_quote": "Rettyの口コミには「完全よやさのお店はなかなか予約取れませんがそれだけ価値があるお店と言う事ですよね」、「値段以上のクオリティ」「予約困難店」という記述があり、予約が取りにくい人気店であることがうかがえます。",
+      "supports": "予約困難な人気店であること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH9L0q33sl-519emSnOw4qYv4gycc8so9-8e2LqunrKvmT247Lpwxi1SOqOW7OI9ezit_sgXUmgPIikSZBlSgp5MmPFcEA2ygcmwegdBkb6Nya4ZQpSTmeIFaxkuqqnc1bQ9NkELTPmdxeur2Vu",
+      "snippet_quote": "「ミシュラン愛知岐阜三重 特別版」で星を獲得した直後には、お祝いの花が店に飾られていたという情報もあります。",
+      "supports": "ミシュラン星獲得を示唆する情報"
+    }
+  ],
+  "warnings": [
+    "2件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋市中村区の日本料理店「味処おおたに」について、Google検索で見つかった業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n店主の大谷有弘氏は、「自分のスタイルを探し求め、遊び心のある和食をめざし、異なる素材や調理法が融合して生まれるハーモニーを大切にしている」と語っています。穏やかな性格で、その人柄が料理の雰囲気にも表れており、地元の人々に愛されています。料理にかける気概は、厨房を取り囲むカウンター席という店舗の構えからも感じられます。\n\n大谷氏のこだわりは多岐にわたります。献立は毎月入れ替わり、季節感だけでなく、スペシャリテや目新しさが織り込まれています。お造りは盛り合わせではなく一種のネタで、その精度を極めるのが大谷流です。コース中盤で提供される「なめらか胡麻豆腐」は、胡麻煎餅、胡麻クリーム、胡麻豆腐の3種類からなり、全て自家製手作りで仕込まれる定番の一品です。また、夜のコースの締めには、鯛の甘さと季節の食材の絶妙な共演を大切にした鯛の炊き込みご飯が提供されます。この炊き込みご飯には、鯛の骨と昆布の出汁、大谷氏が試行錯誤の末に選んだ長野県佐久市産のコシヒカリが使用され、お客様ひと組ごとに特注の土鍋釜で炊き上げられます。和食の軸を守りつつも新しさを追求し、一品ごとの満足度とコストパフォーマンスの高さも重視しています。店舗の空間にもこだわり、カウンターや掘りごたつ座敷には栃の木の一枚板を採用し、料理と空間の両方で季節感を表現しています。\n\n**提供スタイルの特徴**\n「味処おおたに」は完全予約制の店舗です。昼・夜ともに1種類のお任せコースのみを提供しており、夜席は11品、昼席は9品で構成され、内容は月替わりです。コースは先付から始まり、食材本来の味を引き出した日本料理が供されます。カウンター内の完全オープンキッチンはライブ感があり、ムースをカットしたりクリームを泡立てたりといった、お菓子作りのような調理シーンも見られます。昼席は木曜日と土曜日のみの営業で、12時に一斉スタートします。店内には10席のカウンター席と、4～6名用の小上がりの掘りごたつ座敷があります。店舗敷地内には2台分の駐車場も完備されています。\n\n**地元グルメメディアでの紹介**\n「味処おおたに」は、名古屋の地元グルメメディアやブログで紹介されています。具体的には、「ナゴヤの大人のウェブマガジン | WEB大人の名古屋」、「TERIYAKIグルメ」、「ぼくプーさんの名古屋グルメぐり」、「antonグダグダ備忘録」、「ＣＯＣＯラン発信」などで取り上げられています。\n\n**料理人としての評価**\n料理人の大谷有弘氏と「味処おおたに」は、高い評価を得ています。Rettyでのオススメ度は91%で、22件の口コミ中14件がExcellent評価です。Rettyの口コミでは、「どのお料理も見た目も味も大満足」、「素材の味が美味しさの原点」「丁寧な施しと言う名の調理が全てのお料理を高みまで引き上げます」、「ひと手間、ふた手間かかった綺麗な盛り付け」「コスパ抜群」「出汁が美味しい特に蛤真丈のお椀、鯛と筍の炊き込みご飯が抜群」といった声が寄せられています。\n\nNAVITIMEのクチコミでは、評価5.0で「胡麻豆腐最高」「毎回どのお料理もとてもとても美味しくて」「大将も女将さんも素敵で、いつも最高の時間過ごせます」「このおいしさ、このサービスで6,000円とはっ！？」と絶賛されています。WEB大人の名古屋では、「和食の新たな食べ方を提案する店」「ひと品ずつの満足度に優れ、対するコストパフォーマンスの高さも見逃せないポイント」と評価されています。AutoReserveでは、大谷氏が「穏やかな性格。人柄が雰囲気に出ている優しい料理を提供し、地元も人々に愛されている」と評されています。\n\nまた、「プレミアムビール「GARGERY」」のブログでは、大谷氏の「料理にかける気概」や「若さ溢れる料理」が評価されています。Rettyの口コミには「完全よやさのお店はなかなか予約取れませんがそれだけ価値があるお店と言う事ですよね」、「値段以上のクオリティ」「予約困難店」という記述があり、予約が取りにくい人気店であることがうかがえます。「antonグダグダ備忘録」のブログでは、「大谷大将が旬の食材を生かし、丁寧に創り出す日本料理は繊細かつ食材の調和が取れた逸品で値段以上のクオリティを強く感じさせるほどに全てが素晴らしく美味しいです！！！」と非常に高く評価されています。さらに、「ミシュラン愛知岐阜三重 特別版」で星を獲得した直後には、お祝いの花が店に飾られていたという情報もあります。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFUHcTMNwj7h3gPRQua96FbzoTCogH3Hh4mxiCItJZ5QGTmLFjiUQEvCNXr8wHOdXA57uzaKmFmoVsoMrZOm1bxUyKG_qzyLzi2bB7m6dXQ4RFA_KpVNY2Y4craYGXxWXITy6nzY991-622Gos=",
+        "title": "otona-no-nagoya.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPmaa4k9_Cwntavc1nacXXts-iVyBYqGItiZ5cmbcv6sOMpyoTLXSwnvuWcU4CuW_qbbi3fyOWkIg2ptzKP90ouTo4BjWqz1PKFEsK3yJhwHIpnOFk9Icln6GpaIgF77ZjkSGDbwyUpze0qr_pFnpHPkFKJ2AQ",
+        "title": "autoreserve.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFeOAaRTy0nVv4JGIaiz6NalmvBDI9S_rh60N8pmdTXxdPEwkBWYh8hf0_8PaSZYU_0U9f_yZLBP3-J9Vd-9LpbUBwocmH1Y1nDlSmreMOf2fTJkd_9xfzy8MIXTJ-dqCWflw==",
+        "title": "gargery.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH9L0q33sl-519emSnOw4qYv4gycc8so9-8e2LqunrKvmT247Lpwxi1SOqOW7OI9ezit_sgXUmgPIikSZBlSgp5MmPFcEA2ygcmwegdBkb6Nya4ZQpSTmeIFaxkuqqnc1bQ9NkELTPmdxeur2Vu",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFjPvPcWnu4ArUk-4rFGKbrEhRPYwDPEQROyBHDdZxyygERu1SSXIoPR2xvze1G4Zrd7WbbysQ7wzbDWW1eqs-mKoDj0yXIpDNuoF-2eDsyREfnRtCejuvjK76nug==",
+        "title": "ajidokoro-otani.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFJs6UcqUc8p-PNqTjbYogwgLYIn_xcgTme-Y3xeQOC4l8f9_dNP4_80W9ftWPR_YiMeFN8yA3XmROjMlC3vxEipEur0yMluw8IWVTYeASpFLdd8xRR5Omu7SR2aEqn",
+        "title": "teriyaki.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEv68bcHHzdvEDHyIryqKWs-wXd62JG8ZcfdWhQ8ucDgRJgvRDPqMlObz5F5VUlfo3rvzuN4lskGmfPDxNZvBSCFzCOtgh7P-33M0VlX_qItNDi2JiHouIFGczkza1M8h9F7S-3xdEY0l119FkbtjqCTNA=",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF3M-90YivKIWUyXi9rQZnjgAZSyvmtL3ac2J4IYJmX1v39OZn554PJlfwf6ot0b_81xtuRhW3CXu-aSEp1HGUayq-xXDeXXejHdFtbihkcxkhdja6bD0lODqjEmKSBHr5CegRkkoT6N5nC1l4WffO-D2dif2h1u1STXQ==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHV2vWmE4P3zL8ao6cn5Ggk_dTVPYpn8Cwlu84P9sDAKp82LlbSk_iDcbtpf23nkv1C0chD0_HOjsyDJc-gR2Tn4NfZlcwgFYU5uAY3O_o_K74vIc3y-d8IOZfZVYE=",
+        "title": "ajidokoro-otani.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE-roZZZqtcGArzBUGp0rDtJx53DsJpJI6FfvD643NFcrJgbxDe4oWfZRpfXNbpO7KOYeGWoYxuyqTlxqEBCFPfPKlUU-aJvU4Sz_5K7aqm5t8s1A==",
+        "title": "gorp.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQExsMnPY4d4W5dOAy6FQshTUaDVryH5AoyXXdFQeU78y2KhUPj09_brWw-2oWSF_1i3vpNbqrFezWFaKow7JNQ4q_dyKQ91rkDqFrFy70MCapsmKkPcLa9NDCxi_Xg=",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFGxKd2j9wza8J8E8SzyUSwdxqTPpkKRt1mP1u_RzMrw4gI-2dyE1ylvRHwqp2UD8-MujXjEM4gyavH2y5Gy0IPOos4sS5et46YSy3ivWjrq6edFgBYx3vLb3pU5YECuFDh7vBQ1-qjo7mV2IoFd0VaaQ2KaAwxUA==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE2564XWUd1z4HIk227TEP31sDqLm8zxBoLPyVcLhAUhHO5PtPUbPm3QM2Kjb-Wk2hQkb6H9C8Ip0i--Hc7YcKLH41wiGXJeN7D2AfzFkXco_7of8AnNbEzh_BrNMuY",
+        "title": "gnavi.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFQRmPhiesXxL14Kh83KbU-wBETeygXsQNklOr-RAXf91MtznrWAesl4NJVDAs1M8w3Xr0eDSzVjQBpQ9v-VssJl2tbYVgtcWCV2OGQKKAFIO6zJD4wChXCuPEQ0Z5xxPYWDPSwEz0VcSBz1C2pBsVRMLj3Bk8=",
+        "title": "livedoor.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHca365eJMdxPQDYOSRSu0rq6dTiGR7AHw6PVRUbXJSDw_m-FIsVHphzt23bt2kzpsVi8S5xrQKVBPLQstUYMwrowRWp9aY8AtWrhvMBFvVNhdgm_lEKEldIAev-jFecltg6kYtD9Rooq8lKCQZ3Qhd5Ba_-XU=",
+        "title": "livedoor.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFL4VaAIpK5lci8gP9rEcmE1q65WTXku2DJ2ahl1m6Qz8hC8wwSN4eLSECpkFkeNuV0WPwf0m8PGe_b9ubKt-iAkMLZ9sGzvOfWKXdAcIJovl32-wUxH_SMcaqVUSsieJx0ZOCFPlX_KAm7XAw=",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXfG5RHxR0H9LzI7CUARke37J-0c2MhmQHNAp5sCut9NxBdN78BArOetQZLT6fsrcRUzXsKGuc6LWQ53mSyhSj5RhqR9_aq2N9F7xqRhgUuO6g_btAweDKLTIc2QvsdszeG4ub66qgJNmG5Q==",
+        "title": "navitime.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE04AYCxpfcM4wE6qZmfM3jOyNh76N2MpCp482s1Fongh1X9Zd1K17lw4vav-SXgx-ujyD8bhkuRn5GVqE3ryXnVS7XANR2Vo939YuopaJwk4Is9E4zL6CiuE2NdMbABC4NiZsGIrRUICDkBdHSNGh_61JVqjtRb2ds_WM=",
+        "title": "retty.me"
+      }
+    ]
+  },
+  "store_id": "manual_味処おおたに",
+  "store_name": "味処おおたに",
+  "area": "名古屋市中村区",
+  "genre": "日本料理",
+  "rating": "4.4",
+  "generated_at": "2026-11-03T00:40:33.856Z"
+}
