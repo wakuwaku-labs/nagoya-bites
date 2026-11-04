@@ -1,0 +1,445 @@
+{
+  "date": "2026-11-04",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅 Lucaバルの農家直送バーニャカウダ、契約農家の開示で野菜の鮮度を読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 92,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "バー",
+          "feature": "features/nagoya-bar-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 4件 (原価,仕入れ,構造,相場) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 136字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「バー」+2"
+        ]
+      },
+      "gate_note": "92点（自動公開ライン 100点）。主な不足: topicality -5 / brand_fit -4 / search_intent -4"
+    },
+    {
+      "id": "c2",
+      "title_draft": "塩釜口 ブラッスリー クー、18席で岐阜本巣の契約農家を続ける仕入れの形",
+      "verdict": "HOLD",
+      "total": 76,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 20,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 2件 (原価,仕入れ) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 127字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "八事 オーガニック食堂 Engi、ランチ1,980円で読む有機野菜の値段",
+      "verdict": "HOLD",
+      "total": 67,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "鶴舞・八事",
+          "feature": "stores/area/tsurumai-yagoto/index.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 1件 (原価) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 128字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「八事」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "11月の名古屋、キャベツ高・たまねぎ安で飲食店のメニューはどう動くか",
+      "verdict": "HOLD",
+      "total": 65,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 1件 (原価) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 123字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-SUPPLY-004) → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅 Lucaバルの花束バーニャカウダ1,400円、生野菜の皿の値段を読む",
+      "verdict": "HOLD",
+      "total": 52,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 17,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "バー",
+          "feature": "features/nagoya-bar-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 61日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 1件 (原価) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 131字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「バー」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "92点（自動公開ライン 100点）。主な不足: topicality -5 / brand_fit -4 / search_intent -4",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "industry_insider",
+      "title_draft": "名駅 Lucaバルの農家直送バーニャカウダ、契約農家の開示で野菜の鮮度を読む",
+      "lead_draft": "「契約農家から直送」と書く店の野菜は、いつも新鮮なのか。見るべきは契約の2文字より、どこまで名前を出しているかだ。農林水産省の11月の見通しでは、9月の長雨でキャベツやだいこんが平年より高い。名駅のLucaバルなど名古屋の3店の開示を並べ、鮮度と季節感の読み方を整理する。",
+      "angle": "契約農家と卸の仕入れの構造を、3店の開示の細かさで比べ、11月の相場高で店が原価と皿の中身をどう動かすかを読み解く",
+      "main_store": {
+        "name": "Lucaバル るかばる",
+        "id": "J001144474",
+        "area": "名駅",
+        "genre": "ダイニングバー・バル"
+      },
+      "column_id": "COL-SUPPLY-004",
+      "sources": [
+        {
+          "label": "農林水産省 野菜の生育状況及び価格見通し（令和8年11月）",
+          "url": "https://www.maff.go.jp/j/press/nousan/engei/261030.html",
+          "date": "2026-10-30"
+        },
+        {
+          "label": "Lucaバル 公式Instagram",
+          "url": "https://www.instagram.com/p/Dc31BhozBOA/",
+          "date": "2026-09-04"
+        },
+        {
+          "label": "ぐるなび Lucaバル",
+          "url": "https://r.gnavi.co.jp/g7txxebb0000"
+        },
+        {
+          "label": "OZmall Lucaバル",
+          "url": "https://www.ozmall.co.jp/restaurant/7675/?PD=256"
+        },
+        {
+          "label": "飲食店ドットコム 農家との直接契約",
+          "url": "https://www.inshokuten.com/foodist/article/5588/"
+        },
+        {
+          "label": "マイナビ農業 契約栽培の連載",
+          "url": "https://agri.mynavi.jp/2026_10_13_603158/",
+          "date": "2026-10-13"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "industry_insider",
+      "title_draft": "塩釜口 ブラッスリー クー、18席で岐阜本巣の契約農家を続ける仕入れの形",
+      "lead_draft": "塩釜口のブラッスリー クーは、総席数18席で岐阜本巣の契約農家から減農薬・無農薬の野菜を仕入れると書く。少ない席で農家と組むと、仕入れの量と皿の中身はどう決まるのか。9月の長雨で野菜の値が上がる11月に、コース5,500円からの店の仕入れの形を読み解く。",
+      "angle": "18席の席数とコース価格から、契約農家と組むときの仕入れの量と原価の考え方を読み解く",
+      "main_store": {
+        "name": "ブラッスリー　クー",
+        "id": "J003624394",
+        "area": "塩釜口",
+        "genre": "イタリアン・フレンチ"
+      },
+      "column_id": "COL-SUPPLY-004",
+      "sources": [
+        {
+          "label": "農林水産省 野菜の生育状況及び価格見通し（令和8年11月）",
+          "url": "https://www.maff.go.jp/j/press/nousan/engei/261030.html",
+          "date": "2026-10-30"
+        },
+        {
+          "label": "ブラッスリー クー 公式Instagram",
+          "url": "https://www.instagram.com/p/DfKdliVSN5c/",
+          "date": "2026-10-31"
+        },
+        {
+          "label": "ホットペッパーグルメ ブラッスリー クー",
+          "url": "https://www.hotpepper.jp/strJ003624394/"
+        },
+        {
+          "label": "飲食店ドットコム 農家との直接契約",
+          "url": "https://www.inshokuten.com/foodist/article/5588/"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "industry_insider",
+      "title_draft": "八事 オーガニック食堂 Engi、ランチ1,980円で読む有機野菜の値段",
+      "lead_draft": "八事のオーガニック食堂 Engiは、東海圏を中心にオーガニック食材を仕入れ、ランチを1,980円で出す。農家の名前を出さない店は仕入れが見えないのか。有機という言葉と仕入先の開示は別の話だ。野菜の値が上がる11月に、ランチの価格帯と仕入れの関係を整理する。",
+      "angle": "有機野菜のランチの価格帯と仕入先の開示の範囲を切り分け、原価の見え方を読み解く",
+      "main_store": {
+        "name": "オーガニック食堂 Engi エンギ",
+        "id": "J001234081",
+        "area": "八事",
+        "genre": "ダイニングバー・バル"
+      },
+      "column_id": "COL-SUPPLY-004",
+      "sources": [
+        {
+          "label": "農林水産省 野菜の生育状況及び価格見通し（令和8年11月）",
+          "url": "https://www.maff.go.jp/j/press/nousan/engei/261030.html",
+          "date": "2026-10-30"
+        },
+        {
+          "label": "ホットペッパーグルメ Engi",
+          "url": "https://www.hotpepper.jp/strJ001234081/"
+        },
+        {
+          "label": "日本気象協会 11月の東京市場の野菜相場",
+          "url": "https://weather-jwa.jp/?p=16636",
+          "date": "2026-10-27"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "industry_insider",
+      "title_draft": "11月の名古屋、キャベツ高・たまねぎ安で飲食店のメニューはどう動くか",
+      "lead_draft": "農林水産省の見通しでは、11月はキャベツやだいこんが平年より高く、たまねぎとさといもは安い。東京市場の話だが、キャベツの主産地には愛知も入る。野菜の値が動く月に、飲食店はメニューの何を変え、何を変えないのか。卸売の数字から仕入れの判断を読み解く。",
+      "angle": "卸売の価格と出荷の見通しから、店の原価とメニューの入れ替えの判断を読み解く",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": ""
+      },
+      "column_id": "COL-SUPPLY-004",
+      "sources": [
+        {
+          "label": "農林水産省 野菜の生育状況及び価格見通し（令和8年11月）",
+          "url": "https://www.maff.go.jp/j/press/nousan/engei/261030.html",
+          "date": "2026-10-30"
+        },
+        {
+          "label": "創業手帳 10月26日の青果物卸売価格速報値",
+          "url": "https://sogyotecho.jp/?p=269956",
+          "date": "2026-10-29"
+        },
+        {
+          "label": "日本気象協会 11月の東京市場の野菜相場",
+          "url": "https://weather-jwa.jp/?p=16636",
+          "date": "2026-10-27"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "industry_insider",
+      "title_draft": "名駅 Lucaバルの花束バーニャカウダ1,400円、生野菜の皿の値段を読む",
+      "lead_draft": "名駅のLucaバルは、農家から仕入れた野菜を花束のように盛るバーニャカウダを1,400円で出す。火を入れない皿は、野菜の状態がそのまま出る。愛西市のトマトや碧南市のにんじんの産地を名乗る店で、この値段はどう組み立てられているのか。価格帯と原価の両面から読み解く。",
+      "angle": "生で出す皿の価格帯と原価、女子会コースへの組み込み方を読み解く",
+      "main_store": {
+        "name": "Lucaバル るかばる",
+        "id": "J001144474",
+        "area": "名駅",
+        "genre": "ダイニングバー・バル"
+      },
+      "column_id": "COL-SUPPLY-004",
+      "sources": [
+        {
+          "label": "ぐるなび Lucaバル",
+          "url": "https://r.gnavi.co.jp/g7txxebb0000"
+        },
+        {
+          "label": "Lucaバル 公式Instagram",
+          "url": "https://www.instagram.com/p/Dc31BhozBOA/",
+          "date": "2026-09-04"
+        },
+        {
+          "label": "ホットペッパーグルメ Lucaバル",
+          "url": "https://www.hotpepper.jp/strJ001144474/"
+        }
+      ]
+    }
+  ]
+}
