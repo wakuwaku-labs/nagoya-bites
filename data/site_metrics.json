@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-04T19:17:22.079Z",
+  "generatedAt": "2026-11-04T23:15:58.818Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2778,
-    "pageViews": 3905,
-    "sessions": 3072,
-    "avgSessionDuration": 111.5,
+    "activeUsers": 2788,
+    "pageViews": 3922,
+    "sessions": 3082,
+    "avgSessionDuration": 111.4,
     "bounceRate": 0.299,
     "pagesPerSession": 1.27
   },
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2367,
-      "direct": 468,
+      "organic": 2375,
+      "direct": 469,
       "social": 46,
-      "ai_assistant": 196,
+      "ai_assistant": 197,
       "referral": 29,
       "paid": 0,
       "other": 1
     },
     "pct": {
       "organic": 76.2,
-      "direct": 15.1,
+      "direct": 15,
       "social": 1.5,
       "ai_assistant": 6.3,
       "referral": 0.9,
@@ -39,22 +39,22 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1092
+      "sessions": 1096
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 795
+      "sessions": 797
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 454
+      "sessions": 456
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 415
+      "sessions": 416
     },
     {
       "source": "chatgpt.com",
@@ -64,7 +64,7 @@
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 62
+      "sessions": 63
     },
     {
       "source": "x",
@@ -180,8 +180,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 454,
-      "sessions": 433
+      "pageViews": 455,
+      "sessions": 434
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -190,8 +190,8 @@
     },
     {
       "path": "/",
-      "pageViews": 107,
-      "sessions": 97
+      "pageViews": 108,
+      "sessions": 98
     },
     {
       "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
@@ -205,7 +205,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 332,
+    "outboundClicks": 333,
     "ctaClickRate": 10.8,
     "byDomain": [
       {
@@ -222,7 +222,7 @@
       },
       {
         "domain": "tabelog.com",
-        "clicks": 40
+        "clicks": 41
       },
       {
         "domain": "maps.google.com",
@@ -263,7 +263,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 226,
+      "organic": 227,
       "direct": 56,
       "social": 10,
       "ai_assistant": 37,
@@ -271,8 +271,8 @@
       "paid": 0,
       "other": 2
     },
-    "ctaClickRate_organic": 9.5,
-    "ctaClickRate_direct": 12,
+    "ctaClickRate_organic": 9.6,
+    "ctaClickRate_direct": 11.9,
     "ctaClickRate_social": 21.7,
     "byPage": [
       {
@@ -309,7 +309,7 @@
       },
       {
         "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
-        "clicks": 7
+        "clicks": 8
       },
       {
         "path": "/stores/J001147583.html",
@@ -513,6 +513,11 @@
         "clicks": 2
       },
       {
+        "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
+        "domain": "tabelog.com",
+        "clicks": 2
+      },
+      {
         "path": "/journal/2026-10-06-sakae-hilton-inplace33-autumn-buffet.html",
         "domain": "nagoyato.com",
         "clicks": 2
@@ -635,11 +640,6 @@
       {
         "path": "/journal/2026-10-04-sakae-brianza-nagoya-haera-lunch.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
-        "domain": "tabelog.com",
         "clicks": 1
       },
       {
@@ -944,6 +944,10 @@
         "clicks": 3
       },
       {
+        "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
+        "clicks": 2
+      },
+      {
         "path": "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
         "clicks": 2
       },
@@ -997,10 +1001,6 @@
       },
       {
         "path": "/journal/2026-10-04-sakae-brianza-nagoya-haera-lunch.html",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
         "clicks": 1
       },
       {
@@ -1116,13 +1116,13 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 116,
+    "reservationClicks": 117,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 55,
-      "reservationOutbound": 57,
-      "naiveSum": 112,
-      "deduped": 62,
+      "reservationOutbound": 58,
+      "naiveSum": 113,
+      "deduped": 63,
       "overlap": 50,
       "bySite": [
         {
@@ -1134,15 +1134,15 @@
         {
           "site": "tabelog.com",
           "cta": 2,
-          "outbound": 9,
-          "deduped": 9
+          "outbound": 10,
+          "deduped": 10
         }
       ]
     }
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2778,
+    "value": 2788,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
