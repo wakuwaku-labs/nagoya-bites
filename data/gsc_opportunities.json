@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T22:58:05.088Z",
+  "generatedAt": "2026-11-04T00:20:26.083Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -36,21 +36,21 @@
       },
       {
         "query": "キミトテ",
-        "impressions": 337,
+        "impressions": 334,
         "clicks": 5,
         "position": 9.7,
-        "ctr": 1.48,
+        "ctr": 1.5,
         "expectedCtr": 2.6,
-        "missedClicks": 3.7
+        "missedClicks": 3.6
       },
       {
         "query": "一人飲み",
-        "impressions": 75,
+        "impressions": 70,
         "clicks": 4,
         "position": 4,
-        "ctr": 5.33,
+        "ctr": 5.71,
         "expectedCtr": 8,
-        "missedClicks": 2
+        "missedClicks": 1.6
       }
     ],
     "rankPush": []
@@ -59,12 +59,12 @@
     "ctrFix": [
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 1184,
+        "impressions": 1135,
         "clicks": 18,
         "position": 7,
-        "ctr": 1.52,
+        "ctr": 1.59,
         "expectedCtr": 4,
-        "missedClicks": 29.4
+        "missedClicks": 27.4
       },
       {
         "page": "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
@@ -77,32 +77,32 @@
       },
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 830,
-        "clicks": 10,
+        "impressions": 799,
+        "clicks": 9,
         "position": 9.2,
-        "ctr": 1.2,
+        "ctr": 1.13,
         "expectedCtr": 2.7,
-        "missedClicks": 12.8
+        "missedClicks": 12.9
       },
       {
         "page": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
-        "impressions": 664,
-        "clicks": 10,
-        "position": 8.5,
-        "ctr": 1.51,
+        "impressions": 537,
+        "clicks": 9,
+        "position": 8.6,
+        "ctr": 1.68,
         "expectedCtr": 3,
-        "missedClicks": 9.9
+        "missedClicks": 6.9
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 1290,
+        "impressions": 1210,
         "clicks": 18,
-        "position": 17.4,
-        "ctr": 1.4,
-        "upsideClicks": 18.1
+        "position": 17.9,
+        "ctr": 1.49,
+        "upsideClicks": 15.9
       }
     ]
   },
