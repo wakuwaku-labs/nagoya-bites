@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T23:16:02.537Z",
+  "generatedAt": "2026-11-05T04:10:45.879Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -36,21 +36,12 @@
       },
       {
         "query": "キミトテ",
-        "impressions": 336,
+        "impressions": 335,
         "clicks": 5,
         "position": 9.7,
         "ctr": 1.49,
         "expectedCtr": 2.6,
         "missedClicks": 3.7
-      },
-      {
-        "query": "一人飲み",
-        "impressions": 75,
-        "clicks": 4,
-        "position": 4,
-        "ctr": 5.33,
-        "expectedCtr": 8,
-        "missedClicks": 2
       }
     ],
     "rankPush": []
@@ -59,12 +50,12 @@
     "ctrFix": [
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 1211,
+        "impressions": 1177,
         "clicks": 19,
         "position": 6.9,
-        "ctr": 1.57,
+        "ctr": 1.61,
         "expectedCtr": 4.1,
-        "missedClicks": 30.6
+        "missedClicks": 29.3
       },
       {
         "page": "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
@@ -77,41 +68,32 @@
       },
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 830,
+        "impressions": 807,
         "clicks": 10,
-        "position": 9.2,
-        "ctr": 1.2,
+        "position": 9.3,
+        "ctr": 1.24,
         "expectedCtr": 2.7,
-        "missedClicks": 12.8
-      },
-      {
-        "page": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
-        "impressions": 575,
-        "clicks": 9,
-        "position": 8.7,
-        "ctr": 1.57,
-        "expectedCtr": 2.9,
-        "missedClicks": 7.8
+        "missedClicks": 11.9
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 1212,
-        "clicks": 18,
-        "position": 18.1,
+        "impressions": 1144,
+        "clicks": 17,
+        "position": 18.3,
         "ctr": 1.49,
-        "upsideClicks": 15.9
+        "upsideClicks": 15
       }
     ]
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / ctrFixGeoless=地名なし全国クエリ(SEO-061)→検索者の大半が名古屋在住とは限らず低CTRが正常。追うなら要検証 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
     "queryCtrFix": 1,
-    "queryCtrFixGeoless": 4,
+    "queryCtrFixGeoless": 3,
     "queryRankPush": 0,
-    "pageCtrFix": 4,
+    "pageCtrFix": 3,
     "pageRankPush": 1,
     "topPageCtrFix": [
       "/features/nagoya-tebasaki.html",

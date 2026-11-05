@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-04T23:15:58.818Z",
+  "generatedAt": "2026-11-05T04:06:06.625Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2788,
-    "pageViews": 3922,
-    "sessions": 3082,
-    "avgSessionDuration": 111.4,
+    "activeUsers": 2796,
+    "pageViews": 3937,
+    "sessions": 3089,
+    "avgSessionDuration": 111.8,
     "bounceRate": 0.299,
     "pagesPerSession": 1.27
   },
@@ -17,44 +17,44 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2375,
-      "direct": 469,
+      "organic": 2382,
+      "direct": 472,
       "social": 46,
       "ai_assistant": 197,
       "referral": 29,
       "paid": 0,
-      "other": 1
+      "other": 2
     },
     "pct": {
       "organic": 76.2,
-      "direct": 15,
+      "direct": 15.1,
       "social": 1.5,
       "ai_assistant": 6.3,
       "referral": 0.9,
       "paid": 0,
-      "other": 0
+      "other": 0.1
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1096
+      "sessions": 1100
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 797
+      "sessions": 798
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 456
+      "sessions": 458
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 416
+      "sessions": 417
     },
     {
       "source": "chatgpt.com",
@@ -72,6 +72,11 @@
       "sessions": 25
     },
     {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 19
+    },
+    {
       "source": "duckduckgo",
       "medium": "organic",
       "sessions": 19
@@ -80,11 +85,6 @@
       "source": "note",
       "medium": "social",
       "sessions": 19
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 17
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -147,6 +147,11 @@
       "sessions": 2
     },
     {
+      "source": "history",
+      "medium": "",
+      "sessions": 2
+    },
+    {
       "source": "ranking",
       "medium": "(not set)",
       "sessions": 2
@@ -154,11 +159,6 @@
     {
       "source": "copilot.com",
       "medium": "(not set)",
-      "sessions": 1
-    },
-    {
-      "source": "history",
-      "medium": "",
       "sessions": 1
     },
     {
@@ -185,13 +185,13 @@
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 208,
-      "sessions": 196
+      "pageViews": 211,
+      "sessions": 198
     },
     {
       "path": "/",
-      "pageViews": 108,
-      "sessions": 98
+      "pageViews": 109,
+      "sessions": 99
     },
     {
       "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
@@ -205,7 +205,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 333,
+    "outboundClicks": 334,
     "ctaClickRate": 10.8,
     "byDomain": [
       {
@@ -218,7 +218,7 @@
       },
       {
         "domain": "prtimes.jp",
-        "clicks": 45
+        "clicks": 46
       },
       {
         "domain": "tabelog.com",
@@ -263,7 +263,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 227,
+      "organic": 228,
       "direct": 56,
       "social": 10,
       "ai_assistant": 37,
@@ -693,6 +693,11 @@
         "clicks": 1
       },
       {
+        "path": "/journal/2026-11-02-meieki-takashimaya-kamakura-beniya-butter-no-itoko.html",
+        "domain": "prtimes.jp",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J000015627.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -890,11 +895,6 @@
       {
         "path": "/stores/J001292845.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001292902.html",
-        "domain": "www.google.com",
         "clicks": 1
       }
     ],
@@ -1142,7 +1142,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2788,
+    "value": 2796,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
