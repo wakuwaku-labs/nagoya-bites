@@ -1,0 +1,462 @@
+{
+  "date": "2026-11-05",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄の青魚居酒屋『定番チューン。』一人飲みにアジフライ790円と〆さば1貫500円",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 95,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,コース,席,予約,一人飲み) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 140字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "95点（自動公開ライン 100点）。主な不足: topicality -10 / recency -3 / writability -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄の青魚居酒屋『定番チューン。』宴会は16人まで、飲み放題1,800円とコース6,800円の差",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 87,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,コース,席,予約) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 129字 +4",
+          "title 47字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "87点（自動公開ライン 100点）。主な不足: topicality -13 / brand_fit -4 / recency -3"
+    },
+    {
+      "id": "c4",
+      "title_draft": "今池 Music Cafe BASSLINE デートに、席料600円と音響のカフェ、牛肉の赤ワイン煮込み2,500円",
+      "verdict": "HOLD",
+      "total": 83,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,デート,一人飲み) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 134字 +4",
+          "title 58字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「今池」+4",
+          "タイトルにシーン語「デート」+4",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄 定番チューン。のレアアジフライ、松浦のアジで揚げ加減を選ぶ店の仕入れを読む",
+      "verdict": "HOLD",
+      "total": 71,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (価格帯) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 130字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "栄 HAERA『築地すしくろ』東海初の寿司酒場、20席で握り11貫4,928円を一人飲みで読む",
+      "verdict": "HOLD",
+      "total": 65,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 150日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,シーン,一人飲み) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 127字 +4",
+          "title 47字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「寿司」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "95点（自動公開ライン 100点）。主な不足: topicality -10 / recency -3 / writability -2",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "栄の青魚居酒屋『定番チューン。』一人飲みにアジフライ790円と〆さば1貫500円",
+      "lead_draft": "10月31日、栄3丁目に青魚の居酒屋「定番チューン。」が開店した。サバの値上がりがNHKでも取り上げられた秋に、あえて〆さば3種を看板に置く店だ。アジフライは2キレ790円、海苔巻きは1貫500円。カウンターで一人でも頼みやすい単位の切り方と、予算5,000円の使い方を読み解く。",
+      "angle": "サバ高の時期に開店した青魚居酒屋の価格帯と席を、一人飲みのカウンター利用、コースと単品の差、当日の予約の締切から読み解く",
+      "main_store": {
+        "name": "青魚と居酒屋料理 定番チューン。",
+        "id": "J004723769",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 青魚と居酒屋料理 定番チューン。",
+          "url": "https://www.hotpepper.jp/strJ004723769/",
+          "date": "2026-10-31"
+        },
+        {
+          "label": "食べログ 名古屋市の新規オープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-10-31"
+        },
+        {
+          "label": "NHK 庶民の魚サバ高騰 背景には何が",
+          "url": "https://news.web.nhk/newsweb/na/nd-20260925de52383",
+          "date": "2026-10-05"
+        },
+        {
+          "label": "東洋経済オンライン サバの高騰が止まらない理由",
+          "url": "https://toyokeizai.net/articles/-/907381?display=b",
+          "date": "2025-10-01"
+        },
+        {
+          "label": "長崎県 アジフライの聖地 松浦",
+          "url": "https://kyodonewsprwire.jp/release/202511219637",
+          "date": "2025-11-21"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄の青魚居酒屋『定番チューン。』宴会は16人まで、飲み放題1,800円とコース6,800円の差",
+      "lead_draft": "栄3丁目に10月31日開店した「定番チューン。」は、40席で宴会は最大16人、個室はない。全7品90分飲み放題のコース6,800円と、席だけ予約して飲み放題1,800円を足す形では何が変わるのか。忘年会の幹事が予約の前に確かめたい価格帯と席の条件を整理する。",
+      "angle": "コースと単品＋飲み放題の価格帯、個室なし16人までの席条件を、忘年会の予約目線で読み解く",
+      "main_store": {
+        "name": "青魚と居酒屋料理 定番チューン。",
+        "id": "J004723769",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 定番チューン。コース",
+          "url": "https://www.hotpepper.jp/strJ004723769/course/",
+          "date": "2026-10-31"
+        },
+        {
+          "label": "食べログ 名古屋市の新規オープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-10-31"
+        },
+        {
+          "label": "NHK 庶民の魚サバ高騰 背景には何が",
+          "url": "https://news.web.nhk/newsweb/na/nd-20260925de52383",
+          "date": "2026-10-05"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "栄 定番チューン。のレアアジフライ、松浦のアジで揚げ加減を選ぶ店の仕入れを読む",
+      "lead_draft": "レアかしっかり火入れか、アジフライの揚げ加減を選ばせる店が栄に開いた。「定番チューン。」は長崎県松浦産の刺身で食べられるアジを使うと書く。生に近い揚げ方は、魚の状態に左右される。790円の皿の裏にある仕入れと数量の考え方を、シーン別の使い方とあわせて読み解く。",
+      "angle": "レアのアジフライが成り立つ仕入れの条件と価格帯を、松浦の流通の話から読み解く",
+      "main_store": {
+        "name": "青魚と居酒屋料理 定番チューン。",
+        "id": "J004723769",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 定番チューン。料理",
+          "url": "https://www.hotpepper.jp/strJ004723769/food/",
+          "date": "2026-10-31"
+        },
+        {
+          "label": "長崎県 アジフライの聖地 松浦",
+          "url": "https://kyodonewsprwire.jp/release/202511219637",
+          "date": "2025-11-21"
+        },
+        {
+          "label": "DIME 松浦のアジフライ",
+          "url": "https://dime.jp/genre/1638188/",
+          "date": "2023-08-28"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "今池 Music Cafe BASSLINE デートに、席料600円と音響のカフェ、牛肉の赤ワイン煮込み2,500円",
+      "lead_draft": "今池5丁目のMusic Cafe BASSLINEは、クラシックやジャズを聴くための音響で組んだ30席の店だ。テーブルチャージ600円、ミュージックチャージはかからない。平均予算3,500円で、デートの夜にどう使えるのか。カウンターとソファ席の違いと価格帯を読み解く。",
+      "angle": "テーブルチャージと料理の価格帯、カウンターとソファの席の違いをデートと一人飲みの目線で読み解く",
+      "main_store": {
+        "name": "Music Cafe BASSLINE ベースライン",
+        "id": "J004698551",
+        "area": "今池",
+        "genre": "カフェ・ダイニングバー"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ Music Cafe BASSLINE",
+          "url": "https://www.hotpepper.jp/strJ004698551/",
+          "date": "2026-10-31"
+        },
+        {
+          "label": "食べログ 名古屋市の新規オープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "栄 HAERA『築地すしくろ』東海初の寿司酒場、20席で握り11貫4,928円を一人飲みで読む",
+      "lead_draft": "ザ・ランドマーク名古屋栄のHAERA4階にある「築地すしくろ」は、創業100年を超える築地玉寿司が手がける東海初の寿司酒場だ。カウンター12席を含む20席で、築地特撰にぎり11貫は4,928円。一人飲みと女子会で、この価格帯をどう使い分けるかを読み解く。",
+      "angle": "20席の席構成と握り・つまみの価格帯を、一人飲みと女子会のシーンで読み解く",
+      "main_store": {
+        "name": "築地すしくろ",
+        "id": "",
+        "area": "栄",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "玉寿司 プレスリリース 築地すしくろ名古屋HAERA店",
+          "url": "https://prtimes.jp/main/html/rd/p/000000011.000088791.html",
+          "date": "2026-06-08"
+        },
+        {
+          "label": "FASHION PRESS 名古屋 ハエラ",
+          "url": "https://www.fashion-press.net/news/147005"
+        }
+      ]
+    }
+  ]
+}
