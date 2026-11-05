@@ -1,7 +1,7 @@
 {
   "_note": "ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない",
-  "mergedCount": 65,
-  "absorbedCount": 68,
+  "mergedCount": 66,
+  "absorbedCount": 69,
   "skippedCount": 14,
   "merged": [
     {
@@ -513,28 +513,6 @@
         "name_exact"
       ],
       "kept": {
-        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J004026741",
-        "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
-        "slug": "J004026741"
-      },
-      "absorbed": [
-        {
-          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J004026739",
-          "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
-          "slug": "J004026739"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
-        "name_exact"
-      ],
-      "kept": {
         "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店",
         "エリア": "名古屋（名古屋駅/西区/中村区）",
         "ホットペッパーID": "J004026742",
@@ -592,6 +570,28 @@
           "ホットペッパーID": "J004403777",
           "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
           "slug": "J004403777"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004026741",
+        "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
+        "slug": "J004026741"
+      },
+      "absorbed": [
+        {
+          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J004026739",
+          "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
+          "slug": "J004026739"
         }
       ],
       "filledFields": []
@@ -700,40 +700,6 @@
     },
     {
       "reasons": [
-        "name_exact"
-      ],
-      "kept": {
-        "店名": "しら河 浄心本店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J000107620",
-        "placeId": "ChIJh8FpXrp2A2AR_OXafePl90Q",
-        "slug": "J000107620"
-      },
-      "absorbed": [
-        {
-          "店名": "しら河 浄心本店",
-          "エリア": "名古屋市西区",
-          "ホットペッパーID": "",
-          "placeId": "ChIJh8FpXrp2A2AR_OXafePl90Q",
-          "slug": "store-e38197e38289e6b2"
-        }
-      ],
-      "filledFields": [
-        "おすすめシーン",
-        "おすすめポイント",
-        "キュレーター",
-        "トレンド情報源",
-        "価格帯目安",
-        "編集部推薦",
-        "話題スコア",
-        "話題フラグ",
-        "追加日",
-        "選定理由",
-        "食べログURL"
-      ]
-    },
-    {
-      "reasons": [
         "owner_confirmed"
       ],
       "kept": {
@@ -777,6 +743,40 @@
         }
       ],
       "filledFields": []
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "しら河 浄心本店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J000107620",
+        "placeId": "ChIJh8FpXrp2A2AR_OXafePl90Q",
+        "slug": "J000107620"
+      },
+      "absorbed": [
+        {
+          "店名": "しら河 浄心本店",
+          "エリア": "名古屋市西区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJh8FpXrp2A2AR_OXafePl90Q",
+          "slug": "store-e38197e38289e6b2"
+        }
+      ],
+      "filledFields": [
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "価格帯目安",
+        "編集部推薦",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由",
+        "食べログURL"
+      ]
     },
     {
       "reasons": [
@@ -941,6 +941,28 @@
     },
     {
       "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "Sei Felice セイフェリーチェ",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J003763458",
+        "placeId": "ChIJAW-TmB5xA2ARC35S7Lm0sK0",
+        "slug": "J003763458"
+      },
+      "absorbed": [
+        {
+          "店名": "Seifelice セイフェリーチェ 栄",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J003917091",
+          "placeId": "ChIJAW-TmB5xA2ARC35S7Lm0sK0",
+          "slug": "J003917091"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
         "name_exact"
       ],
       "kept": {
@@ -962,28 +984,6 @@
       "filledFields": [
         "Instagram"
       ]
-    },
-    {
-      "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "シャンタムール",
-        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J000015669",
-        "placeId": "ChIJnRXJZdBwA2ARAOIm4uhh9wU",
-        "slug": "J000015669"
-      },
-      "absorbed": [
-        {
-          "店名": "シャンタムール サウス",
-          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J004591503",
-          "placeId": "ChIJnRXJZdBwA2ARAOIm4uhh9wU",
-          "slug": "J004591503"
-        }
-      ],
-      "filledFields": []
     },
     {
       "reasons": [
@@ -1014,19 +1014,19 @@
         "owner_confirmed"
       ],
       "kept": {
-        "店名": "Sei Felice セイフェリーチェ",
+        "店名": "シャンタムール",
         "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J003763458",
-        "placeId": "ChIJAW-TmB5xA2ARC35S7Lm0sK0",
-        "slug": "J003763458"
+        "ホットペッパーID": "J000015669",
+        "placeId": "ChIJnRXJZdBwA2ARAOIm4uhh9wU",
+        "slug": "J000015669"
       },
       "absorbed": [
         {
-          "店名": "Seifelice セイフェリーチェ 栄",
+          "店名": "シャンタムール サウス",
           "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J003917091",
-          "placeId": "ChIJAW-TmB5xA2ARC35S7Lm0sK0",
-          "slug": "J003917091"
+          "ホットペッパーID": "J004591503",
+          "placeId": "ChIJnRXJZdBwA2ARAOIm4uhh9wU",
+          "slug": "J004591503"
         }
       ],
       "filledFields": []
@@ -1069,6 +1069,30 @@
     },
     {
       "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "レストラン ロワール フレンチ 名古屋東急ホテル 栄",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J003916519",
+        "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
+        "slug": "J003916519"
+      },
+      "absorbed": [
+        {
+          "店名": "レストラン ロワール 鉄板焼",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J003916520",
+          "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
+          "slug": "J003916520"
+        }
+      ],
+      "filledFields": [
+        "Instagram"
+      ]
+    },
+    {
+      "reasons": [
         "name_exact"
       ],
       "kept": {
@@ -1101,30 +1125,6 @@
         "経度",
         "緯度",
         "駐車場"
-      ]
-    },
-    {
-      "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "レストラン ロワール フレンチ 名古屋東急ホテル 栄",
-        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J003916519",
-        "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
-        "slug": "J003916519"
-      },
-      "absorbed": [
-        {
-          "店名": "レストラン ロワール 鉄板焼",
-          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J003916520",
-          "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
-          "slug": "J003916520"
-        }
-      ],
-      "filledFields": [
-        "Instagram"
       ]
     },
     {
@@ -1554,6 +1554,38 @@
         "データソース",
         "価格帯",
         "備考",
+        "営業状況",
+        "情報源URL"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "宮きしめん伊兵衛 栄店",
+        "エリア": "名古屋市中区栄",
+        "ホットペッパーID": "",
+        "placeId": "",
+        "slug": "store-e5aeaee3818de381"
+      },
+      "absorbed": [
+        {
+          "店名": "宮きしめん伊兵衛 栄店",
+          "エリア": "栄",
+          "ホットペッパーID": "",
+          "placeId": "ChIJv5rjpKJxA2ARYPynMl2aIcA",
+          "slug": "store-e5aeaee3818de381"
+        }
+      ],
+      "filledFields": [
+        "Google評価",
+        "placeId",
+        "データソース",
+        "価格帯",
+        "備考",
+        "口コミ数",
+        "営業ステータス",
         "営業状況",
         "情報源URL"
       ]

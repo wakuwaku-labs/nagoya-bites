@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T04:10:45.879Z",
+  "generatedAt": "2026-11-05T19:19:59.139Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -13,17 +13,26 @@
         "ctr": 0.25,
         "expectedCtr": 3.4,
         "missedClicks": 64.5
+      },
+      {
+        "query": "一人飲み 名古屋",
+        "impressions": 70,
+        "clicks": 4,
+        "position": 4.4,
+        "ctr": 5.71,
+        "expectedCtr": 7.2,
+        "missedClicks": 1
       }
     ],
     "ctrFixGeoless": [
       {
         "query": "ひものや官兵衛 伏見",
-        "impressions": 426,
+        "impressions": 437,
         "clicks": 13,
         "position": 6.4,
-        "ctr": 3.05,
+        "ctr": 2.97,
         "expectedCtr": 4.6,
-        "missedClicks": 6.6
+        "missedClicks": 7.1
       },
       {
         "query": "ビストロランプール",
@@ -36,12 +45,21 @@
       },
       {
         "query": "キミトテ",
-        "impressions": 335,
+        "impressions": 337,
         "clicks": 5,
         "position": 9.7,
-        "ctr": 1.49,
+        "ctr": 1.48,
         "expectedCtr": 2.6,
         "missedClicks": 3.7
+      },
+      {
+        "query": "一人飲み",
+        "impressions": 82,
+        "clicks": 4,
+        "position": 4.1,
+        "ctr": 4.88,
+        "expectedCtr": 7.8,
+        "missedClicks": 2.4
       }
     ],
     "rankPush": []
@@ -50,55 +68,64 @@
     "ctrFix": [
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 1177,
-        "clicks": 19,
+        "impressions": 1241,
+        "clicks": 20,
         "position": 6.9,
         "ctr": 1.61,
         "expectedCtr": 4.1,
-        "missedClicks": 29.3
+        "missedClicks": 30.9
       },
       {
         "page": "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
-        "impressions": 1322,
+        "impressions": 1378,
         "clicks": 30,
         "position": 7.9,
-        "ctr": 2.27,
+        "ctr": 2.18,
         "expectedCtr": 3.3,
-        "missedClicks": 13.4
+        "missedClicks": 15.2
+      },
+      {
+        "page": "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
+        "impressions": 1411,
+        "clicks": 40,
+        "position": 7.2,
+        "ctr": 2.83,
+        "expectedCtr": 3.8,
+        "missedClicks": 14.3
       },
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 807,
+        "impressions": 827,
         "clicks": 10,
-        "position": 9.3,
-        "ctr": 1.24,
+        "position": 9.2,
+        "ctr": 1.21,
         "expectedCtr": 2.7,
-        "missedClicks": 11.9
+        "missedClicks": 12.7
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 1144,
+        "impressions": 1149,
         "clicks": 17,
-        "position": 18.3,
-        "ctr": 1.49,
-        "upsideClicks": 15
+        "position": 18.4,
+        "ctr": 1.48,
+        "upsideClicks": 15.2
       }
     ]
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / ctrFixGeoless=地名なし全国クエリ(SEO-061)→検索者の大半が名古屋在住とは限らず低CTRが正常。追うなら要検証 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
-    "queryCtrFix": 1,
-    "queryCtrFixGeoless": 3,
+    "queryCtrFix": 2,
+    "queryCtrFixGeoless": 4,
     "queryRankPush": 0,
-    "pageCtrFix": 3,
+    "pageCtrFix": 4,
     "pageRankPush": 1,
     "topPageCtrFix": [
       "/features/nagoya-tebasaki.html",
       "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
-      "/journal/2026-08-04-sakae-leesar-coffee.html"
+      "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html"
     ]
   }
 }
