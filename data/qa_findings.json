@@ -1,6 +1,6 @@
 {
-  "date": "2026-11-04",
-  "head": "434b2fb5b7e655c15bb88736436df043d62a41fd",
+  "date": "2026-11-05",
+  "head": "95cedcc3157afb1cefe0da256439f5d7582d0039",
   "verdict": "WARN",
   "findings": [
     {
@@ -9,7 +9,7 @@
       "id": "QA-SEC-NPM-AUDIT",
       "sev": "soft",
       "priority": "P2",
-      "title": "npm 依存に既知脆弱性 10 件（critical 0 / high 1 / moderate 6）",
+      "title": "npm 依存に既知脆弱性 6 件（critical 0 / high 1 / moderate 1）",
       "body": "`npm audit --omit=dev` 結果。\n- acceptance: 破壊的変更の無い範囲で `npm audit fix`／高リスクは個別精査／残存はリスク受容理由を記録／次回QAで推移を追跡（制約4: サイト用新依存は追加しない）"
     }
   ],
