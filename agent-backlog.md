@@ -49,7 +49,7 @@
 
 ### [SEO-152] 日次トリアージが動かなかった日を検知して通知し、未判定のレポートを窓の外へ落とさない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-11-03
 - **due**: 2026-11-17
 - **category**: ops / 監視
@@ -64,6 +64,12 @@
   4. `npm test` が通る
   5. 手順の検索語から絵文字を外す。2026-11-03 に実測: `subject:"📊 NAGOYA BITES 日次レポート"` は期間を外しても 0 件、`subject:"NAGOYA BITES 日次レポート"` は同じ条件で 2 件（週次も同じ）。手順のとおりに検索すると、メールがあるのに「見つからない」で終わる。`.claude/commands/seo-triage.md`・`seo-triage-weekly.md` と定期実行の指示文の 3 か所が対象 2026-11-04 は絵文字つきの同じ検索語で日次 2 件・週次 1 件が返った（同じ語でも結果が日によって変わる）
 - **files**: `scripts/check_seo_triage_weekly_health.js`, `.github/workflows/seo-triage-weekly-watchdog.yml`, `.claude/commands/seo-triage.md`, `.claude/commands/seo-triage-weekly.md`
+- **結果（2026-11-05・Builder）**:
+  1. `scripts/check_seo_triage_daily_health.js` を新規作成（`check_seo_triage_weekly_health.js` を流用）。`source="line-daily"` の最新エントリの鮮度だけを見る。デフォルト閾値は2日（日次カデンス1日＋バッファ1日）。現在の最新エントリは 2026-11-04（1日前）で健全。
+  2. `.github/workflows/seo-triage-daily-watchdog.yml` を新規作成。毎日 15:00 JST に GitHub Actions が実行し、異常なら label `seo-triage-daily-watchdog` の Issue を起票（GitHub が既定でオーナーにメール送信）。復旧すると自動クローズ（CLAUDE.md 監視の原則6）。
+  3. `docs/seo-triage-daily-recovery.md` に復旧手順を記載。絵文字なしの検索語・未処理メールの手動処理・スケジュール再登録の手順を含む。オーナーへの手動変更依頼（`.claude/commands/seo-triage.md` と週次の検索語修正）も末尾に明記。
+  4. `tests/seo_triage_daily_health.test.js`（5件）新規作成。5件すべて pass。既存の失敗テスト（test 1410）はベースライン時点から存在するプレ既存の問題で本実装とは無関係。
+  5. 絵文字検索の手動変更手順は `docs/seo-triage-daily-recovery.md` §「オーナーへのお願い」に記載。自動では `.claude/commands/` を編集できないためオーナーへ依頼。
 
 ### [MEO-001] 店のデータの正しさ・送客の数え方・検索流入の棚卸しを進める（旧 MEO 計画・改訂版）
 
