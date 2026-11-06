@@ -49,8 +49,9 @@
 
 ### [SEO-152] 日次トリアージが動かなかった日を検知して通知し、未判定のレポートを窓の外へ落とさない
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-11-03
+- **resolved**: 2026-11-06 (cbd2c7b4) PR#722
 - **due**: 2026-11-17
 - **category**: ops / 監視
 - **owner**: Builder
