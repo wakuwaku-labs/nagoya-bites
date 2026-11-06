@@ -1,0 +1,425 @@
+{
+  "date": "2026-11-06",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "久屋大通ダムSAKEフェスタ11/7・8、栄の発酵喫茶まんまる村が出店",
+      "verdict": "PASS",
+      "total": 104,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "モーニング",
+          "feature": "features/nagoya-morning.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 4件 (時期,シーン,相場,価格帯) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 150字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「喫茶」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "久屋大通で熟成日本酒の昼飲み、ダム貯蔵酒が「まろやか」になる理由（11/7・8）",
+      "verdict": "HOLD",
+      "total": 67,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 20,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 8日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (シーン) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 106字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "ダムSAKEフェスタ2026（久屋大通）の相場、酒札1枚250円と熟成酒4本5,500円",
+      "verdict": "HOLD",
+      "total": 66,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 138字 +4",
+          "title 44字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "鶴舞公園秋まつり2026は11/15まで、紅葉と縁日グルメの回り方",
+      "verdict": "HOLD",
+      "total": 36,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "鶴舞・八事",
+          "feature": "stores/area/tsurumai-yagoto/index.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 82字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「鶴舞」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "名古屋まるごと周遊キャンペーン（11月）、飲食店クーポンの使いどころ",
+      "verdict": "HOLD",
+      "total": 25,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 6,
+        "writability": 8,
+        "novelty": 3,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "Strategic Skip 該当 1件 (クーポン) → -5",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 76字 +2",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "久屋大通ダムSAKEフェスタ11/7・8、栄の発酵喫茶まんまる村が出店",
+      "lead_draft": "11月7日・8日、久屋大通公園テレビトーヒロバで「ダムSAKEフェスタ」。愛知・岐阜の13蔵がダムの監査廊で寝かせた酒を、今年は1〜3年熟成で飲み比べられる。スターターセットは前売2,500円で酒札10枚。おつまみには栄の発酵喫茶まんまる村が出る。昼飲みの予算と回り方を、熟成の仕組みと値段から読む。",
+      "angle": "前売2,500円・酒札10枚の相場と瓶の価格帯の読み方、年間約15℃の監査廊で1〜3年寝かせる熟成の時期、10:30開場の昼の混雑と一人で回るシーン、栄の発酵喫茶まんまる村（12席・ランチのみ）のぬか漬けとの合わせ方",
+      "main_store": {
+        "name": "発酵喫茶とお食事処 まんまる村",
+        "id": "J003809002",
+        "area": "栄",
+        "genre": "その他グルメ"
+      },
+      "sources": [
+        {
+          "label": "ダムSAKEフェスタ公式Instagram（開催直前の告知・出店3店）",
+          "url": "https://www.instagram.com/p/DfXN_UTHeEZ/",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "名古屋観光情報 ダムSAKEフェスタ〜熟4th stage 2026〜",
+          "url": "https://www.nagoya-info.jp/event/detail/1222/"
+        },
+        {
+          "label": "Aichi Now ダムSAKEフェスタ ~熟 4th STAGE 2026~",
+          "url": "https://aichinow.pref.aichi.jp/events/detail/4001/"
+        },
+        {
+          "label": "国土交通省 矢作ダム管理所・豊田市旭観光協会 矢作ダム貯蔵酒の蔵出し",
+          "url": "https://www.cbr.mlit.go.jp/yahagi/pdf/20260805.pdf",
+          "date": "2026-08-05"
+        },
+        {
+          "label": "発酵喫茶とお食事処 まんまる村 公式（こだわり）",
+          "url": "https://manmaru-mura.com/kodawari.html"
+        },
+        {
+          "label": "ダムSAKEフェスタ公式Instagram はざま酒造×阿木川ダム",
+          "url": "https://www.instagram.com/p/DfGbHgfkz7x/",
+          "date": "2026-10-29"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "ダムSAKEフェスタ2026（久屋大通）の相場、酒札1枚250円と熟成酒4本5,500円",
+      "lead_draft": "久屋大通公園で11月7日・8日に開かれるダムSAKEフェスタ。前売2,500円のスターターセットは酒札10枚、当日は3,000円。矢作ダムの貯蔵酒は300ml×4本で5,500円。試飲1杯の値段と瓶で買う値段を並べ、前売と当日のどちらで行くか、何杯で元が取れるかを数字で読む。",
+      "angle": "価格の読み方（前売と当日の差500円・酒札1枚あたり・瓶の一合単価）と、13蔵36種を2日で回る混雑の時間帯",
+      "main_store": {
+        "name": "発酵喫茶とお食事処 まんまる村",
+        "id": "J003809002",
+        "area": "栄",
+        "genre": "その他グルメ"
+      },
+      "sources": [
+        {
+          "label": "ダムSAKEフェスタ公式Instagram",
+          "url": "https://www.instagram.com/p/DfXN_UTHeEZ/",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "名古屋観光情報",
+          "url": "https://www.nagoya-info.jp/event/detail/1222/"
+        },
+        {
+          "label": "矢作ダム管理所 発表",
+          "url": "https://www.cbr.mlit.go.jp/yahagi/pdf/20260805.pdf",
+          "date": "2026-08-05"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "鶴舞公園秋まつり2026は11/15まで、紅葉と縁日グルメの回り方",
+      "lead_draft": "鶴舞公園秋まつり2026は10月10日から11月15日まで。グルメの屋台と縁日が出る。紅葉の見頃と重なる最後の1週間に、どの時間帯に行けば混雑を避けられるかを読む。",
+      "angle": "紅葉シーズンの屋台の混雑時間帯とデート向きの回り方",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "鶴舞",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "名古屋観光情報 鶴舞公園秋まつり2026",
+          "url": "https://www.nagoya-info.jp/event/detail/1415/"
+        },
+        {
+          "label": "名古屋観光情報 11月7日のイベント",
+          "url": "https://www.nagoya-info.jp/event/today/2026-11-07/"
+        },
+        {
+          "label": "いこーよ 東海のイベント",
+          "url": "https://report.iko-yo.net/trend/events?region=4&tag=161"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "名古屋まるごと周遊キャンペーン（11月）、飲食店クーポンの使いどころ",
+      "lead_draft": "11月1日から30日まで、名古屋市内の飲食店・店舗で使える周遊キャンペーン。SNS投稿と組み合わせたクーポンの仕組みと、昼と夜でどう使い分けるかを読む。",
+      "angle": "クーポンの価格の読み方と一人飲み・ランチでの使い分け",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "名古屋観光情報 名古屋まるごと周遊キャンペーン",
+          "url": "https://www.nagoya-info.jp/event/detail/1404/"
+        },
+        {
+          "label": "名古屋観光情報 11月7日のイベント",
+          "url": "https://www.nagoya-info.jp/event/today/2026-11-07/"
+        },
+        {
+          "label": "いこーよ 東海のイベント",
+          "url": "https://report.iko-yo.net/trend/events?region=4&tag=161"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "久屋大通で熟成日本酒の昼飲み、ダム貯蔵酒が「まろやか」になる理由（11/7・8）",
+      "lead_draft": "地上から約30m下、年間約15℃の監査廊で1年寝かせる矢作ダムの貯蔵酒。愛知・岐阜13蔵の熟成酒が11月7日・8日に久屋大通へ集まる。温度が動かない場所で寝かせると何が変わるのか、1年と3年の飲み比べで確かめる。",
+      "angle": "ダム監査廊（約15℃・暗所）で熟成させる仕組みと、1年・2年・3年熟成の飲み比べ方、昼飲みのシーン",
+      "main_store": {
+        "name": "発酵喫茶とお食事処 まんまる村",
+        "id": "J003809002",
+        "area": "栄",
+        "genre": "その他グルメ"
+      },
+      "sources": [
+        {
+          "label": "矢作ダム管理所 発表",
+          "url": "https://www.cbr.mlit.go.jp/yahagi/pdf/20260805.pdf",
+          "date": "2026-08-05"
+        },
+        {
+          "label": "ダムSAKEフェスタ公式Instagram はざま酒造×阿木川ダム",
+          "url": "https://www.instagram.com/p/DfGbHgfkz7x/",
+          "date": "2026-10-29"
+        },
+        {
+          "label": "Aichi Now",
+          "url": "https://aichinow.pref.aichi.jp/events/detail/4001/"
+        },
+        {
+          "label": "名古屋観光情報",
+          "url": "https://www.nagoya-info.jp/event/detail/1222/"
+        }
+      ]
+    }
+  ]
+}
