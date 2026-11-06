@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-06T19:13:44.010Z",
+  "generatedAt": "2026-11-06T22:44:57.743Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -8,11 +8,11 @@
   },
   "totals": {
     "exits": {
-      "hotpepper": 132,
-      "tabelog": 18,
-      "tel": 7,
+      "hotpepper": 133,
+      "tabelog": 19,
+      "tel": 8,
       "other": 0,
-      "total": 157
+      "total": 160
     },
     "reports": {
       "yes": 0,
@@ -24,11 +24,11 @@
     "start": "2026-11-01",
     "totals": {
       "exits": {
-        "hotpepper": 38,
-        "tabelog": 2,
-        "tel": 3,
+        "hotpepper": 39,
+        "tabelog": 3,
+        "tel": 4,
         "other": 0,
-        "total": 43
+        "total": 46
       },
       "reports": {
         "yes": 0,
@@ -146,6 +146,24 @@
       }
     },
     {
+      "store_name": "串カツとおばんざい 本町通カケル 栄店",
+      "exits": {
+        "hotpepper": 0,
+        "tabelog": 0,
+        "tel": 4,
+        "other": 0,
+        "total": 4
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 4,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "サラマンジェドゥカジノ",
       "exits": {
         "hotpepper": 2,
@@ -232,24 +250,6 @@
       },
       "thisMonth": {
         "exits": 0,
-        "reportsYes": 0
-      }
-    },
-    {
-      "store_name": "串カツとおばんざい 本町通カケル 栄店",
-      "exits": {
-        "hotpepper": 0,
-        "tabelog": 0,
-        "tel": 3,
-        "other": 0,
-        "total": 3
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 3,
         "reportsYes": 0
       }
     },
@@ -1532,6 +1532,24 @@
       }
     },
     {
+      "store_name": "鳥勢",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "鉄神 TESSIN 名古屋駅本店",
       "exits": {
         "hotpepper": 1,
@@ -1838,6 +1856,24 @@
       }
     },
     {
+      "store_name": "珈琲 ぶりこ",
+      "exits": {
+        "hotpepper": 0,
+        "tabelog": 1,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "餃子のかっちゃん 栄錦店",
       "exits": {
         "hotpepper": 1,
@@ -1935,13 +1971,13 @@
     "geoSearch": "現在地: トップの「現在地」ボタンを押した回数と結果（granted・denied・unsupported・error）。位置・エリア名は送っていない"
   },
   "actions": {
-    "reserve": 150,
+    "reserve": 152,
     "reserveBySite": {
-      "hotpepper": 132,
-      "tabelog": 18,
+      "hotpepper": 133,
+      "tabelog": 19,
       "other": 0
     },
-    "tel": 7,
+    "tel": 8,
     "map": 93
   },
   "map": {
@@ -2004,9 +2040,9 @@
     }
   },
   "callLookup": {
-    "total": 7,
+    "total": 8,
     "byResult": {
-      "ok": 5,
+      "ok": 6,
       "(not set)": 2
     }
   },

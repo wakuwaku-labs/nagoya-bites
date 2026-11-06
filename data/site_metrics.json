@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-11-06T19:13:52.420Z",
+  "generatedAt": "2026-11-06T22:45:07.318Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2903,
-    "pageViews": 4132,
-    "sessions": 3217,
+    "activeUsers": 2917,
+    "pageViews": 4176,
+    "sessions": 3240,
     "avgSessionDuration": 111.7,
-    "bounceRate": 0.312,
-    "pagesPerSession": 1.28
+    "bounceRate": 0.313,
+    "pagesPerSession": 1.29
   },
   "dailyReference": {
     "date": "2026-11-05",
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2456,
-      "direct": 523,
+      "organic": 2470,
+      "direct": 539,
       "social": 47,
-      "ai_assistant": 208,
+      "ai_assistant": 210,
       "referral": 31,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 75.2,
-      "direct": 16,
+      "organic": 74.9,
+      "direct": 16.3,
       "social": 1.4,
       "ai_assistant": 6.4,
       "referral": 0.9,
@@ -39,37 +39,37 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1107
+      "sessions": 1109
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 849
+      "sessions": 853
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 474
+      "sessions": 482
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 463
+      "sessions": 465
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 133
+      "sessions": 134
     },
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 66
+      "sessions": 67
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 28
+      "sessions": 42
     },
     {
       "source": "x",
@@ -180,12 +180,12 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 443,
-      "sessions": 423
+      "pageViews": 444,
+      "sessions": 424
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 219,
+      "pageViews": 220,
       "sessions": 207
     },
     {
@@ -205,7 +205,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 339,
+    "outboundClicks": 341,
     "ctaClickRate": 10.5,
     "byDomain": [
       {
@@ -214,7 +214,7 @@
       },
       {
         "domain": "www.google.com",
-        "clicks": 71
+        "clicks": 72
       },
       {
         "domain": "prtimes.jp",
@@ -222,7 +222,7 @@
       },
       {
         "domain": "tabelog.com",
-        "clicks": 41
+        "clicks": 42
       },
       {
         "domain": "maps.google.com",
@@ -256,15 +256,15 @@
     "note": null,
     "byChannel": {
       "organic": 238,
-      "direct": 52,
+      "direct": 53,
       "social": 10,
-      "ai_assistant": 38,
+      "ai_assistant": 39,
       "referral": 1,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.7,
-    "ctaClickRate_direct": 9.9,
+    "ctaClickRate_organic": 9.6,
+    "ctaClickRate_direct": 9.8,
     "ctaClickRate_social": 21.3,
     "byPage": [
       {
@@ -700,6 +700,11 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J000108015.html",
+        "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J000389213.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -870,6 +875,11 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J001262917.html",
+        "domain": "www.google.com",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J001266833.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -877,16 +887,6 @@
       {
         "path": "/stores/J001277921.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001283397.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001286615.html",
-        "domain": "tabelog.com",
         "clicks": 1
       }
     ],
@@ -1016,6 +1016,10 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J000108015.html",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J000389213.html",
         "clicks": 1
       },
@@ -1098,43 +1102,35 @@
       {
         "path": "/stores/J001277921.html",
         "clicks": 1
-      },
-      {
-        "path": "/stores/J001283397.html",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001286615.html",
-        "clicks": 1
       }
     ],
-    "reservationClicks": 118,
+    "reservationClicks": 117,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
-      "ctaEvents": 46,
-      "reservationOutbound": 50,
-      "naiveSum": 96,
-      "deduped": 53,
-      "overlap": 43,
+      "ctaEvents": 48,
+      "reservationOutbound": 51,
+      "naiveSum": 99,
+      "deduped": 54,
+      "overlap": 45,
       "bySite": [
         {
           "site": "hotpepper.jp",
-          "cta": 44,
+          "cta": 45,
           "outbound": 42,
           "deduped": 45
         },
         {
           "site": "tabelog.com",
-          "cta": 2,
-          "outbound": 8,
-          "deduped": 8
+          "cta": 3,
+          "outbound": 9,
+          "deduped": 9
         }
       ]
     }
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2903,
+    "value": 2917,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
