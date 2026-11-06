@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T23:18:08.645Z",
+  "generatedAt": "2026-11-06T00:18:29.036Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -16,12 +16,12 @@
       },
       {
         "query": "一人飲み 名古屋",
-        "impressions": 70,
+        "impressions": 68,
         "clicks": 4,
         "position": 4.4,
-        "ctr": 5.71,
+        "ctr": 5.88,
         "expectedCtr": 7.2,
-        "missedClicks": 1
+        "missedClicks": 0.9
       }
     ],
     "ctrFixGeoless": [
@@ -45,21 +45,21 @@
       },
       {
         "query": "キミトテ",
-        "impressions": 337,
-        "clicks": 5,
+        "impressions": 313,
+        "clicks": 4,
         "position": 9.7,
-        "ctr": 1.48,
+        "ctr": 1.28,
         "expectedCtr": 2.6,
-        "missedClicks": 3.7
+        "missedClicks": 4.1
       },
       {
         "query": "一人飲み",
-        "impressions": 82,
+        "impressions": 80,
         "clicks": 4,
-        "position": 4.1,
-        "ctr": 4.88,
-        "expectedCtr": 7.8,
-        "missedClicks": 2.4
+        "position": 4.2,
+        "ctr": 5,
+        "expectedCtr": 7.6,
+        "missedClicks": 2.1
       }
     ],
     "rankPush": []
@@ -68,12 +68,12 @@
     "ctrFix": [
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 1241,
+        "impressions": 1207,
         "clicks": 20,
         "position": 6.9,
-        "ctr": 1.61,
+        "ctr": 1.66,
         "expectedCtr": 4.1,
-        "missedClicks": 30.9
+        "missedClicks": 29.5
       },
       {
         "page": "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
@@ -95,23 +95,23 @@
       },
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 827,
+        "impressions": 809,
         "clicks": 10,
         "position": 9.2,
-        "ctr": 1.21,
+        "ctr": 1.24,
         "expectedCtr": 2.7,
-        "missedClicks": 12.7
+        "missedClicks": 12.1
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 1149,
-        "clicks": 17,
-        "position": 18.4,
-        "ctr": 1.48,
-        "upsideClicks": 15.2
+        "impressions": 1074,
+        "clicks": 14,
+        "position": 18.2,
+        "ctr": 1.3,
+        "upsideClicks": 16.1
       }
     ]
   },
