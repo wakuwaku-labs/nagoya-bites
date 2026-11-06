@@ -1840,7 +1840,7 @@
     "storeName": "wakamaru ワカマル 栄店",
     "kind": "tabelog",
     "area": "栄",
-    "checkedAt": "2026-10-25T06:58:14.416Z"
+    "checkedAt": "2026-11-06T19:22:32.319Z"
   },
   "7ea4b7c6afd9d6699692f6a1295e2023": {
     "ok": true,
@@ -1862,7 +1862,7 @@
     "storeName": "台所 宗や 金山",
     "kind": "tabelog",
     "area": "金山",
-    "checkedAt": "2026-10-25T06:58:20.394Z"
+    "checkedAt": "2026-11-06T19:22:37.679Z"
   },
   "48e7c1403e5077dfccaf078c15bc8733": {
     "ok": true,
@@ -126885,5 +126885,49 @@
     "kind": "hotpepper",
     "area": "大曽根･千種･今池･池下･守山区",
     "checkedAt": "2026-11-05T19:31:24.879Z"
+  },
+  "8a68e82f2eacb777e641bf945a22e1bf": {
+    "ok": false,
+    "reason": "fetch-error",
+    "error": "HTTP 403",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23000000/",
+    "storeName": "水炊き 吟醸もつ鍋 由乃",
+    "kind": "tabelog",
+    "area": "名古屋市中区栄",
+    "checkedAt": "2026-11-06T19:22:18.384Z"
+  },
+  "4619fc0e2c87f1bf8032b50fd7e45261": {
+    "ok": false,
+    "reason": "fetch-error",
+    "error": "HTTP 403",
+    "url": "https://tabelog.com/aichi/A2301/A230105/23000001/",
+    "storeName": "LA VAGABONDE",
+    "kind": "tabelog",
+    "area": "名古屋市中区千代田",
+    "checkedAt": "2026-11-06T19:22:23.270Z"
+  },
+  "51908de558fbc1b89d9d695b7e952b7f": {
+    "ok": false,
+    "reason": "fetch-error",
+    "error": "HTTP 403",
+    "url": "https://tabelog.com/aichi/A2301/A230109/23093040/",
+    "storeName": "大衆ホルモン酒場 たいぞう",
+    "kind": "tabelog",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-06T19:22:28.207Z"
+  },
+  "7a6b60eb463980617a793b4ad4f6a2d1": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "大衆ホルモン酒場 たいぞう",
+    "shopState": null,
+    "closed": false,
+    "storeName": "大衆ホルモン酒場 たいぞう",
+    "title": "大衆ホルモン酒場 たいぞう(名古屋市西区/居酒屋)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004421127/",
+    "kind": "hotpepper",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-06T19:22:43.691Z"
   }
 }

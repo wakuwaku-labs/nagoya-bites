@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-06T00:13:44.270Z",
+  "generatedAt": "2026-11-06T19:13:44.010Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -8,27 +8,27 @@
   },
   "totals": {
     "exits": {
-      "hotpepper": 134,
+      "hotpepper": 132,
       "tabelog": 18,
-      "tel": 4,
+      "tel": 7,
       "other": 0,
-      "total": 156
+      "total": 157
     },
     "reports": {
       "yes": 0,
       "no": 2
     }
   },
-  "unattributedExits": 1,
+  "unattributedExits": 0,
   "month": {
     "start": "2026-11-01",
     "totals": {
       "exits": {
         "hotpepper": 38,
         "tabelog": 2,
-        "tel": 0,
+        "tel": 3,
         "other": 0,
-        "total": 40
+        "total": 43
       },
       "reports": {
         "yes": 0,
@@ -232,6 +232,24 @@
       },
       "thisMonth": {
         "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "串カツとおばんざい 本町通カケル 栄店",
+      "exits": {
+        "hotpepper": 0,
+        "tabelog": 0,
+        "tel": 3,
+        "other": 0,
+        "total": 3
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 3,
         "reportsYes": 0
       }
     },
@@ -507,24 +525,6 @@
     },
     {
       "store_name": "BASARA 名古屋店",
-      "exits": {
-        "hotpepper": 1,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 1
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 0,
-        "reportsYes": 0
-      }
-    },
-    {
-      "store_name": "BRIANZA NAGOYA ブリアンツァナゴヤ",
       "exits": {
         "hotpepper": 1,
         "tabelog": 0,
@@ -1935,19 +1935,19 @@
     "geoSearch": "現在地: トップの「現在地」ボタンを押した回数と結果（granted・denied・unsupported・error）。位置・エリア名は送っていない"
   },
   "actions": {
-    "reserve": 152,
+    "reserve": 150,
     "reserveBySite": {
-      "hotpepper": 134,
+      "hotpepper": 132,
       "tabelog": 18,
       "other": 0
     },
-    "tel": 4,
-    "map": 92
+    "tel": 7,
+    "map": 93
   },
   "map": {
-    "total": 92,
+    "total": 93,
     "unattributed": 6,
-    "stores": 41,
+    "stores": 42,
     "top": [
       {
         "store_name": "うな祥",
@@ -1991,7 +1991,7 @@
       }
     ],
     "byLocation": {
-      "store_page": 38,
+      "store_page": 39,
       "(not set)": 25,
       "journal_store_card": 18,
       "store_page_bar": 8,
@@ -2000,14 +2000,14 @@
     "byLinkKind": {
       "(not set)": 32,
       "search": 31,
-      "place_id": 29
+      "place_id": 30
     }
   },
   "callLookup": {
-    "total": 4,
+    "total": 7,
     "byResult": {
-      "(not set)": 2,
-      "ok": 2
+      "ok": 5,
+      "(not set)": 2
     }
   },
   "geoSearch": {

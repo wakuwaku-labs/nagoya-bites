@@ -1,70 +1,75 @@
 {
-  "generatedAt": "2026-11-06T00:13:54.865Z",
+  "generatedAt": "2026-11-06T19:13:52.420Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2830,
-    "pageViews": 4027,
-    "sessions": 3118,
-    "avgSessionDuration": 111,
-    "bounceRate": 0.295,
-    "pagesPerSession": 1.29
+    "activeUsers": 2903,
+    "pageViews": 4132,
+    "sessions": 3217,
+    "avgSessionDuration": 111.7,
+    "bounceRate": 0.312,
+    "pagesPerSession": 1.28
   },
   "dailyReference": {
-    "date": "2026-11-04",
-    "sessions": 124,
-    "bounceRate": 0.315,
-    "pageViews": 164
+    "date": "2026-11-05",
+    "sessions": 126,
+    "bounceRate": 0.357,
+    "pageViews": 177
   },
   "channels": {
     "sessions": {
-      "organic": 2419,
-      "direct": 464,
+      "organic": 2456,
+      "direct": 523,
       "social": 47,
       "ai_assistant": 208,
-      "referral": 29,
+      "referral": 31,
       "paid": 0,
-      "other": 2
+      "other": 0
     },
     "pct": {
-      "organic": 76.3,
-      "direct": 14.6,
-      "social": 1.5,
-      "ai_assistant": 6.6,
+      "organic": 75.2,
+      "direct": 16,
+      "social": 1.4,
+      "ai_assistant": 6.4,
       "referral": 0.9,
       "paid": 0,
-      "other": 0.1
+      "other": 0
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1106
+      "sessions": 1107
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 823
+      "sessions": 849
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 463
+      "sessions": 474
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 419
+      "sessions": 463
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 134
+      "sessions": 133
     },
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 65
+      "sessions": 66
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 28
     },
     {
       "source": "x",
@@ -74,7 +79,7 @@
     {
       "source": "duckduckgo",
       "medium": "organic",
-      "sessions": 21
+      "sessions": 20
     },
     {
       "source": "note",
@@ -87,22 +92,17 @@
       "sessions": 17
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 11
-    },
-    {
-      "source": "unknown",
-      "medium": "(not set)",
-      "sessions": 11
-    },
-    {
       "source": "trend_today",
       "medium": "(not set)",
       "sessions": 11
     },
     {
       "source": "history",
+      "medium": "(not set)",
+      "sessions": 8
+    },
+    {
+      "source": "unknown",
       "medium": "(not set)",
       "sessions": 7
     },
@@ -122,22 +122,22 @@
       "sessions": 5
     },
     {
+      "source": "grid",
+      "medium": "(not set)",
+      "sessions": 4
+    },
+    {
+      "source": "teams.public.onecdn.static.microsoft",
+      "medium": "referral",
+      "sessions": 3
+    },
+    {
       "source": "copilot.com",
       "medium": "ai-assistant",
       "sessions": 3
     },
     {
-      "source": "grid",
-      "medium": "(not set)",
-      "sessions": 3
-    },
-    {
       "source": "facebook.com",
-      "medium": "referral",
-      "sessions": 2
-    },
-    {
-      "source": "teams.public.onecdn.static.microsoft",
       "medium": "referral",
       "sessions": 2
     },
@@ -152,13 +152,13 @@
       "sessions": 2
     },
     {
-      "source": "copilot.com",
-      "medium": "(not set)",
+      "source": "aocr.org",
+      "medium": "referral",
       "sessions": 1
     },
     {
-      "source": "history",
-      "medium": "",
+      "source": "copilot.com",
+      "medium": "(not set)",
       "sessions": 1
     },
     {
@@ -175,47 +175,42 @@
       "source": "search.portal.auone.jp",
       "medium": "referral",
       "sessions": 1
-    },
-    {
-      "source": "grid",
-      "medium": "",
-      "sessions": 1
     }
   ],
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 444,
+      "pageViews": 443,
       "sessions": 423
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 216,
-      "sessions": 204
+      "pageViews": 219,
+      "sessions": 207
     },
     {
       "path": "/",
-      "pageViews": 110,
-      "sessions": 100
+      "pageViews": 108,
+      "sessions": 98
     },
     {
       "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
-      "pageViews": 94,
-      "sessions": 92
+      "pageViews": 96,
+      "sessions": 93
     },
     {
       "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
-      "pageViews": 84,
-      "sessions": 82
+      "pageViews": 86,
+      "sessions": 83
     }
   ],
   "cta": {
     "outboundClicks": 339,
-    "ctaClickRate": 10.9,
+    "ctaClickRate": 10.5,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 125
+        "clicks": 123
       },
       {
         "domain": "www.google.com",
@@ -223,7 +218,7 @@
       },
       {
         "domain": "prtimes.jp",
-        "clicks": 46
+        "clicks": 48
       },
       {
         "domain": "tabelog.com",
@@ -261,20 +256,20 @@
     "note": null,
     "byChannel": {
       "organic": 238,
-      "direct": 51,
+      "direct": 52,
       "social": 10,
-      "ai_assistant": 39,
+      "ai_assistant": 38,
       "referral": 1,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.8,
-    "ctaClickRate_direct": 11,
+    "ctaClickRate_organic": 9.7,
+    "ctaClickRate_direct": 9.9,
     "ctaClickRate_social": 21.3,
     "byPage": [
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-        "clicks": 55
+        "clicks": 57
       },
       {
         "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
@@ -397,7 +392,7 @@
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
         "domain": "prtimes.jp",
-        "clicks": 43
+        "clicks": 45
       },
       {
         "path": "/stores/J004090251.html",
@@ -600,11 +595,6 @@
         "clicks": 1
       },
       {
-        "path": "/features/nagoya-sweets.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
         "path": "/features/nagoya-tebasaki.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -636,11 +626,6 @@
       },
       {
         "path": "/journal/2026-10-01-sakae-yabamisen-matsuzakaya-solo.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-10-04-sakae-brianza-nagoya-haera-lunch.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
       },
@@ -716,6 +701,11 @@
       },
       {
         "path": "/stores/J000389213.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J000402235.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
       },
@@ -893,6 +883,11 @@
         "path": "/stores/J001283397.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
+      },
+      {
+        "path": "/stores/J001286615.html",
+        "domain": "tabelog.com",
+        "clicks": 1
       }
     ],
     "reservationClicksByPage": [
@@ -985,19 +980,11 @@
         "clicks": 1
       },
       {
-        "path": "/features/nagoya-sweets.html",
-        "clicks": 1
-      },
-      {
         "path": "/features/nagoya-tebasaki.html",
         "clicks": 1
       },
       {
         "path": "/journal/2026-10-01-sakae-yabamisen-matsuzakaya-solo.html",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-10-04-sakae-brianza-nagoya-haera-lunch.html",
         "clicks": 1
       },
       {
@@ -1030,6 +1017,10 @@
       },
       {
         "path": "/stores/J000389213.html",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J000402235.html",
         "clicks": 1
       },
       {
@@ -1111,35 +1102,39 @@
       {
         "path": "/stores/J001283397.html",
         "clicks": 1
+      },
+      {
+        "path": "/stores/J001286615.html",
+        "clicks": 1
       }
     ],
     "reservationClicks": 118,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
-      "ctaEvents": 56,
-      "reservationOutbound": 59,
-      "naiveSum": 115,
-      "deduped": 63,
-      "overlap": 52,
+      "ctaEvents": 46,
+      "reservationOutbound": 50,
+      "naiveSum": 96,
+      "deduped": 53,
+      "overlap": 43,
       "bySite": [
         {
           "site": "hotpepper.jp",
-          "cta": 53,
-          "outbound": 49,
-          "deduped": 53
+          "cta": 44,
+          "outbound": 42,
+          "deduped": 45
         },
         {
           "site": "tabelog.com",
-          "cta": 3,
-          "outbound": 10,
-          "deduped": 10
+          "cta": 2,
+          "outbound": 8,
+          "deduped": 8
         }
       ]
     }
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2830,
+    "value": 2903,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
