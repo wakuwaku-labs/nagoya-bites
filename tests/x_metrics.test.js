@@ -247,3 +247,45 @@ test('見張り: 36時間超・error が1日続く・正常・ファイル無し
   assert.ok(H.check(mk('2026-10-26T06:00:00Z', 'error'), n).ok);
   assert.ok(!H.check(tmpRoot(), n).ok);
 });
+
+// ── 一回限りの試し（--probe-nonpublic）──────────────────────────────────
+function probeFetch(status, body) {
+  const calls = [];
+  const f = async (url, opts) => { calls.push({ url, auth: opts.headers.authorization }); return { status, text: async () => JSON.stringify(body) }; };
+  f.calls = calls;
+  return f;
+}
+
+test('probe: 自分の最新の投稿 1 件に 1 回だけ頼み、項目名と値の有無を残す（本文・鍵は残さない・通常の取得はしない）', async () => {
+  const root = tmpRoot(null, LEDGER); const lines = [];
+  const f = probeFetch(200, { data: [{ id: '2', text: 'ひみつの本文', edit_history_tweet_ids: ['2'], public_metrics: pm(5), non_public_metrics: { impression_count: 9, url_link_clicks: 1, user_profile_clicks: null }, attachments: { media_keys: ['m1'] } }],
+    includes: { media: [{ media_key: 'm1', public_metrics: { view_count: 4 }, non_public_metrics: { playback_50_count: 2 } }] } });
+  const r = await M.probeNonpublic({ root, env: ENV, fetchImpl: f, now: NOW, log: (l) => lines.push(l) });
+  assert.strictEqual(f.calls.length, 1);
+  assert.ok(f.calls[0].url.includes('/2/tweets?') && f.calls[0].url.includes('ids=2') && !f.calls[0].url.includes('users/me'));
+  assert.ok(decodeURIComponent(f.calls[0].url).includes('non_public_metrics,organic_metrics,public_metrics'));
+  assert.ok(decodeURIComponent(f.calls[0].url).includes('attachments.media_keys'));
+  assert.strictEqual(r.result, 'ok');
+  assert.deepStrictEqual(r.non_public_metrics, { impression_count: 9, url_link_clicks: 1, user_profile_clicks: null });
+  assert.deepStrictEqual(r.media_non_public_metrics, [{ playback_50_count: 2 }]);
+  const out = readOut(root);
+  assert.strictEqual(out.budget.spent_usd, 0.005);
+  assert.strictEqual(out.snapshots.length, 0);
+  const all = JSON.stringify(out) + lines.join('\n');
+  assert.ok(!all.includes('ひみつの本文'));
+  assert.ok(!/oauth_signature|OAuth /i.test(all));
+});
+
+test('probe: 403 は取得不可として HTTP 状態を残し落ちない／上限・鍵なし・対象なしは呼ばない', async () => {
+  const root = tmpRoot(null, LEDGER);
+  const r = await M.probeNonpublic({ root, env: ENV, fetchImpl: probeFetch(403, { title: 'Forbidden', detail: 'x' }), now: NOW, log: quiet });
+  assert.strictEqual(r.result, 'unavailable');
+  assert.strictEqual(r.http_status, 403);
+  assert.ok(/403/.test(r.reason));
+  const f = probeFetch(200, {});
+  const over = tmpRoot({ version: 1, snapshots: [], budget: { month: '2026-10', spent_usd: 0.999 } }, LEDGER);
+  assert.strictEqual((await M.probeNonpublic({ root: over, env: ENV, fetchImpl: f, now: NOW, log: quiet })).result, 'budget');
+  assert.strictEqual((await M.probeNonpublic({ root: tmpRoot(null, LEDGER), env: {}, fetchImpl: f, now: NOW, log: quiet })).result, 'error');
+  assert.strictEqual((await M.probeNonpublic({ root: tmpRoot(null, []), env: ENV, fetchImpl: f, now: NOW, log: quiet })).result, 'no_target');
+  assert.strictEqual(f.calls.length, 0);
+});

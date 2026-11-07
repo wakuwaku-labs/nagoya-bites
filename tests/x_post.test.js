@@ -286,10 +286,21 @@ function withExperiment(root, cfg) {
   fs.writeFileSync(f, JSON.stringify(pol));
 }
 
-test('実験: 本物の設定は既定オフ。オフ・設定なし・期間外では出力が完全に同じ（URL 必須のまま）', async () => {
+test('実験: 本物の設定は 2026-11-08〜11-21 だけ有効（期間の外は自動でオフ）。2 日分の割り当てに URL あり・なしの両方が出る', () => {
   const real = JSON.parse(fs.readFileSync(path.join(REAL_ROOT, 'data/x_post_policy.json'), 'utf8'));
-  assert.strictEqual(real.urlExperiment.enabled, false);
-  assert.strictEqual(X.urlVariantFor('2026-11-08', real), null);
+  assert.strictEqual(real.urlExperiment.enabled, true);
+  assert.strictEqual(real.urlExperiment.since, '2026-11-08');
+  assert.strictEqual(real.urlExperiment.until, '2026-11-21');
+  assert.strictEqual(X.urlVariantFor('2026-11-07', real), null);
+  assert.strictEqual(X.urlVariantFor('2026-11-22', real), null);
+  assert.strictEqual(X.urlVariantFor('2026-12-31', real), null);
+  const all = [];
+  for (let d = 8; d <= 21; d++) all.push(X.urlVariantFor(`2026-11-${String(d).padStart(2, '0')}`, real).url_variant);
+  assert.ok(all.includes('url') && all.includes('no_url'), all.join());
+  console.log('割り当て:', all.map((v, i) => `11-${8 + i}=${v}`).join(' '));
+});
+
+test('実験: オフ・設定なし・期間外では出力が完全に同じ（URL 必須のまま）', async () => {
   const outs = [];
   for (const cfg of [undefined, { enabled: false, id: 'e', noUrlShare: 1 }, { enabled: true, id: 'e', noUrlShare: 1, since: '2027-01-01' }]) {
     const root = fixture({ mode: 'dry-run' });
@@ -354,4 +365,27 @@ test('実験オン: no_url の日は本文からリンクを外して投稿し�
   const f3 = fakeFetch(); f3.root = root;
   assert.strictEqual((await run({}, { root, env: ENV, fetchImpl: f3, now: NOW })).result, 'already_posted');
   assert.strictEqual(f3.calls.length, 0);
+});
+
+test('実験の dry-run（本物の期間設定）: 11-08 は URL なし・11-10 は URL あり。X には送らず台帳も書かない', async () => {
+  const real = JSON.parse(fs.readFileSync(path.join(REAL_ROOT, 'data/x_post_policy.json'), 'utf8'));
+  const root = fixture({ mode: 'dry-run' });
+  withExperiment(root, real.urlExperiment);
+  const mk = (date) => ({ ...entry, slug: `${date}-nakagawa-test`, date });
+  const es = [mk('2026-11-08'), mk('2026-11-10')];
+  fs.writeFileSync(path.join(root, 'data/journal_published.json'), JSON.stringify({ entries: es }));
+  for (const e of es) fs.copyFileSync(path.join(root, `journal/${entry.slug}.html`), path.join(root, `journal/${e.slug}.html`));
+  const got = {};
+  for (const e of es) {
+    const f = fakeFetch(); f.root = root;
+    // 記事ページの確認は偽物が entry.slug のファイルを返す
+    const r = await run({ date: e.date }, { root, env: ENV, fetchImpl: f, now: new Date(`${e.date}T03:00:00Z`) });
+    assert.strictEqual(r.result, 'dry_run_ok', JSON.stringify(r));
+    assert.ok(!f.calls.some((c) => c.url.startsWith('https://api.x.com')));
+    got[e.date] = [r.experiment.url_variant, /https?:/.test(r.text)];
+  }
+  console.log('dry-run:', JSON.stringify(got));
+  assert.deepStrictEqual(got['2026-11-08'], ['no_url', false]);
+  assert.deepStrictEqual(got['2026-11-10'], ['url', true]);
+  assert.ok(!fs.existsSync(path.join(root, 'data/x_post_log.json')));
 });

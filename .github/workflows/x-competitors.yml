@@ -1,0 +1,69 @@
+name: NAGOYA BITES — X の競合の数字の取得
+
+# 毎週月曜 07:00 JST に、競合の X アカウント（data/x_competitors_config.json）の投稿の数字と特徴を
+# data/x_competitors.json に積む（本文・画像・URL は保存しない。90 日超は消す）。
+#   費用: 月の上限 $1（150円）。scripts/fetch_x_competitors.js の関所が守る（X の数字取得の上限とは別）。
+#   日曜 22:00 UTC = 月曜 07:00 JST。
+
+on:
+  schedule:
+    - cron: '0 22 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: x-competitors
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 競合の数字を取得
+        id: fetch
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+        run: |
+          set +e
+          node scripts/fetch_x_competitors.js
+          echo "exit=$?" >> "$GITHUB_OUTPUT"
+          set -e
+
+      - name: 結果をコミット
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/x_competitors.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "変更なし"
+            exit 0
+          fi
+          git commit -m "chore: X の競合の数字を更新 [skip actions]"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            echo "push 失敗（試行 ${i}/5）。$((i * 5))秒待って再試行します"
+            sleep $((i * 5))
+          done
+          echo "::error::data/x_competitors.json を push できませんでした"
+          exit 1
+
+      - name: 取得に失敗したときはジョブを失敗にする
+        if: steps.fetch.outputs.exit != '0'
+        run: |
+          echo "::error::競合の数字を取得できませんでした。理由は data/x_competitors.json の last_run を見てください"
+          exit 1

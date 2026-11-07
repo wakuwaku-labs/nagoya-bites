@@ -1,0 +1,41 @@
+{
+  "_comment": "X の競合アカウント（名古屋のグルメ・飲食を日本語で発信している人）の一覧。scripts/fetch_x_competitors.js が毎週月曜に読む。入れ替えるときは accounts の handle（@ なし）を書き換えるだけ。選び方の目安: 名古屋の飲食が中心／日本語／投稿が続いている。X API は選ぶときに使っていない（Web 検索のみ）",
+  "version": 1,
+  "capUsd": 1,
+  "maxResults": 10,
+  "retentionDays": 90,
+  "capHelp": "月の上限 $1（既存の X の数字取得の上限 CAP_USD とは別に数える。使用額は data/x_competitors.json の cost）。maxResults は1アカウントあたり1回に取る投稿の上限（X の下限 5・上限 100）。retentionDays を過ぎた投稿は消す。保存するのは数字と特徴だけで、本文・画像・URL は保存しない",
+  "selectedAt": "2026-11-07",
+  "accounts": [
+    {
+      "handle": "gourmet_nagoya",
+      "name": "名古屋グルメ探偵 アスカイ",
+      "reason": "名古屋のおすすめグルメ・新店情報が中心。フォロワー約15万と名古屋グルメ系で最大級（2026-11-07 時点の Web 検索の表示値）",
+      "followers_at_selection": 150600
+    },
+    {
+      "handle": "nagoya_foods",
+      "name": "名古屋グルメYouTuber【ナゴグル】",
+      "reason": "名古屋を中心に東海の飲食店を訪問して動画で発信。フォロワー約5.5万。動画つき投稿の反応を見る比較対象（Web 検索の表示値）",
+      "followers_at_selection": 55800
+    },
+    {
+      "handle": "gourmetemperor",
+      "name": "名古屋グルメ帝王【バズらせ屋】仕掛け人",
+      "reason": "愛知県を中心に毎日グルメ活動をするとプロフィールに記載。フォロワー約3.5万で、伸ばし方（バズり方）の特徴を見られる（Web 検索の表示値。投稿頻度はプロフィールの記載による）",
+      "followers_at_selection": 35400
+    },
+    {
+      "handle": "nagoya1016",
+      "name": "美食ぐるめin名古屋",
+      "reason": "愛知・名古屋の食べ歩きが中心の個人アカウント。フォロワー約3.3万で、NAGOYA BITES に近い規模帯の目安になる（Web 検索の表示値）",
+      "followers_at_selection": 32600
+    },
+    {
+      "handle": "nagoyafood",
+      "name": "ナゴレコ｜本当に美味しい名古屋めし",
+      "reason": "名古屋エリアのグルメメディアを名乗る。フォロワー約2.9万。媒体型（個人でなく編集もの）の発信の比較対象（Web 検索の表示値）",
+      "followers_at_selection": 29100
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # 0055 note と X の出し方を、運営の公式情報と政府統計に合わせる
 
 - 日付: 2026-10-24
-- 状態: 採用
+- 状態: 採用（3 は 0058 で一部改定: 2026-11-08〜2026-11-21 の間だけ URL なしの日を混ぜる実験。期間外は 3 のまま）
 - 関連: docs/sns-reach-research-2026-10.md / data/x_post_policy.json（postSlot・maxHashtags）/ data/note_post_policy.json（tags）/ scripts/x_post_wait.js / scripts/lib/note_draft.js / ADR 0047（X の文面）・0054（note の抜粋）
 
 ## 背景

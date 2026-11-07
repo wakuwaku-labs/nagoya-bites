@@ -10,6 +10,7 @@
  *
  * 使い方: node scripts/fetch_x_metrics.js [--dry-run] [--force]
  *   --dry-run … 通信せず、今日取る投稿・見積と今月の使用額だけ出す
+ *   --probe-nonpublic … 一回限りの試し。自分の投稿1件に non_public_metrics 等を1回だけ頼み、項目名・値の有無・HTTP 状態を出す（通常の取得はしない・約 $0.005）
  *   --force   … 同じ UTC 日のスナップショットがあっても取り直して上書きする
  *
  * 鍵（GitHub Secrets・OAuth 1.0a）: X_API_KEY / X_API_SECRET / X_ACCESS_TOKEN / X_ACCESS_TOKEN_SECRET
@@ -204,6 +205,70 @@ function plan({ root, snapshots, now, mode, env = {} }) {
 }
 const estimateFor = (mode, n) => round3(USER_READ_USD + perItemUsd(mode) * n);
 
+// ── 一回限りの試し（段階C2）: 非公開の数字（non_public_metrics など）が自分のアプリで取れるか ─────────────
+const PROBE_FIELDS = 'non_public_metrics,organic_metrics,public_metrics';
+const PROBE_MEDIA = { expansions: 'attachments.media_keys', 'media.fields': 'public_metrics,non_public_metrics' };
+const PROBE_USD = TWEETS_READ_USD;  // GET /2/tweets?ids= 1 件（高い方で見積もる）
+
+/** 項目ごとに「値があるか」を数値のまま写す（本文・URL は載せない）。 */
+function describeFields(obj) {
+  const out = {};
+  for (const [k, v] of Object.entries(obj || {})) out[k] = (typeof v === 'number' && Number.isFinite(v)) ? v : null;
+  return out;
+}
+
+/**
+ * 30 日以内の自分の投稿 1 件に GET /2/tweets?ids= を 1 回だけ呼び、返った項目名と値の有無・HTTP 状態を log に出す。
+ * 通常の取得（users/me・タイムライン）はしない。CAP_USD の関所を通し、使用額を data/x_metrics.json の budget に足す。
+ * 結果（項目名・数値・状態のみ。本文は載せない）は data.probe_nonpublic に残す。
+ */
+async function probeNonpublic({ root = X.ROOT, env = process.env, fetchImpl = fetch, now = new Date(), log = console.log } = {}) {
+  const data = load(root);
+  const iso = now.toISOString();
+  const month = iso.slice(0, 7);
+  data.version = 1;
+  data._comment = COMMENT;
+  data.budget = normalizeBudget(data.budget, month);
+  const finish = (result, reason, extra = {}) => {
+    data.probe_nonpublic = { at: iso, result, reason: reason || null, ...extra };
+    X.writeJson(REL, data, root);
+    log(`[probe] 結果 ${result}${reason ? `（${reason}）` : ''} ${JSON.stringify(extra)}`);
+    return { result, reason: reason || null, ...extra, data };
+  };
+  if (round3(data.budget.spent_usd + PROBE_USD) > CAP_USD + 1e-9) {
+    return finish('budget', `月の上限 $${CAP_USD.toFixed(2)} に達するため呼ばない（使用額 $${data.budget.spent_usd.toFixed(3)}）`);
+  }
+  const cred = credentials(env);
+  if (!cred) return finish('error', '鍵（X_API_KEY など4つの Secrets）が揃っていません');
+  const heads = ledgerHeads(root, now).sort((a, b) => b.postedMs - a.postedMs);
+  if (!heads.length) return finish('no_target', '30 日以内の自分の投稿が台帳に無い');
+  const id = heads[0].id;
+  let res;
+  try {
+    res = await xGet('/tweets', { ids: id, 'tweet.fields': PROBE_FIELDS, ...PROBE_MEDIA }, cred, fetchImpl);
+  } catch (e) {
+    return finish('error', `通信に失敗: ${e && e.name ? e.name : 'error'}`);
+  }
+  const body = res.body && typeof res.body === 'object' ? res.body : {};
+  const t = Array.isArray(body.data) ? body.data[0] : null;
+  const media = (body.includes && Array.isArray(body.includes.media)) ? body.includes.media : [];
+  const extra = {
+    http_status: res.status,
+    tweet_id: id,
+    fields: t ? Object.keys(t).filter((k) => k !== 'text' && k !== 'edit_history_tweet_ids') : [],
+    public_metrics: t ? describeFields(t.public_metrics) : null,
+    non_public_metrics: t ? describeFields(t.non_public_metrics) : null,
+    organic_metrics: t ? describeFields(t.organic_metrics) : null,
+    media_count: media.length,
+    media_public_metrics: media.map((m) => describeFields(m.public_metrics)),
+    media_non_public_metrics: media.map((m) => describeFields(m.non_public_metrics)),
+    errors: Array.isArray(body.errors) ? body.errors.map((e) => ({ title: e.title || null, detail: typeof e.detail === 'string' ? e.detail.slice(0, 200) : null, parameter: e.parameter || null })) : [],
+  };
+  if (res.status >= 200 && res.status < 300) data.budget.spent_usd = round3(data.budget.spent_usd + PROBE_USD);
+  if (res.status !== 200) return finish('unavailable', errReason(res.status, res.body), extra);
+  return finish(extra.non_public_metrics && Object.keys(extra.non_public_metrics).length ? 'ok' : 'no_nonpublic', null, extra);
+}
+
 async function run({ root = X.ROOT, env = process.env, fetchImpl = fetch, now = new Date(), force = false, dryRun = false, log = console.log } = {}) {
   const data = load(root);
   const iso = now.toISOString();
@@ -320,9 +385,9 @@ async function run({ root = X.ROOT, env = process.env, fetchImpl = fetch, now = 
 
 if (require.main === module) {
   const argv = process.argv.slice(2);
-  run({ force: argv.includes('--force'), dryRun: argv.includes('--dry-run') })
+  (argv.includes('--probe-nonpublic') ? probeNonpublic() : run({ force: argv.includes('--force'), dryRun: argv.includes('--dry-run') }))
     .then((r) => { process.exit(r.result === 'error' ? 1 : 0); })
     .catch((e) => { console.error('予期しない失敗:', e && e.message ? e.message : 'error'); process.exit(1); });
 }
 
-module.exports = { run, estimate, estimateFor, duePosts, milestonesFor, ledgerHeads, plan, fetchMode, load, TWEETS_READ_USD, MILESTONE_DAYS, USER_READ_USD, OWNED_READ_USD, CAP_USD, MAX_RESULTS, MAX_SNAPSHOTS };
+module.exports = { run, probeNonpublic, xGet, credentials, errReason, estimate, estimateFor, duePosts, milestonesFor, ledgerHeads, plan, fetchMode, load, TWEETS_READ_USD, MILESTONE_DAYS, USER_READ_USD, OWNED_READ_USD, CAP_USD, MAX_RESULTS, MAX_SNAPSHOTS };
