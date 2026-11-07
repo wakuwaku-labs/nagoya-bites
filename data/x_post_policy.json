@@ -106,6 +106,14 @@
     "円頓寺"
   ],
   "areaHashtagWordsHelp": "記事の題名に出てくる語だけをハッシュタグにする（題名に無い地名は付けない）。長い語から先に照合する（「中村区」を「中区」と取り違えない）",
+  "urlExperiment": {
+    "enabled": false,
+    "id": "url-vs-nourl-1",
+    "noUrlShare": 0.5,
+    "since": "",
+    "until": "",
+    "help": "URL あり／なしの実験（既定オフ）。docs/decisions/0058（提案・本人の承認待ち）。enabled を true にするのは 0058 の承認と STOP-POLICY の後だけ。true のとき、日付と id から決まる割り当てで noUrlShare の割合の日は本文のリンクを外して出す（検査は URL 以外すべて通す）。割り当ては再実行でも変わらない。台帳 data/x_post_log.json に experiment・url_variant（'url' か 'no_url'）が付く。since/until は YYYY-MM-DD（空なら無制限）。戻すのは enabled を false に戻す1行だけ"
+  },
   "maxWeightedLength": 280,
   "duplicateWindowDays": 30,
   "livePage": {

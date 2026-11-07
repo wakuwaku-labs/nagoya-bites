@@ -364,7 +364,7 @@ function wordingViolations(text, root = ROOT) {
  * 投稿前の検査。返り値は落ちた理由の配列（空なら通過）。
  * articleText: 記事の本文の文字（htmlToText 済み）。recentTexts: 過去の投稿の文面。
  */
-function validatePost(text, { entry, policy, articleText, recentTexts = [], root = ROOT }) {
+function validatePost(text, { entry, policy, articleText, recentTexts = [], root = ROOT, allowNoUrl = false }) {
   const failures = [];
   const max = policy.maxWeightedLength || 280;
   const w = weightedLength(text);
@@ -374,7 +374,9 @@ function validatePost(text, { entry, policy, articleText, recentTexts = [], root
   const words = wordingViolations(text, root);
   if (words.length) failures.push(`wording:${words.join(',')}`);
   const urls = String(text).match(URL_RE) || [];
-  if (urls.length !== 1) failures.push(`url_count:${urls.length}`);
+  // allowNoUrl は URL あり／なしの実験（判断記録 0058）の「なし」の日だけ。URL が 1 本あるときの検査は変えない
+  if (urls.length === 0 && allowNoUrl) { /* URL なしを許す */ }
+  else if (urls.length !== 1) failures.push(`url_count:${urls.length}`);
   else {
     let u;
     try { u = new URL(urls[0]); } catch (_) { u = null; }
@@ -386,6 +388,26 @@ function validatePost(text, { entry, policy, articleText, recentTexts = [], root
   }
   if (recentTexts.some((t) => String(t).trim() === String(text).trim())) failures.push('duplicate_recent');
   return failures;
+}
+
+// ── URL あり／なしの実験（既定オフ・判断記録 0058 は提案の段階）────────────────
+/**
+ * その日の割り当て。policy.urlExperiment.enabled が true のときだけ { experiment, url_variant: 'url'|'no_url' } を返す。
+ * 日付と実験 ID から決まる（再実行・やり直しでも同じ日は同じ）。オフ・期間外は null＝今までどおり URL 必須。
+ */
+function urlVariantFor(date, policy) {
+  const cfg = policy && policy.urlExperiment;
+  if (!cfg || cfg.enabled !== true || !cfg.id) return null;
+  if (cfg.since && String(date) < String(cfg.since)) return null;
+  if (cfg.until && String(date) > String(cfg.until)) return null;
+  const share = typeof cfg.noUrlShare === 'number' ? Math.min(1, Math.max(0, cfg.noUrlShare)) : 0.5;
+  const h = crypto.createHash('sha256').update(`${cfg.id}:${date}`).digest().readUInt32BE(0) / 0x100000000;
+  return { experiment: String(cfg.id), url_variant: h < share ? 'no_url' : 'url' };
+}
+
+/** 文面から URL を除く（行ごと消え、空行は 1 つにまとめる）。ハッシュタグ・本文はそのまま。 */
+function stripUrl(text) {
+  return String(text).replace(URL_RE, '').replace(/[ 　]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').replace(/\n\s*$/, '').trim();
 }
 
 // ── 台帳 ────────────────────────────────────────────────────────────────
@@ -461,6 +483,6 @@ module.exports = {
   ROOT, LOG_REL, HEALTH_REL, HUMAN_ACTION_ERRORS,
   weightedLength, loadPolicy, articleUrl, utmUrl, areaHashtag, hashtagsFor, planWait, rewriteTitle, buildTemplatePost,
   DRAFT_DIR, draftPath, loadDraft, checkDraft, draftReplies, validateReplies, buildDraftPost, insiderPoints, buildPointPosts, postCandidates,
-  htmlToText, normalizeDigits, numbersMissingFromArticle, wordingViolations, validatePost,
+  urlVariantFor, stripUrl, htmlToText, normalizeDigits, numbersMissingFromArticle, wordingViolations, validatePost,
   readLog, writeJson, alreadyPosted, recentTexts, oauthHeader, classifyError, pct,
 };

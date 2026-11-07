@@ -277,3 +277,81 @@ test('形が合わない鍵は、値を出さずに長さ・ハイフン・記�
   assert.ok(md.includes('X_ACCESS_TOKEN の形: 長さ 13'));
   assert.ok(!md.includes('secretValue'));
 });
+
+// ── URL あり／なしの実験（docs/decisions/0058・既定オフ）────────────────────
+function withExperiment(root, cfg) {
+  const f = path.join(root, 'data/x_post_policy.json');
+  const pol = JSON.parse(fs.readFileSync(f, 'utf8'));
+  if (cfg === undefined) delete pol.urlExperiment; else pol.urlExperiment = cfg;
+  fs.writeFileSync(f, JSON.stringify(pol));
+}
+
+test('実験: 本物の設定は既定オフ。オフ・設定なし・期間外では出力が完全に同じ（URL 必須のまま）', async () => {
+  const real = JSON.parse(fs.readFileSync(path.join(REAL_ROOT, 'data/x_post_policy.json'), 'utf8'));
+  assert.strictEqual(real.urlExperiment.enabled, false);
+  assert.strictEqual(X.urlVariantFor('2026-11-08', real), null);
+  const outs = [];
+  for (const cfg of [undefined, { enabled: false, id: 'e', noUrlShare: 1 }, { enabled: true, id: 'e', noUrlShare: 1, since: '2027-01-01' }]) {
+    const root = fixture({ mode: 'dry-run' });
+    withExperiment(root, cfg);
+    const f = fakeFetch(); f.root = root;
+    outs.push(JSON.stringify(await run({}, { root, env: ENV, fetchImpl: f, now: NOW })));
+  }
+  assert.strictEqual(outs[0], outs[1]);
+  assert.strictEqual(outs[0], outs[2]);
+  assert.ok(!outs[0].includes('experiment'));
+  assert.ok(/https:\/\/nagoya-bites\.com\/journal\//.test(JSON.parse(outs[0]).text));
+});
+
+test('実験: 割り当ては日付と ID から決まり（再実行で同じ）、share 0 と 1 の端を守る', () => {
+  const pol = { urlExperiment: { enabled: true, id: 'exp-a', noUrlShare: 0.5 } };
+  const days = Array.from({ length: 60 }, (_, i) => `2026-11-${String((i % 28) + 1).padStart(2, '0')}-${i}`);
+  const a = days.map((d) => X.urlVariantFor(d, pol).url_variant);
+  assert.deepStrictEqual(a, days.map((d) => X.urlVariantFor(d, pol).url_variant));
+  const n = a.filter((v) => v === 'no_url').length;
+  assert.ok(n > 15 && n < 45, `偏りすぎ: ${n}/60`);
+  assert.strictEqual(X.urlVariantFor('2026-11-08', pol).experiment, 'exp-a');
+  assert.ok(days.every((d) => X.urlVariantFor(d, { urlExperiment: { enabled: true, id: 'x', noUrlShare: 0 } }).url_variant === 'url'));
+  assert.ok(days.every((d) => X.urlVariantFor(d, { urlExperiment: { enabled: true, id: 'x', noUrlShare: 1 } }).url_variant === 'no_url'));
+  assert.strictEqual(X.urlVariantFor('2026-11-08', { urlExperiment: { enabled: true, id: 'x', until: '2026-11-01' } }), null);
+});
+
+test('実験: validatePost は allowNoUrl のときだけ URL なしを許し、他の検査（数字・言い方・重複・リンク先）は通す', () => {
+  const root = REAL_ROOT;
+  const b = X.buildTemplatePost(entry, policy);
+  const body = X.stripUrl(b.text);
+  assert.ok(!/https?:/.test(body));
+  const art = `${entry.title} 2026 10 12`;
+  assert.deepStrictEqual(X.validatePost(body, { entry, policy, articleText: art, root }), ['url_count:0']);
+  assert.deepStrictEqual(X.validatePost(body, { entry, policy, articleText: art, root, allowNoUrl: true }), []);
+  assert.deepStrictEqual(X.validatePost(`${body} 999円`, { entry, policy, articleText: art, root, allowNoUrl: true }), ['numbers_not_in_article:999']);
+  assert.ok(X.validatePost(body, { entry, policy, articleText: art, root, allowNoUrl: true, recentTexts: [body] }).includes('duplicate_recent'));
+  assert.ok(X.validatePost('あ'.repeat(200), { entry, policy, articleText: art, root, allowNoUrl: true }).some((f) => f.startsWith('too_long')));
+  // 他の記事へのリンクは allowNoUrl でも落とす／URL が 2 本は落とす（URL ありの検査は変えない）
+  assert.ok(X.validatePost(`${body}\nhttps://example.com/x`, { entry, policy, articleText: art, root, allowNoUrl: true }).includes('url_not_article'));
+  assert.ok(X.validatePost(`${b.text}\n${b.text}`, { entry, policy, articleText: art, root, allowNoUrl: true }).some((f) => f.startsWith('url_count:2')));
+});
+
+test('実験オン: no_url の日は本文からリンクを外して投稿し、台帳に experiment・url_variant が付く。URL ありの日は今までと同じ', async () => {
+  const cfg = { enabled: true, id: 'exp-t', noUrlShare: 1 };
+  const root = fixture(); withExperiment(root, cfg);
+  const f = fakeFetch(); f.root = root;
+  const r = await run({}, { root, env: ENV, fetchImpl: f, now: NOW });
+  assert.strictEqual(r.result, 'posted');
+  assert.ok(!/https?:/.test(r.text));
+  const sent = JSON.parse(f.calls.find((c) => c.url.startsWith('https://api.x.com')).opts.body).text;
+  assert.strictEqual(sent, r.text);
+  const row = JSON.parse(fs.readFileSync(path.join(root, 'data/x_post_log.json'), 'utf8')).posts[0];
+  assert.deepStrictEqual([row.experiment, row.url_variant, row.status], ['exp-t', 'no_url', 'posted']);
+
+  const root2 = fixture(); withExperiment(root2, { ...cfg, noUrlShare: 0 });
+  const f2 = fakeFetch(); f2.root = root2;
+  const r2 = await run({}, { root: root2, env: ENV, fetchImpl: f2, now: NOW });
+  assert.ok(/https:\/\/nagoya-bites\.com\/journal\//.test(r2.text));
+  const row2 = JSON.parse(fs.readFileSync(path.join(root2, 'data/x_post_log.json'), 'utf8')).posts[0];
+  assert.deepStrictEqual([row2.experiment, row2.url_variant], ['exp-t', 'url']);
+  // 二重投稿防止: 2 回目は送らない
+  const f3 = fakeFetch(); f3.root = root;
+  assert.strictEqual((await run({}, { root, env: ENV, fetchImpl: f3, now: NOW })).result, 'already_posted');
+  assert.strictEqual(f3.calls.length, 0);
+});
