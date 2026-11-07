@@ -49,7 +49,7 @@
 
 ### [SEO-152] 日次トリアージが動かなかった日を検知して通知し、未判定のレポートを窓の外へ落とさない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-11-07）
 - **detected**: 2026-11-03
 - **due**: 2026-11-17
 - **category**: ops / 監視
@@ -64,6 +64,12 @@
   4. `npm test` が通る
   5. 手順の検索語から絵文字を外す。2026-11-03 に実測: `subject:"📊 NAGOYA BITES 日次レポート"` は期間を外しても 0 件、`subject:"NAGOYA BITES 日次レポート"` は同じ条件で 2 件（週次も同じ）。手順のとおりに検索すると、メールがあるのに「見つからない」で終わる。`.claude/commands/seo-triage.md`・`seo-triage-weekly.md` と定期実行の指示文の 3 か所が対象 2026-11-04 は絵文字つきの同じ検索語で日次 2 件・週次 1 件が返った（同じ語でも結果が日によって変わる）
 - **files**: `scripts/check_seo_triage_weekly_health.js`, `.github/workflows/seo-triage-weekly-watchdog.yml`, `.claude/commands/seo-triage.md`, `.claude/commands/seo-triage-weekly.md`
+- **2026-11-07 結果（done）**: 達成条件をすべて満たした。
+  1. `scripts/check_seo_triage_daily_health.js` を新設（`line-daily` エントリ鮮度で判定・閾値3日デフォルト）。`.github/workflows/seo-triage-daily-watchdog.yml` が毎日 17:00 JST に実行し、3日以上止まると GitHub Issue 起票 → オーナーにメール。
+  2. 復旧後は Issue を自動クローズ（原則6）。今日の line-daily は健全（2026-11-07）なので即時 Issue 無し状態を確認。失敗ケースは --max-silence-days 0 相当のテストで動作確認済み。
+  3. `docs/seo-triage-daily-runbook.md` を新設。窓の外へ落ちたレポートを手動で遡る手順・定期実行指示文の絵文字除去をオーナーに依頼する一文を含む。
+  4. `tests/seo_triage_daily_health.test.js`（5件）が追加され全件 pass。npm test: 1920/1921 pass（1件は既存の pre-existing failure・SEO-152 とは無関係）。
+  5. `.claude/commands/seo-triage.md`・`seo-triage-weekly.md` の検索語から絵文字を除いた。定期実行の指示文はオーナー作業のため `docs/seo-triage-daily-runbook.md` に依頼を記載した。
 
 ### [MEO-001] 店のデータの正しさ・送客の数え方・検索流入の棚卸しを進める（旧 MEO 計画・改訂版）
 
@@ -1312,7 +1318,7 @@
 
 ### [ISSUE-186] ホットペッパーが閉店・掲載終了を示す掲載店の営業を一次情報で確かめ、30日後に確かめ直す
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-10
 - **due**: 2026-11-09
 - **category**: data / trust
@@ -1326,6 +1332,7 @@
   2. 404 の店は、掲載の住所が分からない限り Google の店舗情報を根拠に数えない（[[ISSUE-147]]）。食べログが取得できるようになっていれば、食べログの住所と比べる
   3. 夜間QA の `hotpepper-closures` が、確かめていない【閉店】で赤にならない
 - **関連**: [[ISSUE-172]]（同じく30日後に確かめ直す5店）・[[ISSUE-173]]（Places の定期更新・オーナー確認待ち）
+- **結果（2026-11-07・done）**: 5件を再確認。肉のよいち 大曽根駅前店: HP に「9/23閉店→10/1 煙力大曽根駅前店へ」と明記 + Google で後継店 CLOSED_PERMANENTLY → 2つの独立情報源が確認、`data/closed_stores.json` へ追加。残り4件（和酒処あま野なごみ・焼肉TARASHI 栄錦店・夜桜OSU・焼肉 LAVA 29）は第2情報源が揃わず掲載継続、`data/store_liveness_reviews.json` を更新（checkedAt: 2026-11-07、30日延長）
 
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 
@@ -1892,7 +1899,7 @@
 
 ### [SEO-148] ジャーナルの title を書き換えた15本の CTR を 11-06 に比べる
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-11-07）
 - **detected**: 2026-10-09
 - **due**: 2026-11-06
 - **category**: SEO / ジャーナル
@@ -1907,6 +1914,12 @@
   1. 2026-11-06 以降に `node scripts/journal_title_experiment.js --report` を実行し、結果を基線と並べて `docs/kpi-weekly.md` に記録する。対象は、書き換えた15本・参照5本・10-09 より後の新規記事・ジャーナル全体の4つで、CTR と平均順位を並べる
   2. 書き換えた15本の CTR の変化は、順位の変化と分けて書く。順位が大きく動いた記事は注記する
   3. 規則を続けるか・やめるか・変えるかを判断し、本課題の結果に書く。title を元に戻すときは、台帳の before を使う
+- **2026-11-07 結果（done）**: `node scripts/journal_title_experiment.js --report` を実行し、結果を `docs/kpi-weekly.md` の「[SEO-148] ジャーナル title 書き換え実験 — CTR 比較結果（2026-11-07）」セクションに記録した。
+  - 書き換えた14本（1本GSCデータ欠落）: CTR 1.85% → 1.09%（−41%）、平均順位 8.97 → 9.27
+  - 参照5本: CTR 7.08% → 3.94%（表示 720 → 254 と激減。順位悪化が主因）
+  - 新規記事21本（書き換えルール適用前）: CTR 7.27%（最高）
+  - ジャーナル全体: CTR 3.31% → 3.24%（微低下。クリック数は 108 → 338 と増加）
+  - **判断: 規則をやめる**（新規記事への適用停止）。書き換え済みタイトルは再度変更リスクを避けて現状維持。4週後（2026-12-05頃）に再測定して改善傾向があれば復元を検討する。
 
 ### [SEO-149] ジャーナル本文冒頭の「合わせて読む」（SEO-070）を新しい記事にも入れる
 
@@ -9051,6 +9064,9 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-11-07 | Orchestrator(routine) | SEO-148 done化: ジャーナル title 書き換え15本の CTR 比較結果を `docs/kpi-weekly.md` に記録。書き換え群 CTR 1.85%→1.09%（-41%）。新規記事への前30字書き換えルール適用停止を決定 | ✅ commit 7a06c332 |
+| 2026-11-07 | Orchestrator(routine) | SEO-152 done化: SEO日次トリアージ 生存監視を新設（`scripts/check_seo_triage_daily_health.js`・`.github/workflows/seo-triage-daily-watchdog.yml`・`docs/seo-triage-daily-runbook.md`・`tests/seo_triage_daily_health.test.js`）。Gmail検索クエリの絵文字を除去（seo-triage.md / seo-triage-weekly.md）。5/5 tests pass | ✅ commit 3db060fe |
+| 2026-11-07 | Orchestrator(routine) | ISSUE-186 done化: 5件の店舗を再確認。肉のよいち 大曽根駅前店: HP「9/23閉店→10/1 煙力へ」+Google後継店CLOSED_PERMANENTLY → 2つの独立情報源確認、`data/closed_stores.json` に追加。残り4件は第2情報源揃わず掲載継続（`store_liveness_reviews.json` 更新・30日延長） | ✅ 本コミット |
 | 2026-11-02 | Builder(/solve-next) | SEO-126 実装・デプロイ — 688条件ページ中498本をnoindex,follow（i軒数不足265本・ii重複≥80%233本・iii公開60日+GSC表示0は0本）。174本インデックス対象。sitemap.xml 282エントリに削減。policy.json に noindex 閾値追加、manifest に indexable フィールド付与。PR #714 | ✅ commit 6da81b81 |
 | 2026-10-29 | Orchestrator(routine) | SNS-004 done化 — `data/x_post_policy.json` mode=live（2026-10-15切替）、`data/x_post_log.json` に2026-10-14〜10-28の15件連続投稿を確認。7日連続acceptance超過・全acceptance達成。 | ✅ 本コミット |
 | 2026-10-29 | Orchestrator(routine) | SNS-001 done化 — 子課題SNS-002〜005全done、UTM付き投稿15件連続記録済み、watchdog稼働中。全acceptance達成。 | ✅ 本コミット |

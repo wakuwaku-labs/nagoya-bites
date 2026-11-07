@@ -895,8 +895,8 @@
       "id": "J003985266",
       "storeName": "肉のよいち 大曽根駅前店",
       "issue": "ISSUE-186",
-      "checkedAt": "2026-10-10",
-      "verdict": "決められない",
+      "checkedAt": "2026-11-07",
+      "verdict": "閉店",
       "why": "ホットペッパーの店舗ページが店名の上に【閉店】を表示している（住所は掲載と同じ大曽根3-14-46）。Google の店舗情報は同じ placeId・同じ住所で閉業（CLOSED_PERMANENTLY）だが、名前が「大衆ホルモン・やきにく 煙力 大曽根駅前店」に変わっていて掲載の店名と合わない（2026-05-22 の取得では「肉のよいち 大曽根駅前店」・営業中）。名前が合わない情報源は根拠に数えないため、閉店を示すのはホットペッパー1つだけ。Web 検索でも閉店・業態変更の告知は見つからなかった。推測で外さず掲載を続け、30日後に確かめ直す",
       "evidence": {
         "hotpepper": {
@@ -917,13 +917,14 @@
           "addressVsListing": "same",
           "usedAsEvidence": false
         }
-      }
+      },
+      "recheckNote": "2026-11-07 再確認: HotPepperが【閉店】を継続表示し「9/23を持ちまして閉店いたします。10/1に煙力大曽根駅前店として生まれ変わります！」と閉店日と後継店名を明示（住所: 大曽根3-14-46は掲載と一致）。Google は同住所で煙力大曽根駅前店が CLOSED_PERMANENTLY（HP のアナウンスが同店との連続性を証明）。2つの情報源が閉店を確認。closed_stores.json に追加"
     },
     {
       "id": "J003893954",
       "storeName": "和酒処あま野なごみ",
       "issue": "ISSUE-186",
-      "checkedAt": "2026-10-10",
+      "checkedAt": "2026-11-07",
       "verdict": "決められない",
       "why": "ホットペッパーの店舗ページが店名の上に【閉店】を表示している（住所は掲載と同じ錦3-20-14）。一方、Google の店舗情報は同じ名前・同じ住所で営業中（OPERATIONAL）。情報源が食い違うため推測で外さず掲載を続け、30日後に確かめ直す。Web 検索でも閉店の告知は見つからなかった",
       "evidence": {
@@ -945,13 +946,14 @@
           "addressVsListing": "same",
           "usedAsEvidence": true
         }
-      }
+      },
+      "recheckNote": "2026-11-07 再確認: HotPepperが404（掲載終了。前回は【閉店】表示）。SavorJapanに「和酒処あま野」が錦3-20-14の同住所で営業時間あり（掲載日不明・古い可能性）。Googleは前回OPERATIONAL。情報源が依然として食い違うため決定不可。掲載継続。さらに30日後に確かめ直す"
     },
     {
       "id": "J003850724",
       "storeName": "焼肉TARASHI 栄錦店",
       "issue": "ISSUE-186",
-      "checkedAt": "2026-10-10",
+      "checkedAt": "2026-11-07",
       "verdict": "決められない",
       "why": "ホットペッパーのページが無い（HTTP 404「掲載情報なし」＝掲載終了）。Google の店舗情報は閉業だが、名前が「焼肉BAR タラシ 錦本店」で掲載の「栄錦店」と支店名が違い、別の支店の可能性がある。ただし掲載データに住所が残っておらず（data/stores.json の住所は空・git 履歴にも無い）、掲載の住所と比べられないため、Google の店舗情報を根拠に数えない。食べログは CI とこの環境から取得できない（HTTP 403）。推測で外さず掲載を続け、30日後に確かめ直す",
       "evidence": {
@@ -973,13 +975,14 @@
           "addressVsListing": "unknown",
           "usedAsEvidence": false
         }
-      }
+      },
+      "recheckNote": "2026-11-07 再確認: HotPepperが404（前回と変わらず）。Web検索でUber Eatsに「焼肉Bar TARASHI」の掲載あり（住所: 錦3-4-21）・SavorJapanも掲載（掲載日不明）。Google は前回 CLOSED_PERMANENTLY だが支店名の食い違い（錦本店 vs 栄錦店）が未解決。営業を示す証拠があるため決定不可。掲載継続。さらに30日後に確かめ直す"
     },
     {
       "id": "J001223732",
       "storeName": "夜桜OSU",
       "issue": "ISSUE-186",
-      "checkedAt": "2026-10-10",
+      "checkedAt": "2026-11-07",
       "verdict": "決められない",
       "why": "ホットペッパーのページが無い（HTTP 404「掲載情報なし」＝掲載終了）。Google の店舗情報は名前が合い閉業（掲載のアクセス「上前津駅1番出口～徒歩1分」とも位置は矛盾しない）。ただし掲載データに住所が残っておらず（data/stores.json の住所は空・git 履歴にも無い）、掲載の住所と比べられないため、Google の店舗情報を根拠に数えない。食べログは CI とこの環境から取得できない（HTTP 403）。推測で外さず掲載を続け、30日後に確かめ直す",
       "evidence": {
@@ -1001,13 +1004,14 @@
           "addressVsListing": "unknown",
           "usedAsEvidence": false
         }
-      }
+      },
+      "recheckNote": "2026-11-07 再確認: HotPepperが404（前回と変わらず）。Web検索でぐるなびに夜桜 OSU店の古い掲載（2021年更新）あり。Googleは前回 CLOSED_PERMANENTLY（名前一致・位置矛盾なし）。閉店を示す独立した2つ目の情報源（名前と住所が合う）が確認できないため決定不可。掲載継続。さらに30日後に確かめ直す"
     },
     {
       "id": "J003582085",
       "storeName": "焼肉 LAVA 29",
       "issue": "ISSUE-186",
-      "checkedAt": "2026-10-10",
+      "checkedAt": "2026-11-07",
       "verdict": "決められない",
       "why": "ホットペッパーのページが無い（HTTP 404「掲載情報なし」＝掲載終了）。Google の店舗情報は臨時休業（閉業ではない）。ただし掲載データに住所が残っておらず（data/stores.json の住所は空・git 履歴にも無い）、掲載の住所と比べられないため、Google の店舗情報を根拠に数えない。食べログは CI とこの環境から取得できない（HTTP 403）。推測で外さず掲載を続け、30日後に確かめ直す",
       "evidence": {
@@ -1029,7 +1033,8 @@
           "addressVsListing": "unknown",
           "usedAsEvidence": false
         }
-      }
+      },
+      "recheckNote": "2026-11-07 再確認: HotPepperが404（前回と変わらず）。Web検索でAutoreserveにHP外観ページのキャッシュあり。Googleは前回臨時休業（CLOSED_TEMPORARILY）。閉店を示す2つの独立した情報源が確認できないため決定不可。掲載継続。さらに30日後に確かめ直す"
     },
     {
       "id": "manual:日々担々 守山店|名古屋市守山区",
