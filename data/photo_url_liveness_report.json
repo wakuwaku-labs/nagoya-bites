@@ -1,11 +1,11 @@
 {
   "version": 1,
   "lastRun": "2026-11-07",
-  "lastRunAt": "2026-11-07T00:30:55.613Z",
-  "checked": 4910,
+  "lastRunAt": "2026-11-07T08:24:19.452Z",
+  "checked": 4909,
   "summary": {
-    "ok": 4910,
-    "dead": 0,
+    "ok": 4896,
+    "dead": 13,
     "unknown": 0,
     "byHost": {
       "places": {
@@ -14,12 +14,143 @@
         "unknown": 0
       },
       "hotpepper": {
-        "ok": 4723,
-        "dead": 0,
+        "ok": 4709,
+        "dead": 13,
         "unknown": 0
       }
     }
   },
-  "dead": [],
+  "dead": [
+    {
+      "店名": "居酒屋きんぐ 金山店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/71/05/P048787105/P048787105_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001277195",
+      "写真アセットID": "P048787105",
+      "firstDetected": "2026-11-07",
+      "lastChecked": "2026-11-07"
+    },
+    {
+      "店名": "旬醸まほろば 栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/21/90/P048602190/P048602190_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003917301",
+      "写真アセットID": "P048602190",
+      "firstDetected": "2026-11-07",
+      "lastChecked": "2026-11-07"
+    },
+    {
+      "店名": "大衆ホルモン やきにく 煙力 名駅広小路店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/21/56/P041812156/P041812156_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001203878",
+      "写真アセットID": "P041812156",
+      "firstDetected": "2026-11-07",
+      "lastChecked": "2026-11-07"
+    },
+    {
+      "店名": "三重人 名駅店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/95/55/P048789555/P048789555_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001119258",
+      "写真アセットID": "P048789555",
+      "firstDetected": "2026-11-07",
+      "lastChecked": "2026-11-07"
+    },
+    {
+      "店名": "大衆ホルモン やきにく 煙力 伏見店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/21/82/P041812182/P041812182_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001263733",
+      "写真アセットID": "P041812182",
+      "firstDetected": "2026-11-07",
+      "lastChecked": "2026-11-07"
+    },
+    {
+      "店名": "店長のひとりごと",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/48/53/P042424853/P042424853_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000729169",
+      "写真アセットID": "P042424853",
+      "firstDetected": "2026-11-07",
+      "lastChecked": "2026-11-07"
+    },
+    {
+      "店名": "CLOCK / PIENORICCO",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/47/90/P039234790/P039234790_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001293004",
+      "写真アセットID": "P039234790",
+      "firstDetected": "2026-11-07",
+      "lastChecked": "2026-11-07"
+    },
+    {
+      "店名": "居酒屋 天海 てんかい 名古屋駅西口店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/95/21/P049399521/P049399521_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003389579",
+      "写真アセットID": "P049399521",
+      "firstDetected": "2026-11-07",
+      "lastChecked": "2026-11-07"
+    },
+    {
+      "店名": "名古屋大酒場かぶらや総本家",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/11/61/P045951161/P045951161_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001009924",
+      "写真アセットID": "P045951161",
+      "firstDetected": "2026-11-07",
+      "lastChecked": "2026-11-07"
+    },
+    {
+      "店名": "暖善ゆず庭 名古屋駅",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/53/06/P046935306/P046935306_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000024328",
+      "写真アセットID": "P046935306",
+      "firstDetected": "2026-11-07",
+      "lastChecked": "2026-11-07"
+    },
+    {
+      "店名": "鶏料理 焼鳥つくし",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/83/77/P041618377/P041618377_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003497673",
+      "写真アセットID": "P041618377",
+      "firstDetected": "2026-11-07",
+      "lastChecked": "2026-11-07"
+    },
+    {
+      "店名": "地鶏坊主 金山北寺",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/53/43/P049665343/P049665343_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000677421",
+      "写真アセットID": "P049665343",
+      "firstDetected": "2026-11-07",
+      "lastChecked": "2026-11-07"
+    },
+    {
+      "店名": "大衆天ぷらと日本酒 天ぷら酒場 NAKASHO",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/39/42/P032903942/P032903942_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001189988",
+      "写真アセットID": "P032903942",
+      "firstDetected": "2026-11-07",
+      "lastChecked": "2026-11-07"
+    }
+  ],
   "unknownSample": []
 }

@@ -43,7 +43,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       "addressLocality": "栄",
       "streetAddress": "愛知県名古屋市中区栄２丁目２−３４ 蒼園 ビル"
     },
-    "image": "https://imgfp.hotp.jp/IMGH/21/82/P041812182/P041812182_480.jpg",
+    "image": "/assets/store-figures/_fallback.svg",
     "url": "https://nagoya-bites.com/stores/J001263733.html",
     "description": "◆駅近伏見駅徒歩3分 ◆厳選食材を手軽に",
     "priceRange": "¥",
@@ -126,6 +126,8 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .links-section h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .ig-photos{margin:0 0 2rem;}
 .ig-photos h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
+.ig-photos-lead{margin-bottom:1.6rem;}
+.ig-photos-lead .ig-embed-box{min-height:562px;}
 .ig-carousel{position:relative;max-width:420px;margin:0 auto;}
 .ig-carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .ig-carousel-track::-webkit-scrollbar{display:none;}
@@ -202,7 +204,7 @@ button.link-btn{font:inherit;cursor:pointer;}
 <main id="main-content">
 <!-- NB-CHROME:HEADER:END -->
 
-<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F21%2F82%2FP041812182%2FP041812182_480.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F21%2F82%2FP041812182%2FP041812182_238.jpg" alt="大衆ホルモン やきにく 煙力 伏見店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/21/82/P041812182/P041812182_480.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
+
 
 <div class="container">
   <!-- NB-CHROME:BREADCRUMB:START -->
@@ -227,10 +229,7 @@ button.link-btn{font:inherit;cursor:pointer;}
     <p class="store-facts">伏見駅から徒歩3分・予算2001～3000円</p>
   </div>
 
-  <div class="point-box"><p>◆駅近伏見駅徒歩3分 ◆厳選食材を手軽に</p></div>
-  
-
-  <div class="ig-photos">
+  <div class="ig-photos ig-photos-lead">
     <h2>公式Instagramの実際の写真</h2>
     <div class="ig-carousel">
       <div class="ig-carousel-track">
@@ -249,6 +248,10 @@ button.link-btn{font:inherit;cursor:pointer;}
       </div>
     </div>
   </div>
+
+  <div class="point-box"><p>◆駅近伏見駅徒歩3分 ◆厳選食材を手軽に</p></div>
+  
+
   <div class="info-grid">
     <div class="info-cell"><label>エリア</label><span>愛知県 栄</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市中区栄２丁目２−３４ 蒼園 ビル</span></div>
