@@ -1,34 +1,34 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-11-06T22:45:11.040Z",
+  "generatedAt": "2026-11-07T00:22:56.430Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 3297,
+  "total_sessions": 3312,
   "engines": [
     {
       "key": "google",
       "label": "Google",
-      "sessions": 1109,
-      "pct": 33.6,
+      "sessions": 1115,
+      "pct": 33.7,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 1109
+          "sessions": 1115
         }
       ]
     },
     {
       "key": "bing",
       "label": "Bing",
-      "sessions": 859,
-      "pct": 26.1,
+      "sessions": 860,
+      "pct": 26,
       "sources": [
         {
           "source": "bing",
           "medium": "organic",
-          "sessions": 853
+          "sessions": 854
         },
         {
           "source": "cn.bing.com",
@@ -40,8 +40,8 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 507,
-      "pct": 15.4,
+      "sessions": 512,
+      "pct": 15.5,
       "sources": [
         {
           "source": "(direct)",
@@ -51,33 +51,33 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 42
+          "sessions": 47
         }
       ]
     },
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 482,
+      "sessions": 483,
       "pct": 14.6,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 482
+          "sessions": 483
         }
       ]
     },
     {
       "key": "ai_assistant",
       "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
-      "sessions": 210,
+      "sessions": 211,
       "pct": 6.4,
       "sources": [
         {
           "source": "chatgpt.com",
           "medium": "ai-assistant",
-          "sessions": 134
+          "sessions": 135
         },
         {
           "source": "openai",
@@ -104,7 +104,7 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 63,
+      "sessions": 64,
       "pct": 1.9,
       "sources": [
         {
@@ -151,6 +151,11 @@
           "source": "ranking",
           "medium": "(not set)",
           "sessions": 2
+        },
+        {
+          "source": "(data not available)",
+          "medium": "(data not available)",
+          "sessions": 1
         },
         {
           "source": "aocr.org",
@@ -212,30 +217,30 @@
     }
   ],
   "search_only": {
-    "total": 2680,
+    "total": 2689,
     "share": [
       {
         "key": "google",
         "label": "Google",
-        "sessions": 1109,
-        "pct_of_search": 41.4
+        "sessions": 1115,
+        "pct_of_search": 41.5
       },
       {
         "key": "bing",
         "label": "Bing",
-        "sessions": 859,
-        "pct_of_search": 32.1
+        "sessions": 860,
+        "pct_of_search": 32
       },
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 482,
+        "sessions": 483,
         "pct_of_search": 18
       },
       {
         "key": "ai_assistant",
         "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
-        "sessions": 210,
+        "sessions": 211,
         "pct_of_search": 7.8
       },
       {
@@ -250,11 +255,11 @@
     "from": "2026-11-05",
     "to": "2026-11-06",
     "delta": {
-      "google": 1,
-      "bing": 26,
-      "direct": 63,
-      "yahoo": 11,
-      "ai_assistant": 0,
+      "google": 3,
+      "bing": 30,
+      "direct": 79,
+      "yahoo": 19,
+      "ai_assistant": 2,
       "other": -2,
       "social": 0,
       "duckduckgo": -1
@@ -263,7 +268,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 1109 セッションのみ。Bing(859) + 生成AI(210) の 1069 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 1115 セッションのみ。Bing(860) + 生成AI(211) の 1071 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],

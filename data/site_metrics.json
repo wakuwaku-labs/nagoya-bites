@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-06T22:45:07.318Z",
+  "generatedAt": "2026-11-07T00:18:20.420Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2917,
-    "pageViews": 4176,
-    "sessions": 3240,
-    "avgSessionDuration": 111.7,
+    "activeUsers": 2925,
+    "pageViews": 4188,
+    "sessions": 3248,
+    "avgSessionDuration": 111.6,
     "bounceRate": 0.313,
     "pagesPerSession": 1.29
   },
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2470,
-      "direct": 539,
+      "organic": 2478,
+      "direct": 544,
       "social": 47,
-      "ai_assistant": 210,
+      "ai_assistant": 211,
       "referral": 31,
       "paid": 0,
-      "other": 0
+      "other": 1
     },
     "pct": {
-      "organic": 74.9,
-      "direct": 16.3,
+      "organic": 74.8,
+      "direct": 16.4,
       "social": 1.4,
       "ai_assistant": 6.4,
       "referral": 0.9,
@@ -39,17 +39,17 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1109
+      "sessions": 1115
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 853
+      "sessions": 854
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 482
+      "sessions": 483
     },
     {
       "source": "(direct)",
@@ -59,7 +59,7 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 134
+      "sessions": 135
     },
     {
       "source": "openai",
@@ -69,7 +69,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 42
+      "sessions": 47
     },
     {
       "source": "x",
@@ -152,6 +152,11 @@
       "sessions": 2
     },
     {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 1
+    },
+    {
       "source": "aocr.org",
       "medium": "referral",
       "sessions": 1
@@ -180,13 +185,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 444,
+      "pageViews": 445,
       "sessions": 424
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 220,
-      "sessions": 207
+      "pageViews": 221,
+      "sessions": 208
     },
     {
       "path": "/",
@@ -205,8 +210,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 341,
-    "ctaClickRate": 10.5,
+    "outboundClicks": 343,
+    "ctaClickRate": 10.6,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -218,11 +223,11 @@
       },
       {
         "domain": "prtimes.jp",
-        "clicks": 48
+        "clicks": 49
       },
       {
         "domain": "tabelog.com",
-        "clicks": 42
+        "clicks": 43
       },
       {
         "domain": "maps.google.com",
@@ -255,21 +260,21 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 238,
+      "organic": 239,
       "direct": 53,
       "social": 10,
-      "ai_assistant": 39,
+      "ai_assistant": 40,
       "referral": 1,
       "paid": 0,
       "other": 0
     },
     "ctaClickRate_organic": 9.6,
-    "ctaClickRate_direct": 9.8,
+    "ctaClickRate_direct": 9.7,
     "ctaClickRate_social": 21.3,
     "byPage": [
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-        "clicks": 57
+        "clicks": 58
       },
       {
         "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
@@ -392,7 +397,7 @@
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
         "domain": "prtimes.jp",
-        "clicks": 45
+        "clicks": 46
       },
       {
         "path": "/stores/J004090251.html",
@@ -1130,7 +1135,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2917,
+    "value": 2925,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

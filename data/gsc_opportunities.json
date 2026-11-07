@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-06T22:45:11.001Z",
+  "generatedAt": "2026-11-07T00:22:56.389Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -36,21 +36,21 @@
       },
       {
         "query": "キミトテ",
-        "impressions": 315,
+        "impressions": 293,
         "clicks": 4,
         "position": 9.7,
-        "ctr": 1.27,
+        "ctr": 1.37,
         "expectedCtr": 2.6,
-        "missedClicks": 4.2
+        "missedClicks": 3.6
       },
       {
         "query": "一人飲み",
-        "impressions": 83,
+        "impressions": 78,
         "clicks": 4,
         "position": 4.2,
-        "ctr": 4.82,
+        "ctr": 5.13,
         "expectedCtr": 7.6,
-        "missedClicks": 2.3
+        "missedClicks": 1.9
       }
     ],
     "rankPush": []
@@ -59,12 +59,12 @@
     "ctrFix": [
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 1275,
+        "impressions": 1227,
         "clicks": 23,
         "position": 6.9,
-        "ctr": 1.8,
+        "ctr": 1.87,
         "expectedCtr": 4.1,
-        "missedClicks": 29.3
+        "missedClicks": 27.4
       },
       {
         "page": "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
@@ -86,23 +86,23 @@
       },
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 822,
+        "impressions": 789,
         "clicks": 10,
-        "position": 9.2,
-        "ctr": 1.22,
+        "position": 9.3,
+        "ctr": 1.27,
         "expectedCtr": 2.7,
-        "missedClicks": 12.5
+        "missedClicks": 11.4
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 1083,
-        "clicks": 15,
-        "position": 18.4,
-        "ctr": 1.39,
-        "upsideClicks": 15.3
+        "impressions": 1000,
+        "clicks": 14,
+        "position": 18.5,
+        "ctr": 1.4,
+        "upsideClicks": 14
       }
     ]
   },

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-06T22:44:57.743Z",
+  "generatedAt": "2026-11-07T00:18:10.700Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -9,10 +9,10 @@
   "totals": {
     "exits": {
       "hotpepper": 133,
-      "tabelog": 19,
+      "tabelog": 20,
       "tel": 8,
       "other": 0,
-      "total": 160
+      "total": 161
     },
     "reports": {
       "yes": 0,
@@ -25,10 +25,10 @@
     "totals": {
       "exits": {
         "hotpepper": 39,
-        "tabelog": 3,
+        "tabelog": 4,
         "tel": 4,
         "other": 0,
-        "total": 46
+        "total": 47
       },
       "reports": {
         "yes": 0,
@@ -430,6 +430,24 @@
       },
       "thisMonth": {
         "exits": 2,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "焼肉 福 錦通り店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 1,
+        "tel": 0,
+        "other": 0,
+        "total": 2
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
         "reportsYes": 0
       }
     },
@@ -1298,24 +1316,6 @@
       }
     },
     {
-      "store_name": "焼肉 福 錦通り店",
-      "exits": {
-        "hotpepper": 1,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 1
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 0,
-        "reportsYes": 0
-      }
-    },
-    {
       "store_name": "焼肉ぽんが 名古屋伏見店",
       "exits": {
         "hotpepper": 1,
@@ -1971,10 +1971,10 @@
     "geoSearch": "現在地: トップの「現在地」ボタンを押した回数と結果（granted・denied・unsupported・error）。位置・エリア名は送っていない"
   },
   "actions": {
-    "reserve": 152,
+    "reserve": 153,
     "reserveBySite": {
       "hotpepper": 133,
-      "tabelog": 19,
+      "tabelog": 20,
       "other": 0
     },
     "tel": 8,
