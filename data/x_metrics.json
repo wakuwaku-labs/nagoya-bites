@@ -1674,7 +1674,7 @@
   ],
   "budget": {
     "month": "2026-11",
-    "spent_usd": 0.14,
+    "spent_usd": 0.145,
     "cap_usd": 1,
     "cap_jpy": 150
   },
@@ -1682,5 +1682,44 @@
     "at": "2026-11-07T01:10:43.942Z",
     "result": "ok",
     "reason": null
+  },
+  "probe_nonpublic": {
+    "at": "2026-11-07T09:39:13.293Z",
+    "result": "ok",
+    "reason": null,
+    "http_status": 200,
+    "tweet_id": "2118893717017022788",
+    "fields": [
+      "id",
+      "non_public_metrics",
+      "organic_metrics",
+      "public_metrics"
+    ],
+    "public_metrics": {
+      "bookmark_count": 0,
+      "impression_count": 1,
+      "like_count": 0,
+      "quote_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0
+    },
+    "non_public_metrics": {
+      "engagements": 1,
+      "impression_count": 1,
+      "url_link_clicks": 0,
+      "user_profile_clicks": 0
+    },
+    "organic_metrics": {
+      "impression_count": 1,
+      "like_count": 0,
+      "reply_count": 1,
+      "retweet_count": 0,
+      "url_link_clicks": 0,
+      "user_profile_clicks": 0
+    },
+    "media_count": 0,
+    "media_public_metrics": [],
+    "media_non_public_metrics": [],
+    "errors": []
   }
 }
