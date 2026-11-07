@@ -40,6 +40,23 @@ function firstLineType(text) {
   return 'other';
 }
 
+// 題材の分類（SNS分析ツールの x-features.ts の NB_TOPICS と同じ。上から順に最初に当たった物）
+const NB_TOPICS = [
+  ['宴会・忘年会', /忘年会|新年会|宴会|貸切/],
+  ['デート', /デート|記念日|夜景/],
+  ['ひとり飲み・ひとりごはん', /一人|ひとり|1人|カウンター/],
+  ['ランチ', /ランチ|定食|昼/],
+  ['イベント', /フェス|イベント|まつり|祭/],
+  ['お酒', /飲み放題|ワイン|日本酒|酒|ビール|ハイボール/],
+  ['喫茶・カフェ', /モーニング|喫茶|カフェ|コーヒー/],
+];
+
+function topicOf(text) {
+  const s = String(text || '');
+  for (const [name, re] of NB_TOPICS) if (re.test(s)) return name;
+  return 'その他';
+}
+
 /** 本文を保存せずに特徴だけを取り出す。 */
 function features(t, mediaByKey) {
   const text = typeof t.text === 'string' ? t.text : '';
@@ -56,6 +73,7 @@ function features(t, mediaByKey) {
     chars: [...text].length,
     first_line: firstLineType(text),
     hashtags: (ent.hashtags || []).map((h) => String(h.tag)).filter(Boolean),
+    topic: topicOf(text),
   };
 }
 
@@ -192,4 +210,4 @@ if (require.main === module) {
     .catch((e) => { console.error('予期しない失敗:', e && e.message ? e.message : 'error'); process.exit(1); });
 }
 
-module.exports = { run, firstLineType, features, postRow, USER_READ_USD, POST_READ_USD };
+module.exports = { run, firstLineType, features, NB_TOPICS, topicOf, postRow, USER_READ_USD, POST_READ_USD };

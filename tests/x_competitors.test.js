@@ -58,7 +58,7 @@ test('正常: 形が仕様どおり。本文・URL・画像は保存せず、特
   assert.deepStrictEqual([a.handle, a.user_id, a.followers], ['acc0', '100', 1000]);
   assert.deepStrictEqual(Object.keys(a.posts[0]), ['id', 'created_at', 'metrics', 'features']);
   assert.deepStrictEqual(a.posts[0].metrics, { impressions: 100, likes: 5, reposts: 1, replies: 2, quotes: 0, bookmarks: 3 });
-  assert.deepStrictEqual(a.posts[0].features, { media: 'video', has_url: true, chars: [...`今日のランチ3選は？\n${SECRET_TEXT}`].length, first_line: 'question', hashtags: ['名古屋グルメ'] });
+  assert.deepStrictEqual(a.posts[0].features, { media: 'video', has_url: true, chars: [...`今日のランチ3選は？\n${SECRET_TEXT}`].length, first_line: 'question', hashtags: ['名古屋グルメ'], topic: 'ランチ' });
   const raw = fs.readFileSync(path.join(root, 'data/x_competitors.json'), 'utf8');
   assert.ok(!raw.includes('ひみつ') && !raw.includes('example.com') && !raw.includes('pic.x.com') && !/oauth/i.test(raw));
   assert.ok(f.calls[0].url.includes('/users/by?') && f.calls.filter((c) => c.url.includes('/tweets')).every((c) => c.url.includes('exclude=replies,retweets') && c.url.includes('max_results=10')));
@@ -126,7 +126,7 @@ test('特徴: 1 行目の型・画像・URL なし', () => {
   assert.strictEqual(C.firstLineType('行列の理由は\nあ'), 'other');
   assert.strictEqual(C.firstLineType('ここが一番うまい。'), 'assertion');
   const f = C.features({ text: 'abc', attachments: { media_keys: ['k'] } }, new Map([['k', 'photo']]));
-  assert.deepStrictEqual(f, { media: 'image', has_url: false, chars: 3, first_line: 'other', hashtags: [] });
+  assert.deepStrictEqual(f, { media: 'image', has_url: false, chars: 3, first_line: 'other', hashtags: [], topic: 'その他' });
 });
 
 test('dry-run は通信せず何も書かない／鍵なしは error', async () => {
@@ -142,4 +142,16 @@ test('本物の設定: 5 アカウントで、各項目に選んだ理由があ�
   assert.strictEqual(c.accounts.length, 5);
   assert.ok(c.accounts.every((a) => a.handle && !a.handle.startsWith('@') && a.reason.length > 10));
   assert.ok(C.USER_READ_USD * 5 + C.POST_READ_USD * c.maxResults * 5 < 1);
+});
+
+test('題材の分類: 各分類・順番・空文字・本文が出力に入らない', () => {
+  const cases = [['忘年会の予約', '宴会・忘年会'], ['夜景がきれい', 'デート'], ['カウンターあります', 'ひとり飲み・ひとりごはん'],
+    ['日替わり定食', 'ランチ'], ['秋のまつり', 'イベント'], ['ハイボール', 'お酒'], ['モーニング', '喫茶・カフェ'], ['こんにちは', 'その他']];
+  for (const [t, want] of cases) assert.strictEqual(C.topicOf(t), want, t);
+  assert.strictEqual(C.topicOf('忘年会のランチ'), '宴会・忘年会');
+  assert.strictEqual(C.topicOf(''), 'その他');
+  assert.strictEqual(C.topicOf(undefined), 'その他');
+  const f = C.features({ text: 'ひみつの本文ランチ' }, new Map());
+  assert.strictEqual(f.topic, 'ランチ');
+  assert.ok(!JSON.stringify(f).includes('ひみつの本文'));
 });
