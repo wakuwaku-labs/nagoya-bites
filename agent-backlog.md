@@ -1318,7 +1318,7 @@
 
 ### [ISSUE-186] ホットペッパーが閉店・掲載終了を示す掲載店の営業を一次情報で確かめ、30日後に確かめ直す
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-10
 - **due**: 2026-11-09
 - **category**: data / trust
@@ -1332,6 +1332,7 @@
   2. 404 の店は、掲載の住所が分からない限り Google の店舗情報を根拠に数えない（[[ISSUE-147]]）。食べログが取得できるようになっていれば、食べログの住所と比べる
   3. 夜間QA の `hotpepper-closures` が、確かめていない【閉店】で赤にならない
 - **関連**: [[ISSUE-172]]（同じく30日後に確かめ直す5店）・[[ISSUE-173]]（Places の定期更新・オーナー確認待ち）
+- **結果（2026-11-07・done）**: 5件を再確認。肉のよいち 大曽根駅前店: HP に「9/23閉店→10/1 煙力大曽根駅前店へ」と明記 + Google で後継店 CLOSED_PERMANENTLY → 2つの独立情報源が確認、`data/closed_stores.json` へ追加。残り4件（和酒処あま野なごみ・焼肉TARASHI 栄錦店・夜桜OSU・焼肉 LAVA 29）は第2情報源が揃わず掲載継続、`data/store_liveness_reviews.json` を更新（checkedAt: 2026-11-07、30日延長）
 
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 
@@ -9063,6 +9064,9 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-11-07 | Orchestrator(routine) | SEO-148 done化: ジャーナル title 書き換え15本の CTR 比較結果を `docs/kpi-weekly.md` に記録。書き換え群 CTR 1.85%→1.09%（-41%）。新規記事への前30字書き換えルール適用停止を決定 | ✅ commit 7a06c332 |
+| 2026-11-07 | Orchestrator(routine) | SEO-152 done化: SEO日次トリアージ 生存監視を新設（`scripts/check_seo_triage_daily_health.js`・`.github/workflows/seo-triage-daily-watchdog.yml`・`docs/seo-triage-daily-runbook.md`・`tests/seo_triage_daily_health.test.js`）。Gmail検索クエリの絵文字を除去（seo-triage.md / seo-triage-weekly.md）。5/5 tests pass | ✅ commit 3db060fe |
+| 2026-11-07 | Orchestrator(routine) | ISSUE-186 done化: 5件の店舗を再確認。肉のよいち 大曽根駅前店: HP「9/23閉店→10/1 煙力へ」+Google後継店CLOSED_PERMANENTLY → 2つの独立情報源確認、`data/closed_stores.json` に追加。残り4件は第2情報源揃わず掲載継続（`store_liveness_reviews.json` 更新・30日延長） | ✅ 本コミット |
 | 2026-11-02 | Builder(/solve-next) | SEO-126 実装・デプロイ — 688条件ページ中498本をnoindex,follow（i軒数不足265本・ii重複≥80%233本・iii公開60日+GSC表示0は0本）。174本インデックス対象。sitemap.xml 282エントリに削減。policy.json に noindex 閾値追加、manifest に indexable フィールド付与。PR #714 | ✅ commit 6da81b81 |
 | 2026-10-29 | Orchestrator(routine) | SNS-004 done化 — `data/x_post_policy.json` mode=live（2026-10-15切替）、`data/x_post_log.json` に2026-10-14〜10-28の15件連続投稿を確認。7日連続acceptance超過・全acceptance達成。 | ✅ 本コミット |
 | 2026-10-29 | Orchestrator(routine) | SNS-001 done化 — 子課題SNS-002〜005全done、UTM付き投稿15件連続記録済み、watchdog稼働中。全acceptance達成。 | ✅ 本コミット |
