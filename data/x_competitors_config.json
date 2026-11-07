@@ -2,7 +2,7 @@
   "_comment": "X の競合アカウント（名古屋のグルメ・飲食を日本語で発信している人）の一覧。scripts/fetch_x_competitors.js が毎週月曜に読む。入れ替えるときは accounts の handle（@ なし）を書き換えるだけ。選び方の目安: 名古屋の飲食が中心／日本語／投稿が続いている。X API は選ぶときに使っていない（Web 検索のみ）",
   "version": 1,
   "capUsd": 1,
-  "maxResults": 10,
+  "maxResults": 7,
   "retentionDays": 90,
   "capHelp": "月の上限 $1（既存の X の数字取得の上限 CAP_USD とは別に数える。使用額は data/x_competitors.json の cost）。maxResults は1アカウントあたり1回に取る投稿の上限（X の下限 5・上限 100）。retentionDays を過ぎた投稿は消す。保存するのは数字と特徴だけで、本文・画像・URL は保存しない",
   "selectedAt": "2026-11-07",
