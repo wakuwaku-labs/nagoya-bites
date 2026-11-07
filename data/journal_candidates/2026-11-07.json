@@ -1,0 +1,439 @@
+{
+  "date": "2026-11-07",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "大曽根の焼き鳥『大金星』一人飲みと忘年会、串275円と12月の2時間制",
+      "verdict": "PASS",
+      "total": 106,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "焼き鳥",
+          "feature": "features/nagoya-yakitori-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 7件 (価格帯,席,予約,シーン,一人飲み,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 133字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大曽根」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「焼き鳥」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "新栄『こいどろぼう』女子会と誕生日に、明太トロロ鍋と馬肉の階段盛り",
+      "verdict": "HOLD",
+      "total": 83,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "女子会",
+          "feature": "features/girls-party.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,席,シーン) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 114字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「女子会」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄・錦『しじみ倶楽部』宴会に、炊き肉の新店を予算で読む",
+      "verdict": "HOLD",
+      "total": 70,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 4,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (価格帯,席) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 80字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "伏見『焼肉ぽんが』接待と個室に、9,500円コースと個室料を読む",
+      "verdict": "HOLD",
+      "total": 60,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 285日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,コース,席,予約,シーン,接待) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 84字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅『和牛鍋牛スタイル』すき焼き4,950円を立冬に読む",
+      "verdict": "HOLD",
+      "total": 51,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 642日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (価格帯,席) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 82字 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語がリードのみ「個室」+1",
+          "タイトルにジャンル語「和牛」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "大曽根の焼き鳥『大金星』一人飲みと忘年会、串275円と12月の2時間制",
+      "lead_draft": "11月6日、大曽根駅5番出口から徒歩1分に博多串焼きと九州料理の「大金星」が開店した。串は1本275円から頼め、カウンターで一人でも組み立てやすい。一方で12月1日からは2時間制、年末年始はサービス料10%がかかる。22席の店をいつ、何人で使うかを価格と席から読む。",
+      "angle": "一人飲みの価格帯（串1本単位・お通し）と、22席・貸切22名の席、12月からの2時間制という繁忙期の回転と予約の条件を読み、忘年会シーンに使う時期を示す",
+      "main_store": {
+        "name": "大金星 大曽根駅本店",
+        "id": "J004723242",
+        "area": "大曽根",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 大金星 大曽根駅本店",
+          "url": "https://www.hotpepper.jp/strJ004723242/",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "食べログ 大金星 大曽根駅本店",
+          "url": "https://tabelog.com/aichi/A2301/A230110/23098137/",
+          "date": "2026-11-06"
+        },
+        {
+          "label": "Instagram 大金星 公式投稿（酔っ払い海老）",
+          "url": "https://www.instagram.com/p/De71Mbzhed9/",
+          "date": "2026-10-25"
+        },
+        {
+          "label": "Instagram 大金星 公式投稿（もつ鍋）",
+          "url": "https://www.instagram.com/p/De7Iw9mAd4H/",
+          "date": "2026-10-25"
+        },
+        {
+          "label": "国立天文台 令和8年暦要項 二十四節気",
+          "url": "https://eco.mtk.nao.ac.jp/koyomi/yoko/2026/rekiyou262.html",
+          "date": "2025-02-03"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "新栄『こいどろぼう』女子会と誕生日に、明太トロロ鍋と馬肉の階段盛り",
+      "lead_draft": "11月2日、新栄町に馬肉と鍋の居酒屋「こいどろぼう 新栄町店」が開店した。名物の明太トロロ鍋は1人前1,848円で2人前から、馬肉の階段盛りは1,958円。立冬の週に鍋を囲むなら、40席の店で何人まで、どの予算で使えるかを読む。",
+      "angle": "鍋は2人前からという注文単位と予算3,500円の価格帯、40席・個室なしの席で女子会・誕生日のシーンに向くかを読む",
+      "main_store": {
+        "name": "こいどろぼう 新栄町店",
+        "id": "J004723946",
+        "area": "新栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ こいどろぼう 新栄町店",
+          "url": "https://www.hotpepper.jp/strJ004723946/",
+          "date": "2026-11-02"
+        },
+        {
+          "label": "食べログ 名古屋市の新規オープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-11-02"
+        },
+        {
+          "label": "国立天文台 令和8年暦要項 二十四節気",
+          "url": "https://eco.mtk.nao.ac.jp/koyomi/yoko/2026/rekiyou262.html",
+          "date": "2025-02-03"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "栄・錦『しじみ倶楽部』宴会に、炊き肉の新店を予算で読む",
+      "lead_draft": "11月2日、栄・錦に炊き肉屋「しじみ倶楽部 栄錦店」が開店した。名駅店に続く店で、しじみの出汁で肉を炊く鍋が看板だ。50席の店を宴会でどう使うか、価格帯を読む。",
+      "angle": "炊き肉の価格帯と宴会の席数を読む",
+      "main_store": {
+        "name": "炊き肉屋 しじみ倶楽部 栄錦店",
+        "id": "J004698452",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "食べログ 名古屋市の新規オープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-11-02"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "伏見『焼肉ぽんが』接待と個室に、9,500円コースと個室料を読む",
+      "lead_draft": "2月に名古屋初出店した目黒の焼肉店「焼肉ぽんが 名古屋伏見店」。コースは9,500円で、3階の個室は個室料5,000円がかかる。接待で使うときの予算と席の選び方を読む。",
+      "angle": "コース9,500円と個室料の価格帯、完全個室4部屋の席、接待シーンの予約を読む",
+      "main_store": {
+        "name": "焼肉ぽんが 名古屋伏見店",
+        "id": "J004613144",
+        "area": "伏見",
+        "genre": "焼肉・ホルモン"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 焼肉ぽんが 名古屋伏見店",
+          "url": "https://www.hotpepper.jp/strJ004613144/"
+        },
+        {
+          "label": "食品産業新聞社ニュース（エキサイト）焼肉ぽんが名古屋伏見店オープン",
+          "url": "https://www.excite.co.jp/news/article/Ssnp_657754/",
+          "date": "2026-01-26"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "名駅『和牛鍋牛スタイル』すき焼き4,950円を立冬に読む",
+      "lead_draft": "名駅南の和牛鍋の店「和牛鍋牛スタイル」。下村牛すき焼きは4,950円、もつ鍋味噌味は2,200円。72席で個室はない。立冬の日に鍋を食べに行くならどう使うかを読む。",
+      "angle": "すき焼きともつ鍋の価格帯と72席の席を読む",
+      "main_store": {
+        "name": "和牛鍋牛スタイル",
+        "id": "J004726000",
+        "area": "名駅",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 和牛鍋牛スタイル",
+          "url": "https://www.hotpepper.jp/strJ004726000/"
+        },
+        {
+          "label": "国立天文台 令和8年暦要項 二十四節気",
+          "url": "https://eco.mtk.nao.ac.jp/koyomi/yoko/2026/rekiyou262.html",
+          "date": "2025-02-03"
+        }
+      ]
+    }
+  ]
+}
