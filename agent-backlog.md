@@ -49,7 +49,7 @@
 
 ### [SEO-152] 日次トリアージが動かなかった日を検知して通知し、未判定のレポートを窓の外へ落とさない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-11-07）
 - **detected**: 2026-11-03
 - **due**: 2026-11-17
 - **category**: ops / 監視
@@ -64,6 +64,12 @@
   4. `npm test` が通る
   5. 手順の検索語から絵文字を外す。2026-11-03 に実測: `subject:"📊 NAGOYA BITES 日次レポート"` は期間を外しても 0 件、`subject:"NAGOYA BITES 日次レポート"` は同じ条件で 2 件（週次も同じ）。手順のとおりに検索すると、メールがあるのに「見つからない」で終わる。`.claude/commands/seo-triage.md`・`seo-triage-weekly.md` と定期実行の指示文の 3 か所が対象 2026-11-04 は絵文字つきの同じ検索語で日次 2 件・週次 1 件が返った（同じ語でも結果が日によって変わる）
 - **files**: `scripts/check_seo_triage_weekly_health.js`, `.github/workflows/seo-triage-weekly-watchdog.yml`, `.claude/commands/seo-triage.md`, `.claude/commands/seo-triage-weekly.md`
+- **2026-11-07 結果（done）**: 達成条件をすべて満たした。
+  1. `scripts/check_seo_triage_daily_health.js` を新設（`line-daily` エントリ鮮度で判定・閾値3日デフォルト）。`.github/workflows/seo-triage-daily-watchdog.yml` が毎日 17:00 JST に実行し、3日以上止まると GitHub Issue 起票 → オーナーにメール。
+  2. 復旧後は Issue を自動クローズ（原則6）。今日の line-daily は健全（2026-11-07）なので即時 Issue 無し状態を確認。失敗ケースは --max-silence-days 0 相当のテストで動作確認済み。
+  3. `docs/seo-triage-daily-runbook.md` を新設。窓の外へ落ちたレポートを手動で遡る手順・定期実行指示文の絵文字除去をオーナーに依頼する一文を含む。
+  4. `tests/seo_triage_daily_health.test.js`（5件）が追加され全件 pass。npm test: 1920/1921 pass（1件は既存の pre-existing failure・SEO-152 とは無関係）。
+  5. `.claude/commands/seo-triage.md`・`seo-triage-weekly.md` の検索語から絵文字を除いた。定期実行の指示文はオーナー作業のため `docs/seo-triage-daily-runbook.md` に依頼を記載した。
 
 ### [MEO-001] 店のデータの正しさ・送客の数え方・検索流入の棚卸しを進める（旧 MEO 計画・改訂版）
 
