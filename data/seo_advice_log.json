@@ -4780,6 +4780,46 @@
       "brand_reason": "同じメールの再取得。判定は 11-03 の実行のとおり（採用 SEO-150/151、却下3）。11-01〜11-07 の週次はまだ届いていない（通常 11-08 朝着）",
       "category": null,
       "fingerprint": "945244ce58fbc86c"
+    },
+    {
+      "id": null,
+      "date": "2026-11-08",
+      "source": "line-daily",
+      "advice": "[レポート11-06] 🟡 予約クリック率1.2%（訪問167人・2回）。👉 journal/ の日次記事の予約導線(cta_reserve)を見直し、より目立つ位置やデザインに変更して予約への誘導を強化する",
+      "verdict": "duplicate",
+      "brand_reason": "重複（予約ボタンを目立たせる同旨を 10-02〜11-07 に判定済み。判定器は語の違いで false を返したが主旨は同じ）。1日2回は前日6回・前週37回/週と比べ単日のブレの範囲で、配置の差を検出できる母数がない（制約10）。記事の予約ボタンは add_journal_store_cta.js が店舗データにある店にだけ付ける。TOP5の 11-03 かくおうざん amelie の記事に予約ボタンが無いのは店が店舗データに無いためで、原因側は SEO-150/151 で ready。色・配置は DSN-001 経由",
+      "category": null,
+      "fingerprint": "4692090f9a047716"
+    },
+    {
+      "id": null,
+      "date": "2026-11-08",
+      "source": "line-daily",
+      "advice": "[レポート11-06] 🟡 検索流入64%・SNS流入0%。👉 nagoya-solo-dining・nagoya-unaju の見出しと写真で Instagram 投稿を作成・発信する",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SNS投稿の同旨を 09-25〜11-06 に判定済み・SEO-093/098/101 に集約）。SNS投稿はリポジトリ外の運用で UTM で測る方針、このループの実装対象ではない。記事の X 投稿は自動で稼働中。HotPepper/Places 写真を Instagram に上げるのは規約上不可（CLAUDE.md 写真ソースの禁止事項）",
+      "category": null,
+      "fingerprint": "3a60b839c406dd56"
+    },
+    {
+      "id": null,
+      "date": "2026-11-08",
+      "source": "line-daily",
+      "advice": "[レポート11-06] 🟡 「さく蛸 黒川」など8〜9位台のKW。👉 stores/ の「さく蛸 黒川」静的店舗ページに魅力を伝える情報を足して順位を上げる",
+      "verdict": "duplicate",
+      "brand_reason": "重複・比較待ち（同旨を 11-03〜11-07 に判定済み）。さく蛸の店舗ページは実在せず（店舗データに無い）、原因は SEO-150/151 で ready。記事は #1066 で 10-30 に題を書き直し 11-13 に比較。比較前に変えると前後比が取れない（GSCループの原則）",
+      "category": null,
+      "fingerprint": "c8c7405d7b466fec"
+    },
+    {
+      "id": null,
+      "date": "2026-11-08",
+      "source": "line-weekly",
+      "advice": "[週次 2026-10-25〜10-31・11-08 の再取得] 訪問811人+38%・閲覧1107+31%と助言3件（電話ボタン削除・回遊・さく蛸）",
+      "verdict": "duplicate",
+      "brand_reason": "同じメールの再取得。判定は 11-03 の実行のとおり（採用 SEO-150/151、却下3）。11-01〜11-07 の週次はまだ届いていない（前回は月曜 08:07 着のため 11-09 朝着の見込み。過去ログの「11-08 朝着」は誤り）",
+      "category": null,
+      "fingerprint": "945244ce58fbc86c"
     }
   ]
 }
