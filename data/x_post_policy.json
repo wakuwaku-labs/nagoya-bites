@@ -114,6 +114,11 @@
     "until": "2026-11-21",
     "help": "URL あり／なしの実験。docs/decisions/0058（2026-11-07 本人承認・採用・期間2週間 2026-11-08〜2026-11-21 JST）。id は 1 から 2 に変更（1 だと 14 日中 URL ありが 3 日だけで比べられないため。2 は 7 日ずつ）。期間の外は自動でオフ（enabled のまま放っておいてよい）。true のとき、日付と id から決まる割り当てで noUrlShare の割合の日は本文のリンクを外して出す（検査は URL 以外すべて通す）。割り当ては再実行でも変わらない。台帳 data/x_post_log.json に experiment・url_variant（'url' か 'no_url'）が付く。since/until は YYYY-MM-DD（空なら無制限）。戻すのは enabled を false に戻す1行だけ"
   },
+  "planExperiment": {
+    "enabled": true,
+    "maxAgeDays": 8,
+    "help": "SNS分析ツールの割り当て（iCloud の nagoya_bites/next.json の plan・docs/decisions/0059）。true のとき Mac 側の文面づくり（scripts/write_x_draft.js）が、今日の枠（JST の曜日）の型・1行目・長さを Claude への指示に足し、使った枠を保存した文面と台帳（plan_cell・plan_experiment）に残す。ファイルが無い・壊れ・maxAgeDays 日より古い・schema 違い・別の週なら指定なし（今までどおり）。URL の実験（urlExperiment・0058）とは独立に動く。戻すのは enabled を false に戻す1行だけ。置き場は環境変数 SNS_ANALYZER_X_DIR で変えられる"
+  },
   "maxWeightedLength": 280,
   "duplicateWindowDays": 30,
   "livePage": {

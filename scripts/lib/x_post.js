@@ -312,7 +312,7 @@ function postCandidates({ entry, policy, date, html, root = ROOT }) {
         const b = buildDraftPost(draft, entry, policy);
         // 返信の検査に落ちたら、保存した文面は使わない（定型に戻る）
         const rf = b.ok && b.replies ? validateReplies(b.replies, { policy, articleText: htmlToText(html), root }) : [];
-        out.push(b.ok && !rf.length ? b : { mode: 'draft', failures: b.ok ? rf : [b.reason] });
+        out.push(b.ok && !rf.length ? { ...b, ...(draft.plan && typeof draft.plan === 'object' ? { plan: draft.plan } : {}) } : { mode: 'draft', failures: b.ok ? rf : [b.reason] });
       }
     }
   }
