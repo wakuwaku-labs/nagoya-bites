@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-08T19:10:45.914Z",
+  "generatedAt": "2026-11-08T21:43:16.714Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2997,
-    "pageViews": 4276,
-    "sessions": 3285,
+    "activeUsers": 3004,
+    "pageViews": 4284,
+    "sessions": 3288,
     "avgSessionDuration": 113.1,
-    "bounceRate": 0.3,
+    "bounceRate": 0.299,
     "pagesPerSession": 1.3
   },
   "dailyReference": {
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2527,
-      "direct": 521,
+      "organic": 2533,
+      "direct": 522,
       "social": 49,
       "ai_assistant": 227,
       "referral": 35,
@@ -29,7 +29,7 @@
       "organic": 75.2,
       "direct": 15.5,
       "social": 1.5,
-      "ai_assistant": 6.8,
+      "ai_assistant": 6.7,
       "referral": 1,
       "paid": 0,
       "other": 0
@@ -39,7 +39,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1153
+      "sessions": 1156
     },
     {
       "source": "bing",
@@ -49,12 +49,12 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 519
+      "sessions": 522
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 475
+      "sessions": 476
     },
     {
       "source": "chatgpt.com",
@@ -220,7 +220,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 352,
+    "outboundClicks": 353,
     "ctaClickRate": 10.7,
     "byDomain": [
       {
@@ -245,7 +245,7 @@
       },
       {
         "domain": "www.instagram.com",
-        "clicks": 18
+        "clicks": 19
       },
       {
         "domain": "jouhou.nagoya",
@@ -270,7 +270,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 245,
+      "organic": 246,
       "direct": 53,
       "social": 10,
       "ai_assistant": 42,
@@ -315,15 +315,15 @@
         "clicks": 8
       },
       {
+        "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
+        "clicks": 7
+      },
+      {
         "path": "/stores/J001147583.html",
         "clicks": 7
       },
       {
         "path": "/index.html",
-        "clicks": 6
-      },
-      {
-        "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
         "clicks": 6
       },
       {
@@ -710,6 +710,11 @@
         "clicks": 1
       },
       {
+        "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
+        "domain": "www.instagram.com",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J000015627.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -897,11 +902,6 @@
       {
         "path": "/stores/J001239080.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001257937.html",
-        "domain": "www.google.com",
         "clicks": 1
       }
     ],
@@ -1153,8 +1153,8 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2997,
-    "stage": "takeoff",
+    "value": 3004,
+    "stage": "healthy",
     "thresholds": {
       "phase0": 500,
       "takeoff": 3000,
