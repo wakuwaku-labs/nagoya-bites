@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-07T21:29:40.340Z",
+  "generatedAt": "2026-11-08T00:15:53.888Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2954,
-    "pageViews": 4234,
-    "sessions": 3278,
-    "avgSessionDuration": 112.9,
-    "bounceRate": 0.311,
+    "activeUsers": 2959,
+    "pageViews": 4241,
+    "sessions": 3282,
+    "avgSessionDuration": 112.8,
+    "bounceRate": 0.31,
     "pagesPerSession": 1.29
   },
   "dailyReference": {
@@ -17,10 +17,10 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2499,
-      "direct": 528,
+      "organic": 2504,
+      "direct": 529,
       "social": 49,
-      "ai_assistant": 217,
+      "ai_assistant": 218,
       "referral": 32,
       "paid": 0,
       "other": 0
@@ -39,17 +39,17 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1129
+      "sessions": 1132
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 845
+      "sessions": 846
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 500
+      "sessions": 501
     },
     {
       "source": "(direct)",
@@ -59,7 +59,7 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 142
+      "sessions": 143
     },
     {
       "source": "openai",
@@ -74,7 +74,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 24
+      "sessions": 25
     },
     {
       "source": "duckduckgo",
@@ -185,8 +185,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 445,
-      "sessions": 423
+      "pageViews": 446,
+      "sessions": 424
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -210,12 +210,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 347,
+    "outboundClicks": 348,
     "ctaClickRate": 10.6,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 130
+        "clicks": 131
       },
       {
         "domain": "www.google.com",
@@ -260,7 +260,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 245,
+      "organic": 246,
       "direct": 52,
       "social": 10,
       "ai_assistant": 39,
@@ -1139,7 +1139,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2954,
+    "value": 2959,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
