@@ -891,7 +891,7 @@
 
 ### [ISSUE-172] ISSUE-169 で決められなかった5店の営業を、30日後に一次情報で確かめ直す
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-11-08）
 - **detected**: 2026-10-09
 - **due**: 2026-11-09
 - **category**: data-quality / trust
@@ -914,6 +914,17 @@
   - Google の紐付けは別の店（[[ISSUE-147]] の追記）なので、営業を示す情報が無い
   - 特集 nagoya-sweets に掲載中。FAQ は「最新の営業時間を確かめて」に書き直してある
   - 確かめ方と、閉店とする基準は [[ISSUE-169]] と同じ
+- **結果（2026-11-08）**: 6店（決められない5店＋かき氷 うと）を再確認。ホットペッパーページ取り直し＋Google Places API（Text Search＋Place Details）で2店を閉店と確認、4店は決められないのまま。
+  - **閉店と確認**:
+    - Cafe & Pizzeria Harbor（J004090514・熱田）: Google「Cafe & Pizzeria harbor」(熱田区千年1-8-20) placeId=ChIJJRTP_2x7A2ARQnjmufVqvrY → CLOSED_PERMANENTLY。食べログ【閉店】。2つの独立情報源で閉店基準を満たす。`data/closed_stores.json` に追加。
+    - カラオケ レインボー 栄店（J001110537・栄）: Google「Karaoke Rainbow Sakae」(中区錦3-17-15) placeId=ChIJ66M4QtRwA2ARjO0zJpActD4 → CLOSED_PERMANENTLY。食べログ【閉店】。口コミ0件。2つの独立情報源で閉店基準を満たす。`data/closed_stores.json` に追加。
+  - **決められないのまま（4店）**:
+    - 博多もつ鍋屋 HANARE（J003633026）: ホットペッパー HTTP 404。Google に「博多もつ鍋屋 HANARE 名古屋伏見店」(placeId=ChIJVcNlgr9wA2ARDl6Hb1p1MdI) → OPERATIONAL（取得時）。住所一致（中区錦2-5-14）。食べログ【閉店】。Google が営業中のため基準未達。
+    - 金鯱うなぎ 伏見店（J001143016）: ホットペッパー HTTP 404。Google「金鯱うなぎ 伏見店」placeId=ChIJG36fFr5wA2ARxqCjFdBAlI8 → OPERATIONAL。食べログ【閉店】。Google が営業中のため基準未達。
+    - 喰えるBAR shin（J003617516）: ホットペッパー HTTP 404。Google「スタンダード」(中区丸の内3-15-11)が OPERATIONAL。shin 自体のエントリは見つからず。Google 情報が別店名のため根拠にできない。
+    - かき氷 うと（J004634502・栄）: ホットペッパー HTTP 404 のまま。Google Text Search で 「かき氷 うと 名古屋」→ OPERATIONAL の「うと」(千種区今池)を発見するが栄マルエイガレリア店との住所一致なし。食べログ個別ページ取得不可。基準未達。
+  - **次のアクション**: 決められない4店について、オーナーに電話での確認を依頼するか1行で確認する（acceptance2）。なお閉店した2店（Harbor・レインボー）は次回の build.js 実行（API キーあり）で自動的に除外される。
+  - `data/closed_stores.json`: 110件（+2件）。`data/store_liveness_reviews.json`: 再確認記録6件追加。`data/place_status.json`: 100件のOPERATIONAL記録追加（ISSUE-173の place_status.yml の日次実行分）。
 
 ### [ISSUE-173] 掲載店の Google の営業状態（business_status）を Basic の項目だけで定期的に取り直す
 
@@ -9051,6 +9062,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-11-08 | DataKeeper(routine) | ISSUE-172 done化 — 決められない6店を再確認。Harbor（熱田）・レインボー 栄店 2店を閉店と確認し `data/closed_stores.json`（110件）に追記。残4店（博多もつ鍋屋HANARE・金鯱うなぎ伏見・喰えるBAR shin・かき氷うと）は決められないのまま（Google が OPERATIONAL または別店名）。`data/store_liveness_reviews.json` に再確認記録6件追加。次回 build.js 実行で2店が自動除外される。 | ✅ 本コミット |
 | 2026-11-02 | Builder(/solve-next) | SEO-126 実装・デプロイ — 688条件ページ中498本をnoindex,follow（i軒数不足265本・ii重複≥80%233本・iii公開60日+GSC表示0は0本）。174本インデックス対象。sitemap.xml 282エントリに削減。policy.json に noindex 閾値追加、manifest に indexable フィールド付与。PR #714 | ✅ commit 6da81b81 |
 | 2026-10-29 | Orchestrator(routine) | SNS-004 done化 — `data/x_post_policy.json` mode=live（2026-10-15切替）、`data/x_post_log.json` に2026-10-14〜10-28の15件連続投稿を確認。7日連続acceptance超過・全acceptance達成。 | ✅ 本コミット |
 | 2026-10-29 | Orchestrator(routine) | SNS-001 done化 — 子課題SNS-002〜005全done、UTM付き投稿15件連続記録済み、watchdog稼働中。全acceptance達成。 | ✅ 本コミット |

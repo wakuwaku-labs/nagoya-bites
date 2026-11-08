@@ -903,6 +903,26 @@
       "確認日": "2026-10-09",
       "出典": "https://www.hotpepper.jp/strJ003450558/",
       "理由": "移転閉店（ISSUE-178 で一次情報を確認）。錦3丁目の店はホットペッパーの店舗ページが店名の上に【閉店】を表示し、店の公式 Instagram の住所は熱田区池内町4-1。Google の店舗情報「まるゆ」も熱田区池内町4-1 で営業中。根拠の全体は data/store_liveness_reviews.json"
+    },
+    {
+      "店名": "Cafe & Pizzeria Harbor ハーバー",
+      "エリア": "熱田",
+      "ホットペッパーID": "J004090514",
+      "食べログID": "23064621",
+      "閉店日": "不明（2026年1月以降・2026年9月以前）",
+      "確認日": "2026-11-08",
+      "出典": "https://www.google.com/maps/place/?q=place_id:ChIJJRTP_2x7A2ARQnjmufVqvrY",
+      "理由": "閉店（ISSUE-172 で再確認）。Google の店舗情報「Cafe & Pizzeria harbor」（熱田区千年1-8-20）が CLOSED_PERMANENTLY（placeId: ChIJJRTP_2x7A2ARQnjmufVqvrY）、食べログも【閉店】。2つの独立した情報源が閉店を示す。最終来店痕跡は 2026-01 の Hotpepper 口コミ（閉店指標より前）。根拠の全体は data/store_liveness_reviews.json"
+    },
+    {
+      "店名": "カラオケ レインボー 栄店",
+      "エリア": "栄",
+      "ホットペッパーID": "J001110537",
+      "食べログID": "23055454",
+      "閉店日": "不明",
+      "確認日": "2026-11-08",
+      "出典": "https://www.google.com/maps/place/?q=place_id:ChIJ66M4QtRwA2ARjO0zJpActD4",
+      "理由": "閉店（ISSUE-172 で再確認）。Google の店舗情報「Karaoke Rainbow Sakae」（中区錦3-17-15）が CLOSED_PERMANENTLY（placeId: ChIJ66M4QtRwA2ARjO0zJpActD4）、食べログも【閉店】。2つの独立した情報源が閉店を示す。口コミなし。根拠の全体は data/store_liveness_reviews.json"
     }
   ]
 }
