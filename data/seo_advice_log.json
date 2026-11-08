@@ -4820,6 +4820,76 @@
       "brand_reason": "同じメールの再取得。判定は 11-03 の実行のとおり（採用 SEO-150/151、却下3）。11-01〜11-07 の週次はまだ届いていない（前回は月曜 08:07 着のため 11-09 朝着の見込み。過去ログの「11-08 朝着」は誤り）",
       "category": null,
       "fingerprint": "945244ce58fbc86c"
+    },
+    {
+      "id": null,
+      "date": "2026-11-09",
+      "source": "line-daily",
+      "advice": "[レポート11-07] 🟢 訪問90人に予約ボタン8回と好調。👉 features/nagoya-solo-dining（人気1位）の冒頭に「今すぐ予約」ボタンを大きく目立つように追加し予約サイトへ誘導",
+      "verdict": "rejected",
+      "brand_reason": "却下（単日ノイズ・制約10／信頼・制約7）。予約8回は1日90訪問の数字で、予約率は日々大きく振れる（10-07/10-08 に同理由で却下済み）。solo-dining は掲載店ごとに予約・地図の導線を既に持つ。「今すぐ予約」の大ボタンは送客サイト的な煽りで、広告ゼロ・編集独立の信頼担保と相反する（09-30 に同旨で却下済み）",
+      "category": null,
+      "fingerprint": "0c89d59eb093d77c"
+    },
+    {
+      "id": "SEO-153",
+      "date": "2026-11-09",
+      "source": "line-daily",
+      "advice": "[レポート11-07] 🟡 1訪問1.3ページと回遊が少ない。👉 journal/2026-11-06-hisaya-dam-sake-festa-manmarumura（人気2位）の記事下に関連するfeatures/の特集記事へのリンクを2つ追加",
+      "verdict": "adopted",
+      "brand_reason": "振替採用。1記事への手書き追記は 10-13 に同旨で却下済み（関連ブロックは refresh_journal_related.js が自動生成）。ただし当該記事の関連ブロックを実地確認すると、主リンクの特集が『モーニング・喫茶10選』で、題名の出店者の業態『発酵喫茶』に TOPIC_FEATURES の /喫茶/ が当たった誤りだった（主題は日本酒イベント）。三層編集の導線を主題に合わせる修正として P3 で起票",
+      "category": "SEO",
+      "fingerprint": "7a7d7cca99108d82"
+    },
+    {
+      "id": null,
+      "date": "2026-11-09",
+      "source": "line-daily",
+      "advice": "[レポート11-07] 🟡 「名古屋駅 一人飲み」平均11.3位。👉 features/nagoya-solo-diningの記事タイトルに「名古屋駅」を追加し本文中に「一人飲み」を自然な形で数回追記",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-28〜11-03 に同旨を判定済み）。名駅×一人飲みの受け皿は features/meieki-hitori-nomi.html で、市内全域の solo-dining の題に名古屋駅を足すと自己カニバリ。本文の『一人飲み』は既に46回。10-10 の内部リンク追加の効果判定は SEO-087 の 2026-11-07 チェック（未実施）に集約",
+      "category": null,
+      "fingerprint": "03be8c33c9a107ff"
+    },
+    {
+      "id": null,
+      "date": "2026-11-09",
+      "source": "line-weekly",
+      "advice": "[週次 2026-11-01〜11-07] 🟢 予約クリック率7.1%。👉 トップページ(index.html)のファーストビューに「人気店の予約はこちら」CTAを大きく表示し予約ボタン(cta_click)の視認性を高める",
+      "verdict": "rejected",
+      "brand_reason": "却下（編集独立・制約7／実装済み）。FV は SEO-040（価値提案＋人気特集導線・done）で設計済みで、予約導線は SEO-013/037/105（done）でカード・モーダルに常設。トップに『人気店の予約はこちら』を置くと、どの店を出すかが広告枠と見分けられず、送客サイト化して広告ゼロの信頼担保と相反する。予約率7.1%は目標を上回っており、視認性不足を示す事実が無い（制約10）",
+      "category": null,
+      "fingerprint": "0b7dd5b9de29b14a"
+    },
+    {
+      "id": null,
+      "date": "2026-11-09",
+      "source": "line-weekly",
+      "advice": "[週次 2026-11-01〜11-07] 🟡 検索流入比率73%。👉 「名古屋駅 一人飲み」で11.3位の特集 nagoya-solo-dining の記事を拡充しコンテンツを強化して順位アップ",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-28〜11-03 に同旨を判定済み）。同KWの受け皿は features/meieki-hitori-nomi.html、solo-dining の強化は SEO-087（in_progress）に集約。SEO-087 は 10-10 の内部リンク追加の効果を 2026-11-07 に判定する予定で、判定前に手を足さない（未実施のため SEO-087 に追記）",
+      "category": null,
+      "fingerprint": "ccc7ee31f8a778e8"
+    },
+    {
+      "id": null,
+      "date": "2026-11-09",
+      "source": "line-weekly",
+      "advice": "[週次 2026-11-01〜11-07] 🟡 1訪問1.3ページと伸び悩み。👉 nagoya-solo-dining 特集記事内に関連する他の特集記事(features/)への内部リンクを2〜3箇所追加し回遊率を高める",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-26 週次に同旨を却下済み）。solo-dining は既に meieki-hitori-nomi / hard-to-book / kospa / meieki / gourmet-guide ほか関連特集へリンク済みで、10-10 に meieki-hitori-nomi への本文内リンクも追加済み。関連の薄い特集を足すとシーン専門性を薄める",
+      "category": null,
+      "fingerprint": "3aadcaca4a391dbc"
+    },
+    {
+      "id": null,
+      "date": "2026-11-09",
+      "source": "line-weekly",
+      "advice": "[週次 2026-11-01〜11-07 総括] 訪問778人(-4%)・閲覧1136(+3%)・訪問回数876(-2%)・成長ステータス横ばい（次の一手が必要）・流入 Google33%/Bing25%/Yahoo15%",
+      "verdict": "duplicate",
+      "brand_reason": "重複（新しい起票なし）。前週+38%の翌週の-4%で、悪化トレンドではなく横ばい。人気1位は今週も solo-dining（89回）で、勝ち筋の分解と横展開は SEO-087 に集約済み。『次の一手』に当たるのは SEO-087 の 11-07 効果判定（未実施）なので、その実施を SEO-087 に追記して促す。Bing 比率の上昇は 11-05 の日次で判定済み",
+      "category": null,
+      "fingerprint": "72f0da3326a34935"
     }
   ]
 }
