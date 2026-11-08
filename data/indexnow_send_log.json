@@ -2,27 +2,30 @@
   "ok": true,
   "dry_run": false,
   "status": 200,
-  "sent": 4,
+  "sent": 7,
   "response": "",
   "breakdown": {
     "cap": 200,
     "fixed": 3,
-    "journal": 1,
+    "journal": 2,
     "stores": {
       "selected": 0,
       "pending": 0,
       "comment_not_on_page": 0
     },
     "hubs": {
-      "selected": 0,
-      "pending": 0
+      "selected": 2,
+      "pending": 2
     }
   },
   "urls": [
     "https://nagoya-bites.com/",
     "https://nagoya-bites.com/journal/",
     "https://nagoya-bites.com/features/",
-    "https://nagoya-bites.com/journal/2026-11-07-ozone-daikinboshi-hakata-kushiyaki-solo-bonenkai.html"
+    "https://nagoya-bites.com/journal/2026-11-07-ozone-daikinboshi-hakata-kushiyaki-solo-bonenkai.html",
+    "https://nagoya-bites.com/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
+    "https://nagoya-bites.com/stores/area/sakae/index.html",
+    "https://nagoya-bites.com/stores/area/index.html"
   ],
-  "logged_at": "2026-11-07T21:41:14.270Z"
+  "logged_at": "2026-11-08T00:30:28.089Z"
 }
