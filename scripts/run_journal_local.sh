@@ -960,4 +960,13 @@ if [ "$NOTE_MODE" = "draft" ] || [ "$NOTE_MODE" = "live" ]; then
   # 成否を data/note_post_health.json に書いたので push する（Mac の通知は補助。主経路は見張り役の Issue）
   push_health
 fi
+
+# note の数字（自分の記事のビュー・スキ・コメントとフォロワー）を1日1回読む（docs/decisions/0059）。
+# 非ブロッキング: 失敗しても公開済みの記事・X・note の投稿には影響しない。読むだけ（書き込み・スキ・フォローはしない）。
+# 保存先は iCloud の sns-analyzer-x/nagoya_bites/note_metrics.json（公開リポジトリには置かない）。同じ日に2回動いても行は増えない
+log "note の数字を取得（fetch_note_stats.js）"
+if ! run_with_timeout 240 caffeinate -s -i -d -u node scripts/fetch_note_stats.js >>"$LOG" 2>&1; then
+  log "⚠️ note の数字の取得に失敗（非ブロッキング・その日は取得なし）"
+  notify "note の数字の取得失敗" "ログ: $LOG。未ログインなら node scripts/note_login.js --google"
+fi
 exit 0

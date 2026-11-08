@@ -24,6 +24,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 const X = require('./lib/x_post');
 const { findEntry, todayJst } = require('./post_journal_to_x');
+const S = require('./lib/sns_analyzer');
 
 const PROMPT_REL = 'docs/x-post-prompt.md';
 
@@ -62,9 +63,58 @@ function wordingList(root) {
   return compilePolicy(loadWording(root)).terms.filter((t) => t.severity === 'error').map((t) => t.label || t.pattern);
 }
 
-function buildPrompt({ root, entry, material, previous }) {
+
+// ── SNS分析ツールの割り当て（判断記録 0059）─────────────────────────────────
+const FIRST_LINE_JA = {
+  question: '本文の1行目を、読んだ人が「自分のことだ」と思う問いかけ（疑問形）にする。',
+  number: '本文の1行目に、記事の数字（evidence の引用の中にあるもの）を置く。',
+  assertion: '本文の1行目を、記事の事実をそのまま言い切る一文にする（煽りの言葉は使わない）。',
+};
+const LENGTH_JA = {
+  short: '本文は全角で50字までの短さにする。',
+  mid: '本文は全角で51〜80字にする。',
+  long: '本文は全角で81〜110字にする（使い切らなくてよい。足りない事実を水増ししない）。',
+};
+
+/**
+ * 今日（date・JST）の割り当て。policy.planExperiment.enabled が true で、iCloud の next.json が使える状態のときだけ
+ * { plan } を返す。使えないときは { plan: null, reason }＝今までどおり（指定なし）。例外は投げない。
+ */
+function loadPlan(date, policy, now = new Date()) {
+  const cfg = policy.planExperiment;
+  if (!cfg || cfg.enabled !== true) return { plan: null, reason: 'off' };
+  let r;
+  try { r = S.readFresh('next.json', { schema: 'x-next/1', maxAgeDays: Number(cfg.maxAgeDays) || 8, now }); } catch (e) { return { plan: null, reason: `error:${e.message}` }; }
+  if (!r.ok) return { plan: null, reason: r.reason };
+  let p;
+  try { p = S.pickSlot(r.data, date); } catch (e) { return { plan: null, reason: `error:${e.message}` }; }
+  return p.ok ? { plan: p.plan } : { plan: null, reason: p.reason };
+}
+
+/** 文面づくりの指示に足す節（指定が1つも無ければ空）。 */
+function planSection(plan) {
+  if (!plan) return [];
+  const lines = [];
+  if (plan.nb_kind) lines.push(`- 型は \`${plan.nb_kind}\` で書く。記事の事実がどうしてもその型に合わないときだけ、いちばん合う別の型にしてよい。`);
+  if (plan.first_line) lines.push(`- ${FIRST_LINE_JA[plan.first_line]}`);
+  if (plan.length) lines.push(`- ${LENGTH_JA[plan.length]}`);
+  if (!lines.length) return [];
+  return ['', '## 今日の指定', '次の指定は、上の「書き方の決まり」を破らない範囲で守る（決まりが優先）。', ...lines];
+}
+
+/** 保存する割り当ての記録。followed = 指定の型で書けたか（型の指定が無ければ null）。 */
+function planRecord(plan, type) {
+  return {
+    week: plan.week, slot: plan.slot, role: plan.role, experiment_id: plan.experiment_id, cell_id: plan.cell_id,
+    requested: { nb_kind: plan.nb_kind, first_line: plan.first_line, length: plan.length },
+    ...(plan.nb_kind ? { followed: type === plan.nb_kind } : {}),
+  };
+}
+
+function buildPrompt({ root, entry, material, previous, plan }) {
   const parts = [
     promptBody(root),
+    ...planSection(plan),
     '',
     '## 使わない言い方',
     wordingList(root).map((w) => `- ${w}`).join('\n'),
@@ -159,12 +209,15 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
   const articleText = X.htmlToText(html);
   const material = articleMaterial(html);
 
+  const { plan, reason: planReason } = loadPlan(date, policy, now);
+  if (plan) out.plan = plan; else if (planReason !== 'off') out.plan_skipped = planReason;
+
   const attempts = Math.max(1, Number(cfg.attempts) || 1);
   const timeoutMs = Math.max(10, Number(cfg.timeoutSec) || 150) * 1000;
   let previous = null;
   for (let i = 1; i <= attempts; i++) {
     const started = Date.now();
-    const r = await call(args.claudeBin, buildPrompt({ root, entry, material, previous }), timeoutMs);
+    const r = await call(args.claudeBin, buildPrompt({ root, entry, material, previous, plan }), timeoutMs);
     const seconds = Math.round((Date.now() - started) / 1000);
     if (!r.ok) {
       // 応答が無い・認証切れ・利用上限は、書き直させても直らない
@@ -188,9 +241,16 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
       ...(reply.replies !== undefined ? { replies: Array.isArray(reply.replies) ? reply.replies.map((x) => (typeof x === 'string' ? x.trim() : x)) : reply.replies } : {}),
       generated_at: now.toISOString(),
       generator: `claude --print（${PROMPT_REL}）`,
+      ...(plan ? { plan: planRecord(plan, reply.type) } : {}),
     };
     const failures = checkAll(draft, { entry, policy, articleText, root });
     out.attempts.push({ i, seconds, reason: failures.join(' / ') || null });
+    // 指定の型と違う型で通ったときは、最後の回でなければ1回書き直させる（最後の回は通った案を使い、followed:false で残す）
+    if (!failures.length && plan && plan.nb_kind && reply.type !== plan.nb_kind && i < attempts) {
+      out.attempts[out.attempts.length - 1].reason = `plan_kind_differs:${reply.type}`;
+      previous = { reason: `指定の型 ${plan.nb_kind} と違う型（${reply.type}）で書かれた。記事に合う限り ${plan.nb_kind} で書き直す`, raw: JSON.stringify({ type: reply.type, body: reply.body, replies: reply.replies, evidence: reply.evidence }) };
+      continue;
+    }
     if (!failures.length) {
       out.draft = draft;
       out.post = X.buildDraftPost(draft, entry, policy).text;
@@ -242,4 +302,4 @@ async function main() {
 
 if (require.main === module) main();
 
-module.exports = { run, parseArgs, parseReply, articleMaterial, buildPrompt, checkAll, summary, callClaude };
+module.exports = { loadPlan, planSection, planRecord, run, parseArgs, parseReply, articleMaterial, buildPrompt, checkAll, summary, callClaude };

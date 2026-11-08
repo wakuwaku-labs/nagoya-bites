@@ -173,7 +173,7 @@ async function sendTweet(text, cred, fetchImpl = fetch, replyToId = null) {
 }
 
 /** 結果を台帳・心拍に書く（live のときだけ呼ぶ）。 */
-function record(root, { date, entry, result, reason, text, textMode, draftReason, tweetId, errorClass, status, thread, experiment }) {
+function record(root, { date, entry, result, reason, text, textMode, draftReason, tweetId, errorClass, status, thread, experiment, plan }) {
   const now = new Date().toISOString();
   if (status) {
     const log = X.readLog(root);
@@ -188,6 +188,9 @@ function record(root, { date, entry, result, reason, text, textMode, draftReason
       ...(reason ? { reason } : {}),
       ...(thread ? { thread } : {}),
       ...(experiment ? { experiment: experiment.experiment, url_variant: experiment.url_variant } : {}),
+      ...(plan && plan.cell_id ? { plan_cell: plan.cell_id } : {}),
+      ...(plan && plan.experiment_id ? { plan_experiment: plan.experiment_id } : {}),
+      ...(plan && typeof plan.followed === 'boolean' ? { plan_followed: plan.followed } : {}),
     };
     // 同じ記事の未完了の行（failed・blocked）は最新の1行に置き換える（台帳が失敗で膨らまないように）
     log.posts = log.posts.filter((p) => !(p.slug === entry.slug && (p.status === 'failed' || p.status === 'blocked')));
@@ -266,6 +269,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   out.textMode = built.mode;
   if (built.replies) out.replies = built.replies;
   if (built.type) out.draftType = built.type;
+  if (built.plan) out.plan = built.plan;
 
   // 本番の記事が出ているか（出ていないページを貼るとリンクカードが壊れる）
   if (!args.skipLiveCheck) {
@@ -288,7 +292,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
 
   const cred = credentials(env);
   if (!cred) {
-    record(root, { date, entry, result: 'failed', reason: 'no_credentials', errorClass: 'auth', text: built.text, textMode: built.mode, experiment: out.experiment, draftReason, status: 'failed' });
+    record(root, { date, entry, result: 'failed', reason: 'no_credentials', errorClass: 'auth', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, status: 'failed' });
     return { ...out, result: 'failed', reason: 'no_credentials', errorClass: 'auth', exitCode: 1 };
   }
 
@@ -297,7 +301,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
     res = await sendTweet(built.text, cred, fetchImpl);
   } catch (e) {
     const reason = `network:${e.message || e}`;
-    record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, experiment: out.experiment, draftReason, status: 'failed' });
+    record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, status: 'failed' });
     return { ...out, result: 'failed', reason, errorClass: 'server', exitCode: 1 };
   }
   const id = res.body && res.body.data && res.body.data.id;
@@ -327,7 +331,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
         }
       }
     }
-    record(root, { date, entry, result: 'posted', text: built.text, textMode: built.mode, experiment: out.experiment, draftReason, tweetId: id, status: 'posted', thread });
+    record(root, { date, entry, result: 'posted', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, tweetId: id, status: 'posted', thread });
     return { ...out, result: 'posted', tweetId: id, tweetUrl: `https://x.com/i/web/status/${id}`, ...(thread ? { repliesPosted: thread.replies.length, ...(thread.failed_reason ? { repliesFailed: thread.failed_reason } : {}) } : {}), exitCode: 0 };
   }
   const errorClass = X.classifyError(res.status, res.body);
@@ -335,10 +339,10 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   const reason = `http_${res.status}: ${detail}`;
   if (errorClass === 'duplicate') {
     // 同じ文面が既に X にある＝前の回で届いていた。もう送らない
-    record(root, { date, entry, result: 'duplicate', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, draftReason, status: 'duplicate' });
+    record(root, { date, entry, result: 'duplicate', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, status: 'duplicate' });
     return { ...out, result: 'duplicate', reason, errorClass, exitCode: 0 };
   }
-  record(root, { date, entry, result: 'failed', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, draftReason, status: 'failed' });
+  record(root, { date, entry, result: 'failed', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, status: 'failed' });
   return { ...out, result: 'failed', reason, errorClass, exitCode: 1 };
 }
 

@@ -10,6 +10,8 @@ const X = require('../scripts/lib/x_post');
 const { run: postRun } = require('../scripts/post_journal_to_x');
 const W = require('../scripts/write_x_draft');
 
+// 分析の割り当て（iCloud の next.json）が本物の置き場から入らないようにする（判断記録 0059）
+process.env.SNS_ANALYZER_X_DIR = fs.mkdtempSync(path.join(os.tmpdir(), 'xdraft-nonext-'));
 const REAL_ROOT = path.resolve(__dirname, '..');
 const realPolicy = X.loadPolicy(REAL_ROOT);
 const policy = { ...realPolicy, draft: { ...realPolicy.draft, generate: true, useInPost: true }, template: { points: true } };
