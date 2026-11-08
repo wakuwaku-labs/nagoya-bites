@@ -1061,6 +1061,169 @@
           "posts": 6
         }
       }
+    },
+    {
+      "id": "J000972095",
+      "storeName": "博多もつ鍋屋 HANARE",
+      "issue": "ISSUE-172",
+      "checkedAt": "2026-11-08",
+      "verdict": "決められない",
+      "why": "ISSUE-169 と変化なし。食べログの【閉店】が唯一の根拠。ホットペッパーは COVID 臨時休業のまま（口コミ最新 2019-11-15）、Places 検索で「博多もつ鍋屋 HANARE 名古屋市中区葵3-21-17」は候補なし（別チェーンのみ）。閉店を示す独立した2つ目の情報源が無い",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ000972095/",
+          "fetchedAt": "2026-11-08",
+          "status": 200,
+          "shopState": null,
+          "latestReviewDate": "2019-11-15",
+          "netReservation": false,
+          "note": "COVID臨時休業メッセージ継続（2021-01-20 更新のまま）"
+        },
+        "places": {
+          "fetchedAt": "2026-11-08",
+          "via": "Text Search",
+          "query": "博多もつ鍋屋 HANARE 名古屋市中区葵3-21-17",
+          "candidates": [],
+          "usedAsEvidence": false
+        }
+      }
+    },
+    {
+      "id": "J004445210",
+      "storeName": "鰻 ひつまぶし 金鯱うなぎ 伏見店",
+      "issue": "ISSUE-172",
+      "checkedAt": "2026-11-08",
+      "verdict": "決められない",
+      "why": "情報源の食い違いが続く。ホットペッパーの口コミ最新 2026-04-21（2026-03-07 来店）。Google の店舗情報（同名・同住所・placeId: ChIJ2y7c4lV3A2ARuj-o4ml3xX4）は OPERATIONAL のまま。食べログは【閉店】。Google と Hotpepper の活動が閉店を示す食べログに優先する",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ004445210/",
+          "fetchedAt": "2026-11-08",
+          "status": 200,
+          "shopState": null,
+          "latestReviewDate": "2026-04-21",
+          "latestVisitDate": "2026-03-07",
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJ2y7c4lV3A2ARuj-o4ml3xX4",
+          "fetchedAt": "2026-11-08",
+          "via": "Place Details",
+          "name": "Kinsyachi Unagi",
+          "businessStatus": "OPERATIONAL",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        }
+      }
+    },
+    {
+      "id": "J003410000",
+      "storeName": "喰えるBAR shin",
+      "issue": "ISSUE-172",
+      "checkedAt": "2026-11-08",
+      "verdict": "決められない",
+      "why": "ISSUE-169 と変化なし。食べログ【閉店】、同じ住所（中村区中村町8-60-2）の Google の店舗情報は「Standard」（OPERATIONAL）のまま（PlaceId: ChIJYb45rMF3A2ARQVPXeRt9MXc）。改名か別の店かは確かめられない。ホットペッパーは口コミ0件のまま",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ003410000/",
+          "fetchedAt": "2026-11-08",
+          "status": 200,
+          "shopState": null,
+          "latestReviewDate": null,
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJYb45rMF3A2ARQVPXeRt9MXc",
+          "fetchedAt": "2026-11-08",
+          "via": "Place Details",
+          "name": "Standard",
+          "businessStatus": "OPERATIONAL",
+          "addressVsListing": "same",
+          "usedAsEvidence": false
+        }
+      }
+    },
+    {
+      "id": "J004090514",
+      "storeName": "Cafe & Pizzeria Harbor ハーバー",
+      "issue": "ISSUE-172",
+      "checkedAt": "2026-11-08",
+      "verdict": "閉店",
+      "why": "Google の店舗情報「Cafe & Pizzeria harbor」（熱田区千年1-8-20・placeId: ChIJJRTP_2x7A2ARQnjmufVqvrY）が CLOSED_PERMANENTLY（2026-10-09 の取得では同じ住所の Google の店舗情報が無く、港区の別の会社が引っかかっていた）。食べログも【閉店】。2つの独立した情報源が同じ名前・同じ住所で閉店を示す。最終来店痕跡は 2026-01-26 の Hotpepper 口コミで、両方の閉店指標より前",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ004090514/",
+          "fetchedAt": "2026-11-08",
+          "status": 200,
+          "shopState": null,
+          "latestVisitorDate": "2026-01-26",
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJJRTP_2x7A2ARQnjmufVqvrY",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJJRTP_2x7A2ARQnjmufVqvrY",
+          "fetchedAt": "2026-11-08",
+          "via": "Text Search（Cafe & Pizzeria Harbor 名古屋市熱田区千年1-8-20）",
+          "name": "Cafe & Pizzeria harbor",
+          "address": "日本、〒456-0054 愛知県名古屋市熱田区千年1-8-20",
+          "businessStatus": "CLOSED_PERMANENTLY",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        }
+      }
+    },
+    {
+      "id": "J001110537",
+      "storeName": "カラオケ レインボー 栄店",
+      "issue": "ISSUE-172",
+      "checkedAt": "2026-11-08",
+      "verdict": "閉店",
+      "why": "Google の店舗情報「Karaoke Rainbow Sakae」（中区錦3-17-15・placeId: ChIJ66M4QtRwA2ARjO0zJpActD4）が CLOSED_PERMANENTLY（2026-10-09 の取得では同じ住所に該当なし）。食べログも【閉店】。2つの独立した情報源が同じ住所で閉店を示す。ホットペッパーは口コミ0件（2022-07-13 更新のまま）",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ001110537/",
+          "fetchedAt": "2026-11-08",
+          "status": 200,
+          "shopState": null,
+          "latestReviewDate": null,
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJ66M4QtRwA2ARjO0zJpActD4",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJ66M4QtRwA2ARjO0zJpActD4",
+          "fetchedAt": "2026-11-08",
+          "via": "Text Search（カラオケ レインボー 栄店 名古屋市中区錦3-17-15）",
+          "name": "Karaoke Rainbow Sakae",
+          "address": "日本、〒460-0003 愛知県名古屋市中区錦3-17-15",
+          "businessStatus": "CLOSED_PERMANENTLY",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        }
+      }
+    },
+    {
+      "id": "J004634502",
+      "storeName": "かき氷 うと（栄マルエイガレリア店）",
+      "issue": "ISSUE-172",
+      "checkedAt": "2026-11-08",
+      "verdict": "決められない",
+      "why": "ホットペッパーの掲載ページが HTTP 404 のまま（2026-10-09 から変化なし）。Google の Text Search「かき氷 うと 栄マルエイガレリア 名古屋市中区栄」ではマルエイガレリア（建物）のみが返り、店舗の情報は見つからない。閉店を示す独立した2つ目の情報源が無い",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ004634502/",
+          "fetchedAt": "2026-11-08",
+          "status": 404,
+          "shopState": null
+        },
+        "places": {
+          "fetchedAt": "2026-11-08",
+          "via": "Text Search",
+          "query": "かき氷 うと 栄マルエイガレリア 名古屋市中区栄",
+          "candidates": [{"name": "Maruei Galleria", "businessStatus": "OPERATIONAL"}],
+          "usedAsEvidence": false,
+          "note": "店舗ではなく建物のみが返った"
+        }
+      }
     }
   ]
 }
