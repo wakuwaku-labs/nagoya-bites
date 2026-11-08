@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-08T00:31:40.206Z",
+  "generatedAt": "2026-11-08T12:37:08.251Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 2959,
-    "pageViews": 4241,
-    "sessions": 3282,
-    "avgSessionDuration": 112.8,
-    "bounceRate": 0.31,
+    "activeUsers": 3013,
+    "pageViews": 4309,
+    "sessions": 3338,
+    "avgSessionDuration": 112,
+    "bounceRate": 0.309,
     "pagesPerSession": 1.29
   },
   "dailyReference": {
@@ -17,20 +17,20 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2504,
-      "direct": 529,
+      "organic": 2547,
+      "direct": 543,
       "social": 49,
-      "ai_assistant": 218,
+      "ai_assistant": 227,
       "referral": 32,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 75.2,
-      "direct": 15.9,
-      "social": 1.5,
-      "ai_assistant": 6.5,
-      "referral": 1,
+      "organic": 75,
+      "direct": 16,
+      "social": 1.4,
+      "ai_assistant": 6.7,
+      "referral": 0.9,
       "paid": 0,
       "other": 0
     }
@@ -39,32 +39,37 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1132
+      "sessions": 1158
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 846
+      "sessions": 853
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 501
+      "sessions": 510
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 472
+      "sessions": 479
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 143
+      "sessions": 150
     },
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 67
+      "sessions": 69
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 32
     },
     {
       "source": "x",
@@ -72,14 +77,9 @@
       "sessions": 26
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 25
-    },
-    {
       "source": "duckduckgo",
       "medium": "organic",
-      "sessions": 19
+      "sessions": 20
     },
     {
       "source": "note",
@@ -185,18 +185,18 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 446,
-      "sessions": 424
+      "pageViews": 450,
+      "sessions": 428
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 222,
-      "sessions": 209
+      "pageViews": 224,
+      "sessions": 211
     },
     {
       "path": "/",
-      "pageViews": 109,
-      "sessions": 100
+      "pageViews": 110,
+      "sessions": 101
     },
     {
       "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
@@ -205,21 +205,21 @@
     },
     {
       "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
-      "pageViews": 86,
-      "sessions": 83
+      "pageViews": 87,
+      "sessions": 84
     }
   ],
   "cta": {
-    "outboundClicks": 348,
+    "outboundClicks": 353,
     "ctaClickRate": 10.6,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 131
+        "clicks": 134
       },
       {
         "domain": "www.google.com",
-        "clicks": 73
+        "clicks": 75
       },
       {
         "domain": "prtimes.jp",
@@ -260,16 +260,16 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 246,
+      "organic": 247,
       "direct": 52,
       "social": 10,
-      "ai_assistant": 39,
+      "ai_assistant": 43,
       "referral": 1,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.8,
-    "ctaClickRate_direct": 9.8,
+    "ctaClickRate_organic": 9.7,
+    "ctaClickRate_direct": 9.6,
     "ctaClickRate_social": 20.4,
     "byPage": [
       {
@@ -560,12 +560,22 @@
         "clicks": 2
       },
       {
+        "path": "/stores/J001259913.html",
+        "domain": "www.google.com",
+        "clicks": 2
+      },
+      {
         "path": "/stores/J003366509.html",
         "domain": "www.google.com",
         "clicks": 2
       },
       {
         "path": "/stores/J003649439.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/J003671888.html",
         "domain": "www.hotpepper.jp",
         "clicks": 2
       },
@@ -682,6 +692,11 @@
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
         "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-11-05-sakae-teiban-tune-aozakana-izakaya.html",
+        "domain": "www.hotpepper.jp",
         "clicks": 1
       },
       {
@@ -878,21 +893,6 @@
         "path": "/stores/J001258285.html",
         "domain": "www.google.com",
         "clicks": 1
-      },
-      {
-        "path": "/stores/J001259546.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001259913.html",
-        "domain": "www.google.com",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001262917.html",
-        "domain": "www.google.com",
-        "clicks": 1
       }
     ],
     "reservationClicksByPage": [
@@ -969,6 +969,10 @@
         "clicks": 2
       },
       {
+        "path": "/stores/J003671888.html",
+        "clicks": 2
+      },
+      {
         "path": "/stores/J003672535.html",
         "clicks": 2
       },
@@ -1010,6 +1014,10 @@
       },
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-11-05-sakae-teiban-tune-aozakana-izakaya.html",
         "clicks": 1
       },
       {
@@ -1107,13 +1115,9 @@
       {
         "path": "/stores/J001202808.html",
         "clicks": 1
-      },
-      {
-        "path": "/stores/J001259546.html",
-        "clicks": 1
       }
     ],
-    "reservationClicks": 118,
+    "reservationClicks": 120,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 50,
@@ -1139,8 +1143,8 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 2959,
-    "stage": "takeoff",
+    "value": 3013,
+    "stage": "healthy",
     "thresholds": {
       "phase0": 500,
       "takeoff": 3000,
