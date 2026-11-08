@@ -40,6 +40,9 @@ export PATH="/Users/katagirijakutou/.local/bin:/opt/homebrew/bin:/usr/local/bin:
 # サブスク認証を使うため API キーは絶対にエクスポートしない
 unset ANTHROPIC_API_KEY
 export DISABLE_AUTOUPDATER=1
+# SNS分析ツールの next.json・note-next.json と note の数字の置き場（docs/decisions/0059）。
+# launchd から動くと iCloud Drive を読めない（Operation not permitted）ので、SNS分析ツールが写しを置く普通のフォルダを使う。
+export SNS_ANALYZER_X_DIR="$HOME/.config/sns-analyzer-x/nagoya_bites"
 
 # ---- 写真取得用のクレデンシャル読み込み（ISSUE-091）----
 # 2026-08-17 に「記事と無関係な別店の販促バナーが記事の顔になる」事故が起きた。
@@ -963,7 +966,7 @@ fi
 
 # note の数字（自分の記事のビュー・スキ・コメントとフォロワー）を1日1回読む（docs/decisions/0059）。
 # 非ブロッキング: 失敗しても公開済みの記事・X・note の投稿には影響しない。読むだけ（書き込み・スキ・フォローはしない）。
-# 保存先は iCloud の sns-analyzer-x/nagoya_bites/note_metrics.json（公開リポジトリには置かない）。同じ日に2回動いても行は増えない
+# 保存先は ~/.config/sns-analyzer-x/nagoya_bites/note_metrics.json（公開リポジトリには置かない。SNS分析ツールがここも読む）。同じ日に2回動いても行は増えない
 log "note の数字を取得（fetch_note_stats.js）"
 if ! run_with_timeout 240 caffeinate -s -i -d -u node scripts/fetch_note_stats.js >>"$LOG" 2>&1; then
   log "⚠️ note の数字の取得に失敗（非ブロッキング・その日は取得なし）"
