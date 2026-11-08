@@ -27,6 +27,11 @@ const path = require('path');
 const { RECOMMENDED_QUERIES, QUERY_TEMPLATES, RECOMMENDED_SITES } = require('./lib/trending_queries');
 const sourceDiversity = require('./lib/journal_source_diversity');
 
+/** JST基準の今日の日付文字列（trending_scout.js と同じロジック・ISSUE-195） */
+function jstDateString() {
+  return new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+}
+
 const TRENDING_PATH = path.join(__dirname, '..', 'data', 'trending_stores.json');
 const INDEX_PATH = path.join(__dirname, '..', 'index.html');
 
@@ -279,7 +284,7 @@ function cmdIngestJSON(file) {
 
 function cmdAutoPromote() {
   const trending = loadTrending();
-  const today = new Date().toISOString().slice(0, 10);
+  const today = jstDateString();
   let promoted = 0, skipped = 0;
   (trending.stores || []).forEach(s => {
     if (!s['_auto']) return;

@@ -41,7 +41,7 @@ Use this skill when the user asks to run the migrated source command `seo-triage
 
 引数に週次レポート本文があればそれを使い、この Step をスキップして Step 1 へ。
 **引数が空のとき**は Gmail MCP で最新の週次レポートを取得する:
-1. Gmail を `subject:"📊 NAGOYA BITES 週次レポート" newer_than:9d` で検索し、最新スレッドを取得。
+1. Gmail を `subject:"NAGOYA BITES 週次レポート" newer_than:9d` で検索し、最新スレッドを取得。
 2. 本文から「🤖 AI週次分析（前週比）」の総括文 と「💡 今週のアドバイス」セクションを抽出して入力にする。件名の「<開始>〜<終了>」を週の範囲として控える。
 3. 該当メールが**見つからない場合のみ**「週次レポートが Gmail に見つかりません。本文を貼り付けてください」と促して終了。
 4. 取得できたら通常フローへ。重複は Step 3 の `--check-dup` で弾かれるので、同じメールを再処理しても二重起票しない（**冪等**）。

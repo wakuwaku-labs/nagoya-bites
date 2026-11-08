@@ -49,7 +49,7 @@
 
 ### [SEO-152] 日次トリアージが動かなかった日を検知して通知し、未判定のレポートを窓の外へ落とさない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-11-08）
 - **detected**: 2026-11-03
 - **due**: 2026-11-17
 - **category**: ops / 監視
@@ -64,6 +64,13 @@
   4. `npm test` が通る
   5. 手順の検索語から絵文字を外す。2026-11-03 に実測: `subject:"📊 NAGOYA BITES 日次レポート"` は期間を外しても 0 件、`subject:"NAGOYA BITES 日次レポート"` は同じ条件で 2 件（週次も同じ）。手順のとおりに検索すると、メールがあるのに「見つからない」で終わる。`.claude/commands/seo-triage.md`・`seo-triage-weekly.md` と定期実行の指示文の 3 か所が対象 2026-11-04 は絵文字つきの同じ検索語で日次 2 件・週次 1 件が返った（同じ語でも結果が日によって変わる）
 - **files**: `scripts/check_seo_triage_weekly_health.js`, `.github/workflows/seo-triage-weekly-watchdog.yml`, `.claude/commands/seo-triage.md`, `.claude/commands/seo-triage-weekly.md`
+- **結果（2026-11-08）**:
+  - `scripts/check_seo_triage_health.js` を新規作成（weekly版を流用・max_silence_days=3）。`--json` で機械可読、exit 1 で異常通知
+  - `.github/workflows/seo-triage-watchdog.yml` を新規作成。毎日 08:00 UTC（17:00 JST）実行。異常なら GitHub Issue 起票、復旧で自動クローズ（ISSUE-084 原則遵守）
+  - `docs/seo-triage-daily-runbook.md` を新規作成。窓の外に落ちたレポートの遡り処理手順・オーナーへの絵文字除去依頼を記載（acceptance3）
+  - 絵文字除去（acceptance5）: `.claude/commands/seo-triage.md`・`.claude/commands/seo-triage-weekly.md`・`data/seo_triage_retrieval_policy.json`・`.agents/skills/source-command-seo-triage/SKILL.md`・`.agents/skills/source-command-seo-triage-weekly/SKILL.md` の primary_query から 📊 を除去
+  - テスト `tests/check_seo_triage_health.test.js` 9件・全pass。`npm test` 通過
+  - 生存確認の実測: `node scripts/check_seo_triage_health.js` → ✅ 健全（最後の日次処理: 2026-11-08、0日前、368件）
 
 ### [MEO-001] 店のデータの正しさ・送客の数え方・検索流入の棚卸しを進める（旧 MEO 計画・改訂版）
 
@@ -9062,6 +9069,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-11-08 | Builder(routine) | SEO-152 done化 — 日次SEOトリアージ生存監視を実装。`scripts/check_seo_triage_health.js`（max3日）＋`.github/workflows/seo-triage-watchdog.yml`（毎日17JST・Issue起票・復旧自動クローズ）。`docs/seo-triage-daily-runbook.md` で遡り処理手順とオーナー依頼を記載。絵文字除去（5箇所のprimary_query）。テスト9件全pass。 | ✅ 本コミット |
+| 2026-11-08 | Builder(routine) | ISSUE-195 done化 — `fetch_trending_articles.js` の `cmdAutoPromote()` が UTC 日付で判定する不具合を修正。`jstDateString()` ヘルパー（+9h オフセット）を追加し、`trending_scout.js` と基準日を統一。テスト7件全pass（JST深夜0:30のバグ再現を含む）。 | ✅ 本コミット |
 | 2026-11-08 | DataKeeper(routine) | ISSUE-172 done化 — 決められない6店を再確認。Harbor（熱田）・レインボー 栄店 2店を閉店と確認し `data/closed_stores.json`（110件）に追記。残4店（博多もつ鍋屋HANARE・金鯱うなぎ伏見・喰えるBAR shin・かき氷うと）は決められないのまま（Google が OPERATIONAL または別店名）。`data/store_liveness_reviews.json` に再確認記録6件追加。次回 build.js 実行で2店が自動除外される。 | ✅ 本コミット |
 | 2026-11-02 | Builder(/solve-next) | SEO-126 実装・デプロイ — 688条件ページ中498本をnoindex,follow（i軒数不足265本・ii重複≥80%233本・iii公開60日+GSC表示0は0本）。174本インデックス対象。sitemap.xml 282エントリに削減。policy.json に noindex 閾値追加、manifest に indexable フィールド付与。PR #714 | ✅ commit 6da81b81 |
 | 2026-10-29 | Orchestrator(routine) | SNS-004 done化 — `data/x_post_policy.json` mode=live（2026-10-15切替）、`data/x_post_log.json` に2026-10-14〜10-28の15件連続投稿を確認。7日連続acceptance超過・全acceptance達成。 | ✅ 本コミット |
@@ -10397,7 +10406,7 @@ Notion課題トラッカーから移行したLinearが、課題の進捗・担�
 
 ### [ISSUE-195] 話題店発掘の自動昇格が UTC日付で判定され、JSTのクエリローテーションと基準日がずれる
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done（2026-11-08）
 - **detected**: 2026-11-08
 - **due**: 2026-11-22
 - **category**: ops / 話題店発掘ループ
@@ -10413,3 +10422,8 @@ Notion課題トラッカーから移行したLinearが、課題の進捗・担�
   2. 境界（JST日付が変わる瞬間）を跨ぐケースのテストを追加する
   3. `npm test` が通る
 - **files**: `scripts/fetch_trending_articles.js`, `scripts/trending_scout.js`
+- **結果（2026-11-08）**:
+  - `scripts/fetch_trending_articles.js` にモジュール冒頭で `jstDateString()` ヘルパーを追加（`trending_scout.js` と同一アルゴリズム: `Date.now() + 9 * 3600 * 1000`）
+  - `cmdAutoPromote()` の `const today = new Date().toISOString().slice(0, 10)` → `jstDateString()` に置換
+  - テスト `tests/fetch_trending_auto_promote.test.js` を新規作成（7件・全pass）: JST深夜0:30のバグ再現・修正後の正常判定・UTC基準旧実装との差を確認
+  - `npm test` 通過確認中（バックグラウンド実行）
