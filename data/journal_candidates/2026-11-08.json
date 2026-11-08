@@ -1,0 +1,400 @@
+{
+  "date": "2026-11-08",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄・白川公園『圧釜うどん もちり』一人ランチに、大盛り無料と1,100円台のぶっかけ",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 94,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 128字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -8 / search_intent -6 / writability -2"
+    },
+    {
+      "id": "c4",
+      "title_draft": "国際センター『八塩折 yashiori』すっぽんとうなぎの日本料理を接待で",
+      "verdict": "HOLD",
+      "total": 77,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 6,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "ひつまぶし",
+          "feature": "features/nagoya-hitsumabushi.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,コース,席,予約,接待) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 66字 +2",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「うなぎ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "那古野『天むす処けしき.』一人朝ごはんに、握りたて天むすと行列の避け方",
+      "verdict": "HOLD",
+      "total": 70,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 18日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (席,予約,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 101字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "東別院『チャーシューメン ススル』一人ランチに、11月5日開店のラーメン新店",
+      "verdict": "HOLD",
+      "total": 65,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (価格帯,席) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 93字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "相生山『BENS BAGEL』11月7日開店のベーグル店を朝の買い物で",
+      "verdict": "HOLD",
+      "total": 63,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (価格帯,予約) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 61字 +2",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -8 / search_intent -6 / writability -2",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "栄・白川公園『圧釜うどん もちり』一人ランチに、大盛り無料と1,100円台のぶっかけ",
+      "lead_draft": "11月10日、栄三丁目の白川公園近くに「圧釜うどん もちり 栄店」が開店する。圧力釜で一気に茹でて氷水で締める麺が看板で、ぶっかけは1,100円台から、普通盛りと大盛りは同じ値段だ。28席の店を一人のランチでどう使うか、価格と席と開店直後の混み方から読む。",
+      "angle": "大盛り無料・小盛り-55円という価格帯の設計と天ぷらセット・ミニ丼の足し方、28席と通し営業の回転、開店2日間の500円企画で混む時期を読み、一人ランチのシーンに向くかを示す",
+      "main_store": {
+        "name": "圧釜うどん もちり 栄店",
+        "id": "",
+        "area": "栄",
+        "genre": "うどん"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES 圧釜うどん もちり 栄店 2026年11月10日 NEW OPEN（株式会社エフリード）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000067.000100887.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "Instagram 圧釜うどん もちり 栄店 公式（@udon.mochiri.sakae）",
+          "url": "https://www.instagram.com/udon.mochiri.sakae/",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "食べログ 名古屋市の新規オープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-11-08"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "東別院『チャーシューメン ススル』一人ランチに、11月5日開店のラーメン新店",
+      "lead_draft": "11月5日、東別院駅近くにラーメンと油そばの「チャーシューメン ススル」が開店した。食べログの新店一覧に載ったばかりで、価格や席の情報はまだ少ない。一人ランチで寄るときの見方をまとめる。",
+      "angle": "ラーメンの価格帯と席の数を読み、一人ランチに向くかを示す",
+      "main_store": {
+        "name": "チャーシューメン ススル",
+        "id": "",
+        "area": "東別院",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "食べログ チャーシューメン ススル",
+          "url": "https://tabelog.com/aichi/A2301/A230105/23098173/",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "食べログ 名古屋市の新規オープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-11-08"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "相生山『BENS BAGEL』11月7日開店のベーグル店を朝の買い物で",
+      "lead_draft": "11月7日、相生山駅近くにベーグルの「BENS BAGEL」が開店した。住宅街のベーグル店を朝の買い物でどう使うかを読む。",
+      "angle": "ベーグルの価格帯と持ち帰りの予約を読む",
+      "main_store": {
+        "name": "BENS BAGEL",
+        "id": "",
+        "area": "相生山",
+        "genre": "パン"
+      },
+      "sources": [
+        {
+          "label": "食べログ BENS BAGEL",
+          "url": "https://tabelog.com/aichi/A2301/A230112/23098360/",
+          "date": "2026-11-07"
+        },
+        {
+          "label": "食べログ 名古屋市の新規オープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-11-08"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "国際センター『八塩折 yashiori』すっぽんとうなぎの日本料理を接待で",
+      "lead_draft": "11月6日、国際センター駅近くにすっぽんとうなぎの日本料理店「八塩折 yashiori」が開店した。接待で使うときの予算と席を読む。",
+      "angle": "コースの価格帯と個室の席、接待の予約を読む",
+      "main_store": {
+        "name": "八塩折 yashiori",
+        "id": "",
+        "area": "名駅",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "食べログ 八塩折 yashiori",
+          "url": "https://tabelog.com/aichi/A2301/A230101/23098031/",
+          "date": "2026-11-06"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "那古野『天むす処けしき.』一人朝ごはんに、握りたて天むすと行列の避け方",
+      "lead_draft": "国際センター駅から歩いてすぐの那古野に、天むす専門の「天むす処けしき. 名古屋本店」がある。注文を受けてから海老を揚げて握る13席ほどの店で、平日昼は長い行列ができる日もある。朝の時間帯の使い方を読む。",
+      "angle": "握りたての提供と13席・QR事前注文の回転、朝8時開店の時間帯で行列を避ける予約の取り方を読み、一人朝ごはんのシーンに向くかを示す",
+      "main_store": {
+        "name": "天むす処けしき.名古屋本店",
+        "id": "",
+        "area": "那古野",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "リベシティ 天むす処けしき. 訪問記",
+          "url": "https://library.libecity.com/articles/01KVDF9AC64W1T612Z6KSFEER4",
+          "date": "2026-10-21"
+        },
+        {
+          "label": "hamoni 天むす処 けしき. 名古屋本店",
+          "url": "https://hamoni.jp/shop/hFwdMAxefFPlhf6iP6lA"
+        },
+        {
+          "label": "TableCheck 天むす処けしき. 名古屋本店",
+          "url": "https://www.tablecheck.com/en/tenmusudokorokeshiki"
+        }
+      ]
+    }
+  ]
+}
