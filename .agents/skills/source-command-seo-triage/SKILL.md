@@ -1,6 +1,6 @@
 ---
 name: "source-command-seo-triage"
-description: "LINE で届く「💡今日のアドバイス」（SEO/アクセス解析）を貼り付けると、NAGOYA BITES のブランド総合フィルター（Moat / Strategic Skip）を通して採用/却下を判定し、採用分を agent-backlog.md に ready で起票 → Linearへ同期する。却下は理由付きでログに残す。"
+description: "LINE で届く「💡今日のアドバイス」（SEO/アクセス解析）を貼り付けると、NAGOYA BITES のブランド総合フィルター（Moat / Strategic Skip）を通して採用/却下を判定し、採用分を agent-backlog.md に ready で起票 → Ondine へ起票する。却下は理由付きでログに残す。"
 ---
 
 # source-command-seo-triage
@@ -13,12 +13,12 @@ Use this skill when the user asks to run the migrated source command `seo-triage
 
 毎日 LINE に届く SEO/アクセス解析の「💡今日のアドバイス」を、**鵜呑みにせず**
 NAGOYA BITES のブランド・方向性という総合フィルターに通し、
-適合分だけを Linearに `Todo` で出す。却下は理由とともにログへ残す。
+適合分だけを Ondine に課題として出す。却下は理由とともにログへ残す。
 
 **使い方（手動）**: LINE のアドバイス本文をこのコマンドに続けて貼り付ける。
 
 **使い方（自動・スケジュール起動）**: 引数が空のときは Step 0 で Gmail から最新の日次レポートメールを自動取得し、その『💡今日のアドバイス』を入力にして以降を**全自動**で処理する（人の貼り付け不要）。
-判定・起票・Linear同期の原理は手動時と**完全に同一**。違いは入力の取得元が「人の貼り付け」か「Gmail自動取得」かだけ。
+判定・起票・Ondine 起票の原理は手動時と**完全に同一**。違いは入力の取得元が「人の貼り付け」か「Gmail自動取得」かだけ。
 
 ---
 
@@ -27,7 +27,7 @@ NAGOYA BITES のブランド・方向性という総合フィルターに通し�
 - 採用課題マスター: `agent-backlog.md`（ID 接頭辞 `SEO-` / owner=Marketer / category=SEO）
 - ループの記憶（採用・却下・重複の全履歴）: `data/seo_advice_log.json`（append-only）
 - 決定的ヘルパー: `node scripts/seo_triage.js`（ID採番 / 重複検知 / ログ追記 / 健診レポート）
-- Linear同期: 既存の `/sync-backlog`（スキーマ変更不要・そのまま流用）
+- 課題管理: Ondine（`ondine-agent.mjs create`・Step 7）。Linear は使わない
 - レポート配信元: GAS（`Google分析オートLINE送信.js`）が日次レポートを件名「📊 NAGOYA BITES 日次レポート <日付>」で Gmail 送信。自動運用はこのメールを入力にする。
 
 ---
@@ -91,7 +91,7 @@ node scripts/seo_triage.js --check-dup "<その施策のテキスト>"
 
 ### Step 5: 採用分を agent-backlog.md に起票
 
-Linearへ登録する前に `AGENTS.md` の7品質ルールを適用する。既存のProjectから目的に合うものを選び、Linearの実担当者と期日を確定し、背景・達成条件を記載する。不足値があれば同期前にユーザーへ確認する。30分超の採用施策は親Issueとsub-issueへ分割する。
+Ondine へ起票する前に、題は動詞・背景と達成条件を書く。30分超の採用施策は親Issueとsub-issueへ分割する。
 
 採用が複数あるなら ID は連番。先頭IDを取得:
 ```bash
@@ -99,7 +99,7 @@ node scripts/seo_triage.js --next-id   # 例: SEO-001。2件目以降は連番�
 ```
 
 `agent-backlog.md` の「## 進行中・完了タスク」直下に、既存パーサ準拠の形式で追記する
-（`**priority** / **status** / **detected** / **category** / **owner**` を必ず含める。これが無いとLinear Issueの説明に欠落する）:
+（`**priority** / **status** / **detected** / **category** / **owner**` を必ず含める。backlog の記録に必要）:
 
 ```markdown
 ### [SEO-001] <施策を一言で・効果が伝わる動詞で>
@@ -107,9 +107,6 @@ node scripts/seo_triage.js --next-id   # 例: SEO-001。2件目以降は連番�
 - **detected**: <今日の日付 YYYY-MM-DD>
 - **category**: SEO
 - **owner**: Marketer
-- **assignee**: <Linearユーザー名またはID>
-- **due**: <YYYY-MM-DD>
-- **project**: <既存Linear Projectの正確な名前>
 - **source**: SEOアドバイス(LINE) <日付> 原文「<アドバイス原文を短く引用>」
 - **brand-filter**: ✅ 適合 — <Moat のどこを伸ばすか / なぜ順位操作でないか>
 - **acceptance**: <受け入れ条件。例: 対象特集のh1/タイトル/本文冒頭2行にKWを自然挿入・JSON-LD不汚染・体感KPIは次回SEOアドバイスで再評価>
@@ -129,18 +126,18 @@ node scripts/seo_triage.js --log-append '[
 ```
 `fingerprint` は省略可（スクリプトが正規化して自動付与 → 次回の重複検知に効く）。
 
-### Step 7: Linearへ同期
+### Step 7: Ondine へ起票（2026-11-09 から Linear ではなく Ondine。課題 #1671）
 
-採用が1件以上あれば `/sync-backlog` のフローを内部実行する:
+採用が1件以上あれば、採用した SEO-NNN ごとに Ondine へ起票する（Linear には新規起票しない）。
+既に同じ SEO-NNN の課題があれば新規に作らず追記する（確認: `list` の出力を `SEO-NNN` で grep）。
 ```bash
-node scripts/sync_backlog_to_linear.js
+O="$HOME/orca/projects/各種案件＆媒体　管理ツール/tools/ondine-agent.mjs"
+node "$O" create --title "[SEO-NNN] <動詞で終わる題>" --detail "<背景・source・brand-filter・acceptance をそのまま>" --priority P2 --assignee ai:claude-code
 ```
-差分を確認後、Linearへ反映する:
-```bash
-node scripts/sync_backlog_to_linear.js --apply
-```
-採用課題が `Todo / 担当部署 / カテゴリ` でLinearに出現する。
-（採用ゼロ＝backlog 無変更なら同期はスキップしてよい。）
+- repo・期限は `.ondine.json` の既定で入る（期限は優先度から自動）。
+- 担当は実装者に関係なく、AI が動くなら `ai:claude-code`、オーナー本人の操作が要るなら `you`。
+- `agent-backlog.md` の起票（Step 5）は従来どおり残す（`/solve-next` の元）。`sync_backlog_to_linear.js` は実行しない。
+（採用ゼロなら起票はスキップしてよい。）
 
 ### Step 8: トリアージ表を提示（可視化＋上書き余地）
 
@@ -149,7 +146,7 @@ node scripts/sync_backlog_to_linear.js --apply
 ```
 ## 🧭 SEOアドバイス トリアージ（<日付>）
 
-### ✅ 採用 → LinearにTodoで起票（N件）
+### ✅ 採用 → Ondine に起票（N件）
 | ID | 施策 | ブランド適合理由 | 優先度 |
 |----|------|------------------|--------|
 | SEO-001 | … | Moat「シーン別専門性」を強化 | P2 |
@@ -187,4 +184,4 @@ node scripts/sync_backlog_to_linear.js --apply
 
 - 貼り付けが空、かつ Step 0 の Gmail 取得でも日次レポートが見つからない → 「本文を貼ってください」と促して終了（自動運用ではGAS未送信/件名変更を疑う）
 - `--check-dup` / `--log-append` がエラー JSON を返す → ユーザーに内容を見せて中断（ログ不整合を防ぐ）
-- Step 7 の Linear同期失敗 → backlog 起票は完了しているので、その旨を伝え「後で `/sync-backlog` 再実行」を促す
+- Step 7 の Ondine 起票失敗 → backlog 起票は完了しているので、その旨を伝え後で再実行する
