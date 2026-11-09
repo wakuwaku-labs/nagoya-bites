@@ -106,7 +106,7 @@ node scripts/seo_triage.js --check-dup "<その施策のテキスト>"
 
 ### Step 5: 採用分を agent-backlog.md に起票
 
-Linearへ登録する前に `AGENTS.md` の7品質ルールを適用する。既存のProjectから目的に合うものを選び、Linearの実担当者と期日を確定し、背景・達成条件を記載する。不足値があれば同期前にユーザーへ確認する。30分超の採用施策は親Issueとsub-issueへ分割する。
+Ondine へ起票する前に、題は動詞・背景と達成条件を書く（Ondine の8項目は全体の決まり）。30分超の採用施策は親Issueとsub-issueへ分割する。
 
 採用が複数あるなら ID は連番。先頭IDを取得:
 ```bash
