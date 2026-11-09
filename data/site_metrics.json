@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-09T06:39:00.519Z",
+  "generatedAt": "2026-11-09T07:53:25.177Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 3037,
-    "pageViews": 4338,
-    "sessions": 3358,
-    "avgSessionDuration": 113,
+    "activeUsers": 3050,
+    "pageViews": 4353,
+    "sessions": 3375,
+    "avgSessionDuration": 112.6,
     "bounceRate": 0.305,
     "pagesPerSession": 1.29
   },
@@ -17,10 +17,10 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2567,
+      "organic": 2578,
       "direct": 517,
       "social": 49,
-      "ai_assistant": 228,
+      "ai_assistant": 230,
       "referral": 36,
       "paid": 0,
       "other": 0
@@ -39,17 +39,17 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1170
+      "sessions": 1175
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 838
+      "sessions": 842
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 533
+      "sessions": 535
     },
     {
       "source": "(direct)",
@@ -59,7 +59,7 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 152
+      "sessions": 153
     },
     {
       "source": "openai",
@@ -162,6 +162,11 @@
       "sessions": 1
     },
     {
+      "source": "gemini.google.com",
+      "medium": "ai-assistant",
+      "sessions": 1
+    },
+    {
       "source": "hk.search.yahoo.com",
       "medium": "referral",
       "sessions": 1
@@ -195,8 +200,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 437,
-      "sessions": 415
+      "pageViews": 438,
+      "sessions": 416
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -215,12 +220,12 @@
     },
     {
       "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
-      "pageViews": 87,
-      "sessions": 84
+      "pageViews": 88,
+      "sessions": 85
     }
   ],
   "cta": {
-    "outboundClicks": 357,
+    "outboundClicks": 359,
     "ctaClickRate": 10.6,
     "byDomain": [
       {
@@ -241,7 +246,7 @@
       },
       {
         "domain": "maps.google.com",
-        "clicks": 23
+        "clicks": 25
       },
       {
         "domain": "www.instagram.com",
@@ -270,7 +275,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 251,
+      "organic": 253,
       "direct": 52,
       "social": 10,
       "ai_assistant": 42,
@@ -288,7 +293,7 @@
       },
       {
         "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
-        "clicks": 19
+        "clicks": 21
       },
       {
         "path": "/stores/J004090251.html",
@@ -420,13 +425,13 @@
         "clicks": 14
       },
       {
-        "path": "/features/nagoya-solo-dining.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 12
-      },
-      {
         "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
         "domain": "maps.google.com",
+        "clicks": 14
+      },
+      {
+        "path": "/features/nagoya-solo-dining.html",
+        "domain": "www.hotpepper.jp",
         "clicks": 12
       },
       {
@@ -1153,7 +1158,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 3037,
+    "value": 3050,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
