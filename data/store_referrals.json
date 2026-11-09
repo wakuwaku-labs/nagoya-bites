@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-09T00:15:12.457Z",
+  "generatedAt": "2026-11-09T06:38:53.053Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -2104,10 +2104,10 @@
       "other": 0
     },
     "tel": 10,
-    "map": 100
+    "map": 102
   },
   "map": {
-    "total": 100,
+    "total": 102,
     "unattributed": 4,
     "stores": 43,
     "top": [
@@ -2120,11 +2120,11 @@
         "count": 12
       },
       {
-        "store_name": "BISTRO DIA",
-        "count": 8
+        "store_name": "圧釜うどん もちり 栄店",
+        "count": 10
       },
       {
-        "store_name": "圧釜うどん もちり 栄店",
+        "store_name": "BISTRO DIA",
         "count": 8
       },
       {
@@ -2154,13 +2154,13 @@
     ],
     "byLocation": {
       "store_page": 40,
-      "journal_store_card": 26,
+      "journal_store_card": 28,
       "(not set)": 20,
       "store_page_bar": 11,
       "modal_cta": 3
     },
     "byLinkKind": {
-      "search": 40,
+      "search": 42,
       "place_id": 33,
       "(not set)": 27
     }
