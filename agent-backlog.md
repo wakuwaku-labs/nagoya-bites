@@ -8,7 +8,9 @@
 
 ### [SEO-153] ジャーナルの関連特集が題名の部分一致（「発酵喫茶」→モーニング特集）で主題とずれるのを直す
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
+- **resolved**: 2026-11-09
+- **resolved_by**: ea9af2d
 - **detected**: 2026-11-09
 - **due**: 2026-12-09
 - **category**: SEO
@@ -65,7 +67,9 @@
 
 ### [SEO-152] 日次トリアージが動かなかった日を検知して通知し、未判定のレポートを窓の外へ落とさない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-11-09
+- **resolved_by**: f12586d
 - **detected**: 2026-11-03
 - **due**: 2026-11-17
 - **category**: ops / 監視
