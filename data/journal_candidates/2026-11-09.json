@@ -1,0 +1,297 @@
+{
+  "date": "2026-11-09",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄三越の寿司「すしの美登利」とアラン・デュカス・ショコラ、新店2軒を予約と時間で使い分け",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 94,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 5件 (新店,比較,予約,シーン,価格帯) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 148字 +4",
+          "title 44字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「寿司」+2"
+        ]
+      },
+      "gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -10 / search_intent -4 / writability -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄三越の地下にアラン・デュカス・ショコラ 11月16日開店、限定プラリネ3,348円と9階すしの美登利",
+      "verdict": "HOLD",
+      "total": 76,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 5,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 1件 (価格帯) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 120字 +4",
+          "title 51字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄三越9階は夜9時まで、すしの美登利と宮きしめん伊兵衛の通し営業と中休みの差",
+      "verdict": "HOLD",
+      "total": 65,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 91字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -10 / search_intent -4 / writability -2",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "weekly_digest",
+      "title_draft": "栄三越の寿司「すしの美登利」とアラン・デュカス・ショコラ、新店2軒を予約と時間で使い分け",
+      "lead_draft": "名古屋栄三越の秋の刷新が仕上げに入った。10月31日に9階へ「すしの美登利」が開き、11月16日には地下1階に「アラン・デュカス・ショコラ・パリ」が開く。名駅の行列店が栄では予約を受け、9階は夜9時まで通しで開く。昼の寿司、贈り物、夜の一人飯をどの階で済ませるかを、席数と価格と営業時間から読む。",
+      "angle": "同じ百貨店の刷新で開いた新店2軒を名駅1号店と比較し、予約の取り方（名駅は行列・栄は予約可）、席配置（カウンター10＋テーブル44）、価格帯（上にぎり2,200円〜おまかせ4,400円、限定プラリネ3,348円）、時間帯（9階は10/31から21時まで通し）、シーン（一人の昼・家族・手土産）で読み分ける",
+      "main_store": {
+        "name": "すしの美登利 名古屋栄三越店",
+        "id": "",
+        "area": "栄",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「すしの美登利」",
+          "url": "https://jouhou.nagoya/sushi-no-midori/",
+          "date": "2026-10-31"
+        },
+        {
+          "label": "名古屋情報通「宮きしめん」",
+          "url": "https://jouhou.nagoya/miya-kishimen/",
+          "date": "2026-11-08"
+        },
+        {
+          "label": "PR TIMES（株式会社SFAD）アラン・デュカス・ショコラ 名古屋栄三越",
+          "url": "https://prtimes.jp/main/html/rd/p/000000047.000143817.html",
+          "date": "2026-10-28"
+        },
+        {
+          "label": "PR TIMES（株式会社名古屋三越）秋のリニューアル 9階レストラン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000017.000185183.html",
+          "date": "2026-10-07"
+        },
+        {
+          "label": "鉄道チャンネル「すしの美登利が栄に2号店」",
+          "url": "https://tetsudo-ch.com/13041098.html",
+          "date": "2026-10-28"
+        },
+        {
+          "label": "アイスポ「名古屋栄三越はどう変わった？」",
+          "url": "https://www.aichispot.com/mitsukosi-renewal2026-sakae-open/",
+          "date": "2026-11-08"
+        },
+        {
+          "label": "NAGOYAJIN「アラン・デュカス・ショコラが栄三越に」",
+          "url": "https://nagoyajin.nagoya/sakae-alain-ducasse-chocolat-mitsukoshi-open-20261116/",
+          "date": "2026-11-04"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "weekly_digest",
+      "title_draft": "栄三越の地下にアラン・デュカス・ショコラ 11月16日開店、限定プラリネ3,348円と9階すしの美登利",
+      "lead_draft": "11月16日、名古屋栄三越の地下1階にパリ発のショコラ専門店が開く。限定のプラリネ5個入りは3,348円で鯱のスリーブ付き。同じ館の9階には10月31日にすしの美登利が開いた。贈り物と食事を一つの館で済ませる段取りを、価格と時間帯から読む。",
+      "angle": "手土産の価格帯（プラリネ3,348円・クッキー6,480円）と9階の食事（寿司3,000〜4,500円）を、買う順番と営業時間（地下20時・9階21時）で組む",
+      "main_store": {
+        "name": "アラン・デュカス・ショコラ・パリ 名古屋栄三越",
+        "id": "",
+        "area": "栄",
+        "genre": "スイーツ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社SFAD）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000047.000143817.html",
+          "date": "2026-10-28"
+        },
+        {
+          "label": "NAGOYAJIN",
+          "url": "https://nagoyajin.nagoya/sakae-alain-ducasse-chocolat-mitsukoshi-open-20261116/",
+          "date": "2026-11-04"
+        },
+        {
+          "label": "名古屋情報通「すしの美登利」",
+          "url": "https://jouhou.nagoya/sushi-no-midori/",
+          "date": "2026-10-31"
+        },
+        {
+          "label": "アイスポ",
+          "url": "https://www.aichispot.com/mitsukosi-renewal2026-sakae-open/",
+          "date": "2026-11-08"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "weekly_digest",
+      "title_draft": "栄三越9階は夜9時まで、すしの美登利と宮きしめん伊兵衛の通し営業と中休みの差",
+      "lead_draft": "10月31日から名古屋栄三越の9階レストランは夜9時まで開く。新しく入った寿司は昼夜通し、きしめんは平日に中休みを取る。同じ階で営業時間の組み方が分かれた理由を、席数と客層から読む。",
+      "angle": "通し営業（寿司・テイクアウト併設）と中休み（会席・個室）を、仕込みと人員配置と客層の違いで読む",
+      "main_store": {
+        "name": "すしの美登利 名古屋栄三越店",
+        "id": "",
+        "area": "栄",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社名古屋三越）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000017.000185183.html",
+          "date": "2026-10-07"
+        },
+        {
+          "label": "名古屋情報通「宮きしめん」",
+          "url": "https://jouhou.nagoya/miya-kishimen/",
+          "date": "2026-11-08"
+        },
+        {
+          "label": "名古屋情報通「すしの美登利」",
+          "url": "https://jouhou.nagoya/sushi-no-midori/",
+          "date": "2026-10-31"
+        }
+      ]
+    }
+  ]
+}
