@@ -1,20 +1,20 @@
 ---
-description: LINE で届く「週次レポート」（🤖 AI週次分析＋💡今週のアドバイス）を貼り付けると、NAGOYA BITES のブランド総合フィルター（Moat / Strategic Skip）を通して採用/却下を判定し、採用分を agent-backlog.md に ready で起票 → Linearへ同期する。日次の /seo-triage と同じループの週次版（前週比トレンド対応）。
+description: LINE で届く「週次レポート」（🤖 AI週次分析＋💡今週のアドバイス）を貼り付けると、NAGOYA BITES のブランド総合フィルター（Moat / Strategic Skip）を通して採用/却下を判定し、採用分を agent-backlog.md に ready で起票 → Ondine へ起票する。日次の /seo-triage と同じループの週次版（前週比トレンド対応）。
 ---
 
 # /seo-triage-weekly — 週次レポートのAI分析をブランドフィルターに通して課題化する
 
 毎週 LINE に届く週次レポートの「🤖 AI週次分析（前週比）」と「💡 今週のアドバイス」を、
 **鵜呑みにせず** NAGOYA BITES のブランド・方向性という総合フィルターに通し、
-適合分だけを Linearに `Todo` で出す。却下は理由とともにログへ残す。
+適合分だけを Ondine に `todo` で出す。却下は理由とともにログへ残す。
 
-日次の `/seo-triage` と**完全に同じ仕組み・同じスクリプト・同じ Linear同期**を使う。
+日次の `/seo-triage` と**完全に同じ仕組み・同じスクリプト・同じ Ondine 起票**を使う。
 違いは入力が「週次レポート（前週比トレンド付き）」であり、`source` を `line-weekly` で記録する点だけ。
 
 **使い方（手動）**: LINE の週次レポート本文をこのコマンドに続けて貼り付ける。
 
 **使い方（自動・スケジュール起動）**: 引数が空のときは Step 0 で Gmail から最新の週次レポートメールを自動取得し、以降を**全自動**で処理する（人の貼り付け不要）。
-判定・起票・Linear同期の原理は日次 `/seo-triage` と**完全に同一**。違いは入力が週次（前週比トレンド付き）で `source` を `line-weekly` で記録する点だけ。
+判定・起票・Ondine 起票の原理は日次 `/seo-triage` と**完全に同一**。違いは入力が週次（前週比トレンド付き）で `source` を `line-weekly` で記録する点だけ。
 
 ---
 
@@ -23,7 +23,7 @@ description: LINE で届く「週次レポート」（🤖 AI週次分析＋💡
 - 採用課題マスター: `agent-backlog.md`（ID 接頭辞 `SEO-` / owner=Marketer / category=SEO）
 - ループの記憶（採用・却下・重複の全履歴）: `data/seo_advice_log.json`（append-only・`source` で日次/週次を区別）
 - 決定的ヘルパー: `node scripts/seo_triage.js`（ID採番 / 重複検知 / ログ追記 / 健診レポート）
-- Linear同期: 既存の `/sync-backlog`（スキーマ変更不要・そのまま流用）
+- 課題管理: Ondine（`ondine-agent.mjs create`・Step 7）。Linear は使わない
 - レポート配信元: GAS（`Google分析オートLINE送信.js`）が週次レポートを件名「📊 NAGOYA BITES 週次レポート <開始>〜<終了>」で Gmail 送信。自動運用はこのメールを入力にする。
 
 ---
@@ -99,7 +99,7 @@ node scripts/seo_triage.js --check-dup "<その施策のテキスト>"
 
 ### Step 5: 採用分を agent-backlog.md に起票
 
-Linearへ登録する前に `CLAUDE.md` の7品質ルールを適用する。既存のProjectから目的に合うものを選び、Linearの実担当者と期日を確定し、背景・達成条件を記載する。不足値があれば同期前にユーザーへ確認する。30分超の採用施策は親Issueとsub-issueへ分割する。
+Ondine へ起票する前に `CLAUDE.md` の7品質ルールを適用する。担当（`ai:claude-code` か `you`）と期日を確定し、背景・達成条件を記載する。不足値があれば同期前にユーザーへ確認する。30分超の採用施策は親Issueとsub-issueへ分割する。
 
 採用が複数あるなら ID は連番。先頭IDを取得:
 ```bash
@@ -107,7 +107,7 @@ node scripts/seo_triage.js --next-id   # 例: SEO-004。2件目以降は連番�
 ```
 
 `agent-backlog.md` の「## 進行中・完了タスク」直下に、既存パーサ準拠の形式で追記する
-（`**priority** / **status** / **detected** / **category** / **owner**` を必ず含める。これが無いとLinear Issueの説明に欠落する）:
+（`**priority** / **status** / **detected** / **category** / **owner**` を必ず含める。これが無いと Ondine 課題の説明に欠落する）:
 
 ```markdown
 ### [SEO-004] <施策を一言で・効果が伝わる動詞で>
@@ -115,9 +115,8 @@ node scripts/seo_triage.js --next-id   # 例: SEO-004。2件目以降は連番�
 - **detected**: <今日の日付 YYYY-MM-DD>
 - **category**: SEO
 - **owner**: Marketer
-- **assignee**: <Linearユーザー名またはID>
+- **assignee**: <ai:claude-code または you>
 - **due**: <YYYY-MM-DD>
-- **project**: <既存Linear Projectの正確な名前>
 - **source**: 週次レポート(LINE) <週の範囲 例 2026-05-25〜05-31> 原文「<該当の総括 or アドバイスを短く引用>」
 - **brand-filter**: ✅ 適合 — <Moat のどこを伸ばすか / なぜ順位操作でないか>
 - **trend**: <前週比の根拠。例: 検索流入 前週比 -32%（週トレンド）>
@@ -140,18 +139,18 @@ node scripts/seo_triage.js --log-append '[
 `fingerprint` は省略可（スクリプトが正規化して自動付与 → 次回の重複検知に効く）。
 `source` を省くと既定 `line-daily` になるので**週次では必ず明示**する。
 
-### Step 7: Linearへ同期
+### Step 7: Ondine へ起票（2026-11-09 から Linear ではなく Ondine。課題 #1671）
 
-採用が1件以上あれば `/sync-backlog` のフローを内部実行する:
+採用が1件以上あれば、採用した SEO-NNN ごとに Ondine へ起票する（Linear には新規起票しない）。
+既に同じ SEO-NNN の課題があれば新規に作らず追記する（確認: `list` の出力を `SEO-NNN` で grep）。
 ```bash
-node scripts/sync_backlog_to_linear.js
+O="$HOME/orca/projects/各種案件＆媒体　管理ツール/tools/ondine-agent.mjs"
+node "$O" create --title "[SEO-NNN] <動詞で終わる題>" --detail "<背景・source・brand-filter・acceptance をそのまま>" --priority P2 --assignee ai:claude-code
 ```
-差分を確認後、Linearへ反映する:
-```bash
-node scripts/sync_backlog_to_linear.js --apply
-```
-採用課題が `Todo / 担当部署 / カテゴリ` でLinearに出現する。
-（採用ゼロ＝backlog 無変更なら同期はスキップしてよい。）
+- repo・期限は `.ondine.json` の既定で入る（期限は優先度から自動）。
+- 担当は実装者に関係なく、AI が動くなら `ai:claude-code`、オーナー本人の操作が要るなら `you`。
+- `agent-backlog.md` の起票（Step 5）は従来どおり残す（`/solve-next` の元）。`sync_backlog_to_linear.js` は実行しない。
+（採用ゼロなら起票はスキップしてよい。）
 
 ### Step 8: トリアージ表を提示（可視化＋上書き余地）
 
@@ -163,7 +162,7 @@ node scripts/sync_backlog_to_linear.js --apply
 ### 📈 今週のトレンド要約（AI週次分析より）
 - <総括を1〜2行で。最も動いた指標を数値付きで>
 
-### ✅ 採用 → LinearにTodoで起票（N件）
+### ✅ 採用 → OndineにTodoで起票（N件）
 | ID | 施策 | 前週比の根拠 | ブランド適合理由 | 優先度 |
 |----|------|--------------|------------------|--------|
 | SEO-004 | … | 検索流入 -32% | Moat「シーン別専門性」を強化 | P1 |
@@ -202,4 +201,4 @@ node scripts/sync_backlog_to_linear.js --apply
 
 - 貼り付けが空、かつ Step 0 の Gmail 取得でも週次レポートが見つからない → 「本文を貼ってください」と促して終了（自動運用ではGAS未送信/件名変更を疑う）
 - `--check-dup` / `--log-append` がエラー JSON を返す → ユーザーに内容を見せて中断（ログ不整合を防ぐ）
-- Step 7 の Linear同期失敗 → backlog 起票は完了しているので、その旨を伝え「後で `/sync-backlog` 再実行」を促す
+- Step 7 の Ondine 起票失敗 → backlog 起票は完了しているので、その旨を伝え、課題を再起票するよう促す

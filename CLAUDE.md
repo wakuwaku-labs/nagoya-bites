@@ -387,7 +387,7 @@ Orchestrator（CEO）← agents/orchestrator.md
 ## SEOアドバイス改善ループ（`/seo-triage` 日次 / `/seo-triage-weekly` 週次）
 
 SEO/アクセス解析のアドバイスを、**鵜呑みにせず**ブランドの総合フィルターに
-通して改善に回す仕組み。日次・週次の**2系統が同じスクリプト・同じLinear同期**を共有する。
+通して改善に回す仕組み。日次・週次の**2系統が同じスクリプト・同じ Ondine 起票**を共有する。
 
 ### 全自動の運用モデル（人の貼り付け不要）
 
@@ -409,7 +409,7 @@ SEO/アクセス解析のアドバイスを、**鵜呑みにせず**ブランド
    ↓
 [判定] CLAUDE.md の Moat / Strategic Skip を根拠に採用/却下（次節）
    ↓
-[同期] 採用分を agent-backlog.md に起票し、Orca CLI経由でLinearへcreate/update（人の確認を挟まず登録）
+[同期] 採用分を agent-backlog.md に起票し、Ondine（`ondine-agent.mjs create`）へ起票（人の確認を挟まず登録。2026-11-09 に Linear から移行・Ondine #1671）
 ```
 
 手動でも全く同じ: LINE 本文を `/seo-triage`（💡今日のアドバイス・source=line-daily）/
@@ -424,7 +424,7 @@ SEO/アクセス解析のアドバイスを、**鵜呑みにせず**ブランド
    ・却下 → data/seo_advice_log.json に理由付きで記録（backlog/Linearには出さない）
    ・重複 → 過去判定済みは再起票しない（日次/週次を横断して衝突検知。数値違いは正規化で同種扱い）
            → 同じメールを再処理しても二重起票しない（冪等。スケジュール多重起動も安全）
-3. 採用分はLinearへ自動同期（backlogの詳細を保ちつつ、進捗はLinearで確認する）
+3. 採用分は Ondine へ起票（backlogの詳細を保ちつつ、進捗は Ondine で確認する。Linear へは新規起票しない）
 4. 実装は /solve-next の YES ゲート経由（マネタイズ・信頼系は制約7・8でさらに承認必須）
    → このループが作るのは status:ready まで。コード実装・デプロイは別ゲート。
 5. ループ健診: node scripts/seo_triage.js --report --days 30           （全体）
