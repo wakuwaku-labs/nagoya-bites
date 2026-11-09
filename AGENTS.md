@@ -476,7 +476,7 @@ SEO/アクセス解析のアドバイスを、**鵜呑みにせず**ブランド
    ↓
 [判定] AGENTS.md の Moat / Strategic Skip を根拠に採用/却下（次節）
    ↓
-[同期] 採用分を agent-backlog.md に起票し、Orca CLI経由でLinearへcreate/update（人の確認を挟まず登録）
+[同期] 採用分を agent-backlog.md に起票し、Ondine（`ondine-agent.mjs create`）へ起票（人の確認を挟まず登録。2026-11-09 に Linear から移行・Ondine #1671）
 ```
 
 手動でも全く同じ: LINE 本文を `/seo-triage`（💡今日のアドバイス・source=line-daily）/
