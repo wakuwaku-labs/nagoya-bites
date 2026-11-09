@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-08T21:43:08.469Z",
+  "generatedAt": "2026-11-09T00:15:12.457Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -2104,10 +2104,10 @@
       "other": 0
     },
     "tel": 10,
-    "map": 98
+    "map": 100
   },
   "map": {
-    "total": 98,
+    "total": 100,
     "unattributed": 4,
     "stores": 43,
     "top": [
@@ -2124,11 +2124,11 @@
         "count": 8
       },
       {
-        "store_name": "ちひろ菓子店 新栄葵店",
-        "count": 6
+        "store_name": "圧釜うどん もちり 栄店",
+        "count": 8
       },
       {
-        "store_name": "圧釜うどん もちり 栄店",
+        "store_name": "ちひろ菓子店 新栄葵店",
         "count": 6
       },
       {
@@ -2154,13 +2154,13 @@
     ],
     "byLocation": {
       "store_page": 40,
-      "journal_store_card": 24,
+      "journal_store_card": 26,
       "(not set)": 20,
       "store_page_bar": 11,
       "modal_cta": 3
     },
     "byLinkKind": {
-      "search": 38,
+      "search": 40,
       "place_id": 33,
       "(not set)": 27
     }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-08T21:43:20.089Z",
+  "generatedAt": "2026-11-09T00:20:01.357Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -16,12 +16,12 @@
       },
       {
         "query": "名古屋 1人飲み 男",
-        "impressions": 93,
-        "clicks": 9,
+        "impressions": 92,
+        "clicks": 8,
         "position": 3,
-        "ctr": 9.68,
+        "ctr": 8.7,
         "expectedCtr": 11,
-        "missedClicks": 1.2
+        "missedClicks": 2.1
       }
     ],
     "ctrFixGeoless": [
@@ -33,15 +33,6 @@
         "ctr": 2.69,
         "expectedCtr": 4.7,
         "missedClicks": 9.7
-      },
-      {
-        "query": "キミトテ",
-        "impressions": 267,
-        "clicks": 4,
-        "position": 9.7,
-        "ctr": 1.5,
-        "expectedCtr": 2.6,
-        "missedClicks": 2.9
       }
     ],
     "rankPush": []
@@ -50,12 +41,12 @@
     "ctrFix": [
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 1316,
-        "clicks": 23,
+        "impressions": 1266,
+        "clicks": 22,
         "position": 6.8,
-        "ctr": 1.75,
+        "ctr": 1.74,
         "expectedCtr": 4.2,
-        "missedClicks": 32.2
+        "missedClicks": 31.1
       },
       {
         "page": "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
@@ -77,41 +68,32 @@
       },
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 803,
+        "impressions": 788,
         "clicks": 10,
         "position": 9.3,
-        "ctr": 1.25,
+        "ctr": 1.27,
         "expectedCtr": 2.7,
-        "missedClicks": 11.7
-      },
-      {
-        "page": "/stores/J004576448.html",
-        "impressions": 565,
-        "clicks": 11,
-        "position": 8.5,
-        "ctr": 1.95,
-        "expectedCtr": 3,
-        "missedClicks": 5.9
+        "missedClicks": 11.3
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 910,
-        "clicks": 15,
-        "position": 19.2,
-        "ctr": 1.65,
-        "upsideClicks": 10.5
+        "impressions": 824,
+        "clicks": 13,
+        "position": 20.1,
+        "ctr": 1.58,
+        "upsideClicks": 10.1
       }
     ]
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / ctrFixGeoless=地名なし全国クエリ(SEO-061)→検索者の大半が名古屋在住とは限らず低CTRが正常。追うなら要検証 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
     "queryCtrFix": 2,
-    "queryCtrFixGeoless": 2,
+    "queryCtrFixGeoless": 1,
     "queryRankPush": 0,
-    "pageCtrFix": 5,
+    "pageCtrFix": 4,
     "pageRankPush": 1,
     "topPageCtrFix": [
       "/features/nagoya-tebasaki.html",

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-08T21:43:16.714Z",
+  "generatedAt": "2026-11-09T00:15:22.637Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 3004,
-    "pageViews": 4284,
-    "sessions": 3288,
+    "activeUsers": 3007,
+    "pageViews": 4289,
+    "sessions": 3292,
     "avgSessionDuration": 113.1,
     "bounceRate": 0.299,
     "pagesPerSession": 1.3
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2533,
-      "direct": 522,
+      "organic": 2535,
+      "direct": 524,
       "social": 49,
       "ai_assistant": 227,
       "referral": 35,
@@ -39,7 +39,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1156
+      "sessions": 1157
     },
     {
       "source": "bing",
@@ -49,12 +49,12 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 522
+      "sessions": 523
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 476
+      "sessions": 477
     },
     {
       "source": "chatgpt.com",
@@ -89,7 +89,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 14
+      "sessions": 15
     },
     {
       "source": "trend_today",
@@ -220,8 +220,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 353,
-    "ctaClickRate": 10.7,
+    "outboundClicks": 355,
+    "ctaClickRate": 10.8,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -229,7 +229,7 @@
       },
       {
         "domain": "www.google.com",
-        "clicks": 80
+        "clicks": 82
       },
       {
         "domain": "prtimes.jp",
@@ -270,7 +270,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 246,
+      "organic": 248,
       "direct": 53,
       "social": 10,
       "ai_assistant": 42,
@@ -278,8 +278,8 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.7,
-    "ctaClickRate_direct": 10.2,
+    "ctaClickRate_organic": 9.8,
+    "ctaClickRate_direct": 10.1,
     "ctaClickRate_social": 20.4,
     "byPage": [
       {
@@ -311,12 +311,12 @@
         "clicks": 9
       },
       {
-        "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 8
+        "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
+        "clicks": 9
       },
       {
-        "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
-        "clicks": 7
+        "path": "/features/nagoya-hitsumabushi.html",
+        "clicks": 8
       },
       {
         "path": "/stores/J001147583.html",
@@ -440,6 +440,11 @@
         "clicks": 8
       },
       {
+        "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
+        "domain": "www.google.com",
+        "clicks": 8
+      },
+      {
         "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
         "domain": "maps.google.com",
         "clicks": 7
@@ -447,11 +452,6 @@
       {
         "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
         "domain": "www.instagram.com",
-        "clicks": 6
-      },
-      {
-        "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
-        "domain": "www.google.com",
         "clicks": 6
       },
       {
@@ -1153,7 +1153,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 3004,
+    "value": 3007,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
