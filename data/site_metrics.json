@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-09T19:16:41.708Z",
+  "generatedAt": "2026-11-10T00:14:43.748Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 3090,
-    "pageViews": 4429,
-    "sessions": 3447,
-    "avgSessionDuration": 111.9,
-    "bounceRate": 0.305,
+    "activeUsers": 3110,
+    "pageViews": 4455,
+    "sessions": 3471,
+    "avgSessionDuration": 111.6,
+    "bounceRate": 0.307,
     "pagesPerSession": 1.28
   },
   "dailyReference": {
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2632,
-      "direct": 514,
+      "organic": 2651,
+      "direct": 525,
       "social": 50,
-      "ai_assistant": 233,
-      "referral": 38,
+      "ai_assistant": 234,
+      "referral": 39,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 75.9,
-      "direct": 14.8,
+      "organic": 75.8,
+      "direct": 15,
       "social": 1.4,
       "ai_assistant": 6.7,
       "referral": 1.1,
@@ -39,27 +39,27 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1202
+      "sessions": 1213
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 857
+      "sessions": 860
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 546
+      "sessions": 551
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 467
+      "sessions": 469
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 155
+      "sessions": 156
     },
     {
       "source": "openai",
@@ -70,6 +70,11 @@
       "source": "x",
       "medium": "social",
       "sessions": 27
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 24
     },
     {
       "source": "duckduckgo",
@@ -84,12 +89,7 @@
     {
       "source": "service.smt.docomo.ne.jp",
       "medium": "referral",
-      "sessions": 18
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 15
+      "sessions": 19
     },
     {
       "source": "trend_today",
@@ -224,18 +224,18 @@
       "sessions": 99
     },
     {
+      "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
+      "pageViews": 101,
+      "sessions": 96
+    },
+    {
       "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
       "pageViews": 96,
       "sessions": 93
-    },
-    {
-      "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
-      "pageViews": 93,
-      "sessions": 87
     }
   ],
   "cta": {
-    "outboundClicks": 368,
+    "outboundClicks": 372,
     "ctaClickRate": 10.7,
     "byDomain": [
       {
@@ -244,7 +244,7 @@
       },
       {
         "domain": "www.google.com",
-        "clicks": 91
+        "clicks": 95
       },
       {
         "domain": "prtimes.jp",
@@ -285,8 +285,8 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 261,
-      "direct": 51,
+      "organic": 262,
+      "direct": 54,
       "social": 10,
       "ai_assistant": 43,
       "referral": 3,
@@ -294,7 +294,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 9.9,
-    "ctaClickRate_direct": 9.9,
+    "ctaClickRate_direct": 10.3,
     "ctaClickRate_social": 20,
     "byPage": [
       {
@@ -382,6 +382,10 @@
         "clicks": 3
       },
       {
+        "path": "/stores/J001279923.html",
+        "clicks": 3
+      },
+      {
         "path": "/stores/J003366509.html",
         "clicks": 3
       },
@@ -411,10 +415,6 @@
       },
       {
         "path": "/stores/J001239080.html",
-        "clicks": 2
-      },
-      {
-        "path": "/stores/J001259913.html",
         "clicks": 2
       }
     ],
@@ -511,6 +511,11 @@
       },
       {
         "path": "/stores/J001127221.html",
+        "domain": "www.google.com",
+        "clicks": 3
+      },
+      {
+        "path": "/stores/J001279923.html",
         "domain": "www.google.com",
         "clicks": 3
       },
@@ -913,11 +918,6 @@
         "path": "/stores/J001257937.html",
         "domain": "www.google.com",
         "clicks": 1
-      },
-      {
-        "path": "/stores/J001259546.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
       }
     ],
     "reservationClicksByPage": [
@@ -1132,13 +1132,9 @@
       {
         "path": "/stores/J001202808.html",
         "clicks": 1
-      },
-      {
-        "path": "/stores/J001259546.html",
-        "clicks": 1
       }
     ],
-    "reservationClicks": 118,
+    "reservationClicks": 117,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 42,
@@ -1164,7 +1160,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 3090,
+    "value": 3110,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
