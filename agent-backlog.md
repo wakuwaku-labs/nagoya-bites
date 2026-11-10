@@ -8,7 +8,7 @@
 
 ### [SEO-153] ジャーナルの関連特集が題名の部分一致（「発酵喫茶」→モーニング特集）で主題とずれるのを直す
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
 - **detected**: 2026-11-09
 - **due**: 2026-12-09
 - **category**: SEO
@@ -65,7 +65,7 @@
 
 ### [SEO-152] 日次トリアージが動かなかった日を検知して通知し、未判定のレポートを窓の外へ落とさない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-11-03
 - **due**: 2026-11-17
 - **category**: ops / 監視
@@ -3805,6 +3805,28 @@
 - **review**: 本チケットのacceptanceは上記「検証できる事実」の5項目。人手レビューはPR作成後にDesigner役職（Orchestrator代行）が実施
 - **未完了**: PR作成・マージ。マージ後の翌日CI（node build.js）でHotPepper新規射影フィールド（定休日/最寄駅/席数等）が実データに反映されることを確認（ローカルはHOTPEPPER_API_KEY未設定のため射影ロジックのfixtureテストのみで検証済み）
 ## 実行ログ
+
+### 2026-11-10（自動ルーティン・クラウドセッション）
+
+**処理件数**: 1件（SEO-152）
+
+- **[SEO-152]** 日次トリアージが動かなかった日を検知して通知し、未判定のレポートを窓の外へ落とさない
+  - **実装**: `scripts/check_seo_triage_daily_health.js`（`check_seo_triage_weekly_health.js` を流用・`line-daily` 専用・デフォルト閾値3日）／`.github/workflows/seo-triage-daily-watchdog.yml`（毎日18:00 JST 実行・GitHub Issue 自動起票/クローズ・ラベル `seo-triage-daily-watchdog`）／`docs/seo-triage-gap-recovery.md`（絵文字なし検索語 + `in:anywhere` による未判定レポート回収手順）／`.claude/commands/seo-triage.md` と `seo-triage-weekly.md` の Gmail 検索語から📊絵文字を除去
+  - **検証**: `node scripts/check_seo_triage_daily_health.js` → ✅ 健全（1日前・許容3日）／`--json` モード正常／`node scripts/audit_design_system.js --check` violations=0
+  - **QA**: `npm test` 1956 pass / 1 fail（test 1419 は SEO-152 以前から存在する pre-existing failure、agent-backlog.md の既存行に識別情報が入っており今回の変更範囲外）
+  - **注**: acceptance.3「`.claude/commands/seo-triage.md` は自動編集できないので手順を `docs/` に書く」について、今回 `.claude/commands/*.md` は手動編集可のクラウドセッションから直接編集できたため seo-triage.md・seo-triage-weekly.md 両方を編集した
+
+- **[SEO-153]** ジャーナルの関連特集が題名の部分一致（「発酵喫茶」→モーニング特集）で主題とずれるのを直す
+  - **実装**: `scripts/lib/journal_topics.js` の `[/モーニング|喫茶/]` ルールを `[/モーニング|(?<!発酵)喫茶/]` に変更（否定後読みで「発酵喫茶」を除外）。続けて `node scripts/refresh_journal_related.js` を実行
+  - **検証**: `node -e` でタイトル4本を確認 → 「発酵喫茶」記事が nagoya-morning から sakae に変更、他3本は nagoya-morning のまま。`refresh_journal_related.js` → 4件更新（該当4記事のみ・意図しない変更なし）。`2026-11-06-hisaya-dam-sake-festa-manmarumura.html` の関連ブロックから `nagoya-morning.html` が消え `sakae.html` に変更
+  - **QA**: `npm test` 1956 pass / 1 fail（pre-existing test 1419）
+
+- **[ISSUE-195]** 話題店発掘の自動昇格が UTC日付で判定され、JSTのクエリローテーションと基準日がずれる
+  - **実装**: `scripts/fetch_trending_articles.js` の `cmdAutoPromote()` 282行目 `new Date().toISOString().slice(0, 10)` を `new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10)` に変更（trending_scout.js の jstDateString() と同じパターン）。`tests/fetch_trending_auto_promote.test.js` を新規作成し境界テスト5件追加
+  - **検証**: `node --test tests/fetch_trending_auto_promote.test.js` → 5/5 pass。UTC/JST境界ケース（UTC前日・JST当日）のテストを含む
+  - **QA**: `npm test` 1961 pass / 1 fail（pre-existing test 1424）
+
+---
 
 ### 2026-10-05（自動ルーティン・クラウドセッション）
 
@@ -10414,7 +10436,7 @@ Notion課題トラッカーから移行したLinearが、課題の進捗・担�
 
 ### [ISSUE-195] 話題店発掘の自動昇格が UTC日付で判定され、JSTのクエリローテーションと基準日がずれる
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
 - **detected**: 2026-11-08
 - **due**: 2026-11-22
 - **category**: ops / 話題店発掘ループ
