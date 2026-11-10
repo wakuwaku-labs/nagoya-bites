@@ -103,12 +103,13 @@ function pickSlot(next, date) {
   const fl = f.first_line ?? null;
   const ln = f.length ?? null;
   if ((nb !== null && !KINDS.has(nb)) || (fl !== null && !FIRST_LINES.has(fl)) || (ln !== null && !LENGTHS.has(ln))) return { ok: false, reason: 'unknown_value' };
+  const md = f.media === 'image' || f.media === 'none' ? f.media : null; // 画像カードの付ける・付けない（scripts/lib/x_image_card.js）
   const str = (v) => (typeof v === 'string' && v.trim() ? v.trim().slice(0, 200) : null);
   return {
     ok: true,
     plan: { week: plan.week, slot: wd, role: s.role === 'explore' || s.role === 'exploit' ? s.role : null,
       experiment_id: str(s.experiment_id), cell_id: str(s.cell_id), topic: str(s.topic),
-      url_variant: s.url_variant === 'url' || s.url_variant === 'no_url' ? s.url_variant : null, nb_kind: nb, first_line: fl, length: ln },
+      url_variant: s.url_variant === 'url' || s.url_variant === 'no_url' ? s.url_variant : null, nb_kind: nb, first_line: fl, length: ln, ...(md ? { media: md } : {}) },
   };
 }
 

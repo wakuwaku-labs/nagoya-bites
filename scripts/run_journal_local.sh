@@ -817,6 +817,14 @@ log "X 用の文面を作成（write_x_draft.js）"
 run_with_timeout 360 caffeinate -s -i -d -u node scripts/write_x_draft.js --date "$TODAY_JST" --claude-bin "$CLAUDE_BIN" \
   || log "⚠️ write_x_draft.js 失敗（非ブロッキング・X は定型で投稿）"
 
+# ---- 5j. X 用の画像カード（自前の PNG・policy の imageCard）----
+# 日付の偶奇（か SNS分析ツールの週の予定の media 指定）で付ける日だけ assets/x-cards/<date>.png を作る。
+# 付ける・付けないの記録 data/x_post_cards/<date>.json も下のコミットに同乗させる（GitHub Actions は日本語の字形が
+# 無いかもしれないので作るのは Mac 側）。失敗しても公開は止めない（画像なしで投稿される）。
+log "X 用の画像カードを作成（make_x_image_card.js）"
+run_with_timeout 120 node scripts/make_x_image_card.js --date "$TODAY_JST" \
+  || log "⚠️ make_x_image_card.js 失敗（非ブロッキング・X は画像なしで投稿）"
+
 # ---- 6. ラッパーが commit & push を確実に実行 ----
 # claude (journal-today.md Step 10) は「ユーザー承認後のみ push」と定義されているため
 # ヘッドレスでは承認者が居らず未 push 終了になる。それを補うため、ここで強制 commit/push する。
@@ -835,7 +843,9 @@ for p in \
   "data/journal_candidates/${TODAY_JST}.json" \
   "assets/journal-figures/${TODAY_JST}"-*.svg \
   "assets/journal-figures/${TODAY_JST}"-*.png \
-  "data/x_post_drafts/${TODAY_JST}.json" ; do
+  "data/x_post_drafts/${TODAY_JST}.json" \
+  "data/x_post_cards/${TODAY_JST}.json" \
+  "assets/x-cards/${TODAY_JST}.png" ; do
   for f in $p; do
     [ -e "$f" ] && TODAY_FILES+=("$f")
   done

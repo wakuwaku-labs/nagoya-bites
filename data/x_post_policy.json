@@ -119,6 +119,12 @@
     "maxAgeDays": 8,
     "help": "SNS分析ツールの割り当て（iCloud の nagoya_bites/next.json の plan・docs/decisions/0059）。true のとき Mac 側の文面づくり（scripts/write_x_draft.js）が、今日の枠（JST の曜日）の型・1行目・長さを Claude への指示に足し、使った枠を保存した文面と台帳（plan_cell・plan_experiment）に残す。ファイルが無い・壊れ・maxAgeDays 日より古い・schema 違い・別の週なら指定なし（今までどおり）。URL の実験（urlExperiment・0058）とは独立に動く。戻すのは enabled を false に戻す1行だけ。置き場は環境変数 SNS_ANALYZER_X_DIR で変えられる"
   },
+  "imageCard": {
+    "enabled": true,
+    "followPlan": true,
+    "imageOnOddDays": true,
+    "help": "X の投稿に自前の画像カード（記事の題・要点・地名とサイトのロゴだけ。他社の写真・og:image は使わない）を付ける実験（競合は画像つきが伸びた・SNS分析ツールの候補 competitor-format:media=image）。enabled=false で全部やめる（画像カードを作らず、付けない）。followPlan=true のとき、SNS分析ツールの週の予定の枠に format.media（image か none）があればそれに従い、無ければ日付の偶奇で交互（imageOnOddDays=true なら奇数日に付ける）。カードは Mac 側（scripts/make_x_image_card.js・run_journal_local.sh）で assets/x-cards/<date>.png に作り、付けた・付けなかったは data/x_post_cards/<date>.json と台帳（media・media_reason）に残す。画像の上げに失敗したら画像なしで投稿を続ける。URL は本文に残す（判断記録 0055）。since（YYYY-MM-DD）を足すとその日以降だけ"
+  },
   "maxWeightedLength": 280,
   "duplicateWindowDays": 30,
   "livePage": {

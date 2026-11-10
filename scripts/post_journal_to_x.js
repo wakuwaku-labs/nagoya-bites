@@ -29,6 +29,7 @@
 const fs = require('fs');
 const path = require('path');
 const X = require('./lib/x_post');
+const IC = require('./lib/x_image_card');
 
 const TWEET_URL = 'https://api.x.com/2/tweets';
 
@@ -159,12 +160,12 @@ function credentialShape(value) {
   return parts.join('・');
 }
 
-async function sendTweet(text, cred, fetchImpl = fetch, replyToId = null) {
+async function sendTweet(text, cred, fetchImpl = fetch, replyToId = null, mediaId = null) {
   const auth = X.oauthHeader({ method: 'POST', url: TWEET_URL, ...cred });
   const res = await fetchImpl(TWEET_URL, {
     method: 'POST',
     headers: { authorization: auth, 'content-type': 'application/json' },
-    body: JSON.stringify(replyToId ? { text, reply: { in_reply_to_tweet_id: replyToId } } : { text }),
+    body: JSON.stringify({ text, ...(replyToId ? { reply: { in_reply_to_tweet_id: replyToId } } : {}), ...(mediaId ? { media: { media_ids: [String(mediaId)] } } : {}) }),
   });
   let body;
   const raw = await res.text();
@@ -173,7 +174,7 @@ async function sendTweet(text, cred, fetchImpl = fetch, replyToId = null) {
 }
 
 /** 結果を台帳・心拍に書く（live のときだけ呼ぶ）。 */
-function record(root, { date, entry, result, reason, text, textMode, draftReason, tweetId, errorClass, status, thread, experiment, plan }) {
+function record(root, { date, entry, result, reason, text, textMode, draftReason, tweetId, errorClass, status, thread, experiment, plan, media }) {
   const now = new Date().toISOString();
   if (status) {
     const log = X.readLog(root);
@@ -188,6 +189,7 @@ function record(root, { date, entry, result, reason, text, textMode, draftReason
       ...(reason ? { reason } : {}),
       ...(thread ? { thread } : {}),
       ...(experiment ? { experiment: experiment.experiment, url_variant: experiment.url_variant } : {}),
+      ...(media ? { media: media.variant, media_reason: media.reason, ...(media.id ? { media_id: media.id } : {}) } : {}),
       ...(plan && plan.cell_id ? { plan_cell: plan.cell_id } : {}),
       ...(plan && plan.experiment_id ? { plan_experiment: plan.experiment_id } : {}),
       ...(plan && typeof plan.followed === 'boolean' ? { plan_followed: plan.followed } : {}),
@@ -288,6 +290,10 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
     out.ogImage = await checkOgImage(live.html, fetchImpl);
   }
 
+  // 画像カード（自前の PNG）。付ける日かどうかは Mac 側で決めて記録済み（scripts/make_x_image_card.js）。ここでは読むだけ
+  const card = IC.loadCard(date, policy, root);
+  out.media = { variant: card.attach ? 'image' : 'none', reason: card.reason, ...(card.attach ? { bytes: card.bytes } : {}) };
+
   if (mode === 'dry-run') return { ...out, result: 'dry_run_ok', exitCode: 0 };
 
   const cred = credentials(env);
@@ -296,13 +302,33 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
     return { ...out, result: 'failed', reason: 'no_credentials', errorClass: 'auth', exitCode: 1 };
   }
 
+  // 画像を上げる。失敗しても止めない（画像なしで投稿を続け、理由を台帳に残す）
+  let media = { variant: 'none', reason: card.reason };
+  if (card.attach) {
+    const up = await IC.uploadImage(card.file, cred, fetchImpl);
+    if (up.ok) media = { variant: 'image', reason: card.reason, id: up.id, via: up.via };
+    else media = { variant: 'none', reason: `upload_failed: ${up.reason}`.slice(0, 300) };
+  }
+  out.media = media;
+
   let res;
   try {
-    res = await sendTweet(built.text, cred, fetchImpl);
+    res = await sendTweet(built.text, cred, fetchImpl, null, media.id);
   } catch (e) {
     const reason = `network:${e.message || e}`;
-    record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, status: 'failed' });
+    record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, media, status: 'failed' });
     return { ...out, result: 'failed', reason, errorClass: 'server', exitCode: 1 };
+  }
+  // 画像つきの投稿が受け付けられなかったら、画像なしでもう1回だけ送る（重複の拒否は届いている印なのでそのまま扱う）
+  if (media.id && [400, 403, 422].includes(res.status) && !((res.status === 201 || res.status === 200) && res.body && res.body.data && res.body.data.id) && X.classifyError(res.status, res.body) !== 'duplicate') {
+    const d = typeof res.body === 'string' ? res.body.slice(0, 120) : JSON.stringify(res.body).slice(0, 120);
+    media = { variant: 'none', reason: `tweet_with_media_rejected: http_${res.status} ${d}`.slice(0, 300) };
+    out.media = media;
+    try { res = await sendTweet(built.text, cred, fetchImpl, null, null); } catch (e) {
+      const reason = `network:${e.message || e}`;
+      record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, media, status: 'failed' });
+      return { ...out, result: 'failed', reason, errorClass: 'server', exitCode: 1 };
+    }
   }
   const id = res.body && res.body.data && res.body.data.id;
   if ((res.status === 201 || res.status === 200) && id) {
@@ -331,7 +357,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
         }
       }
     }
-    record(root, { date, entry, result: 'posted', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, tweetId: id, status: 'posted', thread });
+    record(root, { date, entry, result: 'posted', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, media, tweetId: id, status: 'posted', thread });
     return { ...out, result: 'posted', tweetId: id, tweetUrl: `https://x.com/i/web/status/${id}`, ...(thread ? { repliesPosted: thread.replies.length, ...(thread.failed_reason ? { repliesFailed: thread.failed_reason } : {}) } : {}), exitCode: 0 };
   }
   const errorClass = X.classifyError(res.status, res.body);
@@ -339,10 +365,10 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   const reason = `http_${res.status}: ${detail}`;
   if (errorClass === 'duplicate') {
     // 同じ文面が既に X にある＝前の回で届いていた。もう送らない
-    record(root, { date, entry, result: 'duplicate', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, status: 'duplicate' });
+    record(root, { date, entry, result: 'duplicate', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, media, status: 'duplicate' });
     return { ...out, result: 'duplicate', reason, errorClass, exitCode: 0 };
   }
-  record(root, { date, entry, result: 'failed', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, status: 'failed' });
+  record(root, { date, entry, result: 'failed', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, media, status: 'failed' });
   return { ...out, result: 'failed', reason, errorClass, exitCode: 1 };
 }
 
@@ -362,6 +388,7 @@ function summaryMarkdown(r) {
   for (const x of r.rejected || []) lines.push(`  - 使わなかった候補: ${TEXT_MODE_JA[x.mode] || x.mode} … ${x.reason}`);
   if (r.weighted) lines.push(`- 文字数（X の数え方）: ${r.weighted} / 280`);
   if (r.livePage) lines.push(`- 本番の記事: HTTP ${r.livePage.status}（${r.livePage.attempts} 回目）`);
+  if (r.media) lines.push(`- 画像カード: ${r.media.variant === 'image' ? '付ける' : '付けない'}（${r.media.reason}）`);
   if (r.ogImage) lines.push(`- リンクカードの画像: ${r.ogImage.ok ? 'OK' : `出ない見込み（${r.ogImage.reason}）`}`);
   if (r.tweetUrl) lines.push(`- 投稿: ${r.tweetUrl}`);
   if (r.replies) lines.push(`- 返信（続き）: ${r.repliesPosted != null ? `${r.repliesPosted} / ` : ''}${r.replies.length} 件${r.repliesFailed ? `（途中で止まった: ${r.repliesFailed}）` : ''}`);
