@@ -1,8 +1,8 @@
 {
   "_note": "ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない",
-  "mergedCount": 66,
-  "absorbedCount": 69,
-  "skippedCount": 14,
+  "mergedCount": 68,
+  "absorbedCount": 71,
+  "skippedCount": 16,
   "merged": [
     {
       "reasons": [
@@ -819,6 +819,40 @@
         "placeid_match"
       ],
       "kept": {
+        "店名": "水炊き 吟醸もつ鍋 由乃 ゆの 錦本店",
+        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+        "ホットペッパーID": "J001161668",
+        "placeId": "ChIJy6nhCdVwA2ARBWqaSQeO-ow",
+        "slug": "J001161668"
+      },
+      "absorbed": [
+        {
+          "店名": "水炊き 吟醸もつ鍋 由乃",
+          "エリア": "名古屋市中区栄",
+          "ホットペッパーID": "",
+          "placeId": "ChIJy6nhCdVwA2ARBWqaSQeO-ow",
+          "slug": "store-e6b0b4e7828ae381"
+        }
+      ],
+      "filledFields": [
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "価格帯目安",
+        "編集部推薦",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由",
+        "食べログURL"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
         "店名": "勝手口河内屋",
         "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
         "ホットペッパーID": "J004698880",
@@ -1566,7 +1600,7 @@
         "店名": "宮きしめん伊兵衛 栄店",
         "エリア": "名古屋市中区栄",
         "ホットペッパーID": "",
-        "placeId": "",
+        "placeId": "ChIJv5rjpKJxA2ARYPynMl2aIcA",
         "slug": "store-e5aeaee3818de381"
       },
       "absorbed": [
@@ -1579,13 +1613,9 @@
         }
       ],
       "filledFields": [
-        "Google評価",
-        "placeId",
         "データソース",
         "価格帯",
         "備考",
-        "口コミ数",
-        "営業ステータス",
         "営業状況",
         "情報源URL"
       ]
@@ -1736,6 +1766,31 @@
         "placeid_match"
       ],
       "kept": {
+        "店名": "LA VAGABONDE (ラ・ヴァガボンド)",
+        "エリア": "名古屋市中区",
+        "ホットペッパーID": "",
+        "placeId": "ChIJx9ZMB7lwA2ARumYZugELHJU",
+        "slug": "la-vagabonde"
+      },
+      "absorbed": [
+        {
+          "店名": "LA VAGABONDE",
+          "エリア": "名古屋市中区千代田",
+          "ホットペッパーID": "",
+          "placeId": "ChIJx9ZMB7lwA2ARumYZugELHJU",
+          "slug": "la-vagabonde"
+        }
+      ],
+      "filledFields": [
+        "おすすめシーン",
+        "食べログ評価"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
         "店名": "飛騨牛一頭家 馬喰一代 名古屋WEST",
         "エリア": "名古屋市中村区",
         "ホットペッパーID": "",
@@ -1858,6 +1913,18 @@
     },
     {
       "names": [
+        "壺中天 こちゅうてん",
+        "壺中天（こちゅうてん）"
+      ],
+      "hpIds": [
+        "J000805511",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "ward_conflict"
+    },
+    {
+      "names": [
         "今池焼鳥 B7 ビーセブン",
         "今池焼鳥 B7"
       ],
@@ -1879,6 +1946,18 @@
       ],
       "reason": "placeid_match",
       "blocker": "no_corroboration"
+    },
+    {
+      "names": [
+        "壺中天",
+        "壺中天（こちゅうてん）"
+      ],
+      "hpIds": [
+        "",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "ward_conflict"
     },
     {
       "names": [
