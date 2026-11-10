@@ -4930,6 +4930,36 @@
       "brand_reason": "重複（2026-11-09 に同じメールを全件判定済み: FVの予約CTA=却下、solo-dining 拡充と内部リンク=SEO-087 に集約、総括=重複）。新しい週次メール（11-08〜11-14 分）は未着",
       "category": null,
       "fingerprint": "8b960c9a63d540d3"
+    },
+    {
+      "id": null,
+      "date": "2026-11-11",
+      "source": "line-daily",
+      "advice": "[レポート11-09] 🟡 予約クリック率が2.3%で目安の3%を下回る。👉 journal/ の日次記事 2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch の冒頭に関連店舗の予約ボタン(cta_reserve)を追記しクリックしやすくする",
+      "verdict": "rejected",
+      "brand_reason": "却下（実在保証・制約7／単日ノイズ。11-10 に同じ記事への同旨を却下済み）。当該記事の店は HotPepper ID が実在照合できておらず、予約ボタンは照合できた店にだけ出す設計（SEO-054・done）。無い予約先を作って冒頭に置くのは実在保証に反する。地図導線（cta_gmap_click）は記事内に既にあり、当日はマップ14回・情報到達17回と機能している。予約4回の日の率（2.3%）は前日3.5%からの単日の揺れで、週次は7.1%と目安を上回る",
+      "category": null,
+      "fingerprint": "71a97b12640b6d00"
+    },
+    {
+      "id": null,
+      "date": "2026-11-11",
+      "source": "line-daily",
+      "advice": "[レポート11-09] 🟡 1訪問あたり閲覧が1.3ページと目安の2ページを下回る。👉 人気1位のjournal記事 2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch に関連するfeatures/特集記事へのリンクを記事下に追加",
+      "verdict": "rejected",
+      "brand_reason": "却下（実装済みで増分なし）。実ファイルで確認: 当該記事は既に features/sakae（2箇所）・nagoya-solo-dining・nagoya-lunch-washoku・nagoya-gourmet-guide へリンク済み（栄×一人×昼の主題に合う特集は網羅）。これ以上足すと関連の薄い特集になりシーン専門性を薄める。当日の直帰率21%・滞在2分59秒は良好で、記事が読まれていない兆候も無い",
+      "category": null,
+      "fingerprint": "23611e172d45df3f"
+    },
+    {
+      "id": null,
+      "date": "2026-11-11",
+      "source": "line-daily",
+      "advice": "[レポート11-09] 🟡 「さく蛸 黒川」が平均8.9位で表示600回と上位表示の伸びしろ。👉 index.html の「さく蛸 黒川」の店舗詳細モーダルにこのKWを意識した店舗紹介文を追記し検索順位向上を狙う",
+      "verdict": "duplicate",
+      "brand_reason": "重複・比較待ち（同旨を 11-03〜11-08 に判定済み）。さく蛸は店舗データに無く（stores.json 0件を再確認）、モーダルも店舗ページも存在しない。原因対応は SEO-150/151 で ready。順位を受けている記事は #1066 で 10-30 に題を書き直し 11-13 に比較予定で、比較前に変えると前後比が取れない（GSCループの原則）。モーダルは検索に載る面でもない",
+      "category": null,
+      "fingerprint": "ce7fd163bb80c6ae"
     }
   ]
 }
