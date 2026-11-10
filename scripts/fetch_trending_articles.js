@@ -279,7 +279,8 @@ function cmdIngestJSON(file) {
 
 function cmdAutoPromote() {
   const trending = loadTrending();
-  const today = new Date().toISOString().slice(0, 10);
+  // JST基準の日付（trending_scout.js の jstDateString() と同じ計算・ISSUE-195）
+  const today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
   let promoted = 0, skipped = 0;
   (trending.stores || []).forEach(s => {
     if (!s['_auto']) return;

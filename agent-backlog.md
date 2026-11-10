@@ -3821,6 +3821,11 @@
   - **検証**: `node -e` でタイトル4本を確認 → 「発酵喫茶」記事が nagoya-morning から sakae に変更、他3本は nagoya-morning のまま。`refresh_journal_related.js` → 4件更新（該当4記事のみ・意図しない変更なし）。`2026-11-06-hisaya-dam-sake-festa-manmarumura.html` の関連ブロックから `nagoya-morning.html` が消え `sakae.html` に変更
   - **QA**: `npm test` 1956 pass / 1 fail（pre-existing test 1419）
 
+- **[ISSUE-195]** 話題店発掘の自動昇格が UTC日付で判定され、JSTのクエリローテーションと基準日がずれる
+  - **実装**: `scripts/fetch_trending_articles.js` の `cmdAutoPromote()` 282行目 `new Date().toISOString().slice(0, 10)` を `new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10)` に変更（trending_scout.js の jstDateString() と同じパターン）。`tests/fetch_trending_auto_promote.test.js` を新規作成し境界テスト5件追加
+  - **検証**: `node --test tests/fetch_trending_auto_promote.test.js` → 5/5 pass。UTC/JST境界ケース（UTC前日・JST当日）のテストを含む
+  - **QA**: `npm test` 1961 pass / 1 fail（pre-existing test 1424）
+
 ---
 
 ### 2026-10-05（自動ルーティン・クラウドセッション）
@@ -10431,7 +10436,7 @@ Notion課題トラッカーから移行したLinearが、課題の進捗・担�
 
 ### [ISSUE-195] 話題店発掘の自動昇格が UTC日付で判定され、JSTのクエリローテーションと基準日がずれる
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
 - **detected**: 2026-11-08
 - **due**: 2026-11-22
 - **category**: ops / 話題店発掘ループ
