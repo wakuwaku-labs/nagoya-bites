@@ -1,0 +1,147 @@
+name: NAGOYA BITES — SEO日次トリアージ 生存監視
+
+# なぜこのワークフローが必要か（SEO-152・2026-11-10）:
+#   日次レポートメール（件名「NAGOYA BITES 日次レポート」）は GAS が Gmail 送信するが、
+#   /seo-triage の Gmail 検索クエリが newer_than:2d の「最新スレッドだけ取得」なので、
+#   定期実行が 1 回抜けるとその日のレポートは二度と読まれない。
+#   また絵文字（📊）を含む件名は Gmail 検索で 0 件になる日がある（2026-11-03 実測・SEO-152）。
+#   日次処理が止まっても外から気づく方法がなかった。
+#
+#   この監視は data/seo_advice_log.json の source="line-daily" エントリの鮮度だけを見る。
+#   採用・却下の件数は見ない（0件は正常。鳴らすのは「処理自体が止まったこと」だけ）。
+#
+#   動いていないルーチンはエントリを追記できないため、エントリ日付は偽装不能な事実
+#   （CLAUDE.md 制約10）。
+#
+#   ISSUE-084 の教訓（警報を防音室で鳴らすな）をそのまま適用:
+#     1. 監視は監視対象と別の場所で回す  → ローカル/クラウドルーチンではなく GitHub Actions
+#     2. 通知は out-of-band に出す        → Issue 起票（GitHub が既定でオーナーにメールする）
+#     3. 「気づけるはず」を検知と数えない → 人がログを見に行かなくても届く
+
+on:
+  schedule:
+    # 09:00 UTC = 18:00 JST。日次処理は 21:01 JST 実行なので、
+    # 前日の処理が抜けた翌日の夕方に検知する。
+    # 許容欠測日数（既定3日）側で余裕を持たせている。
+    - cron: '0 9 * * *'
+  workflow_dispatch: # 手動確認・復旧後の即時クローズ用
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 生存確認
+        id: check
+        run: |
+          set +e
+          node scripts/check_seo_triage_daily_health.js --json > /tmp/seo-daily-health.json
+          set -e
+          echo "----- 判定結果 -----"
+          node scripts/check_seo_triage_daily_health.js || true
+
+      - name: 異常なら Issue を起票/更新、復旧していればクローズ
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('/tmp/seo-daily-health.json', 'utf8'));
+            const label = 'seo-triage-daily-watchdog';
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'open', labels: label, per_page: 20,
+            });
+            const existing = issues.find(i => i.title.startsWith('🔴 SEO日次トリアージが処理されていません'));
+
+            // ---- 復旧している場合: 開いている Issue を閉じる ----
+            if (r.ok) {
+              if (existing) {
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number: existing.number,
+                  body: `✅ 復旧を確認しました（JST ${r.today_jst}）。最後の日次処理: ${r.last_daily.date}（${r.silence_days}日前）。自動クローズします。`,
+                });
+                await github.rest.issues.update({
+                  owner, repo, issue_number: existing.number, state: 'closed',
+                });
+                core.info(`Issue #${existing.number} を復旧クローズしました。`);
+              } else {
+                core.info('健全。Issue の起票は不要です。');
+              }
+              return;
+            }
+
+            // ---- 異常あり: 起票 or 更新 ----
+            const kinds = r.problems.map(p => p.kind).join(', ');
+            const title = `🔴 SEO日次トリアージが処理されていません（${kinds}）`;
+
+            const lines = [];
+            lines.push('SEO日次トリアージの **生存確認に失敗**しました（JST ' + r.today_jst + ' 時点）。');
+            lines.push('');
+            lines.push('> 日次トリアージが止まると、Google Analytics の日次データへの対応が遅れ、');
+            lines.push('> 未判定のレポートが窓の外へ落ちます（`newer_than:2d` の制約により後から取得不可）。');
+            lines.push('> （参考: 2026-11 に Gmail 検索語の絵文字問題で日次メールが取得できない状態が続いた・SEO-152）');
+            lines.push('');
+            lines.push('## 検出内容');
+            for (const p of r.problems) lines.push(`- **${p.kind}** — ${p.detail}`);
+            if (r.warnings.length) {
+              lines.push('');
+              lines.push('## 警告（それ自体は異常ではない）');
+              for (const w of r.warnings) lines.push(`- ${w}`);
+            }
+            lines.push('');
+            lines.push('## 最後の日次処理');
+            if (r.last_daily) {
+              lines.push(`- 対象日: \`${r.last_daily.date}\`（${r.silence_days}日前 / 許容 ${r.max_silence_days}日）`);
+              lines.push(`- verdict: \`${r.last_daily.verdict}\` / id: ${r.last_daily.id || '—'}`);
+              lines.push(`- 累計 line-daily エントリ数: ${r.total_daily_entries}`);
+            } else {
+              lines.push('- `data/seo_advice_log.json` に line-daily エントリが一件もありません。');
+            }
+            lines.push('');
+            lines.push('## 対処');
+            lines.push('1. **`stale_daily` の場合（最有力: Gmail 検索語の絵文字問題）** — SEO-152 参照。');
+            lines.push('   - `docs/seo-triage-gap-recovery.md` の手順で未判定レポートを回収する。');
+            lines.push('   - Gmail 検索語から絵文字を外した `.claude/commands/seo-triage.md` を反映する。');
+            lines.push('2. **ルーチン未登録の場合** — claude.ai のスケジュールで日次トリアージが登録されているか確認する。');
+            lines.push('3. 復旧後は手動で1回実行し、`data/seo_advice_log.json` に line-daily エントリが追加されることを確認する:');
+            lines.push('   ```bash');
+            lines.push('   node scripts/check_seo_triage_daily_health.js');
+            lines.push('   ```');
+            lines.push('4. 停止期間中に送られてきていた日次レポートは `in:anywhere` を使って遡って処理する。');
+            lines.push('   台帳突合（fingerprint 重複チェック）があるため二重起票にはなりません。');
+            lines.push('   詳細: `docs/seo-triage-gap-recovery.md`');
+            lines.push('');
+            lines.push('---');
+            lines.push('この Issue は生存確認が通ると自動でクローズされます（seo-triage-daily-watchdog.yml）。');
+            const body = lines.join('\n');
+
+            if (existing) {
+              await github.rest.issues.update({
+                owner, repo, issue_number: existing.number, title, body,
+              });
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: existing.number,
+                body: `再検出（JST ${r.today_jst}）。現在の問題: ${kinds}`,
+              });
+              core.setFailed(`SEO日次トリアージの異常が継続しています: ${kinds}`);
+            } else {
+              const { data: created } = await github.rest.issues.create({
+                owner, repo, title, body, labels: [label],
+              });
+              core.setFailed(`SEO日次トリアージの異常を検出し Issue #${created.number} を起票しました: ${kinds}`);
+            }
