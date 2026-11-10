@@ -1,0 +1,435 @@
+{
+  "date": "2026-11-10",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "東別院のラーメン『チャーシューメン ススル』950円とカウンター12席の一人ランチ",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 22,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "出典が偏っている媒体 jouhou.nagoya は独立ドメインに数えない（別媒体・一次発表で裏を取ると加点）",
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 3件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,予約,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 169字 +4",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「栄」+1",
+          "タイトルにシーン語「カウンター」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      },
+      "gate_note": "98点（自動公開ライン 100点）。主な不足: brand_fit -4 / topicality -3 / search_intent -3"
+    },
+    {
+      "id": "c3",
+      "title_draft": "名駅南『河東製油所 名古屋店』昼の一人ごはんに、予約不可・10時開店の韓国料理",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 13,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "韓国料理",
+          "feature": "features/nagoya-korean.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (席,予約) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 128字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「韓国料理」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "国際センター『八塩折 yashiori』すっぽんと鰻の日本料理、接待の予算1万5千円台",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,コース,席,予約,接待) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 119字 +4",
+          "title 43字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「名駅」+1",
+          "タイトルにシーン語「接待」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "東別院の新店ラーメン、チャーシューメン ススルは券売機と12席で何を優先したか",
+      "verdict": "HOLD",
+      "total": 75,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 13,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 3
+      },
+      "search_intent_links": [
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "出典が偏っている媒体 jouhou.nagoya は独立ドメインに数えない（別媒体・一次発表で裏を取ると加点）",
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (席,回転) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 143字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「一人飲み」+1",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "相生山『BEN'S BAGEL』朝のテイクアウトに、売り切れ次第終了の住宅街ベーグル店",
+      "verdict": "HOLD",
+      "total": 68,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 13,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (回転) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 140字 +4",
+          "title 43字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「緑区・天白区」+1",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "98点（自動公開ライン 100点）。主な不足: brand_fit -4 / topicality -3 / search_intent -3",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "東別院のラーメン『チャーシューメン ススル』950円とカウンター12席の一人ランチ",
+      "lead_draft": "2026年11月5日、地下鉄名城線の東別院駅から徒歩2分の中区平和に開店した「チャーシューメン ススル」。丸の内の鶏白湯店「鶏そば 啜る」の新業態で、席は全12席がカウンター。ラーメンは2種とも950円、チャーシュー増しダブルと味玉で1,650円。券売機の現金払いと、チャーシューが切れたら閉める営業を、一人ランチの使い方として整理する。",
+      "angle": "価格帯（950円の基本と1,650円の増し）・12席カウンターの回転・電話が通じず予約が実質できない並び方・券売機と現金払い・昼夜の中休み・チャーシュー売り切れで閉店する仕込み量の設計から、一人ランチに向く理由を読む",
+      "main_store": {
+        "name": "チャーシューメン ススル",
+        "id": "",
+        "area": "東別院",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「チャーシューメンススル」内覧会レポート",
+          "url": "https://jouhou.nagoya/chashumen-susuru/",
+          "date": "2026-11-04"
+        },
+        {
+          "label": "美食ぐるめin名古屋（X）オープン記念の告知",
+          "url": "https://x.com/nagoya1016/status/2117521442795557089",
+          "date": "2026-11-03"
+        },
+        {
+          "label": "おいでよ名古屋（X）開店の告知",
+          "url": "https://x.com/oinagoya/status/2117939140901908871",
+          "date": "2026-11-04"
+        },
+        {
+          "label": "チャーシューメン ススル 公式Instagram（リール）",
+          "url": "https://www.instagram.com/chashumen_susuru/reel/Dfg9cVYR_cZ/",
+          "date": "2026-11-09"
+        },
+        {
+          "label": "食べログ チャーシューメン ススル",
+          "url": "https://tabelog.com/aichi/A2301/A230105/23098173/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "相生山『BEN'S BAGEL』朝のテイクアウトに、売り切れ次第終了の住宅街ベーグル店",
+      "lead_draft": "2026年11月7日、名古屋市天白区相川に開店したベーグル店「BEN'S BAGEL」。営業は火曜から土曜の9時から15時までで、売り切れ次第終了。駐車場があり、テイクアウトが中心になる。住宅街の駅から少し歩く立地で、平日朝の買い方と、6時間しか開けない営業の組み立てを整理する。",
+      "angle": "営業時間（9〜15時・週5日）と売り切れ終了の仕込み量・駐車場つきの住宅街立地・テイクアウトの回転から、平日朝の買い方を読む",
+      "main_store": {
+        "name": "BEN'S BAGEL",
+        "id": "",
+        "area": "相生山",
+        "genre": "ベーグル"
+      },
+      "sources": [
+        {
+          "label": "食べログ BEN'S BAGEL",
+          "url": "https://tabelog.com/aichi/A2301/A230112/23098360/"
+        },
+        {
+          "label": "BEN'S BAGEL 公式Instagram",
+          "url": "https://www.instagram.com/ben_s_bagel/",
+          "date": "2026-11-07"
+        },
+        {
+          "label": "食べログ 名古屋市 新規オープン順",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-11-10"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "名駅南『河東製油所 名古屋店』昼の一人ごはんに、予約不可・10時開店の韓国料理",
+      "lead_draft": "2026年11月6日、名駅南1丁目に開店した韓国料理の「河東製油所 名古屋店」。営業は火曜から日曜の10時から18時で、予約は受けず、テイクアウトもできる。夜を開けない韓国料理店という珍しい時間設計を、名駅南で働く人の昼の一人ごはんの使い方として整理する。",
+      "angle": "営業時間（10〜18時で夜を開けない）・予約不可の席運用・テイクアウト併用から、昼の一人ごはんに向くかを読む",
+      "main_store": {
+        "name": "河東製油所 名古屋店",
+        "id": "",
+        "area": "名駅",
+        "genre": "韓国料理"
+      },
+      "sources": [
+        {
+          "label": "食べログ 河東製油所 名古屋店",
+          "url": "https://tabelog.com/aichi/A2301/A230101/23098375/"
+        },
+        {
+          "label": "河東製油所 公式Instagram",
+          "url": "https://www.instagram.com/hadong_82",
+          "date": "2026-11-06"
+        },
+        {
+          "label": "食べログ 名古屋市 新規オープン順",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-11-10"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "東別院の新店ラーメン、チャーシューメン ススルは券売機と12席で何を優先したか",
+      "lead_draft": "東別院駅の近くに11月5日に開いたラーメン店「チャーシューメン ススル」は、豚と鶏を1対1で8時間炊く白湯と、国産豚バラを15時間かけるチャーシューを看板にする。青森県産にんにくは無料で、券売機のボタンで頼む。席はカウンター12席のみ。仕込みに時間のかかる品を軸にした店の回し方を読む。",
+      "angle": "仕込み時間（白湯8時間・チャーシュー15時間）と原価・券売機での注文・カウンター12席の回転・売り切れ閉店の設計を読む",
+      "main_store": {
+        "name": "チャーシューメン ススル",
+        "id": "",
+        "area": "東別院",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「チャーシューメンススル」",
+          "url": "https://jouhou.nagoya/chashumen-susuru/",
+          "date": "2026-11-04"
+        },
+        {
+          "label": "チャーシューメン ススル 公式Instagram",
+          "url": "https://www.instagram.com/chashumen_susuru/",
+          "date": "2026-11-09"
+        },
+        {
+          "label": "食べログ チャーシューメン ススル",
+          "url": "https://tabelog.com/aichi/A2301/A230105/23098173/"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "国際センター『八塩折 yashiori』すっぽんと鰻の日本料理、接待の予算1万5千円台",
+      "lead_draft": "2026年11月6日、国際センター駅の近くに開店した日本料理の「八塩折 yashiori」。すっぽんと鰻を扱い、夜の予算は1万5千円から2万円の帯に置かれている。名駅西の静かな立地で、接待に使うときの予算の読み方と予約の取り方を整理する。",
+      "angle": "価格帯（1万5千円台のコース）・予約の取り方・席の少ない日本料理店の接待向きの理由を読む",
+      "main_store": {
+        "name": "八塩折 yashiori",
+        "id": "",
+        "area": "名駅",
+        "genre": "日本料理"
+      },
+      "sources": [
+        {
+          "label": "食べログ 名古屋市 新規オープン順",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-11-10"
+        },
+        {
+          "label": "食べログ 八塩折 yashiori",
+          "url": "https://tabelog.com/aichi/A2301/A230101/23098031/"
+        }
+      ]
+    }
+  ]
+}
