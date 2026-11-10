@@ -4890,6 +4890,46 @@
       "brand_reason": "重複（新しい起票なし）。前週+38%の翌週の-4%で、悪化トレンドではなく横ばい。人気1位は今週も solo-dining（89回）で、勝ち筋の分解と横展開は SEO-087 に集約済み。『次の一手』に当たるのは SEO-087 の 11-07 効果判定（未実施）なので、その実施を SEO-087 に追記して促す。Bing 比率の上昇は 11-05 の日次で判定済み",
       "category": null,
       "fingerprint": "72f0da3326a34935"
+    },
+    {
+      "id": null,
+      "date": "2026-11-10",
+      "source": "line-daily",
+      "advice": "[レポート11-08] 🟡 訪問114人に店舗詳細17回と少なく回遊性に余地。👉 トップページ(index.html)の掲載店舗の写真を大きくしたりキャッチコピーを魅力的に変更し、店舗詳細が見たくなるように改善する",
+      "verdict": "rejected",
+      "brand_reason": "却下（前提が成立しない・制約10／具体性なし）。当日のトップページ閲覧は147中5回だけで、訪問の入口は日次ジャーナル（26回）と特集（solo-dining 11回）＝トップのカードを変えても店舗詳細17回の母数にほぼ作用しない。「写真を大きく」「キャッチコピーを魅力的に」は何をどう変えるかの根拠が無い汎用論で、HotPepper 写真は引き伸ばさない方針（写真の禁止事項）とも合わない。カードの設計は UI・UX 全面改修（2026-10）で実測つきで済ませている",
+      "category": null,
+      "fingerprint": "0d287a0b84e1e6d1"
+    },
+    {
+      "id": null,
+      "date": "2026-11-10",
+      "source": "line-daily",
+      "advice": "[レポート11-08] 🟡 予約ボタン4回・情報到達9回とコンバージョンが伸び悩み。👉 人気1位の journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch 記事内に関連店舗の予約ボタンやGoogleマップ導線を明確に配置しCVR向上",
+      "verdict": "rejected",
+      "brand_reason": "却下（実装済みで増分なし・単日ノイズ）。実ファイルで確認: 当該記事の店カードには地図導線（cta_gmap_click）が既にある。これは SEO-054（done・2026-08-19）で生成テンプレに入れた導線で、予約ボタンは HotPepper ID が実在照合できた店にだけ出す設計。当該店は ID が無いため予約ボタンを出さないのが正しく、無い予約先を作って置くのは実在保証（制約7）に反する。予約率は訪問100人あたり約3.5人で目安の3%を上回っており「伸び悩み」の前提も成立しない",
+      "category": null,
+      "fingerprint": "ee8bb4717f8e3a6e"
+    },
+    {
+      "id": null,
+      "date": "2026-11-10",
+      "source": "line-daily",
+      "advice": "[レポート11-08] 🟢 検索流入78%・SNS流入0%。👉 人気上位の nagoya-solo-dining・nagoya-tebasaki 特集の見出しや写真をそのまま使い、Instagramで魅力的な投稿を毎日実施する",
+      "verdict": "rejected",
+      "brand_reason": "却下（写真の規約・運用の前提違い。09-14/09-17/09-23/09-25・11-08 に同旨を判定済み）。特集の写真は HotPepper・Places・店舗公式IGの embed で、Instagram へ「そのまま」上げるのは複製・再配信にあたり規約違反（写真ソースの禁止事項・ADR 0056 と同じ理由）。SNS 投稿はリポジトリ外の運用で UTM で測る方針で、このループから毎日投稿を起こさない。X と note の自動投稿は別に稼働中（ADR 0047/0055）",
+      "category": null,
+      "fingerprint": "cdcad7c1056e99b0"
+    },
+    {
+      "id": null,
+      "date": "2026-11-10",
+      "source": "line-weekly",
+      "advice": "[週次 2026-11-01〜11-07・11-10 の再取得] 訪問778人-4%・閲覧1136+3%と助言3件（FVに予約CTA・solo-dining 拡充・solo-dining に内部リンク追加）",
+      "verdict": "duplicate",
+      "brand_reason": "重複（2026-11-09 に同じメールを全件判定済み: FVの予約CTA=却下、solo-dining 拡充と内部リンク=SEO-087 に集約、総括=重複）。新しい週次メール（11-08〜11-14 分）は未着",
+      "category": null,
+      "fingerprint": "8b960c9a63d540d3"
     }
   ]
 }
