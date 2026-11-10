@@ -69082,7 +69082,7 @@
     "storeName": "アヴァンティ AVANTI 名古屋",
     "kind": "tabelog",
     "area": "名古屋（名古屋駅/西区/中村区）",
-    "checkedAt": "2026-10-30T19:23:37.687Z"
+    "checkedAt": "2026-11-10T08:29:26.588Z"
   },
   "0f5606c7d06d38b5640d84de8a4bfb59": {
     "ok": false,
@@ -69092,7 +69092,7 @@
     "storeName": "弁天通のやいてこちゃん",
     "kind": "tabelog",
     "area": "名古屋（名古屋駅/西区/中村区）",
-    "checkedAt": "2026-10-30T19:23:42.060Z"
+    "checkedAt": "2026-11-10T08:29:32.162Z"
   },
   "0d8558b9c69e944dab3d6f46cead257b": {
     "ok": false,
@@ -69102,7 +69102,7 @@
     "storeName": "牛もつ鍋専門店 鍋秀 岩塚店",
     "kind": "tabelog",
     "area": "名古屋（名古屋駅/西区/中村区）",
-    "checkedAt": "2026-10-30T19:23:46.775Z"
+    "checkedAt": "2026-11-10T08:29:37.526Z"
   },
   "c2c89ff59271e837965715e8d1bb22d2": {
     "ok": false,
@@ -127063,5 +127063,95 @@
     "kind": "tabelog",
     "area": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
     "checkedAt": "2026-11-10T01:21:34.673Z"
+  },
+  "f3e5bb24e1abf1285729c55bb15ea192": {
+    "ok": false,
+    "reason": "fetch-error",
+    "error": "HTTP 403",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23079672/",
+    "storeName": "大衆ビストロ てらさわ KITTE名古屋店",
+    "kind": "tabelog",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-10T08:29:16.423Z"
+  },
+  "48cb24ca490e591560feb70c67461ed6": {
+    "ok": false,
+    "reason": "fetch-error",
+    "error": "HTTP 403",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23055202/",
+    "storeName": "mono grande モノグランデ 矢場町 栄",
+    "kind": "tabelog",
+    "area": "栄(ミナミ)/矢場町/大須/上前津",
+    "checkedAt": "2026-11-10T08:29:21.931Z"
+  },
+  "c08d75dab51e0a599baa09cd8e9ca80d": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "THE FOYER CAFE ザ ホワイエ カフェ しらかわホール",
+    "shopState": "【11/25 OPEN予定】",
+    "closed": false,
+    "storeName": "THE FOYER CAFE ザ ホワイエ カフェ しらかわホール",
+    "title": "THE FOYER CAFE ザ ホワイエ カフェ しらかわホール(伏見駅/カフェ・スイーツ)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004723894/",
+    "kind": "hotpepper",
+    "area": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+    "checkedAt": "2026-11-10T08:29:43.763Z"
+  },
+  "254b960c41cfb5ae62520c2750378f95": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "大衆ビストロ てらさわ KITTE名古屋店",
+    "shopState": null,
+    "closed": false,
+    "storeName": "大衆ビストロ てらさわ KITTE名古屋店",
+    "title": "大衆ビストロ てらさわ KITTE名古屋店(名古屋駅/イタリアン・フレンチ)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ001189962/",
+    "kind": "hotpepper",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-10T08:29:49.575Z"
+  },
+  "ce61ba04b520941e9962191aca2173c2": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "mono grande モノグランデ 矢場町 栄",
+    "shopState": null,
+    "closed": false,
+    "storeName": "mono grande モノグランデ 矢場町 栄",
+    "title": "mono grande モノグランデ 矢場町 栄(栄/ダイニングバー・バル)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ001110715/",
+    "kind": "hotpepper",
+    "area": "栄(ミナミ)/矢場町/大須/上前津",
+    "checkedAt": "2026-11-10T08:29:56.702Z"
+  },
+  "891a97fb857a82ce92ddd7eea47c33db": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "ビアバル マ メゾン チカマチラウンジ店",
+    "shopState": null,
+    "closed": false,
+    "storeName": "ビアバル マ メゾン チカマチラウンジ店",
+    "title": "ビアバル マ メゾン チカマチラウンジ店(名古屋駅/ダイニングバー・バル)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ001059003/",
+    "kind": "hotpepper",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-10T08:30:03.332Z"
+  },
+  "8aa7845e7d76a8ebf6a68921b8743980": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "焼肉居酒屋 鶴",
+    "shopState": "【11/11リニューアル予定】",
+    "closed": false,
+    "storeName": "焼肉居酒屋 鶴",
+    "title": "焼肉居酒屋 鶴(名古屋市西区/居酒屋)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004558991/",
+    "kind": "hotpepper",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-10T08:30:08.763Z"
   }
 }

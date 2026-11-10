@@ -510,6 +510,41 @@
     },
     {
       "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "那古野 しば福や 名駅店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J003671888",
+        "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
+        "slug": "J003671888"
+      },
+      "absorbed": [
+        {
+          "店名": "那古野 しば福や 名駅店 (なごの しばふくや めいえきてん)",
+          "エリア": "名古屋市中村区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
+          "slug": "store-e982a3e58fa4e987"
+        }
+      ],
+      "filledFields": [
+        "Instagram",
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "価格帯目安",
+        "編集部推薦",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由",
+        "食べログURL"
+      ]
+    },
+    {
+      "reasons": [
         "name_exact"
       ],
       "kept": {
@@ -554,63 +589,6 @@
     },
     {
       "reasons": [
-        "placeid_match"
-      ],
-      "kept": {
-        "店名": "炭火焼 鰻籠",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J004493228",
-        "placeId": "ChIJX4-hv7lvA2ARg1EOQ5XbI58",
-        "slug": "J004493228"
-      },
-      "absorbed": [
-        {
-          "店名": "炭火焼　鰻籠",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J003603009",
-          "placeId": "ChIJX4-hv7lvA2ARg1EOQ5XbI58",
-          "slug": "J003603009"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
-        "placeid_match"
-      ],
-      "kept": {
-        "店名": "那古野 しば福や 名駅店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J003671888",
-        "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
-        "slug": "J003671888"
-      },
-      "absorbed": [
-        {
-          "店名": "那古野 しば福や 名駅店 (なごの しばふくや めいえきてん)",
-          "エリア": "名古屋市中村区",
-          "ホットペッパーID": "",
-          "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
-          "slug": "store-e982a3e58fa4e987"
-        }
-      ],
-      "filledFields": [
-        "Instagram",
-        "おすすめシーン",
-        "おすすめポイント",
-        "キュレーター",
-        "トレンド情報源",
-        "価格帯目安",
-        "編集部推薦",
-        "話題スコア",
-        "話題フラグ",
-        "追加日",
-        "選定理由",
-        "食べログURL"
-      ]
-    },
-    {
-      "reasons": [
         "owner_confirmed"
       ],
       "kept": {
@@ -627,6 +605,28 @@
           "ホットペッパーID": "J004403777",
           "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
           "slug": "J004403777"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "炭火焼 鰻籠",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004493228",
+        "placeId": "ChIJX4-hv7lvA2ARg1EOQ5XbI58",
+        "slug": "J004493228"
+      },
+      "absorbed": [
+        {
+          "店名": "炭火焼　鰻籠",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J003603009",
+          "placeId": "ChIJX4-hv7lvA2ARg1EOQ5XbI58",
+          "slug": "J003603009"
         }
       ],
       "filledFields": []
@@ -703,28 +703,6 @@
         "owner_confirmed"
       ],
       "kept": {
-        "店名": "Cafe & Bar ゆきっち",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J003850472",
-        "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
-        "slug": "J003850472"
-      },
-      "absorbed": [
-        {
-          "店名": "Cafe & Bar ゆきっち はなれ",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J003850482",
-          "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
-          "slug": "J003850482"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
         "店名": "鳥正",
         "エリア": "名古屋（名古屋駅/西区/中村区）",
         "ホットペッパーID": "J003624313",
@@ -743,6 +721,28 @@
       "filledFields": [
         "キャッチ"
       ]
+    },
+    {
+      "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "Cafe & Bar ゆきっち",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J003850472",
+        "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
+        "slug": "J003850472"
+      },
+      "absorbed": [
+        {
+          "店名": "Cafe & Bar ゆきっち はなれ",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J003850482",
+          "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
+          "slug": "J003850482"
+        }
+      ],
+      "filledFields": []
     },
     {
       "reasons": [
@@ -975,52 +975,6 @@
     },
     {
       "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "シャンタムール",
-        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J000015669",
-        "placeId": "ChIJnRXJZdBwA2ARAOIm4uhh9wU",
-        "slug": "J000015669"
-      },
-      "absorbed": [
-        {
-          "店名": "シャンタムール サウス",
-          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J004591503",
-          "placeId": "ChIJnRXJZdBwA2ARAOIm4uhh9wU",
-          "slug": "J004591503"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
-        "name_exact"
-      ],
-      "kept": {
-        "店名": "ジガー バー シルクロード",
-        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J004493224",
-        "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
-        "slug": "J004493224"
-      },
-      "absorbed": [
-        {
-          "店名": "ジガー バー シルクロード",
-          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J000015124",
-          "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
-          "slug": "J000015124"
-        }
-      ],
-      "filledFields": [
-        "Instagram"
-      ]
-    },
-    {
-      "reasons": [
         "name_exact"
       ],
       "kept": {
@@ -1048,6 +1002,28 @@
         "owner_confirmed"
       ],
       "kept": {
+        "店名": "シャンタムール",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J000015669",
+        "placeId": "ChIJnRXJZdBwA2ARAOIm4uhh9wU",
+        "slug": "J000015669"
+      },
+      "absorbed": [
+        {
+          "店名": "シャンタムール サウス",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J004591503",
+          "placeId": "ChIJnRXJZdBwA2ARAOIm4uhh9wU",
+          "slug": "J004591503"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
         "店名": "Sei Felice セイフェリーチェ",
         "エリア": "栄(ミナミ)/矢場町/大須/上前津",
         "ホットペッパーID": "J003763458",
@@ -1064,6 +1040,30 @@
         }
       ],
       "filledFields": []
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "ジガー バー シルクロード",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J004493224",
+        "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
+        "slug": "J004493224"
+      },
+      "absorbed": [
+        {
+          "店名": "ジガー バー シルクロード",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J000015124",
+          "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
+          "slug": "J000015124"
+        }
+      ],
+      "filledFields": [
+        "Instagram"
+      ]
     },
     {
       "reasons": [
@@ -1103,30 +1103,6 @@
     },
     {
       "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "レストラン ロワール フレンチ 名古屋東急ホテル 栄",
-        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J003916519",
-        "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
-        "slug": "J003916519"
-      },
-      "absorbed": [
-        {
-          "店名": "レストラン ロワール 鉄板焼",
-          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J003916520",
-          "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
-          "slug": "J003916520"
-        }
-      ],
-      "filledFields": [
-        "Instagram"
-      ]
-    },
-    {
-      "reasons": [
         "name_exact"
       ],
       "kept": {
@@ -1159,6 +1135,30 @@
         "経度",
         "緯度",
         "駐車場"
+      ]
+    },
+    {
+      "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "レストラン ロワール フレンチ 名古屋東急ホテル 栄",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J003916519",
+        "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
+        "slug": "J003916519"
+      },
+      "absorbed": [
+        {
+          "店名": "レストラン ロワール 鉄板焼",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J003916520",
+          "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
+          "slug": "J003916520"
+        }
+      ],
+      "filledFields": [
+        "Instagram"
       ]
     },
     {
@@ -1766,24 +1766,31 @@
         "placeid_match"
       ],
       "kept": {
-        "店名": "LA VAGABONDE (ラ・ヴァガボンド)",
-        "エリア": "名古屋市中区",
+        "店名": "LA VAGABONDE",
+        "エリア": "名古屋市中区千代田",
         "ホットペッパーID": "",
         "placeId": "ChIJx9ZMB7lwA2ARumYZugELHJU",
         "slug": "la-vagabonde"
       },
       "absorbed": [
         {
-          "店名": "LA VAGABONDE",
-          "エリア": "名古屋市中区千代田",
+          "店名": "LA VAGABONDE (ラ・ヴァガボンド)",
+          "エリア": "名古屋市中区",
           "ホットペッパーID": "",
           "placeId": "ChIJx9ZMB7lwA2ARumYZugELHJU",
           "slug": "la-vagabonde"
         }
       ],
       "filledFields": [
-        "おすすめシーン",
-        "食べログ評価"
+        "Instagram",
+        "editorReason",
+        "visitStatus",
+        "おすすめポイント",
+        "トレンド情報源",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由"
       ]
     },
     {
