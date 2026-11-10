@@ -88,7 +88,7 @@ const LENGTHS = new Set(['short', 'mid', 'long']);
 
 /**
  * next.json の plan から、date（JST）の枠を取り出す。条件: plan.week が date の週・slots が配列・曜日の枠が有り、値が既知。
- * 返り値: { ok: true, plan: { week, slot, role, experiment_id, cell_id, nb_kind, first_line, length } } か { ok: false, reason }。
+ * 返り値: { ok: true, plan: { week, slot, role, experiment_id, cell_id, topic, url_variant, nb_kind, first_line, length } } か { ok: false, reason }。
  */
 function pickSlot(next, date) {
   const plan = next && next.plan;
@@ -107,7 +107,8 @@ function pickSlot(next, date) {
   return {
     ok: true,
     plan: { week: plan.week, slot: wd, role: s.role === 'explore' || s.role === 'exploit' ? s.role : null,
-      experiment_id: str(s.experiment_id), cell_id: str(s.cell_id), nb_kind: nb, first_line: fl, length: ln },
+      experiment_id: str(s.experiment_id), cell_id: str(s.cell_id), topic: str(s.topic),
+      url_variant: s.url_variant === 'url' || s.url_variant === 'no_url' ? s.url_variant : null, nb_kind: nb, first_line: fl, length: ln },
   };
 }
 

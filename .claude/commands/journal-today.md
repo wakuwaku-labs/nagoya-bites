@@ -104,6 +104,7 @@ node scripts/score_journal_candidates.js /tmp/journal-candidates-YYYY-MM-DD.json
 ```
 - 重複ゲート（HARD FAIL）: 同一店舗90日 / 同一コラム180日 / タイトル類似 / リード類似 → 即失格
 - 採点ルーブリック: 最新性25 / 話題性25 / 独自性20 / ブランド整合15 / 執筆実現性10 / 新規性5
+- 週の投稿の予定（SNS分析ツールの next.json）の題材が使えるときは、題材に明確に一致する候補に **並べ替えだけ** +2（同判定帯の同点・僅差のタイブレーク。total・判定・失格は不変）。結果の `plan_topic`・`plan_topic_bonus` に記録。`--no-plan-topic` で切る
 - 結果は `data/journal_candidates/YYYY-MM-DD.json` に保存
 
 #### 3c. 95点ゲート（**当日公開スキップは禁止**）

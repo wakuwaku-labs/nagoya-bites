@@ -25,6 +25,7 @@ const { spawn } = require('child_process');
 const X = require('./lib/x_post');
 const { findEntry, todayJst } = require('./post_journal_to_x');
 const S = require('./lib/sns_analyzer');
+const PT = require('./lib/journal_plan_topic');
 
 const PROMPT_REL = 'docs/x-post-prompt.md';
 
@@ -92,9 +93,11 @@ function loadPlan(date, policy, now = new Date()) {
 }
 
 /** 文面づくりの指示に足す節（指定が1つも無ければ空）。 */
-function planSection(plan) {
+function planSection(plan, title) {
   if (!plan) return [];
   const lines = [];
+  // 題材は、記事の題名が予定の題材に明確に一致するときだけ。無理に話題を変えない
+  if (plan.topic && title && PT.matchesTopic({ title_draft: title }, plan.topic)) lines.push(`- 今週の予定の題材は「${plan.topic}」。この記事はその題材に当たるので、読む人がその場面で使える点を前に出してよい（記事にない事実は足さない）。`);
   if (plan.nb_kind) lines.push(`- 型は \`${plan.nb_kind}\` で書く。記事の事実がどうしてもその型に合わないときだけ、いちばん合う別の型にしてよい。`);
   if (plan.first_line) lines.push(`- ${FIRST_LINE_JA[plan.first_line]}`);
   if (plan.length) lines.push(`- ${LENGTH_JA[plan.length]}`);
@@ -106,6 +109,7 @@ function planSection(plan) {
 function planRecord(plan, type) {
   return {
     week: plan.week, slot: plan.slot, role: plan.role, experiment_id: plan.experiment_id, cell_id: plan.cell_id,
+    topic: plan.topic ?? null, url_variant: plan.url_variant ?? null,
     requested: { nb_kind: plan.nb_kind, first_line: plan.first_line, length: plan.length },
     ...(plan.nb_kind ? { followed: type === plan.nb_kind } : {}),
   };
@@ -114,7 +118,7 @@ function planRecord(plan, type) {
 function buildPrompt({ root, entry, material, previous, plan }) {
   const parts = [
     promptBody(root),
-    ...planSection(plan),
+    ...planSection(plan, entry.title),
     '',
     '## 使わない言い方',
     wordingList(root).map((w) => `- ${w}`).join('\n'),

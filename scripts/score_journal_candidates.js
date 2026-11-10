@@ -78,6 +78,7 @@ const path = require('path');
 // KW は features/ の実在記事に裏付けられ、`--verify` で第三者が確認できる（自己申告値ではない）。
 const { scoreSearchIntent } = require('./journal_seo_kw');
 const sourceDiversity = require('./lib/journal_source_diversity');
+const planTopicLib = require('./lib/journal_plan_topic');
 
 const ROOT = path.join(__dirname, '..');
 const DATA = path.join(ROOT, 'data');
@@ -573,7 +574,18 @@ function scoreAll(candidates, opts = {}) {
   const published = opts.published || loadJSON(PUBLISHED_PATH, { entries: [] });
   const diversity = opts.diversity || sourceDiversity.measure({ today });
   const scored = candidates.map(c => scoreOne(c, published, today, policy, diversity.saturated));
-  const ranked = scored.slice().sort((a, b) => b.total - a.total);
+  // 週の投稿の予定の題材（opts.planTopic）は、並べ替えのキーにだけ足す弱い加点。total・verdict・失格は変えない。
+  // 判定が同じ帯（PASS 同士・PASS_WITH_NOTE 同士）の中でだけ、total + 加点 で並べる（帯をまたいで順位を逆転させない）。
+  const planTopic = opts.planTopic && opts.planTopic.topic ? opts.planTopic : null;
+  for (const r of scored) {
+    if (r.verdict === 'DISQUALIFIED') continue;
+    const b = planTopic ? planTopicLib.bonusFor(candidates.find(c => c.id === r.id), planTopic) : { bonus: 0 };
+    r.plan_topic_bonus = b.bonus;
+    if (b.reason) r.plan_topic_note = b.reason;
+  }
+  const bandRank = v => (v === 'PASS' ? 2 : v === 'PASS_WITH_NOTE' ? 1 : 0);
+  const ranked = scored.slice().sort((a, b) =>
+    (bandRank(b.verdict) - bandRank(a.verdict)) || ((b.total + (b.plan_topic_bonus || 0)) - (a.total + (a.plan_topic_bonus || 0))) || (b.total - a.total));
   const disqualified = scored.filter(r => r.verdict === 'DISQUALIFIED');
   const eligible = ranked.filter(r => r.verdict === 'PASS' || r.verdict === 'PASS_WITH_NOTE');
   const selected = eligible[0] || null;
@@ -588,6 +600,8 @@ function scoreAll(candidates, opts = {}) {
     disqualified,
     selected_id: selected ? selected.id : null,
     selected_verdict: selected ? selected.verdict : null,
+    plan_topic: planTopic ? { topic: planTopic.topic, week: planTopic.week || null, slot: planTopic.slot ?? null, bonus: planTopicLib.TIEBREAK_BONUS } : null,
+    plan_topic_changed_selection: !!(planTopic && selected && eligible.length > 1 && selected.id !== scored.filter(r => r.verdict === 'PASS' || r.verdict === 'PASS_WITH_NOTE').sort((a, b) => (bandRank(b.verdict) - bandRank(a.verdict)) || (b.total - a.total))[0].id),
     selected_gate_note: selected && selected.gate_note ? selected.gate_note : '',
     // 採点時点で「独立ドメインに数えなかった」媒体（後から検算できるよう残す）
     saturated_sources: diversity.saturated,
@@ -629,6 +643,7 @@ function printRanking(result, explain) {
   console.log('\n[採点結果]');
   result.ranked.forEach((r, i) => {
     console.log(`  ${i + 1}. ${markOf(r.verdict)} [${r.total}/${MAX_TOTAL}] ${r.id} "${r.title_draft}"`);
+    if (r.plan_topic_note) console.log(`     ${r.plan_topic_note}`);
     if (r.breakdown) {
       console.log(`     最新性${r.breakdown.recency}/話題性${r.breakdown.topicality}/独自性${r.breakdown.uniqueness}/ブランド${r.breakdown.brand_fit}/執筆${r.breakdown.writability}/新規${r.breakdown.novelty}/検索意図${r.breakdown.search_intent}`);
     }
@@ -828,7 +843,17 @@ if (require.main === module) {
     process.exit(1);
   }
   if (baseDate) console.log(`基準日: ${baseDate}（--date 指定・バックフィル用）\n`);
-  const result = scoreAll(candidates, baseDate ? { today: baseDate } : {});
+  // 週の予定の題材（使えないときは null＝今までどおり）。--no-plan-topic で切る
+  let planTopic = null;
+  if (!args.includes('--no-plan-topic')) {
+    try {
+      const policy = require('./lib/x_post').loadPolicy();
+      const pt = planTopicLib.loadPlanTopic(baseDate || todayISO(), policy);
+      if (pt.topic) planTopic = pt;
+      console.log(pt.topic ? `週の予定の題材: 「${pt.topic}」（同点・僅差のときだけ +${planTopicLib.TIEBREAK_BONUS}）` : `週の予定の題材: なし（${pt.reason}）`);
+    } catch (e) { console.log(`週の予定の題材: なし（error:${e.message}）`); }
+  }
+  const result = scoreAll(candidates, Object.assign(baseDate ? { today: baseDate } : {}, { planTopic }));
   const out = saveResult(result);
   printRanking(result, explain);
   console.log(`\n採点結果を保存: ${out}`);
