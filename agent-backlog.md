@@ -8,7 +8,7 @@
 
 ### [SEO-153] ジャーナルの関連特集が題名の部分一致（「発酵喫茶」→モーニング特集）で主題とずれるのを直す
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
 - **detected**: 2026-11-09
 - **due**: 2026-12-09
 - **category**: SEO
@@ -3815,6 +3815,11 @@
   - **検証**: `node scripts/check_seo_triage_daily_health.js` → ✅ 健全（1日前・許容3日）／`--json` モード正常／`node scripts/audit_design_system.js --check` violations=0
   - **QA**: `npm test` 1956 pass / 1 fail（test 1419 は SEO-152 以前から存在する pre-existing failure、agent-backlog.md の既存行に識別情報が入っており今回の変更範囲外）
   - **注**: acceptance.3「`.claude/commands/seo-triage.md` は自動編集できないので手順を `docs/` に書く」について、今回 `.claude/commands/*.md` は手動編集可のクラウドセッションから直接編集できたため seo-triage.md・seo-triage-weekly.md 両方を編集した
+
+- **[SEO-153]** ジャーナルの関連特集が題名の部分一致（「発酵喫茶」→モーニング特集）で主題とずれるのを直す
+  - **実装**: `scripts/lib/journal_topics.js` の `[/モーニング|喫茶/]` ルールを `[/モーニング|(?<!発酵)喫茶/]` に変更（否定後読みで「発酵喫茶」を除外）。続けて `node scripts/refresh_journal_related.js` を実行
+  - **検証**: `node -e` でタイトル4本を確認 → 「発酵喫茶」記事が nagoya-morning から sakae に変更、他3本は nagoya-morning のまま。`refresh_journal_related.js` → 4件更新（該当4記事のみ・意図しない変更なし）。`2026-11-06-hisaya-dam-sake-festa-manmarumura.html` の関連ブロックから `nagoya-morning.html` が消え `sakae.html` に変更
+  - **QA**: `npm test` 1956 pass / 1 fail（pre-existing test 1419）
 
 ---
 
