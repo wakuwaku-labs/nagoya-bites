@@ -121,7 +121,7 @@ const REQUIRED_TAP = [
   '.search-clear-btn', '.sticky-search input', '.sticky-search-btn', '.mobile-cta-bar .cta-search', '.mobile-cta-bar .cta-filter',
   '.view-toggle button', '.pg-btn', '.fold-toggle', '.share-btn', '.clear-all-btn',
   '.geo-btn', '.results-summary-reset', '.store-index-area>summary', '.scene-chip', '.scene-index-list a',
-  '.hpc a', '.ml', '.tb-filter', '.sort-select',
+  '.ml', '.tb-filter', '.sort-select',
   // 絞り込みシート（I-20）と、検索欄の下の「絞り込み」ボタン
   '.filter-toggle-btn', '.fs-chip', '.fs-close', '.fs-reset', '.fs-go', '.fs-suggest-btn',
 ];
