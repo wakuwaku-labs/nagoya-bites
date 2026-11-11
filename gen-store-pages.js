@@ -96,6 +96,7 @@ const trustDisplay = require('./scripts/lib/trust_display');
 const { placesKey } = require('./scripts/lib/places_key');
 const sitemapLastmod = require('./scripts/lib/sitemap_lastmod');
 const { gaSnippet } = require('./scripts/lib/ga_snippet');
+const storeLinkTracking = require('./scripts/lib/store_link_tracking');
 const { RESERVE_ASK_SCRIPT } = require('./scripts/lib/reservation_ask_snippet');
 const { basicFacts } = require('./scripts/lib/store_facts');
 const TRUST_POLICY = trustDisplay.loadPolicy();
@@ -1241,6 +1242,7 @@ ${hasIgEmbed ? `<script>
 ` : ''}${callOk ? `<script>var NB_CALL_MAPS_KEY='AIzaSyBKD3MCHPdIPxHt-hZlh8EIv_8zMYDbgos';</script>
 ${CALL_SCRIPT}
 ` : ''}${RESERVE_ASK_SCRIPT}
+${storeLinkTracking.TAG}
 </body>
 </html>`;
   // ホットペッパーのクレジット・画像提供（フッターのみ。判定はページ全体で行う）
