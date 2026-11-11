@@ -458,6 +458,12 @@ jobs:
         # （ISSUE-121 の教訓どおり、CIが緑を確認できる状態にしてから昇格）。
         run: node scripts/audit_design_system.js --check --sample 200
 
+      - name: ホットペッパーのクレジット・画像提供をフッターへ反映する（利用規約・冪等）
+        # 店舗ページ・ハブは生成器が出す。当日に増えた特集・日次の記事（フッターがひな形のまま）にも足す。
+        # 通信しない。決まりは scripts/lib/site_chrome.js の creditModeFor。
+        run: node scripts/add_hp_credit.js
+        continue-on-error: true
+
       - name: サイト共通クローム整合性監査（DSN-003・header/nav/breadcrumb/footer の統一）
         # scripts/lib/site_chrome.js を正本に、全ページのクローム部分が再生成値と一致するかを検査する。
         # gen-store-pages.js の直後に置くことで再生成済み stores/ も同じ基準で見る。

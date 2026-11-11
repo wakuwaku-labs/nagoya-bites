@@ -280,6 +280,8 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .nb-footer-bottom a{color:var(--dim);text-decoration:none;}
 .nb-footer-bottom a:hover{color:var(--gold);}
 .nb-footer .feedback-nudge{margin-left:auto;font-size:var(--fs-xs);color:var(--dim);}
+.nb-footer-credit{flex-basis:100%;font-size:var(--fs-xs);color:var(--dim);line-height:var(--lh-body);}
+.nb-footer-credit a{text-decoration:underline;text-underline-offset:2px;}
 @media(max-width:768px){
   footer.nb-footer{padding:var(--rhythm-sm) 1rem var(--sp-5);}
   .nb-footer-inner{grid-template-columns:1fr 1fr;}

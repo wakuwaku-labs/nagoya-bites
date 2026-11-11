@@ -1384,8 +1384,6 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 .no-sakura-pillar-title{font-family:var(--font-body);font-weight:700;font-size:var(--fs-md);margin:0;}
 .no-sakura-pillar-body{font-size:var(--fs-xs);line-height:1.5;}
 .no-sakura-link{display:inline-flex;align-items:center;gap:.25rem;min-height:var(--tap-min);}
-body:not(.search-active) #hpc-foot{display:none!important;}
-.hpc-foot{border:0;background:transparent;justify-content:center;padding:.5rem 1rem 1rem;}
 .hpc span,.hpc a{font-family:var(--font-body);letter-spacing:0;}
 .results-summary{background:transparent;padding:.6rem 1rem;}
 .results-summary-label,.results-summary-cond{display:none;}
@@ -1943,11 +1941,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 </div>
 <div class="grid" id="grid"></div>
 <div class="pagination" id="pagination" role="navigation" aria-label="ページネーション"></div>
-<!-- DSN-008: ホットペッパーの利用規約で必須のクレジット。結果の上の操作列から、結果の下へ移した -->
-<div class="hpc hpc-foot" id="hpc-foot">
-  <span>Powered by</span>
-  <a href="https://webservice.recruit.co.jp/" target="_blank" rel="noopener noreferrer">ホットペッパーグルメ Webサービス</a>
-</div>
+<!-- ホットペッパーのクレジットは全ページ共通のフッター（scripts/lib/site_chrome.js の renderCredit）に出す。以前はここ（検索結果の下・検索中だけ表示）にあった -->
 <button class="back-to-magazine" type="button" onclick="exitSearchMode()" aria-label="絞り込みを解除して特集・ランキングに戻る"><span class="btm-arrow" aria-hidden="true">←</span>絞り込みを解除して特集・ランキングに戻る</button>
 
 <!-- モーダル -->
@@ -2482,6 +2476,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
     <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
     <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
     <p class="feedback-nudge">情報の誤りやご意見は <a href="index.html#feedback">こちら</a> からお寄せください。</p>
+    <p class="nb-footer-credit">Powered by <a href="https://webservice.recruit.co.jp/" target="_blank" rel="noopener noreferrer">ホットペッパーグルメ Webサービス</a> 【画像提供：ホットペッパー グルメ】</p>
   </div>
 </footer>
 <!-- NB-CHROME:FOOTER:END -->

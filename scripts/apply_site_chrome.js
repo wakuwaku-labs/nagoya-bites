@@ -232,8 +232,8 @@ function applyBreadcrumb(html, { depth, group }) {
 // FOOTER
 // ---------------------------------------------------------------------------
 
-function replaceFooter(html, { depth, main }) {
-  const rendered = chrome.renderFooter({ depth, main });
+function replaceFooter(html, { depth, main, credit }) {
+  const rendered = chrome.renderFooter({ depth, main, credit });
   const startMark = chrome.MARK('FOOTER', 'START');
   const endMark = chrome.MARK('FOOTER', 'END');
   if (html.includes(startMark) && html.includes(endMark)) {
@@ -407,7 +407,7 @@ function transform(original, rel) {
   html = b.html;
   if (b.error) errors.push(b.error);
 
-  const f = replaceFooter(html, { depth, main: !own });
+  const f = replaceFooter(html, { depth, main: !own, credit: chrome.creditModeFor(rel, html) });
   html = f.html;
   if (f.error) errors.push(f.error);
 

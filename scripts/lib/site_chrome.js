@@ -182,13 +182,49 @@ function resolveHref(href, p) {
   return p + href;
 }
 
+// ホットペッパーグルメ Webサービスの利用規約が求める表示（#SEO P1-01）。
+// credit: 'none' | 'api'（クレジットのみ）| 'api+image'（クレジット＋画像提供）。
+// 文言とリンク先は https://webservice.recruit.co.jp/doc/hotpepper/guideline.html の指定どおり。
+function renderCredit(credit) {
+  if (credit !== 'api' && credit !== 'api+image') return '';
+  const img = credit === 'api+image' ? ' 【画像提供：ホットペッパー グルメ】' : '';
+  return `\n    <p class="nb-footer-credit">Powered by <a href="https://webservice.recruit.co.jp/" target="_blank" rel="noopener noreferrer">ホットペッパーグルメ Webサービス</a>${img}</p>`;
+}
+
+// ページのどの部分がホットペッパー由来かを見て、フッターに出す表示を決める。
+//   stores/ 配下（店舗・一覧・エリア×ジャンル）… 店データが HP 由来なので常にクレジット
+//   index.html・features/・journal/ … HP へのリンクか HP の画像があるページだけ（方針ページ・日次の一覧・HP を使わない記事は出さない）
+//   運営系（about・faq・contact・privacy-policy・404）… 出さない
+// 画像提供は、HP の画像（imgfp.hotp.jp）をページが表示するときだけ。判定はフッター自身を除いた本文で行う（べき等）。
+function creditModeFor(rel, html) {
+  const body = String(html).replace(/<!-- NB-CHROME:FOOTER:START -->[\s\S]*?<!-- NB-CHROME:FOOTER:END -->/, '')
+    .replace(/<footer\b[\s\S]*?<\/footer>/, '');
+  const hasImage = /imgfp\.hotp\.jp/.test(body);
+  const hasHp = hasImage || /hotpepper\.jp|hotp\.jp/.test(body);
+  let uses;
+  if (rel.startsWith('stores/')) uses = true;
+  else if (rel === 'index.html' || rel.startsWith('features/') || rel.startsWith('journal/')) uses = hasHp;
+  else uses = false;
+  if (!uses) return 'none';
+  return hasImage ? 'api+image' : 'api';
+}
+
+// 組み上がったページのフッターに、ページ全体を見て決めたクレジットを足す（べき等。既にあれば作り直す）。
+// フッターのブロック（FOOTER マーカー）が無いページは何もしない。
+function applyCredit(html, rel) {
+  const re = /(<!-- NB-CHROME:FOOTER:START -->[\s\S]*?)(\n    <p class="nb-footer-credit">[\s\S]*?<\/p>)?(\n  <\/div>\n<\/footer>\n<!-- NB-CHROME:FOOTER:END -->)/;
+  if (!re.test(html)) return html;
+  const add = renderCredit(creditModeFor(rel, html));
+  return html.replace(re, (_, a, _old, c) => a + add + c);
+}
+
 /**
  * @param {object} opts
  * @param {number} opts.depth
  * @param {boolean} [opts.main=true] - フッターの前で </main> を閉じる（renderHeader の main と対）
  * @param {string} [opts.base] - renderHeader の base と同じ（404.html は "/"）
  */
-function renderFooter({ depth, main = true, base }) {
+function renderFooter({ depth, main = true, base, credit = 'none' }) {
   const p = base != null ? base : prefix(depth);
   const groups = FOOTER_GROUPS.map(g => {
     const links = g.links.map(([href, label]) => `      <a href="${p}${href}">${esc(label)}</a>`).join('\n');
@@ -210,7 +246,7 @@ ${groups}
   <div class="nb-footer-bottom">
     <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
     <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
-    <p class="feedback-nudge">情報の誤りやご意見は <a href="${p}index.html#feedback">こちら</a> からお寄せください。</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="${p}index.html#feedback">こちら</a> からお寄せください。</p>${renderCredit(credit)}
   </div>
 </footer>
 ${MARK('FOOTER', 'END')}`;
@@ -255,6 +291,9 @@ module.exports = {
   renderHeader,
   renderBreadcrumb,
   renderFooter,
+  renderCredit,
+  creditModeFor,
+  applyCredit,
   chromeScript,
   esc,
   unesc,

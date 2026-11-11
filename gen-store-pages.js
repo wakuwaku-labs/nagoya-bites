@@ -984,7 +984,7 @@ ${igAllUrls.map((_, i) => `        <span class="ig-carousel-dot${i === 0 ? ' act
     bodyCallOk && `<p class="nb-call-status" role="status"></p>`,
   ].filter(Boolean).join('\n    ');
 
-  return `<!DOCTYPE html>
+  const html = `<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -1243,6 +1243,8 @@ ${CALL_SCRIPT}
 ` : ''}${RESERVE_ASK_SCRIPT}
 </body>
 </html>`;
+  // ホットペッパーのクレジット・画像提供（フッターのみ。判定はページ全体で行う）
+  return siteChrome.applyCredit(html, `stores/${slug}.html`);
 }
 
 // ================================================================

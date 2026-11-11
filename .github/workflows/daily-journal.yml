@@ -118,6 +118,11 @@ jobs:
         # ジャーナル生成の有無に関わらず毎日実行（既公開記事も常に最新の隣接3本を指すようにする）。
         run: node scripts/refresh_journal_related.js
 
+      - name: ホットペッパーのクレジット・画像提供を新記事のフッターへ反映する（利用規約・冪等）
+        # 新記事が HP の店・画像を使うときだけ出す（決まりは scripts/lib/site_chrome.js の creditModeFor）。通信しない。
+        if: always()
+        run: node scripts/add_hp_credit.js || true
+
       - name: 生成ファイルをコミット & プッシュ
         if: always()
         run: |

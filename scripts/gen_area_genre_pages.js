@@ -333,7 +333,7 @@ ${siteChrome.renderHeader({ depth, active: 'top' })}
   ${siteChrome.renderBreadcrumb(breadcrumb, { depth })}
 ${bodyHtml}
 </div>
-${siteChrome.renderFooter({ depth })}
+${siteChrome.renderFooter({ depth, credit: 'api' })}
 ${siteChrome.chromeScript()}
 </body>
 </html>`;
