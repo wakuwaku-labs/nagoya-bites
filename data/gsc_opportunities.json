@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T00:38:33.805Z",
+  "generatedAt": "2026-11-11T19:15:33.242Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -18,12 +18,12 @@
     "ctrFixGeoless": [
       {
         "query": "ひものや官兵衛 伏見",
-        "impressions": 489,
+        "impressions": 508,
         "clicks": 12,
         "position": 6.3,
-        "ctr": 2.45,
+        "ctr": 2.36,
         "expectedCtr": 4.7,
-        "missedClicks": 11
+        "missedClicks": 11.9
       }
     ],
     "rankPush": []
@@ -32,50 +32,50 @@
     "ctrFix": [
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 1342,
+        "impressions": 1404,
         "clicks": 24,
         "position": 6.8,
-        "ctr": 1.79,
+        "ctr": 1.71,
         "expectedCtr": 4.2,
-        "missedClicks": 32.3
-      },
-      {
-        "page": "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
-        "impressions": 1563,
-        "clicks": 39,
-        "position": 7.2,
-        "ctr": 2.5,
-        "expectedCtr": 3.8,
-        "missedClicks": 20.9
-      },
-      {
-        "page": "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
-        "impressions": 1593,
-        "clicks": 33,
-        "position": 8.2,
-        "ctr": 2.07,
-        "expectedCtr": 3.1,
-        "missedClicks": 16.7
+        "missedClicks": 35
       },
       {
         "page": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
-        "impressions": 735,
-        "clicks": 32,
-        "position": 5.6,
-        "ctr": 4.35,
-        "expectedCtr": 5.4,
-        "missedClicks": 7.7
+        "impressions": 1778,
+        "clicks": 61,
+        "position": 6.3,
+        "ctr": 3.43,
+        "expectedCtr": 4.7,
+        "missedClicks": 22.6
+      },
+      {
+        "page": "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
+        "impressions": 1611,
+        "clicks": 40,
+        "position": 7.2,
+        "ctr": 2.48,
+        "expectedCtr": 3.8,
+        "missedClicks": 21.9
+      },
+      {
+        "page": "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
+        "impressions": 1610,
+        "clicks": 33,
+        "position": 8.2,
+        "ctr": 2.05,
+        "expectedCtr": 3.1,
+        "missedClicks": 17.2
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 687,
+        "impressions": 701,
         "clicks": 11,
-        "position": 22.3,
-        "ctr": 1.6,
-        "upsideClicks": 8.2
+        "position": 22.8,
+        "ctr": 1.57,
+        "upsideClicks": 8.6
       }
     ]
   },
@@ -88,8 +88,8 @@
     "pageRankPush": 1,
     "topPageCtrFix": [
       "/features/nagoya-tebasaki.html",
-      "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
-      "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html"
+      "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
+      "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html"
     ]
   }
 }

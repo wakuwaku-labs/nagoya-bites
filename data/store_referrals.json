@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T00:38:20.558Z",
+  "generatedAt": "2026-11-11T19:15:18.422Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -8,11 +8,11 @@
   },
   "totals": {
     "exits": {
-      "hotpepper": 141,
-      "tabelog": 19,
-      "tel": 10,
+      "hotpepper": 143,
+      "tabelog": 21,
+      "tel": 11,
       "other": 0,
-      "total": 170
+      "total": 175
     },
     "reports": {
       "yes": 0,
@@ -24,11 +24,11 @@
     "start": "2026-11-01",
     "totals": {
       "exits": {
-        "hotpepper": 54,
-        "tabelog": 6,
-        "tel": 6,
+        "hotpepper": 59,
+        "tabelog": 8,
+        "tel": 7,
         "other": 0,
-        "total": 66
+        "total": 74
       },
       "reports": {
         "yes": 0,
@@ -39,24 +39,6 @@
   "stores": [
     {
       "store_name": "うなぎのしろむら 泉本店",
-      "exits": {
-        "hotpepper": 6,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 6
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 1,
-        "reportsYes": 0
-      }
-    },
-    {
-      "store_name": "鳥心 名駅本店",
       "exits": {
         "hotpepper": 6,
         "tabelog": 0,
@@ -110,7 +92,43 @@
       }
     },
     {
+      "store_name": "鳥心 名駅本店",
+      "exits": {
+        "hotpepper": 5,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 5
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "National Bakery &canteen ナショナル ベーカリー アンド カンティーン",
+      "exits": {
+        "hotpepper": 4,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 4
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "ひつまぶし 名古屋 備長 エスカ店",
       "exits": {
         "hotpepper": 4,
         "tabelog": 0,
@@ -160,42 +178,6 @@
       },
       "thisMonth": {
         "exits": 1,
-        "reportsYes": 0
-      }
-    },
-    {
-      "store_name": "サラマンジェドゥカジノ",
-      "exits": {
-        "hotpepper": 2,
-        "tabelog": 1,
-        "tel": 0,
-        "other": 0,
-        "total": 3
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 0,
-        "reportsYes": 0
-      }
-    },
-    {
-      "store_name": "ひつまぶし 名古屋 備長 エスカ店",
-      "exits": {
-        "hotpepper": 3,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 3
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -290,6 +272,24 @@
       }
     },
     {
+      "store_name": "parfait de ruelle パフェ ド リュエル",
+      "exits": {
+        "hotpepper": 2,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 2
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 2,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "お台所 六六堂",
       "exits": {
         "hotpepper": 2,
@@ -309,6 +309,24 @@
     },
     {
       "store_name": "ザマルシェ THE MARCHE 久屋大通店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 1,
+        "tel": 0,
+        "other": 0,
+        "total": 2
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "サラマンジェドゥカジノ",
       "exits": {
         "hotpepper": 1,
         "tabelog": 1,
@@ -363,6 +381,24 @@
     },
     {
       "store_name": "鰻 ひつまぶし 金鯱うなぎ 伏見店",
+      "exits": {
+        "hotpepper": 2,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 2
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 2,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "鰻のノリスケ",
       "exits": {
         "hotpepper": 2,
         "tabelog": 0,
@@ -1226,24 +1262,6 @@
       }
     },
     {
-      "store_name": "鰻のノリスケ",
-      "exits": {
-        "hotpepper": 1,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 1
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 1,
-        "reportsYes": 0
-      }
-    },
-    {
       "store_name": "海老豚骨ラーメン一番軒 メイチカ店",
       "exits": {
         "hotpepper": 0,
@@ -1316,10 +1334,10 @@
       }
     },
     {
-      "store_name": "居酒屋 権兵衛 名駅店",
+      "store_name": "錦輝茶寮 きんきさりょう",
       "exits": {
-        "hotpepper": 1,
-        "tabelog": 0,
+        "hotpepper": 0,
+        "tabelog": 1,
         "tel": 0,
         "other": 0,
         "total": 1
@@ -1329,7 +1347,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 0,
+        "exits": 1,
         "reportsYes": 0
       }
     },
@@ -1392,6 +1410,24 @@
       "exits": {
         "hotpepper": 1,
         "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "寿し処 圓山",
+      "exits": {
+        "hotpepper": 0,
+        "tabelog": 1,
         "tel": 0,
         "other": 0,
         "total": 1
@@ -1730,6 +1766,24 @@
       }
     },
     {
+      "store_name": "中国料理 延辺館 えんぺんかん",
+      "exits": {
+        "hotpepper": 0,
+        "tabelog": 0,
+        "tel": 1,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "鳥勢",
       "exits": {
         "hotpepper": 1,
@@ -2054,6 +2108,24 @@
       }
     },
     {
+      "store_name": "和食 宙 錦",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "和風ラザニア専門店Y",
       "exits": {
         "hotpepper": 1,
@@ -2187,23 +2259,23 @@
     "geoSearch": "現在地: トップの「現在地」ボタンを押した回数と結果（granted・denied・unsupported・error）。位置・エリア名は送っていない"
   },
   "actions": {
-    "reserve": 160,
+    "reserve": 164,
     "reserveBySite": {
-      "hotpepper": 141,
-      "tabelog": 19,
+      "hotpepper": 143,
+      "tabelog": 21,
       "other": 0
     },
-    "tel": 10,
-    "map": 125
+    "tel": 11,
+    "map": 129
   },
   "map": {
-    "total": 125,
+    "total": 129,
     "unattributed": 3,
-    "stores": 49,
+    "stores": 54,
     "top": [
       {
         "store_name": "圧釜うどん もちり 栄店",
-        "count": 22
+        "count": 23
       },
       {
         "store_name": "うな祥",
@@ -2211,15 +2283,19 @@
       },
       {
         "store_name": "なかがわ 街仲食堂 by ジーバーFOOD",
-        "count": 14
+        "count": 12
       },
       {
         "store_name": "BISTRO DIA",
         "count": 8
       },
       {
+        "store_name": "酔いどれ 名古屋駅前店",
+        "count": 4
+      },
+      {
         "store_name": "ちひろ菓子店 新栄葵店",
-        "count": 5
+        "count": 3
       },
       {
         "store_name": "魚心あれば酒心 名古屋駅店",
@@ -2236,23 +2312,19 @@
       {
         "store_name": "げんかい 名駅別邸",
         "count": 2
-      },
-      {
-        "store_name": "ひものや 官兵衛 伏見駅店",
-        "count": 2
       }
     ],
     "byLocation": {
-      "store_page": 49,
-      "journal_store_card": 44,
-      "(not set)": 18,
+      "store_page": 56,
+      "journal_store_card": 45,
+      "(not set)": 14,
       "store_page_bar": 11,
       "modal_cta": 3
     },
     "byLinkKind": {
-      "search": 62,
-      "place_id": 36,
-      "(not set)": 27
+      "search": 65,
+      "place_id": 41,
+      "(not set)": 23
     }
   },
   "callLookup": {
