@@ -63,12 +63,14 @@ const DATA_TEMPORARY_ALLOW = new Set([
 
 // ディレクトリ配下の許可（拡張子と深さ）
 //  stores/**.html（店舗・誘導・エリア×ジャンルのハブ）, features/*.html, journal/*.html + feed.xml/feed.atom,
-//  assets/**（画像・CSS。参照されるのはこの下だけ）, icons/*.png
+//  assets/**（画像・CSS。参照されるのはこの下だけ）, assets/js/*.js（共通の計測 JS）, icons/*.png
 const DIR_RULES = [
   { prefix: 'stores/', ext: /\.html$/, recursive: true },
   { prefix: 'features/', ext: /\.html$/, recursive: false },
   { prefix: 'journal/', ext: /\.(html|xml|atom)$/, recursive: false },
   { prefix: 'assets/', ext: /\.(css|jpg|jpeg|png|webp|svg|gif|ico|avif)$/i, recursive: true },
+  // 公開ページが読み込む共通 JS（assets/js/ の .js だけ。店舗ページの計測 store-link-tracking.js など）
+  { prefix: 'assets/js/', ext: /\.js$/, recursive: false },
   { prefix: 'icons/', ext: /\.(png|svg|ico)$/i, recursive: false },
 ];
 
