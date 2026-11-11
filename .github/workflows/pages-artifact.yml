@@ -1,0 +1,94 @@
+name: Pages Artifact (許可リストだけを公開)
+
+# 判断の記録 0061（docs/decisions/）。GitHub Pages に「許可リストだけを集めた成果物」を出す。
+#
+# このファイルを main に入れただけでは本番は変わらない:
+#  - リポジトリの Pages の公開元が「Deploy from a branch」のままなら、デプロイの job は動かない
+#    （自動の起動はリポジトリ変数 PAGES_ACTIONS_ENABLED が 'true' のときだけ。手動起動は別）。
+#  - 既存の build.yml（Build & Deploy）は変えていない。
+# 切り替えの手順と戻し方は docs/decisions/0061-pages-allowlist-artifact.md。
+#
+# 手動起動（workflow_dispatch）:
+#  - deploy=false（既定）: 成果物を作って中身を検査するだけ（本番に出さない。予行演習）
+#  - deploy=true: 公開元が「GitHub Actions」のときだけ成功する。本番を成果物に切り替える
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: '本番に出す（公開元が GitHub Actions のときだけ成功）。false は成果物の検査だけ'
+        type: boolean
+        default: false
+  # 以下は PAGES_ACTIONS_ENABLED が 'true' のときだけ働く（各 job の if で止める）。
+  # GITHUB_TOKEN による push は push イベントを起こさないので、main へ push する既存の
+  # workflow の完了を workflow_run で拾う（名前は各 workflow の name と一致させる。
+  # tests/pages_artifact.test.js が「main へ push する workflow が全部ここにある」ことを検査する）。
+  push:
+    branches: [main]
+  workflow_run:
+    workflows:
+      - 'Build & Deploy'
+      - 'NAGOYA BITES — 日次「話題店自動追加」'
+      - 'NAGOYA BITES — 日次ジャーナル自動生成'
+      - 'NAGOYA BITES — 日次「今日の話題店」TOP5 更新'
+      - 'editorReason batch'
+      - 'Daily Google place status refresh'
+      - 'Nightly QA (テスト/性能/セキュリティ)'
+      - 'Weekly media appearances fetch'
+      - 'Weekly Google Places fetch'
+      - 'NAGOYA BITES — 週次エージェントパイプライン'
+      - 'NAGOYA BITES — X の数字の取得'
+      - 'NAGOYA BITES — X の競合の数字の取得'
+      - 'NAGOYA BITES — X 自動投稿'
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-artifact
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.event_name == 'workflow_dispatch' || vars.PAGES_ACTIONS_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # 生成系の workflow が先に main へ push した後の最新を出す（build.yml と同じ理由）
+          ref: main
+
+      - name: 許可リストだけの成果物を作る（必須ファイルが欠ければここで失敗＝本番を壊さない）
+        run: node scripts/build_pages_artifact.js --out _site
+
+      - name: 成果物の検査（内部の文書・データが入っていないこと）
+        run: |
+          set -e
+          for p in HANDOFF.md CLAUDE.md AGENTS.md agent-backlog.md spec.md build.js package.json \
+                   data/site_metrics.json data/x_post_log.json docs scripts tests agents .github .claude; do
+            if [ -e "_site/$p" ]; then echo "::error::公開してはいけない物が成果物に入っている: $p"; exit 1; fi
+          done
+          test -s _site/index.html
+          test -s _site/data/stores.json
+          echo "成果物 OK: $(find _site -type f | wc -l) ファイル"
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    if: >-
+      (github.event_name == 'workflow_dispatch' && inputs.deploy == true) ||
+      (github.event_name != 'workflow_dispatch' && vars.PAGES_ACTIONS_ENABLED == 'true')
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
