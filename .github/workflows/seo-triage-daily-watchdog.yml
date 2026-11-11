@@ -1,0 +1,141 @@
+name: NAGOYA BITES — SEO日次トリアージ 生存監視
+
+# なぜこのワークフローが必要か（SEO-152・2026-11-11）:
+#   日次レポートメール（件名「NAGOYA BITES 日次レポート」）は GAS が Gmail 送信するが、
+#   /seo-triage の Gmail 検索クエリが newer_than:2d の「最新スレッド」だけを取得するため、
+#   定期実行が 1 回抜けるとその日のレポートは二度と読まれない。
+#   2026-10 の調査で 10-23・10-25・10-28 の 3 通が判定されずに消えていた（SEO-152 背景）。
+#
+#   この監視は data/seo_advice_log.json の source="line-daily" エントリの鮮度だけを見る。
+#   採用・却下の件数は見ない（0件は正常。鳴らすのは「処理自体が止まったこと」だけ）。
+#
+#   ISSUE-084 の教訓（警報を防音室で鳴らすな）をそのまま適用:
+#     1. 監視は監視対象と別の場所で回す  → ローカル/クラウドルーチンではなく GitHub Actions
+#     2. 通知は out-of-band に出す        → Issue 起票（GitHub が既定でオーナーにメールする）
+#     3. 「気づけるはず」を検知と数えない → 人がログを見に行かなくても届く
+
+on:
+  schedule:
+    # 06:00 UTC = 15:00 JST。日次トリアージは 21:01 JST（12:01 UTC）に実行されるため、
+    # 前日の実行を翌日 15:00 JST に確認する（約 27 時間のバッファ）。
+    # 許容欠測日数（既定 3 日）側で余裕を持たせているため、1 日ズレてもすぐに鳴らない。
+    - cron: '0 6 * * *'
+  workflow_dispatch: # 手動確認・復旧後の即時クローズ用
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 生存確認
+        id: check
+        run: |
+          set +e
+          node scripts/check_seo_triage_daily_health.js --json > /tmp/seo-daily-health.json
+          set -e
+          echo "----- 判定結果 -----"
+          node scripts/check_seo_triage_daily_health.js || true
+
+      - name: 異常なら Issue を起票/更新、復旧していればクローズ
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('/tmp/seo-daily-health.json', 'utf8'));
+            const label = 'seo-triage-daily-watchdog';
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'open', labels: label, per_page: 20,
+            });
+            const existing = issues.find(i => i.title.startsWith('🔴 SEO日次トリアージが処理されていません'));
+
+            // ---- 復旧している場合: 開いている Issue を閉じる ----
+            if (r.ok) {
+              if (existing) {
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number: existing.number,
+                  body: `✅ 復旧を確認しました（JST ${r.today_jst}）。最後の日次処理: ${r.last_daily.date}（${r.silence_days}日前）。自動クローズします。`,
+                });
+                await github.rest.issues.update({
+                  owner, repo, issue_number: existing.number, state: 'closed',
+                });
+                core.info(`Issue #${existing.number} を復旧クローズしました。`);
+              } else {
+                core.info('健全。Issue の起票は不要です。');
+              }
+              return;
+            }
+
+            // ---- 異常あり: 起票 or 更新 ----
+            const kinds = r.problems.map(p => p.kind).join(', ');
+            const title = `🔴 SEO日次トリアージが処理されていません（${kinds}）`;
+
+            const lines = [];
+            lines.push('SEO日次トリアージの **生存確認に失敗**しました（JST ' + r.today_jst + ' 時点）。');
+            lines.push('');
+            lines.push('> 日次トリアージが止まると、当日のレポートが newer_than:2d の窓から落ちて');
+            lines.push('> 二度と処理されなくなります（SEO-152: 2026-10 に 3 通が消えた実例）。');
+            lines.push('> 未処理のまま放置すると、採用候補の施策が検出されません。');
+            lines.push('');
+            lines.push('## 検出内容');
+            for (const p of r.problems) lines.push(`- **${p.kind}** — ${p.detail}`);
+            if (r.warnings.length) {
+              lines.push('');
+              lines.push('## 警告（それ自体は異常ではない）');
+              for (const w of r.warnings) lines.push(`- ${w}`);
+            }
+            lines.push('');
+            lines.push('## 最後の日次処理');
+            if (r.last_daily) {
+              lines.push(`- 対象日: \`${r.last_daily.date}\`（${r.silence_days}日前 / 許容 ${r.max_silence_days}日）`);
+              lines.push(`- verdict: \`${r.last_daily.verdict}\` / id: ${r.last_daily.id || '—'}`);
+              lines.push(`- 累計 line-daily エントリ数: ${r.total_daily_entries}`);
+            } else {
+              lines.push('- `data/seo_advice_log.json` に line-daily エントリが一件もありません。');
+            }
+            lines.push('');
+            lines.push('## 対処');
+            lines.push('1. **`stale_daily` の場合（最有力: newer_than:2d の窓から落ちた）**');
+            lines.push('   - `docs/seo-triage-daily-recovery.md` の手順で未処理レポートを遡って処理する。');
+            lines.push('   - `data/seo_advice_log.json` の最新 line-daily エントリの date が今日になれば復旧。');
+            lines.push('2. **認証切れの場合** — claude.ai で Gmail MCP の再認証を行う。');
+            lines.push('3. **ルーチン未登録の場合** — claude.ai のスケジュールで日次トリアージが登録されているか確認する。');
+            lines.push('4. 復旧後は手動で1回実行し、`data/seo_advice_log.json` に line-daily エントリが追加されることを確認する:');
+            lines.push('   ```bash');
+            lines.push('   node scripts/check_seo_triage_daily_health.js');
+            lines.push('   ```');
+            lines.push('');
+            lines.push('---');
+            lines.push('この Issue は生存確認が通ると自動でクローズされます（seo-triage-daily-watchdog.yml）。');
+            const body = lines.join('\n');
+
+            if (existing) {
+              await github.rest.issues.update({
+                owner, repo, issue_number: existing.number, title, body,
+              });
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: existing.number,
+                body: `再検出（JST ${r.today_jst}）。現在の問題: ${kinds}`,
+              });
+              core.setFailed(`SEO日次トリアージの異常が継続しています: ${kinds}`);
+            } else {
+              const { data: created } = await github.rest.issues.create({
+                owner, repo, title, body, labels: [label],
+              });
+              core.setFailed(`SEO日次トリアージの異常を検出し Issue #${created.number} を起票しました: ${kinds}`);
+            }

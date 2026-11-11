@@ -63,9 +63,10 @@
   5. `npm test`・`node scripts/audit_design_system.js --check`・`node scripts/audit_store_link_identity.js` が通る
 - **files**: `scripts/fetch_manual_store_photos.js`, `data/pending_stores.json`, `scripts/merge_pending_stores.js`
 
-### [SEO-152] 日次トリアージが動かなかった日を検知して通知し、未判定のレポートを窓の外へ落とさない
+### [SEO-152] 日次トリアージが動かなかった日を検知して通知し、未判定のレポートを窓の外へ落とさない ✅
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-11-11
 - **detected**: 2026-11-03
 - **due**: 2026-11-17
 - **category**: ops / 監視
