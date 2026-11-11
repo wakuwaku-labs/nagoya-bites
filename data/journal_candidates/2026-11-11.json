@@ -1,0 +1,471 @@
+{
+  "date": "2026-11-11",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄の地下「鉄板屋大吉」10席で朝5時まで、一人飲み・二軒目の少席店が回る理由",
+      "verdict": "PASS",
+      "total": 101,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 5件 (人件費,回転,仕込み,構造,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 149字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄の地下「鉄板 はちろく」20席が昼と夜の二毛作で回す、宴会・女子会の予算の読み方",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 91,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 2件 (構造,相場) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 138字 +4",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "91点（自動公開ライン 100点）。主な不足: uniqueness -10 / topicality -5 / writability -2",
+      "plan_topic_bonus": 2,
+      "plan_topic_note": "週の予定の題材「宴会・忘年会」に一致 +2（並べ替えのみ・採点と判定は不変）"
+    },
+    {
+      "id": "c4",
+      "title_draft": "錦の地下バー「CHIKA TRAIN」12席、22時から朝6時の深夜営業が成り立つ構造",
+      "verdict": "HOLD",
+      "total": 82,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "バー",
+          "feature": "features/nagoya-bar-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 2件 (人件費,構造) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 121字 +4",
+          "title 43字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「錦」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「バー」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄の地下「串カツ 星や」15席、駅3分の地下で一人飲みが成り立つ席数の考え方",
+      "verdict": "HOLD",
+      "total": 75,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 2件 (回転,仕込み) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 124字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "伏見地下街の小さな居酒屋、15〜23席の店が並ぶ昭和の地下で回転が成り立つ理由",
+      "verdict": "HOLD",
+      "total": 64,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 1件 (回転) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 121字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "plan_topic": {
+    "topic": "宴会・忘年会",
+    "week": "2026-W46",
+    "slot": 2,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "industry_insider",
+      "column_id": "COL-SEAT-006",
+      "title_draft": "栄の地下「鉄板屋大吉」10席で朝5時まで、一人飲み・二軒目の少席店が回る理由",
+      "lead_draft": "東京商工リサーチによると、2026年10月の飲食業倒産は98件で10月として最多、8割超が資本金1千万円未満の小さな会社だった。栄3丁目エトワールさかえの地下にある鉄板屋大吉は、カウンター10席で17時から翌5時まで開ける。席数ではなく営業時間で売上の器を作る少席店の計算を、人件費と回転から読む。",
+      "angle": "10席×12時間＝30席×4時間という席時間と回転の考え方、最低賃金1,195円での人件費、早い時間を仕込みに回し深夜の繁忙に合わせる時間の使い方、地下テナントの集客構造から、少席店が回る理由と一人飲み・二軒目での使い方を読む",
+      "main_store": {
+        "name": "鉄板屋大吉",
+        "id": "J001267980",
+        "area": "栄",
+        "genre": "鉄板焼き・もんじゃ"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「10月の『飲食業』倒産 10月では最多の98件」",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203428_1527.html",
+          "date": "2026-11-10"
+        },
+        {
+          "label": "東京商工リサーチ「『人手不足』倒産 10月では過去最多の50件」",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203405_1527.html",
+          "date": "2026-11-06"
+        },
+        {
+          "label": "中日BIZナビ「愛知の最低賃金55円上げ1195円に 10月1日から適用」",
+          "url": "https://biz.chunichi.co.jp/news/article/10/129664/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "愛知労働局「最低賃金のお知らせ」",
+          "url": "https://jsite.mhlw.go.jp/aichi-roudoukyoku/jirei_toukei/chingin_kanairoudou/oshirase.html",
+          "date": "2026-10-14"
+        },
+        {
+          "label": "ホットペッパーグルメ「鉄板屋大吉」店舗情報",
+          "url": "https://www.hotpepper.jp/strJ001267980/"
+        },
+        {
+          "label": "鉄板屋大吉 公式Instagram",
+          "url": "https://www.instagram.com/teppanyadaikichi/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "industry_insider",
+      "column_id": "COL-SEAT-006",
+      "title_draft": "栄の地下「鉄板 はちろく」20席が昼と夜の二毛作で回す、宴会・女子会の予算の読み方",
+      "lead_draft": "2026年10月の飲食業倒産は98件で10月として最多だった。栄3丁目エトワールさかえの地下にある鉄板 はちろくは20席で、昼11時半からと夜17時半からの二部営業。席を増やせない地下の店が、昼の定食と夜の飲み放題コースで席の稼働を足していく仕組みを、価格帯と人件費から読む。",
+      "angle": "昼夜二部営業で席時間を増やす構造、お通し200円と飲み放題コース3,500円の相場、12名から貸切の宴会運用を読む",
+      "main_store": {
+        "name": "鉄板 はちろく",
+        "id": "J001134067",
+        "area": "栄",
+        "genre": "鉄板焼き"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「10月の『飲食業』倒産 10月では最多の98件」",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203428_1527.html",
+          "date": "2026-11-10"
+        },
+        {
+          "label": "中日BIZナビ「愛知の最低賃金55円上げ1195円に 10月1日から適用」",
+          "url": "https://biz.chunichi.co.jp/news/article/10/129664/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "ホットペッパーグルメ「鉄板はちろく」店舗情報",
+          "url": "https://www.hotpepper.jp/strJ001134067/"
+        },
+        {
+          "label": "鉄板 はちろく 公式Instagram",
+          "url": "https://www.instagram.com/teppan0513/"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "industry_insider",
+      "column_id": "COL-SEAT-006",
+      "title_draft": "栄の地下「串カツ 星や」15席、駅3分の地下で一人飲みが成り立つ席数の考え方",
+      "lead_draft": "人件費高騰による倒産が2026年10月に過去最多の50件となった。栄駅13番出口から歩いて約3分、栄グリーンビル地下の串カツ 星やは15席。地下の小さな店が、少ない人数で回せる席数と仕込みの量をどう合わせているかを、一人飲みの使い方とあわせて読む。",
+      "angle": "15席という人員1〜2人で回せる規模、串揚げの仕込みと回転、駅近地下の集客を読む",
+      "main_store": {
+        "name": "串カツ 星や",
+        "id": "J001176879",
+        "area": "栄",
+        "genre": "串カツ"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「『人手不足』倒産 10月では過去最多の50件」",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203405_1527.html",
+          "date": "2026-11-06"
+        },
+        {
+          "label": "東京商工リサーチ「10月の『飲食業』倒産 10月では最多の98件」",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203428_1527.html",
+          "date": "2026-11-10"
+        },
+        {
+          "label": "ホットペッパーグルメ「串カツ 星や」店舗情報",
+          "url": "https://www.hotpepper.jp/strJ001176879/"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "industry_insider",
+      "column_id": "COL-SEAT-006",
+      "title_draft": "錦の地下バー「CHIKA TRAIN」12席、22時から朝6時の深夜営業が成り立つ構造",
+      "lead_draft": "2026年10月の飲食業倒産は98件、バー・ナイトクラブは11件だった。錦3丁目サンロード錦ビル地下のCHIKA TRAINは12席で、22時から翌6時まで開ける。終電後に動く客だけを相手にする小さな地下の店の売上の器を、席数と時間から読む。",
+      "angle": "深夜専業の少席バーの席時間と人件費、終電後需要の構造を読む",
+      "main_store": {
+        "name": "CHIKA TRAIN 地下トレイン",
+        "id": "J004090733",
+        "area": "錦",
+        "genre": "バー"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「10月の『飲食業』倒産 10月では最多の98件」",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203428_1527.html",
+          "date": "2026-11-10"
+        },
+        {
+          "label": "ホットペッパーグルメ「CHIKA TRAIN」店舗情報",
+          "url": "https://www.hotpepper.jp/strJ004090733/"
+        },
+        {
+          "label": "CHIKA TRAIN 公式Instagram",
+          "url": "https://www.instagram.com/chikatrain_official/"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "industry_insider",
+      "column_id": "COL-SEAT-006",
+      "title_draft": "伏見地下街の小さな居酒屋、15〜23席の店が並ぶ昭和の地下で回転が成り立つ理由",
+      "lead_draft": "2026年10月、居酒屋の倒産は16件で前年同月より45.4%増えた。伏見駅に直結する伏見地下街には、15〜23席ほどの小さな居酒屋やバーが並ぶ。夕方早くから開ける地下街の店が、会社帰りの短い滞在で席を回す仕組みを、営業時間と価格帯から読む。",
+      "angle": "地下街の早い開店時間と短時間滞在、せんべろ価格帯の回転設計を読む",
+      "main_store": {
+        "name": "standbar-ZERO",
+        "id": "J003561003",
+        "area": "伏見",
+        "genre": "立ち飲み"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「10月の『飲食業』倒産 10月では最多の98件」",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203428_1527.html",
+          "date": "2026-11-10"
+        },
+        {
+          "label": "ホットペッパーグルメ「standbar-ZERO」店舗情報",
+          "url": "https://www.hotpepper.jp/strJ003561003/"
+        }
+      ]
+    }
+  ]
+}
