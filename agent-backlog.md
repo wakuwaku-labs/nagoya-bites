@@ -8,7 +8,8 @@
 
 ### [SEO-153] ジャーナルの関連特集が題名の部分一致（「発酵喫茶」→モーニング特集）で主題とずれるのを直す
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
+- **resolved**: 2026-11-11
 - **detected**: 2026-11-09
 - **due**: 2026-12-09
 - **category**: SEO
