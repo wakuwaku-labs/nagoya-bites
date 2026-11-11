@@ -68,9 +68,10 @@ const DIR_RULES = [
   { prefix: 'stores/', ext: /\.html$/, recursive: true },
   { prefix: 'features/', ext: /\.html$/, recursive: false },
   { prefix: 'journal/', ext: /\.(html|xml|atom)$/, recursive: false },
-  { prefix: 'assets/', ext: /\.(css|jpg|jpeg|png|webp|svg|gif|ico|avif)$/i, recursive: true },
-  // 公開ページが読み込む共通 JS（assets/js/ の .js だけ。店舗ページの計測 store-link-tracking.js など）
+  // 公開ページが読み込む共通 JS（assets/js/ の .js だけ。店舗ページの計測 store-link-tracking.js など）。
+  // 判定は最初に前方一致した規則で決まるので、広い 'assets/' より前に置く
   { prefix: 'assets/js/', ext: /\.js$/, recursive: false },
+  { prefix: 'assets/', ext: /\.(css|jpg|jpeg|png|webp|svg|gif|ico|avif)$/i, recursive: true },
   { prefix: 'icons/', ext: /\.(png|svg|ico)$/i, recursive: false },
 ];
 
