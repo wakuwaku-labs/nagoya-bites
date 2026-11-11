@@ -1,21 +1,21 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-11-10T22:53:07.088Z",
+  "generatedAt": "2026-11-11T00:13:16.021Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 3592,
+  "total_sessions": 3595,
   "engines": [
     {
       "key": "google",
       "label": "Google",
-      "sessions": 1235,
+      "sessions": 1236,
       "pct": 34.4,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 1235
+          "sessions": 1236
         }
       ]
     },
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 904,
-      "pct": 25.2,
+      "pct": 25.1,
       "sources": [
         {
           "source": "bing",
@@ -73,7 +73,7 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 505,
+      "sessions": 507,
       "pct": 14.1,
       "sources": [
         {
@@ -84,7 +84,7 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 29
+          "sessions": 31
         }
       ]
     },
@@ -242,12 +242,12 @@
     }
   ],
   "search_only": {
-    "total": 2970,
+    "total": 2971,
     "share": [
       {
         "key": "google",
         "label": "Google",
-        "sessions": 1235,
+        "sessions": 1236,
         "pct_of_search": 41.6
       },
       {
@@ -280,20 +280,20 @@
     "from": "2026-11-09",
     "to": "2026-11-10",
     "delta": {
-      "google": 35,
-      "bing": 30,
-      "yahoo": 19,
-      "direct": 4,
-      "ai_assistant": 1,
+      "google": 33,
+      "bing": 41,
+      "yahoo": 15,
+      "direct": 23,
+      "ai_assistant": 11,
       "other": 1,
       "social": 0,
-      "duckduckgo": 0
+      "duckduckgo": 1
     }
   },
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 1235 セッションのみ。Bing(904) + 生成AI(244) の 1148 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 1236 セッションのみ。Bing(904) + 生成AI(244) の 1148 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
