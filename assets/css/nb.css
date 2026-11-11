@@ -465,6 +465,18 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .nb-call-status:empty{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
 .nb-call-status:not(:empty){flex:1 0 100%;grid-column:1/-1;padding-top:var(--sp-1);}
 
+/* 日次記事の記事末ブロック（この記事で紹介したお店・あわせて読みたい特集）。中身は scripts/lib/journal_next_block.js */
+.nb-journal-next{max-width:var(--container-prose);margin:0 auto;padding:0 1.5rem var(--rhythm-md);}
+.nb-journal-next-title,.nb-journal-next-sub{font-family:var(--font-display);font-weight:500;font-size:var(--fs-xl);color:var(--ink);margin:var(--sp-6) 0 var(--sp-3);padding-top:var(--sp-4);border-top:2px solid var(--gold);}
+.nb-journal-next-sub{margin-top:var(--sp-6);}
+.nb-journal-next>:first-child{margin-top:0;}
+.nb-journal-next-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--sp-2);}
+.nb-journal-next-link{display:flex;flex-wrap:wrap;align-items:center;gap:.15rem var(--sp-3);min-height:var(--tap-min);padding:var(--sp-3) var(--sp-4);background:var(--card);border:1px solid var(--card-border);border-left:3px solid var(--gold);border-radius:var(--r-sm);color:var(--ink);text-decoration:none;}
+.nb-journal-next-link:hover{background:rgba(122,92,16,.08);}
+.nb-journal-next-name{font-weight:600;font-size:var(--fs-md);flex:1 1 12rem;min-width:0;}
+.nb-journal-next-meta{font-size:var(--fs-sm);color:var(--muted);}
+.nb-journal-next-go{font-size:var(--fs-sm);font-weight:500;color:var(--gold);white-space:nowrap;margin-left:auto;}
+
 /* ── 店舗ページの行動バー（I-14b・スマホの画面の下に固定する予約・電話・地図） ──
    幅 768px 以下だけ出す。PC では出さず、本文のリンク欄の操作も変えない。ボタンの出し分けは gen-store-pages.js の
    buildActionBar()（計画 7.3 節の表・店の種類で4通り）。一番手（塗り）は予約、無ければ電話、どちらも無ければ地図。
