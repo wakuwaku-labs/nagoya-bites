@@ -90,7 +90,7 @@ function processFile(file, dryRun) {
         STOCK_HOST_RE.lastIndex = 0;
         heroCount++;
         const alt = (inner.match(/\balt="([^"]+)"/) || [, ''])[1] || title;
-        return `<div class="hero-image">\n      <img src="${figureRel}" alt="${alt}" loading="lazy">\n    </div>`;
+        return `<div class="hero-image">\n      <img src="${figureRel}" alt="${alt}" loading="eager" fetchpriority="high">\n    </div>`;
       }
     );
 
@@ -106,7 +106,7 @@ function processFile(file, dryRun) {
         STOCK_HOST_RE.lastIndex = 0;
         heroCount++;
         const alt = (inner.match(/\balt="([^"]+)"/) || [, ''])[1] || title;
-        return `<figure class="art-hero-img">\n  <img src="${figureRel}" alt="${alt}" loading="lazy" decoding="async">\n</figure>`;
+        return `<figure class="art-hero-img">\n  <img src="${figureRel}" alt="${alt}" loading="eager" decoding="async" fetchpriority="high">\n</figure>`;
       }
     );
   }
