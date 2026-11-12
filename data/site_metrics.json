@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-12T20:55:12.075Z",
+  "generatedAt": "2026-11-12T23:15:43.977Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 4676,
-    "pageViews": 6061,
-    "sessions": 5172,
-    "avgSessionDuration": 82.4,
+    "activeUsers": 4685,
+    "pageViews": 6077,
+    "sessions": 5188,
+    "avgSessionDuration": 82.3,
     "bounceRate": 0.521,
     "pagesPerSession": 1.17
   },
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2752,
-      "direct": 1976,
+      "organic": 2762,
+      "direct": 1978,
       "social": 54,
-      "ai_assistant": 248,
-      "referral": 41,
+      "ai_assistant": 249,
+      "referral": 42,
       "paid": 0,
       "other": 0
     },
     "pct": {
       "organic": 54.3,
-      "direct": 39,
+      "direct": 38.9,
       "social": 1.1,
       "ai_assistant": 4.9,
       "referral": 0.8,
@@ -44,22 +44,22 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1244
+      "sessions": 1247
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 922
+      "sessions": 923
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 556
+      "sessions": 561
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 167
+      "sessions": 168
     },
     {
       "source": "openai",
@@ -79,7 +79,7 @@
     {
       "source": "service.smt.docomo.ne.jp",
       "medium": "referral",
-      "sessions": 22
+      "sessions": 23
     },
     {
       "source": "note",
@@ -87,14 +87,14 @@
       "sessions": 21
     },
     {
-      "source": "trend_today",
+      "source": "(not set)",
       "medium": "(not set)",
       "sessions": 12
     },
     {
-      "source": "(not set)",
+      "source": "trend_today",
       "medium": "(not set)",
-      "sessions": 10
+      "sessions": 12
     },
     {
       "source": "history",
@@ -104,7 +104,7 @@
     {
       "source": "ecosia.org",
       "medium": "organic",
-      "sessions": 7
+      "sessions": 8
     },
     {
       "source": "openai",
@@ -210,13 +210,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 434,
-      "sessions": 411
+      "pageViews": 436,
+      "sessions": 413
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 226,
-      "sessions": 213
+      "pageViews": 227,
+      "sessions": 214
     },
     {
       "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -235,7 +235,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 400,
+    "outboundClicks": 401,
     "ctaClickRate": 7.7,
     "byDomain": [
       {
@@ -248,7 +248,7 @@
       },
       {
         "domain": "prtimes.jp",
-        "clicks": 48
+        "clicks": 49
       },
       {
         "domain": "tabelog.com",
@@ -281,7 +281,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 280,
+      "organic": 281,
       "direct": 51,
       "social": 10,
       "ai_assistant": 49,
@@ -295,7 +295,7 @@
     "byPage": [
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-        "clicks": 58
+        "clicks": 59
       },
       {
         "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -418,7 +418,7 @@
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
         "domain": "prtimes.jp",
-        "clicks": 46
+        "clicks": 47
       },
       {
         "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -1152,7 +1152,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 4676,
+    "value": 4685,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
