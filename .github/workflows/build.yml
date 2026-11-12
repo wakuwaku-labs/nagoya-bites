@@ -292,6 +292,15 @@ jobs:
         run: node scripts/refresh_feature_rosters.js --if-stale
         continue-on-error: true
 
+      - name: 特集の店カードに店舗ページへのリンクを足し、ItemList に url を入れる（冪等・日次・通信なし）
+        # 店舗ページが実在するのにリンクの無い店カードへ「詳細ページを見る」を足し、店一覧の構造化データ（ItemList）の
+        # url の無い項目へ同じページの店カードのリンク先を入れる。ひも付けは完全一致か先頭一致で1店だけ
+        # （scripts/lib/feature_card_links.js）。結べない店・店舗ページの無い店には何もしない。
+        # 月次の入れ替え（上の refresh_feature_rosters.js）の対象外の手書きの特集にも毎日効く。冒頭の区画（下の add_feature_top_cta.js）が
+        # ItemList を読むので、その前に置く。ローカルの確認は --check。
+        run: node scripts/link_feature_store_cards.js
+        continue-on-error: true
+
       - name: 特集の店カードの★を、データに評価が無い店から外す（MEO-003・冪等・日次）
         # ★は掲載店の入れ替え（月1回）のときに書かれる。build.js が紐付けの状態で消した評価
         # （scripts/lib/place_binding.js の applyRatingGate・判断の記録 0046）が、特集にだけ次の入れ替えまで残らないようにする

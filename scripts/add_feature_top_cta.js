@@ -95,13 +95,22 @@ function topFeatureSlugs() {
   return slugs;
 }
 
+/**
+ * 手書きの特集の ItemList の項目名は「店名（エリア）— ひとこと」の形のものがある。
+ * 冒頭の区画に出す店名は、店カードと同じ店名だけにする（「（エリア）— ひとこと」を落とす）。
+ * 「（アオノ）名古屋駅店」のように店名の途中にある括弧は、ダッシュで続かないので落とさない
+ */
+function stripListNote(name) {
+  return String(name).replace(/\s*[（(][^）)]*[）)]\s*[—–]\s*.*$/, '').trim();
+}
+
 /** 記事の ItemList JSON-LD から掲載店（順位つき）を取り出す */
 function storesFromItemList(html) {
   const out = [];
   const re = /"@type":"ListItem","position":(\d+),"name":"((?:[^"\\]|\\.)*)","url":"[^"]*\/stores\/(J\d+)\.html"/g;
   let m;
   while ((m = re.exec(html)) !== null) {
-    out.push({ position: parseInt(m[1], 10), name: JSON.parse('"' + m[2] + '"'), jcode: m[3] });
+    out.push({ position: parseInt(m[1], 10), name: stripListNote(JSON.parse('"' + m[2] + '"')), jcode: m[3] });
   }
   return out.sort((a, b) => a.position - b.position);
 }
@@ -329,4 +338,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { storesFromItemList, storesFromHtmlLinks, buildCta, applyToHtml, sameBrand, pickDiverse, START, END };
+module.exports = { stripListNote, storesFromItemList, storesFromHtmlLinks, buildCta, applyToHtml, sameBrand, pickDiverse, START, END };

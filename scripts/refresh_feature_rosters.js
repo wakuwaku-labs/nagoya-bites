@@ -406,14 +406,15 @@ function touchDateModified(html, ymd) {
 }
 
 function replaceItemList(html, list) {
-  const re = /(\{"@context":"https:\/\/schema\.org","@type":"ItemList"[^]*?"itemListElement":)\[[^]*?\](\})/;
+  // 空白・改行の入った書き方（json.dumps の既定・整形したもの）も扱う。扱えないと、店カードだけ入れ替わって ItemList が古い店のまま残る
+  const re = /(\{\s*"@context"\s*:\s*"https:\/\/schema\.org"\s*,\s*"@type"\s*:\s*"ItemList"[^]*?"itemListElement"\s*:\s*)\[[^]*?\](\s*\})/;
   if (!re.test(html)) return html;
   const items = list.map((e, i) => {
     const s = e.store;
     return `{"@type":"ListItem","position":${i + 1},"name":${JSON.stringify(s['店名'])},"url":"https://nagoya-bites.com/stores/${s['ホットペッパーID']}.html"}`;
   }).join(',');
   return html.replace(re, (full, head, tail) => {
-    const withCount = head.replace(/"numberOfItems":\d+/, `"numberOfItems":${list.length}`);
+    const withCount = head.replace(/("numberOfItems"\s*:\s*)\d+/, `$1${list.length}`);
     return `${withCount}[${items}]${tail}`;
   });
 }
