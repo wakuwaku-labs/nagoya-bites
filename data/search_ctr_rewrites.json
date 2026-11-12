@@ -4,7 +4,7 @@
     {
       "id": "ondine-1066",
       "issue": "Ondine #1066（事業責任者の施策 #1・article_improve・判断 0078・0082）",
-      "status": "applied",
+      "status": "reverted",
       "changedOn": "2026-10-30",
       "compareOn": "2026-11-13",
       "metric": "site_search_clicks（data/gsc_metrics.json の totals.clicks・直近28日）。効果の判定は評価日に事業責任者が行う",
@@ -344,7 +344,28 @@
             }
           ]
         }
-      ]
+      ],
+      "revertedOn": "2026-11-13",
+      "result": {
+        "judgedOn": "2026-11-13",
+        "stopHit": true,
+        "reason": "書き直した記事のクリック率（表示で加重）0.0228 → 0.0169。止める条件に当たったため元に戻した",
+        "rewrittenPages": {
+          "before": {
+            "impressions": 5087,
+            "clicks": 116
+          },
+          "now": {
+            "impressions": 6435,
+            "clicks": 109
+          }
+        },
+        "siteClicks": {
+          "before": 886,
+          "now": 1677
+        },
+        "note": "比較の期間（10/15〜11/11）は書き直し前の15日を含む。全体のクリックには 11/6 の不自然な約430クリックが入っている。手羽先特集だけはクリック率が上がっていた（1.62% → 1.80%）が、止める条件は束全体で決めているため一緒に戻した"
+      }
     }
   ]
 }
