@@ -104,4 +104,24 @@ function lastmodHealth(xml, today) {
   };
 }
 
-module.exports = { normDate, clampToday, readSitemapLastmods, htmlDates, articleLastmod, maxDate, lastmodLine, lastmodHealth };
+/**
+ * 店舗ページの「内容が変わったか」を比べるための指紋（P3-21）。
+ * 毎日の機械的な再生成だけで変わる部分を消してから比べる。消すもの:
+ *   ・「Google口コミ取得日 YYYY-MM-DD」の日付（取得し直すたびに進む）
+ *   ・ホットペッパーのクレジット表記の1行（フッターに一律で足される）
+ *   ・計測用スクリプトの読み込み行（assets/js/*tracking*.js・一律で足される）
+ *   ・Google Places の写真 URL（毎日取り直されて文字列が変わる）
+ *   ・タグ間の空白・改行・インデント（クレジット行の差し込みで変わる）
+ * 店名・住所・口コミの数値・写真の差し替えなど、読者に見える中身の変化は消さない。
+ */
+function lastmodFingerprint(html) {
+  return String(html || '')
+    .replace(/(Google口コミ取得日\s*)\d{4}-\d{2}-\d{2}/g, '$1')
+    .replace(/<p class="nb-footer-credit">[\s\S]*?<\/p>\s*/g, '')
+    .replace(/<script[^>]+src="[^"]*tracking[^"]*\.js"[^>]*><\/script>\s*/g, '')
+    .replace(/https?:\/\/lh\d\.googleusercontent\.com\/[^"'\s)<>]*/g, 'PLACES_URL')
+    .replace(/https?:\/\/places\.googleapis\.com\/[^"'\s)<>]*/g, 'PLACES_URL')
+    .replace(/>\s+</g, '><');
+}
+
+module.exports = { lastmodFingerprint, normDate, clampToday, readSitemapLastmods, htmlDates, articleLastmod, maxDate, lastmodLine, lastmodHealth };
