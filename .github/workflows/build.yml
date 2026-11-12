@@ -422,6 +422,13 @@ jobs:
         run: node scripts/inject_store_links.js
         continue-on-error: true
 
+      - name: 画像 sitemap（sitemap-images.xml）を作り直す（P3-21・日次・冪等）
+        # 旧実装は CI で動かない build_features.js の末尾にあり、2026-10-15 から止まっていた。
+        # sitemap.xml（gen-store-pages.js と gen_area_genre_pages.js が確定させた後）の店舗・特集ページの
+        # og:image から作る。Places の写真 URL は書かない（ADR 0045・直後の static_places 監査も見る）。
+        run: node scripts/gen_image_sitemap.js
+        continue-on-error: true
+
       - name: インラインJS構文監査（GA4計測が全ページで動くか・SEO-115）
         # 公開ページのインライン <script> を構文解析し（実行はしない）、gtag.js を読み込むページで
         # gtag('config',…) を含むJSが生きているかを検査する（scripts/audit_inline_js_syntax.js・
@@ -548,7 +555,7 @@ jobs:
           # CI で毎ビルド生成されても捨てられ、フロントが古い内訳（一部店舗のみ）を出し続ける。
           # ISSUE-146: data/store_page_orphans.json（gen-store-pages.js --check-orphans の孤児一覧）も対象。
           # 漏れていると手元の一覧が古いまま残り、手元の audit_design_system.js が転送ページを誤検知する。
-          git add index.html features/index.html sitemap.xml llms.txt faq.html data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/store_referrals.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/feature_roster_health.json data/store_link_identity_checked.json data/store_link_identity_report.json data/area_genre_pages_manifest.json data/photo_url_liveness_report.json data/dead_photo_urls.json data/store_merge_pairs.json data/store_page_orphans.json
+          git add index.html features/index.html sitemap.xml sitemap-images.xml llms.txt faq.html data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/store_referrals.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/feature_roster_health.json data/store_link_identity_checked.json data/store_link_identity_report.json data/area_genre_pages_manifest.json data/photo_url_liveness_report.json data/dead_photo_urls.json data/store_merge_pairs.json data/store_page_orphans.json
           # ISSUE-148: スプレッドシートの住所検査の記録。Hot Pepper を取れた回にだけ書かれ、まだ無い回に
           # 上の git add 全体を落とさないよう分ける（data/indexnow_state.json と同じ扱い）
           git add data/spreadsheet_address_gate.json 2>/dev/null || true

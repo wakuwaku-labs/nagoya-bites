@@ -1516,7 +1516,9 @@ async function main() {
     let prevHtml = null;
     try { prevHtml = fs.readFileSync(outFile, 'utf8'); } catch (_) { /* 新しい店 */ }
     const changed = prevHtml !== html;
-    storeLastmod.set(slug, changed ? runDate : (prevLastmod.get(`${BASE_URL}/stores/${slug}.html`) || runDate));
+    // lastmod は「読者に見える中身が変わった」ときだけ当日にする（日付・計測用の行・一律のクレジットだけの差は除く・P3-21）
+    const meaningful = prevHtml === null || sitemapLastmod.lastmodFingerprint(prevHtml) !== sitemapLastmod.lastmodFingerprint(html);
+    storeLastmod.set(slug, meaningful ? runDate : (prevLastmod.get(`${BASE_URL}/stores/${slug}.html`) || runDate));
     if (changed && !DRY_RUN) fs.writeFileSync(outFile, html, 'utf8');
     if (!changed) unchangedPages++;
     generated++;
