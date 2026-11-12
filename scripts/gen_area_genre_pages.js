@@ -20,7 +20,7 @@ const crypto = require('crypto');
 const siteChrome = require('./lib/site_chrome');
 const { loadStores } = require('./lib/load_stores');
 const {
-  loadPolicy, planPages, parsePriceBand, accessSummary,
+  loadPolicy, planPages, parsePriceBand, accessSummary, areaSlugsOf, openStores, normalizeGenre,
 } = require('./lib/area_genre_pages');
 const trustDisplay = require('./lib/trust_display');
 const { gaSnippet } = require('./lib/ga_snippet');
@@ -119,11 +119,36 @@ function sortForDisplay(stores) {
   });
 }
 
-function storeSlug(s) {
+// 店舗ページのスラグの決め方は gen-store-pages.js の toSlug と同じ（ホットペッパーID → 英語名 → 店名の英数字 → 店名の16進）。
+function baseSlugOf(s) {
   if (s['ホットペッパーID']) return s['ホットペッパーID'];
-  const ascii = (s['店名'] || '').replace(/[^\x00-\x7F]/g, '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const dash = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  if (s['英語名']) return dash(s['英語名']);
+  const ascii = dash((s['店名'] || '').replace(/[^\x00-\x7F]/g, '').trim());
   if (ascii.length >= 3) return ascii;
   return 'store-' + Buffer.from(s['店名'] || '', 'utf8').toString('hex').slice(0, 16);
+}
+
+// gen-store-pages.js は同じスラグが先に使われていると -2・-3 を付ける（stores.json の並び順・店名のある店だけ）。
+// 同じ順で数えて、同名の店のリンクが先の店のページを指さないようにする（旧実装は先の店と同じスラグを返していた）。
+function buildSlugMap(stores) {
+  const map = new Map();
+  const seen = new Set();
+  for (const s of stores) {
+    if (!s['店名']) continue;
+    const base = baseSlugOf(s);
+    let slug = base;
+    let n = 2;
+    while (seen.has(slug)) slug = `${base}-${n++}`;
+    seen.add(slug);
+    map.set(s, slug);
+  }
+  return map;
+}
+let SLUG_MAP = new Map();
+
+function storeSlug(s) {
+  return SLUG_MAP.get(s) || baseSlugOf(s);
 }
 
 // ================================================================
@@ -339,6 +364,32 @@ ${siteChrome.chromeScript()}
 </html>`;
 }
 
+/**
+ * ジャンル別の一覧ページ（エリア×ジャンル）に載らない店へ、静的なリンクで届く入口の区画。
+ * 載らない理由は2つ: そのエリアで同じジャンルの店が hubMinStores 軒未満（一覧ページを作らない）／ジャンルが一覧の分類に
+ * 当てはまらない。閾値は下げず（中身の薄いページを増やさない）、既に在るエリアのページから店舗ページへ直接リンクする。
+ * 並びはジャンル名→店名の順（決定的）。リンクだけを出す（他の一覧と同じ hub-more の形・新しい CSS は足さない）。
+ */
+function otherStoresSection(stores, policy, { heading, lead, summary, depth }) {
+  if (!stores.length) return '';
+  const label = (s) => {
+    const g = normalizeGenre(s['ジャンル'], policy);
+    return g ? g.label : (s['ジャンル'] || '');
+  };
+  const sorted = stores.slice().sort((a, b) =>
+    label(a).localeCompare(label(b), 'ja') || (a['店名'] || '').localeCompare(b['店名'] || '', 'ja'));
+  return `  <section class="hub-others" aria-label="${esc(heading)}">
+    <h2 class="nb-section-head"><span>${esc(heading)}</span></h2>
+    <p class="hub-picks-note">${esc(lead)}</p>
+    <details class="hub-more">
+      <summary>${esc(summary.replace('{n}', String(sorted.length)))}</summary>
+      <ul>
+${sorted.map(s => `        <li><a href="${siteChrome.prefix(depth)}stores/${esc(storeSlug(s))}.html">${esc(s['店名'])}</a></li>`).join('\n')}
+      </ul>
+    </details>
+  </section>`;
+}
+
 function renderRootPage(rootResult, policy) {
   const { pages } = rootResult;
   const areaPages = pages.filter(p => p.type === 'area').sort((a, b) => b.stores.length - a.stores.length);
@@ -363,7 +414,12 @@ ${areaGrid}
 ${genreList}
     </ul>
   </details>
-`;
+${otherStoresSection(UNGROUPED, policy, {
+    heading: 'エリアの一覧に分類していない店',
+    lead: '所在地の書き方が上のエリアのどれにも当てはまらず、エリア別の一覧に入れていない店です。店名から各店のページへ進めます。',
+    summary: '{n}軒の店舗ページを見る',
+    depth: 2,
+  })}`;
 
   const jsonLd = [{
     '@context': 'https://schema.org', '@type': 'CollectionPage',
@@ -393,6 +449,16 @@ function renderAreaPage(page, allPages, policy) {
       <div class="hg-count">${p.stores.length}軒</div>
     </a>`).join('\n');
 
+  // ジャンル別の一覧に載っていない店（同じジャンルが少ない・ジャンルが分類に当てはまらない）
+  const inGenrePages = new Set();
+  for (const p of genrePages) for (const st of p.stores) inGenrePages.add(st);
+  const othersHtml = otherStoresSection(page.stores.filter(st => !inGenrePages.has(st)), policy, {
+    heading: 'ジャンル別の一覧がない店',
+    lead: `${page.area.label}の掲載店のうち、同じジャンルの店が${policy.hubMinStores}軒に満たず、ジャンル別の一覧を作っていない店です。店名から各店のページへ進めます。`,
+    summary: 'ほか{n}軒の店舗ページを見る',
+    depth: 3,
+  });
+
   const statCells = [
     ['掲載軒数', `${page.stores.length}軒`],
     priceStat ? ['最多価格帯', priceStat.band] : null,
@@ -409,6 +475,7 @@ ${statCells.map(([k, v]) => `    <div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>
   <div class="hub-grid">
 ${grid}
   </div>
+${othersHtml}
   <div class="related-wrap">
     <p class="related-title">エリア一覧に戻る</p>
     <div class="related-links">
@@ -601,6 +668,8 @@ function allPagesHasCondition(policy, genrePage, cond) {
 }
 
 let REGISTRY = null;
+// どのエリア群にも入らない開店中の店（エリア原文も住所も policy の対応表に無い）。prepare() が決める
+let UNGROUPED = [];
 
 function buildRegistry(pages) {
   const byArea = new Map(); // areaSlug -> genre pages[]
@@ -658,6 +727,8 @@ function prepare() {
   const policy = loadPolicy();
   GLOBAL_POLICY = policy;
   const stores = loadStores();
+  SLUG_MAP = buildSlugMap(stores);
+  UNGROUPED = openStores(stores).filter(s => areaSlugsOf(s, policy).length === 0);
   const { pages } = planPages(stores, policy);
   REGISTRY = buildRegistry(pages);
   return { policy, stores, pages, TRUST_POLICY: trustDisplay.loadPolicy() };
@@ -836,4 +907,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { priceBandRows, editorPicks, topStations, contentHashOf, storeCard, hubReserveOnclick, prepare, renderHubPage };
+module.exports = { priceBandRows, editorPicks, topStations, contentHashOf, storeCard, hubReserveOnclick, prepare, renderHubPage, buildSlugMap, baseSlugOf };
