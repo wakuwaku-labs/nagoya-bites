@@ -1,4 +1,4 @@
-status: in_progress
+status: done
 
 # 残っている計画を進める（2026-11-13）
 
@@ -27,3 +27,6 @@ status: in_progress
 
 ## 関連ファイル
 /Users/katagirijakutou/nagoya-bites/data/seo/phase1-diagnosis-report.md ・ /Users/katagirijakutou/nagoya-bites/data/seo/phase2/
+
+## 結果（2026-11-13）
+- 本人承認（#1886）→ main 2a96aceb25 に合流・本番で4つを確認。#1808 done。残りは #1883（11/20 予約）・#1838（権限待ち）・#1861（11/27）
