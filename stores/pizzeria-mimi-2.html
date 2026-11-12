@@ -10,6 +10,7 @@ function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,p
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,follow"><!-- nb-orphan-noindex -->
 <title>Pizzeria mimi（車道・千種・イタリアン・ピッツェリア・予算2001～3000円・Google★4.3）| NAGOYA BITES</title>
 <meta name="description" content="車道駅から徒歩2分のイタリアン・ピッツェリア。予算2001～3000円。Google★4.3（口コミレビュー10件）。口コミ信頼度D。2026年9月19日開店。予約・地図・口コミを1ページで確認できます。">
 <link rel="canonical" href="https://nagoya-bites.com/stores/pizzeria-mimi-2.html">

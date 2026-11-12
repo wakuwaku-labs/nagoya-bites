@@ -1587,6 +1587,16 @@ async function main() {
           remaining = remaining.filter(s => !delSet.has(s));
           console.log(`★ ${deleted}件の孤児ページを削除しました（保留 ${plan.hold.length}件は manual_stores 同名のため残置）`);
         }
+        // 項目14（非破壊・冪等）: 残った孤児（閉店・掲載終了・実在検証待ち・不明）は削除せず、検索に出さない印だけ <head> に足す。
+        // 戻すには印の行を消す（SO.removeOrphanNoindex・scripts/noindex_orphan_stores.js --revert）。現役に戻った店は上の通常生成で上書きされる。
+        let noindexed = 0;
+        for (const s of remaining) {
+          const f = path.join(OUT_DIR, `${s}.html`);
+          const before = fs.readFileSync(f, 'utf8');
+          const after = SO.addOrphanNoindex(before);
+          if (after !== before) { fs.writeFileSync(f, after, 'utf8'); noindexed++; }
+        }
+        console.log(`★ 残った孤児 ${remaining.length}件のうち ${noindexed}件に noindex を足しました（既に印のある物は触りません）`);
       } else if (DELETE_ORPHANS || REDIRECT_ORPHANS) {
         console.log(`(--limit / --dry-run 中は書き換え・削除をスキップしました)`);
       } else {

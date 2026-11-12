@@ -47,3 +47,22 @@ test('readH1: 逃がして書かれた店名を元に戻して読み、& を含�
   });
   assert.deepStrictEqual(r.redirect.OLD, { to: 'NEW', why: 'samename', name: 'Cafe & Bar ゆきっち' });
 });
+
+// 項目14: 孤児ページの noindex（非破壊・冪等・元に戻せる）
+test('addOrphanNoindex: <head> に1行足し、何度かけても同じで、removeOrphanNoindex で元に戻る', () => {
+  const html = '<!DOCTYPE html>\n<html><head>\n<meta charset="UTF-8">\n<title>店 | NAGOYA BITES</title>\n</head><body>x</body></html>\n';
+  const once = SO.addOrphanNoindex(html);
+  assert.ok(SO.isOrphanNoindexed(once));
+  assert.match(once, /<meta name="robots" content="noindex,follow">/);
+  assert.strictEqual(SO.addOrphanNoindex(once), once, '冪等');
+  assert.strictEqual(SO.removeOrphanNoindex(once), html, '戻すと完全に元の内容');
+  assert.strictEqual(SO.removeOrphanNoindex(html), html, '印が無ければ何もしない');
+});
+
+test('addOrphanNoindex: 既に noindex の案内ページと誘導ページ以外の入力は触らない', () => {
+  const notice = '<head><meta name="robots" content="noindex"><title>x</title></head>';
+  assert.strictEqual(SO.addOrphanNoindex(notice), notice);
+  const noTitle = '<head><meta charset="utf-8"></head>';
+  assert.ok(SO.addOrphanNoindex(noTitle).includes('nb-orphan-noindex'));
+  assert.strictEqual(SO.removeOrphanNoindex(SO.addOrphanNoindex(noTitle)), noTitle);
+});
