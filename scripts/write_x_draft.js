@@ -115,10 +115,39 @@ function planRecord(plan, type) {
   };
 }
 
+/**
+ * 投稿日（date・JST の YYYY-MM-DD）の曜日に割り当てたシリーズ名（Ondine #1808・policy.series）。
+ * 割り当てが無い・無効なら null。忘年会幹事のような期間限定のシリーズは、月が外れたら fallbackByMonth の名前に替える。
+ */
+function seriesFor(date, policy) {
+  const cfg = policy && policy.series;
+  if (!cfg || cfg.enabled !== true || !/^\d{4}-\d{2}-\d{2}$/.test(String(date))) return null;
+  const dow = new Date(`${date}T00:00:00Z`).getUTCDay();
+  const month = Number(String(date).slice(5, 7));
+  let name = cfg.weekdays && cfg.weekdays[String(dow)];
+  if (!name) return null;
+  const months = cfg.monthsOnly && cfg.monthsOnly[name];
+  if (Array.isArray(months) && !months.includes(month)) name = cfg.fallbackByMonth && cfg.fallbackByMonth[name];
+  if (!name) return null;
+  return { name, hint: (cfg.seriesHints && cfg.seriesHints[name]) || '' };
+}
+
+/** 文面づくりの指示に足す「今日のシリーズ」の節（割り当てが無ければ空） */
+function seriesSection(date, policy) {
+  const s = seriesFor(date, policy);
+  if (!s) return [];
+  return ['', '## 今日のシリーズ',
+    `今日はシリーズ「${s.name}」の日。${s.hint}`,
+    '- 記事の事実がこのシリーズに合うときだけ、シリーズ名を本文の中に自然な形で一度だけ入れ、シリーズの書き方に寄せる。合わないときは使わず、いつもどおり書く（事実を曲げない・無理に当てはめない）。',
+    '- シリーズ名を入れても、本文の長さの上限・書き方の決まり（数字は evidence の引用の中だけ・煽りと根拠のないランキングを書かない）は変わらない。',
+    '- シリーズ名の「◯」は記事の数字（evidence の引用の中にあるもの）で埋める。埋められないときは名前を入れない。'];
+}
+
 function buildPrompt({ root, entry, material, previous, plan }) {
   const parts = [
     promptBody(root),
     ...planSection(plan, entry.title),
+    ...seriesSection(entry.date, X.loadPolicy(root)),
     '',
     '## 使わない言い方',
     wordingList(root).map((w) => `- ${w}`).join('\n'),
@@ -306,4 +335,4 @@ async function main() {
 
 if (require.main === module) main();
 
-module.exports = { loadPlan, planSection, planRecord, run, parseArgs, parseReply, articleMaterial, buildPrompt, checkAll, summary, callClaude };
+module.exports = { seriesFor, seriesSection, loadPlan, planSection, planRecord, run, parseArgs, parseReply, articleMaterial, buildPrompt, checkAll, summary, callClaude };

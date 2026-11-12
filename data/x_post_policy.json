@@ -119,6 +119,32 @@
     "maxAgeDays": 8,
     "help": "SNS分析ツールの割り当て（iCloud の nagoya_bites/next.json の plan・docs/decisions/0059）。true のとき Mac 側の文面づくり（scripts/write_x_draft.js）が、今日の枠（JST の曜日）の型・1行目・長さを Claude への指示に足し、使った枠を保存した文面と台帳（plan_cell・plan_experiment）に残す。ファイルが無い・壊れ・maxAgeDays 日より古い・schema 違い・別の週なら指定なし（今までどおり）。URL の実験（urlExperiment・0058）とは独立に動く。戻すのは enabled を false に戻す1行だけ。置き場は環境変数 SNS_ANALYZER_X_DIR で変えられる"
   },
+  "series": {
+    "enabled": true,
+    "weekdays": {
+      "0": "今週の新店・閉店",
+      "1": "行く前に",
+      "2": "予算◯円で",
+      "3": "駅ごとのひとり飲み",
+      "4": "予算◯円で",
+      "5": "忘年会幹事",
+      "6": "行く前に"
+    },
+    "monthsOnly": {
+      "忘年会幹事": [11, 12]
+    },
+    "fallbackByMonth": {
+      "忘年会幹事": "駅ごとのひとり飲み"
+    },
+    "help": "Ondine #1808・設計書 x-awareness-engine §6 C（シリーズ）。Mac 側の文面づくり（scripts/write_x_draft.js）が、投稿日（JST）の曜日に割り当てたシリーズ名を Claude への指示に足す。weekdays のキーは曜日（0=日〜6=土）。monthsOnly のシリーズは書かれた月（1〜12）だけ使い、それ以外の月は fallbackByMonth の名前に替える。記事の事実がシリーズに合わない日は使わない（指示側で『合うときだけ』と書く・事実を曲げない）。投稿の数・時刻・上限は変えない（postSlot・maxReplies などはそのまま）。シリーズ名の説明は seriesHints。戻すのは enabled を false に戻す1行",
+    "seriesHints": {
+      "行く前に": "初めて行く店を調べている人向け。「◯◯に行く前に」の書き出しで、行く前に知らないと困ること（予約の可否・営業時間・支払い方法など）を・で始まる箇条書きにする。型は checklist。",
+      "駅ごとのひとり飲み": "仕事帰りに一人で入る店を探す人向け。駅名と条件（出口・徒歩・時間制など）で、記事の店を1店ずつ事実だけで書く。型は number か checklist。",
+      "今週の新店・閉店": "新しい店を探す人向け。記事が新店・閉店を扱うときだけ。事実は記事の出典にあるものだけを書き、閉店は故人や事件に触れない。",
+      "予算◯円で": "財布を守りたい人向け。記事にある料金の計算（合計・追加料金・時間制の差）を見せる。順位は付けない。型は number。",
+      "忘年会幹事": "幹事向け（11〜12月だけ）。人数・個室・飲み放題の時間制などの確認事項を、記事の事実から箇条書きにする。型は checklist。"
+    }
+  },
   "imageCard": {
     "enabled": false,
     "followPlan": true,
