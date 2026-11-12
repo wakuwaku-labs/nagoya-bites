@@ -1,0 +1,445 @@
+{
+  "date": "2026-11-12",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅『八塩折 yashiori』接待と記念日に、会席12,400円と17,400円・焚き火を囲む22席",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 94,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 18,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 3件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,予約,シーン,接待,デート) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 152字 +4",
+          "title 51字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「接待」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -7 / brand_fit -4 / writability -3",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "大須『Standing Style Shitu』女性のための立ち呑み、パンとコーヒーと酒の一人飲み",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 94,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 18,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (席,シーン,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 153字 +4",
+          "title 49字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -7 / brand_fit -4 / writability -3",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "名駅・円頓寺近く『八塩折』対馬の手釣り魚と八丁味噌、仕入れから読む完全予約制",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 88,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 18,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,コース,席,予約) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 143字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "88点（自動公開ライン 100点）。主な不足: topicality -7 / search_intent -6 / brand_fit -4",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "相生山『BEN'S BAGEL』天白の住宅街のベーグル専門店、9時開店と売り切れ閉店",
+      "verdict": "HOLD",
+      "total": 75,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 13,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,席,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 136字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「緑区・天白区」+1",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "栄・住吉『鮨かど 住吉店』11月11日開店の寿司と天ぷら、二軒目のカウンター",
+      "verdict": "HOLD",
+      "total": 63,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 129字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「カウンター」+4",
+          "タイトルにジャンル語「寿司」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": {
+    "topic": "イベント",
+    "week": "2026-W46",
+    "slot": 3,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -7 / brand_fit -4 / writability -3",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "名駅『八塩折 yashiori』接待と記念日に、会席12,400円と17,400円・焚き火を囲む22席",
+      "lead_draft": "2026年11月6日、国際センター駅から徒歩5分の西区名駅3丁目に開いた日本料理「八塩折 yashiori」。築120年の古民家を直し、焚き火を囲む円形カウンターで薪の料理を出す。会席は8品12,400円と10品17,400円の2本、完全予約制の22席。差額の読み方と、接待・記念日での使い方を整理する。",
+      "angle": "会席2本の価格帯（8品12,400円と10品17,400円の差額）と、完全予約制・22席・最大14名の予約の取り方、円形カウンターの席が接待とデートのどちらのシーンに向くかを読む",
+      "main_store": {
+        "name": "八塩折 yashiori",
+        "id": "",
+        "area": "名駅",
+        "genre": "日本料理"
+      },
+      "sources": [
+        {
+          "label": "食べログ「八塩折 yashiori」店舗情報",
+          "url": "https://tabelog.com/aichi/A2301/A230101/23098031/",
+          "date": "2026-11-06"
+        },
+        {
+          "label": "八塩折 公式Instagram「流線形のカウンター」",
+          "url": "https://www.instagram.com/p/Dfkb6hMTkxR/",
+          "date": "2026-11-10"
+        },
+        {
+          "label": "八塩折 公式Instagram「古民家リノベーション」",
+          "url": "https://www.instagram.com/p/Dfkbjh3Tnbg/",
+          "date": "2026-11-10"
+        },
+        {
+          "label": "八塩折 公式Instagram 対馬の天然魚の仕入れ",
+          "url": "https://www.instagram.com/p/DetXGH8k1nA/",
+          "date": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "大須『Standing Style Shitu』女性のための立ち呑み、パンとコーヒーと酒の一人飲み",
+      "lead_draft": "2026年11月11日、大須観音駅から徒歩3分の大須2丁目に開いた「Standing Style Shitu 大須」。座席を置かない立ち呑みで、パンとコーヒー、酒と肴を一つの店で出す。公式Instagramは女性のための立ち呑みを掲げる。昼のパンと夜の一杯をどう使い分けるかを、開店直後の情報から整理する。",
+      "angle": "席を置かない立ち呑みの回転と、パン・コーヒー・酒の時間帯の使い分け、一人飲みのシーンを読む",
+      "main_store": {
+        "name": "Standing Style Shitu 大須",
+        "id": "",
+        "area": "大須",
+        "genre": "立ち飲み・パン"
+      },
+      "sources": [
+        {
+          "label": "食べログ「Standing Style Shitu 大須」",
+          "url": "https://tabelog.com/aichi/A2301/A230105/23098387/",
+          "date": "2026-11-11"
+        },
+        {
+          "label": "Standing Style Shitu 公式Instagram",
+          "url": "https://www.instagram.com/p/Dfjee2ET5LR/",
+          "date": "2026-11-10"
+        },
+        {
+          "label": "Standing Style Shitu 公式Instagram（パン）",
+          "url": "https://www.instagram.com/p/Dfk1nAyz1_Y/",
+          "date": "2026-11-10"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "相生山『BEN'S BAGEL』天白の住宅街のベーグル専門店、9時開店と売り切れ閉店",
+      "lead_draft": "2026年11月7日、地下鉄桜通線の相生山駅から徒歩5分、天白区相川に開いたベーグル専門店「BEN'S BAGEL」。営業は火曜から土曜の9時から15時で、売り切れ次第終わる。駐車場があり持ち帰りが中心。住宅街の小さな専門店が朝の時間に絞る理由を、営業の組み立てから読む。",
+      "angle": "朝9時から15時に絞る営業と売り切れ閉店の回転、持ち帰り中心で席を持たない価格帯を読む",
+      "main_store": {
+        "name": "BEN'S BAGEL",
+        "id": "",
+        "area": "天白区",
+        "genre": "ベーグル"
+      },
+      "sources": [
+        {
+          "label": "食べログ「BEN'S BAGEL」",
+          "url": "https://tabelog.com/aichi/A2301/A230112/23098360/",
+          "date": "2026-11-07"
+        },
+        {
+          "label": "BEN'S BAGEL 公式Instagram",
+          "url": "https://www.instagram.com/ben_s_bagel/",
+          "date": "2026-11-07"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "名駅・円頓寺近く『八塩折』対馬の手釣り魚と八丁味噌、仕入れから読む完全予約制",
+      "lead_draft": "国際センター駅から徒歩5分の日本料理「八塩折 yashiori」は、対馬で一本ずつ手釣りされた天然魚を、上がった日だけ直送で受ける。岡崎の八丁味噌など愛知の発酵調味料も使う。量の読めない仕入れを前提に、なぜ完全予約制で人数を先に決めるのか。2026年11月6日開店の店の組み立てを読む。",
+      "angle": "量の読めない直送の仕入れと完全予約制の関係、コースの価格帯と席の予約を読む",
+      "main_store": {
+        "name": "八塩折 yashiori",
+        "id": "",
+        "area": "名駅",
+        "genre": "日本料理"
+      },
+      "sources": [
+        {
+          "label": "食べログ「八塩折 yashiori」店舗情報",
+          "url": "https://tabelog.com/aichi/A2301/A230101/23098031/",
+          "date": "2026-11-06"
+        },
+        {
+          "label": "八塩折 公式Instagram 対馬の天然魚の仕入れ",
+          "url": "https://www.instagram.com/p/DetXGH8k1nA/",
+          "date": "2026-10-20"
+        },
+        {
+          "label": "八塩折 公式Instagram カクキュー八丁味噌",
+          "url": "https://www.instagram.com/p/DevEiRYE8yW/",
+          "date": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "栄・住吉『鮨かど 住吉店』11月11日開店の寿司と天ぷら、二軒目のカウンター",
+      "lead_draft": "2026年11月11日、栄駅から徒歩7分の中区栄3丁目・住吉エリアに開いた「鮨かど 住吉店」。食べログでは居酒屋・寿司・天ぷらの店として載る。開店直後で価格や席数の公開はまだ少ない。住吉の飲み屋街で寿司を二軒目に使えるかを、分かっている情報の範囲で整理する。",
+      "angle": "住吉の二軒目としての使い方を読む",
+      "main_store": {
+        "name": "鮨かど 住吉店",
+        "id": "",
+        "area": "栄",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "食べログ「鮨かど 住吉店」",
+          "url": "https://tabelog.com/aichi/A2301/A230103/23098180/",
+          "date": "2026-11-11"
+        }
+      ]
+    }
+  ]
+}
