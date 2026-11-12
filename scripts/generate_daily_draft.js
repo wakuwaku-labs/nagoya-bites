@@ -526,7 +526,7 @@ function buildHeroImageSection(input) {
   const attrs = ` data-hero-source="${esc(heroSource)}"` + (heroStore ? ` data-hero-store="${esc(heroStore)}"` : '');
 
   return `<figure class="art-hero-img"${attrs}>
-  <img src="${esc(imgUrl)}" alt="${esc(input.title)}" loading="lazy" decoding="async">
+  <img src="${esc(imgUrl)}" alt="${esc(input.title)}" loading="eager" decoding="async" fetchpriority="high">
   <figcaption class="art-img-credit">写真: ${creditHtml}</figcaption>
 </figure>`;
 }
