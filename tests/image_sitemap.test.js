@@ -50,3 +50,14 @@ test('lastmod の指紋: 取得日・クレジット・計測 script・Places UR
   assert.notStrictEqual(L.lastmodFingerprint(base), L.lastmodFingerprint(base.replace('<h1>店</h1>', '<h1>別の店</h1>')));
   assert.notStrictEqual(L.lastmodFingerprint(base), L.lastmodFingerprint(base.replace('3/9項目', '4/9項目')));
 });
+
+// 2026-10-15 に画像 sitemap が止まったのは、作る処理が毎日のビルドに乗っていなかったため。
+// 生成の手順と、生成物のコミットが build.yml から外れたら落とす（項目20 の構造化データの手順も同じ）
+test('毎日のビルドが画像 sitemap と構造化データの画像を作り直し、コミットする', () => {
+  const yml = fs.readFileSync(path.join(__dirname, '..', '.github/workflows/build.yml'), 'utf8');
+  assert.match(yml, /run: node scripts\/gen_image_sitemap\.js/);
+  assert.match(yml, /run: node scripts\/apply_schema_image\.js/);
+  const addLine = yml.split('\n').find((l) => /git add index\.html /.test(l));
+  assert.ok(addLine && /\bsitemap-images\.xml\b/.test(addLine), 'sitemap-images.xml が git add に無い');
+  assert.ok(yml.indexOf('gen_image_sitemap.js') > yml.indexOf('gen_area_genre_pages.js'), 'sitemap.xml が確定する前に画像 sitemap を作っている');
+});
