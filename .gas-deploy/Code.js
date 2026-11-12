@@ -653,14 +653,14 @@ function generateAdvice(data, a, date, isWeekly) {
 
 // ─── SEO-092: 実測GSCクエリから「伸びしろのあるKW候補」を抜く ───
 // GAS に Search Console API を叩かせるのではなく、このリポジトリが日次で
-// 生成・公開している data/gsc_metrics.json（GitHub Pages で誰でも閲覧できる
-// 静的JSON。CLAUDE.md の「判定ロジックはGASに持たせない」原則における“判定”とは
+// 生成している data/gsc_metrics.json（公開リポジトリの raw で誰でも読める
+// 静的JSON。2026-11-13 にサイトの URL からは外した＝docs/decisions/0061。CLAUDE.md の「判定ロジックはGASに持たせない」原則における“判定”とは
 // 採用/却下のような編集判断を指すため、ここでの決定的なフィルタ処理はそれに当たらない）を
 // そのまま読みに行く。pos 8〜20（1ページ目の境界〜2ページ目）＝タイトル/見出し改善や
 // 内部リンクで押し上げる余地があるクエリだけを表示回数順に抜き出す。
 // 取得できない場合は空配列を返し、呼び出し側はKWを名指ししない文言にフォールバックする
 // （データに無いKWを創作しない・CLAUDE.md制約10）。
-const GSC_METRICS_URL = 'https://nagoya-bites.com/data/gsc_metrics.json';
+const GSC_METRICS_URL = 'https://raw.githubusercontent.com/wakuwaku-labs/nagoya-bites/main/data/gsc_metrics.json';
 function fetchGscCandidateKeywords() {
   try {
     const res = UrlFetchApp.fetch(GSC_METRICS_URL, { muteHttpExceptions: true });

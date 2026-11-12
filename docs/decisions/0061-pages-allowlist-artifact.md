@@ -1,7 +1,7 @@
 # 0061 内部文書とデータの公開を止める（Pages に「許可リストだけ」を出す）
 
 - 日付: 2026-11-12
-- 状態: 採用（コードは用意済み。本番の切り替えは未実施。オーナーが下の手順で行う）
+- 状態: 採用（2026-11-13 にオーナーの「推奨で進めて」で本番を切り替えた。切り替えの操作は Claude が gh で行った）
 - 関連: `scripts/build_pages_artifact.js`・`.github/workflows/pages-artifact.yml`・`tests/pages_artifact.test.js`
 
 ## 背景
@@ -28,7 +28,7 @@
 ## 決めたこと（案 A）
 1. `scripts/build_pages_artifact.js` が、git で追跡されているファイルのうち**許可リストに当たる物だけ**を `_site/` へコピーする。許可リストに無い物は、何もしなくても公開されない（既定は遮断）。
    - 許可: ルート直下の公開ページ（`*.html`）・`sitemap*.xml`・`robots.txt`・`llms.txt`・`manifest.json`・`sw.js`・`CNAME`・IndexNow の鍵ファイル・Search Console の確認ファイル、`stores/**.html`、`features/*.html`、`journal/*.html` と `feed.xml`・`feed.atom`、`assets/**`（画像・CSS）、`icons/*`、`data/stores.json`・`data/crosscheck.json`（index.html が fetch する）・`data/area_genre_pages_manifest.json`（`llms.txt` が出典として URL を示す）。
-   - 暫定許可: `data/gsc_metrics.json`（下の「要判断」を参照）。
+   - 暫定許可: なし（2026-11-13 に `data/gsc_metrics.json` を外した。下の「決定済み」を参照）。
    - 遮断: 上以外のすべて（`HANDOFF.md`・`CLAUDE.md`・`agent-backlog.md`・`data/` の残り・`docs/`・`scripts/`・`tests/`・`agents/`・`.github/`・`.claude/`・`.gas-deploy/`・ルートの `*.js`・`*.sh`・`*.md`・ログなど。`journal/_template.html` などの先頭 `_` の作業用ページも）。
    - 必須ファイル（`index.html`・`404.html`・`sw.js`・`data/stores.json` など）が欠けたら成果物を作らず失敗する（壊れたサイトを出さない）。
 2. `.github/workflows/pages-artifact.yml` を新設した。**main に合流しただけでは本番は変わらない**:
@@ -37,7 +37,10 @@
    - 手動起動（`deploy` が既定の false）は、成果物を作って検査するだけの予行演習。
 3. 試験 `tests/pages_artifact.test.js` が、(a) 内部の物が許可されないこと、(b) JS が fetch する data・sitemap の URL・公開ページが参照する資産・manifest のアイコン・外部（GAS・`llms.txt`）が読む `data/*.json` がすべて成果物に入ること、(c) 必須ファイルが欠けたら失敗すること、(d) main へ push する既存 workflow が `workflow_run` の一覧に全部あること、を検査する。
 
-## 要判断: `data/gsc_metrics.json` を公開し続けるか
+## 決定済み（2026-11-13）: `data/gsc_metrics.json` はサイトから外す
+- オーナーが推奨（外す）を選んだ。GAS の取得先を `https://raw.githubusercontent.com/wakuwaku-labs/nagoya-bites/main/data/gsc_metrics.json` に替え、`DATA_TEMPORARY_ALLOW` を空にした。リポジトリが PUBLIC なので raw では読めるまま（新たに公開される物は無い）。日次アドバイスの KW の名指しは落ちない。リポジトリを非公開にするときは、この取得先も見直す。
+
+### 当時の判断材料
 - `.gas-deploy/Code.js` の `fetchGscCandidateKeywords()` が、日次レポートのアドバイス用に `https://nagoya-bites.com/data/gsc_metrics.json` を読んでいる（取れなければ「KW を名指ししない文言」に落ちる作りで、止まりはしない）。
 - そのため既定では**暫定許可**にしてある（遮断すると GAS の日次アドバイスの質が下がる）。リポジトリが PUBLIC のうちは、遮断しても内容は GitHub 上で読めるので、遮断の効果は「サイトの URL では開けない」ことだけ。
 - 遮断したいときは、`scripts/build_pages_artifact.js` の `DATA_TEMPORARY_ALLOW` から外し、GAS 側の取得を直す（例: 取得先を変える、または KW 候補を使わない）。試験が GAS の参照と突き合わせているので、片方だけ変えると試験が落ちて気づける。
@@ -58,12 +61,11 @@
 3. コードの戻しは `git revert`（`pages-artifact.yml`・`build_pages_artifact.js`・試験・この記録）。
 
 ## 切り替え後に確かめる URL（前に `https://nagoya-bites.com` を付ける）
-- 404 になるはず（内部）: `/HANDOFF.md`・`/CLAUDE.md`・`/AGENTS.md`・`/agent-backlog.md`・`/spec.md`・`/build-report.md`・`/sprint-1-report.md`・`/store-notification-template.md`・`/data/site_metrics.json`・`/data/x_post_log.json`・`/data/feedback_log.json`・`/data/editor_picks.json`・`/docs/decisions/README.md`・`/scripts/fetch_gsc_metrics.js`・`/tests/pages_artifact.test.js`・`/agents/builder.md`・`/.claude/settings.json`・`/package.json`・`/build.js`・`/journal/_template.html`
-- 200 になるはず（必要）: `/`・`/about.html`・`/faq.html`・`/contact.html`・`/privacy-policy.html`・`/features/`・`/stores/J000015064.html`・`/stores/area/chikusa-imaike/bar-budget-3000.html`・`/journal/feed.xml`・`/sitemap.xml`・`/sitemap-images.xml`・`/robots.txt`・`/llms.txt`・`/manifest.json`・`/sw.js`・`/assets/css/nb.css`・`/icons/icon-192.png`・`/data/stores.json`・`/data/crosscheck.json`・`/data/area_genre_pages_manifest.json`・`/data/gsc_metrics.json`（暫定許可の間）・`/googledf7b9dabc1052b56.html`・`/ec3ee6876b0d465ab4f7093ba5bc42d0.txt`
+- 404 になるはず（内部）: `/data/gsc_metrics.json`・`/HANDOFF.md`・`/CLAUDE.md`・`/AGENTS.md`・`/agent-backlog.md`・`/spec.md`・`/build-report.md`・`/sprint-1-report.md`・`/store-notification-template.md`・`/data/site_metrics.json`・`/data/x_post_log.json`・`/data/feedback_log.json`・`/data/editor_picks.json`・`/docs/decisions/README.md`・`/scripts/fetch_gsc_metrics.js`・`/tests/pages_artifact.test.js`・`/agents/builder.md`・`/.claude/settings.json`・`/package.json`・`/build.js`・`/journal/_template.html`
+- 200 になるはず（必要）: `/`・`/about.html`・`/faq.html`・`/contact.html`・`/privacy-policy.html`・`/features/`・`/stores/J000015064.html`・`/stores/area/chikusa-imaike/bar-budget-3000.html`・`/journal/feed.xml`・`/sitemap.xml`・`/sitemap-images.xml`・`/robots.txt`・`/llms.txt`・`/manifest.json`・`/sw.js`・`/assets/css/nb.css`・`/icons/icon-192.png`・`/data/stores.json`・`/data/crosscheck.json`・`/data/area_genre_pages_manifest.json`・`/googledf7b9dabc1052b56.html`・`/ec3ee6876b0d465ab4f7093ba5bc42d0.txt`
 - 存在しない URL（例 `/no-such-page`）が `404.html` の中身を HTTP 404 で返すこと。
 - トップページを開き、店舗の一覧が出て、店舗カードの口コミ内訳（`data/crosscheck.json`）が開くこと（スマホ幅で1往復）。
 
 ## 見直す条件
-- `DATA_TEMPORARY_ALLOW` の `data/gsc_metrics.json` は、GAS 側の取得を直したら外す。
 - 公開してよい新しい種類のファイル（新しい `data/*.json` を JS が fetch する・新しいディレクトリの資産など）を足すときは、許可リストに足す（試験が、足し忘れて壊れる典型を止める）。
 - リポジトリを非公開にする判断をしたら、この記録の「重要な制約」と案 C を見直す。

@@ -63,18 +63,22 @@ test('実際のリポジトリ: 内部の文書・ディレクトリは1つも�
   }
 });
 
-test('data/ は許可した物だけ（暫定許可は gsc_metrics.json の1件だけ）', () => {
+test('data/ は許可した物だけ（暫定許可は無し・gsc_metrics.json はサイトから外した）', () => {
   const dataAllowed = allowed.filter((p) => p.startsWith('data/')).sort();
   const expected = [...mod.DATA_ALLOW, ...mod.DATA_TEMPORARY_ALLOW].sort();
   assert.deepStrictEqual(dataAllowed, expected.filter((p) => trackedSet.has(p)));
-  assert.deepStrictEqual([...mod.DATA_TEMPORARY_ALLOW], ['data/gsc_metrics.json']);
+  assert.deepStrictEqual([...mod.DATA_TEMPORARY_ALLOW], []);
+  assert.ok(!allowedSet.has('data/gsc_metrics.json'), 'data/gsc_metrics.json がサイトに出る');
 });
 
 test('GAS など外部が公開 URL で読む /data/*.json は許可されている（外すと外部の機能が壊れる）', () => {
   const code = read('.gas-deploy/Code.js');
   const urls = [...code.matchAll(/https:\/\/nagoya-bites\.com\/(data\/[A-Za-z0-9_./-]+\.json)/g)].map((m) => m[1]);
-  assert.ok(urls.length >= 1, 'GAS の参照が見つからない（Code.js が変わった。判断の記録 0061 を見直す）');
   for (const u of urls) assert.ok(mod.isAllowed(u), `GAS が読む ${u} が遮断されている`);
+  // GSC の KW 候補はサイトでなく公開リポジトリの raw から読む（0061・2026-11-13）。読む先が追跡中のファイルであること
+  const raws = [...code.matchAll(/https:\/\/raw\.githubusercontent\.com\/wakuwaku-labs\/nagoya-bites\/main\/([A-Za-z0-9_./-]+\.json)/g)].map((m) => m[1]);
+  assert.ok(raws.includes('data/gsc_metrics.json'), 'GAS が gsc_metrics.json を raw から読んでいない（判断の記録 0061 を見直す）');
+  for (const r of raws) assert.ok(trackedSet.has(r), `GAS が raw で読む ${r} が追跡されていない`);
   const llms = read('llms.txt');
   for (const m of llms.matchAll(/https:\/\/nagoya-bites\.com\/(data\/[A-Za-z0-9_./-]+\.json)/g)) {
     assert.ok(mod.isAllowed(m[1]), `llms.txt が出典に挙げる ${m[1]} が遮断されている`);

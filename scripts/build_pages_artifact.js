@@ -54,12 +54,10 @@ const DATA_ALLOW = new Set([
 ]);
 
 // 暫定許可: 公開が要る内部データ（理由と外す手順は docs/decisions/0061 を参照）
-//  - gsc_metrics.json: .gas-deploy/Code.js の fetchGscCandidateKeywords() が公開 URL を読む。
-//    遮断すると GAS の日次レポートは「KW を名指ししない文言」に落ちる（失敗しても止まらない作り）。
-//    GAS 側を直した後でここから外す。
-const DATA_TEMPORARY_ALLOW = new Set([
-  'data/gsc_metrics.json',
-]);
+//  - 2026-11-13 に空にした。gsc_metrics.json は GAS（.gas-deploy/Code.js の fetchGscCandidateKeywords()）が
+//    公開リポジトリの raw.githubusercontent.com から読むように替え、サイトの URL からは外した。
+//    新しく足すときは、外部がサイトの URL でしか読めない理由を 0061 に書いてから足す。
+const DATA_TEMPORARY_ALLOW = new Set([]);
 
 // ディレクトリ配下の許可（拡張子と深さ）
 //  stores/**.html（店舗・誘導・エリア×ジャンルのハブ）, features/*.html, journal/*.html + feed.xml/feed.atom,
