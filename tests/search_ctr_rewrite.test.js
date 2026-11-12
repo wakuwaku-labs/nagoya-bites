@@ -89,7 +89,8 @@ test('台帳: 書き直した題と説明文は規則どおり（長さ・前30�
         if (/description/.test(f.tag)) assert.ok(f.after.length <= 160, `${p.path} ${f.tag}: ${f.after.length}字`);
       }
       const t = p.fields.find(f => f.tag === 'title');
-      if (!t) continue;
+      // 戻した束（reverted）はページが before のため、今のページとの照合はしない（一致は --check が見る）
+      if (!t || b.status === 'reverted') continue;
       const body = titleBody(t.after);
       assert.ok(body.length <= 50, `${p.path}: 題が長い（${body.length}字）`);
       assert.equal(readTag(html, 'og:title'), `${body}｜NAGOYA BITES`, `${p.path}: og:title も同じ題`);
