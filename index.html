@@ -1723,6 +1723,26 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
+    <a class="feature-card" href="features/nagoya-winter-2026.html">
+      <span class="feature-card-season">冬限定</span>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/47/65/P050054765/P050054765.jpg" srcset="https://imgfp.hotp.jp/IMGH/47/65/P050054765/P050054765.jpg 600w, https://imgfp.hotp.jp/IMGH/47/65/P050054765/P050054765.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋の冬に味わうかにと鍋" width="480" height="600" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 冬グルメ 2026-27・10選</div>
+        <div class="feature-card-sub">ふぐ・牡蠣・かに・鍋</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/nagoya-miso-oden-doteni.html">
+      <span class="feature-card-season">冬の名古屋めし</span>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/36/87/P050843687/P050843687.jpg" srcset="https://imgfp.hotp.jp/IMGH/36/87/P050843687/P050843687.jpg 600w, https://imgfp.hotp.jp/IMGH/36/87/P050843687/P050843687.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋の味噌おでん・どて煮" width="480" height="600" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 味噌おでん・どて煮ガイド・13選</div>
+        <div class="feature-card-sub">違いと頼み方・エリア別</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
     <a class="feature-card" href="features/nagoya-solo-dining.html">
       <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/69/23/P047636923/P047636923_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/69/23/P047636923/P047636923_480.jpg 600w, https://imgfp.hotp.jp/IMGH/69/23/P047636923/P047636923_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋の一人飲みで落ち着けるカウンター席" width="480" height="600" loading="lazy" decoding="async">
       <div class="feature-card-body">
@@ -1746,15 +1766,6 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋・名駅グルメおすすめ15選</div>
         <div class="feature-card-sub">出張・接待・仕事帰りに</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/sakae.html">
-      <img class="feature-card-thumb" src="assets/features/sakae.jpg" srcset="assets/features/sakae-600.jpg 600w, assets/features/sakae.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="栄・錦の繁華街を彩る夜のネオン街並み" width="900" height="1350" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名古屋・栄・錦グルメおすすめ15選</div>
-        <div class="feature-card-sub">名古屋最大の繁華街</div>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
@@ -2562,7 +2573,7 @@ var FULL_CATALOG_FAILED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '6de412c6ef0c';
+var STORES_JSON_VERSION = 'dc434f983bd1';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   function settle() {
