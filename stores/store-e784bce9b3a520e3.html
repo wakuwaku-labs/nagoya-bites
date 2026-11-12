@@ -10,6 +10,7 @@ function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,p
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,follow"><!-- nb-orphan-noindex -->
 <title>焼鳥 〇座（名古屋市中区・焼鳥）| NAGOYA BITES</title>
 <meta name="description" content="栄駅から徒歩5分の焼鳥。Google★4.6（口コミ20件）。栄に位置し。予約・地図・口コミを1ページで確認できます。">
 <link rel="canonical" href="https://nagoya-bites.com/stores/store-e784bce9b3a520e3.html">

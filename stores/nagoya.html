@@ -10,6 +10,7 @@ function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,p
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,follow"><!-- nb-orphan-noindex -->
 <title>肉屋 雪月花 NAGOYA（名駅・肉割烹・和牛）| NAGOYA BITES</title>
 <meta name="description" content="ミシュランプレート獲得・食べログアワード2018-2021と4年連続受賞の肉割烹。最高級の松阪牛をシェフ田中聡が厳選し、サーロイン・シャトーブリアンから希少部…。名駅の肉割烹・和牛（20001～30000円）。接待対応。">
 <link rel="canonical" href="https://nagoya-bites.com/stores/nagoya.html">
