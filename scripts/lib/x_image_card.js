@@ -263,17 +263,20 @@ async function readBody(res) {
 }
 
 /**
- * PNG を X に上げて media id を返す。v2（POST /2/media/upload）を先に試し、使えなければ v1.1 に切り替える。
+ * 画像（カードの PNG のパス、または写真の Buffer）を X に上げて media id を返す。v2（POST /2/media/upload）を先に試し、使えなければ v1.1 に切り替える。
  * どちらも OAuth 1.0a の利用者の鍵で署名する（multipart の本文は署名の対象外）。
  * 返り値: { ok:true, id, via } か { ok:false, reason }。例外は投げない。
  */
-async function uploadImage(file, cred, fetchImpl = fetch) {
+async function uploadImage(file, cred, fetchImpl = fetch, { type = 'image/png', name = 'card.png' } = {}) {
   let buf;
-  try { buf = fs.readFileSync(file); } catch (e) { return { ok: false, reason: `read_failed:${e.message}` }; }
+  if (Buffer.isBuffer(file)) buf = file; // 店の写真（x_store_photo.js）はメモリから上げる（リポジトリに置かない）
+  else {
+    try { buf = fs.readFileSync(file); } catch (e) { return { ok: false, reason: `read_failed:${e.message}` }; }
+  }
   const attempts = [];
   const form = (extra) => {
     const f = new FormData();
-    f.append('media', new Blob([buf], { type: 'image/png' }), 'card.png');
+    f.append('media', new Blob([buf], { type }), name);
     for (const [k, v] of Object.entries(extra)) f.append(k, v);
     return f;
   };

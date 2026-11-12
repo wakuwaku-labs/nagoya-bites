@@ -30,6 +30,7 @@ const fs = require('fs');
 const path = require('path');
 const X = require('./lib/x_post');
 const IC = require('./lib/x_image_card');
+const SP = require('./lib/x_store_photo');
 
 const TWEET_URL = 'https://api.x.com/2/tweets';
 
@@ -293,6 +294,17 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   // 画像カード（自前の PNG）。付ける日かどうかは Mac 側で決めて記録済み（scripts/make_x_image_card.js）。ここでは読むだけ
   const card = IC.loadCard(date, policy, root);
   out.media = { variant: card.attach ? 'image' : 'none', reason: card.reason, ...(card.attach ? { bytes: card.bytes } : {}) };
+  // 店の実物写真（docs/decisions/0062）。カードを付けない日に、記事に許諾つきの写真（既定はプレスリリース）があれば付ける。
+  // クレジットの行を足すと 280 を超える日は付けない（リンクカードで見せる）
+  let photo = null;
+  let photoText = null;
+  if (!card.attach) {
+    photo = SP.pickPhoto(articleHtml, policy);
+    photoText = photo ? SP.withCredit(built.text, photo, X.weightedLength) : null;
+    if (photo && photoText) out.media = { variant: 'photo', reason: `store_photo_${photo.source}`, src: photo.src, credit: photoText.slice(photoText.lastIndexOf('\n') + 1) };
+    else if (photo) out.media = { variant: 'none', reason: 'photo_credit_too_long' };
+    else if ((policy.storePhoto || {}).enabled === true) out.media = { variant: 'none', reason: 'no_store_photo' };
+  }
 
   if (mode === 'dry-run') return { ...out, result: 'dry_run_ok', exitCode: 0 };
 
@@ -303,13 +315,25 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   }
 
   // 画像を上げる。失敗しても止めない（画像なしで投稿を続け、理由を台帳に残す）
-  let media = { variant: 'none', reason: card.reason };
+  const baseText = built.text;
+  let media = { variant: 'none', reason: out.media.reason };
   if (card.attach) {
     const up = await IC.uploadImage(card.file, cred, fetchImpl);
     if (up.ok) media = { variant: 'image', reason: card.reason, id: up.id, via: up.via };
     else media = { variant: 'none', reason: `upload_failed: ${up.reason}`.slice(0, 300) };
+  } else if (photo && photoText) {
+    const dl = await SP.downloadPhoto(photo.src, fetchImpl);
+    const up = dl.ok ? await IC.uploadImage(dl.buf, cred, fetchImpl, { type: dl.type, name: dl.type === 'image/jpeg' ? 'photo.jpg' : 'photo.png' }) : dl;
+    if (up.ok) {
+      media = { variant: 'photo', reason: `store_photo_${photo.source}`, id: up.id, via: up.via };
+      // 写真を付けるときだけクレジットの行を足した文面で送る（台帳にも送った文面が残る）
+      built = { ...built, text: photoText };
+      out.text = photoText;
+    } else media = { variant: 'none', reason: `photo_failed: ${up.reason}`.slice(0, 300) };
   }
   out.media = media;
+  // 写真つきが断られて写真なしで送り直すときは、クレジットの行も外す
+  const textWithoutPhoto = baseText;
 
   let res;
   try {
@@ -324,6 +348,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
     const d = typeof res.body === 'string' ? res.body.slice(0, 120) : JSON.stringify(res.body).slice(0, 120);
     media = { variant: 'none', reason: `tweet_with_media_rejected: http_${res.status} ${d}`.slice(0, 300) };
     out.media = media;
+    if (textWithoutPhoto !== built.text) { built = { ...built, text: textWithoutPhoto }; out.text = textWithoutPhoto; }
     try { res = await sendTweet(built.text, cred, fetchImpl, null, null); } catch (e) {
       const reason = `network:${e.message || e}`;
       record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, media, status: 'failed' });
@@ -388,7 +413,7 @@ function summaryMarkdown(r) {
   for (const x of r.rejected || []) lines.push(`  - 使わなかった候補: ${TEXT_MODE_JA[x.mode] || x.mode} … ${x.reason}`);
   if (r.weighted) lines.push(`- 文字数（X の数え方）: ${r.weighted} / 280`);
   if (r.livePage) lines.push(`- 本番の記事: HTTP ${r.livePage.status}（${r.livePage.attempts} 回目）`);
-  if (r.media) lines.push(`- 画像カード: ${r.media.variant === 'image' ? '付ける' : '付けない'}（${r.media.reason}）`);
+  if (r.media) lines.push(`- 画像: ${r.media.variant === 'image' ? '画像カードを付ける' : r.media.variant === 'photo' ? `店の写真を付ける（${r.media.credit || ''}）` : '付けない（リンクカードで見せる）'}（${r.media.reason}）`);
   if (r.ogImage) lines.push(`- リンクカードの画像: ${r.ogImage.ok ? 'OK' : `出ない見込み（${r.ogImage.reason}）`}`);
   if (r.tweetUrl) lines.push(`- 投稿: ${r.tweetUrl}`);
   if (r.replies) lines.push(`- 返信（続き）: ${r.repliesPosted != null ? `${r.repliesPosted} / ` : ''}${r.replies.length} 件${r.repliesFailed ? `（途中で止まった: ${r.repliesFailed}）` : ''}`);

@@ -34,7 +34,7 @@ const fakeRaster = { kind: 'fake', bin: 'fake' };
 function fixture(policyOver = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'xcard-'));
   for (const d of ['data', 'journal', 'docs', 'icons']) fs.mkdirSync(path.join(root, d), { recursive: true });
-  const policy = { ...realPolicy, mode: 'live', planExperiment: { enabled: false }, urlExperiment: { enabled: false }, draft: { ...realPolicy.draft, useInPost: false }, template: { points: false }, imageCard: { ...realPolicy.imageCard, ...policyOver } };
+  const policy = { ...realPolicy, mode: 'live', planExperiment: { enabled: false }, urlExperiment: { enabled: false }, draft: { ...realPolicy.draft, useInPost: false }, template: { points: false }, imageCard: { ...realPolicy.imageCard, enabled: true, ...policyOver } };
   fs.writeFileSync(path.join(root, 'data/x_post_policy.json'), JSON.stringify(policy));
   fs.copyFileSync(path.join(REAL_ROOT, 'data/selection_wording_policy.json'), path.join(root, 'data/selection_wording_policy.json'));
   fs.copyFileSync(path.join(REAL_ROOT, 'icons/icon-512.png'), path.join(root, 'icons/icon-512.png'));
@@ -288,4 +288,98 @@ test('試運転: 何も送らず、付ける日・付けない日の判定だけ
     assert.strictEqual(r.media.variant, expect);
     assert.ok(!f.calls.some((c) => c.url === C.UPLOAD_V2 || c.url.startsWith('https://api.x.com/2/tweets')));
   }
+});
+
+// ── 店の実物写真（x_store_photo・docs/decisions/0062）──
+const SP = require('../scripts/lib/x_store_photo');
+const JPEG = Buffer.concat([Buffer.from([0xff, 0xd8, 0xff, 0xe0]), Buffer.alloc(200)]);
+const pressFig = (source = 'press', host = 'prcdn.freetls.fastly.net') => `<figure class="art-hero-img" data-hero-source="${source}" data-hero-store="ススル"><img src="https://${host}/release_image/1/2/3.jpg" alt=""><figcaption>写真: <a href="https://prtimes.jp/main/html/rd/p/000000001.html">提供 株式会社テスト（プレスリリースより）</a></figcaption></figure>`;
+
+function photoFixture({ fig = pressFig(), storePhoto = {} } = {}) {
+  const fx = fixture({ enabled: false });
+  const policy = JSON.parse(fs.readFileSync(path.join(fx.root, 'data/x_post_policy.json'), 'utf8'));
+  policy.storePhoto = { ...realPolicy.storePhoto, ...storePhoto };
+  fs.writeFileSync(path.join(fx.root, 'data/x_post_policy.json'), JSON.stringify(policy));
+  fs.writeFileSync(path.join(fx.root, `journal/${entry.slug}.html`), ARTICLE.replace('<h1>', `${fig}<h1>`));
+  return fx.root;
+}
+function photoFetch(root, { photoStatus = 200, ...o } = {}) {
+  const base = fakeFetch(root, o);
+  const fn = async (url, opts = {}) => {
+    if (url.startsWith('https://prcdn.freetls.fastly.net/')) {
+      base.calls.push({ url, opts });
+      return { status: photoStatus, arrayBuffer: async () => JPEG.buffer.slice(JPEG.byteOffset, JPEG.byteOffset + JPEG.length) };
+    }
+    return base(url, opts);
+  };
+  fn.calls = base.calls;
+  fn.tweetBodies = base.tweetBodies;
+  return fn;
+}
+
+test('店の写真: 本番の設定は文字だけのカードを止め、プレスリリースの写真だけを使う', () => {
+  assert.strictEqual(realPolicy.imageCard.enabled, false);
+  assert.strictEqual(realPolicy.storePhoto.enabled, true);
+  assert.deepStrictEqual(realPolicy.storePhoto.sources, ['press']);
+});
+
+test('店の写真: プレスリリースの写真は加工せず上げ、本文の最後にクレジット、台帳に media=photo', async () => {
+  const root = photoFixture();
+  const f = photoFetch(root);
+  const r = await postRun({ date: entry.date }, { root, env: ENV, fetchImpl: f, now: NOW });
+  assert.strictEqual(r.result, 'posted');
+  const photoCall = f.calls.find((c) => c.url.startsWith('https://prcdn.'));
+  assert.ok(photoCall.url.includes('width=1920'), '配信元の縮小版を取る');
+  const up = f.calls.find((c) => c.url === C.UPLOAD_V2);
+  assert.strictEqual(up.opts.body.get('media').type, 'image/jpeg');
+  const body = f.tweetBodies()[0];
+  assert.deepStrictEqual(body.media.media_ids, ['m-v2']);
+  assert.ok(body.text.endsWith('写真: 提供 株式会社テスト（プレスリリースより）'), body.text);
+  assert.ok(X.weightedLength(body.text) <= 280);
+  const row = X.readLog(root).posts[0];
+  assert.strictEqual(row.media, 'photo');
+  assert.strictEqual(row.text, body.text, '台帳には送った文面');
+  assert.ok(!fs.existsSync(path.join(root, 'assets/x-cards')), '写真をリポジトリに置かない');
+});
+
+test('店の写真: 取れない・上げられない日は写真もクレジットも無しで送る', async () => {
+  for (const o of [{ photoStatus: 404 }, { v2: 403, v1: 401 }]) {
+    const root = photoFixture();
+    const f = photoFetch(root, o);
+    const r = await postRun({ date: entry.date }, { root, env: ENV, fetchImpl: f, now: NOW });
+    assert.strictEqual(r.result, 'posted');
+    const body = f.tweetBodies()[0];
+    assert.ok(!body.media && !body.text.includes('写真:'), JSON.stringify(o));
+    assert.ok(X.readLog(root).posts[0].media_reason.startsWith('photo_failed'));
+  }
+});
+
+test('店の写真: 写真つきが断られたら、写真とクレジットを外してもう1回だけ送る', async () => {
+  const root = photoFixture();
+  const f = photoFetch(root, { tweetStatuses: [403, 201] });
+  const r = await postRun({ date: entry.date }, { root, env: ENV, fetchImpl: f, now: NOW });
+  assert.strictEqual(r.result, 'posted');
+  const [a, b] = f.tweetBodies();
+  assert.ok(a.media && a.text.includes('写真:'));
+  assert.ok(!b.media && !b.text.includes('写真:'));
+  assert.strictEqual(X.readLog(root).posts[0].text, b.text);
+});
+
+test('店の写真: ホットペッパーの写真・設定が切れた日は上げない（リンクカードで見せる）', async () => {
+  for (const [opt, reason] of [[{ fig: pressFig('hotpepper', 'imgfp.hotp.jp') }, 'no_store_photo'], [{ storePhoto: { enabled: false } }, 'disabled']]) {
+    const root = photoFixture(opt);
+    const f = photoFetch(root);
+    await postRun({ date: entry.date }, { root, env: ENV, fetchImpl: f, now: NOW });
+    assert.ok(!f.calls.some((c) => c.url === C.UPLOAD_V2 || c.url.startsWith('https://prcdn.')));
+    assert.ok(!f.tweetBodies()[0].media);
+    assert.strictEqual(X.readLog(root).posts[0].media_reason, reason);
+  }
+});
+
+test('店の写真: クレジットを足すと 280 を超えるなら付けない', () => {
+  const photo = { credit: '提供 株式会社テスト（プレスリリースより）' };
+  assert.ok(SP.withCredit('短い本文', photo, X.weightedLength).endsWith('写真: 提供 株式会社テスト（プレスリリースより）'));
+  const mid = SP.withCredit('あ'.repeat(122), photo, X.weightedLength);
+  assert.ok(mid && mid.endsWith('写真: 株式会社テスト提供'), '長い形が入らなければ短い形');
+  assert.strictEqual(SP.withCredit('あ'.repeat(135), photo, X.weightedLength), null);
 });

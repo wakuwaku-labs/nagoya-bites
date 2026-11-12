@@ -123,7 +123,7 @@
     "enabled": false,
     "followPlan": true,
     "imageOnOddDays": true,
-    "help": "X の投稿に自前の画像カード（記事の題・要点・地名とサイトのロゴだけ。他社の写真・og:image は使わない）を付ける実験（競合は画像つきが伸びた・SNS分析ツールの候補 competitor-format:media=image）。enabled=false で全部やめる（画像カードを作らず、付けない）。followPlan=true のとき、SNS分析ツールの週の予定の枠に format.media（image か none）があればそれに従い、無ければ日付の偶奇で交互（imageOnOddDays=true なら奇数日に付ける）。カードは Mac 側（scripts/make_x_image_card.js・run_journal_local.sh）で assets/x-cards/<date>.png に作り、付けた・付けなかったは data/x_post_cards/<date>.json と台帳（media・media_reason）に残す。画像の上げに失敗したら画像なしで投稿を続ける。URL は本文に残す（判断記録 0055）。since（YYYY-MM-DD）を足すとその日以降だけ"
+    "help": "【2026-11-13 停止・docs/decisions/0062】本人「文字ばかりで見にくく興味を引かない・数字も上がらない」により、代わりに storePhoto（店の実物写真）を使う。X の投稿に自前の画像カード（記事の題・要点・地名とサイトのロゴだけ。他社の写真・og:image は使わない）を付ける実験（競合は画像つきが伸びた・SNS分析ツールの候補 competitor-format:media=image）。enabled=false で全部やめる（画像カードを作らず、付けない）。followPlan=true のとき、SNS分析ツールの週の予定の枠に format.media（image か none）があればそれに従い、無ければ日付の偶奇で交互（imageOnOddDays=true なら奇数日に付ける）。カードは Mac 側（scripts/make_x_image_card.js・run_journal_local.sh）で assets/x-cards/<date>.png に作り、付けた・付けなかったは data/x_post_cards/<date>.json と台帳（media・media_reason）に残す。画像の上げに失敗したら画像なしで投稿を続ける。URL は本文に残す（判断記録 0055）。since（YYYY-MM-DD）を足すとその日以降だけ"
   },
   "maxWeightedLength": 280,
   "duplicateWindowDays": 30,
@@ -135,5 +135,16 @@
   "watchdog": {
     "graceHours": 6
   },
-  "watchdogHelp": "ジャーナルの公開（published_at）から graceHours を過ぎても投稿が台帳に無ければ警報。GitHub の定時実行は数時間遅れることがある（journal-watchdog.yml の実測 4〜6 時間）ため短くしない"
+  "watchdogHelp": "ジャーナルの公開（published_at）から graceHours を過ぎても投稿が台帳に無ければ警報。GitHub の定時実行は数時間遅れることがある（journal-watchdog.yml の実測 4〜6 時間）ため短くしない",
+  "storePhoto": {
+    "enabled": true,
+    "sources": [
+      "press"
+    ],
+    "hosts": [
+      "prcdn.freetls.fastly.net",
+      "prtimes.jp"
+    ],
+    "help": "X の投稿に「記事の店の実物写真」を付ける（文字だけの画像カードの代わり・docs/decisions/0062・2026-11-13 本人「文字ばかりで見にくく興味を引かない」）。記事（ヒーロー → 本文の順）に載せた写真のうち、ここにある出どころ・配信元のものだけを加工せずに上げ、本文の最後に「写真: 提供 ◯◯（プレスリリースより）」を足す。press＝PR TIMES 企業規約 第6条3項で報道目的の利用が許諾（docs/decisions/0056 と同じ線引き）。hotpepper・places は規約で再配信・保存が禁止なので入れない（その日はリンクカードで店の写真が出る）。クレジットを足して 280 を超える日・取れない日・上げられない日は写真なしで送る。画像カード（imageCard）が付く日はそちらが先。enabled=false でやめる"
+  }
 }
