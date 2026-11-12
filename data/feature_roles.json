@@ -1,0 +1,73 @@
+{
+  "_comment": "同じ主題の特集の役割（主＝検索で受ける本命、従＝切り口の違う派生）と、互いに張る相互リンクの文言の正本（診断項目18）。scripts/apply_feature_roles.js が各特集の既存の「関連する特集」区画（class=related）に、役割の一言つきのチップを足す・書き換える。URL・題名・説明文・canonical は変えない。文言には数字（N選）を入れない（sync_feature_counts が他の特集へのリンク文の「N選」を掲載数に書き換えるため）。うなぎの組（nagoya-unaju・nagoya-hitsumabushi）は別の作業者が扱うため、ここには載せない。",
+  "touchDate": "2026-11-13",
+  "groups": [
+    {
+      "theme": "接待",
+      "main": "settai-guide",
+      "members": ["settai-guide", "nagoya-settai-secret", "nagoya-meieki-business-dinner", "nagoya-lunch-washoku", "nagoya-settai-lunch", "nagoya-settai-concierge"],
+      "edges": [
+        { "from": "settai-guide", "to": "nagoya-settai-secret", "label": "夜の会食を煙・防音・接客で選ぶ" },
+        { "from": "settai-guide", "to": "nagoya-meieki-business-dinner", "label": "名古屋駅周辺に絞って会食先を選ぶ" },
+        { "from": "settai-guide", "to": "nagoya-lunch-washoku", "label": "昼の接待は個室の和食ランチから選ぶ" },
+        { "from": "settai-guide", "to": "nagoya-settai-lunch", "label": "うなぎ・和定食を中心にした接待ランチ" },
+        { "from": "settai-guide", "to": "nagoya-settai-concierge", "label": "選びきれないときは編集部に相談する" },
+        { "from": "nagoya-settai-secret", "to": "settai-guide", "label": "接待の考え方と使い分けを読む（総合マニュアル）" },
+        { "from": "nagoya-meieki-business-dinner", "to": "settai-guide", "label": "接待の考え方と使い分けを読む（総合マニュアル）" },
+        { "from": "nagoya-lunch-washoku", "to": "settai-guide", "label": "接待の考え方と使い分けを読む（総合マニュアル）" },
+        { "from": "nagoya-settai-lunch", "to": "settai-guide", "label": "接待の考え方と使い分けを読む（総合マニュアル）" },
+        { "from": "nagoya-settai-concierge", "to": "settai-guide", "label": "接待の考え方と使い分けを読む（総合マニュアル）" },
+        { "from": "nagoya-lunch-washoku", "to": "nagoya-settai-lunch", "label": "うなぎ・和定食を中心にした接待ランチ" },
+        { "from": "nagoya-settai-lunch", "to": "nagoya-lunch-washoku", "label": "接待ランチの総合は個室の和食ランチ" }
+      ]
+    },
+    {
+      "theme": "宴会",
+      "main": "banquet",
+      "members": ["banquet", "large-group", "enmkai-kanji"],
+      "edges": [
+        { "from": "banquet", "to": "large-group", "label": "20人以上の大人数に対応した宴会場から選ぶ" },
+        { "from": "banquet", "to": "enmkai-kanji", "label": "幹事の段取りと予約時の確認事項（手順書）" },
+        { "from": "large-group", "to": "banquet", "label": "人数を問わず宴会の店を探す（総合）" },
+        { "from": "enmkai-kanji", "to": "banquet", "label": "宴会の店を条件で探す（店リスト・総合）" },
+        { "from": "enmkai-kanji", "to": "large-group", "label": "20人以上は大人数に対応した宴会場から" }
+      ]
+    },
+    {
+      "theme": "焼肉",
+      "main": "nagoya-yakiniku",
+      "members": ["nagoya-yakiniku", "nagoya-yakiniku-guide"],
+      "edges": [
+        { "from": "nagoya-yakiniku", "to": "nagoya-yakiniku-guide", "label": "仕入れ・炭火・地元産牛で選ぶ焼肉（素材重視）" },
+        { "from": "nagoya-yakiniku-guide", "to": "nagoya-yakiniku", "label": "エリアと価格帯で焼肉を選ぶ（総合）" }
+      ]
+    },
+    {
+      "theme": "焼き鳥",
+      "main": "nagoya-yakitori-guide",
+      "members": ["nagoya-yakitori-guide", "nagoya-yakitori"],
+      "edges": [
+        { "from": "nagoya-yakitori-guide", "to": "nagoya-yakitori", "label": "店ごとの紹介を並べて見る焼き鳥" },
+        { "from": "nagoya-yakitori", "to": "nagoya-yakitori-guide", "label": "炭火・地鶏・業態・価格帯から選び方を読む（総合ガイド）" }
+      ]
+    },
+    {
+      "theme": "バー",
+      "main": "nagoya-bar",
+      "members": ["nagoya-bar", "nagoya-bar-guide"],
+      "edges": [
+        { "from": "nagoya-bar", "to": "nagoya-bar-guide", "label": "ワインを中心に選ぶバー（ワインバー）" },
+        { "from": "nagoya-bar-guide", "to": "nagoya-bar", "label": "カクテルを中心にバー全般から選ぶ（総合）" }
+      ]
+    },
+    {
+      "theme": "予約困難",
+      "main": "hard-to-book",
+      "members": ["hard-to-book", "nagoya-reservation-difficult"],
+      "edges": [
+        { "from": "hard-to-book", "to": "nagoya-reservation-difficult", "label": "人気店の構造（席数・回転・拡散）で見極める" },
+        { "from": "nagoya-reservation-difficult", "to": "hard-to-book", "label": "予約が取れない理由とキャンセル待ちの攻略法（総合）" }
+      ]
+    }
+  ]
+}
