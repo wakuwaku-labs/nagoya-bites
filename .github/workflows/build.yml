@@ -336,6 +336,12 @@ jobs:
         run: node scripts/apply_feature_byline.js
         continue-on-error: true
 
+      - name: 記事末尾の X フォロー1行（Ondine #1808・冪等・日次）
+        # 日次ジャーナルと特集の記事の末尾に、UTM つき（utm_source=web・utm_medium=follow_cta）の X フォロー1行を当てる。
+        # 判定と部品は scripts/lib/x_follow_cta.js の1本（journal/_template.html も同じ部品）。ローカルの確認は --check。
+        run: node scripts/apply_x_follow_cta.js
+        continue-on-error: true
+
       - name: 日次・特集の構造化データに画像を足す（項目20・冪等・日次）
         # og:image がサイトのアイコン・Google Places 以外のときだけ、BlogPosting/Article の image に入れる。
         # 判定は scripts/lib/schema_image.js の1本（日次の生成元と共有）。差分が無ければ書かない。
