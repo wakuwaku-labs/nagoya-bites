@@ -1665,9 +1665,10 @@
 
 ### [SEO-123] エリア×ジャンル×条件ページ699本を濃くし、11-15 にインデックス対象を実測で絞る
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **due**: 2026-11-15
+- **resolved**: 2026-11-12
 - **category**: SEO
 - **owner**: Builder / Editor
 - **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §1-4 ⑥・柱C）。親は [[SEO-116]]
@@ -1677,6 +1678,9 @@
 - **acceptance**:
   1. 子課題3件が閉じている
   2. 11-15 の判定結果（インデックス対象と noindex の本数）を `docs/kpi-weekly.md` に記録する
+- **結果（2026-11-12）**:
+  1. SEO-124（done）・SEO-125（done）・SEO-126（done）の子課題3件すべて閉じた
+  2. 11-15 判定結果を `docs/kpi-weekly.md` に記録（インデックス対象 175 本・noindex 498 本・sitemap 282 エントリ）。北極星4指標: ハブ数 93 本（前期 31）・発見型クリック 225（前期 122）・発見型表示 2,277（前期 1,846）・生成AI 247（前期 103）・Bing 918（前期 483）
 
 ### [SEO-124] ハブの本文に編集辞書と選定理由を足し、FAQ の構造化データを外す
 
@@ -1994,9 +1998,10 @@
 
 ### [SEO-140] 11-15 のチェックポイントで北極星指標を判定する
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **due**: 2026-11-15
+- **resolved**: 2026-11-12
 - **category**: SEO / 計測
 - **owner**: Marketer
 - **source**: `docs/seo-strategy-2026-10.md` §4。親は [[SEO-116]]
@@ -2006,6 +2011,10 @@
   1. 北極星4指標・`date.html` の順位・PV を `docs/kpi-weekly.md` に記録する
   2. 到達条件と照合する。未達ならハブのインデックス状況を Bing と GSC で確かめ、[[SEO-124]] を優先する判断を記録する
   3. [[SEO-130]] の候補を noindex にするかをここで決める
+- **結果（2026-11-12）**:
+  1. 北極星4指標・date.html 順位・PV を `docs/kpi-weekly.md` に記録（「11-15 チェックポイント」節）
+  2. 6項目中4項目クリア。発見型クリック 225（目標150）✅・ハブ数 93本（目標50）✅・PV 5,155（目標4,500）✅・インデックス確定 ✅。発見型表示 2,277（目標2,500）✗・date.html 10.1位（目標10位以内）△。ハブ表示が 31→93 本に拡大し SEO-124 効果が出始めと判断。現行路線継続。
+  3. SEO-130 の noindex 127候補（A:9・B:118）は今回は実施しない。B基準 118件は実在店舗で GA4 欠落期間の影響が残る可能性。12-15 チェックポイントで再判断。
 
 ### [SEO-141] 11-30 に忘年会面の継続か撤退かを判定する
 
@@ -9083,6 +9092,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-11-12 | Orchestrator(routine) | SEO-140 done化 — 11-15チェックポイント記録。北極星6項目中4項目クリア（発見型クリック225/ハブ数93本/PV5155/インデックス確定）。SEO-130 noindex 127候補は今回見送り（12-15再判断）。 | ✅ 本コミット |
+| 2026-11-12 | Orchestrator(routine) | SEO-123 done化 — 子課題SEO-124/125/126全done確認。11-15判定結果を `docs/kpi-weekly.md` に記録（インデックス対象175本・noindex 498本・sitemap 282エントリ）。北極星: ハブ数93（前31）・発見型クリック225（前122）・生成AI 247（前103）・Bing 918（前483）。 | ✅ 本コミット |
 | 2026-11-08 | DataKeeper(routine) | ISSUE-172 done化 — 決められない6店を再確認。Harbor（熱田）・レインボー 栄店 2店を閉店と確認し `data/closed_stores.json`（110件）に追記。残4店（博多もつ鍋屋HANARE・金鯱うなぎ伏見・喰えるBAR shin・かき氷うと）は決められないのまま（Google が OPERATIONAL または別店名）。`data/store_liveness_reviews.json` に再確認記録6件追加。次回 build.js 実行で2店が自動除外される。 | ✅ 本コミット |
 | 2026-11-02 | Builder(/solve-next) | SEO-126 実装・デプロイ — 688条件ページ中498本をnoindex,follow（i軒数不足265本・ii重複≥80%233本・iii公開60日+GSC表示0は0本）。174本インデックス対象。sitemap.xml 282エントリに削減。policy.json に noindex 閾値追加、manifest に indexable フィールド付与。PR #714 | ✅ commit 6da81b81 |
 | 2026-10-29 | Orchestrator(routine) | SNS-004 done化 — `data/x_post_policy.json` mode=live（2026-10-15切替）、`data/x_post_log.json` に2026-10-14〜10-28の15件連続投稿を確認。7日連続acceptance超過・全acceptance達成。 | ✅ 本コミット |
