@@ -10,6 +10,7 @@ function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,p
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,follow"><!-- nb-orphan-noindex -->
 <title>よろにく 名古屋（中区 栄・焼肉）| NAGOYA BITES</title>
 <meta name="description" content="地下鉄栄駅 直結の焼肉。予算10001～15000円。Google★3.9（口コミ15件）。個室対応。東京発の予約困難焼肉「よろにく」の地方初出店。予約・地図・口コミを1ページで確認できます。">
 <link rel="canonical" href="https://nagoya-bites.com/stores/store-e38288e3828de381.html">

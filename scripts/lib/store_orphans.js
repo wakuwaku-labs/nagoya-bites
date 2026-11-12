@@ -117,8 +117,39 @@ function classifyOrphans({ orphans, activeNameBySlug, mergedKeptBySlug, manualNa
   return out;
 }
 
+/**
+ * 検索に出さない印（孤児ページ用・非破壊）。ページの中身は変えず、<head> に1行だけ足す。
+ * 印の行ごと取り除けば元に戻る（removeOrphanNoindex）。何度かけても結果は同じ（冪等）。
+ * 対象は「今の店舗データに無く、別スラグの現役ページへ誘導もできない」孤児（閉店・掲載終了・実在検証待ち・不明）。
+ * 現役の店ページに戻った孤児は、生成器が通常のページで上書きするので印も消える。
+ */
+const NOINDEX_MARK = 'nb-orphan-noindex';
+const NOINDEX_LINE = `<meta name="robots" content="noindex,follow"><!-- ${NOINDEX_MARK} -->`;
+
+function isOrphanNoindexed(html) {
+  return typeof html === 'string' && html.includes(`<!-- ${NOINDEX_MARK} -->`);
+}
+
+/** 既に robots の noindex を持つページ（掲載外の案内 M000006 など）には何も足さない */
+function hasRobotsNoindex(html) {
+  return /<meta\s+name="robots"\s+content="[^"]*noindex/i.test(html);
+}
+
+function addOrphanNoindex(html) {
+  if (typeof html !== 'string' || isOrphanNoindexed(html) || hasRobotsNoindex(html)) return html;
+  if (html.includes('<title>')) return html.replace('<title>', `${NOINDEX_LINE}\n<title>`);
+  if (html.includes('</head>')) return html.replace('</head>', `${NOINDEX_LINE}\n</head>`);
+  return html;
+}
+
+function removeOrphanNoindex(html) {
+  if (!isOrphanNoindexed(html)) return html;
+  return html.replace(`${NOINDEX_LINE}\n`, '');
+}
+
 module.exports = {
-  REDIRECT_MARK, normName, isRedirectStub, stubTarget, readH1, renderRedirectStub, classifyOrphans,
+  REDIRECT_MARK, NOINDEX_MARK, normName, isRedirectStub, stubTarget, readH1, renderRedirectStub, classifyOrphans,
+  isOrphanNoindexed, addOrphanNoindex, removeOrphanNoindex,
 };
 
 /** 内部リンク元の走査: 他ページが参照している stores/<slug>.html のスラグ集合 */

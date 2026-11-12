@@ -1516,7 +1516,9 @@ async function main() {
     let prevHtml = null;
     try { prevHtml = fs.readFileSync(outFile, 'utf8'); } catch (_) { /* 新しい店 */ }
     const changed = prevHtml !== html;
-    storeLastmod.set(slug, changed ? runDate : (prevLastmod.get(`${BASE_URL}/stores/${slug}.html`) || runDate));
+    // lastmod は「読者に見える中身が変わった」ときだけ当日にする（日付・計測用の行・一律のクレジットだけの差は除く・P3-21）
+    const meaningful = prevHtml === null || sitemapLastmod.lastmodFingerprint(prevHtml) !== sitemapLastmod.lastmodFingerprint(html);
+    storeLastmod.set(slug, meaningful ? runDate : (prevLastmod.get(`${BASE_URL}/stores/${slug}.html`) || runDate));
     if (changed && !DRY_RUN) fs.writeFileSync(outFile, html, 'utf8');
     if (!changed) unchangedPages++;
     generated++;
@@ -1587,6 +1589,16 @@ async function main() {
           remaining = remaining.filter(s => !delSet.has(s));
           console.log(`★ ${deleted}件の孤児ページを削除しました（保留 ${plan.hold.length}件は manual_stores 同名のため残置）`);
         }
+        // 項目14（非破壊・冪等）: 残った孤児（閉店・掲載終了・実在検証待ち・不明）は削除せず、検索に出さない印だけ <head> に足す。
+        // 戻すには印の行を消す（SO.removeOrphanNoindex・scripts/noindex_orphan_stores.js --revert）。現役に戻った店は上の通常生成で上書きされる。
+        let noindexed = 0;
+        for (const s of remaining) {
+          const f = path.join(OUT_DIR, `${s}.html`);
+          const before = fs.readFileSync(f, 'utf8');
+          const after = SO.addOrphanNoindex(before);
+          if (after !== before) { fs.writeFileSync(f, after, 'utf8'); noindexed++; }
+        }
+        console.log(`★ 残った孤児 ${remaining.length}件のうち ${noindexed}件に noindex を足しました（既に印のある物は触りません）`);
       } else if (DELETE_ORPHANS || REDIRECT_ORPHANS) {
         console.log(`(--limit / --dry-run 中は書き換え・削除をスキップしました)`);
       } else {
