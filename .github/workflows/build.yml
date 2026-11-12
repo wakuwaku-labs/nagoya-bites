@@ -336,6 +336,12 @@ jobs:
         run: node scripts/apply_feature_byline.js
         continue-on-error: true
 
+      - name: 日次・特集の構造化データに画像を足す（項目20・冪等・日次）
+        # og:image がサイトのアイコン・Google Places 以外のときだけ、BlogPosting/Article の image に入れる。
+        # 判定は scripts/lib/schema_image.js の1本（日次の生成元と共有）。差分が無ければ書かない。
+        run: node scripts/apply_schema_image.js
+        continue-on-error: true
+
       - name: 特集の掲載数の表記をそろえる（SEO-146・冪等・日次）
         # 掲載数は各特集の ItemList の件数＝要素数＝店カード枚数が一致したときだけ使う。
         # 上の refresh_feature_rosters.js が掲載店の入れ替えで件数を変えた日も、自ページの

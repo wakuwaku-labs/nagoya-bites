@@ -63,6 +63,7 @@ const https = require('https');
 // ヒーロー写真の帰属判定は scripts/lib/hero_photo_gate.js に一元化（2026-08-17 の事故）
 const { judgeHero } = require('./lib/hero_photo_gate');
 const { gaSnippet } = require('./lib/ga_snippet');
+const { jsonLdImageUrl, dropEmptyImageLine } = require('./lib/schema_image');
 const { applyToHtml: applyReserveAsk } = require('./lib/reservation_ask_snippet');
 // 図解SVG→OGP用PNG変換は scripts/lib/og_figure_png.js に一元化（ISSUE-095）
 const OG = require('./lib/og_figure_png.js');
@@ -672,6 +673,7 @@ function renderHtml(input) {
     '{{KEYWORDS}}': esc(input.keywords || ''),
     '{{SLUG}}': esc(input.slug),
     '{{OG_IMAGE}}': esc(input.og_image || 'https://nagoya-bites.com/icons/icon-512.png'),
+    '{{LD_IMAGE_URL}}': jsonLdImageUrl(input.og_image), // 項目20: アイコン・Places 以外の og:image だけ JSON-LD の image に入れる
     '{{DATE}}': esc(input.date),
     '{{DATE_JA}}': esc(toDateJa(input.date)),
     '{{EYEBROW}}': esc(input.eyebrow || themeLabel),
@@ -686,7 +688,7 @@ function renderHtml(input) {
     '{{PHOTO_SUGGESTIONS_HTML}}': buildPhotoSuggestionsHtmlComment(input.photo_suggestions)
   };
   Object.entries(replacements).forEach(([k, v]) => { html = html.split(k).join(v); });
-  return html;
+  return dropEmptyImageLine(html); // 使える画像が無い日は image の行ごと外す（無い画像を作らない）
 }
 
 function renderMd(input) {
