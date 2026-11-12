@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-12T19:36:35.389Z",
+  "generatedAt": "2026-11-12T20:37:27.027Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 4669,
-    "pageViews": 6050,
-    "sessions": 5159,
+    "activeUsers": 4674,
+    "pageViews": 6058,
+    "sessions": 5166,
     "avgSessionDuration": 82.5,
     "bounceRate": 0.52,
     "pagesPerSession": 1.17
@@ -17,16 +17,16 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2747,
-      "direct": 1974,
+      "organic": 2749,
+      "direct": 1976,
       "social": 54,
       "ai_assistant": 248,
-      "referral": 40,
+      "referral": 41,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 54.3,
+      "organic": 54.2,
       "direct": 39,
       "social": 1.1,
       "ai_assistant": 4.9,
@@ -39,12 +39,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 1937
+      "sessions": 1939
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1240
+      "sessions": 1241
     },
     {
       "source": "bing",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 555
+      "sessions": 556
     },
     {
       "source": "chatgpt.com",
@@ -77,13 +77,13 @@
       "sessions": 23
     },
     {
-      "source": "note",
-      "medium": "social",
-      "sessions": 21
-    },
-    {
       "source": "service.smt.docomo.ne.jp",
       "medium": "referral",
+      "sessions": 22
+    },
+    {
+      "source": "note",
+      "medium": "social",
       "sessions": 21
     },
     {
@@ -210,8 +210,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 432,
-      "sessions": 409
+      "pageViews": 433,
+      "sessions": 410
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -235,7 +235,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 399,
+    "outboundClicks": 400,
     "ctaClickRate": 7.7,
     "byDomain": [
       {
@@ -244,7 +244,7 @@
       },
       {
         "domain": "www.google.com",
-        "clicks": 120
+        "clicks": 121
       },
       {
         "domain": "prtimes.jp",
@@ -285,7 +285,7 @@
       "direct": 51,
       "social": 10,
       "ai_assistant": 49,
-      "referral": 9,
+      "referral": 10,
       "paid": 0,
       "other": 0
     },
@@ -378,6 +378,10 @@
         "clicks": 3
       },
       {
+        "path": "/journal/2026-11-02-meieki-takashimaya-kamakura-beniya-butter-no-itoko.html",
+        "clicks": 3
+      },
+      {
         "path": "/journal/2026-11-05-sakae-teiban-tune-aozakana-izakaya.html",
         "clicks": 3
       },
@@ -403,10 +407,6 @@
       },
       {
         "path": "/journal/2026-10-17-sakae-rokurokudou-settai-enkai-wine-cellar.html",
-        "clicks": 2
-      },
-      {
-        "path": "/journal/2026-11-02-meieki-takashimaya-kamakura-beniya-butter-no-itoko.html",
         "clicks": 2
       },
       {
@@ -736,6 +736,11 @@
         "clicks": 1
       },
       {
+        "path": "/journal/2026-11-02-meieki-takashimaya-kamakura-beniya-butter-no-itoko.html",
+        "domain": "www.google.com",
+        "clicks": 1
+      },
+      {
         "path": "/journal/2026-11-03-kakuozan-amelie-french-date-course.html",
         "domain": "tabelog.com",
         "clicks": 1
@@ -907,11 +912,6 @@
       },
       {
         "path": "/stores/J001155162.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001178025.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
       }
@@ -1124,13 +1124,9 @@
       {
         "path": "/stores/J001155162.html",
         "clicks": 1
-      },
-      {
-        "path": "/stores/J001178025.html",
-        "clicks": 1
       }
     ],
-    "reservationClicks": 116,
+    "reservationClicks": 115,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 34,
@@ -1156,7 +1152,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 4669,
+    "value": 4674,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
