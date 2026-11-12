@@ -32,6 +32,7 @@ test('x_follow_cta: 一覧と記事でないページは対象外', () => {
   assert.equal(C.kindOf('features/index.html', '</article>'), null);
   assert.equal(C.kindOf('features/x.html', '<p>'), null);
   assert.equal(C.kindOf('features/x.html', '</article>'), 'feature');
+  assert.equal(C.kindOf('features/x.html', '<main></main><!-- NB-CHROME:FOOTER:START -->'), 'feature');
   assert.equal(C.kindOf('journal/2026-01-01-a.html', '</article>'), 'journal');
 });
 

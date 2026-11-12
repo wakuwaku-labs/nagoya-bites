@@ -32,7 +32,8 @@ function kindOf(relPath, html) {
   const m = rel.match(/(?:^|\/)(journal|features)\/([^/]+\.html)$/);
   if (!m || m[2] === 'index.html') return null;
   if (m[2] === '_template.html') return m[1] === 'journal' ? 'journal' : null;
-  if (!/<\/article>/.test(html)) return null;
+  // 記事（</article> あり）か、<article> を使わない旧い特集（共通フッターの印あり）。どちらも無ければ記事ではない
+  if (!/<\/article>/.test(html) && !html.includes(ANCHOR)) return null;
   return m[1] === 'journal' ? 'journal' : 'feature';
 }
 
