@@ -65,8 +65,18 @@ function wrapLines(text, maxUnits, maxLines) {
       // 語の途中で切れないように、直近 12 文字以内の区切り（空白・閉じ括弧・読点の後／開き括弧の前）があればそこで折り返す
       const chars = [...cur];
       let brk = -1;
-      for (let i = chars.length - 1; i > 0 && chars.length - i <= 12; i--) {
-        if (' 』」）、。'.includes(chars[i - 1]) || '『「（'.includes(chars[i])) { brk = i; break; }
+      const isWord = (c) => /[0-9A-Za-z,.\-]/.test(c || '');
+      const isUnit = (c) => /[0-9]/.test(chars[chars.length - 1] || '') && '円貫品席人名分秒杯個枚本皿種店年月日時位％%'.includes(c);
+      if ((isWord(ch) || isUnit(ch)) && isWord(chars[chars.length - 1])) {
+        // 数字や英単語（12,400・1貫 など）の途中では割らない: その語の頭で折り返す
+        let i = chars.length;
+        while (i > 0 && isWord(chars[i - 1])) i--;
+        if (i > 0 && chars.length - i <= 12 && !noHead.includes(chars[i])) brk = i;
+      }
+      for (let i = chars.length - 1; brk < 0 && i > 0 && chars.length - i <= 12; i--) {
+        if (noHead.includes(chars[i])) continue; // 行頭に閉じ括弧・句読点を出さない
+        if (isWord(chars[i]) && isWord(chars[i - 1])) continue;
+        if (' 』」）、。・'.includes(chars[i - 1]) || '『「（'.includes(chars[i])) { brk = i; break; }
       }
       if (brk > 0 && ch !== ' ') {
         lines.push(chars.slice(0, brk).join('').trim());
@@ -89,32 +99,64 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 
 const FONT = "'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans CJK JP','Noto Sans JP','Yu Gothic','Meiryo',sans-serif";
 
+// 縦の配置（px）。題の1行目のベースライン・本文が下りてよい下端（フッターの区切り線 H-110 の 25px 上）
+const TITLE_TOP = 205;
+const CONTENT_BOTTOM = H - 135;
+const POINT_SIZE = 30;
+const POINT_LEAD = 44;
+
+/**
+ * 題の大きさ・折り返しと、要点を載せるかを決める（純粋関数）。
+ * 大きい字から試し、最後の行が 1〜2 文字だけ余る折り返しは避ける。
+ * 要点は「題の下に置いてもフッターに重ならない」大きさがあればそれを選び、どの大きさでも重なるなら要点を外す。
+ * 返り値: null（題が 4 行に収まらない）か { size, lead, lines, pointLines, pointTop, bottom }
+ */
+function layoutCard(title, point) {
+  const p = point ? wrapLines(point, Math.floor(1010 / POINT_SIZE), 2) : null;
+  const pointLines = p && !p.truncated && p.lines.length ? p.lines : [];
+  const geo = (size, lines, pl) => {
+    const lead = Math.round(size * 1.4);
+    const lastBase = TITLE_TOP + (lines.length - 1) * lead;
+    const pointTop = lastBase + Math.round(size * 0.3) + 66; // 題の下端から約 30px 空けて要点の1行目
+    const bottom = pl.length ? pointTop + (pl.length - 1) * POINT_LEAD + 12 : lastBase + Math.round(size * 0.2);
+    return { size, lead, lines, pointLines: pl, pointTop, bottom };
+  };
+  const fits = [];
+  for (const sz of [60, 54, 48, 44]) {
+    const w = wrapLines(title, Math.floor(1000 / sz), 4);
+    if (w.truncated || !w.lines.length) continue;
+    const lastLen = [...w.lines[w.lines.length - 1]].length;
+    fits.push({ sz, lines: w.lines, nice: w.lines.length === 1 || lastLen >= 3 });
+  }
+  if (!fits.length) return null;
+  const ok = (g) => g.bottom <= CONTENT_BOTTOM;
+  if (pointLines.length) {
+    for (const nice of [true, false]) {
+      for (const f of fits.filter((x) => x.nice === nice)) {
+        const g = geo(f.sz, f.lines, pointLines);
+        if (ok(g)) return g;
+      }
+    }
+  }
+  const f = fits.find((x) => x.nice) || fits[fits.length - 1];
+  const g = geo(f.sz, f.lines, []);
+  return ok(g) ? g : null;
+}
+
 /**
  * カードの SVG（1200x675）。素材は記事の題・要点・地名とサイトのロゴだけ。
  * 題が長くて 4 行に収まらないときは null（カードを作らず画像なしで投稿する）。
- * 要点は 2 行に収まる物だけ載せる（収まらなければ載せない）。
+ * 要点は 2 行に収まり、フッターに重ならない物だけ載せる（収まらなければ載せない）。
  */
 function buildCardSvg({ entry, policy, point, iconDataUri }) {
   const title = X.rewriteTitle(entry.title, policy);
-  // 大きい字から試し、最後の行が 1〜2 文字だけ余る（「ランチ」が「ラン／チ」に割れる等）折り返しは避ける
-  let size = 44;
-  let t = null;
-  for (const sz of [60, 54, 48, 44]) {
-    const w = wrapLines(title, Math.floor(1000 / sz), 4);
-    const lastLen = w.lines.length ? [...w.lines[w.lines.length - 1]].length : 0;
-    if (!w.truncated && w.lines.length && (w.lines.length === 1 || lastLen >= 3)) { size = sz; t = w; break; }
-    if (sz === 44 && !w.truncated && w.lines.length) { size = sz; t = w; }
-  }
-  if (!t) return null;
-  const p = point ? wrapLines(point, Math.floor(1010 / 30), 2) : null;
-  const showPoint = p && !p.truncated && p.lines.length;
+  const L = layoutCard(title, point);
+  if (!L) return null;
   const area = (X.areaHashtag(entry.title, policy) || '').replace(/^#/, '');
-  const tLead = size * 1.4;
-  const titleTop = 205;
-  const titleSvg = t.lines.map((l, i) => `<text x="95" y="${titleTop + i * tLead}" font-size="${size}" font-weight="800" fill="#1c1c1a">${esc(l)}</text>`).join('');
-  const pointTop = titleTop + t.lines.length * tLead + 20;
-  const pointSvg = showPoint
-    ? `<rect x="95" y="${pointTop - 36}" width="6" height="${p.lines.length * 44 + 6}" fill="#7a5c10"/>` + p.lines.map((l, i) => `<text x="122" y="${pointTop + i * 44}" font-size="30" fill="#3a3a36">${esc(l)}</text>`).join('')
+  const titleSvg = L.lines.map((l, i) => `<text x="95" y="${TITLE_TOP + i * L.lead}" font-size="${L.size}" font-weight="800" fill="#1c1c1a">${esc(l)}</text>`).join('');
+  const pl = L.pointLines;
+  const pointSvg = pl.length
+    ? `<rect x="95" y="${L.pointTop - 36}" width="6" height="${pl.length * POINT_LEAD + 6}" fill="#7a5c10"/>` + pl.map((l, i) => `<text x="122" y="${L.pointTop + i * POINT_LEAD}" font-size="${POINT_SIZE}" fill="#3a3a36">${esc(l)}</text>`).join('')
     : '';
   const areaSvg = area
     ? `<rect x="95" y="62" width="${Math.round(area.length * 30 + 44)}" height="48" rx="24" fill="#7a5c10"/><text x="117" y="96" font-size="26" font-weight="700" fill="#f7f5f1">${esc(area)}</text>`
@@ -251,4 +293,4 @@ async function uploadImage(file, cred, fetchImpl = fetch) {
   return { ok: false, reason: attempts.join(' | ') };
 }
 
-module.exports = { decideImage, wrapLines, buildCardSvg, renderPng, makeCard, loadCard, uploadImage, cardPngRel, cardInfoRel, W, H, UPLOAD_V2, UPLOAD_V1 };
+module.exports = { decideImage, wrapLines, layoutCard, buildCardSvg, CONTENT_BOTTOM, renderPng, makeCard, loadCard, uploadImage, cardPngRel, cardInfoRel, W, H, UPLOAD_V2, UPLOAD_V1 };

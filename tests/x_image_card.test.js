@@ -121,6 +121,37 @@ test('buildCardSvg: 題・要点・ロゴ・サイト名だけで他社の画像
   assert.ok(!C.buildCardSvg({ entry, policy: realPolicy, point: 'あ'.repeat(200) }).includes('あああ'));
 });
 
+test('layoutCard: 題が4行近い日でも要点がフッターに重ならない（2026-11-12 の重なりの再発防止）', () => {
+  const title = '名駅『八塩折 yashiori』接待と記念日に、会席12,400円と17,400円・焚き火を囲む22席';
+  const point = '会席は8品12,400円と10品17,400円。差額5,000円で2品、1品あたりの単価も約1,550円→約1,740円に上がる';
+  const L = C.layoutCard(title, point);
+  assert.ok(L.bottom <= C.CONTENT_BOTTOM, `下端 ${L.bottom} がフッター上の ${C.CONTENT_BOTTOM} を超えない`);
+  assert.strictEqual(L.pointLines.length, 2, '字を小さくして要点を残す');
+  // どの大きさでも入らない長い題では、要点を外して重ならないようにする
+  const long = C.layoutCard('あ'.repeat(60), point);
+  assert.ok(long && long.bottom <= C.CONTENT_BOTTOM);
+});
+
+test('wrapLines: 数字（12,400）・数と単位（1貫）の途中や、行頭の閉じ括弧で割らない', () => {
+  const a = C.wrapLines('接待と記念日に、会席12,400円と17,400円・焚き火を囲む22席', 18, 4).lines;
+  assert.ok(a.every((l, i) => i === 0 || !(/[0-9,]$/.test(a[i - 1]) && /^[0-9,円]/.test(l))), JSON.stringify(a));
+  const b = C.wrapLines('栄の青魚居酒屋『定番チューン。』一人飲みにアジフライ790円と〆さば1貫500円', 16, 4).lines;
+  assert.ok(b.every((l) => !/^[』。、]/.test(l)), JSON.stringify(b));
+  assert.ok(b.every((l, i) => i === 0 || !(/[0-9]$/.test(b[i - 1]) && /^[0-9貫円]/.test(l))), JSON.stringify(b));
+});
+
+test('layoutCard: 公開済みの全記事で、題と要点がフッターに重ならない', () => {
+  const es = JSON.parse(fs.readFileSync(path.join(REAL_ROOT, 'data/journal_published.json'), 'utf8')).entries;
+  let n = 0;
+  for (const e of es) {
+    const f = path.join(REAL_ROOT, 'journal', `${e.slug}.html`);
+    if (!fs.existsSync(f)) continue;
+    const L = C.layoutCard(X.rewriteTitle(e.title, realPolicy), X.insiderPoints(fs.readFileSync(f, 'utf8'))[0]);
+    if (L) { n++; assert.ok(L.bottom <= C.CONTENT_BOTTOM, `${e.slug}: 下端 ${L.bottom}`); }
+  }
+  assert.ok(n > 0);
+});
+
 // ── 作る（make_x_image_card）──
 test('makeCard: 付ける日は PNG と記録を作り、付けない日は記録だけ・描画に失敗したら画像なしで記録して例外を投げない', () => {
   const { root } = fixture({ imageOnOddDays: true });
