@@ -152,7 +152,37 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 
     <p class="art-intro">顔合わせの食事会で大切なのは、奇をてらった料理ではなく「両家が落ち着いて話せる時間」です。名古屋は伏見〜栄に懐石・割烹の名店が集まり、名駅・金山には遠方の親御さんが集まりやすい個室和食があります。価格帯も雰囲気も異なりますが、どの店も「個室で、和食で、昼から品よく」というこのシーンの条件を満たす実在店だけを選びました。各店とも顔合わせでの利用は事前予約と「顔合わせで使う」旨の伝達を推奨します。</p>
 
-    <h2 class="section-label">01 — 厳選6軒</h2>
+    <!-- SEO-042:TOP-CTA:START -->
+<aside class="topcta" aria-label="この特集の注目店">
+  <div class="topcta-head">この特集の注目店</div>
+  <div class="topcta-sub">本文を読む前に動きたい方へ。この特集の先頭の3軒の詳細と予約はこちらから。</div>
+  <ul class="topcta-list">
+    <li class="topcta-item">
+      <span class="topcta-name">うなぎのしろむら 泉本店</span>
+      <span class="topcta-actions">
+        <a class="store-link" href="../stores/J004026266.html" onclick="trackEvent('feature_store_click',{store:'J004026266',feature:'nagoya-kaoawase-washoku'})">店舗詳細</a>
+        <a class="store-link" href="https://www.hotpepper.jp/strJ004026266/" target="_blank" rel="noopener" onclick="(window.nbReserveExit||trackEvent)('cta_click',{store_name:'うなぎのしろむら 泉本店',store_id:'J004026266',link_domain:'www.hotpepper.jp',location:'feature',feature:'nagoya-kaoawase-washoku'})">今すぐ予約</a>
+      </span>
+    </li>
+    <li class="topcta-item">
+      <span class="topcta-name">旬彩倶楽部 鱗</span>
+      <span class="topcta-actions">
+        <a class="store-link" href="../stores/J001099192.html" onclick="trackEvent('feature_store_click',{store:'J001099192',feature:'nagoya-kaoawase-washoku'})">店舗詳細</a>
+        <a class="store-link" href="https://www.hotpepper.jp/strJ001099192/" target="_blank" rel="noopener" onclick="(window.nbReserveExit||trackEvent)('cta_click',{store_name:'旬彩倶楽部 鱗',store_id:'J001099192',link_domain:'www.hotpepper.jp',location:'feature',feature:'nagoya-kaoawase-washoku'})">今すぐ予約</a>
+      </span>
+    </li>
+    <li class="topcta-item">
+      <span class="topcta-name">鮨赤酢かぶと</span>
+      <span class="topcta-actions">
+        <a class="store-link" href="../stores/J001278357.html" onclick="trackEvent('feature_store_click',{store:'J001278357',feature:'nagoya-kaoawase-washoku'})">店舗詳細</a>
+        <a class="store-link" href="https://www.hotpepper.jp/strJ001278357/" target="_blank" rel="noopener" onclick="(window.nbReserveExit||trackEvent)('cta_click',{store_name:'鮨赤酢かぶと',store_id:'J001278357',link_domain:'www.hotpepper.jp',location:'feature',feature:'nagoya-kaoawase-washoku'})">今すぐ予約</a>
+      </span>
+    </li>
+  </ul>
+</aside>
+<!-- SEO-042:TOP-CTA:END -->
+
+<h2 class="section-label">01 — 厳選6軒</h2>
     <div class="store-list">
 
       <div class="store-card">
@@ -407,5 +437,84 @@ document.addEventListener('touchstart',function(){},{passive:true});
   check();
 })();
 </script>
+<script class="nb-reserve-ask-js">(function nbReserveAskMain() {
+  var KEY = 'nb_reserve_pending';
+  var MIN_AWAY = 20 * 1000;        // これより早く戻った人にはまだ聞かない
+  var MAX_AWAY = 30 * 60 * 1000;   // これより後は予約導線との対応が薄いので聞かない
+  var SHOW_MS = 20 * 1000;
+  function internal() { try { return localStorage.getItem('nb_internal') === '1'; } catch (e) { return false; } }
+  function send(name, p) { try { if (typeof trackEvent === 'function') trackEvent(name, p); } catch (e) {} }
+  window.nbReserveExit = function (name, p) {
+    p = p || {};
+    send(name, p);
+    if (internal()) return;
+    try {
+      sessionStorage.setItem(KEY, JSON.stringify({
+        n: String(p.store_name || ''), i: String(p.store_id || ''),
+        d: String(p.link_domain || ''), l: String(p.location || ''), t: Date.now()
+      }));
+    } catch (e) {}
+  };
+  function today() { var d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+  function hide(el) { if (el && el.parentNode) el.parentNode.removeChild(el); }
+  function show(p) {
+    var el = document.createElement('div');
+    el.className = 'nb-reserve-ask';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-live', 'polite');
+    el.setAttribute('aria-label', '予約できたかの確認');
+    var q = document.createElement('p');
+    q.className = 'nb-reserve-ask-q';
+    q.textContent = (p.n ? '「' + p.n + '」の' : '') + '予約はできましたか？';
+    var note = document.createElement('p');
+    note.className = 'nb-reserve-ask-note';
+    note.textContent = '匿名で数えるだけです。掲載順位には使いません';
+    var row = document.createElement('div');
+    row.className = 'nb-reserve-ask-actions';
+    var params = { store_name: p.n, store_id: p.i, link_domain: p.d, location: p.l };
+    function btn(label, cls, ev) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'nb-reserve-ask-btn ' + cls;
+      b.textContent = label;
+      b.onclick = function () {
+        send(ev, params);
+        row.parentNode.removeChild(row);
+        note.parentNode.removeChild(note);
+        q.textContent = 'ありがとうございます';
+        setTimeout(function () { hide(el); }, 1800);
+      };
+      return b;
+    }
+    row.appendChild(btn('予約した', 'is-yes', 'reserve_report_yes'));
+    row.appendChild(btn('していない', 'is-no', 'reserve_report_no'));
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'nb-reserve-ask-close';
+    close.setAttribute('aria-label', '閉じる');
+    close.textContent = '×';
+    close.onclick = function () { hide(el); };
+    el.appendChild(close); el.appendChild(q); el.appendChild(note); el.appendChild(row);
+    document.body.appendChild(el);
+    setTimeout(function () { hide(el); }, SHOW_MS);
+  }
+  function check() {
+    if (document.visibilityState === 'hidden' || internal()) return;
+    var raw, p;
+    try { raw = sessionStorage.getItem(KEY); } catch (e) { return; }
+    if (!raw) return;
+    try { p = JSON.parse(raw); } catch (e) { p = null; }
+    var away = p ? Date.now() - (p.t || 0) : -1;
+    if (!p || away > MAX_AWAY || away < 0) { try { sessionStorage.removeItem(KEY); } catch (e) {} return; }
+    if (away < MIN_AWAY) return;
+    try { sessionStorage.removeItem(KEY); } catch (e) {}
+    var asked = 'nb_reserve_asked_' + (p.i || p.n) + '_' + today();
+    try { if (localStorage.getItem(asked)) return; localStorage.setItem(asked, '1'); } catch (e) {}
+    show(p);
+  }
+  document.addEventListener('visibilitychange', check);
+  window.addEventListener('pageshow', check);
+  window.addEventListener('focus', check);
+})();</script>
 </body>
 </html>

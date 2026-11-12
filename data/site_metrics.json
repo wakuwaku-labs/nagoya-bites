@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-11-12T07:13:32.611Z",
+  "generatedAt": "2026-11-12T14:11:24.744Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 4443,
-    "pageViews": 5852,
-    "sessions": 4882,
-    "avgSessionDuration": 89.6,
-    "bounceRate": 0.489,
-    "pagesPerSession": 1.2
+    "activeUsers": 4738,
+    "pageViews": 6168,
+    "sessions": 5235,
+    "avgSessionDuration": 84.2,
+    "bounceRate": 0.516,
+    "pagesPerSession": 1.18
   },
   "dailyReference": {
     "date": "2026-11-10",
@@ -17,20 +17,20 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2768,
-      "direct": 1722,
-      "social": 53,
-      "ai_assistant": 249,
+      "organic": 2814,
+      "direct": 1975,
+      "social": 54,
+      "ai_assistant": 251,
       "referral": 43,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 57.2,
-      "direct": 35.6,
+      "organic": 54.8,
+      "direct": 38.4,
       "social": 1.1,
-      "ai_assistant": 5.1,
-      "referral": 0.9,
+      "ai_assistant": 4.9,
+      "referral": 0.8,
       "paid": 0,
       "other": 0
     }
@@ -39,32 +39,32 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 1685
+      "sessions": 1937
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1256
+      "sessions": 1268
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 915
+      "sessions": 943
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 568
+      "sessions": 574
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 166
+      "sessions": 167
     },
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 73
+      "sessions": 74
     },
     {
       "source": "x",
@@ -84,7 +84,7 @@
     {
       "source": "note",
       "medium": "social",
-      "sessions": 20
+      "sessions": 21
     },
     {
       "source": "trend_today",
@@ -92,14 +92,14 @@
       "sessions": 12
     },
     {
-      "source": "history",
+      "source": "(not set)",
       "medium": "(not set)",
       "sessions": 9
     },
     {
-      "source": "(not set)",
+      "source": "history",
       "medium": "(not set)",
-      "sessions": 8
+      "sessions": 9
     },
     {
       "source": "ecosia.org",
@@ -215,18 +215,18 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 436,
-      "sessions": 411
+      "pageViews": 441,
+      "sessions": 416
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 225,
-      "sessions": 212
+      "pageViews": 226,
+      "sessions": 213
     },
     {
       "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
-      "pageViews": 149,
-      "sessions": 142
+      "pageViews": 150,
+      "sessions": 143
     },
     {
       "path": "/",
@@ -235,21 +235,21 @@
     },
     {
       "path": "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
-      "pageViews": 80,
-      "sessions": 80
+      "pageViews": 81,
+      "sessions": 81
     }
   ],
   "cta": {
-    "outboundClicks": 393,
-    "ctaClickRate": 8,
+    "outboundClicks": 402,
+    "ctaClickRate": 7.7,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 134
+        "clicks": 136
       },
       {
         "domain": "www.google.com",
-        "clicks": 114
+        "clicks": 118
       },
       {
         "domain": "prtimes.jp",
@@ -257,11 +257,11 @@
       },
       {
         "domain": "tabelog.com",
-        "clicks": 44
+        "clicks": 45
       },
       {
         "domain": "www.instagram.com",
-        "clicks": 23
+        "clicks": 25
       },
       {
         "domain": "maps.google.com",
@@ -286,17 +286,17 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 275,
+      "organic": 283,
       "direct": 51,
       "social": 10,
-      "ai_assistant": 48,
+      "ai_assistant": 49,
       "referral": 9,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.9,
-    "ctaClickRate_direct": 3,
-    "ctaClickRate_social": 18.9,
+    "ctaClickRate_organic": 10.1,
+    "ctaClickRate_direct": 2.6,
+    "ctaClickRate_social": 18.5,
     "byPage": [
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -316,7 +316,7 @@
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 13
+        "clicks": 14
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -347,6 +347,10 @@
         "clicks": 5
       },
       {
+        "path": "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
+        "clicks": 5
+      },
+      {
         "path": "/stores/J001127221.html",
         "clicks": 5
       },
@@ -367,10 +371,6 @@
         "clicks": 4
       },
       {
-        "path": "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
-        "clicks": 4
-      },
-      {
         "path": "/features/nagoya-yakiniku-guide.html",
         "clicks": 3
       },
@@ -380,6 +380,10 @@
       },
       {
         "path": "/journal/2026-11-05-sakae-teiban-tune-aozakana-izakaya.html",
+        "clicks": 3
+      },
+      {
+        "path": "/stores/J000980343.html",
         "clicks": 3
       },
       {
@@ -407,15 +411,11 @@
         "clicks": 2
       },
       {
+        "path": "/journal/2026-11-10-higashibetsuin-chashumen-susuru-solo-lunch.html",
+        "clicks": 2
+      },
+      {
         "path": "/stores/J000644170.html",
-        "clicks": 2
-      },
-      {
-        "path": "/stores/J000661748.html",
-        "clicks": 2
-      },
-      {
-        "path": "/stores/J000725563.html",
         "clicks": 2
       }
     ],
@@ -438,7 +438,7 @@
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
         "domain": "tabelog.com",
-        "clicks": 13
+        "clicks": 14
       },
       {
         "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
@@ -576,6 +576,11 @@
         "clicks": 2
       },
       {
+        "path": "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
+        "domain": "www.google.com",
+        "clicks": 2
+      },
+      {
         "path": "/journal/2026-11-02-meieki-takashimaya-kamakura-beniya-butter-no-itoko.html",
         "domain": "prtimes.jp",
         "clicks": 2
@@ -588,6 +593,11 @@
       {
         "path": "/stores/J000725563.html",
         "domain": "www.hotpepper.jp",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/J000980343.html",
+        "domain": "www.google.com",
         "clicks": 2
       },
       {
@@ -706,11 +716,6 @@
         "clicks": 1
       },
       {
-        "path": "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
-        "domain": "www.google.com",
-        "clicks": 1
-      },
-      {
         "path": "/journal/2026-10-19-sakae-sumibi-sakaba-cowcow.html",
         "domain": "jouhou.nagoya",
         "clicks": 1
@@ -738,6 +743,16 @@
       {
         "path": "/journal/2026-11-05-sakae-teiban-tune-aozakana-izakaya.html",
         "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-11-10-higashibetsuin-chashumen-susuru-solo-lunch.html",
+        "domain": "www.google.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-11-10-higashibetsuin-chashumen-susuru-solo-lunch.html",
+        "domain": "www.instagram.com",
         "clicks": 1
       },
       {
@@ -837,7 +852,7 @@
       },
       {
         "path": "/stores/J000980343.html",
-        "domain": "www.google.com",
+        "domain": "www.instagram.com",
         "clicks": 1
       },
       {
@@ -904,27 +919,12 @@
         "path": "/stores/J001155162.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
-      },
-      {
-        "path": "/stores/J001178025.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001192240.html",
-        "domain": "tabelog.com",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001194871.html",
-        "domain": "www.google.com",
-        "clicks": 1
       }
     ],
     "reservationClicksByPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 13
+        "clicks": 14
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -1129,17 +1129,9 @@
       {
         "path": "/stores/J001155162.html",
         "clicks": 1
-      },
-      {
-        "path": "/stores/J001178025.html",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001192240.html",
-        "clicks": 1
       }
     ],
-    "reservationClicks": 116,
+    "reservationClicks": 115,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 33,
@@ -1165,7 +1157,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 4443,
+    "value": 4738,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
