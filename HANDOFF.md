@@ -14,7 +14,8 @@ status: in_progress
 - 項目8（手羽先）は 1週間あけるため #1883 に起票、11/20 に自動で渡す予約
 
 ## 次にやること
-- 3人の作業役（x-series-1808 / seo-p4-11-hitsumabushi / seo-p4-18-feature-roles の各 worktree）の結果を統合 → npm test → 承認の課題を起票
+- 統合済み: wakuwaku-labs/seo-p4-integration 2a96aceb25（push 済み・npm test 2064 全通過）。本人の承認（Ondine #1886）待ち
+- 承認後: origin/main を取り込む → npm test → main へ push → Build & Deploy・Pages の完了待ち → 本番確認（ひつまぶしの新しい節・特集の関連リンク・記事末尾の X フォロー・トップの twitter:site・#1066 の6本が元の題）→ #1808・#1886 を done
 
 ## 試したが駄目だったこと
 - なし
