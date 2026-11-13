@@ -26,6 +26,7 @@ Web のタイポグラフィ・密度・動きに加え、**写真の選定、OG
 `tests/x_image_card.test.js`・`tests/og_image_landscape.test.js`・`scripts/audit_empty_image_frames.js`。
 note の見出し画像（写真の日）は、PR TIMES の写真を全面に敷き、下部の暗い影に題（明朝）と日付を白で重ねる（ADR 0065・2026-11-13 本人の指示。写真の色は変えず、比率合わせの切り抜きだけ。ホットペッパー・Google の写真は使わない）。X の画像カードはゴシック、写真が無い日の見出し画像は明るい地のまま。
 見た目の合否（写真の質・ブランドの一貫性・重なり）は、全社共通の検査役 Design QA（`~/.claude/agents/design-qa.md`）に回す（作った会話が自分で合格にしない）。
+外に出る物（X・note・Instagram の画像、OGP、新しい部品とテンプレート）は、公開前に Design QA の合格で出す（G1・2026-11-14 から。不合格は1回だけ差し戻し、2回目も不合格なら注釈つきで本人へ。決まりは `CLAUDE.md` の「外に出す前に design-qa を通す」）。
 
 ---
 
