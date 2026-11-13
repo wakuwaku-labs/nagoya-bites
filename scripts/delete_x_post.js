@@ -36,7 +36,7 @@ async function run({ id, reason = '', yes = false, root = X.ROOT, env = process.
   try { body = JSON.parse(await res.text()); } catch (_) { /* 本文が JSON でなくても続ける */ }
   const deleted = res.status === 200 && body && body.data && body.data.deleted === true;
   const gone = res.status === 404; // すでに無い
-  if (!deleted && !gone) return { ok: false, code: 'x_error', status: res.status, kind: X.classifyError(res.status, body) };
+  if (!deleted && !gone) return { ok: false, code: 'x_error', status: res.status, kind: X.classifyError(res.status, body), detail: JSON.stringify(body || null).slice(0, 300) };
   entry.deleted_at = now.toISOString();
   entry.deleted_reason = String(reason || '').slice(0, 200);
   X.writeJson(X.LOG_REL, log, root);
