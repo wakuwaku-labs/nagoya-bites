@@ -680,6 +680,21 @@
       "media_id": "2120705655229255682",
       "plan_cell": "first_line=number|length=long",
       "plan_experiment": "plan-exploit-2026-W46"
+    },
+    {
+      "date": "2026-11-13",
+      "slug": "2026-11-13-meieki-endoji-paris-festival-kaisen-en-solo",
+      "status": "failed",
+      "text": "名駅・円頓寺「秋のパリ祭」の後に海鮮食堂 enで一人飲み（11/14・15）\n\n11/14・15の11時〜18時、入場無料。MOFのビストロ屋台は商店街の東の端（五条橋側）にまとまる\n\nhttps://nagoya-bites.com/journal/2026-11-13-meieki-endoji-paris-festival-kaisen-en-solo.html?utm_source=x&utm_medium=social&utm_campaign=2026-11-13-meieki-endoji-paris-festival-kaisen-en-solo&utm_content=point\n#名古屋グルメ",
+      "text_mode": "template-point",
+      "draft_reason": "draft_missing",
+      "attempted_at": "2026-11-13T02:45:06.319Z",
+      "error_class": "payment",
+      "reason": "http_403: {\"detail\":\"Your monthly spend cap has been reached.\",\"status\":403,\"title\":\"Forbidden\",\"type\":\"https://api.x.com/2/problems/spend-cap-reached\"}",
+      "experiment": "url-vs-nourl-2",
+      "url_variant": "url",
+      "media": "none",
+      "media_reason": "no_store_photo"
     }
   ]
 }

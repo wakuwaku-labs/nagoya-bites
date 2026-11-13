@@ -1,12 +1,11 @@
 {
   "_comment": "X 自動投稿の最後の実行結果（scripts/post_journal_to_x.js が live のときに書く）。見張り役は .github/workflows/x-post-watchdog.yml",
   "last_run": {
-    "date": "2026-11-12",
-    "slug": "2026-11-12-meieki-yashiori-kaiseki-settai-anniversary",
-    "result": "posted",
-    "reason": null,
-    "tweet_id": "2120705656470810885",
-    "replies_posted": 3,
-    "recorded_at": "2026-11-12T02:30:04.987Z"
+    "date": "2026-11-13",
+    "slug": "2026-11-13-meieki-endoji-paris-festival-kaisen-en-solo",
+    "result": "failed",
+    "reason": "http_403: {\"detail\":\"Your monthly spend cap has been reached.\",\"status\":403,\"title\":\"Forbidden\",\"type\":\"https://api.x.com/2/problems/spend-cap-reached\"}",
+    "error_class": "payment",
+    "recorded_at": "2026-11-13T02:45:06.319Z"
   }
 }
