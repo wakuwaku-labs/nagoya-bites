@@ -5197,7 +5197,7 @@ function buildCardHtml(r, ctx) {
       : '<span class="ci-mark" aria-hidden="true">' + nbEscHtml(genre) + '</span>';
     return '<div class="card' + (photo ? '' : ' is-nophoto') + (href ? ' has-link' : '') + '" onclick="nbCardClick(event,' + idx + ')"' + (href ? '' : ' role="button" tabindex="0" aria-label="' + ename + 'の詳細を見る"') + '>'
       + '<div class="ci">' + (photo ? nbPhotoCredit(r) : '') + photoHtml
-      + (reel ?'<button class="reel-play" onclick="nbPlayReel(event,this,\'' + reel.code + '\')" aria-label="' + nbEscHtml(r['店名']) + 'のリール動画を再生"><i aria-hidden="true"></i></button><span class="reel-tag">リール</span>' : '')
+      + (reel && photo ?'<button class="reel-play" onclick="nbPlayReel(event,this,\'' + reel.code + '\')" aria-label="' + nbEscHtml(r['店名']) + 'のリール動画を再生"><i aria-hidden="true"></i></button><span class="reel-tag">リール</span>' : '')
       + '</div>'
       + '<span class="badge">' + genre + '</span>'
       + flagHtml

@@ -19,6 +19,15 @@ DSN-001（2026-09）でオーナー本人の直接指摘（「サイトが見に
 
 ---
 
+## 担当範囲に含めるもの（2026-11-13 追加）
+
+Web のタイポグラフィ・密度・動きに加え、**写真の選定、OGP（og:image）、SNS の画像（X の画像カード・note の見出し画像）**も担当する。
+生成は `scripts/lib/x_image_card.js`・`scripts/lib/note_eyecatch.js`・`scripts/gen_default_og.js`、機械の検査は
+`tests/x_image_card.test.js`・`tests/og_image_landscape.test.js`・`scripts/audit_empty_image_frames.js`。
+見た目の合否（写真の質・ブランドの一貫性・重なり）は、全社共通の検査役 Design QA（`~/.claude/agents/design-qa.md`）に回す（作った会話が自分で合格にしない）。
+
+---
+
 ## 正本（この3つ以外に設計判断を書かない）
 
 | ファイル | 役割 |
