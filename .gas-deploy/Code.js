@@ -102,8 +102,12 @@ function sendDailyReport() {
   // 確定済みの日を先に決め、全ての数字を同じ日で揃える（日をまたいだ数字を並べない）。
   const settled = pickSettledSlice();
   const reportDate = settled.date;
-  const data = fetchGA4Report(reportDate, reportDate);
+  let data = fetchGA4Report(reportDate, reportDate);
   data.settled = settled;
+  // 直接アクセスの急増（機械的な訪問の疑い）を見分け、判定・助言から外す（2026-11-14）。
+  // 取れなかった日は今までどおりの判定にする（レポート自体は止めない）
+  try { data = excludeDirectSpike(data, detectDirectSpike(fetchDirectDaily(reportDate), reportDate)); }
+  catch (e) { Logger.log('直接アクセスの急増の判定に失敗: ' + e.message); }
   const report = formatDailyReport(data, reportDate);
 
   // LINE送信
@@ -307,6 +311,103 @@ function fetchSettledSlice(date) {
   }, 'properties/' + GA4_PROPERTY_ID);
 
   return { date: date, totals: parseTotals(totalsRequest), sources: parseReport(sourceRequest) };
+}
+
+// ─── 直接アクセスの急増（機械的な訪問の疑い）を見分ける（2026-11-14） ───
+// 2026-11-11 は訪問 826 回（普段 100〜200）・直帰率 88%（普段 21〜48%）で、増えた分はほぼ全部が
+// 「直接アクセス」かつパソコンだった（Google・Bing からの訪問は普段どおり）。人の訪問では説明しにくく、
+// ボットなどの機械的な訪問が GA4 に入ったと見るのが自然。それをそのまま「苦戦中」と判定し、
+// 直帰率・滞在から施策まで出していた（実際の読者は普段どおりだった）。
+// 判定は GA4 の実数（その日と直前の日々の直接アクセスの訪問回数）だけで行う（CLAUDE.md 制約10）。
+const DIRECT_SPIKE_BASELINE_DAYS = 14;  // 普段の値＝直前14日の中央値（急増の日が混じっても動きにくい）
+const DIRECT_SPIKE_RATIO = 3;           // 普段の何倍以上を急増とみなすか
+const DIRECT_SPIKE_MIN_EXTRA = 100;     // 普段より何回以上多いか（少ない日の小さな揺れで鳴らさない）
+
+// 'YYYY-MM-DD' を days 日ずらす（時差の影響を受けないよう UTC で計算する）
+function shiftDateStr(dateStr, days) {
+  const p = String(dateStr).split('-').map(Number);
+  const d = new Date(Date.UTC(p[0], p[1] - 1, p[2] + days));
+  return d.getUTCFullYear() + '-' + ('0' + (d.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + d.getUTCDate()).slice(-2);
+}
+
+// 直接アクセス（sessionSource = (direct)）だけの、日ごとの訪問回数・閲覧数・平均滞在・直帰率
+function fetchDirectDaily(date) {
+  const res = AnalyticsData.Properties.runReport({
+    dateRanges: [{ startDate: shiftDateStr(date, -DIRECT_SPIKE_BASELINE_DAYS), endDate: date }],
+    metrics: [{ name: 'sessions' }, { name: 'screenPageViews' }, { name: 'averageSessionDuration' }, { name: 'bounceRate' }],
+    dimensions: [{ name: 'date' }],
+    dimensionFilter: {
+      andGroup: {
+        expressions: [
+          HOST_FILTER,
+          { filter: { fieldName: 'sessionSource', stringFilter: { matchType: 'EXACT', value: '(direct)' } } },
+        ],
+      },
+    },
+    limit: 100,
+  }, 'properties/' + GA4_PROPERTY_ID);
+  return parseReport(res);
+}
+
+// rows: fetchDirectDaily の行（dimensions[0] は GA4 の 'YYYYMMDD'）。その日に急増があれば spiking=true
+function detectDirectSpike(rows, date) {
+  if (!rows || !date) return null;
+  const byDay = {};
+  rows.forEach(r => { byDay[String(r.dimensions[0])] = r; });
+  const key = d => String(d).replace(/-/g, '');
+  const today = byDay[key(date)];
+  if (!today) return null;  // その日に直接アクセスが無い＝急増ではない
+  const base = [];
+  for (let i = 1; i <= DIRECT_SPIKE_BASELINE_DAYS; i++) {
+    const r = byDay[key(shiftDateStr(date, -i))];
+    base.push(r ? (parseInt(r.metrics[0]) || 0) : 0);  // 行が無い日＝直接アクセス0回
+  }
+  base.sort((x, y) => x - y);
+  const mid = base.length / 2;
+  const median = base.length % 2 ? base[Math.floor(mid)] : (base[mid - 1] + base[mid]) / 2;
+  const sessions = parseInt(today.metrics[0]) || 0;
+  const threshold = Math.max(median * DIRECT_SPIKE_RATIO, median + DIRECT_SPIKE_MIN_EXTRA);
+  return {
+    date: date,
+    sessions: sessions,
+    pageviews: parseInt(today.metrics[1]) || 0,
+    avgDuration: parseFloat(today.metrics[2]) || 0,
+    bounceRate: parseFloat(today.metrics[3]) || 0,
+    median: median,
+    threshold: threshold,
+    spiking: sessions >= threshold,
+  };
+}
+
+// 急増の日は、セッションスコープの数字（直帰率・滞在・回遊・流入元）を直接アクセスを除いた値に置き換える。
+// 平均滞在・直帰率は「訪問回数で重みづけた平均」なので、全体から直接アクセスの分を引けば正確に出る。
+// 訪問者数・閲覧数・イベントは除けない（ページ・イベントの集計は流入元を持たない）ので、そのままにして本文で断る。
+function excludeDirectSpike(data, spike) {
+  if (!spike || !spike.spiking || !data || !data.settled || data.settled.date !== spike.date) return data;
+  const st = data.settled.totals;
+  const ses = st.sessions - spike.sessions;
+  if (ses <= 0) return data;  // 全部が直接アクセス＝除くと何も残らない日は、今までどおり出す
+  const clamp01 = v => Math.min(1, Math.max(0, v));
+  const totals = Object.assign({}, st, {
+    sessions: ses,
+    pageviews: Math.max(0, st.pageviews - spike.pageviews),
+    bounceRate: clamp01((st.bounceRate * st.sessions - spike.bounceRate * spike.sessions) / ses),
+    avgDuration: Math.max(0, (st.avgDuration * st.sessions - spike.avgDuration * spike.sessions) / ses),
+  });
+  const sources = (data.settled.sources || []).filter(r => (r.dimensions[0] || '') !== '(direct)');
+  const out = Object.assign({}, data, {
+    settled: Object.assign({}, data.settled, { totals: totals, sources: sources }),
+    directSpike: spike,
+  });
+  return out;
+}
+
+// 本文と AI への入力に入れる、急増の説明（1か所で作る）
+function directSpikeNote(spike) {
+  return 'この日は「直接アクセス」が' + spike.sessions + '回（直前' + DIRECT_SPIKE_BASELINE_DAYS + '日の中央値は' +
+    Math.round(spike.median) + '回）と急増しました。人の訪問とは考えにくい（ボットなどの疑い）ため、' +
+    '読まれ方・どこから来た？・アドバイスは直接アクセスを除いた値で出しています。' +
+    '訪問した人・ページ数・人気ページ・行動の回数・デバイスは除けないので、急増の分を含んだ値です。';
 }
 
 // セッションスコープ指標の正本。確定スライスがあればそれを、無ければ当該期間の値を返す
@@ -636,6 +737,7 @@ function analyze(data) {
     organicPct, socialPct, mobilePct,
     srcTotal, devTotal,
     unknownSessions, unknownPct, identifiableSessions, highThreshold,
+    directSpike: data.directSpike || null,
   };
 }
 
@@ -867,7 +969,7 @@ function buildAdvicePrompt(data, a, date, isWeekly, gscKeywords) {
   }).join(' / ');
 
   return [
-'あなたはNAGOYA BITES（名古屋の飲食店1100軒超を業界人が厳選して紹介する発見サイト）専属のグロース/SEOアナリストです。',
+'あなたはNAGOYA BITES（名古屋の飲食店を、選んだ根拠つきで紹介する発見サイト。店の選定にはAIによる情報収集・分析を使っている）専属のグロース/SEOアナリストです。',
 'このサイトのオーナー（現役の飲食関係者・Web分析は素人）に向けて、' + period + 'のアクセス解析データから「今日やるべき具体的な改善策」を提案してください。',
 '',
 '# サイトの構造（打ち手はこの実装に即して具体的に書く）',
@@ -878,7 +980,8 @@ function buildAdvicePrompt(data, a, date, isWeekly, gscKeywords) {
 '- SNS投稿は現在サイト外で手動運用しており、docs/daily-posts/ の自動原稿生成は停止中（2026-09-05〜）。SNS施策を提案する場合は「featuresの特集記事やjournalの日次記事の見出し・写真をそのまま使う」打ち手にすること（docs/daily-postsの原稿を流用する提案はしない）',
 '',
 '# このサイトの強み（提案はこの路線を伸ばす方向で）',
-'- 広告ゼロ・PR記事ゼロの編集独立性／現役飲食人による「業界人の目利き」',
+'- 広告ゼロ・PR記事ゼロの編集独立性／店ごとに選んだ根拠（editorReason 等）を残す構造化データと、飲食業界の知識を踏まえた解釈',
+'- 店を選んだ・書いた主体を「業界人」「現役の店長」「現役飲食人」「目利き」などと表す提案はしない（人が全店を選んだように見える表現は禁止）',
 '- シーン別（接待・宴会・デート・個室）の専門性。大手ポータルが書けない独自の切り口で勝つ',
 '- 追わない領域（提案しない）: 匿名口コミの大量集積・クーポン経済・高級セグメント特化',
 '',
@@ -888,6 +991,7 @@ kwLines,
 '# ' + period + 'の実データ',
 '- 訪問者: ' + et.users + '人 ／ ページ閲覧: ' + et.pageviews,
 ((a.settledDate && a.settledDate !== date) ? '- ※ 直帰率・平均滞在・訪問回数・流入元は ' + a.settledDate + ' の確定値です（GA4はこれらの集計確定に最大48時間かかるため、前日値は使いません）。訪問者数・ページ閲覧数・人気ページ・行動イベントは ' + date + ' の値です。異なる日の数字を1つの因果として結び付けないこと。' : ''),
+(a.directSpike ? '- ※ ' + directSpikeNote(a.directSpike) + ' 訪問者数と予約クリック率は分母が膨らんでいるので根拠にしないこと。' : ''),
 '- 訪問回数(セッション): ' + t.sessions,
 '- 1訪問あたり閲覧: ' + a.pagesPerSession.toFixed(1) + 'ページ（目安2以上が良好）',
 '- 平均滞在: ' + secToText(t.avgDuration) + '（目安60秒以上）',
@@ -943,16 +1047,23 @@ function generateRuleBasedAdvice(data, a, date, gscKeywords) {
   const featurePv = featureRow ? (parseInt(featureRow.metrics[1]) || 0) : 0;
   const hasJournal = (data.pages || []).some(p => /journal\//.test(p.dimensions[0]));
 
+  // 直接アクセスの急増（機械的な訪問の疑い）の日は、まずそれを知らせる（2026-11-14）
+  if (a.directSpike) {
+    const sp = a.directSpike;
+    const ratio = sp.median > 0 ? '約' + Math.round(sp.sessions / sp.median) + '倍' : '急増';
+    cand.push({ sev: 99, text: '⚠️ 直接アクセスが普段の' + ratio + '（' + sp.sessions + '回・普段は約' + Math.round(sp.median) + '回）\n　👉 ボットなどの疑い。下の判定とアドバイスはこの分を除いた数字で出しています。数日続くときは GA4 で地域・ブラウザの内訳を見て除外を検討する' });
+  }
+
   // 直帰率（小サンプルでは1〜2人の挙動だけで50pt動くため、意味のある訪問数がある日だけ課題化する）
   if (t.sessions >= MIN_SESSIONS_FOR_RATE_ALERT) {
     if (t.bounceRate > BENCHMARKS.bounceRate.warn) {
       const gap = Math.round((t.bounceRate - BENCHMARKS.bounceRate.good) * 100);
       const acts = [
-        'ファーストビューに「名古屋の飲食店1100軒を“現役の飲食人”が厳選」と一言入れ、3秒で価値を伝える',
+        'ファーストビューに、このサイトで分かること（店ごとに選んだ根拠が読める）を一言で示し、3秒で価値を伝える',
         '最初の画面に人気特集（' + (featureName || '宴会・接待特集') + '）への大きめボタンを置き、次の一歩を作る',
         '冒頭の店舗カードを「🔥話題沸騰」の店から並べ、最初の3枚で離脱を止める',
       ];
-      cand.push({ sev: 95, text: '🔴 すぐ帰る人が' + Math.round(t.bounceRate * 100) + '%（目標50%・あと' + gap + 'pt下げたい／訪問' + t.sessions + '件）\n　👉 ' + rotate(acts, seed) });
+      cand.push({ sev: 95, text: '🔴 すぐ帰る人が' + Math.round(t.bounceRate * 100) + '%（目標50%・あと' + gap + 'pt下げたい／訪問' + t.sessions + '回）\n　👉 ' + rotate(acts, seed) });
     } else if (t.bounceRate > BENCHMARKS.bounceRate.good) {
       cand.push({ sev: 60, text: '🟡 直帰率' + Math.round(t.bounceRate * 100) + '%とやや高め\n　👉 一番見られた「' + topPageName + '」の冒頭に、関連特集リンクを1本足して回遊のきっかけを作る' });
     }
@@ -962,7 +1073,7 @@ function generateRuleBasedAdvice(data, a, date, gscKeywords) {
   if (t.sessions >= MIN_SESSIONS_FOR_RATE_ALERT && t.avgDuration < BENCHMARKS.avgDuration.warn) {
     const acts = [
       '「' + topPageName + '」の表示速度を確認（画像の遅延読込・Instagramエンベッドの貼りすぎを見直す）',
-      '店舗カードに業界人の一言（editorReason）を1行表示し、読みたくなる引きを作る',
+      '店舗カードに選んだ根拠（editorReason）を1行表示し、読みたくなる引きを作る',
       '最新の日次ジャーナルをトップ上部に差し込み、読み物として滞在を伸ばす',
     ];
     cand.push({ sev: 85, text: '🔴 平均滞在' + secToText(t.avgDuration) + '（目標1分・読まれず離脱の疑い）\n　👉 ' + rotate(acts, seed) });
@@ -973,15 +1084,16 @@ function generateRuleBasedAdvice(data, a, date, gscKeywords) {
     cand.push({ sev: 70, text: '🟡 1人あたり' + a.pagesPerSession.toFixed(1) + 'ページしか見ていない（目標2）\n　👉 店舗詳細モーダルの下に「近くの似た店3軒」を出し、横移動を促す' });
   }
 
-  // 予約クリック
-  if (t.users >= 20) {
+  // 予約クリック（率は当日の訪問者数で割る＝analyze の ctaRate と同じ分母。急増の日は分母が膨らむので出さない）
+  const ctaUsers = data.totals.users;
+  if (ctaUsers >= 20 && !a.directSpike) {
     if (a.ctaRate < BENCHMARKS.ctaRate.warn) {
       const acts = [
         '予約ボタンを店舗カードの写真直下（最も押される位置）へ移動する',
         'ボタン文言を「予約する」→「空席・予約をみる」に変え、心理的ハードルを下げる',
         '店舗詳細モーダルを閉じる直前に、予約導線をもう一度見せる',
       ];
-      cand.push({ sev: 90, text: '🔴 予約ボタンが訪問' + t.users + '人中ほぼ未クリック（' + (a.ctaRate * 100).toFixed(1) + '%）\n　👉 ' + rotate(acts, seed) });
+      cand.push({ sev: 90, text: '🔴 予約ボタンが訪問' + ctaUsers + '人中' + (a.ctaCount > 0 ? a.ctaCount + '回しか押されていない' : '一度も押されていない') + '（' + (a.ctaRate * 100).toFixed(1) + '%・目標3%）\n　👉 ' + rotate(acts, seed) });
     } else if (a.ctaRate < BENCHMARKS.ctaRate.good) {
       cand.push({ sev: 55, text: '🟡 予約クリック率' + (a.ctaRate * 100).toFixed(1) + '%（目標3%）\n　👉 人気の「' + topPageName + '」だけでも上部に予約導線を増設する' });
     }
@@ -1071,8 +1183,9 @@ function overallVerdict(data, a) {
   }
   if (a.pagesPerSession >= BENCHMARKS.pagesPerSession.good) score++;
   else if (a.pagesPerSession < BENCHMARKS.pagesPerSession.warn) score--;
-  if (et.users >= 20 && a.ctaRate >= BENCHMARKS.ctaRate.good) score++;
-  else if (et.users >= 20 && a.ctaRate < BENCHMARKS.ctaRate.warn) score--;
+  const ctaJudgeable = et.users >= 20 && !a.directSpike;  // 急増の日は分母（訪問者数）が膨らむので数えない
+  if (ctaJudgeable && a.ctaRate >= BENCHMARKS.ctaRate.good) score++;
+  else if (ctaJudgeable && a.ctaRate < BENCHMARKS.ctaRate.warn) score--;
 
   if (et.users < 5) return '😶 訪問者がまだ少なく判定困難';
   if (score >= 2) return '🟢 好調です！この調子で';
@@ -1093,7 +1206,8 @@ function formatDailyReport(data, date) {
   let msg = '📊 NAGOYA BITES｜確定したサイト状況\n';
   msg += '📅 ' + date + '（' + weekdayJa(date) + '）\n';
   msg += '━━━━━━━━━━━━━━━\n';
-  msg += '🏁 一言: ' + overallVerdict(data, a) + '\n\n';
+  msg += '🏁 一言: ' + overallVerdict(data, a) + (a.directSpike ? '（直接アクセスの急増を除いた判定）' : '') + '\n\n';
+  if (a.directSpike) msg += '⚠️ ' + directSpikeNote(a.directSpike) + '\n\n';
 
   msg += '【サイトの人気度】\n';
   msg += '👥 訪問した人: ' + t.users + '人\n';
@@ -1103,6 +1217,7 @@ function formatDailyReport(data, date) {
   // 見せかけの値が出る。確定済みの日の値を、対象日を明示して出す。
   msg += '【読まれ方' + settledLabel + '】\n';
   if (s.date && s.date !== date) msg += '　※GA4は直帰率・滞在・流入元の確定に最大48時間かかるため、この区画だけ確定済みの日です\n';
+  if (a.directSpike) msg += '　※直接アクセスを除いた値\n';
   msg += '　└ 1人あたり ' + a.pagesPerSession.toFixed(1) + 'ページ ' +
     healthIcon(a.pagesPerSession, BENCHMARKS.pagesPerSession) + '\n';
   msg += '⏱ 平均滞在時間: ' + secToText(st.avgDuration) + ' ' +
@@ -1126,7 +1241,9 @@ function formatDailyReport(data, date) {
     if (a.callCount)  msg += '📞 電話ボタン押した: ' + a.callCount + '回\n';
     if (a.outboundInfoCount) msg += '🔗 情報到達（マップ・Instagram等）: ' + a.outboundInfoCount + '回\n';
     if (a.gmapCount)  msg += '🗺 マップ開いた: ' + a.gmapCount + '回\n';
-    if (t.users >= 20) {
+    if (a.directSpike) {
+      msg += '　→ 訪問100人あたりの予約行動は、直接アクセスの急増で分母が膨らむため、この日は出しません\n';
+    } else if (t.users >= 20) {
       msg += '　→ 訪問100人あたり予約行動 約' + (a.ctaRate * 100).toFixed(1) + '人 ' +
         healthIcon(a.ctaRate, BENCHMARKS.ctaRate) + '\n';
     }
@@ -1134,6 +1251,7 @@ function formatDailyReport(data, date) {
 
   if (a.sessionSources.length > 0) {
     msg += '\n【どこから来た？ TOP3' + settledLabel + '】\n';
+    if (a.directSpike) msg += '　※直接アクセスを除いた内訳\n';
     if (a.highThreshold) {
       msg += '⚠️ この日はGA4のしきい値が効き ' + Math.round(a.unknownPct * 100) + '% が判別不能です。流入構成は30日集計（search_channel_metrics.json）をご参照ください。\n';
     }

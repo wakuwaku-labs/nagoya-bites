@@ -1,0 +1,149 @@
+'use strict';
+
+/**
+ * GAS 日次レポート: 直接アクセスの急増（機械的な訪問の疑い）を判定・助言から外す（2026-11-14）。
+ *
+ * 2026-11-11 の LINE レポートは、訪問 826 回のうち 692 回が直接アクセス（普段は約 18 回）で、
+ * 直帰率 88%・滞在 24 秒から「🔴 苦戦中」と判定し、その数字から施策を出していた。
+ * .gas-deploy/Code.js を vm で読み込み、その日の形の数字で本文を作って確かめる。
+ */
+
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+
+const SRC = fs.readFileSync(path.join(__dirname, '..', '.gas-deploy', 'Code.js'), 'utf8');
+
+function loadGas() {
+  const ctx = {
+    Logger: { log() {} },
+    UrlFetchApp: { fetch: () => ({ getResponseCode: () => 503, getContentText: () => '' }) },
+    PropertiesService: { getScriptProperties: () => ({ getProperty: () => null }) },
+    Utilities: { formatDate: (d) => d.toISOString().slice(0, 10) },
+    AnalyticsData: { Properties: { runReport: () => ({}) } },
+    GmailApp: { sendEmail() {} },
+    console,
+  };
+  vm.createContext(ctx);
+  // const/let はコンテキストの外から見えないので、使う関数を最後に globalThis へ出す
+  vm.runInContext(SRC + '\n;globalThis.__gas = { formatDailyReport, detectDirectSpike, excludeDirectSpike, shiftDateStr };', ctx);
+  return ctx.__gas;
+}
+
+const row = (dims, mets) => ({ dimensions: dims, metrics: mets.map(String) });
+
+// 2026-11-11 の形（直帰率・滞在・訪問・流入元は LINE のレポートと同じ値）
+function data1111() {
+  const settledTotals = { users: 816, pageviews: 867, sessions: 826, avgDuration: 24, bounceRate: 0.88, events: 3000 };
+  return {
+    pages: [row(['/features/nagoya-solo-dining.html'], ['15', '19']), row(['/journal/2026-11-08-x.html'], ['10', '12'])],
+    events: [row(['modal_open'], ['17']), row(['cta_call_click'], ['1']), row(['cta_gmap_click'], ['8'])],
+    sources: [],
+    devices: [row(['desktop'], ['740']), row(['mobile'], ['76'])],
+    totals: { users: 816, pageviews: 867, sessions: 826, avgDuration: 24, bounceRate: 0.88, events: 3000 },
+    outboundByDomain: [],
+    reserveClicks: [row(['/', 'cta_click', 'hotpepper.jp'], ['8'])],
+    settled: {
+      date: '2026-11-11',
+      totals: settledTotals,
+      sources: [
+        row(['(direct)', '(none)'], ['680', '692']),
+        row(['google', 'organic'], ['50', '53']),
+        row(['bing', 'organic'], ['40', '43']),
+        row(['yahoo', 'organic'], ['20', '22']),
+        row(['chatgpt.com', 'ai-assistant'], ['10', '10']),
+      ],
+    },
+  };
+}
+
+// 直前14日は直接アクセス 15〜21 回、当日は 692 回（直帰 0.97・滞在 5 秒・閲覧 700）
+function directRows(todaySessions) {
+  const rows = [];
+  for (let i = 1; i <= 14; i++) {
+    const d = new Date(Date.UTC(2026, 10, 11 - i)).toISOString().slice(0, 10).replace(/-/g, '');
+    rows.push(row([d], [15 + (i % 7), 20, 60, 0.4]));
+  }
+  rows.push(row(['20261111'], [todaySessions, 700, 5, 0.97]));
+  return rows;
+}
+
+test('shiftDateStr は月をまたいでも正しく日をずらす', () => {
+  const g = loadGas();
+  assert.equal(g.shiftDateStr('2026-11-01', -14), '2026-10-18');
+  assert.equal(g.shiftDateStr('2026-03-01', -1), '2026-02-28');
+});
+
+test('普段の約38倍の直接アクセスは急増と判定し、普段の揺れは判定しない', () => {
+  const g = loadGas();
+  const sp = g.detectDirectSpike(directRows(692), '2026-11-11');
+  assert.equal(sp.spiking, true);
+  assert.equal(sp.median, 18);
+  const calm = g.detectDirectSpike(directRows(60), '2026-11-11');
+  assert.equal(calm.spiking, false, '普段の3倍強でも上乗せが100回未満なら鳴らさない');
+  assert.equal(g.detectDirectSpike([], '2026-11-11'), null);
+});
+
+test('急増の日: 判定・読まれ方・流入元・助言は直接アクセスを除いた値になる', () => {
+  const g = loadGas();
+  const spike = g.detectDirectSpike(directRows(692), '2026-11-11');
+  const data = g.excludeDirectSpike(data1111(), spike);
+  const msg = g.formatDailyReport(data, '2026-11-11');
+
+  assert.doesNotMatch(msg, /苦戦中/, '機械的な訪問で「苦戦中」と判定しない');
+  assert.match(msg, /直接アクセスの急増を除いた判定/);
+  assert.match(msg, /直接アクセスを除いた値で出しています/);
+  // 直接アクセスを除いた直帰率: (0.88*826 - 0.97*692) / 134 ≈ 41%
+  const bounce = Number(msg.match(/すぐ帰った人の割合: (\d+)%/)[1]);
+  assert.ok(bounce >= 38 && bounce <= 44, `直帰率 ${bounce}%`);
+  assert.doesNotMatch(msg, /直接アクセス（お気に入り等）/, '流入元の TOP3 から直接アクセスを外す');
+  assert.match(msg, /この日は出しません/, '予約の率は分母が膨らむので出さない');
+  assert.doesNotMatch(msg, /予約ボタンが訪問/);
+  assert.match(msg, /⚠️ 直接アクセスが普段の約38倍/);
+  // 見張り（scripts/lib/gas_deploy_trace.js）が読む確定値ラベルは今までどおり
+  assert.match(msg, /【読まれ方（確定値・2026-11-11）】/);
+});
+
+test('急増でない日は今までどおり（数字を置き換えない）', () => {
+  const g = loadGas();
+  const d = data1111();
+  const same = g.excludeDirectSpike(d, g.detectDirectSpike(directRows(60), '2026-11-11'));
+  assert.equal(same, d);
+  const msg = g.formatDailyReport(same, '2026-11-11');
+  assert.match(msg, /すぐ帰った人の割合: 88%/);
+  assert.doesNotMatch(msg, /直接アクセスを除いた/);
+});
+
+test('助言の文言: 押された回数を書き、店の選び方の禁止語を出さない', () => {
+  const g = loadGas();
+  const msgs = [];
+  // 日によって選ばれる打ち手が替わる（rotate）ので、数日分を作って全部を見る
+  for (let day = 1; day <= 9; day++) {
+    const d = data1111();
+    const date = '2026-11-0' + day;
+    d.settled.date = date;
+    msgs.push(g.formatDailyReport(d, date));
+  }
+  const all = msgs.join('\n');
+  assert.doesNotMatch(all, /ほぼ未クリック/);
+  assert.match(all, /予約ボタンが訪問816人中8回しか押されていない/);
+  assert.doesNotMatch(all, /現役|業界人|目利き/);
+  assert.doesNotMatch(all, /訪問826件/);
+});
+
+test('見張りの直帰率の照合: 直接アクセスを除いたと名乗る日は判定しない・名乗らない日は今までどおり', () => {
+  const { analyzeNumeric, analyzeReport } = require('../scripts/lib/gas_deploy_trace');
+  const ref = { bounceRate: 0.88, sessions: 826 };
+  const g = loadGas();
+  const spiked = g.formatDailyReport(g.excludeDirectSpike(data1111(), g.detectDirectSpike(directRows(692), '2026-11-11')), '2026-11-11');
+  const r1 = analyzeNumeric(spiked, ref).find((m) => m.key === 'bounce_rate_divergence');
+  assert.equal(r1.verdict, 'indeterminate');
+  const r2 = analyzeNumeric('↩️ すぐ帰った人の割合: 42% 🟢', ref).find((m) => m.key === 'bounce_rate_divergence');
+  assert.equal(r2.verdict, 'not_deployed');
+  // 新しい本文は新コードの痕跡で deployed、旧コードの文言は not_deployed
+  const keys = (body) => analyzeReport(body).matched.map((m) => m.key + ':' + m.verdict);
+  assert.ok(keys(spiked).includes('direct_spike_notice:deployed'));
+  assert.ok(keys('🔴 予約ボタンが訪問816人中ほぼ未クリック（1.0%）').includes('cta_almost_none_old_label:not_deployed'));
+});

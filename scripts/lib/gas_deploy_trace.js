@@ -105,6 +105,18 @@ function analyzeNumeric(body, reference, policy = loadPolicy()) {
     const ref = reference && typeof reference[sig.metric] === 'number' ? reference[sig.metric] : null;
     const sessions = reference && typeof reference.sessions === 'number' ? reference.sessions : null;
 
+    // レポートが「意図して参照値と違う母集団で出した」と本文で名乗る日（例: 直接アクセスの急増を
+    // 除いた値）は、差があっても旧コードの証拠にならないので判定しない（誤警報を出さない）
+    if (sig.skip_if_body_matches) {
+      let skipRe = null;
+      try { skipRe = new RegExp(sig.skip_if_body_matches); } catch (e) { skipRe = null; }
+      if (skipRe && skipRe.test(text)) {
+        matched.push({ key: sig.key, fix_id: sig.fix_id, verdict: 'indeterminate',
+          reason: `本文が別の母集団の値だと名乗っている（${sig.skip_if_body_matches}）ため判定しない`, reported, reference: ref });
+        continue;
+      }
+    }
+
     if (ref === null) {
       matched.push({ key: sig.key, fix_id: sig.fix_id, verdict: 'indeterminate',
         reason: '参照値（独立実測）が無いため判定しない', reported });
