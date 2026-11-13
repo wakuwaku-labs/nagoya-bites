@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-12T23:15:43.977Z",
+  "generatedAt": "2026-11-13T00:16:31.287Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 4685,
-    "pageViews": 6077,
-    "sessions": 5188,
-    "avgSessionDuration": 82.3,
+    "activeUsers": 4690,
+    "pageViews": 6087,
+    "sessions": 5195,
+    "avgSessionDuration": 82.5,
     "bounceRate": 0.521,
     "pagesPerSession": 1.17
   },
@@ -17,9 +17,9 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2762,
-      "direct": 1978,
-      "social": 54,
+      "organic": 2766,
+      "direct": 1979,
+      "social": 55,
       "ai_assistant": 249,
       "referral": 42,
       "paid": 0,
@@ -44,7 +44,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1247
+      "sessions": 1251
     },
     {
       "source": "bing",
@@ -84,12 +84,12 @@
     {
       "source": "note",
       "medium": "social",
-      "sessions": 21
+      "sessions": 22
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 12
+      "sessions": 13
     },
     {
       "source": "trend_today",
@@ -210,8 +210,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 436,
-      "sessions": 413
+      "pageViews": 440,
+      "sessions": 415
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -291,7 +291,7 @@
     },
     "ctaClickRate_organic": 10.2,
     "ctaClickRate_direct": 2.6,
-    "ctaClickRate_social": 18.5,
+    "ctaClickRate_social": 18.2,
     "byPage": [
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -1152,7 +1152,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 4685,
+    "value": 4690,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
