@@ -67,13 +67,13 @@ function pngDecode(buf) { // 8bit RGB/RGBA・非インターレース
   return { w, h, ch, data: out };
 }
 
-test('見出し画像（写真の日）: 寸法は note の比率に合い、帯は全体の約26%・上の余白あり。写真が全体の幅の65%を切る日は写真だけ', () => {
+test('見出し画像（写真の日）: 寸法は note の比率に合い、帯は全体の約26%・上の余白あり。写真が全体の幅の60%を切る日は写真だけ', () => {
   const cases = [['横長 16:9', 1920, 1080, true], ['横長 1.91:1', 1600, 837, true], ['横長 2:1', 1600, 800, true], ['4:3', 1600, 1200, false], ['正方形', 1200, 1200, false], ['4:5', 1200, 1500, false]];
   for (const [name, pw, ph, band] of cases) {
     const g = E.photoGeometry(pw, ph);
-    if (!band) { assert.strictEqual(g.photoOnly, true, `${name} は写真だけ`); assert.ok(g.fraction < 0.65, name); continue; }
-    if (g.photoOnly) { assert.ok(g.fraction < 0.65, `${name}（65%を切るので写真だけ）`); continue; }
-    assert.ok(g.fraction >= 0.65, `${name} の写真の幅の割合`);
+    if (!band) { assert.strictEqual(g.photoOnly, true, `${name} は写真だけ`); assert.ok(g.fraction < 0.6, name); continue; }
+    assert.ok(!g.photoOnly, `${name} は帯が付く`);
+    assert.ok(g.fraction >= 0.6, `${name} の写真の幅の割合`);
     assert.ok(Math.abs(g.W / g.H - 1280 / 670) < 0.01, `${name} の比率`);
     assert.ok(Math.abs(g.bandH / g.H - 0.26) < 0.02, `${name} の帯の割合`);
     assert.ok(g.py > 0 && g.px >= 0 && g.px + pw <= g.W && g.bandTop + g.bandH <= g.H, `${name} 写真が上の端に接さず、収まる`);
