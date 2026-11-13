@@ -127,4 +127,4 @@ async function ensureAccount(page, want) {
   throw new Error(`投稿先のアカウントが違います（今: ${who ? who.nickname : '未ログイン'} / 必要: ${want}）。Google での入り直しも通りませんでした（${r.ok ? '別のアカウントに入った' : r.at}）。node scripts/note_login.js --google を試し、だめなら node scripts/note_login.js --own で本人が ${want} にログイン`);
 }
 
-module.exports = { saveCookies, restoreCookies, PROFILE_DIR, COOKIES, launch, clickByText, isLoggedIn, currentUser, loginWithGoogle, ensureAccount };
+module.exports = { CHROME, saveCookies, restoreCookies, PROFILE_DIR, COOKIES, launch, clickByText, isLoggedIn, currentUser, loginWithGoogle, ensureAccount };

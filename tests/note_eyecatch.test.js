@@ -4,6 +4,9 @@ const assert = require('node:assert');
 const fs = require('fs');
 const path = require('path');
 const E = require('../scripts/lib/note_eyecatch');
+// 実際に描く試験は note の投稿と同じ Mac の Chrome が要る。CI（Linux）には無いので飛ばす
+// （2026-11-13 にこの3件が CI で落ち、build.yml が止まってサイトの公開が止まった）
+const NO_CHROME = fs.existsSync(require('../scripts/lib/note_browser').CHROME) ? false : 'Chrome が無い環境（CI）では描画の試験を飛ばす';
 
 test('見出し画像: 共通の写真（店と関係の無い写真）を持たない。写真が無い日は題と日付だけの図', () => {
   assert.strictEqual(E.pickPhoto, undefined);
@@ -102,7 +105,7 @@ test('見出し画像（写真の日）: 2行に分けるなら真ん中に近�
   assert.deepStrictEqual(parts, ['名駅『鎌倉紅谷』クルミッ子が常設に、', 'バターのいとこも 手土産は予算で']);
 });
 
-test('見出し画像（写真の日）: 縦長の写真は重ねず、写真そのもの（同じファイル）を返す', { timeout: 60000 }, async () => {
+test('見出し画像（写真の日）: 縦長の写真は重ねず、写真そのもの（同じファイル）を返す', { skip: NO_CHROME, timeout: 60000 }, async () => {
   const os = require('os');
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-eyecatch-tall-'));
   const rgb = Buffer.alloc(400 * 700 * 3, 120); const src = path.join(dir, 'tall.png'); fs.writeFileSync(src, pngEncode(400, 700, rgb));
@@ -111,7 +114,7 @@ test('見出し画像（写真の日）: 縦長の写真は重ねず、写真そ
   fs.rmSync(dir, { recursive: true, force: true });
 });
 
-test('見出し画像（写真の日）: 実際に描いて、1280x670・影の無い中ほどは写真の色のまま・下部は暗く白い字が載る・長い題も2行で語を割らない', { timeout: 120000 }, async () => {
+test('見出し画像（写真の日）: 実際に描いて、1280x670・影の無い中ほどは写真の色のまま・下部は暗く白い字が載る・長い題も2行で語を割らない', { skip: NO_CHROME, timeout: 120000 }, async () => {
   const os = require('os');
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-eyecatch-photo-'));
   const pw = 1600, ph = 900; const C = [200, 120, 60]; const rgb = Buffer.alloc(pw * ph * 3);
@@ -136,7 +139,7 @@ test('見出し画像（写真の日）: 実際に描いて、1280x670・影の�
   fs.rmSync(dir, { recursive: true, force: true });
 });
 
-test('見出し画像（写真の日）: 題が2行に収まらないときは例外（呼び出し側は写真そのままに落とす）', { timeout: 120000 }, async () => {
+test('見出し画像（写真の日）: 題が2行に収まらないときは例外（呼び出し側は写真そのままに落とす）', { skip: NO_CHROME, timeout: 120000 }, async () => {
   const os = require('os');
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-eyecatch-long-'));
   const rgb = Buffer.alloc(1600 * 900 * 3, 90); const src = path.join(dir, 'src.png'); fs.writeFileSync(src, pngEncode(1600, 900, rgb));
