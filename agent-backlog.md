@@ -10429,7 +10429,7 @@ Notion課題トラッカーから移行したLinearが、課題の進捗・担�
 
 ### [ISSUE-195] 話題店発掘の自動昇格が UTC日付で判定され、JSTのクエリローテーションと基準日がずれる
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
 - **detected**: 2026-11-08
 - **due**: 2026-11-22
 - **category**: ops / 話題店発掘ループ
