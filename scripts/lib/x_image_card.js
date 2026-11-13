@@ -65,7 +65,7 @@ function wrapLines(text, maxUnits, maxLines) {
       // 語の途中で切れないように、直近 12 文字以内の区切り（空白・閉じ括弧・読点の後／開き括弧の前）があればそこで折り返す
       const chars = [...cur];
       let brk = -1;
-      const isWord = (c) => /[0-9A-Za-z,.\-]/.test(c || '');
+      const isWord = (c) => /[0-9A-Za-z,.\-ァ-ヶー]/.test(c || ''); // 数字・英単語・カタカナ語（パソコン）の途中で割らない
       const isUnit = (c) => /[0-9]/.test(chars[chars.length - 1] || '') && '円貫品席人名分秒杯個枚本皿種店年月日時位％%'.includes(c);
       if ((isWord(ch) || isUnit(ch)) && isWord(chars[chars.length - 1])) {
         // 数字や英単語（12,400・1貫 など）の途中では割らない: その語の頭で折り返す
@@ -105,6 +105,59 @@ const CONTENT_BOTTOM = H - 135;
 const POINT_SIZE = 30;
 const POINT_LEAD = 44;
 
+// ── 生成時の検査（K4・2026-11-13）: 不合格のカードは投稿に使わない（文字だけの投稿に落とす）────────
+const CANVAS_MARGIN_R = 95; // 右の余白（左は題が x=95・要点が x=122）
+const isLatinWord = (c) => /[0-9A-Za-z,.\-]/.test(c || '');
+const isKata = (c) => /[ァ-ヶー]/.test(c || '');
+const UNIT_CHARS = '円貫品席人名分秒杯個枚本皿種店年月日時位％%';
+
+/** 折り返した行の幅（px）。 */
+function lineWidthPx(line, size) {
+  return [...line].reduce((a, c) => a + unitWidth(c), 0) * size;
+}
+
+/**
+ * 折り返しの位置が語の途中でないか（空白で折ったところは良い）。
+ * 悪い折り方 = 数字・英単語どうし／カタカナ語どうし／数字と単位（22｜席）の間で行が変わる。
+ * 返り値: 問題の説明の配列（空なら合格）。original は折る前の文（空白の位置を知るため）。
+ */
+function findWordBreaks(lines, original) {
+  const text = [...String(original || '').replace(/\s+/g, ' ').trim()];
+  const out = [];
+  let pos = 0;
+  lines.forEach((line, i) => {
+    while (text[pos] === ' ') pos++;
+    pos += [...line].length;
+    if (i === lines.length - 1) return;
+    const a = text[pos - 1];
+    const b = text[pos];
+    if (b === undefined || b === ' ' || a === ' ') return;
+    const bad = (isLatinWord(a) && isLatinWord(b)) || (isKata(a) && isKata(b)) || (/[0-9]/.test(a) && UNIT_CHARS.includes(b));
+    if (bad) out.push(`語の途中で改行（${a}|${b}）`);
+  });
+  return out;
+}
+
+/**
+ * レイアウトの検査（純粋関数）。返り値: 問題の説明の配列（空なら合格）。
+ *   - 文字の重なり: 要点の下端がフッターの上を超える／題の最終行が要点の帯に重なる／題の1行目が地名ラベルに重なる
+ *   - キャンバスからのはみ出し: 行の幅が右の余白を超える
+ *   - 語の途中の改行（題・要点）
+ */
+function inspectLayout(L, { title = '', point = '' } = {}) {
+  const problems = [];
+  if (!L) return ['layout_missing'];
+  if (L.bottom > CONTENT_BOTTOM) problems.push(`フッターに重なる（下端 ${L.bottom} > ${CONTENT_BOTTOM}）`);
+  const lastBase = TITLE_TOP + (L.lines.length - 1) * L.lead;
+  if (L.pointLines.length && lastBase + Math.round(L.size * 0.25) >= L.pointTop - 36) problems.push('題と要点が重なる');
+  if (TITLE_TOP - Math.round(L.size * 0.85) < 62 + 48 + 6) problems.push('題が地名ラベルに重なる');
+  L.lines.forEach((l) => { if (95 + lineWidthPx(l, L.size) > W - CANVAS_MARGIN_R) problems.push(`題の行がはみ出す（${l.slice(0, 8)}…）`); });
+  L.pointLines.forEach((l) => { if (122 + lineWidthPx(l, POINT_SIZE) > W - CANVAS_MARGIN_R) problems.push(`要点の行がはみ出す（${l.slice(0, 8)}…）`); });
+  problems.push(...findWordBreaks(L.lines, title));
+  if (L.pointLines.length) problems.push(...findWordBreaks(L.pointLines, point));
+  return problems;
+}
+
 /**
  * 題の大きさ・折り返しと、要点を載せるかを決める（純粋関数）。
  * 大きい字から試し、最後の行が 1〜2 文字だけ余る折り返しは避ける。
@@ -129,7 +182,7 @@ function layoutCard(title, point) {
     fits.push({ sz, lines: w.lines, nice: w.lines.length === 1 || lastLen >= 3 });
   }
   if (!fits.length) return null;
-  const ok = (g) => g.bottom <= CONTENT_BOTTOM;
+  const ok = (g) => g.bottom <= CONTENT_BOTTOM && inspectLayout(g, { title, point }).length === 0;
   if (pointLines.length) {
     for (const nice of [true, false]) {
       for (const f of fits.filter((x) => x.nice === nice)) {
@@ -138,9 +191,14 @@ function layoutCard(title, point) {
       }
     }
   }
-  const f = fits.find((x) => x.nice) || fits[fits.length - 1];
-  const g = geo(f.sz, f.lines, []);
-  return ok(g) ? g : null;
+  // 要点なし: 検査に通る最初の（きれいな折り返し優先の）大きさ。どれも通らなければ null（カードを作らない）
+  for (const nice of [true, false]) {
+    for (const f of fits.filter((x) => x.nice === nice)) {
+      const g = geo(f.sz, f.lines, []);
+      if (ok(g)) return g;
+    }
+  }
+  return null;
 }
 
 /**
@@ -151,7 +209,7 @@ function layoutCard(title, point) {
 function buildCardSvg({ entry, policy, point, iconDataUri }) {
   const title = X.rewriteTitle(entry.title, policy);
   const L = layoutCard(title, point);
-  if (!L) return null;
+  if (!L || inspectLayout(L, { title, point: L.pointLines.length ? point : '' }).length) return null; // 検査に落ちたカードは作らない（文字だけの投稿に落とす）
   const area = (X.areaHashtag(entry.title, policy) || '').replace(/^#/, '');
   const titleSvg = L.lines.map((l, i) => `<text x="95" y="${TITLE_TOP + i * L.lead}" font-size="${L.size}" font-weight="800" fill="#1c1c1a">${esc(l)}</text>`).join('');
   const pl = L.pointLines;
@@ -296,4 +354,4 @@ async function uploadImage(file, cred, fetchImpl = fetch, { type = 'image/png', 
   return { ok: false, reason: attempts.join(' | ') };
 }
 
-module.exports = { decideImage, wrapLines, layoutCard, buildCardSvg, CONTENT_BOTTOM, renderPng, makeCard, loadCard, uploadImage, cardPngRel, cardInfoRel, W, H, UPLOAD_V2, UPLOAD_V1 };
+module.exports = { decideImage, wrapLines, layoutCard, inspectLayout, findWordBreaks, buildCardSvg, CONTENT_BOTTOM, renderPng, makeCard, loadCard, uploadImage, cardPngRel, cardInfoRel, W, H, UPLOAD_V2, UPLOAD_V1 };

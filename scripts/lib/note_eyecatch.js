@@ -51,6 +51,32 @@ function html(title, date) {
   <div class="f"><span>${esc(date)} ／ 名古屋の飲食店ジャーナル</span><div class="nb">NB</div></div></div>`;
 }
 
+/**
+ * 見出し画像の検査（K4・2026-11-13・純粋関数）。画面上の位置（px）を受け取り、問題の説明の配列を返す（空なら合格）。
+ * 題（h1）が上のラベルや下のフッターに重ならず、キャンバスからはみ出していないこと。
+ */
+function inspectEyecatchBoxes({ canvas, label, title, footer }) {
+  const p = [];
+  if (!title) return ['題が描かれていない'];
+  if (title.top < canvas.top || title.bottom > canvas.bottom || title.left < canvas.left || title.right > canvas.right) p.push('題がキャンバスからはみ出す');
+  if (label && title.top < label.bottom) p.push('題が上のラベルに重なる');
+  if (footer && title.bottom > footer.top) p.push('題が下のフッターに重なる');
+  return p;
+}
+
+/** ページ上の位置を測って検査する。不合格なら例外（呼び出し側は見出し画像なしで続ける） */
+async function assertEyecatchClean(page) {
+  const boxes = await page.evaluate(() => {
+    const r = (sel) => { const e = document.querySelector(sel); if (!e) return null; const b = e.getBoundingClientRect(); return { top: b.top, bottom: b.bottom, left: b.left, right: b.right }; };
+    const c = document.querySelector('.c');
+    const rng = document.createRange(); rng.selectNodeContents(document.querySelector('h1'));
+    const t = rng.getBoundingClientRect();
+    return { canvas: { top: 0, left: 0, right: c.clientWidth, bottom: c.clientHeight }, label: r('.k'), title: { top: t.top, bottom: t.bottom, left: t.left, right: t.right }, footer: r('.f') };
+  });
+  const problems = inspectEyecatchBoxes(boxes);
+  if (problems.length) throw new Error('見出し画像の検査に不合格: ' + problems.join(' / '));
+}
+
 /** 題と日付から PNG を作ってパスを返す。browser を渡すと、その中に新しいタブを開いて描く（同じプロファイルで二重に起動しない）。 */
 async function makeEyecatch(title, date, outPath, browser) {
   const out = outPath || path.join(os.tmpdir(), `nb-note-eyecatch-${date}.png`);
@@ -60,10 +86,11 @@ async function makeEyecatch(title, date, outPath, browser) {
     const page = await br.newPage();
     await page.setViewport({ width: 1280, height: 670 });
     await page.setContent(html(title, date));
+    await assertEyecatchClean(page); // 重なり・はみ出しがあれば例外（post_note は見出し画像なしで続ける）
     await page.screenshot({ path: out, clip: { x: 0, y: 0, width: 1280, height: 670 } });
     await page.close();
   } finally { if (own) await br.close(); }
   return out;
 }
 
-module.exports = { makeEyecatch, html, downloadPhoto, photoUrl };
+module.exports = { makeEyecatch, inspectEyecatchBoxes, html, downloadPhoto, photoUrl };

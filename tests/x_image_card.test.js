@@ -152,6 +152,68 @@ test('layoutCard: 公開済みの全記事で、題と要点がフッターに�
   assert.ok(n > 0);
 });
 
+// ── 生成時の検査（K4・2026-11-13）──
+test('inspectLayout: 重なり・はみ出し・語の途中の改行を検出する', () => {
+  const base = C.layoutCard('名駅の会席を食べ比べる', '会席は8品12,400円と10品17,400円');
+  assert.deepStrictEqual(C.inspectLayout(base, { title: '名駅の会席を食べ比べる', point: '会席は8品12,400円と10品17,400円' }), []);
+  // 要点の下端がフッターに食い込む（2026-11-12 の型）
+  assert.ok(C.inspectLayout({ ...base, bottom: C.CONTENT_BOTTOM + 1 }).some((p) => /フッターに重なる/.test(p)));
+  // 題の最終行が要点の帯に重なる
+  assert.ok(C.inspectLayout({ ...base, pointTop: 210 }, { title: '名駅の会席を食べ比べる', point: '会席は8品12,400円と10品17,400円' }).some((p) => /重なる/.test(p)));
+  // 右にはみ出す行
+  assert.ok(C.inspectLayout({ ...base, lines: ['あ'.repeat(30)] }).some((p) => /はみ出す/.test(p)));
+  assert.ok(C.inspectLayout(null).length > 0);
+});
+
+test('findWordBreaks: カタカナ語・数字・英単語・数と単位の途中の折り返しは不合格、空白や助詞の後ろは合格', () => {
+  assert.strictEqual(C.findWordBreaks(['名駅のパソコ', 'ンを使う'], '名駅のパソコンを使う').length, 1); // パソコ／ン
+  assert.strictEqual(C.findWordBreaks(['会席12,', '400円'], '会席12,400円').length, 1);
+  assert.strictEqual(C.findWordBreaks(['全22', '席'], '全22席').length, 1);
+  assert.strictEqual(C.findWordBreaks(['八塩折 yashi', 'ori'], '八塩折 yashiori').length, 1);
+  assert.deepStrictEqual(C.findWordBreaks(['八塩折 yashiori', 'の会席'], '八塩折 yashiori の会席'), []); // 空白で折る
+  assert.deepStrictEqual(C.findWordBreaks(['接待と記念日に、', '会席12,400円'], '接待と記念日に、会席12,400円'), []);
+  assert.deepStrictEqual(C.findWordBreaks(['Open', 'Kitchen'], 'Open Kitchen'), []); // 元が空白
+});
+
+test('wrapLines: カタカナ語（パソコン）の途中で割らず、語の頭で折り返す', () => {
+  const t = '名古屋駅でパソコンを使えるカフェを探す';
+  for (const w of [6, 7, 8, 9, 10]) {
+    const r = C.wrapLines(t, w, 6);
+    assert.deepStrictEqual(C.findWordBreaks(r.lines, t), [], `幅${w}: ${JSON.stringify(r.lines)}`);
+  }
+});
+
+test('layoutCard: 検査に通らない折り返しは使わない（語の途中でしか折れない題は大きさを変えるか、要点を外すか、カードなし）', () => {
+  const title = 'パソコン'.repeat(4) + 'で作業';
+  const L = C.layoutCard(title, '');
+  if (L) assert.deepStrictEqual(C.inspectLayout(L, { title }), []);
+  // 要点に語の途中の折り返ししかできないなら要点を外す（カードは残す）
+  const noBreak = 'ア'.repeat(40);
+  const L2 = C.layoutCard('名駅の会席', noBreak);
+  assert.ok(L2 && L2.pointLines.length === 0);
+});
+
+test('公開済みの全記事: 作れるカードはすべて検査に合格する（重なり・はみ出し・語の途中の改行がゼロ）', () => {
+  const es = JSON.parse(fs.readFileSync(path.join(REAL_ROOT, 'data/journal_published.json'), 'utf8')).entries;
+  let n = 0;
+  for (const e of es) {
+    const f = path.join(REAL_ROOT, 'journal', `${e.slug}.html`);
+    if (!fs.existsSync(f)) continue;
+    const title = X.rewriteTitle(e.title, realPolicy);
+    const point = X.insiderPoints(fs.readFileSync(f, 'utf8'))[0];
+    const L = C.layoutCard(title, point);
+    if (!L) continue;
+    n++;
+    assert.deepStrictEqual(C.inspectLayout(L, { title, point: L.pointLines.length ? point : '' }), [], e.slug);
+  }
+  assert.ok(n > 0);
+});
+
+test('buildCardSvg: 検査に通る折り方が無い題は null（makeCard は画像なしで記録し投稿は文字だけになる）', () => {
+  const entry = { slug: 'x', title: 'ア'.repeat(70) };
+  assert.strictEqual(C.buildCardSvg({ entry, policy: realPolicy, point: null }), null);
+});
+
 // ── 作る（make_x_image_card）──
 test('makeCard: 付ける日は PNG と記録を作り、付けない日は記録だけ・描画に失敗したら画像なしで記録して例外を投げない', () => {
   const { root } = fixture({ imageOnOddDays: true });

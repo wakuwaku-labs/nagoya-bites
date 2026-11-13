@@ -33,3 +33,13 @@ test('見出し画像: 取ってきたものが画像でなければ止める（
   assert.ok(!fs.existsSync(path.join(dir, 'nb-note-photo-txt.jpg')));
   fs.rmSync(dir, { recursive: true, force: true });
 });
+
+test('見出し画像の検査: 題がラベル・フッターに重なる／はみ出すと不合格', () => {
+  const canvas = { top: 0, left: 0, right: 1280, bottom: 670 };
+  const label = { top: 64, bottom: 100 }; const footer = { top: 560, bottom: 606 };
+  assert.deepStrictEqual(E.inspectEyecatchBoxes({ canvas, label, footer, title: { top: 180, bottom: 400, left: 80, right: 1200 } }), []);
+  assert.ok(E.inspectEyecatchBoxes({ canvas, label, footer, title: { top: 180, bottom: 600, left: 80, right: 1200 } }).some((p) => /フッター/.test(p)));
+  assert.ok(E.inspectEyecatchBoxes({ canvas, label, footer, title: { top: 90, bottom: 300, left: 80, right: 1200 } }).some((p) => /ラベル/.test(p)));
+  assert.ok(E.inspectEyecatchBoxes({ canvas, label, footer, title: { top: 180, bottom: 400, left: 80, right: 1300 } }).some((p) => /はみ出す/.test(p)));
+  assert.ok(E.inspectEyecatchBoxes({ canvas, label, footer, title: null }).length > 0);
+});
