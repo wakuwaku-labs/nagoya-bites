@@ -344,7 +344,9 @@ ${robots ? `<meta name="robots" content="${esc(robots)}">` : ''}
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="${canonical}">
-<meta property="og:image" content="${BASE_URL}/icons/icon-512.png">
+<meta property="og:image" content="${BASE_URL}/icons/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <link rel="icon" href="${p}icons/icon-192.png">
 <link rel="manifest" href="${p}manifest.json">
 <meta name="theme-color" content="#0d0d0d">

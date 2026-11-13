@@ -672,7 +672,7 @@ function renderHtml(input) {
     '{{DESCRIPTION}}': esc(input.description),
     '{{KEYWORDS}}': esc(input.keywords || ''),
     '{{SLUG}}': esc(input.slug),
-    '{{OG_IMAGE}}': esc(input.og_image || 'https://nagoya-bites.com/icons/icon-512.png'),
+    '{{OG_IMAGE}}': esc(input.og_image || 'https://nagoya-bites.com/icons/og-default.png'),
     '{{LD_IMAGE_URL}}': jsonLdImageUrl(input.og_image), // 項目20: アイコン・Places 以外の og:image だけ JSON-LD の image に入れる
     '{{DATE}}': esc(input.date),
     '{{DATE_JA}}': esc(toDateJa(input.date)),

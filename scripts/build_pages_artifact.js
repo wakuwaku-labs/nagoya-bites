@@ -78,7 +78,7 @@ const REQUIRED = [
   'index.html', '404.html', 'sw.js', 'manifest.json', 'CNAME', 'robots.txt',
   'sitemap.xml', 'llms.txt', 'assets/css/nb.css',
   'data/stores.json', 'data/crosscheck.json',
-  'icons/icon-192.png', 'icons/icon-512.png',
+  'icons/icon-192.png', 'icons/icon-512.png', 'icons/og-default.png',
 ];
 
 /** パス（リポジトリ直下からの / 区切り）が公開してよいか */

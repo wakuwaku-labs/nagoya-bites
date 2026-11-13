@@ -266,7 +266,9 @@ ${GA_SCRIPT}
 <meta property="og:type" content="article">
 <meta property="og:url" content="${url}">
 <meta property="og:site_name" content="NAGOYA BITES">
-<meta property="og:image" content="https://nagoya-bites.com/icons/icon-512.png">
+<meta property="og:image" content="https://nagoya-bites.com/icons/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
 <meta name="twitter:card" content="summary_large_image">

@@ -48,7 +48,7 @@ test('店舗ページ: og/twitter は既定画像、JSON-LD は有効なまま�
   const r = lib.repairHtml(html, { kind: 'stores', dead, resolve: () => null });
   assert.ok(!r.html.includes('place-photos'));
   assert.ok(r.html.includes(lib.DEFAULT_OG));
-  assert.ok(r.html.includes('og:image:width" content="512"'));
+  assert.ok(r.html.includes('og:image:width" content="1200"'));
   assert.deepStrictEqual(lib.jsonLdValid(r.html), []);
   assert.ok(r.html.includes(lib.FALLBACK_FIGURE));
 });

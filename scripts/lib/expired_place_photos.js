@@ -6,12 +6,12 @@
  *
  * 方針（CLAUDE.md の写真ルール）:
  *  - 差し替えは「同じ店」の生きた写真だけ（resolve が返したもの）。他店の写真を借りない・画素を加工しない。
- *  - 無ければ写真を外す（取り繕わない）。og:image は既存の既定（icons/icon-512.png）へ。
+ *  - 無ければ写真を外す（取り繕わない）。og:image は既定の横長画像（icons/og-default.png・1200x630）へ。
  *  - 失効したかどうかは呼び出し側が HTTP で確かめた dead 集合だけで決める（制約10）。
  */
 
 const PLACE_RE = /https:\/\/lh3\.googleusercontent\.com\/place-photos\/[A-Za-z0-9_\-=%.\/?&;]*/g;
-const DEFAULT_OG = 'https://nagoya-bites.com/icons/icon-512.png';
+const DEFAULT_OG = 'https://nagoya-bites.com/icons/og-default.png'; // 1200x630 の横長（正方形のアイコンは X のカードで丸が切れる・K5）
 const FALLBACK_FIGURE = '/assets/store-figures/_fallback.svg';
 const HERO_EXPIRED_MARK = 'NB-HERO-EXPIRED';
 
@@ -119,6 +119,7 @@ function repairHtml(html, ctx) {
     if (/_480\.jpg/.test(url)) return [480, 320];
     if (/_238\.jpg/.test(url)) return [238, 158];
     if (/icon-512\.png/.test(url)) return [512, 512];
+    if (/og-default\.png/.test(url)) return [1200, 630];
     return null;
   };
   let ogChanged = false;

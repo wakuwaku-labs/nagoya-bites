@@ -21,6 +21,7 @@
  *   - Unsplash with w=1200&h=630 ⇒ 1200x630
  *   - imgfp.hotp.jp .../P*_480.jpg ⇒ 480x320 (HotPepperの_480系の典型比3:2)
  *   - icon-512.png ⇒ 512x512
+ *   - icons/og-default.png ⇒ 1200x630（既定の横長画像）
  *   - 不明 ⇒ そのままスキップ
  *
  * 使い方:
@@ -56,6 +57,7 @@ function inferDims(url) {
   const m1 = decoded.match(/[?&]w=(\d+)&h=(\d+)/);
   if (m1) return { w: parseInt(m1[1], 10), h: parseInt(m1[2], 10) };
   if (/icon-512\.png/.test(decoded)) return { w: 512, h: 512 };
+  if (/icons\/og-default\.png/.test(decoded)) return { w: 1200, h: 630 };
   if (/imgfp\.hotp\.jp\/.+_480\.jpg/.test(decoded)) return { w: 480, h: 320 };
   if (/imgfp\.hotp\.jp\/.+_238\.jpg/.test(decoded)) return { w: 238, h: 158 };
   return null;

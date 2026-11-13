@@ -1019,6 +1019,7 @@ ${(() => {
 ${/imgfp\.hotp\.jp\/.+_480\.jpg/.test(photo) ? '<meta property="og:image:width" content="480">\n<meta property="og:image:height" content="320">\n' :
   /imgfp\.hotp\.jp\/.+_238\.jpg/.test(photo) ? '<meta property="og:image:width" content="238">\n<meta property="og:image:height" content="158">\n' :
   /[?&]w=(\d+)&h=(\d+)/.test(photo) ? (m=>`<meta property="og:image:width" content="${m[1]}">\n<meta property="og:image:height" content="${m[2]}">\n`)(photo.match(/[?&]w=(\d+)&h=(\d+)/)) :
+  /og-default\.png/.test(photo) ? '<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n' :
   /icon-512\.png/.test(photo) ? '<meta property="og:image:width" content="512">\n<meta property="og:image:height" content="512">\n' :
   ''}`;
 })()}<meta property="og:site_name" content="NAGOYA BITES">

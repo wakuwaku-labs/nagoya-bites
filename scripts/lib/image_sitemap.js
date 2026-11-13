@@ -27,7 +27,7 @@ function extractOgImage(html) {
 
 /** サイト共通のアイコン・代替図は、その店・記事の画像ではないので載せない */
 function isGenericImage(url) {
-  return /\/icons\/icon-\d+\.png$/i.test(url) || /_fallback\.svg$/i.test(url);
+  return /\/icons\/(?:icon-\d+|og-default)\.png$/i.test(url) || /_fallback\.svg$/i.test(url);
 }
 
 /** sitemap.xml から画像 sitemap の対象ページ（店舗・特集）の loc を順に返す */
