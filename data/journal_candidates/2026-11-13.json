@@ -1,0 +1,466 @@
+{
+  "date": "2026-11-13",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅・円頓寺パリ祭11/14・15、屋台の後は海鮮食堂 enで一人飲み",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 96,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "海鮮",
+          "feature": "features/nagoya-seafood.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 4件 (需要,予約,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 163字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「海鮮」+2"
+        ]
+      },
+      "gate_note": "96点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4",
+      "plan_topic_bonus": 2,
+      "plan_topic_note": "週の予定の題材「ひとり飲み・ひとりごはん」に一致 +2（並べ替えのみ・採点と判定は不変）"
+    },
+    {
+      "id": "c3",
+      "title_draft": "松坂屋名古屋店「至福のフードフェア」11/14〜24、弁当と限定スイーツ",
+      "verdict": "HOLD",
+      "total": 62,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 3,
+        "search_intent": 3
+      },
+      "search_intent_links": [
+        {
+          "kw": "スイーツ",
+          "feature": "features/nagoya-sweets.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 125字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「モーニング」+1",
+          "タイトルにジャンル語「スイーツ」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "名古屋の忘年会、11月中旬に幹事が押さえる3つの数字",
+      "verdict": "HOLD",
+      "total": 62,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (予約) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 98字 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「忘年会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "鶴舞公園秋まつり最終週末（〜11/15）、グルメ祭りと縁日の回り方",
+      "verdict": "HOLD",
+      "total": 61,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "鶴舞・八事",
+          "feature": "stores/area/tsurumai-yagoto/index.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 82字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「鶴舞」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "円頓寺パリ祭のMOFビストロ屋台、肉・魚・チーズとワインを11/14・15だけ",
+      "verdict": "HOLD",
+      "total": 54,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 3,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "フレンチ",
+          "feature": "features/nagoya-french-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 141字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「ビストロ」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": {
+    "topic": "ひとり飲み・ひとりごはん",
+    "week": "2026-W46",
+    "slot": 4,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "96点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "名駅・円頓寺パリ祭11/14・15、屋台の後は海鮮食堂 enで一人飲み",
+      "lead_draft": "2026年11月14日と15日、名駅の北にある円頓寺商店街で「秋のパリ祭」が開かれる。時間は11時から18時、入場は無料。アーケードにマルシェの出店が並び、東の端ではフランスの国家最優秀職人章（MOF）のレシピで料理やワインを出すビストロ屋台が立つ。屋台が閉まったあと、腰を落ち着ける商店街の店と、その時間の組み方を整理する。",
+      "angle": "屋台が閉まる18時前後に需要が商店街の店へ移る。一人はカウンター6席の海鮮食堂 en、大人数は土日昼から開くやきとりゴーと、シーン別に予約と席の回転を読む",
+      "main_store": {
+        "name": "海鮮食堂 en",
+        "id": "J003599494",
+        "area": "名駅",
+        "genre": "海鮮居酒屋"
+      },
+      "sources": [
+        {
+          "label": "食べログ「海鮮食堂en」店舗情報",
+          "url": "https://tabelog.com/aichi/A2301/A230101/23083739/",
+          "date": "2026-11-13"
+        },
+        {
+          "label": "円頓寺 秋のパリ祭 公式 INFO",
+          "url": "https://endoji-paris.net/info.html",
+          "date": "2026-11-12"
+        },
+        {
+          "label": "円頓寺 秋のパリ祭 当日MAP（2026-11-07版）",
+          "url": "https://endoji-paris.net/site/wp-content/uploads/2026/11/EP2026map_20261107.pdf",
+          "date": "2026-11-07"
+        },
+        {
+          "label": "円パリ新聞2026",
+          "url": "https://endoji-paris.net/site/wp-content/uploads/2026/10/webtabloid_EP2026.pdf",
+          "date": "2026-10-20"
+        },
+        {
+          "label": "名古屋コンシェルジュ「円頓寺 秋のパリ祭」",
+          "url": "https://www.nagoya-info.jp/event/detail/224/",
+          "date": "2026-11-01"
+        },
+        {
+          "label": "ホットペッパー「やきとりゴー」",
+          "url": "https://www.hotpepper.jp/strJ003737470/",
+          "date": "2026-11-13"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "円頓寺パリ祭のMOFビストロ屋台、肉・魚・チーズとワインを11/14・15だけ",
+      "lead_draft": "円頓寺商店街の「秋のパリ祭」（11月14日・15日、11〜18時）に、フランスの国家最優秀職人章（MOF）のレシピで中部の肉や魚を料理するビストロ屋台が出る。肉料理、魚料理、チーズ、MOFのバーとブースが分かれ、商店街の東の端にまとまる。屋台の並び方と、混む時間の外し方を整理する。",
+      "angle": "MOFのビストロ屋台を、ステージ時刻と人の流れから混む時間帯を外して回る（価格は未発表のため予算は書かない）",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名駅",
+        "genre": "フランス料理"
+      },
+      "sources": [
+        {
+          "label": "円パリ新聞2026",
+          "url": "https://endoji-paris.net/site/wp-content/uploads/2026/10/webtabloid_EP2026.pdf",
+          "date": "2026-10-20"
+        },
+        {
+          "label": "円頓寺 秋のパリ祭 当日MAP",
+          "url": "https://endoji-paris.net/site/wp-content/uploads/2026/11/EP2026map_20261107.pdf",
+          "date": "2026-11-07"
+        },
+        {
+          "label": "名古屋コンシェルジュ「円頓寺 秋のパリ祭」",
+          "url": "https://www.nagoya-info.jp/event/detail/224/",
+          "date": "2026-11-01"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "松坂屋名古屋店「至福のフードフェア」11/14〜24、弁当と限定スイーツ",
+      "lead_draft": "松坂屋名古屋店で11月14日から24日まで「至福のフードフェア」が開かれる。本館の地下1・2階と各階のレストラン・喫茶で、なだ万厨房の弁当や松阪牛しぐれ弁当、鯖棒すし、限定スイーツが並ぶ。数量や販売日が限られる品もあるため、行く日の決め方を整理する。",
+      "angle": "百貨店催事の限定品を、販売日と数量から行く日を決める（手土産・家族の夕食）",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "栄",
+        "genre": "百貨店催事"
+      },
+      "sources": [
+        {
+          "label": "ベストカレンダー「至福のフードフェア」",
+          "url": "https://bestcalendar.jp/press/164375",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "名古屋コンシェルジュ 11/14 のイベント",
+          "url": "https://www.nagoya-info.jp/event/today/2026-11-14/",
+          "date": "2026-11-13"
+        },
+        {
+          "label": "大丸松坂屋 ニュース",
+          "url": "https://www.daimaru-matsuzakaya.com/assets/news/news_74.pdf",
+          "date": "2026-11-01"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "鶴舞公園秋まつり最終週末（〜11/15）、グルメ祭りと縁日の回り方",
+      "lead_draft": "10月10日から続いた鶴舞公園秋まつりが、11月15日で終わる。グルメ祭りや縁日、音楽祭が公園内に並ぶ最後の週末に、紅葉と合わせた回り方と、昼食の取り方を整理する。",
+      "angle": "最終週末の紅葉と屋台を、家族連れの昼の時間割で組む",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "鶴舞",
+        "genre": "イベント"
+      },
+      "sources": [
+        {
+          "label": "名古屋コンシェルジュ「鶴舞公園秋まつり2026」",
+          "url": "https://www.nagoya-info.jp/event/detail/1415/",
+          "date": "2026-10-10"
+        },
+        {
+          "label": "名古屋コンシェルジュ 11/15 のイベント",
+          "url": "https://www.nagoya-info.jp/event/today/2026-11-15/",
+          "date": "2026-11-13"
+        },
+        {
+          "label": "いこーよ おでかけトレンド",
+          "url": "https://report.iko-yo.net/trend/events?region=4&tag=161",
+          "date": "2026-11-10"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "名古屋の忘年会、11月中旬に幹事が押さえる3つの数字",
+      "lead_draft": "11月も半ばを過ぎると、忘年会の予約が本格的に動き出す。12月の金曜と土曜は2時間制を敷く店が増え、人数の確定日やキャンセル料の規定も店ごとに違う。幹事が予約の前に確かめておきたい数字を整理する。",
+      "angle": "忘年会の予約で、時間制・人数確定日・キャンセル規定を先に確認する幹事向けの段取り",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": "宴会"
+      },
+      "sources": [
+        {
+          "label": "名古屋コンシェルジュ 11/14 のイベント",
+          "url": "https://www.nagoya-info.jp/event/today/2026-11-14/",
+          "date": "2026-11-13"
+        },
+        {
+          "label": "名古屋コンシェルジュ 11/15 のイベント",
+          "url": "https://www.nagoya-info.jp/event/today/2026-11-15/",
+          "date": "2026-11-13"
+        },
+        {
+          "label": "名古屋コンシェルジュ 11/13 のイベント",
+          "url": "https://www.nagoya-info.jp/event/today/2026-11-13/",
+          "date": "2026-11-13"
+        }
+      ]
+    }
+  ]
+}
