@@ -24,7 +24,7 @@ DSN-001（2026-09）でオーナー本人の直接指摘（「サイトが見に
 Web のタイポグラフィ・密度・動きに加え、**写真の選定、OGP（og:image）、SNS の画像（X の画像カード・note の見出し画像）**も担当する。
 生成は `scripts/lib/x_image_card.js`・`scripts/lib/note_eyecatch.js`・`scripts/gen_default_og.js`、機械の検査は
 `tests/x_image_card.test.js`・`tests/og_image_landscape.test.js`・`scripts/audit_empty_image_frames.js`。
-note の見出し画像（写真の日）は、写真の画素・フレームを変えず（縮小・切り抜き・色の変更・文字や影の重ね描きをしない）、題と日付は写真の下の別の帯に置く（ADR 0064・規約が改変可と明記していないため）。X の画像カードはゴシック、写真が無い日の見出し画像は明るい地のまま。
+note の見出し画像（写真の日）は、PR TIMES の写真を全面に敷き、下部の暗い影に題（明朝）と日付を白で重ねる（ADR 0065・2026-11-13 本人の指示。写真の色は変えず、比率合わせの切り抜きだけ。ホットペッパー・Google の写真は使わない）。X の画像カードはゴシック、写真が無い日の見出し画像は明るい地のまま。
 見た目の合否（写真の質・ブランドの一貫性・重なり）は、全社共通の検査役 Design QA（`~/.claude/agents/design-qa.md`）に回す（作った会話が自分で合格にしない）。
 
 ---

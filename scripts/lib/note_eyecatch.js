@@ -2,9 +2,10 @@
 /**
  * note の見出し画像（アイキャッチ）の素材を用意する（docs/decisions/0056）。
  * - 記事に載せた店の実物写真（規約で note に上げてよい出どころだけ。note_draft.js の articlePhoto が選ぶ）は、
- *   加工せずにそのまま取ってくる（downloadPhoto）。写真の画素とフレームはそのままにして、写真の下に別の帯
- *   （題と日付）を足した図を作る（makePhotoEyecatch・2026-11-13 ブランドの決定・docs/decisions/0064-note-eyecatch-title-band-below-photo.md）。
- *   写真に文字や影を重ねない・縮めない・切らない（PR TIMES の規約は改変可と明記していない＝Ondine #1914）。
+ *   そのまま取ってくる（downloadPhoto）。写真を全面に敷き、下部の暗い影に題と日付を白で重ねた図を作る
+ *   （makePhotoEyecatch・2026-11-13 本人の指示「写真に重ねて」・docs/decisions/0065-note-eyecatch-overlay-on-photo.md。0064 の帯の形を置き換えた）。
+ *   写真は比率合わせの切り抜きだけで、色は変えない。重ねてよいのは PR TIMES の報道目的のリリース写真だけ
+ *   （ホットペッパー・Google の写真は規約で加工・複製を禁じているので、そもそも使わない）。
  * - それが無い日は、記事の題と日付だけの図を作る（makeEyecatch・1280x670 PNG）。店と関係の無い写真は使わない
  *   （以前は共通の居酒屋の写真を毎日使い、別の店の記事にも同じ写真が出ていた・2026-10-24 オーナー指摘）。
  * 書体は端末にあるものだけを指す（CLAUDE.md 制約12 の方針に合わせる）。
@@ -23,6 +24,12 @@ function photoUrl(src) {
   const u = new URL(src);
   if (u.hostname === 'prcdn.freetls.fastly.net' && !u.search) u.search = '?width=1920&quality=85&format=jpeg&fit=bounds';
   return u.toString();
+}
+
+/** 題と日付を重ねてよい写真か（ADR 0065）。PR TIMES の報道目的のリリース写真（配信元のホスト）だけ。それ以外は重ねず写真だけにする */
+const OVERLAY_HOSTS = ['prcdn.freetls.fastly.net', 'prtimes.jp'];
+function overlayAllowed(src) {
+  try { const h = new URL(src).hostname; return OVERLAY_HOSTS.some((d) => h === d || h.endsWith('.' + d)); } catch { return false; }
 }
 
 /** 写真を一時ファイルに取ってきてパスを返す（リポジトリには置かない）。画像でなければ止める */
@@ -55,7 +62,8 @@ function html(title, date) {
 }
 
 /** 題を語（Intl.Segmenter・日本語）に分け、2字以上の語は途中で折れないようにする（「大盛り」「ランチ」を割らない） */
-function titleHtml(title) {
+function titleHtml(title, breakAfter = -1) {
+  if (breakAfter > 0 && breakAfter < title.length) return titleHtml(title.slice(0, breakAfter)) + '<br>' + titleHtml(title.slice(breakAfter).replace(/^\s+/, ''));
   const segs = [...new Intl.Segmenter('ja', { granularity: 'word' }).segment(title)];
   const out = []; let cur = '';
   const flush = () => { if (cur) out.push([...cur].length > 1 ? `<span style="white-space:nowrap">${esc(cur)}</span>` : esc(cur)); cur = ''; };
@@ -70,40 +78,47 @@ function titleHtml(title) {
   return out.join('');
 }
 
-const GROUND = '#f6f2ea';
 const RATIO = 1280 / 670; // note の見出し画像の比率
 
-const BAND_RATIO = 0.26; // 帯の高さ（全体の高さに対する割合）
-const TOP_RATIO = 0.05; // 写真の上の余白（全体の高さに対する割合）
-const MIN_PHOTO_WIDTH = 0.6; // 写真が全体の幅のこの割合を切る日（正方形・縦長など）は、帯を付けず写真だけにする
+const MIN_KEEP = 0.5; // 比率合わせで残す写真の割合（短い辺の向き）がこれを切る日（縦長など）は、写真だけにする
+const MIN_SRC_WIDTH = 640; // 切り抜いた後の写真の幅がこれ未満（2倍超に引き伸ばす）なら、写真だけにする
+const TITLE_SIZES = [48, 44, 40]; // 題の字の大きさ（px・1280幅）。大きい順に試す
 
 /**
- * 写真の日の図の寸法（純粋関数）。写真（pw x ph）は原寸のまま置く。
- * 全体は note の比率（1280:670）。帯は全体の高さの約26%、写真の上の余白は約5%、残りの幅は左右の余白（写真は中央）。
- * 写真の幅が全体の60%を切るなら { photoOnly: true }（帯を付けず写真だけの見出し画像にする）。
- * 比率を保つので、左右の余白は上より広くなる（写真が横長でも、帯の分だけ縦が増えるため）。
+ * 写真の日の図の寸法（純粋関数・ADR 0065）。写真（pw x ph）を全面（1280x670）に敷く。
+ * 比率合わせの切り抜き（中央）だけを行う。keep = 写真の残る割合（横長なら左右、縦長なら上下を切る）。
+ * 残る割合が50%を切る（縦長・正方形より細い）か、切り抜いた写真の幅が640px 未満（ぼやける）なら { photoOnly: true }。
  */
 function photoGeometry(pw, ph) {
-  const H = Math.round(ph / (1 - BAND_RATIO - TOP_RATIO));
-  const W = Math.round(H * RATIO);
-  const fraction = pw / W;
-  if (fraction < MIN_PHOTO_WIDTH) return { photoOnly: true, fraction };
-  const py = Math.round(H * TOP_RATIO);
-  return { u: W / 1280, W, H, px: Math.floor((W - pw) / 2), py, pw, ph, bandTop: py + ph, bandH: H - py - ph, fraction };
+  const r = pw / ph;
+  const keep = r >= RATIO ? RATIO / r : r / RATIO;
+  const srcW = r >= RATIO ? ph * RATIO : pw; // 切り抜いた後の写真の幅（元の画素）
+  if (keep < MIN_KEEP || srcW < MIN_SRC_WIDTH) return { photoOnly: true, keep, srcW };
+  return { W: 1280, H: 670, keep, srcW };
 }
 
-/** 写真の日の図: 地の上に、写真（原寸・無加工）と、その下の題と日付の帯。photoSrc は data: URI。字の大きさは全体の幅（u = 幅/1280）に比例 */
-function photoHtml(title, date, photoSrc, g, size) {
-  const u = g.u;
+/**
+ * 写真の日の図（ADR 0065・2026-11-13 本人の指示「写真に重ねて」・見本は AI組織設計 design/brands/choices/03-b.png）:
+ * 写真を全面に敷き（比率合わせの切り抜きだけ・色は変えない）、上と下に暗い影を重ね、
+ * 上に「NAGOYA BITES JOURNAL」、下に題（明朝）と日付を白で載せる。影の無い中ほど（22〜45%）は写真の画素のまま。photoSrc は data: URI。
+ */
+/** 題を2行に分けるなら読点「、」の後で折りたい（「バターの／いとこ」のような商品名の途中を避ける）。真ん中にいちばん近い「、」の直後の位置（無ければ -1） */
+function commaBreak(title) {
+  let best = -1; const mid = title.length / 2;
+  for (let i = title.indexOf('、'); i >= 0; i = title.indexOf('、', i + 1)) if (i + 1 < title.length && (best < 0 || Math.abs(i + 1 - mid) < Math.abs(best - mid))) best = i + 1;
+  return best;
+}
+
+function photoHtml(title, date, photoSrc, size, breakAfter = -1) {
   return `<!doctype html><meta charset="utf-8"><style>
   html,body{margin:0}
-  .c{width:${g.W}px;height:${g.H}px;position:relative;overflow:hidden;background:${GROUND}}
-  .c img{position:absolute;left:${g.px}px;top:${g.py}px;width:${g.pw}px;height:${g.ph}px;display:block}
-  .band{position:absolute;left:0;top:${g.bandTop}px;width:${g.W}px;height:${g.bandH}px;color:#241c10}
-  h1{position:absolute;left:${56 * u}px;right:${56 * u}px;top:${10 * u}px;margin:0;font:700 ${size * u}px/1.36 "Hiragino Mincho ProN","Yu Mincho",serif;letter-spacing:.02em;line-break:strict;word-break:auto-phrase}
-  .f{position:absolute;left:${56 * u}px;right:${56 * u}px;bottom:${10 * u}px;display:flex;justify-content:space-between;align-items:baseline;font:${31 * u}px "Hiragino Sans","Yu Gothic",sans-serif;color:#5d4a2a}
-  .k{font-size:${28 * u}px;font-weight:600;letter-spacing:.18em;color:#7b5a12}
-  </style><div class="c"><img src="${photoSrc}"><div class="band"><h1>${titleHtml(title)}</h1><div class="f"><span>${esc(date)} ／ 名古屋の飲食店ジャーナル</span><span class="k">NAGOYA BITES JOURNAL</span></div></div></div>`;
+  .c{width:1280px;height:670px;position:relative;overflow:hidden;background:#000}
+  .c img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+  .sh{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.42) 0,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 45%,rgba(0,0,0,.55) 65%,rgba(0,0,0,.8) 100%)}
+  .k{position:absolute;left:56px;top:44px;font:600 28px "Hiragino Sans","Yu Gothic",sans-serif;letter-spacing:.18em;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.45)}
+  h1{position:absolute;left:56px;right:56px;bottom:96px;margin:0;font:700 ${size}px/1.38 "Hiragino Mincho ProN","Yu Mincho",serif;color:#fff;letter-spacing:.02em;line-break:strict;word-break:auto-phrase;text-shadow:0 2px 10px rgba(0,0,0,.45)}
+  .f{position:absolute;left:56px;bottom:42px;font:26px "Hiragino Sans","Yu Gothic",sans-serif;color:#eee;text-shadow:0 1px 6px rgba(0,0,0,.45)}
+  </style><div class="c"><img src="${photoSrc}"><div class="sh"></div><div class="k">NAGOYA BITES JOURNAL</div><h1>${titleHtml(title, breakAfter)}</h1><div class="f">${esc(date)} ／ 名古屋の飲食店ジャーナル</div></div>`;
 }
 
 /**
@@ -116,6 +131,9 @@ function inspectEyecatchBoxes({ canvas, label, title, footer }) {
   if (title.top < canvas.top || title.bottom > canvas.bottom || title.left < canvas.left || title.right > canvas.right) p.push('題がキャンバスからはみ出す');
   if (label && title.top < label.bottom) p.push('題が上のラベルに重なる');
   if (footer && title.bottom > footer.top) p.push('題が下のフッターに重なる');
+  for (const [name, b] of [['ラベル', label], ['日付', footer]]) {
+    if (b && b.left !== undefined && (b.top < canvas.top || b.bottom > canvas.bottom || b.left < canvas.left || b.right > canvas.right)) p.push(`${name}がキャンバスからはみ出す`);
+  }
   return p;
 }
 
@@ -137,8 +155,8 @@ async function assertEyecatchClean(page, opts = {}) {
         lines[lines.length - 1] += node.data[i];
       }
     }
-    return { canvas: opts.band ? r('.band') : { top: 0, left: 0, right: c.clientWidth, bottom: c.clientHeight }, label: opts.band ? null : r('.k'), title: { top: t.top, bottom: t.bottom, left: t.left, right: t.right }, footer: r('.f'), lines };
-  }, { band: !!opts.band });
+    return { canvas: { top: 0, left: 0, right: c.clientWidth, bottom: c.clientHeight }, label: r('.k'), title: { top: t.top, bottom: t.bottom, left: t.left, right: t.right }, footer: r('.f'), lines };
+  }, {});
   const problems = inspectEyecatchBoxes(boxes);
   if (opts.title) problems.push(...findWordBreaks(boxes.lines, opts.title));
   if (opts.maxLines && boxes.lines.length > opts.maxLines) problems.push(`題が${opts.maxLines}行に収まらない`);
@@ -162,8 +180,9 @@ async function makeEyecatch(title, date, outPath, browser) {
 }
 
 /**
- * 写真の下に題と日付の帯を足した PNG を作ってパスを返す（写真の画素・フレームはそのまま。縮小・切り抜き・重ね描きなし）。
- * 題が語の途中で折れる・2行に収まらない・帯からはみ出す・日付に重なるときは字を小さくして試し（46→42→38）、
+ * 写真を全面に敷き、影の上に題と日付を重ねた PNG を作ってパスを返す（ADR 0065。写真は比率合わせの切り抜きだけで、色は変えない）。
+ * 写真が縦長・小さすぎる日は何も作らず写真そのもの（photoPath）を返す（呼び出し側は写真だけを使う）。
+ * 題が語の途中で折れる・2行に収まらない・はみ出す・ラベルや日付に重なるときは字を小さくして試し（48→44→40）、
  * それでも合格しなければ例外（呼び出し側は写真そのままに落とす）。
  */
 async function makePhotoEyecatch(photoPath, title, date, outPath, browser) {
@@ -179,18 +198,20 @@ async function makePhotoEyecatch(photoPath, title, date, outPath, browser) {
     const dim = await page.evaluate(() => { const i = document.getElementById('p'); return { w: i.naturalWidth, h: i.naturalHeight }; });
     if (!dim.w || !dim.h) throw new Error('写真の大きさが読めない');
     const g = photoGeometry(dim.w, dim.h);
-    if (g.photoOnly) { await page.close(); return photoPath; } // 写真が小さく見える日は、帯を付けず写真だけ（呼び出し側は返り値が元の写真なら何もしない）
-    await page.setViewport({ width: g.W, height: g.H, deviceScaleFactor: 1 });
+    if (g.photoOnly) { await page.close(); return photoPath; } // 縦長・小さすぎる写真の日は、重ねず写真だけ
     let lastErr = null;
-    for (const size of [34, 32, 30]) {
-      await page.setContent(photoHtml(title, date, src, g, size));
-      try { await assertEyecatchClean(page, { title, maxLines: 2, band: true }); lastErr = null; break; } catch (e) { lastErr = e; }
+    const comma = commaBreak(title);
+    const tries = TITLE_SIZES.flatMap((size) => (comma > 0 ? [[size, comma], [size, -1]] : [[size, -1]])); // 同じ大きさで「、」の後で折る形を先に試す
+    for (const [size, brk] of tries) {
+      await page.setContent(photoHtml(title, date, src, size, brk));
+      await page.evaluate(() => document.fonts && document.fonts.ready);
+      try { await assertEyecatchClean(page, { title, maxLines: 2 }); lastErr = null; break; } catch (e) { lastErr = e; }
     }
     if (lastErr) throw lastErr;
-    await page.screenshot({ path: out, clip: { x: 0, y: 0, width: g.W, height: g.H } });
+    await page.screenshot({ path: out, clip: { x: 0, y: 0, width: 1280, height: 670 } });
     await page.close();
   } finally { if (own) await br.close(); }
   return out;
 }
 
-module.exports = { makePhotoEyecatch, photoHtml, photoGeometry, makeEyecatch, inspectEyecatchBoxes, html, downloadPhoto, photoUrl };
+module.exports = { commaBreak, titleHtml, overlayAllowed, makePhotoEyecatch, photoHtml, photoGeometry, makeEyecatch, inspectEyecatchBoxes, html, downloadPhoto, photoUrl };

@@ -44,7 +44,7 @@ test('見出し画像の検査: 題がラベル・フッターに重なる／は
   assert.ok(E.inspectEyecatchBoxes({ canvas, label, footer, title: null }).length > 0);
 });
 
-// ── 写真の日: 写真の下に題と日付の帯を足す（写真の画素・フレームは変えない・2026-11-13 / Ondine #1914）────────
+// ── 写真の日: 写真を全面に敷き、下部の影に題と日付を重ねる（2026-11-13 本人の指示・ADR 0065）────────
 const zlib = require('zlib');
 function crc32(buf) { let c, crc = ~0; for (const b of buf) { c = (crc ^ b) & 0xff; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; crc = (crc >>> 8) ^ c; } return ~crc >>> 0; }
 function pngEncode(w, h, rgb) {
@@ -67,54 +67,81 @@ function pngDecode(buf) { // 8bit RGB/RGBA・非インターレース
   return { w, h, ch, data: out };
 }
 
-test('見出し画像（写真の日）: 寸法は note の比率に合い、帯は全体の約26%・上の余白あり。写真が全体の幅の60%を切る日は写真だけ', () => {
-  const cases = [['横長 16:9', 1920, 1080, true], ['横長 1.91:1', 1600, 837, true], ['横長 2:1', 1600, 800, true], ['4:3', 1600, 1200, false], ['正方形', 1200, 1200, false], ['4:5', 1200, 1500, false]];
-  for (const [name, pw, ph, band] of cases) {
-    const g = E.photoGeometry(pw, ph);
-    if (!band) { assert.strictEqual(g.photoOnly, true, `${name} は写真だけ`); assert.ok(g.fraction < 0.6, name); continue; }
-    assert.ok(!g.photoOnly, `${name} は帯が付く`);
-    assert.ok(g.fraction >= 0.6, `${name} の写真の幅の割合`);
-    assert.ok(Math.abs(g.W / g.H - 1280 / 670) < 0.01, `${name} の比率`);
-    assert.ok(Math.abs(g.bandH / g.H - 0.26) < 0.02, `${name} の帯の割合`);
-    assert.ok(g.py > 0 && g.px >= 0 && g.px + pw <= g.W && g.bandTop + g.bandH <= g.H, `${name} 写真が上の端に接さず、収まる`);
-  }
-  assert.ok(!E.photoGeometry(1600, 837).photoOnly, '実写真（1.91:1）は帯が付く');
-  const h = E.photoHtml('題', '2026-11-08', 'data:image/png;base64,AA==', E.photoGeometry(1600, 837), 36);
-  assert.match(h, /<img src="data:/);
-  assert.doesNotMatch(h, /gradient|opacity|filter|object-fit|rgba/); // 写真に影・色・切り抜きを足さない
+test('見出し画像（写真の日）: 題を重ねてよいのは PR TIMES の写真だけ', () => {
+  assert.ok(E.overlayAllowed('https://prcdn.freetls.fastly.net/release_image/1/2/a.jpg'));
+  assert.ok(E.overlayAllowed('https://prtimes.jp/i/1/2/a.jpg'));
+  assert.ok(!E.overlayAllowed('https://imgfp.hotp.jp/IMGH/12/34/a.jpg'), 'ホットペッパー');
+  assert.ok(!E.overlayAllowed('https://maps.googleapis.com/maps/api/place/photo?x=1'), 'Google');
+  assert.ok(!E.overlayAllowed('https://evil-prtimes.jp/a.jpg'), '似た名前のホスト');
+  assert.ok(!E.overlayAllowed('not a url'));
 });
 
-test('見出し画像（写真の日）: 正方形の写真は帯を付けず、写真そのもの（同じファイル）を返す', { timeout: 60000 }, async () => {
+test('見出し画像（写真の日）: 全面（1280x670）に敷く。縦長・正方形より細い写真と、小さすぎる写真は写真だけ', () => {
+  const cases = [['16:9', 1920, 1080, true], ['1.91:1', 1600, 837, true], ['4:3', 1600, 1200, true], ['3:2', 1500, 1000, true], ['正方形', 1200, 1200, true], ['4:5', 1200, 1500, false], ['9:16', 1080, 1920, false], ['横に細長い 4:1', 2400, 600, false], ['小さい 16:9', 600, 338, false], ['小さい 4:3', 640, 480, true]];
+  for (const [name, pw, ph, overlay] of cases) {
+    const g = E.photoGeometry(pw, ph);
+    assert.strictEqual(!g.photoOnly, overlay, `${name}: ${overlay ? '重ねる' : '写真だけ'}（keep=${g.keep.toFixed(2)} srcW=${Math.round(g.srcW)}）`);
+    if (overlay) { assert.strictEqual(g.W, 1280); assert.strictEqual(g.H, 670); assert.ok(g.keep >= 0.5 && g.keep <= 1); }
+  }
+  const h = E.photoHtml('栄・白川公園『圧釜うどん もちり』', '2026-11-08', 'data:image/png;base64,AA==', 48);
+  assert.match(h, /<img src="data:/);
+  assert.match(h, /object-fit:cover/); // 比率合わせの切り抜きだけ
+  assert.match(h, /linear-gradient\(180deg/); // 下部の暗い影
+  assert.match(h, /NAGOYA BITES JOURNAL/); assert.match(h, /2026-11-08 ／ 名古屋の飲食店ジャーナル/);
+  assert.match(h, /Hiragino Mincho ProN/); // 題は明朝
+  assert.doesNotMatch(h, /filter|mix-blend|saturate|hue-rotate|sepia|grayscale/); // 写真の色は変えない
+});
+
+test('見出し画像（写真の日）: 2行に分けるなら真ん中に近い「、」の後で折る形を先に試す', () => {
+  const t = '名駅『鎌倉紅谷』クルミッ子が常設に、バターのいとこも 手土産は予算で';
+  assert.strictEqual(E.commaBreak(t), t.indexOf('、') + 1);
+  assert.strictEqual(E.commaBreak('読点の無い題'), -1);
+  assert.strictEqual(E.commaBreak('末尾だけ、'), -1);
+  const h = E.titleHtml(t, E.commaBreak(t));
+  const parts = h.split('<br>').map((x) => x.replace(/<[^>]+>/g, ''));
+  assert.deepStrictEqual(parts, ['名駅『鎌倉紅谷』クルミッ子が常設に、', 'バターのいとこも 手土産は予算で']);
+});
+
+test('見出し画像（写真の日）: 縦長の写真は重ねず、写真そのもの（同じファイル）を返す', { timeout: 60000 }, async () => {
   const os = require('os');
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-eyecatch-sq-'));
-  const rgb = Buffer.alloc(200 * 200 * 3, 120); const src = path.join(dir, 'sq.png'); fs.writeFileSync(src, pngEncode(200, 200, rgb));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-eyecatch-tall-'));
+  const rgb = Buffer.alloc(400 * 700 * 3, 120); const src = path.join(dir, 'tall.png'); fs.writeFileSync(src, pngEncode(400, 700, rgb));
   assert.strictEqual(await E.makePhotoEyecatch(src, '題', '2026-11-08', path.join(dir, 'o.png')), src);
   assert.ok(!fs.existsSync(path.join(dir, 'o.png')));
   fs.rmSync(dir, { recursive: true, force: true });
 });
 
-test('見出し画像（写真の日）: 実際に描いて、写真の領域が元と全画素一致・帯の字が帯に収まる・長い題でも語を割らない', { timeout: 120000 }, async () => {
+test('見出し画像（写真の日）: 実際に描いて、1280x670・影の無い中ほどは写真の色のまま・下部は暗く白い字が載る・長い題も2行で語を割らない', { timeout: 120000 }, async () => {
   const os = require('os');
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-eyecatch-photo-'));
-  const pw = 800, ph = 420; const rgb = Buffer.alloc(pw * ph * 3);
-  for (let y = 0; y < ph; y++) for (let x = 0; x < pw; x++) { const i = (y * pw + x) * 3; rgb[i] = (x * 7 + y) & 255; rgb[i + 1] = (y * 5) & 255; rgb[i + 2] = (x * y) & 255; }
+  const pw = 1600, ph = 900; const C = [200, 120, 60]; const rgb = Buffer.alloc(pw * ph * 3);
+  for (let i = 0; i < pw * ph; i++) { rgb[i * 3] = C[0]; rgb[i * 3 + 1] = C[1]; rgb[i * 3 + 2] = C[2]; }
   const src = path.join(dir, 'src.png'); fs.writeFileSync(src, pngEncode(pw, ph, rgb));
   const out = path.join(dir, 'out.png');
   const title = '栄・白川公園『圧釜うどん もちり』一人ランチに、大盛り無料とぶっかけ1,100円から';
-  await E.makePhotoEyecatch(src, title, '2026-11-08', out);
-  const img = pngDecode(fs.readFileSync(out)); const g = E.photoGeometry(pw, ph);
-  assert.strictEqual(img.w, g.W); assert.strictEqual(img.h, g.H);
-  // 写真の領域の全画素が元と一致
-  for (let y = 0; y < ph; y++) for (let x = 0; x < pw; x++) {
-    const o = ((y + g.py) * img.w + x + g.px) * img.ch; const s = (y * pw + x) * 3;
-    if (img.data[o] !== rgb[s] || img.data[o + 1] !== rgb[s + 1] || img.data[o + 2] !== rgb[s + 2]) assert.fail(`写真の画素が変わっている (${x},${y})`);
-  }
-  // 帯: 地の色と違う画素（字）があり、帯の外（写真の左右・上の余白）には字が無い
+  assert.strictEqual(await E.makePhotoEyecatch(src, title, '2026-11-08', out), out);
+  const img = pngDecode(fs.readFileSync(out));
+  assert.strictEqual(img.w, 1280); assert.strictEqual(img.h, 670);
   const px = (x, y) => { const o = (y * img.w + x) * img.ch; return [img.data[o], img.data[o + 1], img.data[o + 2]]; };
-  const isGround = (c) => c[0] === 0xf6 && c[1] === 0xf2 && c[2] === 0xea;
-  let ink = 0; for (let y = g.bandTop; y < g.bandTop + g.bandH; y++) for (let x = g.px; x < g.px + pw; x++) if (!isGround(px(x, y))) ink++;
-  assert.ok(ink > 500, '帯に題と日付が描かれている');
-  let stray = 0; for (let y = 0; y < img.h; y++) for (let x = 0; x < img.w; x++) { const inPhoto = x >= g.px && x < g.px + pw && y >= g.py && y < g.py + ph; const inBand = y >= g.py + ph && y < g.bandTop + g.bandH; if (!inPhoto && !inBand && !isGround(px(x, y))) stray++; }
-  assert.strictEqual(stray, 0, '帯の外（余白）に字がはみ出さない');
+  // 影の無い中ほど（高さの 24〜43%）は、写真の色そのまま（±1）
+  for (let y = Math.ceil(670 * 0.24); y < Math.floor(670 * 0.43); y += 3) for (let x = 0; x < 1280; x += 7) {
+    const c = px(x, y); if (c.some((v, k) => Math.abs(v - C[k]) > 1)) assert.fail(`写真の色が変わっている (${x},${y}) ${c}`);
+  }
+  // 下の端は影で暗い。題の行あたりに白い字がある。左右の端（56px の外）の下部に字が無い
+  const bottom = px(640, 668); assert.ok(bottom[0] < C[0] * 0.4, '下部が暗い');
+  let white = 0; for (let y = 430; y < 640; y++) for (let x = 56; x < 1224; x++) { const c = px(x, y); if (c[0] > 230 && c[1] > 230 && c[2] > 230) white++; }
+  assert.ok(white > 3000, `題と日付が白で載っている (${white})`);
+  let label = 0; for (let y = 40; y < 80; y++) for (let x = 56; x < 600; x++) { const c = px(x, y); if (c[0] > 230 && c[1] > 230 && c[2] > 230) label++; }
+  assert.ok(label > 200, '上にラベルが載っている');
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+test('見出し画像（写真の日）: 題が2行に収まらないときは例外（呼び出し側は写真そのままに落とす）', { timeout: 120000 }, async () => {
+  const os = require('os');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-eyecatch-long-'));
+  const rgb = Buffer.alloc(1600 * 900 * 3, 90); const src = path.join(dir, 'src.png'); fs.writeFileSync(src, pngEncode(1600, 900, rgb));
+  const long = '名駅・柳橋中央市場の路地裏で朝から開く海鮮丼と天ぷらの店に、仕事前の一人朝ごはんと週末の家族連れの昼ごはんで寄る理由と、行列を避ける時間帯と予約の取り方の全部';
+  await assert.rejects(E.makePhotoEyecatch(src, long, '2026-11-08', path.join(dir, 'o.png')), /2行に収まらない|はみ出す|重なる/);
+  assert.ok(!fs.existsSync(path.join(dir, 'o.png')));
   fs.rmSync(dir, { recursive: true, force: true });
 });

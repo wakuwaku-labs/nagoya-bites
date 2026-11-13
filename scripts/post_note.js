@@ -93,18 +93,19 @@ async function removeEyecatch(page) {
   if (left) throw new Error('付いていた見出し画像を外せませんでした');
 }
 
-/** 見出し画像の素材: 記事に載せた店の実物写真（規約で上げてよいものだけ・加工しない）。無い日・取れない日は題と日付だけの図（docs/decisions/0056） */
+/** 見出し画像の素材: 記事に載せた店の実物写真（規約で上げてよいものだけ。PR TIMES の写真には題と日付を重ねる・ADR 0065）。無い日・取れない日は題と日付だけの図（docs/decisions/0056） */
 async function eyecatchFile(page, draft, date) {
   if (draft.photo) {
     let raw = null;
     try {
       raw = E.downloadPhoto(draft.photo, date);
       try {
+        if (!E.overlayAllowed(draft.photo)) { console.log('note: 見出し画像は記事の写真（店の実物）だけを使います（PR TIMES 以外の写真には題を重ねない・ADR 0065）'); return { file: raw, kind: 'photo' }; }
         const f = await E.makePhotoEyecatch(raw, draft.title, date, null, page.browser());
-        if (f === raw) { console.log('note: 見出し画像は記事の写真（店の実物）だけを使います（帯を付けると写真が小さくなる形のため）'); return { file: raw, kind: 'photo' }; }
+        if (f === raw) { console.log('note: 見出し画像は記事の写真（店の実物）だけを使います（縦長・小さい写真で、全面に敷くと切れる・ぼやけるため）'); return { file: raw, kind: 'photo' }; }
         fs.rmSync(raw, { force: true });
-        console.log('note: 見出し画像は記事の写真（店の実物）の下に題と日付の帯を足したものを使います'); return { file: f, kind: 'photo' };
-      } catch (e) { console.error('note: 題の帯を足せなかったので、写真そのままにします: ' + e.message); }
+        console.log('note: 見出し画像は記事の写真（店の実物）に題と日付を重ねたものを使います'); return { file: f, kind: 'photo' };
+      } catch (e) { console.error('note: 題を重ねられなかったので、写真そのままにします: ' + e.message); }
       console.log('note: 見出し画像は記事の写真（店の実物）を使います'); return { file: raw, kind: 'photo' };
     } catch (e) { console.error('note: 記事の写真を取れなかったので、題だけの図にします: ' + e.message); }
   } else console.log('note: 記事に note へ上げてよい店の写真が無いので、見出し画像は題だけの図にします');
