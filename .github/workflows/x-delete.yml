@@ -1,0 +1,60 @@
+name: NAGOYA BITES — X 投稿の削除（手動のみ）
+
+# 本人の指示で X の投稿を1件消すためだけの手動実行。台帳（data/x_post_log.json）に載っている tweet_id しか受け付けない。
+# 台帳の書き込みは x-post.yml と同じ作法（取り込み直して最大5回 push）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      tweet_id:
+        description: '消す投稿の tweet_id（data/x_post_log.json にあるもの）'
+        required: true
+      reason:
+        description: '消す理由（台帳に残す）'
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: x-post
+  cancel-in-progress: false
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 投稿を消す
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+          INPUT_ID: ${{ github.event.inputs.tweet_id }}
+          INPUT_REASON: ${{ github.event.inputs.reason }}
+        run: node scripts/delete_x_post.js --id "$INPUT_ID" --reason "$INPUT_REASON" --yes
+
+      - name: 台帳をコミット
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/x_post_log.json
+          if git diff --cached --quiet; then echo "台帳に変更なし"; exit 0; fi
+          git commit -m "chore: X 投稿の削除を台帳に記録 [skip actions]"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((i * 5))
+          done
+          echo "::error::台帳を push できませんでした（投稿は削除済みの可能性があります）"
+          exit 1
