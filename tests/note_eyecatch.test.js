@@ -67,21 +67,36 @@ function pngDecode(buf) { // 8bit RGB/RGBA・非インターレース
   return { w, h, ch, data: out };
 }
 
-test('見出し画像（写真の日）: 寸法は note の比率に合い、写真は原寸のまま・帯が写真の下に付く', () => {
-  for (const [pw, ph] of [[1600, 837], [1920, 1080], [1920, 1920], [1200, 400]]) {
+test('見出し画像（写真の日）: 寸法は note の比率に合い、帯は全体の約26%・上の余白あり。写真が全体の幅の65%を切る日は写真だけ', () => {
+  const cases = [['横長 16:9', 1920, 1080, true], ['横長 1.91:1', 1600, 837, true], ['横長 2:1', 1600, 800, true], ['4:3', 1600, 1200, false], ['正方形', 1200, 1200, false], ['4:5', 1200, 1500, false]];
+  for (const [name, pw, ph, band] of cases) {
     const g = E.photoGeometry(pw, ph);
-    assert.ok(Math.abs(g.W / g.H - 1280 / 670) < 0.01, `${pw}x${ph} の比率`);
-    assert.ok(g.px >= 0 && g.py >= 0 && g.px + pw <= g.W && g.py + ph + g.band <= g.H, '写真と帯がキャンバスに収まる');
+    if (!band) { assert.strictEqual(g.photoOnly, true, `${name} は写真だけ`); assert.ok(g.fraction < 0.65, name); continue; }
+    if (g.photoOnly) { assert.ok(g.fraction < 0.65, `${name}（65%を切るので写真だけ）`); continue; }
+    assert.ok(g.fraction >= 0.65, `${name} の写真の幅の割合`);
+    assert.ok(Math.abs(g.W / g.H - 1280 / 670) < 0.01, `${name} の比率`);
+    assert.ok(Math.abs(g.bandH / g.H - 0.26) < 0.02, `${name} の帯の割合`);
+    assert.ok(g.py > 0 && g.px >= 0 && g.px + pw <= g.W && g.bandTop + g.bandH <= g.H, `${name} 写真が上の端に接さず、収まる`);
   }
-  const h = E.photoHtml('題', '2026-11-08', 'data:image/png;base64,AA==', E.photoGeometry(1600, 837), 46);
+  assert.ok(!E.photoGeometry(1600, 837).photoOnly, '実写真（1.91:1）は帯が付く');
+  const h = E.photoHtml('題', '2026-11-08', 'data:image/png;base64,AA==', E.photoGeometry(1600, 837), 36);
   assert.match(h, /<img src="data:/);
   assert.doesNotMatch(h, /gradient|opacity|filter|object-fit|rgba/); // 写真に影・色・切り抜きを足さない
+});
+
+test('見出し画像（写真の日）: 正方形の写真は帯を付けず、写真そのもの（同じファイル）を返す', { timeout: 60000 }, async () => {
+  const os = require('os');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-eyecatch-sq-'));
+  const rgb = Buffer.alloc(200 * 200 * 3, 120); const src = path.join(dir, 'sq.png'); fs.writeFileSync(src, pngEncode(200, 200, rgb));
+  assert.strictEqual(await E.makePhotoEyecatch(src, '題', '2026-11-08', path.join(dir, 'o.png')), src);
+  assert.ok(!fs.existsSync(path.join(dir, 'o.png')));
+  fs.rmSync(dir, { recursive: true, force: true });
 });
 
 test('見出し画像（写真の日）: 実際に描いて、写真の領域が元と全画素一致・帯の字が帯に収まる・長い題でも語を割らない', { timeout: 120000 }, async () => {
   const os = require('os');
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-eyecatch-photo-'));
-  const pw = 640, ph = 420; const rgb = Buffer.alloc(pw * ph * 3);
+  const pw = 800, ph = 420; const rgb = Buffer.alloc(pw * ph * 3);
   for (let y = 0; y < ph; y++) for (let x = 0; x < pw; x++) { const i = (y * pw + x) * 3; rgb[i] = (x * 7 + y) & 255; rgb[i + 1] = (y * 5) & 255; rgb[i + 2] = (x * y) & 255; }
   const src = path.join(dir, 'src.png'); fs.writeFileSync(src, pngEncode(pw, ph, rgb));
   const out = path.join(dir, 'out.png');
@@ -94,12 +109,12 @@ test('見出し画像（写真の日）: 実際に描いて、写真の領域が
     const o = ((y + g.py) * img.w + x + g.px) * img.ch; const s = (y * pw + x) * 3;
     if (img.data[o] !== rgb[s] || img.data[o + 1] !== rgb[s + 1] || img.data[o + 2] !== rgb[s + 2]) assert.fail(`写真の画素が変わっている (${x},${y})`);
   }
-  // 帯: 地の色と違う画素（字）があり、帯の外（写真の左右の余白・写真の下端より上以外）には字が無い
+  // 帯: 地の色と違う画素（字）があり、帯の外（写真の左右・上の余白）には字が無い
   const px = (x, y) => { const o = (y * img.w + x) * img.ch; return [img.data[o], img.data[o + 1], img.data[o + 2]]; };
   const isGround = (c) => c[0] === 0xf6 && c[1] === 0xf2 && c[2] === 0xea;
-  let ink = 0; for (let y = g.py + ph; y < g.py + ph + g.band; y++) for (let x = g.px; x < g.px + pw; x++) if (!isGround(px(x, y))) ink++;
+  let ink = 0; for (let y = g.bandTop; y < g.bandTop + g.bandH; y++) for (let x = g.px; x < g.px + pw; x++) if (!isGround(px(x, y))) ink++;
   assert.ok(ink > 500, '帯に題と日付が描かれている');
-  let stray = 0; for (let y = 0; y < img.h; y++) for (let x = 0; x < img.w; x++) { const inPhoto = x >= g.px && x < g.px + pw && y >= g.py && y < g.py + ph; const inBand = x >= g.px && x < g.px + pw && y >= g.py + ph && y < g.py + ph + g.band; if (!inPhoto && !inBand && !isGround(px(x, y))) stray++; }
+  let stray = 0; for (let y = 0; y < img.h; y++) for (let x = 0; x < img.w; x++) { const inPhoto = x >= g.px && x < g.px + pw && y >= g.py && y < g.py + ph; const inBand = y >= g.py + ph && y < g.bandTop + g.bandH; if (!inPhoto && !inBand && !isGround(px(x, y))) stray++; }
   assert.strictEqual(stray, 0, '帯の外（余白）に字がはみ出さない');
   fs.rmSync(dir, { recursive: true, force: true });
 });

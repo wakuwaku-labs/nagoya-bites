@@ -101,6 +101,7 @@ async function eyecatchFile(page, draft, date) {
       raw = E.downloadPhoto(draft.photo, date);
       try {
         const f = await E.makePhotoEyecatch(raw, draft.title, date, null, page.browser());
+        if (f === raw) { console.log('note: 見出し画像は記事の写真（店の実物）だけを使います（帯を付けると写真が小さくなる形のため）'); return { file: raw, kind: 'photo' }; }
         fs.rmSync(raw, { force: true });
         console.log('note: 見出し画像は記事の写真（店の実物）の下に題と日付の帯を足したものを使います'); return { file: f, kind: 'photo' };
       } catch (e) { console.error('note: 題の帯を足せなかったので、写真そのままにします: ' + e.message); }
