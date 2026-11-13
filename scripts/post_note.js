@@ -96,8 +96,16 @@ async function removeEyecatch(page) {
 /** 見出し画像の素材: 記事に載せた店の実物写真（規約で上げてよいものだけ・加工しない）。無い日・取れない日は題と日付だけの図（docs/decisions/0056） */
 async function eyecatchFile(page, draft, date) {
   if (draft.photo) {
-    try { const f = E.downloadPhoto(draft.photo, date); console.log('note: 見出し画像は記事の写真（店の実物）を使います'); return { file: f, kind: 'photo' }; }
-    catch (e) { console.error('note: 記事の写真を取れなかったので、題だけの図にします: ' + e.message); }
+    let raw = null;
+    try {
+      raw = E.downloadPhoto(draft.photo, date);
+      try {
+        const f = await E.makePhotoEyecatch(raw, draft.title, date, null, page.browser());
+        fs.rmSync(raw, { force: true });
+        console.log('note: 見出し画像は記事の写真（店の実物）の下に題と日付の帯を足したものを使います'); return { file: f, kind: 'photo' };
+      } catch (e) { console.error('note: 題の帯を足せなかったので、写真そのままにします: ' + e.message); }
+      console.log('note: 見出し画像は記事の写真（店の実物）を使います'); return { file: raw, kind: 'photo' };
+    } catch (e) { console.error('note: 記事の写真を取れなかったので、題だけの図にします: ' + e.message); }
   } else console.log('note: 記事に note へ上げてよい店の写真が無いので、見出し画像は題だけの図にします');
   return { file: await E.makeEyecatch(draft.title, date, null, page.browser()), kind: 'card' };
 }

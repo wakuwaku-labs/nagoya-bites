@@ -1,6 +1,6 @@
 # 0056 note の見出し画像は、記事に載せた店の実物写真（プレスリリース）を使い、無い日は題だけの図にする
 
-- 日付: 2026-10-24
+- 日付: 2026-10-24（2026-11-13 追記: 題と日付は写真の下の別の帯に足す形に変わった・ADR 0064。写真に重ねない決まりは今も有効）
 - 状態: 採用
 - 関連: data/note_post_policy.json（eyecatchPhoto）/ scripts/lib/note_draft.js（articlePhoto）/ scripts/lib/note_eyecatch.js / scripts/post_note.js / ADR 0054（note の抜粋）・0055（note の見出し画像を付ける）/ CLAUDE.md 写真ソースの優先順（優先3）
 
