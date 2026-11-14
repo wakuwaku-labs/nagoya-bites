@@ -105,19 +105,33 @@ function sendLineMessage(text) {
 }
 
 // ─── 日次レポート ───
-function sendDailyReport() {
+function buildDailyReport() {
   // 報告する日は「確定した日」（通常 D-2）。「昨日」は GA4 の集計が終わる前に配信されるため、
   // 訪問者数・閲覧数まで実際より少なく出ていた（2026-10-19 は 52PV と出て確定後は 112PV）。
   // 確定済みの日を先に決め、全ての数字を同じ日で揃える（日をまたいだ数字を並べない）。
   const settled = pickSettledSlice();
   const reportDate = settled.date;
-  let data = fetchGA4Report(reportDate, reportDate);
-  data.settled = settled;
   // 直接アクセスの急増（機械的な訪問の疑い）を見分け、判定・助言から外す（2026-11-14）。
-  // 取れなかった日は今までどおりの判定にする（レポート自体は止めない）
-  try { data = excludeDirectSpike(data, detectDirectSpike(fetchDirectDaily(reportDate), reportDate)); }
+  // 急増の日は、訪問した人・ページ数・人気ページ・行動・デバイスも GA4 の取得の段階で
+  // その日の直接アクセスを除く。取れなかった日は今までどおりの判定にする（レポート自体は止めない）
+  let spike = null;
+  try { spike = detectDirectSpike(fetchDirectDaily(reportDate), reportDate); }
   catch (e) { Logger.log('直接アクセスの急増の判定に失敗: ' + e.message); }
-  const report = formatDailyReport(data, reportDate);
+  let data = null;
+  if (spike && spike.spiking) {
+    try { data = fetchGA4Report(reportDate, reportDate, [reportDate]); spike.allExcluded = true; }
+    catch (e) { Logger.log('直接アクセスを除いた取得に失敗（除かずに出す）: ' + e.message); }
+  }
+  if (!data) data = fetchGA4Report(reportDate, reportDate);
+  data.settled = settled;
+  data = excludeDirectSpike(data, spike);
+  return { reportDate: reportDate, report: formatDailyReport(data, reportDate) };
+}
+
+function sendDailyReport() {
+  const built = buildDailyReport();
+  const reportDate = built.reportDate;
+  const report = built.report;
 
   // LINE送信
   sendLineMessage(report);
@@ -129,15 +143,12 @@ function sendDailyReport() {
   Logger.log('日次レポート送信完了（対象日 ' + reportDate + '）');
 }
 
-// ─── 最新の日次レポートを LINE にだけ送り直す（手動で ▶ 実行する用・2026-11-14）───
-// メールで届いた本文をそのまま送る。数字を取り直さず、助言も作り直さず、メールも二重に送らない
-function resendLatestDailyReportToLine() {
-  const threads = GmailApp.search('subject:"NAGOYA BITES 日次レポート" newer_than:2d', 0, 1);
-  if (!threads.length) { Logger.log('送り直せる日次レポートのメールが見つからない'); return; }
-  const msgs = threads[0].getMessages();
-  const body = msgs[msgs.length - 1].getPlainBody();
-  Logger.log('送り直す: ' + msgs[msgs.length - 1].getSubject());
-  sendLineMessage(body);
+// ─── 日次レポートを作り直して LINE にだけ送る（手動で ▶ 実行する用・2026-11-14）───
+// メールは送らない（二重に届かないように）。メール本文の転送は絵文字が化けるので使わない
+function resendDailyReportToLine() {
+  const built = buildDailyReport();
+  sendLineMessage(built.report);
+  Logger.log('LINE にだけ送り直した（対象日 ' + built.reportDate + '）');
 }
 
 // ─── 週次レポート ───
@@ -145,19 +156,31 @@ function sendWeeklyReport() {
   // 週の終端も確定済みの日にする（末日が未確定だと週の直帰率まで引きずられる・SEO-076）
   const endDate = getDateStr(-SETTLED_LAG_DAYS);
   const startDate = getDateStr(-SETTLED_LAG_DAYS - 6);
-  let data = fetchGA4Report(startDate, endDate);
-  let prevData = fetchGA4Report(getDateStr(-SETTLED_LAG_DAYS - 13), getDateStr(-SETTLED_LAG_DAYS - 7));
+  const prevStart = getDateStr(-SETTLED_LAG_DAYS - 13);
+  const prevEnd = getDateStr(-SETTLED_LAG_DAYS - 7);
+  // 直接アクセスの急増（機械的な訪問の疑い）の日を、今週・先週とも外す（2026-11-14・日次と同じ判定）。
+  // 急増の日の直接アクセスは GA4 の取得の段階で除く（訪問者・人気ページ・行動・デバイスも除ける）。
+  // 判定や除いた取得に失敗したときは今までどおりにする（レポート自体は止めない）
+  let spikeNow = null, spikePrev = null;
+  try {
+    const rows = fetchDirectRange(shiftDateStr(prevStart, -DIRECT_SPIKE_BASELINE_DAYS), endDate);
+    spikeNow = detectDirectSpikeRange(rows, startDate, endDate);
+    spikePrev = detectDirectSpikeRange(rows, prevStart, prevEnd);
+  } catch (e) { Logger.log('直接アクセスの急増の判定に失敗（週次）: ' + e.message); }
+  const fetchWeek = (from, to, spike) => {
+    if (spike) {
+      try {
+        const d = fetchGA4Report(from, to, spike.dates);
+        spike.allExcluded = true;
+        return Object.assign(d, { directSpike: spike });
+      } catch (e) { Logger.log('直接アクセスを除いた取得に失敗（週次・差し引きで出す）: ' + e.message); }
+    }
+    return excludeDirectSpikeWeek(fetchGA4Report(from, to), spike);
+  };
+  const data = fetchWeek(startDate, endDate, spikeNow);
+  const prevData = fetchWeek(prevStart, prevEnd, spikePrev);
   let referrals = null;
   try { referrals = fetchStoreReferrals(startDate, endDate); } catch (e) { Logger.log('店舗別送客の取得に失敗: ' + e.message); }
-  // 直接アクセスの急増（機械的な訪問の疑い）の日を、今週・先週とも合計から外す（2026-11-14・日次と同じ判定）。
-  // 取れなかったときは今までどおりの判定にする（レポート自体は止めない）
-  try {
-    const prevStart = getDateStr(-SETTLED_LAG_DAYS - 13);
-    const prevEnd = getDateStr(-SETTLED_LAG_DAYS - 7);
-    const rows = fetchDirectRange(shiftDateStr(prevStart, -DIRECT_SPIKE_BASELINE_DAYS), endDate);
-    data = excludeDirectSpikeWeek(data, detectDirectSpikeRange(rows, startDate, endDate));
-    prevData = excludeDirectSpikeWeek(prevData, detectDirectSpikeRange(rows, prevStart, prevEnd));
-  } catch (e) { Logger.log('直接アクセスの急増の判定に失敗（週次）: ' + e.message); }
   const report = formatWeeklyReport(data, prevData, startDate, endDate, referrals);
 
   sendLineMessage(report);
@@ -486,6 +509,16 @@ function excludeDirectSpikeWeek(data, spike) {
 
 // 本文と AI への入力に入れる、急増の説明（1か所で作る）
 function directSpikeNote(spike) {
+  if (spike.dates && spike.allExcluded) {
+    return 'この週は ' + spike.dates.join('・') + ' に「直接アクセス」が急増しました（合計' + spike.sessions + '回・各日の直前' +
+      DIRECT_SPIKE_BASELINE_DAYS + '日の中央値の合計は' + Math.round(spike.median) + '回）。人の訪問とは考えにくい（ボットなどの疑い）ため、' +
+      'この週の数字はすべて、その日の直接アクセスを除いた値で出しています。';
+  }
+  if (spike.allExcluded) {
+    return 'この日は「直接アクセス」が' + spike.sessions + '回（直前' + DIRECT_SPIKE_BASELINE_DAYS + '日の中央値は' +
+      Math.round(spike.median) + '回）と急増しました。人の訪問とは考えにくい（ボットなどの疑い）ため、' +
+      'この日の数字はすべて直接アクセスを除いた値で出しています。';
+  }
   if (spike.dates) {
     return 'この週は ' + spike.dates.join('・') + ' に「直接アクセス」が急増しました（合計' + spike.sessions + '回・各日の直前' +
       DIRECT_SPIKE_BASELINE_DAYS + '日の中央値の合計は' + Math.round(spike.median) + '回）。人の訪問とは考えにくい（ボットなどの疑い）ため、' +
@@ -504,7 +537,25 @@ function sessionScoped(data) {
   return (data && data.settled) ? data.settled : { date: null, totals: data.totals, sources: data.sources };
 }
 
-function fetchGA4Report(startDate, endDate) {
+// 急増の日（dates・'YYYY-MM-DD'）の直接アクセスを除く条件を足す。dates が空なら filter のまま
+function withDirectExclusion(filter, dates) {
+  if (!dates || !dates.length) return filter;
+  return {
+    andGroup: {
+      expressions: [
+        filter,
+        { notExpression: { andGroup: { expressions: [
+          { filter: { fieldName: 'sessionSource', stringFilter: { matchType: 'EXACT', value: '(direct)' } } },
+          { filter: { fieldName: 'date', inListFilter: { values: dates.map(d => String(d).replace(/-/g, '')) } } },
+        ] } } },
+      ],
+    },
+  };
+}
+
+// excludeDirectDates: 直接アクセスを除く日（急増の日）。渡すと全部の数字からその日の直接アクセスを除く
+function fetchGA4Report(startDate, endDate, excludeDirectDates) {
+  const ex = excludeDirectDates || [];
   const request = AnalyticsData.Properties.runReport({
     dateRanges: [{ startDate: startDate, endDate: endDate }],
     metrics: [
@@ -516,7 +567,7 @@ function fetchGA4Report(startDate, endDate) {
       { name: 'eventCount' },
     ],
     dimensions: [{ name: 'pagePath' }],
-    dimensionFilter: HOST_FILTER,
+    dimensionFilter: withDirectExclusion(HOST_FILTER, ex),
     metricAggregations: ['TOTAL'],  // ページ別ランキング用（totals はページ次元つきのため直帰率/平均滞在の算出には使わない。下の totalsRequest 参照）
     orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
     limit: 20,
@@ -536,14 +587,14 @@ function fetchGA4Report(startDate, endDate) {
       { name: 'bounceRate' },
       { name: 'eventCount' },
     ],
-    dimensionFilter: HOST_FILTER,
+    dimensionFilter: withDirectExclusion(HOST_FILTER, ex),
   }, 'properties/' + GA4_PROPERTY_ID);
 
   const eventRequest = AnalyticsData.Properties.runReport({
     dateRanges: [{ startDate: startDate, endDate: endDate }],
     metrics: [{ name: 'eventCount' }],
     dimensions: [{ name: 'eventName' }],
-    dimensionFilter: HOST_FILTER,
+    dimensionFilter: withDirectExclusion(HOST_FILTER, ex),
     orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
     limit: 30,
   }, 'properties/' + GA4_PROPERTY_ID);
@@ -552,7 +603,7 @@ function fetchGA4Report(startDate, endDate) {
     dateRanges: [{ startDate: startDate, endDate: endDate }],
     metrics: [{ name: 'activeUsers' }, { name: 'sessions' }],
     dimensions: [{ name: 'sessionSource' }, { name: 'sessionMedium' }],
-    dimensionFilter: HOST_FILTER,
+    dimensionFilter: withDirectExclusion(HOST_FILTER, ex),
     orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
     limit: 10,
   }, 'properties/' + GA4_PROPERTY_ID);
@@ -561,7 +612,7 @@ function fetchGA4Report(startDate, endDate) {
     dateRanges: [{ startDate: startDate, endDate: endDate }],
     metrics: [{ name: 'activeUsers' }],
     dimensions: [{ name: 'deviceCategory' }],
-    dimensionFilter: HOST_FILTER,
+    dimensionFilter: withDirectExclusion(HOST_FILTER, ex),
   }, 'properties/' + GA4_PROPERTY_ID);
 
   // SEO-089: outbound_click を link_domain 別に集計し、予約ドメインと情報ドメインを分離する
@@ -569,14 +620,14 @@ function fetchGA4Report(startDate, endDate) {
     dateRanges: [{ startDate: startDate, endDate: endDate }],
     metrics: [{ name: 'eventCount' }],
     dimensions: [{ name: 'customEvent:link_domain' }],
-    dimensionFilter: {
+    dimensionFilter: withDirectExclusion({
       andGroup: {
         expressions: [
           HOST_FILTER,
           { filter: { fieldName: 'eventName', stringFilter: { matchType: 'EXACT', value: 'outbound_click' } } },
         ],
       },
-    },
+    }, ex),
     orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
     limit: 20,
   }, 'properties/' + GA4_PROPERTY_ID);
@@ -587,14 +638,14 @@ function fetchGA4Report(startDate, endDate) {
     dateRanges: [{ startDate: startDate, endDate: endDate }],
     metrics: [{ name: 'eventCount' }],
     dimensions: [{ name: 'pagePath' }, { name: 'eventName' }, { name: 'customEvent:link_domain' }],
-    dimensionFilter: {
+    dimensionFilter: withDirectExclusion({
       andGroup: {
         expressions: [
           HOST_FILTER,
           { filter: { fieldName: 'eventName', inListFilter: { values: ['cta_click', 'cta_reserve', 'outbound_click'] } } },
         ],
       },
-    },
+    }, ex),
     limit: 1000,
   }, 'properties/' + GA4_PROPERTY_ID);
 
@@ -1079,7 +1130,7 @@ kwLines,
 '# ' + period + 'の実データ',
 '- 訪問者: ' + et.users + '人 ／ ページ閲覧: ' + et.pageviews,
 ((a.settledDate && a.settledDate !== date) ? '- ※ 直帰率・平均滞在・訪問回数・流入元は ' + a.settledDate + ' の確定値です（GA4はこれらの集計確定に最大48時間かかるため、前日値は使いません）。訪問者数・ページ閲覧数・人気ページ・行動イベントは ' + date + ' の値です。異なる日の数字を1つの因果として結び付けないこと。' : ''),
-(a.directSpike ? '- ※ ' + directSpikeNote(a.directSpike) + ' 訪問者数と予約クリック率は分母が膨らんでいるので根拠にしないこと。' : ''),
+(a.directSpike ? '- ※ ' + directSpikeNote(a.directSpike) + (a.directSpike.allExcluded ? '' : ' 訪問者数と予約クリック率は分母が膨らんでいるので根拠にしないこと。') : ''),
 '- 訪問回数(セッション): ' + t.sessions,
 '- 1訪問あたり閲覧: ' + a.pagesPerSession.toFixed(1) + 'ページ（目安2以上が良好）',
 '- 平均滞在: ' + secToText(t.avgDuration) + '（目安60秒以上）',
@@ -1174,7 +1225,7 @@ function generateRuleBasedAdvice(data, a, date, gscKeywords) {
 
   // 予約クリック（率は当日の訪問者数で割る＝analyze の ctaRate と同じ分母。急増の日は分母が膨らむので出さない）
   const ctaUsers = data.totals.users;
-  if (ctaUsers >= 20 && !a.directSpike) {
+  if (ctaUsers >= 20 && (!a.directSpike || a.directSpike.allExcluded)) {
     if (a.ctaRate < BENCHMARKS.ctaRate.warn) {
       const acts = [
         '予約ボタンを店舗カードの写真直下（最も押される位置）へ移動する',
@@ -1271,7 +1322,7 @@ function overallVerdict(data, a) {
   }
   if (a.pagesPerSession >= BENCHMARKS.pagesPerSession.good) score++;
   else if (a.pagesPerSession < BENCHMARKS.pagesPerSession.warn) score--;
-  const ctaJudgeable = et.users >= 20 && !a.directSpike;  // 急増の日は分母（訪問者数）が膨らむので数えない
+  const ctaJudgeable = et.users >= 20 && (!a.directSpike || a.directSpike.allExcluded);  // 急増の日は分母（訪問者数）が膨らむので数えない
   if (ctaJudgeable && a.ctaRate >= BENCHMARKS.ctaRate.good) score++;
   else if (ctaJudgeable && a.ctaRate < BENCHMARKS.ctaRate.warn) score--;
 
@@ -1305,7 +1356,7 @@ function formatDailyReport(data, date) {
   // 見せかけの値が出る。確定済みの日の値を、対象日を明示して出す。
   msg += '【読まれ方' + settledLabel + '】\n';
   if (s.date && s.date !== date) msg += '　※GA4は直帰率・滞在・流入元の確定に最大48時間かかるため、この区画だけ確定済みの日です\n';
-  if (a.directSpike) msg += '　※直接アクセスを除いた値\n';
+  if (a.directSpike && !a.directSpike.allExcluded) msg += '　※直接アクセスを除いた値\n';
   msg += '　└ 1人あたり ' + a.pagesPerSession.toFixed(1) + 'ページ ' +
     healthIcon(a.pagesPerSession, BENCHMARKS.pagesPerSession) + '\n';
   msg += '⏱ 平均滞在時間: ' + secToText(st.avgDuration) + ' ' +
@@ -1329,7 +1380,7 @@ function formatDailyReport(data, date) {
     if (a.callCount)  msg += '📞 電話ボタン押した: ' + a.callCount + '回\n';
     if (a.outboundInfoCount) msg += '🔗 情報到達（マップ・Instagram等）: ' + a.outboundInfoCount + '回\n';
     if (a.gmapCount)  msg += '🗺 マップ開いた: ' + a.gmapCount + '回\n';
-    if (a.directSpike) {
+    if (a.directSpike && !a.directSpike.allExcluded) {
       msg += '　→ 訪問100人あたりの予約行動は、直接アクセスの急増で分母が膨らむため、この日は出しません\n';
     } else if (t.users >= 20) {
       msg += '　→ 訪問100人あたり予約行動 約' + (a.ctaRate * 100).toFixed(1) + '人 ' +
@@ -1339,7 +1390,7 @@ function formatDailyReport(data, date) {
 
   if (a.sessionSources.length > 0) {
     msg += '\n【どこから来た？ TOP3' + settledLabel + '】\n';
-    if (a.directSpike) msg += '　※直接アクセスを除いた内訳\n';
+    if (a.directSpike && !a.directSpike.allExcluded) msg += '　※直接アクセスを除いた内訳\n';
     if (a.highThreshold) {
       msg += '⚠️ この日はGA4のしきい値が効き ' + Math.round(a.unknownPct * 100) + '% が判別不能です。流入構成は30日集計（search_channel_metrics.json）をご参照ください。\n';
     }
@@ -1429,7 +1480,7 @@ function formatWeeklyReport(data, prevData, startDate, endDate, referrals) {
   if (prevData.directSpike) msg += '※先週も ' + prevData.directSpike.dates.join('・') + ' の直接アクセスの急増を除いて比べています\n\n';
 
   msg += '【今週 vs 先週】\n';
-  if (a.directSpike || prevData.directSpike) msg += '　※訪問回数・閲覧数・平均滞在・すぐ帰った率は直接アクセスの急増を除いた値（訪問者は除けません）\n';
+  if ((a.directSpike && !a.directSpike.allExcluded) || (prevData.directSpike && !prevData.directSpike.allExcluded)) msg += '　※訪問回数・閲覧数・平均滞在・すぐ帰った率は直接アクセスの急増を除いた値（訪問者は除けません）\n';
   msg += '👥 訪問者: ' + t.users + '人（先週 ' + pt.users + '人）' + arrow(uc) + '\n';
   msg += '📄 閲覧数: ' + t.pageviews + '（先週 ' + pt.pageviews + '）' + arrow(pc) + '\n';
   msg += '🔄 訪問回数: ' + t.sessions + '（先週 ' + pt.sessions + '）' + arrow(sc) + '\n';

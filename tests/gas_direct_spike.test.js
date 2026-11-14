@@ -16,19 +16,19 @@ const vm = require('node:vm');
 
 const SRC = fs.readFileSync(path.join(__dirname, '..', '.gas-deploy', 'Code.js'), 'utf8');
 
-function loadGas() {
+function loadGas(runReport) {
   const ctx = {
     Logger: { log() {} },
     UrlFetchApp: { fetch: () => ({ getResponseCode: () => 503, getContentText: () => '' }) },
     PropertiesService: { getScriptProperties: () => ({ getProperty: () => null }) },
     Utilities: { formatDate: (d) => d.toISOString().slice(0, 10) },
-    AnalyticsData: { Properties: { runReport: () => ({}) } },
+    AnalyticsData: { Properties: { runReport: runReport || (() => ({})) } },
     GmailApp: { sendEmail() {} },
     console,
   };
   vm.createContext(ctx);
   // const/let はコンテキストの外から見えないので、使う関数を最後に globalThis へ出す
-  vm.runInContext(SRC + '\n;globalThis.__gas = { formatDailyReport, detectDirectSpike, excludeDirectSpike, shiftDateStr, formatWeeklyReport, detectDirectSpikeRange, excludeDirectSpikeWeek };', ctx);
+  vm.runInContext(SRC + '\n;globalThis.__gas = { formatDailyReport, detectDirectSpike, excludeDirectSpike, shiftDateStr, formatWeeklyReport, detectDirectSpikeRange, excludeDirectSpikeWeek, withDirectExclusion, fetchGA4Report, directSpikeNote };', ctx);
   return ctx.__gas;
 }
 
@@ -212,4 +212,40 @@ test('週次: 急増の無い週は今までどおり（断り書きなし）', 
   const msg = g.formatWeeklyReport(same, weekData(480, 0.5, 90), '2026-10-29', '2026-11-04', null);
   assert.doesNotMatch(msg, /直接アクセスを除いた/);
   assert.match(msg, /すぐ帰った率: 55%/);
+});
+
+// 2026-11-14 本人「急に増えた数字分が含まれている」: 訪問した人・ページ数・人気ページ・行動・デバイスも
+// GA4 の取得の段階で、急増の日の直接アクセスを除く
+test('急増の日は GA4 の全部の取得から、その日の直接アクセスを除く', () => {
+  const reqs = [];
+  const g = loadGas((req) => { reqs.push(JSON.parse(JSON.stringify(req))); return {}; });
+  g.fetchGA4Report('2026-11-12', '2026-11-12', ['2026-11-12']);
+  assert.equal(reqs.length, 7);
+  reqs.forEach((r) => {
+    const s = JSON.stringify(r.dimensionFilter);
+    assert.match(s, /notExpression/);
+    assert.match(s, /"\(direct\)"/);
+    assert.match(s, /"20261112"/);
+    assert.match(s, /nagoya-bites\.com/, 'ホストの絞り込みは残す');
+  });
+  reqs.length = 0;
+  g.fetchGA4Report('2026-11-10', '2026-11-10');
+  reqs.forEach((r) => assert.doesNotMatch(JSON.stringify(r.dimensionFilter), /notExpression/, '急増でない日は今までどおり'));
+});
+
+test('全部を除いた日は「すべて除いた」と書き、予約の率も出す', () => {
+  const g = loadGas();
+  const spike = g.detectDirectSpike(directRows(692), '2026-11-11');
+  spike.allExcluded = true;
+  const d = data1111();
+  // 取得の段階で除いた後の形（訪問者・デバイスは人の訪問だけ）
+  d.totals = { users: 130, pageviews: 170, sessions: 134, avgDuration: 70, bounceRate: 0.4, events: 400 };
+  d.devices = [row(['mobile'], ['70']), row(['desktop'], ['60'])];
+  const msg = g.formatDailyReport(g.excludeDirectSpike(d, spike), '2026-11-11');
+  assert.match(msg, /この日の数字はすべて直接アクセスを除いた値で出しています/);
+  assert.doesNotMatch(msg, /除けないので/);
+  assert.match(msg, /訪問した人: 130人/);
+  assert.doesNotMatch(msg, /この日は出しません/);
+  assert.match(msg, /訪問100人あたり予約行動/);
+  assert.doesNotMatch(msg, /苦戦中/);
 });
