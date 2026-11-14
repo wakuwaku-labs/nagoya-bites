@@ -28,3 +28,8 @@ status: done
 
 ## 関連ファイル
 - .gas-deploy/Code.js / data/gas_deploy_policy.json / scripts/lib/gas_deploy_trace.js / docs/decisions/0066-gas-report-direct-spike-exclusion.md
+
+## 追記 2026-11-14 午後
+- 本人「文字化け・急増分が含まれている」→ 急増の日は GA4 の全取得で当日の (direct) を除く形に変更（withDirectExclusion・ADR 0066 追記・cb5021e4fa・clasp push 本番一致）。
+- 送り直しは resendDailyReportToLine（作り直して LINE だけ）。メール本文の転送は絵文字が化けたので廃止。
+- 未確認: GA4 が除外条件つきの取得を受け付けるか（手元に GA4 の鍵なし）。失敗時は旧の差し引きに戻り、断り書きが「除けないので」になる＝本人の LINE で判別できる。
