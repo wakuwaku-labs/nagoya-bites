@@ -1358,7 +1358,7 @@
 
 ### [ISSUE-186] ホットペッパーが閉店・掲載終了を示す掲載店の営業を一次情報で確かめ、30日後に確かめ直す
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **detected**: 2026-10-10
 - **due**: 2026-11-09
 - **category**: data / trust
