@@ -129,6 +129,17 @@ function sendDailyReport() {
   Logger.log('日次レポート送信完了（対象日 ' + reportDate + '）');
 }
 
+// ─── 最新の日次レポートを LINE にだけ送り直す（手動で ▶ 実行する用・2026-11-14）───
+// メールで届いた本文をそのまま送る。数字を取り直さず、助言も作り直さず、メールも二重に送らない
+function resendLatestDailyReportToLine() {
+  const threads = GmailApp.search('subject:"NAGOYA BITES 日次レポート" newer_than:2d', 0, 1);
+  if (!threads.length) { Logger.log('送り直せる日次レポートのメールが見つからない'); return; }
+  const msgs = threads[0].getMessages();
+  const body = msgs[msgs.length - 1].getPlainBody();
+  Logger.log('送り直す: ' + msgs[msgs.length - 1].getSubject());
+  sendLineMessage(body);
+}
+
 // ─── 週次レポート ───
 function sendWeeklyReport() {
   // 週の終端も確定済みの日にする（末日が未確定だと週の直帰率まで引きずられる・SEO-076）
