@@ -1,0 +1,461 @@
+{
+  "date": "2026-11-14",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "焼鳥ごりょう 栄（矢場町）11/10開店、コの字カウンター14席でデートと一人飲み",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 99,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        },
+        {
+          "kw": "焼き鳥",
+          "feature": "features/nagoya-yakitori-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 7件 (コース,席,予約,シーン,デート,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 157字 +4",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「デート」+4",
+          "タイトルにジャンル語「焼鳥」+2"
+        ]
+      },
+      "gate_note": "99点（自動公開ライン 100点）。主な不足: topicality -5 / brand_fit -4 / writability -2",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "GapricE（ガプリス）名駅へ移転、11/14開店のカウンター8席イタリアン",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 96,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "イタリアン",
+          "feature": "features/nagoya-italian-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,予約,接待) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 142字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「カウンター」+4",
+          "タイトルにジャンル語「イタリアン」+2"
+        ]
+      },
+      "gate_note": "96点（自動公開ライン 100点）。主な不足: topicality -8 / brand_fit -4 / writability -2",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "炊き肉屋 しじみ倶楽部 栄錦店、しじみ出汁の炊き肉を朝5時まで",
+      "verdict": "HOLD",
+      "total": 84,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,コース,席,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 128字 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「個室」+1",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "豚しゃぶ酒房 一昇 別邸（栄）、11/10開店の豚しゃぶで少人数の宴会",
+      "verdict": "HOLD",
+      "total": 82,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,席,予約) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 108字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "土鍋と肴 余白 名古屋駅店、11/12開店の土鍋ごはん居酒屋",
+      "verdict": "HOLD",
+      "total": 80,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,予約,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 122字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名古屋駅」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": {
+    "topic": "イベント",
+    "week": "2026-W46",
+    "slot": 5,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "99点（自動公開ライン 100点）。主な不足: topicality -5 / brand_fit -4 / writability -2",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "焼鳥ごりょう 栄（矢場町）11/10開店、コの字カウンター14席でデートと一人飲み",
+      "lead_draft": "2026年11月10日、矢場町駅から徒歩2分の場所に「焼鳥ごりょう 栄」が開いた。三河赤鳥を店内でさばき、一本ずつ串を打つ焼鳥の店で、22席のうち14席が焼き台を囲むカウンター。コースは5,500円から7,700円の3本で、焼き鳥8本はどれも同じ。差がどこにあるのか、20時を境に変わる予約の仕組みと合わせて読む。",
+      "angle": "コース3本の価格差は串ではなく〆（土鍋）で、飲み放題なし・ドリンク別。20時以降は席のみ予約でお通し500円という時間で分ける予約設計を、カウンター14席の回転と席配置から読み、デート・一人飲みのシーンに当てる",
+      "main_store": {
+        "name": "焼鳥ごりょう 栄",
+        "id": "J004723188",
+        "area": "栄",
+        "genre": "焼き鳥"
+      },
+      "sources": [
+        {
+          "label": "食べログ「焼鳥ごりょう 栄」店舗情報（2026年11月10日オープン）",
+          "url": "https://tabelog.com/aichi/A2301/A230103/23097789/",
+          "date": "2026-11-10"
+        },
+        {
+          "label": "ホットペッパー「焼鳥ごりょう 栄」コース",
+          "url": "https://www.hotpepper.jp/strJ004723188/course/",
+          "date": "2026-11-14"
+        },
+        {
+          "label": "ホットペッパー「焼鳥ごりょう 栄」料理メニュー",
+          "url": "https://www.hotpepper.jp/strJ004723188/food/",
+          "date": "2026-11-14"
+        },
+        {
+          "label": "焼鳥ごりょう 栄 公式Instagram",
+          "url": "https://www.instagram.com/yakitorigoryo.sakae/"
+        },
+        {
+          "label": "レッツエンジョイ東京「焼鳥ごりょう 栄」",
+          "url": "https://www.enjoytokyo.jp/spot/g_nb7d905/"
+        },
+        {
+          "label": "食べログ 名古屋市の新規オープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "GapricE（ガプリス）名駅へ移転、11/14開店のカウンター8席イタリアン",
+      "lead_draft": "池下で営業していたイタリアン「GapricE（ガプリス）」が、2026年11月14日に名駅2丁目へ移って開店した。食べログの店舗情報では席はカウンター中心の8席、完全予約制で、夜は18時から21時まで。昼は火曜と土曜だけ開く。予算は2万円台の表示で、接待と記念日の使い分けを整理する。",
+      "angle": "8席・完全予約制の一斉スタートで、昼は火土だけという営業の組み方を席と予約から読み、接待と記念日の向き不向きを価格帯から判断する",
+      "main_store": {
+        "name": "GapricE",
+        "id": "",
+        "area": "名駅",
+        "genre": "イタリアン"
+      },
+      "sources": [
+        {
+          "label": "食べログ「GapricE」店舗情報",
+          "url": "https://tabelog.com/aichi/A2301/A230101/23098205/",
+          "date": "2026-11-14"
+        },
+        {
+          "label": "GapricE 公式Instagram",
+          "url": "https://www.instagram.com/gaprice_2022/"
+        },
+        {
+          "label": "foodle「GapricE」",
+          "url": "https://foodle.pro/restaurants/nagoya/gaprice"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "炊き肉屋 しじみ倶楽部 栄錦店、しじみ出汁の炊き肉を朝5時まで",
+      "lead_draft": "2026年11月2日、栄の錦3丁目の地下に「炊き肉屋 しじみ倶楽部 栄錦店」が開いた。国産牛のホルモンと野菜を鉄板で炊き、しじみ出汁で仕上げる炊き肉の店で、営業は18時から翌5時まで。50席で個室もある。深夜の使い方と、コースの飲み放題の読み方を整理する。",
+      "angle": "18時から翌5時の営業と50席の個室で、宴会と深夜の2回転を取る設計を、飲み放題つきコースと単品の価格帯から読む",
+      "main_store": {
+        "name": "炊き肉屋 しじみ倶楽部 栄錦店",
+        "id": "J004698452",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー「炊き肉屋 しじみ倶楽部 栄錦店」",
+          "url": "https://www.hotpepper.jp/strJ004698452/",
+          "date": "2026-11-14"
+        },
+        {
+          "label": "食べログ 名古屋市の新規オープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "土鍋と肴 余白 名古屋駅店、11/12開店の土鍋ごはん居酒屋",
+      "lead_draft": "2026年11月12日、名古屋駅から歩いて数分の場所に「土鍋と肴 余白 名古屋駅店」が開いた。土鍋で炊くごはんと酒の肴を出す居酒屋で、予算は3,000円台の表示。土鍋の炊き上がりを待つ時間をどう使うか、仕事帰りの一人と少人数の使い方を整理する。",
+      "angle": "土鍋の炊き時間が回転を決める店で、予約と注文の順番、3,000円台の価格帯の中身を読む",
+      "main_store": {
+        "name": "土鍋と肴 余白 名古屋駅店",
+        "id": "J004698498",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー「土鍋と肴 余白 名古屋駅店」",
+          "url": "https://www.hotpepper.jp/strJ004698498/",
+          "date": "2026-11-14"
+        },
+        {
+          "label": "食べログ 名古屋市の新規オープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "豚しゃぶ酒房 一昇 別邸（栄）、11/10開店の豚しゃぶで少人数の宴会",
+      "lead_draft": "2026年11月10日、栄に「豚しゃぶ酒房 一昇 別邸」が開いた。豚しゃぶを看板にした酒房で、予算は6,000円から8,000円の表示。錦の本店とあわせ、少人数の会食と宴会でどう使い分けるかを、席と予約から整理する。",
+      "angle": "豚しゃぶの鍋を囲む席配置と予約の取り方を、6,000円台の価格帯とあわせて読み、少人数の会食に当てる",
+      "main_store": {
+        "name": "豚しゃぶ酒房 一昇別邸",
+        "id": "J001178716",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー「豚しゃぶ酒房 一昇別邸」",
+          "url": "https://www.hotpepper.jp/strJ001178716/",
+          "date": "2026-11-14"
+        },
+        {
+          "label": "食べログ 名古屋市の新規オープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-11-14"
+        }
+      ]
+    }
+  ]
+}
