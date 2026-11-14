@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-14T00:37:00.965Z",
+  "generatedAt": "2026-11-14T05:39:17.833Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 4694,
-    "pageViews": 6113,
-    "sessions": 5191,
-    "avgSessionDuration": 82.5,
+    "activeUsers": 4702,
+    "pageViews": 6122,
+    "sessions": 5207,
+    "avgSessionDuration": 82.7,
     "bounceRate": 0.518,
     "pagesPerSession": 1.18
   },
@@ -17,11 +17,11 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2757,
-      "direct": 1994,
+      "organic": 2764,
+      "direct": 1995,
       "social": 57,
       "ai_assistant": 251,
-      "referral": 42,
+      "referral": 43,
       "paid": 0,
       "other": 8
     },
@@ -39,22 +39,22 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 1950
+      "sessions": 1951
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1259
+      "sessions": 1262
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 907
+      "sessions": 908
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 559
+      "sessions": 562
     },
     {
       "source": "chatgpt.com",
@@ -77,13 +77,13 @@
       "sessions": 24
     },
     {
-      "source": "note",
-      "medium": "social",
-      "sessions": 23
-    },
-    {
       "source": "service.smt.docomo.ne.jp",
       "medium": "referral",
+      "sessions": 24
+    },
+    {
+      "source": "note",
+      "medium": "social",
       "sessions": 23
     },
     {
@@ -235,7 +235,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 404,
+    "outboundClicks": 405,
     "ctaClickRate": 7.8,
     "byDomain": [
       {
@@ -244,7 +244,7 @@
       },
       {
         "domain": "www.google.com",
-        "clicks": 123
+        "clicks": 124
       },
       {
         "domain": "prtimes.jp",
@@ -281,7 +281,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 277,
+      "organic": 278,
       "direct": 54,
       "social": 10,
       "ai_assistant": 49,
@@ -289,7 +289,7 @@
       "paid": 0,
       "other": 4
     },
-    "ctaClickRate_organic": 10,
+    "ctaClickRate_organic": 10.1,
     "ctaClickRate_direct": 2.7,
     "ctaClickRate_social": 17.5,
     "byPage": [
@@ -303,7 +303,7 @@
       },
       {
         "path": "/stores/J004090251.html",
-        "clicks": 19
+        "clicks": 20
       },
       {
         "path": "/",
@@ -428,7 +428,7 @@
       {
         "path": "/stores/J004090251.html",
         "domain": "www.google.com",
-        "clicks": 19
+        "clicks": 20
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -1152,7 +1152,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 4694,
+    "value": 4702,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
