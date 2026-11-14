@@ -249,3 +249,23 @@ test('全部を除いた日は「すべて除いた」と書き、予約の率�
   assert.match(msg, /訪問100人あたり予約行動/);
   assert.doesNotMatch(msg, /苦戦中/);
 });
+
+// 2026-11-14 本人「文字化けしている」: GmailApp は 4バイトの絵文字を化けさせる。件名・テキスト版から外し、HTML 版は文字参照で残す
+test('レポートのメールは絵文字を化けない形で送る', () => {
+  const sent = [];
+  const ctx = { Logger: { log() {} }, PropertiesService: { getScriptProperties: () => ({ getProperty: () => null }) },
+    Utilities: { formatDate: (d) => d.toISOString().slice(0, 10) }, UrlFetchApp: {}, AnalyticsData: { Properties: { runReport: () => ({}) } },
+    GmailApp: { sendEmail: (...a) => sent.push(a) }, console };
+  vm.createContext(ctx);
+  vm.runInContext(SRC + '\n;globalThis.__s = sendReportEmail;', ctx);
+  ctx.__s('📊 NAGOYA BITES 日次レポート 2026-11-12', '📊 NAGOYA BITES\n👥 訪問した人: 130人\n⏱ 平均滞在時間: 1分 🟢\n<a>&');
+  const [to, subject, body, opts] = sent[0];
+  assert.equal(subject, 'NAGOYA BITES 日次レポート 2026-11-12');
+  assert.doesNotMatch(body, /[\u{10000}-\u{10FFFF}]/u);
+  assert.match(body, /^訪問した人: 130人$/m);
+  assert.match(body, /⏱ 平均滞在時間/, '3バイトの記号は化けないので残す');
+  assert.doesNotMatch(opts.htmlBody, /[\u{10000}-\u{10FFFF}]/u);
+  assert.match(opts.htmlBody, /&#x1F4CA;/);
+  assert.match(opts.htmlBody, /&lt;a&gt;&amp;/);
+  assert.ok(to);
+});

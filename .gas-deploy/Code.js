@@ -104,6 +104,22 @@ function sendLineMessage(text) {
   Logger.log('LINE送信: ' + res.getResponseCode() + ' ' + res.getContentText());
 }
 
+// ─── レポートのメール送信（2026-11-14）───
+// GmailApp は 4バイトの絵文字（📊 など）を正しく符号化できず、件名・本文で「������」に化けていた。
+// 件名は絵文字を外す。本文はテキスト版から絵文字を外し、HTML 版では数値文字参照（&#x1F4CA;）にして絵文字を残す。
+function stripAstral(text) {
+  return String(text).replace(/[\u{10000}-\u{10FFFF}]\uFE0F? ?/gu, '');
+}
+function toHtmlEntities(text) {
+  return String(text).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]))
+    .replace(/[\u{10000}-\u{10FFFF}]/gu, (c) => '&#x' + c.codePointAt(0).toString(16).toUpperCase() + ';');
+}
+function sendReportEmail(subject, body) {
+  GmailApp.sendEmail(REPORT_EMAIL, stripAstral(subject).trim(), stripAstral(body), {
+    htmlBody: '<pre style="white-space:pre-wrap;font-family:inherit;font-size:14px">' + toHtmlEntities(body) + '</pre>',
+  });
+}
+
 // ─── 日次レポート ───
 function buildDailyReport() {
   // 報告する日は「確定した日」（通常 D-2）。「昨日」は GA4 の集計が終わる前に配信されるため、
@@ -138,7 +154,7 @@ function sendDailyReport() {
 
   // Gmail送信（併用設定時）
   if (REPORT_EMAIL) {
-    GmailApp.sendEmail(REPORT_EMAIL, '📊 NAGOYA BITES 日次レポート ' + reportDate, report);
+    sendReportEmail('NAGOYA BITES 日次レポート ' + reportDate, report);
   }
   Logger.log('日次レポート送信完了（対象日 ' + reportDate + '）');
 }
@@ -185,7 +201,7 @@ function sendWeeklyReport() {
 
   sendLineMessage(report);
   if (REPORT_EMAIL) {
-    GmailApp.sendEmail(REPORT_EMAIL, '📊 NAGOYA BITES 週次レポート ' + startDate + '〜' + endDate, report);
+    sendReportEmail('NAGOYA BITES 週次レポート ' + startDate + '〜' + endDate, report);
   }
   Logger.log('週次レポート送信完了');
 }
