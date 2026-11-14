@@ -125,10 +125,19 @@ function sendWeeklyReport() {
   // 週の終端も確定済みの日にする（末日が未確定だと週の直帰率まで引きずられる・SEO-076）
   const endDate = getDateStr(-SETTLED_LAG_DAYS);
   const startDate = getDateStr(-SETTLED_LAG_DAYS - 6);
-  const data = fetchGA4Report(startDate, endDate);
-  const prevData = fetchGA4Report(getDateStr(-SETTLED_LAG_DAYS - 13), getDateStr(-SETTLED_LAG_DAYS - 7));
+  let data = fetchGA4Report(startDate, endDate);
+  let prevData = fetchGA4Report(getDateStr(-SETTLED_LAG_DAYS - 13), getDateStr(-SETTLED_LAG_DAYS - 7));
   let referrals = null;
   try { referrals = fetchStoreReferrals(startDate, endDate); } catch (e) { Logger.log('店舗別送客の取得に失敗: ' + e.message); }
+  // 直接アクセスの急増（機械的な訪問の疑い）の日を、今週・先週とも合計から外す（2026-11-14・日次と同じ判定）。
+  // 取れなかったときは今までどおりの判定にする（レポート自体は止めない）
+  try {
+    const prevStart = getDateStr(-SETTLED_LAG_DAYS - 13);
+    const prevEnd = getDateStr(-SETTLED_LAG_DAYS - 7);
+    const rows = fetchDirectRange(shiftDateStr(prevStart, -DIRECT_SPIKE_BASELINE_DAYS), endDate);
+    data = excludeDirectSpikeWeek(data, detectDirectSpikeRange(rows, startDate, endDate));
+    prevData = excludeDirectSpikeWeek(prevData, detectDirectSpikeRange(rows, prevStart, prevEnd));
+  } catch (e) { Logger.log('直接アクセスの急増の判定に失敗（週次）: ' + e.message); }
   const report = formatWeeklyReport(data, prevData, startDate, endDate, referrals);
 
   sendLineMessage(report);
@@ -330,10 +339,11 @@ function shiftDateStr(dateStr, days) {
   return d.getUTCFullYear() + '-' + ('0' + (d.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + d.getUTCDate()).slice(-2);
 }
 
-// 直接アクセス（sessionSource = (direct)）だけの、日ごとの訪問回数・閲覧数・平均滞在・直帰率
-function fetchDirectDaily(date) {
+// 直接アクセス（sessionSource = (direct)）だけの、日ごとの訪問回数・閲覧数・平均滞在・直帰率。
+// startDate〜endDate の各日を返す（急増の判定には、各日の直前 DIRECT_SPIKE_BASELINE_DAYS 日ぶんも要るので呼び出し側で広げる）
+function fetchDirectRange(startDate, endDate) {
   const res = AnalyticsData.Properties.runReport({
-    dateRanges: [{ startDate: shiftDateStr(date, -DIRECT_SPIKE_BASELINE_DAYS), endDate: date }],
+    dateRanges: [{ startDate: startDate, endDate: endDate }],
     metrics: [{ name: 'sessions' }, { name: 'screenPageViews' }, { name: 'averageSessionDuration' }, { name: 'bounceRate' }],
     dimensions: [{ name: 'date' }],
     dimensionFilter: {
@@ -344,9 +354,13 @@ function fetchDirectDaily(date) {
         ],
       },
     },
-    limit: 100,
+    limit: 200,
   }, 'properties/' + GA4_PROPERTY_ID);
   return parseReport(res);
+}
+
+function fetchDirectDaily(date) {
+  return fetchDirectRange(shiftDateStr(date, -DIRECT_SPIKE_BASELINE_DAYS), date);
 }
 
 // rows: fetchDirectDaily の行（dimensions[0] は GA4 の 'YYYYMMDD'）。その日に急増があれば spiking=true
@@ -402,8 +416,62 @@ function excludeDirectSpike(data, spike) {
   return out;
 }
 
+// 週次: startDate〜endDate の各日に detectDirectSpike を当て、急増の日だけを合算する（rows は fetchDirectRange の行。
+// 各日の直前 DIRECT_SPIKE_BASELINE_DAYS 日ぶんを含むこと）。急増の日が無ければ null。
+// 平均滞在・直帰率は訪問回数で重みづけた平均で合算する。
+function detectDirectSpikeRange(rows, startDate, endDate) {
+  const days = [];
+  for (let d = startDate; d <= endDate; d = shiftDateStr(d, 1)) {
+    const sp = detectDirectSpike(rows, d);
+    if (sp && sp.spiking) days.push(sp);
+  }
+  if (!days.length) return null;
+  const sum = f => days.reduce((acc, x) => acc + f(x), 0);
+  const sessions = sum(x => x.sessions);
+  return {
+    dates: days.map(x => x.date),
+    sessions: sessions,
+    pageviews: sum(x => x.pageviews),
+    avgDuration: sessions > 0 ? sum(x => x.avgDuration * x.sessions) / sessions : 0,
+    bounceRate: sessions > 0 ? sum(x => x.bounceRate * x.sessions) / sessions : 0,
+    median: sum(x => x.median),  // 急増の日それぞれの「普段」の合計
+    spiking: true,
+  };
+}
+
+// 週次: 急増の日の直接アクセス分を、週の合計（訪問回数・閲覧・平均滞在・直帰率）と流入元から引く。
+// 訪問者数・人気ページ・行動の回数・デバイスは除けない（流入元を持たない集計）のでそのまま。
+function excludeDirectSpikeWeek(data, spike) {
+  if (!spike || !spike.spiking || !data || !data.totals) return data;
+  const t = data.totals;
+  const ses = t.sessions - spike.sessions;
+  if (ses <= 0) return data;  // 全部が直接アクセスなら今までどおり出す
+  const clamp01 = v => Math.min(1, Math.max(0, v));
+  const totals = Object.assign({}, t, {
+    sessions: ses,
+    pageviews: Math.max(0, t.pageviews - spike.pageviews),
+    bounceRate: clamp01((t.bounceRate * t.sessions - spike.bounceRate * spike.sessions) / ses),
+    avgDuration: Math.max(0, (t.avgDuration * t.sessions - spike.avgDuration * spike.sessions) / ses),
+  });
+  // 流入元は (direct) の行から急増の日の分だけ引く（急増でない日の直接アクセスは残す）
+  const sources = [];
+  (data.sources || []).forEach(r => {
+    if ((r.dimensions[0] || '') !== '(direct)') { sources.push(r); return; }
+    const left = (parseInt(r.metrics[1]) || 0) - spike.sessions;
+    if (left > 0) sources.push({ dimensions: r.dimensions, metrics: [String(Math.min(parseInt(r.metrics[0]) || 0, left)), String(left)] });
+  });
+  sources.sort((x, y) => (parseInt(y.metrics[1]) || 0) - (parseInt(x.metrics[1]) || 0));
+  return Object.assign({}, data, { totals: totals, sources: sources, directSpike: spike });
+}
+
 // 本文と AI への入力に入れる、急増の説明（1か所で作る）
 function directSpikeNote(spike) {
+  if (spike.dates) {
+    return 'この週は ' + spike.dates.join('・') + ' に「直接アクセス」が急増しました（合計' + spike.sessions + '回・各日の直前' +
+      DIRECT_SPIKE_BASELINE_DAYS + '日の中央値の合計は' + Math.round(spike.median) + '回）。人の訪問とは考えにくい（ボットなどの疑い）ため、' +
+      '訪問回数・閲覧数・平均滞在・すぐ帰った率・流入元・アドバイスは、その日の直接アクセスを除いた値で出しています。' +
+      '訪問した人・人気ページ・行動の回数は除けないので、急増の分を含んだ値です。';
+  }
   return 'この日は「直接アクセス」が' + spike.sessions + '回（直前' + DIRECT_SPIKE_BASELINE_DAYS + '日の中央値は' +
     Math.round(spike.median) + '回）と急増しました。人の訪問とは考えにくい（ボットなどの疑い）ため、' +
     '読まれ方・どこから来た？・アドバイスは直接アクセスを除いた値で出しています。' +
@@ -1336,9 +1404,12 @@ function formatWeeklyReport(data, prevData, startDate, endDate, referrals) {
   msg += '📅 ' + startDate + ' 〜 ' + endDate + '\n';
   msg += '（先週比: ' + getDateStr(-SETTLED_LAG_DAYS - 13) + '〜' + getDateStr(-SETTLED_LAG_DAYS - 7) + '）\n';
   msg += '━━━━━━━━━━━━━━━\n';
-  msg += '🏁 一言: ' + overallVerdict(data, a) + '\n\n';
+  msg += '🏁 一言: ' + overallVerdict(data, a) + (a.directSpike ? '（直接アクセスの急増を除いた判定）' : '') + '\n\n';
+  if (a.directSpike) msg += '⚠️ ' + directSpikeNote(a.directSpike) + '\n\n';
+  if (prevData.directSpike) msg += '※先週も ' + prevData.directSpike.dates.join('・') + ' の直接アクセスの急増を除いて比べています\n\n';
 
   msg += '【今週 vs 先週】\n';
+  if (a.directSpike || prevData.directSpike) msg += '　※訪問回数・閲覧数・平均滞在・すぐ帰った率は直接アクセスの急増を除いた値（訪問者は除けません）\n';
   msg += '👥 訪問者: ' + t.users + '人（先週 ' + pt.users + '人）' + arrow(uc) + '\n';
   msg += '📄 閲覧数: ' + t.pageviews + '（先週 ' + pt.pageviews + '）' + arrow(pc) + '\n';
   msg += '🔄 訪問回数: ' + t.sessions + '（先週 ' + pt.sessions + '）' + arrow(sc) + '\n';
@@ -1377,6 +1448,7 @@ function formatWeeklyReport(data, prevData, startDate, endDate, referrals) {
 
   if (data.sources.length > 0) {
     msg += '\n【流入元 TOP3】\n';
+    if (a.directSpike) msg += '　※直接アクセスの急増を除いた内訳\n';
     if (a.highThreshold) {
       msg += '⚠️ この週はGA4のしきい値が効き ' + Math.round(a.unknownPct * 100) + '% が判別不能です。流入構成は30日集計をご参照ください。\n';
     }

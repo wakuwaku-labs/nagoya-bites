@@ -28,7 +28,7 @@ function loadGas() {
   };
   vm.createContext(ctx);
   // const/let はコンテキストの外から見えないので、使う関数を最後に globalThis へ出す
-  vm.runInContext(SRC + '\n;globalThis.__gas = { formatDailyReport, detectDirectSpike, excludeDirectSpike, shiftDateStr };', ctx);
+  vm.runInContext(SRC + '\n;globalThis.__gas = { formatDailyReport, detectDirectSpike, excludeDirectSpike, shiftDateStr, formatWeeklyReport, detectDirectSpikeRange, excludeDirectSpikeWeek };', ctx);
   return ctx.__gas;
 }
 
@@ -146,4 +146,70 @@ test('見張りの直帰率の照合: 直接アクセスを除いたと名乗る
   const keys = (body) => analyzeReport(body).matched.map((m) => m.key + ':' + m.verdict);
   assert.ok(keys(spiked).includes('direct_spike_notice:deployed'));
   assert.ok(keys('🔴 予約ボタンが訪問816人中ほぼ未クリック（1.0%）').includes('cta_almost_none_old_label:not_deployed'));
+});
+
+// ── 週次（2026-11-14）: 11/11 を含む週。11/5〜11/11 の週と、その前の週 10/29〜11/4 ──
+function weekData(sessions, bounce, direct) {
+  return {
+    pages: [row(['/features/nagoya-solo-dining.html'], ['15', '19'])],
+    events: [row(['modal_open'], ['17'])],
+    sources: [row(['(direct)', '(none)'], [String(direct), String(direct)]), row(['google', 'organic'], ['200', '250']), row(['bing', 'organic'], ['40', '43'])],
+    devices: [row(['desktop'], ['700']), row(['mobile'], ['300'])],
+    totals: { users: 900, pageviews: Math.round(sessions * 1.2), sessions, avgDuration: 30, bounceRate: bounce, events: 3000 },
+    outboundByDomain: [],
+    reserveClicks: [],
+  };
+}
+// 10/15〜11/11 の直接アクセス。普段は 15〜21 回、11/11 だけ 692 回（直帰 0.97・滞在 5 秒）
+function directRowsWeek() {
+  const rows = [];
+  for (let i = 0; i <= 27; i++) {
+    const d = new Date(Date.UTC(2026, 10, 11 - i)).toISOString().slice(0, 10).replace(/-/g, '');
+    rows.push(i === 0 ? row([d], [692, 700, 5, 0.97]) : row([d], [15 + (i % 7), 20, 60, 0.4]));
+  }
+  return rows;
+}
+
+test('週次: 急増の日だけを合算し、普段の週は null', () => {
+  const g = loadGas();
+  const sp = g.detectDirectSpikeRange(directRowsWeek(), '2026-11-05', '2026-11-11');
+  assert.deepEqual(Array.from(sp.dates), ['2026-11-11']);
+  assert.equal(sp.sessions, 692);
+  assert.equal(g.detectDirectSpikeRange(directRowsWeek(), '2026-10-29', '2026-11-04'), null);
+});
+
+test('週次: 11/11 を含む週は断り書きが出て、直帰率・訪問回数・流入元は除外後の値になる', () => {
+  const g = loadGas();
+  const rows = directRowsWeek();
+  // 今週: 訪問 1100（うち直接 692+通常日分）。直帰率は直接の 0.97 に引かれて 0.76
+  const raw = weekData(1100, 0.76, 692 + 90);
+  const prev = weekData(400, 0.42, 110);
+  const sp = g.detectDirectSpikeRange(rows, '2026-11-05', '2026-11-11');
+  const spPrev = g.detectDirectSpikeRange(rows, '2026-10-29', '2026-11-04');
+  const data = g.excludeDirectSpikeWeek(raw, sp);
+  const prevData = g.excludeDirectSpikeWeek(prev, spPrev);
+  assert.equal(prevData, prev, '先週は急増なし＝数字を置き換えない');
+  const msg = g.formatWeeklyReport(data, prevData, '2026-11-05', '2026-11-11', null);
+
+  assert.match(msg, /直接アクセスを除いた/);
+  assert.match(msg, /2026-11-11/);
+  // 直帰率: (0.78*1100 - 0.97*692) / 408 ≈ 0.4 → 40% 前後（除外前は 78%）
+  const bounce = Number(msg.match(/すぐ帰った率: (\d+)%/)[1]);
+  assert.ok(bounce >= 38 && bounce <= 44, `直帰率 ${bounce}%`);
+  assert.match(msg, /訪問回数: 408（先週 400）/);
+  assert.doesNotMatch(msg, /苦戦中/);
+  assert.doesNotMatch(msg, /減速中/);
+  assert.match(msg, /⚠️ 直接アクセスが普段の約/);
+  // 流入元: 直接は 782-692=90 回だけ残り、google が先頭
+  assert.match(msg, /🥇 .*(google|Google)/i);
+});
+
+test('週次: 急増の無い週は今までどおり（断り書きなし）', () => {
+  const g = loadGas();
+  const raw = weekData(500, 0.55, 90);
+  const same = g.excludeDirectSpikeWeek(raw, null);
+  assert.equal(same, raw);
+  const msg = g.formatWeeklyReport(same, weekData(480, 0.5, 90), '2026-10-29', '2026-11-04', null);
+  assert.doesNotMatch(msg, /直接アクセスを除いた/);
+  assert.match(msg, /すぐ帰った率: 55%/);
 });
