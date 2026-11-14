@@ -923,6 +923,15 @@
       "確認日": "2026-11-08",
       "出典": "https://www.google.com/maps/place/?q=place_id:ChIJ66M4QtRwA2ARjO0zJpActD4",
       "理由": "閉店（ISSUE-172 で再確認）。Google の店舗情報「Karaoke Rainbow Sakae」（中区錦3-17-15）が CLOSED_PERMANENTLY（placeId: ChIJ66M4QtRwA2ARjO0zJpActD4）、食べログも【閉店】。2つの独立した情報源が閉店を示す。口コミなし。根拠の全体は data/store_liveness_reviews.json"
+    },
+    {
+      "店名": "夜桜OSU",
+      "エリア": "栄",
+      "ホットペッパーID": "J001223732",
+      "閉店日": "不明",
+      "確認日": "2026-11-14",
+      "出典": "https://www.hotpepper.jp/strJ001223732/（HTTP 404・掲載終了）/ https://www.google.com/maps/place/?q=place_id:ChIJry3-HftxA2ARSFALpql-94k（CLOSED_PERMANENTLY・焼肉 夜桜 OSU店・大須4-9-3）",
+      "理由": "閉店（ISSUE-186・2026-11-14 再検証）。HP 掲載終了（HTTP 404）＋ Google Places 閉業（CLOSED_PERMANENTLY）の2情報源で確認。名前（焼肉 夜桜 OSU店）・住所（大須4-9-3）が掲載データと一致。根拠の全体は data/store_liveness_reviews.json"
     }
   ]
 }

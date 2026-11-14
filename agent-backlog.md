@@ -1358,7 +1358,8 @@
 
 ### [ISSUE-186] ホットペッパーが閉店・掲載終了を示す掲載店の営業を一次情報で確かめ、30日後に確かめ直す
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-11-14
 - **detected**: 2026-10-10
 - **due**: 2026-11-09
 - **category**: data / trust
@@ -9109,6 +9110,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-11-14 | DataKeeper(routine) | ISSUE-186 done化 — 5店の30日再検証完了。夜桜OSU（J001223732）を閉店確定（HP 404＋Google CLOSED_PERMANENTLY・名前・住所一致）し `data/closed_stores.json` に追記。残4店（肉のよいち・あま野なごみ・TARASHI・LAVA 29）は決められないのまま（住所照合不可または情報源不足）。`data/store_liveness_reviews.json` に再確認記録5件追加。PR #739 | ✅ 本コミット |
 | 2026-11-12 | Orchestrator(routine) | SEO-140 done化 — 11-15チェックポイント記録。北極星6項目中4項目クリア（発見型クリック225/ハブ数93本/PV5155/インデックス確定）。SEO-130 noindex 127候補は今回見送り（12-15再判断）。 | ✅ 本コミット |
 | 2026-11-12 | Orchestrator(routine) | SEO-123 done化 — 子課題SEO-124/125/126全done確認。11-15判定結果を `docs/kpi-weekly.md` に記録（インデックス対象175本・noindex 498本・sitemap 282エントリ）。北極星: ハブ数93（前31）・発見型クリック225（前122）・生成AI 247（前103）・Bing 918（前483）。 | ✅ 本コミット |
 | 2026-11-08 | DataKeeper(routine) | ISSUE-172 done化 — 決められない6店を再確認。Harbor（熱田）・レインボー 栄店 2店を閉店と確認し `data/closed_stores.json`（110件）に追記。残4店（博多もつ鍋屋HANARE・金鯱うなぎ伏見・喰えるBAR shin・かき氷うと）は決められないのまま（Google が OPERATIONAL または別店名）。`data/store_liveness_reviews.json` に再確認記録6件追加。次回 build.js 実行で2店が自動除外される。 | ✅ 本コミット |
