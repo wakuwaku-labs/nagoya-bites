@@ -2,27 +2,33 @@
   "ok": true,
   "dry_run": false,
   "status": 200,
-  "sent": 4,
+  "sent": 10,
   "response": "",
   "breakdown": {
     "cap": 200,
     "fixed": 3,
-    "journal": 1,
+    "journal": 2,
     "stores": {
       "selected": 0,
       "pending": 0,
       "comment_not_on_page": 0
     },
     "hubs": {
-      "selected": 0,
-      "pending": 0
+      "selected": 5,
+      "pending": 5
     }
   },
   "urls": [
     "https://nagoya-bites.com/",
     "https://nagoya-bites.com/journal/",
     "https://nagoya-bites.com/features/",
-    "https://nagoya-bites.com/journal/2026-11-13-meieki-endoji-paris-festival-kaisen-en-solo.html"
+    "https://nagoya-bites.com/journal/2026-11-13-meieki-endoji-paris-festival-kaisen-en-solo.html",
+    "https://nagoya-bites.com/journal/2026-11-14-yabacho-yakitori-goryo-sakae-date-solo.html",
+    "https://nagoya-bites.com/stores/area/index.html",
+    "https://nagoya-bites.com/stores/area/sakae/index.html",
+    "https://nagoya-bites.com/stores/area/sakae/yakiniku.html",
+    "https://nagoya-bites.com/stores/area/sakae/yakiniku-budget-5000-plus.html",
+    "https://nagoya-bites.com/stores/area/sakae/yakiniku-late-night.html"
   ],
-  "logged_at": "2026-11-13T23:29:51.033Z"
+  "logged_at": "2026-11-14T00:46:40.213Z"
 }
