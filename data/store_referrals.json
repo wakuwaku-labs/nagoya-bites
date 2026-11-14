@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-14T06:03:53.983Z",
+  "generatedAt": "2026-11-14T07:15:24.502Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -2230,10 +2230,10 @@
       "other": 0
     },
     "tel": 9,
-    "map": 135
+    "map": 136
   },
   "map": {
-    "total": 135,
+    "total": 136,
     "unattributed": 1,
     "stores": 60,
     "top": [
@@ -2266,21 +2266,21 @@
         "count": 3
       },
       {
+        "store_name": "QQ（クイント・クインテ）",
+        "count": 2
+      },
+      {
         "store_name": "オリーブ OLIVE 金山本店",
         "count": 2
       },
       {
         "store_name": "くろ凪 名古屋駅前店",
         "count": 2
-      },
-      {
-        "store_name": "げんかい 名駅別邸",
-        "count": 2
       }
     ],
     "byLocation": {
       "store_page": 62,
-      "journal_store_card": 50,
+      "journal_store_card": 51,
       "store_page_bar": 11,
       "(not set)": 7,
       "modal_cta": 3,
@@ -2289,7 +2289,7 @@
     "byLinkKind": {
       "search": 71,
       "place_id": 47,
-      "(not set)": 17
+      "(not set)": 18
     }
   },
   "callLookup": {
