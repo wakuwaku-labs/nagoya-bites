@@ -19,7 +19,7 @@
  *   6. https://developers.line.biz/console/ にアクセス
  *   7. プロバイダー「NAGOYA BITES」→ チャネル（Messaging API）を選択
  *   8. 「Messaging API設定」タブ → 「チャネルアクセストークン（長期）」を発行
- *   9. トークンをコピー → 下の LINE_CHANNEL_TOKEN に設定
+ *   9. トークンをコピー → GAS の「プロジェクトの設定」→「スクリプト プロパティ」に LINE_CHANNEL_TOKEN として保存（コードに書かない）
  *   10. LINEアプリでこの公式アカウントを友だち追加する
  *       （Messaging API設定タブのQRコードから）
  *
@@ -31,7 +31,7 @@
  *   1. https://script.google.com/ で新しいプロジェクトを作成
  *   2. プロジェクト名を「NAGOYA BITES レポート」に変更
  *   3. このファイルの内容をすべてコピー＆ペースト
- *   4. LINE_CHANNEL_TOKEN, LINE_USER_ID を設定
+ *   4. スクリプト プロパティに LINE_CHANNEL_TOKEN を保存し、LINE_USER_ID を設定
  *   5. 左メニュー「サービス」→「+」→「Google Analytics Data API」を検索して追加
  *   6. 関数「testLineMessage」を選択して ▶ 実行（初回は権限承認が必要）
  *   7. LINEにテストメッセージが届いたことを確認
@@ -61,7 +61,11 @@
 
 // ─── 設定（ここを変更する） ───
 const GA4_PROPERTY_ID = '533244445';
-const LINE_CHANNEL_TOKEN = 'fgb0xGLaxbkgsFJoo2u/911FxfqiTwi7inkVDVElNUeZ4Usg2BhM18ocCiFVOZsxaKX6UqqB5NeFscV784eEFUOD9VhBtnUi/wV/0/kM62Z/ooyJW3whgeZVWFAHiF6MNbx07c8ZEgyPOLzI0pd1MQdB04t89/1O/w1cDnyilFU=';
+// LINE のトークンはコードに書かない（公開 repo に漏れていたため 2026-11-14 に再発行）。
+// GAS の「プロジェクトの設定」→「スクリプト プロパティ」の LINE_CHANNEL_TOKEN に置く
+function getLineChannelToken() {
+  return PropertiesService.getScriptProperties().getProperty('LINE_CHANNEL_TOKEN') || '';
+}
 const LINE_USER_ID = 'Ufa1112c027c42c13193f30ada3988b24';
 const REPORT_EMAIL = 'wakato1251999@gmail.com';  // Gmail送信も併用（空ならLINEのみ）。日次/週次レポートをメール化し、スケジュール起動したClaudeが読んでSEOトリアージ→Notion自動同期する入口にする
 const SITE_URL = 'https://nagoya-bites.com/';
@@ -75,6 +79,11 @@ function sendLineMessage(text) {
     Logger.log('LINE送信スキップ: textが空です');
     return;
   }
+  const token = getLineChannelToken();
+  if (!token) {
+    Logger.log('LINE送信スキップ: スクリプト プロパティ LINE_CHANNEL_TOKEN が未設定です');
+    return;
+  }
   const url = 'https://api.line.me/v2/bot/message/push';
   const payload = {
     to: LINE_USER_ID,
@@ -85,7 +94,7 @@ function sendLineMessage(text) {
   const options = {
     method: 'post',
     headers: {
-      'Authorization': 'Bearer ' + LINE_CHANNEL_TOKEN,
+      'Authorization': 'Bearer ' + token,
       'Content-Type': 'application/json; charset=UTF-8'
     },
     payload: body,
