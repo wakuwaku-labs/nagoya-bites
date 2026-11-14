@@ -73,6 +73,9 @@ const BACKOFF_DAYS = {
   'photo-policy': [30, 60, 90],
   // Google 側で店を特定できない（閉店・未登録・別店しか出ない）。これも週では変わらない。
   'name-mismatch': [14, 30, 60],
+  // 候補が1件も返らなかった（Google に未登録、または検索クエリでヒットしない）。
+  // name-mismatch と同じ間隔でよい（候補が増えるのも週単位の事象）。
+  'no-candidates': [14, 30, 60],
   'out-of-area': [30, 60, 90],
   'not-food': [30, 60, 90],
 };
@@ -374,7 +377,10 @@ async function fetchPhoto(name, area, cachedPlaceId, store = {}) {
     }
     if (best) break;
   }
-  if (!best) return { reason: lastReason, matchedName: lastMatchedName, sim: lastSim };
+  // 候補が1件も見つからなかった（Text Search が0件を返した / 名前の形でヒットしなかった）場合は
+  // 'no-candidates' として、「候補はあったが名前が合わなかった（name-mismatch）」と区別する。
+  const finalReason = lastReason === 'name-mismatch' && !lastMatchedName ? 'no-candidates' : lastReason;
+  if (!best) return { reason: finalReason, matchedName: lastMatchedName, sim: lastSim };
 
   // ── 採用基準ゲート（data/photo_policy.json）──────────────────────────
   // Places の写真には「オーナーが上げた宣材」と「客が上げたスマホ写真」が混在し、
@@ -574,6 +580,8 @@ async function main() {
       // 取れた店はバックオフの履歴を捨てる（次に失効したときは初回として扱う）
       delete s['写真失敗回数'];
       delete s['写真失敗理由'];
+      delete s['写真失敗候補名'];
+      delete s['写真失敗スコア'];
       ok++;
       if (wasDead) 復活++;
       const skip = r.skipped ? `・${r.skipped}枚を除外` : '';
@@ -588,12 +596,18 @@ async function main() {
       if (apiHealth.responded > 0 && !apiHealth.quotaExhausted) {
         s['写真失敗回数'] = (Number(s['写真失敗回数']) || 0) + 1;
         s['写真失敗理由'] = r?.reason || 'unknown';
+        // 候補名と一致度を残す。第三者が「表記ゆれか・未登録か・別店か」を後から判断できる（制約10）。
+        // 候補が無い場合（no-candidates）は空文字で記録し、スコアは 0 にする。
+        s['写真失敗候補名'] = r?.matchedName || '';
+        s['写真失敗スコア'] = typeof r?.sim === 'number' ? r.sim : 0;
       }
       const why = apiHealth.quotaExhausted
         // 上限超過で候補を引けなかっただけ。店名の判定結果ではないので、そう書かない
         // （旧実装は既定値の name-mismatch を表示し、一致度1の正しい候補まで
         //   「別店マッチ」と報告していた）
         ? '日次上限に到達して候補を取得できず → 次回に持ち越し'
+        : r?.reason === 'no-candidates'
+        ? `Google に候補が1件も見つからず → SVG維持（未登録または検索でヒットしない）`
         : r?.reason === 'name-mismatch'
         ? `別店マッチのため不採用（候補:「${r.matchedName}」一致度${r.sim}）→ SVG維持`
         : r?.reason === 'photo-policy'
