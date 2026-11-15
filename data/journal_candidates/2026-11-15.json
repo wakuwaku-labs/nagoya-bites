@@ -1,0 +1,473 @@
+{
+  "date": "2026-11-15",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄の忘年会・宴会に海鮮居酒屋『サカナのハチベエ 栄3丁目店』、飲み放題4,500円から",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 94,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 7件 (時期,繁忙,予約,シーン,相場,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 136字 +4",
+          "title 43字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4 / writability -2",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄の忘年会、幹事が11月に決めること — 宴会の予約締切とキャンセル料を先に読む",
+      "verdict": "HOLD",
+      "total": 79,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 2件 (予約,価格帯) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 110字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "名古屋の忘年会は56.5%、少人数の宴会を栄の居酒屋で取る",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (予約) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 81字 +4",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "忘年会の予算5,000円、栄の海鮮居酒屋なら日本酒飲み放題まで届く",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (価格帯) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 96字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "忘年会シーズン開幕、名古屋の幹事のための予約メモ",
+      "verdict": "HOLD",
+      "total": 55,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 8,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 6,
+        "novelty": 3,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 10日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (予約) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 24字（短すぎ）→ +0",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「忘年会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": {
+    "topic": "デート",
+    "week": "2026-W46",
+    "slot": 6,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4 / writability -2",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "栄の忘年会・宴会に海鮮居酒屋『サカナのハチベエ 栄3丁目店』、飲み放題4,500円から",
+      "lead_draft": "忘年会の予約が本格的に動き出す11月中旬。東京商工リサーチの11月5日公表の調査では、忘・新年会を開く企業は56.5%と2年続けて下がった。大宴会より少人数の会が増える年に、栄駅徒歩5分の海鮮居酒屋で幹事が先に確かめる、コースの値段・予約の締切・取り消しの料金を整理する。",
+      "angle": "忘年会の予約が動く時期に、外食総研の想定予算5,004円という相場と、4,500〜6,000円の飲み放題付きコースの価格帯、前日17時の締切とキャンセル料、120分制の回転と12月の繁忙、42席・半個室26人の席の組み方を、幹事の予約と宴会シーンから読む",
+      "main_store": {
+        "name": "サカナのハチベエ 栄3丁目店",
+        "id": "J001187258",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "ホットペッパーグルメ サカナのハチベエ 栄3丁目店",
+          "url": "https://www.hotpepper.jp/strJ001187258/",
+          "date": "2026-11-15"
+        },
+        {
+          "label": "ホットペッパーグルメ サカナのハチベエ 栄3丁目店 コース",
+          "url": "https://www.hotpepper.jp/strJ001187258/course/",
+          "date": "2026-11-15"
+        },
+        {
+          "label": "@DIME 忘年会も新年会も完全復活!?（ホットペッパーグルメ外食総研）",
+          "url": "https://dime.jp/genre/2062965/",
+          "date": "2025-12-19"
+        },
+        {
+          "label": "サカナのハチベエ 栄三丁目店 公式サイト（10/8 コース内容を更新）",
+          "url": "https://sakanano-hachibe-sakae.com/",
+          "date": "2026-10-08"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "栄の忘年会、幹事が11月に決めること — 宴会の予約締切とキャンセル料を先に読む",
+      "lead_draft": "11月中旬は忘年会の予約が動き出す時期。東京商工リサーチの11月5日公表の調査で開催企業は56.5%に下がり、少人数の会が中心になる。栄の海鮮居酒屋を例に、幹事が予約前に確かめる締切・取り消し料・席の上限を短く整理する。",
+      "angle": "予約の締切とキャンセル料という幹事の実務を、宴会コースの価格帯と席数から読む",
+      "main_store": {
+        "name": "サカナのハチベエ 栄3丁目店",
+        "id": "J001187258",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "ホットペッパーグルメ サカナのハチベエ 栄3丁目店",
+          "url": "https://www.hotpepper.jp/strJ001187258/",
+          "date": "2026-11-15"
+        },
+        {
+          "label": "@DIME 忘年会も新年会も完全復活!?（ホットペッパーグルメ外食総研）",
+          "url": "https://dime.jp/genre/2062965/",
+          "date": "2025-12-19"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "名古屋の忘年会は56.5%、少人数の宴会を栄の居酒屋で取る",
+      "lead_draft": "東京商工リサーチの調査で、忘・新年会を開く企業は56.5%。名古屋でも大宴会より少人数の会が増えそうだ。栄の居酒屋の予約の形から、少人数の忘年会の取り方を考える。",
+      "angle": "企業調査の数字から少人数宴会の予約を読む",
+      "main_store": {
+        "name": "サカナのハチベエ 栄3丁目店",
+        "id": "J001187258",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "ホットペッパーグルメ サカナのハチベエ 栄3丁目店",
+          "url": "https://www.hotpepper.jp/strJ001187258/",
+          "date": "2026-11-15"
+        },
+        {
+          "label": "@DIME 忘年会も新年会も完全復活!?（ホットペッパーグルメ外食総研）",
+          "url": "https://dime.jp/genre/2062965/",
+          "date": "2025-12-19"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "忘年会の予算5,000円、栄の海鮮居酒屋なら日本酒飲み放題まで届く",
+      "lead_draft": "外食総研の前年の調査で忘年会1回の想定予算は平均5,004円。栄の海鮮居酒屋では、この予算で120分の飲み放題付きコースが選べる。日本酒の飲み放題を足すと6,000円。予算の線引きを整理する。",
+      "angle": "想定予算と飲み放題コースの価格帯の対応",
+      "main_store": {
+        "name": "サカナのハチベエ 栄3丁目店",
+        "id": "J001187258",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "ホットペッパーグルメ サカナのハチベエ 栄3丁目店 コース",
+          "url": "https://www.hotpepper.jp/strJ001187258/course/",
+          "date": "2026-11-15"
+        },
+        {
+          "label": "@DIME 忘年会も新年会も完全復活!?（ホットペッパーグルメ外食総研）",
+          "url": "https://dime.jp/genre/2062965/",
+          "date": "2025-12-19"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "忘年会シーズン開幕、名古屋の幹事のための予約メモ",
+      "lead_draft": "忘年会の季節が始まった。予約の取り方をまとめる。",
+      "angle": "予約の一般論",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "@DIME 忘年会も新年会も完全復活!?（ホットペッパーグルメ外食総研）",
+          "url": "https://dime.jp/genre/2062965/",
+          "date": "2025-12-19"
+        }
+      ]
+    }
+  ]
+}
