@@ -61,9 +61,26 @@ function html(title, date) {
   <div class="f"><span>${esc(date)} ／ 名古屋の飲食店ジャーナル</span><div class="nb">NB</div></div></div>`;
 }
 
-/** 題を語（Intl.Segmenter・日本語）に分け、2字以上の語は途中で折れないようにする（「大盛り」「ランチ」を割らない） */
+/** 商品名など、行をまたいで割れてはいけない語（Intl.Segmenter が「バター／の／いとこ」と分けてしまうもの・2026-11-13 design-qa 軽微2）。見つけたら足す */
+const KEEP_TOGETHER = ['バターのいとこ', 'クルミッ子', '鎌倉紅谷'];
+
+/** 題を語（Intl.Segmenter・日本語）に分け、2字以上の語・KEEP_TOGETHER の語は途中で折れないようにする（「大盛り」「ランチ」「バターのいとこ」を割らない） */
 function titleHtml(title, breakAfter = -1) {
   if (breakAfter > 0 && breakAfter < title.length) return titleHtml(title.slice(0, breakAfter)) + '<br>' + titleHtml(title.slice(breakAfter).replace(/^\s+/, ''));
+  const keep = KEEP_TOGETHER.slice().sort((a, b) => b.length - a.length);
+  const out = []; let rest = title;
+  while (rest) {
+    const hit = keep.map((k) => ({ k, i: rest.indexOf(k) })).filter((h) => h.i >= 0).sort((a, b) => a.i - b.i || b.k.length - a.k.length)[0];
+    const head = hit ? rest.slice(0, hit.i) : rest;
+    if (head) out.push(wordsHtml(head));
+    if (!hit) break;
+    out.push(`<span style="white-space:nowrap">${esc(hit.k)}</span>`);
+    rest = rest.slice(hit.i + hit.k.length);
+  }
+  return out.join('');
+}
+
+function wordsHtml(title) {
   const segs = [...new Intl.Segmenter('ja', { granularity: 'word' }).segment(title)];
   const out = []; let cur = '';
   const flush = () => { if (cur) out.push([...cur].length > 1 ? `<span style="white-space:nowrap">${esc(cur)}</span>` : esc(cur)); cur = ''; };
@@ -214,4 +231,4 @@ async function makePhotoEyecatch(photoPath, title, date, outPath, browser) {
   return out;
 }
 
-module.exports = { commaBreak, titleHtml, overlayAllowed, makePhotoEyecatch, photoHtml, photoGeometry, makeEyecatch, inspectEyecatchBoxes, html, downloadPhoto, photoUrl };
+module.exports = { KEEP_TOGETHER, commaBreak, titleHtml, overlayAllowed, makePhotoEyecatch, photoHtml, photoGeometry, makeEyecatch, inspectEyecatchBoxes, html, downloadPhoto, photoUrl };

@@ -105,6 +105,28 @@ test('見出し画像（写真の日）: 2行に分けるなら真ん中に近�
   assert.deepStrictEqual(parts, ['名駅『鎌倉紅谷』クルミッ子が常設に、', 'バターのいとこも 手土産は予算で']);
 });
 
+test('見出し画像: 商品名「バターのいとこ」は行をまたがず、1つの折り返さない塊になる（2026-11-13 design-qa 軽微2）', () => {
+  assert.ok(E.KEEP_TOGETHER.includes('バターのいとこ'));
+  for (const t of ['名駅『鎌倉紅谷』クルミッ子が常設に、バターのいとこも 手土産は予算で', 'バターのいとこ', 'バターのいとこバターのいとこ']) {
+    for (const b of [-1, ...Array.from({ length: t.length }, (_, i) => i)]) {
+      const h = E.titleHtml(t, b);
+      const lines = h.split('<br>');
+      const plain = lines.map((l) => l.replace(/<[^>]+>/g, ''));
+      // どの折り方でも、商品名は1行の中に丸ごと入っている（行の切れ目に商品名の途中が来ない）
+      const joined = plain.join('');
+      let from = 0, idx;
+      while ((idx = joined.indexOf('バターのいとこ', from)) >= 0) {
+        const end = idx + 7; let acc = 0; let ok = false;
+        for (const l of plain) { if (idx >= acc && end <= acc + l.length) ok = true; acc += l.length; }
+        if (b <= 0 || b >= t.length || !(b > idx && b < end)) assert.ok(ok, `${t} / 折り位置${b}`);
+        from = end;
+      }
+    }
+    // 商品名は nowrap の塊としてそのまま出る
+    assert.ok(E.titleHtml(t).includes('<span style="white-space:nowrap">バターのいとこ</span>'));
+  }
+});
+
 test('見出し画像（写真の日）: 縦長の写真は重ねず、写真そのもの（同じファイル）を返す', { skip: NO_CHROME, timeout: 60000 }, async () => {
   const os = require('os');
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-eyecatch-tall-'));
