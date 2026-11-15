@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-15T19:13:05.049Z",
+  "generatedAt": "2026-11-15T22:30:54.404Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 6406,
-    "pageViews": 7825,
-    "sessions": 6913,
-    "avgSessionDuration": 61.9,
-    "bounceRate": 0.638,
+    "activeUsers": 6691,
+    "pageViews": 8110,
+    "sessions": 7184,
+    "avgSessionDuration": 59.8,
+    "bounceRate": 0.651,
     "pagesPerSession": 1.13
   },
   "dailyReference": {
@@ -17,20 +17,20 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2772,
-      "direct": 3782,
-      "social": 59,
+      "organic": 2779,
+      "direct": 4058,
+      "social": 60,
       "ai_assistant": 247,
       "referral": 45,
       "paid": 0,
       "other": 2
     },
     "pct": {
-      "organic": 40.1,
-      "direct": 54.8,
-      "social": 0.9,
-      "ai_assistant": 3.6,
-      "referral": 0.7,
+      "organic": 38.6,
+      "direct": 56.4,
+      "social": 0.8,
+      "ai_assistant": 3.4,
+      "referral": 0.6,
       "paid": 0,
       "other": 0
     }
@@ -39,12 +39,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 3744
+      "sessions": 4020
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1274
+      "sessions": 1279
     },
     {
       "source": "bing",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 574
+      "sessions": 575
     },
     {
       "source": "chatgpt.com",
@@ -69,7 +69,7 @@
     {
       "source": "note",
       "medium": "social",
-      "sessions": 27
+      "sessions": 28
     },
     {
       "source": "x",
@@ -77,14 +77,14 @@
       "sessions": 26
     },
     {
-      "source": "service.smt.docomo.ne.jp",
-      "medium": "referral",
+      "source": "duckduckgo",
+      "medium": "organic",
       "sessions": 25
     },
     {
-      "source": "duckduckgo",
-      "medium": "organic",
-      "sessions": 24
+      "source": "service.smt.docomo.ne.jp",
+      "medium": "referral",
+      "sessions": 25
     },
     {
       "source": "(not set)",
@@ -220,8 +220,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 434,
-      "sessions": 406
+      "pageViews": 436,
+      "sessions": 408
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -230,8 +230,8 @@
     },
     {
       "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
-      "pageViews": 155,
-      "sessions": 148
+      "pageViews": 156,
+      "sessions": 149
     },
     {
       "path": "/features/nagoya-unaju.html",
@@ -246,7 +246,7 @@
   ],
   "cta": {
     "outboundClicks": 397,
-    "ctaClickRate": 5.7,
+    "ctaClickRate": 5.5,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -311,9 +311,9 @@
       "paid": 0,
       "other": 4
     },
-    "ctaClickRate_organic": 9.7,
-    "ctaClickRate_direct": 1.4,
-    "ctaClickRate_social": 22,
+    "ctaClickRate_organic": 9.6,
+    "ctaClickRate_direct": 1.3,
+    "ctaClickRate_social": 21.7,
     "byPage": [
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -1166,7 +1166,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 6406,
+    "value": 6691,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
