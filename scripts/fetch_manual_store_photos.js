@@ -71,6 +71,9 @@ const BACKOFF_DAYS = {
   // 店は特定できたが、基準を満たす写真が Google に1枚も無い。
   // 解消にはオーナーがビジネスプロフィールに写真を上げる必要があり、月単位の事象。
   'photo-policy': [30, 60, 90],
+  // Google の textsearch が候補を1件も返さない（閉店・未登録・ジャンル区分無し等）。
+  // 解消にはオーナーか Google 側のデータ変更が必要で週では変わらない。name-mismatch と同じ間隔。
+  'no-candidates': [14, 30, 60],
   // Google 側で店を特定できない（閉店・未登録・別店しか出ない）。これも週では変わらない。
   'name-mismatch': [14, 30, 60],
   'out-of-area': [30, 60, 90],
@@ -328,7 +331,10 @@ function passesGates(name, r) {
 
 async function fetchPhoto(name, area, cachedPlaceId, store = {}) {
   let best = null; // {matchedName, address, photos, photo, sim, placeId}
-  let lastMatchedName = '', lastReason = 'name-mismatch', lastSim = 0;
+  // 初期値は 'no-candidates'（候補ゼロ）。候補を 1 件でも見たら 'name-mismatch' に切り替わる。
+  // これにより「Google が 0 件返した」と「候補はあるが名前が合わない」を区別できる（SEO-150）。
+  let lastMatchedName = '', lastReason = 'no-candidates', lastSim = 0;
+  let bestCandidateSim = 0, bestCandidateName = '';
 
   // ── 既知の place_id があればまずそこから引く（ISSUE-074）──
   // textsearch を省けるので API 呼び出しが減り、かつ「一度検証を通った同じ店」を
@@ -359,10 +365,14 @@ async function fetchPhoto(name, area, cachedPlaceId, store = {}) {
     for (const c of candidates) {
       if (!c || !c.matchedName) continue;
       lastMatchedName = c.matchedName;
+      // 候補が 1 件でも見えたら reason を 'name-mismatch' に切り替える（no-candidates との区別）
+      if (lastReason === 'no-candidates') lastReason = 'name-mismatch';
       // textsearch は候補一覧の名前/住所/業態だけを軽量に返す。名前ゲートを通った候補だけ
       // 詳細取得（写真ギャラリー付き）に進む＝無関係な候補ぶんの API 消費を避ける。
       const quickGate = passesGates(name, { matchedName: c.matchedName, address: c.address, types: c.types });
       lastSim = quickGate.sim || 0;
+      // 一致度が最高の候補名を記録しておく（結果に関わらず後の診断に使う）
+      if (lastSim > bestCandidateSim) { bestCandidateSim = lastSim; bestCandidateName = c.matchedName; }
       if (!quickGate.ok) { if (quickGate.reason !== 'name-mismatch') { lastReason = quickGate.reason; lastMatchedName = quickGate.label; } continue; }
       const r = await detailsByPlaceId(c.placeId);
       await new Promise(res => setTimeout(res, 150));
@@ -374,7 +384,9 @@ async function fetchPhoto(name, area, cachedPlaceId, store = {}) {
     }
     if (best) break;
   }
-  if (!best) return { reason: lastReason, matchedName: lastMatchedName, sim: lastSim };
+  // bestCandidateName は一致度が最高だった候補（name-mismatch 診断用）。
+  // no-candidates の場合は空のまま（そもそも候補が無かったので名前情報が無い）。
+  if (!best) return { reason: lastReason, matchedName: bestCandidateName || lastMatchedName, sim: bestCandidateSim || lastSim };
 
   // ── 採用基準ゲート（data/photo_policy.json）──────────────────────────
   // Places の写真には「オーナーが上げた宣材」と「客が上げたスマホ写真」が混在し、
@@ -574,6 +586,8 @@ async function main() {
       // 取れた店はバックオフの履歴を捨てる（次に失効したときは初回として扱う）
       delete s['写真失敗回数'];
       delete s['写真失敗理由'];
+      delete s['写真候補名'];
+      delete s['写真候補一致度'];
       ok++;
       if (wasDead) 復活++;
       const skip = r.skipped ? `・${r.skipped}枚を除外` : '';
@@ -588,12 +602,20 @@ async function main() {
       if (apiHealth.responded > 0 && !apiHealth.quotaExhausted) {
         s['写真失敗回数'] = (Number(s['写真失敗回数']) || 0) + 1;
         s['写真失敗理由'] = r?.reason || 'unknown';
+        // 候補名と一致度を記録する（no-candidates と name-mismatch の診断に使う・SEO-150）。
+        // 後から第三者が「表記ゆれか・未登録か」を再現できるようにする（制約10）。
+        if (r?.matchedName) s['写真候補名'] = r.matchedName;
+        else delete s['写真候補名'];  // candidates=0 のときは残さない
+        if (r?.sim != null && r.sim > 0) s['写真候補一致度'] = r.sim;
+        else delete s['写真候補一致度'];
       }
       const why = apiHealth.quotaExhausted
         // 上限超過で候補を引けなかっただけ。店名の判定結果ではないので、そう書かない
         // （旧実装は既定値の name-mismatch を表示し、一致度1の正しい候補まで
         //   「別店マッチ」と報告していた）
         ? '日次上限に到達して候補を取得できず → 次回に持ち越し'
+        : r?.reason === 'no-candidates'
+        ? 'Google で候補ゼロ（閉店・未登録の可能性）→ SVG維持'
         : r?.reason === 'name-mismatch'
         ? `別店マッチのため不採用（候補:「${r.matchedName}」一致度${r.sim}）→ SVG維持`
         : r?.reason === 'photo-policy'
