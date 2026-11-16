@@ -1,27 +1,30 @@
-status: done
+status: in_progress
 
-# 名古屋バイツの基本方針を X 投稿・記事・投稿案の仕組みに入れる（Ondine #2041・2026-11-16）
+# 基本方針の段階1: 読者を誤解させうる表示を直す（Ondine #2048・2026-11-17）
 
 ## 目的
-本人の「名古屋バイツ 基本方針」（2026-11-16）に沿った文面だけが作られ・出るようにする。
+計画 docs/plans/media-policy-2026-11/03 の S1-1〜S1-5（掲載歴・訪問済・言い切り・閉業・壊れた写真）を直し、main に合流して本番で確かめる。
 
 ## 完了条件
-①原文がリポジトリにあり editor.md から参照 ②X 投稿と記事の指示文に要点 ③避ける言い回しの下書きが投稿前の検査で止まる試験が通る ④既存の試験が全部通る
+S1-1〜S1-5 の「⑪完了」を満たし、npm test が通り、main 合流後の本番で確かめた結果を report に残す。
 
 ## できていること
-- 原文 docs/brand-policy/nagoya_bites.md・要点 data/brand_policy/nagoya_bites.json（SNS分析ツールから写し）
-- 判定 scripts/lib/brand_policy.js → x_post.js・note_draft.js・validate_journal_draft.js 5c
-- 指示文: docs/x-post-prompt.md・write_x_draft.js・run_journal_local.sh・journal-today.md・agents/editor.md
-- 試験 tests/brand_policy.test.js 8件 pass。判断 docs/decisions/0068
+- S1-1: 掲載歴・編集部訪問済・食べログ点数・内部の項目名・星の食い違い（検査 scripts/audit_feature_facts.js）・Unsplash 由来の顔写真7本を図に
+- S1-2: 桜ゼロ宣言等を「編集の約束」に言い換え（assertionWords の検査）
+- S1-3: 題・本文の「業界人」等を外した（上位2本の題も 11-17 に変更・記録 data/top_title_changes.json）
+- S1-4: 閉業・休業の注記（店舗ページ・特集カード）。記事の閉店検査は記録だけ（WARNING）
+- S1-5: 記事の Google 写真を外し、月次の見張り（article-photo-watchdog.yml）
+- 判断 docs/decisions/0071
 
 ## 次にやること
-- なし（main af67d9234b に合流・CI 成功）
+- main 合流 → build.yml の完了を待ち、本番で stores の再生成後に audit_selection_wording を全数確認
+- 上位2本の題のクリックを 2026-12-16 以降に `node scripts/rewrite_selection_wording.js --report` で確認（半減なら --revert）
 
 ## 試したが駄目だったこと
-- なし
+- features の復元に git checkout を使うと未コミットの修正も消える（コミットしてから戻す）
 
 ## 守るルール・判断メモ
-- 記事では★4.1（Google評価）は対象外、順位の語は警告だけ（実測 47 本中 3 本が事実の引用）。X は全部止める
+- 本番の自動公開の条件は変えない（閉店検査は WARNING のまま）／削除は本人に一覧を見せてから（assets/features の古い jpg 14枚は参照を外しただけ）
 
 ## 関連ファイル
-- docs/decisions/0068-brand-policy-in-generators.md
+- docs/decisions/0071-stage1-misleading-display.md
