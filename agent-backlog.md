@@ -12,7 +12,7 @@
 - **detected**: 2026-11-13
 - **due**: 2026-11-27
 - **category**: SEO
-- **owner**: Marketer
+- **owner**: 片桐 ← Marketer（GA4の日別詳細セグメント確認には GA4_SERVICE_ACCOUNT_KEY が必要。GitHub Secret のため自動ルーチンでは利用不可）
 - **assignee**: ai:claude-code
 - **source**: SEOアドバイス(LINE) 2026-11-11 原文「すぐ帰る人が88%（目標50%）…冒頭の店舗カードを話題沸騰の店から並べ」「平均滞在24秒…最新の日次ジャーナルをトップ上部に差し込み」の振替採用。助言の打ち手3件は却下（前提がこの1日の異常値・実装済み・制約7）
 - **brand-filter**: ✅ 適合 — 合否や打ち手は検証できる事実で決める（制約10）。人の訪問でない数字を基に画面を変えない。順位操作ではなく計測の正しさの確認
@@ -452,7 +452,7 @@
 - **due**: 2026-11-07
 - **detected**: 2026-10-24
 - **category**: SNS / 計測
-- **owner**: Marketer
+- **owner**: 片桐 ← Marketer（acceptance #1〜#3: X/note の各投稿表示数・いいね・スキ はプラットフォームへのログインが必要。自動ルーチンでは取得不可）
 - **source**: オーナー依頼（2026-10-24）「note や X の投稿は媒体ごとに多く見られる方法がある。しっかり調べた上で実践して」
 - **背景**: 2026-10-24 に X を平日 12:00 投稿・保存した文面を待つ・ハッシュタグ1個に、note のタグを5個前後にした（`docs/decisions/0055-sns-reach-practices.md`・調査は `docs/sns-reach-research-2026-10.md`）。始める前の数字は X @NAGOYABITES がフォロワー 0・投稿ごとの表示 3〜19 回・いいね 0、note nagoya_bites がフォロワー 0・スキ 0〜3
 - **acceptance**:
@@ -1803,11 +1803,12 @@
 
 ### [SEO-129] GSC 表示上位300店の editorReason 下書きを作り、オーナーが承認した分だけ反映する
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **detected**: 2026-10-09
 - **due**: 2026-11-20
 - **category**: SEO / コンテンツ
-- **owner**: Editor
+- **owner**: 片桐 ← Editor（acceptance #2 — 48件の下書きレビュー待ち）
+- **progress（2026-11-16）**: acceptance #1 完了 — `scripts/build_editorreason_drafts.js` に GSC 表示回数スコアリングを追加（>500imp=+18000・>100=+10000・>50=+5000・>10=+2000）。428店の店舗ページ表示回数が次回バッチ（月曜 editorreason-batch.yml）の候補順位に反映される。acceptance #2（`docs/editorreason-drafts.md` の48件に `[approved]` を付けること）はオーナー操作待ち
 - **source**: SEO分析（2026-10-09）。親は [[SEO-128]]
 - **brand-filter**: ✅ 条件付き適合 — 業界視点のコメントは Moat の中心だが、AI が「現役飲食人の目利き」を名乗る文を書いて無確認で載せると信頼を損なう（制約7）。そのため既存の「引用付き下書き → オーナー承認」の経路だけを使い、insiderNote は AI に書かせない（`docs/editorreason-todo.md` の記入ルール）
 - **背景**: クエリが分かる表示（全体の 45.9%）の 59.8% が店名指名検索で、CTR は 0.61%。`.github/workflows/editorreason-batch.yml` が引用付きの下書きを `docs/editorreason-drafts.md` に作り、オーナーが `[approved]` を付けた分だけ `scripts/approve_editorreason_drafts.js` が `data/editor_picks.json` へ反映する経路が既にある
