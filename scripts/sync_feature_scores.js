@@ -34,8 +34,9 @@ const SCORE_RE = /(\n[ \t]*)?<span class="score">[^<]*<\/span>/g;
  * <div> の入れ子を数えて閉じタグを決める。
  * 店カードの中でないとき・長すぎるときは null
  */
-function cardRange(html, offset) {
-  const cls = Math.max(html.lastIndexOf('class="store-card"', offset), html.lastIndexOf('class="store"', offset));
+function cardRange(html, offset, classes) {
+  const names = classes || ['store-card', 'store'];
+  const cls = Math.max(...names.map((n) => html.lastIndexOf(`class="${n}"`, offset)));
   if (cls < 0) return null;
   const start = html.lastIndexOf('<div', cls);
   if (start < 0 || html.slice(start, cls).includes('>')) return null;

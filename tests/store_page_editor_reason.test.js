@@ -14,7 +14,7 @@ const { auditHtml } = require(path.join(ROOT, 'scripts', 'lib', 'inline_js.js'))
 const BASE = { '店名': 'テスト酒場', 'エリア': '栄', 'ジャンル': '居酒屋', 'おすすめポイント': '炭火の焼き鳥が看板。' };
 
 test('editorReason を持つ店は「選定理由」を本文に出し、HTML をエスケープする', () => {
-  const html = buildEditorReason({ ...BASE, editorReason: '<b>串打ち</b>を毎朝店で行う一軒。', visitStatus: 'visited' });
+  const html = buildEditorReason({ ...BASE, editorReason: '<b>串打ち</b>を毎朝店で行う一軒。', visitStatus: 'visited', visitedOn: '2026-10-01' });
   assert.match(html, /<section class="editor-reason">/);
   assert.match(html, /<h2>選定理由<\/h2>/);
   assert.ok(html.includes('&lt;b&gt;串打ち&lt;/b&gt;を毎朝店で行う一軒。'));

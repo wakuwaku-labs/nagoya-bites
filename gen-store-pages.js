@@ -21,6 +21,7 @@ const { loadPolicy: loadIgPostPolicy } = require('./scripts/lib/ig_post_policy')
 const { relabelForSlug } = require('./scripts/lib/feature_counts');
 const storeListings = require('./scripts/lib/store_listings');
 const { editorReasonOf, visitStatusLabel } = require('./scripts/lib/editor_reason');
+const operatingNotice = require('./scripts/lib/operating_notice');
 const { renderPhotoCredit, PHOTO_CREDIT_CSS } = require('./scripts/lib/photo_credit');
 const { isDeadPhotoUrl } = require('./scripts/lib/dead_photo_urls');
 const { canShowCallButton } = require('./scripts/lib/phone_link');
@@ -691,6 +692,17 @@ function buildStoreGlance(s) {
   return { note, facts, chips };
 }
 
+// 閉業・一時休業の注記（S1-4）。Google の営業状態が閉業・一時休業の店だけ。無ければ ''
+let __noticeIndex = null;
+function closureNoteHtml(s) {
+  if (!__noticeIndex) {
+    const { loadStores } = require('./scripts/lib/load_stores');
+    __noticeIndex = operatingNotice.buildNoticeIndex(loadStores());
+  }
+  const n = operatingNotice.noticeFor(s, __noticeIndex);
+  return n ? `<p class="nb-note closure-note" data-closure="${n.kind}">${escapeHtml(n.text)}</p>` : '';
+}
+
 function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals) {
   const name     = s['店名'] || '';
   const genre    = s['ジャンル'] || '';
@@ -1166,6 +1178,7 @@ ${heroHtml}
 
   <div class="genre-badge">${genre}</div>
   <h1>${nameHtml}</h1>
+  ${closureNoteHtml(s)}
   <div class="store-glance">${glanceRowHtml}${glanceFactsHtml}${glanceChipsHtml}
   </div>
 ${igLead ? igEmbedHtml + '\n' : ''}

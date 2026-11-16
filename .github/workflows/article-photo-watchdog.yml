@@ -1,0 +1,60 @@
+name: NAGOYA BITES — 記事の写真の生死の月次確認
+
+# なぜ必要か（基本方針 段階1 S1-5・ADR 0069・2026-11-16）:
+#   過去のジャーナル・特集に書いた Google の写真 URL は期限切れになる（実測: 59 URL のうち 49 が 403）。
+#   書いた後に取り直さない面なので、壊れた写真が出続けても誰も気づけない（制約11・「気づけるはず」を検知と数えない）。
+#   月に1回、記事の中の Places 写真 URL を実際に HTTP で確かめ、残っていれば Issue で知らせる（Issue → メール）。
+#   直し方は Issue 本文に書く: node scripts/repair_expired_place_photos.js --scope journal,features の後、
+#   node scripts/clear_places_photos_in_articles.js。復旧したら自動で閉じる。
+
+on:
+  schedule:
+    # 毎月1日 08:20 UTC = 17:20 JST（他の監視と時刻をずらす）
+    - cron: '20 8 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: 記事の Places 写真を確かめる（書き換えない）
+        id: scan
+        run: |
+          set +e
+          node scripts/clear_places_photos_in_articles.js --check > /tmp/photo-watch.txt 2>&1
+          A=$?
+          node scripts/repair_expired_place_photos.js --scope journal,features --check >> /tmp/photo-watch.txt 2>&1
+          B=$?
+          cat /tmp/photo-watch.txt
+          if [ "$A" != "0" ] || [ "$B" != "0" ]; then echo "bad=1" >> "$GITHUB_OUTPUT"; else echo "bad=0" >> "$GITHUB_OUTPUT"; fi
+      - name: 残っていれば Issue を起票/更新、無ければクローズ
+        uses: actions/github-script@v7
+        env:
+          BAD: ${{ steps.scan.outputs.bad }}
+        with:
+          script: |
+            const fs = require('fs');
+            const label = 'article-photo-watchdog';
+            const owner = context.repo.owner, repo = context.repo.repo;
+            const { data: issues } = await github.rest.issues.listForRepo({ owner, repo, state: 'open', labels: label, per_page: 5 });
+            const body = '記事（journal/・features/）に、期限切れになりうる Google の写真 URL が残っています。\n\n```\n' +
+              fs.readFileSync('/tmp/photo-watch.txt', 'utf8').slice(0, 3000) + '\n```\n\n' +
+              '直し方: `node scripts/repair_expired_place_photos.js --scope journal,features` の後 `node scripts/clear_places_photos_in_articles.js`。';
+            if (process.env.BAD === '1') {
+              if (issues.length) {
+                await github.rest.issues.update({ owner, repo, issue_number: issues[0].number, body });
+              } else {
+                await github.rest.issues.create({ owner, repo, title: '🖼 記事に期限切れの Google 写真が残っています', body, labels: [label] });
+              }
+            } else {
+              for (const i of issues) await github.rest.issues.update({ owner, repo, issue_number: i.number, state: 'closed' });
+            }

@@ -156,7 +156,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   <h2 class="section-label">01 — Why We Don't Call It "Sakura Score"</h2>
   <p class="body-para">
     一般的な「サクラチェッカー」型のサービスは、各レビューや店舗ごとに <strong>「サクラ確率 87%」</strong> のような数値を出します。
-    NAGOYA BITES では、機械統計の発想を借りつつも、<strong>同じ数値を「サクラ確率」とは呼びません</strong>。代わりに「口コミ信頼度」— その店の★と件数をどれだけ信じてよいか — という読者向けの名前を採用し、段階の語も店への評価ではなく<strong>読者への助言</strong>（「そのまま参考にできます」「他の情報と合わせて判断を」）として書いています。
+    NAGOYA BITES では、機械統計の発想を借りつつも、<strong>同じ数値を「サクラ確率」とは呼びません</strong>。代わりに「口コミ信頼度」— その店の★と件数をどれだけ信じてよいか — という読者向けの名前を採用し、段階の語も店への評価ではなく<strong>読者への助言</strong>（「確認できた範囲では、偏りは小さい状態です」「他の情報と合わせて判断を」）として書いています。
   </p>
   <p class="body-para">
     理由は 3 つあります。
@@ -177,8 +177,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     店の良し悪し・料理の評価・当サイトの推薦度ではありません。段階は次の 5 つ（SS〜D）＋判定材料不足で、語はすべて読者への助言として書いています。
   </p>
   <div class="tier-grid">
-    <div class="tier-card tier-ss"><div class="tier-num">SS ／ 97 — 100</div><div class="tier-label">Advice</div><div class="tier-body"><strong>文句なしに参考にできます。</strong>観測できた検証項目のすべてで満点。全体の約4%だけが到達する最上位帯です。</div></div>
-    <div class="tier-card"><div class="tier-num">A ／ 90 — 96</div><div class="tier-label">Advice</div><div class="tier-body"><strong>そのまま参考にできます。</strong>観測できた検証項目のほぼ全てで、★と件数に不自然な点が見つかりませんでした。</div></div>
+    <div class="tier-card tier-ss"><div class="tier-num">SS ／ 97 — 100</div><div class="tier-label">Advice</div><div class="tier-body"><strong>確認できた項目すべてで、偏りは見つかっていません。</strong>観測できた検証項目のすべてで満点。全体の約4%だけが到達する最上位帯です。</div></div>
+    <div class="tier-card"><div class="tier-num">A ／ 90 — 96</div><div class="tier-label">Advice</div><div class="tier-body"><strong>確認できた範囲では、偏りは小さい状態です。</strong>観測できた検証項目のほぼ全てで、★と件数に不自然な点が見つかりませんでした。</div></div>
     <div class="tier-card tier-mid"><div class="tier-num">B ／ 75 — 89</div><div class="tier-label">Advice</div><div class="tier-body"><strong>おおむね参考にできます。</strong>一部の項目で軽微な乖離や件数の薄さがあります。</div></div>
     <div class="tier-card tier-low"><div class="tier-num">C ／ 60 — 74</div><div class="tier-label">Advice</div><div class="tier-body"><strong>参考程度に。</strong>件数が少ない、直近の評価が全体と離れている等、★を額面どおりに受け取りにくい材料があります。</div></div>
     <div class="tier-card tier-low"><div class="tier-num">D ／ 0 — 59</div><div class="tier-label">Advice</div><div class="tier-body"><strong>他の情報と合わせて判断を。</strong>件数不足や分布の偏りなど、★だけで判断しない方がよい材料が重なっています。店を非難する語は使いません。</div></div>
@@ -233,7 +233,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       <tr>
         <td>S4</td>
         <td>他媒体掲載クロスチェック</td>
-        <td>editor_picks.json（手動）+ 無料RSS自動検出（Google News/note/はてな）の mediaFeatures</td>
+        <td>編集部の手動の記録 + 無料RSS自動検出（Google News/note/はてな）</td>
         <td class="max">10</td>
         <td>入れる（掲載が 1 件以上見つかった店で観測）</td>
         <td>第三者媒体への掲載が複数あるほど独立検証が効いていると加点（1媒体5点・2媒体以上8点・4媒体以上10点）。掲載情報が見つからない場合は3点（中立）— プレス実績の有無は無料RSS発見の性質上ほとんどの正当な小規模店で該当するため、0点（減点）にはしない。</td>
@@ -348,7 +348,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     <p class="tips-title">どこに何が出るか</p>
     <ul>
       <li><strong>店舗カード（1 秒）：</strong>「口コミ信頼度 A」のように段階だけ。数字や%は出しません（%は「確率」に見えるため 2026-08-20 に廃止）。</li>
-      <li><strong>店舗詳細・店舗ページ（10 秒）：</strong>「A 92 / 100 — Google★4.3（182件）は、そのまま参考にできます。」＋「検証 5/7項目 ・ Google口コミ取得日」。</li>
+      <li><strong>店舗詳細・店舗ページ（10 秒）：</strong>「A 92 / 100 — Google★4.3（182件）は、確認できた範囲では、偏りは小さい状態です。」＋「検証 5/7項目 ・ Google口コミ取得日」。</li>
       <li><strong>内訳（1 分）：</strong>7 つの検証項目ごとに観測事実だけを表示。観測外の項目は「—（判定保留・採点に含めません）」。別枠で「掲載データの充実度（口コミ信頼度には含めません）」。</li>
       <li><strong>読み方（5 分）：</strong><a href="review-trust.html" style="color:var(--green);text-decoration:underline;">口コミ信頼度の読み方</a>。このページ（方法論）はその下の層です。</li>
     </ul>
@@ -381,7 +381,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       <li><strong>店舗側からの修正依頼：</strong><a href="mailto:editor@nagoya-bites.com?subject=%E5%8F%A3%E3%82%B3%E3%83%9F%E4%BF%A1%E9%A0%BC%E5%BA%A6%E3%81%AE%E4%BF%AE%E6%AD%A3%E4%BE%9D%E9%A0%BC" style="color:var(--green);">editor@nagoya-bites.com</a> 宛にメール。事実誤認・誤判定があれば即時補正します。</li>
       <li><strong>読者からの通報：</strong>同じく <a href="mailto:editor@nagoya-bites.com?subject=%E5%8F%A3%E3%82%B3%E3%83%9F%E4%BF%A1%E9%A0%BC%E5%BA%A6%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E3%81%AE%E9%80%9A%E5%A0%B1" style="color:var(--green);">editor@nagoya-bites.com</a>。匿名通報を歓迎します。</li>
       <li><strong>受付した申立て・通報はすべて記録し、10 営業日以内に一次回答します。</strong></li>
-      <li><strong>Inspector の月次レビュー。</strong>編集部 Inspector が毎月 <code>data/cross_check_flags.json</code> の内部フラグを目視確認し、誤検知が疑われる店は <code>editor_picks.json</code> の手動補正で対応します。</li>
+      <li><strong>Inspector の月次レビュー。</strong>編集部 Inspector が毎月 <code>data/cross_check_flags.json</code> の内部フラグを目視確認し、誤検知が疑われる店は手動で補正します。</li>
     </ul>
   </div>
 
@@ -411,9 +411,9 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   <p class="related-title">関連ページ</p>
   <div class="related-links">
     <a class="related-link" href="review-trust.html" style="background:rgba(46,125,50,.08);border-color:var(--green);font-weight:500;" onclick="trackEvent('internal_link_click',{feature:'integrity-method',link_url:'review-trust.html',block:'feature_related'})">口コミ信頼度の読み方（1 分）</a>
-    <a class="related-link" href="no-fake-reviews.html" onclick="trackEvent('internal_link_click',{feature:'integrity-method',link_url:'no-fake-reviews.html',block:'feature_related'})">桜ゼロ宣言（3 層防衛）</a>
+    <a class="related-link" href="no-fake-reviews.html" onclick="trackEvent('internal_link_click',{feature:'integrity-method',link_url:'no-fake-reviews.html',block:'feature_related'})">編集の約束（3 層防衛）</a>
     <a class="related-link" href="editorial-policy.html" onclick="trackEvent('internal_link_click',{feature:'integrity-method',link_url:'editorial-policy.html',block:'feature_related'})">編集規約（信頼の仕組み）</a>
-    <a class="related-link" href="become-reviewer.html" onclick="trackEvent('internal_link_click',{feature:'integrity-method',link_url:'become-reviewer.html',block:'feature_related'})">業界人レビュワー募集</a>
+    <a class="related-link" href="become-reviewer.html" onclick="trackEvent('internal_link_click',{feature:'integrity-method',link_url:'become-reviewer.html',block:'feature_related'})">レビュワー募集</a>
     <a class="related-link" href="../journal/index.html" onclick="trackEvent('internal_link_click',{feature:'integrity-method',link_url:'../journal/index.html',block:'feature_related'})">Journal（毎日1本）</a>
     <a class="related-link" href="index.html" onclick="trackEvent('internal_link_click',{feature:'integrity-method',link_url:'index.html',block:'feature_related'})">特集記事一覧</a>
     <a class="related-link" href="../about.html" onclick="trackEvent('internal_link_click',{feature:'integrity-method',link_url:'../about.html',block:'feature_related'})">About NAGOYA BITES</a>
@@ -444,7 +444,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       <a href="../features/index.html">特集記事</a>
       <a href="../journal/index.html">ジャーナル</a>
       <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
-      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+      <a href="../features/no-fake-reviews.html">編集の約束</a>
     </nav>
     <nav class="nb-footer-group" aria-label="編集部">
       <p class="nb-footer-title">編集部</p>

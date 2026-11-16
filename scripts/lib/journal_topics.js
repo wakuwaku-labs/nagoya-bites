@@ -28,7 +28,7 @@ const TOPIC_FEATURES = [
   // 4つ目の値は話題のまとまり: 同じ話題の記事を関連記事で前に並べるときと、エリア×ジャンルのハブを引くときに使う
   // （分けた特集にジャンルのハブが無くても、まとまりの代表のハブへのリンクを失わない）。
   [/和牛|松阪牛|肉割烹/, 'nagoya-yakiniku', '焼肉おすすめ10選'],
-  [/焼肉|焼き肉|ホルモン/, 'nagoya-yakiniku-guide', '業界人が通う焼肉8選', 'nagoya-yakiniku'],
+  [/焼肉|焼き肉|ホルモン/, 'nagoya-yakiniku-guide', '焼肉8選', 'nagoya-yakiniku'],
   [/ステーキ/, 'nagoya-steak', 'ステーキ10選'],
   [/鉄板焼/, 'nagoya-teppanyaki', '鉄板焼き10選'],
   [/すき焼き|しゃぶしゃぶ/, 'nagoya-sukiyaki', 'すき焼き・しゃぶしゃぶ10選'],

@@ -82,6 +82,11 @@ function loadClosedSet() {
       if (s['ホットペッパーID']) set.hpids.add(s['ホットペッパーID']);
     }
   } catch (e) { /* 無ければ空 */ }
+  // Google で閉業・一時休業と表示されている店も、新しい掲載店に選ばない（S1-4・ADR 0069。人の確認で営業中とした店は対象外）
+  try {
+    const idx = require('./lib/operating_notice').buildNoticeIndex(require('./lib/load_stores').loadStores());
+    for (const k of idx.keys()) if (/^J\d+$/.test(k)) set.hpids.add(k);
+  } catch (e) { /* 無ければ足さない */ }
   return set;
 }
 

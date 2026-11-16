@@ -99,6 +99,14 @@ function pickDailyTopic(date) {
   if (slot && slot.candidate_external) candidates.push(...slot.candidate_external.map(x => ({ type: 'external', ...x })));
   if (trendingPick) candidates.unshift({ type: 'trending', store: trendingPick });
 
+  // Google で閉業・一時休業と表示されている店は新しい記事で扱わない（S1-4・ADR 0069）
+  try {
+    const noticeIdx = require('./lib/operating_notice').buildNoticeIndex(require('./lib/load_stores').loadStores());
+    for (let i = candidates.length - 1; i >= 0; i--) {
+      if (candidates[i].type === 'local' && noticeIdx.has(candidates[i].id)) candidates.splice(i, 1);
+    }
+  } catch (e) { /* 判定できなければそのまま */ }
+
   // Recent store ids to avoid re-posting within 30 days
   const recentStoreIds = new Set();
   (published.entries || []).forEach(e => {

@@ -1,7 +1,7 @@
 # 0033 特集の本文の言い方を人が選んだと読めない言い方にし、題の系統は検索の比較が済むまで持ち越す
 
 - 日付: 2026-10-13
-- 状態: 採用
+- 状態: 置き換え済み（0069 決定4 と 0071）。題の系統も2026-11-17 に外した
 - 関連: Linear P-331（親 P-235・UI・UX全面改修）・P-363・P-364・P-365 / 持ち越し P-334（題の系統）・P-332（ジャーナル）・P-366（選定基準の数値）・P-367（データに残る言い回し） / 計画 I-03e・4.4 節 #2・5.5 節・8.4 節 / 判断の記録 0025・0031・0032 / `data/selection_wording_policy.json` / `tests/selection_wording_sources.test.js` / `features/` / `scripts/add_feature_top_cta.js` / `scripts/gen_industry_features.js` / `data/featured.json` / `data/editor_picks.json`
 
 ## 背景

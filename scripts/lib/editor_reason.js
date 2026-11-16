@@ -27,13 +27,21 @@ function editorReasonOf(s) {
   return reason;
 }
 
+// 「訪問済」「店主取材済」は、訪問・取材の日付の記録（visitedOn）を出せる店だけ（ADR 0069 決定8・基本方針 S1-1）。
+// 記録が無い店は、実際に行ったと読めない「公開情報ベース」として扱う。
+function effectiveVisitStatus(s) {
+  const v = (s && s.visitStatus) || '';
+  if ((v === 'visited' || v === 'interview') && !(s && s.visitedOn)) return 'desk';
+  return v;
+}
+
 function visitStatusLabel(s) {
-  return VISIT_STATUS_LABELS[(s && s.visitStatus) || ''] || '';
+  return VISIT_STATUS_LABELS[effectiveVisitStatus(s)] || '';
 }
 
 function visitStatusRank(s) {
-  const i = VISIT_STATUS_RANK.indexOf((s && s.visitStatus) || '');
+  const i = VISIT_STATUS_RANK.indexOf(effectiveVisitStatus(s));
   return i < 0 ? VISIT_STATUS_RANK.length : i;
 }
 
-module.exports = { VISIT_STATUS_LABELS, sameSentence, editorReasonOf, visitStatusLabel, visitStatusRank };
+module.exports = { effectiveVisitStatus, VISIT_STATUS_LABELS, sameSentence, editorReasonOf, visitStatusLabel, visitStatusRank };

@@ -20,6 +20,7 @@
  *   node scripts/repair_expired_place_photos.js --dry-run   # 件数と内訳だけ（書き込まない）
  *   node scripts/repair_expired_place_photos.js             # 直す
  *   node scripts/repair_expired_place_photos.js --check     # 失効が残っていれば exit 1（書き込まない・CI の soft 向け）
+ *   --scope journal,features                                # 対象のフォルダを絞る（既定は features,journal,stores）
  */
 'use strict';
 
@@ -72,9 +73,15 @@ async function confirmDead(urls) {
 
 const isHotpepperPhoto = (u) => /^https:\/\/imgfp\.hotp\.jp\//.test(u || '');
 
+// --scope journal,features のように対象を絞れる（店舗ページは毎日の再生成が直すので、記事だけ直したいとき）
+function scopeDirs() {
+  const i = argv.indexOf('--scope');
+  return i >= 0 && argv[i + 1] ? argv[i + 1].split(',') : ['features', 'journal', 'stores'];
+}
+
 function listTargets() {
   const files = [];
-  for (const d of ['features', 'journal', 'stores']) {
+  for (const d of scopeDirs()) {
     const dir = path.join(ROOT, d);
     for (const f of fs.readdirSync(dir)) {
       if (!f.endsWith('.html') || f === '_template.html') continue;

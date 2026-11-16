@@ -36,6 +36,25 @@ function extractLocalStores() {
   try { return loadStores(); } catch (e) { return []; }
 }
 
+// 記事の店名のうち、確定閉店（data/closed_stores.json）・Google で閉業/一時休業の表示の店。[ '店名（理由）' ]
+function closedStoreHits(names, stores) {
+  const out = [];
+  let closed = [];
+  try { closed = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'closed_stores.json'), 'utf8')).stores || []; } catch (e) { /* 無ければ空 */ }
+  const closedNames = new Set(closed.map(s => s['店名']));
+  let idx = new Map();
+  try { idx = require('./lib/operating_notice').buildNoticeIndex(stores); } catch (e) { /* 無ければ空 */ }
+  const { placesKey } = require('./lib/places_key');
+  const byName = new Map(stores.map(s => [s['店名'], s]));
+  for (const n of new Set(names)) {
+    if (closedNames.has(n)) { out.push(`${n}（確定閉店）`); continue; }
+    const s = byName.get(n);
+    const hit = s && idx.get(placesKey(s));
+    if (hit) out.push(`${n}（Google で${hit.kind === 'permanent' ? '閉業' : '一時休業'}と表示）`);
+  }
+  return out;
+}
+
 function checkJournal(htmlPath, mdPath) {
   const html = fs.readFileSync(htmlPath, 'utf8');
   const md = mdPath && fs.existsSync(mdPath) ? fs.readFileSync(mdPath, 'utf8') : '';
@@ -60,10 +79,13 @@ function checkJournal(htmlPath, mdPath) {
   const badScore = scores.find(s => s < 0 || s > 5);
   pass(2, badScore === undefined, badScore !== undefined ? `異常なGoogle評価: ${badScore}` : 'OK');
 
-  // 3. 閉店店舗チェック
-  const closedNames = stores.filter(s => String(s['公開フラグ']).toUpperCase() === 'FALSE').map(s => s['店名']);
-  const hitClosed = storeNameMatches.filter(n => closedNames.includes(n));
-  pass(3, hitClosed.length === 0, hitClosed.length ? `閉店店舗を含む: ${hitClosed.join(', ')}` : 'OK');
+  // 3. 閉店・休業店舗チェック（基本方針 段階1 S1-4・ADR 0069）
+  //    以前は存在しない項目（公開フラグ）を見ていて必ず通っていた。実在するデータ（data/closed_stores.json の確定閉店と、
+  //    Google で閉業・一時休業と表示されている店 = scripts/lib/operating_notice.js）を見る。
+  //    公開の条件に関わるので、段階4の検証と本人の承認までは「記録だけ（WARNING）」で、公開は止めない（ADR 0069・決定6）。
+  const closedInfo = closedStoreHits(storeNameMatches, stores);
+  results.push({ id: 3, ok: true, warn: closedInfo.length > 0,
+    msg: closedInfo.length ? `⚠️ WARNING: 閉店・休業の記録がある店を含みます（記事で扱わない）: ${closedInfo.join(' / ')}` : 'OK' });
 
   // 4. 個人名・オーナー名(ユニーク判定が難しいため"オーナー""大将""店主名"等のマーカーで近似)
   const personalMarker = /オーナー[:：][^<\s、。]{2,8}|大将[:：][^<\s、。]{2,8}/;

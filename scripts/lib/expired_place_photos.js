@@ -10,7 +10,8 @@
  *  - 失効したかどうかは呼び出し側が HTTP で確かめた dead 集合だけで決める（制約10）。
  */
 
-const PLACE_RE = /https:\/\/lh3\.googleusercontent\.com\/place-photos\/[A-Za-z0-9_\-=%.\/?&;]*/g;
+// Places の写真 URL の形は3種類ある（place-photos・places・grass-cs。2026-11-16 実測: 後の2種も同じく期限切れになる）
+const PLACE_RE = /https:\/\/lh3\.googleusercontent\.com\/(?:place-photos|places|grass-cs)\/[A-Za-z0-9_\-=%.\/?&;]*/g;
 const DEFAULT_OG = 'https://nagoya-bites.com/icons/og-default.png'; // 1200x630 の横長（正方形のアイコンは X のカードで丸が切れる・K5）
 const FALLBACK_FIGURE = '/assets/store-figures/_fallback.svg';
 const HERO_EXPIRED_MARK = 'NB-HERO-EXPIRED';
@@ -141,7 +142,7 @@ function repairHtml(html, ctx) {
   }
 
   // 7. JSON-LD "image"（失効 URL の行を外す。最後のプロパティだった場合は直前のカンマも外す）
-  const ldImg = '"image":\\s*"(https:\\/\\/lh3\\.googleusercontent\\.com\\/place-photos\\/[^"]+)"';
+  const ldImg = '"image":\\s*"(https:\\/\\/lh3\\.googleusercontent\\.com\\/(?:place-photos|places|grass-cs)\\/[^"]+)"';
   out = out.replace(new RegExp(',(\\s*)' + ldImg + '(?=\\s*[}\\]])', 'g'), (all, ws, u) => {
     if (!isDead(u)) return all;
     changes.push('JSON-LD image 削除');
