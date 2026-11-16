@@ -45,7 +45,7 @@ const FOOTER_GROUPS = [
       ['features/index.html', '特集記事'],
       ['journal/index.html', 'ジャーナル'],
       ['features/review-trust.html', '口コミ信頼度の読み方'],
-      ['features/no-fake-reviews.html', '桜ゼロ宣言'],
+      ['features/no-fake-reviews.html', '編集の約束'],
     ],
   },
   {

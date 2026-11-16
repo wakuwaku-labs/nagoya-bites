@@ -163,7 +163,7 @@ for (const f of legacyTargets) scanWords(read(f), P.legacyNames, `[旧名称] ${
 // （_README / _why 等・公開面には注入されない）を除いた文字列値だけを対象にする。
 // 生テキストの行フィルタだとインデント幅・改行位置が変わるだけで壊れるため使わない。
 {
-  const skipKeys = new Set(['bannedWords', 'legacyNames']);
+  const skipKeys = new Set(['bannedWords', 'legacyNames', 'assertionWords']);
   const violations2 = [];
   function walk(node, path) {
     if (node == null) return;
@@ -221,12 +221,30 @@ for (const f of legacyTargets) scanWords(read(f), P.legacyNames, `[旧名称] ${
 // ── B-5. 読み方ページ ──────────────────────────────────────
 scanWords(read('features/review-trust.html'), P.bannedWords, '[禁止語] features/review-trust.html');
 
+// ── C. 言い切りの語（assertionWords・基本方針 段階1 S1-2）─────────────────────────────
+// 編集部が保証できない言い切りを公開ページに出さない。index.html・features/*.html・ルート直下のページ・llms.txt
+// （stores/*.html は gen-store-pages.js が助言文をこのJSONから作るので、再生成後の姿はここでは数えない）
+{
+  const words = P.assertionWords || [];
+  const targets = ['index.html', 'about.html', 'faq.html', 'contact.html', '404.html', 'llms.txt', 'privacy-policy.html']
+    .concat(fs.readdirSync(path.join(ROOT, 'features')).filter((f) => f.endsWith('.html')).map((f) => 'features/' + f));
+  const counts = {}; const samples = {};
+  for (const f of targets) {
+    const t = read(f); if (t == null) continue;
+    for (const w of words) {
+      const n = t.split(w).length - 1;
+      if (n > 0) { counts[w] = (counts[w] || 0) + n; if (!samples[w]) samples[w] = f; }
+    }
+  }
+  for (const [w, n] of Object.entries(counts)) violations.push(`[言い切り] 「${w}」 ${n}か所 例: ${samples[w]}`);
+}
+
 // ── 出力 ──────────────────────────────────────────────────
 console.log(`口コミ信頼度 公開文言監査（policy v${P.version} / scoreVersion ${P.scoreVersion}）`);
 for (const i of info) console.log(`  ℹ ${i}`);
 for (const w of warnings) console.log(`  ⚠ ${w}`);
 if (violations.length === 0) {
-  console.log('  ✅ 旧名称 0 件・禁止語 0 件');
+  console.log('  ✅ 旧名称 0 件・禁止語 0 件・言い切り 0 件');
 } else {
   console.log(`  ❌ 違反 ${violations.length} 件`);
   for (const v of violations) console.log(`   - ${v}`);
