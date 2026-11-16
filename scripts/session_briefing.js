@@ -87,6 +87,8 @@ function readHandoff() {
 }
 
 function fetchLinear(policy) {
+  // 正本は Ondine（基本方針の計画 5章・Ondine #2050）。policy.linearEnabled=false で Linear を読まない（戻すときは true）
+  if (policy.linearEnabled === false) return { disabled: true };
   const args = ['linear', 'list-issues', '--team', policy.team, '--json'];
   if (policy.project) args.push('--project', policy.project); // 他アプリの課題を混ぜない
   const run = spawnSync('orca', args,
@@ -113,7 +115,9 @@ function short(issue) {
 function render({ today, handoff, linear, result, alerts, policy }) {
   const out = [`【自動ブリーフィング ${today}】`];
   out.push(`HANDOFF: ${handoff.status}${handoff.next[0] ? ` — 次: ${handoff.next[0].slice(0, 80)}` : ''}`);
-  if (linear.error) {
+  if (linear.disabled) {
+    out.push('Linear: 読まない設定（課題の正本は Ondine）。');
+  } else if (linear.error) {
     out.push(`Linear: 取得できず（${linear.error}）。状況は未確認のまま扱うこと。`);
   } else {
     const max = policy.maxItemsPerSection;
@@ -136,7 +140,7 @@ function main() {
   const today = new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10); // JST
   const handoff = readHandoff();
   const linear = fetchLinear(policy);
-  const result = linear.error ? null : classify(linear.issues, today, policy);
+  const result = (linear.error || linear.disabled) ? null : classify(linear.issues, today, policy);
   const alerts = fetchOpenAlerts(policy);
   if (process.argv.includes('--json')) {
     console.log(JSON.stringify({ today, handoff, linearError: linear.error || null, result, alerts }, null, 2));
