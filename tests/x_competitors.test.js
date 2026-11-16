@@ -183,3 +183,43 @@ test('合体: 古い投稿（topic_tags なし）の形は壊さず、新しく�
   assert.ok(!('topic_tags' in posts.find((p) => p.id === oldPost.id).features));
   assert.deepStrictEqual(posts.find((p) => p.id === '1000009').features.topic_tags, ['スイーツ・手土産', '値段・お得']);
 });
+
+test('--retag: 保存済みの投稿に topic_tags を付け、本文は保存せず、費用は返ってきた件数分だけ。消えた id は残す', async () => {
+  const root = tmpRoot(cfg(1));
+  await C.run({ root, env: ENV, fetchImpl: fake(), now: NOW, log: quiet });
+  const fp = path.join(root, 'data/x_competitors.json');
+  const o = readOut(root);
+  const keep = o.accounts[0].posts[0];
+  delete keep.features.topic_tags;
+  o.accounts[0].posts.push({ id: '999', created_at: '2026-11-01T00:00:00.000Z', metrics: { likes: 7 }, features: { topic: 'x' } });
+  o.cost.usd = 0.1;
+  fs.writeFileSync(fp, JSON.stringify(o));
+  const calls = [];
+  const f = async (url) => {
+    calls.push(decodeURIComponent(url));
+    return { status: 200, text: async () => JSON.stringify({ data: [tw(keep.id, keep.created_at, { text: 'ひみつのラーメン 900円' })] }) };
+  };
+  const r = await C.run({ root, env: ENV, fetchImpl: f, now: NOW, retag: true, log: quiet });
+  assert.strictEqual(r.result, 'ok');
+  assert.strictEqual(calls.length, 1);
+  assert.ok(calls[0].includes('/tweets?') && calls[0].includes('ids=') && !calls[0].includes('/users'));
+  const out = readOut(root);
+  const posts = out.accounts[0].posts;
+  assert.deepStrictEqual(posts.find((p) => p.id === keep.id).features.topic_tags, ['麺（ラーメン・うどん等）', '値段・お得']);
+  assert.deepStrictEqual(posts.find((p) => p.id === '999').metrics, { likes: 7 });
+  assert.ok(!JSON.stringify(out).includes('ひみつ'));
+  assert.strictEqual(out.cost.usd, 0.105);
+});
+
+test('--retag: 上限を超えるときは読まない', async () => {
+  const root = tmpRoot(cfg(1));
+  await C.run({ root, env: ENV, fetchImpl: fake(), now: NOW, log: quiet });
+  const o = readOut(root);
+  o.cost.usd = 0.999;
+  fs.writeFileSync(path.join(root, 'data/x_competitors.json'), JSON.stringify(o));
+  const f = fake();
+  const r = await C.run({ root, env: ENV, fetchImpl: f, now: NOW, retag: true, log: quiet });
+  assert.strictEqual(f.calls.length, 0);
+  assert.strictEqual(r.result, 'error');
+  assert.strictEqual(readOut(root).cost.usd, 0.999);
+});

@@ -2,13 +2,18 @@ name: NAGOYA BITES — X の競合の数字の取得
 
 # 毎週月曜 07:00 JST に、競合の X アカウント（data/x_competitors_config.json）の投稿の数字と特徴を
 # data/x_competitors.json に積む（本文・画像・URL は保存しない。90 日超は消す）。
-#   費用: 月の上限 $1（150円）。scripts/fetch_x_competitors.js の関所が守る（X の数字取得の上限とは別）。
+#   費用: 月の上限 $1.5（225円）。scripts/fetch_x_competitors.js の関所が守る（X の数字取得の上限とは別）。
 #   日曜 22:00 UTC = 月曜 07:00 JST。
 
 on:
   schedule:
     - cron: '0 22 * * 0'
   workflow_dispatch:
+    inputs:
+      retag:
+        description: '保存済みの全投稿の話題タグを付け直す（1回用・有料）'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -39,7 +44,7 @@ jobs:
           X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
         run: |
           set +e
-          node scripts/fetch_x_competitors.js
+          if [ "${{ inputs.retag }}" = "true" ]; then node scripts/fetch_x_competitors.js --retag; else node scripts/fetch_x_competitors.js; fi
           echo "exit=$?" >> "$GITHUB_OUTPUT"
           set -e
 
