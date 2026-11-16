@@ -8,6 +8,7 @@
  *   node scripts/rewrite_selection_wording.js              # 書き換える（検索流入の上位2本の題は除く）
  *   node scripts/rewrite_selection_wording.js --check      # 書き換えが要るファイルがあれば exit 1
  *   node scripts/rewrite_selection_wording.js --top solo-dining   # 検索流入の上位の題を1本だけ変える（決定4）
+ *   node scripts/rewrite_selection_wording.js --revert solo-dining # その1本の題を元に戻す（半減したとき・決定4）
  *   --list    変えるファイルと件数を出す
  * 対象: features/*.html・journal/20*.html・features/index.html・journal/index.html・index.html・
  *       data/journal_published.json・data/featured.json・page-names.json・llms.txt・題の元（scripts/gen_industry_features.js・scripts/lib/journal_topics.js）。
@@ -44,19 +45,34 @@ function apply(text, { top } = {}) {
   return t;
 }
 
+// 上位の題の変更の記録（data/top_title_changes.json）と今の data/gsc_metrics.json を並べ、戻す条件に当たるかを出す
+function reportTop() {
+  const led = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'top_title_changes.json'), 'utf8'));
+  let gsc = null;
+  try { gsc = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'gsc_metrics.json'), 'utf8')); } catch (e) { /* 無ければ空 */ }
+  for (const c of led.changes) {
+    const row = gsc && (gsc.pages || []).find((p) => String(p.page).endsWith('/' + c.path));
+    const now = row ? row.clicks : null;
+    const hit = c.status === 'applied' && now != null && now <= c.stop.clicksAtOrBelow;
+    console.log(`${c.id}: 変えた日 ${c.changedOn}・比較 ${c.compareOn}・基線 ${c.baseline.clicks}クリック → 今 ${now == null ? '（取得なし）' : now}（直近28日 ${gsc ? gsc.dateRange.startDate + '〜' + gsc.dateRange.endDate : '-'}）${hit ? ' ⚠ 戻す条件に当たった: --revert ' + c.id : ''}`);
+  }
+}
+
 function main() {
   const args = process.argv.slice(2);
+  if (args.includes('--report')) return reportTop();
   const check = args.includes('--check');
   const list = args.includes('--list');
-  const top = args.includes('--top') ? args[args.indexOf('--top') + 1] : null;
-  if (top && !TOP_TITLES.some((p) => p.id === top)) { console.error('--top は ' + TOP_TITLES.map((p) => p.id).join(' / ')); process.exit(2); }
+  const revert = args.includes('--revert') ? args[args.indexOf('--revert') + 1] : null;
+  const top = revert || (args.includes('--top') ? args[args.indexOf('--top') + 1] : null);
+  if ((top || revert) && !TOP_TITLES.some((p) => p.id === top)) { console.error('--top は ' + TOP_TITLES.map((p) => p.id).join(' / ')); process.exit(2); }
   const only = top ? TOP_TITLES.find((p) => p.id === top) : null;
   let changed = 0, bad = 0;
   for (const f of targets()) {
     const p = path.join(ROOT, f);
     const before = fs.readFileSync(p, 'utf8');
     let after;
-    if (only) after = before.split(only.old).join(only.neu);
+    if (only) after = revert ? before.split(only.neu).join(only.old) : before.split(only.old).join(only.neu);
     else after = apply(before);
     if (after === before) continue;
     if (signature(before) !== signature(after) && !only) {

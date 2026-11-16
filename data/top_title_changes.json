@@ -1,0 +1,27 @@
+{
+  "_README": "検索流入の上位の特集の題を変えた記録と、戻す条件（ADR 0069 決定4・ADR 0070）。題から「業界人」を外す変更のうち、流入が多い2本だけは最後に1本ずつ変える決まりで、28日のクリックが変える前の半分以下になったら戻す。確認は node scripts/rewrite_selection_wording.js --report、戻すのは node scripts/rewrite_selection_wording.js --revert <id>（題・og・twitter・構造化データ・特集の一覧の写しをまとめて戻す）。1本の記事のクリックの変化は約76%以上動かないと偶然と見分けられないので、半減（-50%）は見分けられる大きさの目安。",
+  "changes": [
+    {
+      "id": "solo-dining",
+      "path": "features/nagoya-solo-dining.html",
+      "changedOn": "2026-11-17",
+      "compareOn": "2026-12-16",
+      "old": "立ち飲みまで業界人が厳選10店",
+      "neu": "立ち飲みまで10店",
+      "baseline": { "startDate": "2026-10-19", "endDate": "2026-11-15", "clicks": 268, "impressions": 3139, "ctr": 0.0854, "position": 6.1 },
+      "stop": { "clicksAtOrBelow": 134, "rule": "変えた日から28日（比較は 2026-12-16 以降の data/gsc_metrics.json の直近28日）のクリックが 134 以下なら --revert solo-dining で戻す" },
+      "status": "applied"
+    },
+    {
+      "id": "tebasaki",
+      "path": "features/nagoya-tebasaki.html",
+      "changedOn": "2026-11-17",
+      "compareOn": "2026-12-16",
+      "old": "風来坊と山ちゃんの違い｜業界人が選ぶ厳選8店",
+      "neu": "風来坊と山ちゃんの違い｜8店",
+      "baseline": { "startDate": "2026-10-19", "endDate": "2026-11-15", "clicks": 33, "impressions": 1636, "ctr": 0.0202, "position": 6.8 },
+      "stop": { "clicksAtOrBelow": 16, "rule": "変えた日から28日のクリックが 16 以下なら --revert tebasaki で戻す（表示が少なく偶然のぶれが大きい。順位と表示も見て決める）" },
+      "status": "applied"
+    }
+  ]
+}
