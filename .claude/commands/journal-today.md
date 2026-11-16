@@ -76,9 +76,9 @@ node scripts/fetch_trending_articles.js ingest-json /tmp/buzz.json
 ```
 → `data/trending_stores.json` の `stores[]` または `candidates[]` に追加、`出典URL` も保存。
 
-### 3. 候補アングル生成 → 採点 → **95点ゲート**（必須）
+### 3. 候補アングル生成 → 採点 → **品質ゲート**（必須）
 
-Step 2.5 のリサーチノートを踏まえ、**いきなり1本を執筆せず、5本の候補アングル → 採点 → 95点以上の1本のみ採用** という品質ゲートを通す。
+Step 2.5 のリサーチノートを踏まえ、**いきなり1本を執筆せず、5本の候補アングル → 採点 → ゲートを通った1本のみ採用** という品質ゲートを通す。
 
 #### 3a. 候補アングル5本を `/tmp/journal-candidates-YYYY-MM-DD.json` に書き出す
 本文はまだ書かない（リード150字 + angle 1行 + ソース3件以上のみ）。
@@ -108,15 +108,13 @@ node scripts/score_journal_candidates.js /tmp/journal-candidates-YYYY-MM-DD.json
 - 週の投稿の予定（SNS分析ツールの next.json）の題材が使えるときは、題材に明確に一致する候補に **並べ替えだけ** +2（同判定帯の同点・僅差のタイブレーク。total・判定・失格は不変）。結果の `plan_topic`・`plan_topic_bonus` に記録。`--no-plan-topic` で切る
 - 結果は `data/journal_candidates/YYYY-MM-DD.json` に保存
 
-#### 3c. 95点ゲート（**当日公開スキップは禁止**）
-- 最高スコア **≥ 95**: 採用 → Step 3.5（写真調査）へ
-- 最高スコア **< 95**: **95点に到達するまで** 以下を繰り返す（公開スキップ禁止）:
-  1. **第1ラウンド**: Editor がリサーチノートを再読し、追加で 5本の候補を生成 → 再採点
-  2. **第2ラウンド**: WebSearch クエリを **拡張**（隣接エリア・隣接ジャンル）し research-notes を増補 → さらに 5本追加 → 再採点
-  3. **第3ラウンド（救援プール）**: `data/editorial_column_backlog.json` の未使用コラム（業界裏側）から候補を機械生成し、Step 2.5 の最新ソース3件を注入
-  4. **第4ラウンド（最終救援）**: 救援プール候補に最新ソースを **追加で3件以上手動投入** して再採点。**ここで必ず 95+ を出す**
-
-> 救援プール（業界裏側コラム）は構造的に「独自性20点満点・ブランド整合15点満点」を取りやすい設計のため、最新ソースさえ揃えば 95+ に必ず到達できる。**当日公開ゼロという結果はワークフロー上発生しない。**
+#### 3c. 品質ゲート（採点の基準は `data/journal_gate_policy.json` が正本。旧「95点固定」は廃止済み）
+- PASS: 採用 → Step 3.5（写真調査）へ
+- PASS_WITH_NOTE: 採用（公開は続けるが、足りない点を記録に残す）
+- HOLD（基準に届かない）: 次の順で試す。それでも駄目なら**その日は出さない**（根拠の薄い記事で日次の頻度を守らない。基本方針・`docs/decisions/0069` 決定6）。本人宛ての課題にして理由を残す
+  1. 自動で直す（足りない出典・確認日・注意点を足す）
+  2. 題材を替えて1回だけ書き直す（隣接エリア・隣接ジャンルで research-notes を増補）
+- 出典のない数字（話題度など）を積んで基準を通さない（CLAUDE.md 品質ゲート原則1）
 
 #### 3d. 採用候補の確定と pending_stores 登録
 採用された候補1本のみ、Step 3.6 → Step 4（本文執筆）に進む。
@@ -140,7 +138,7 @@ node scripts/score_journal_candidates.js /tmp/journal-candidates-YYYY-MM-DD.json
 
 > **⚠️ `アクセス` は必須**（CLAUDE.md「品質フィルタ通過条件」）。最寄り駅+徒歩分数を入れ、文字列に必ず「名古屋」または名古屋固有駅名を含める。未指定時は `merge_pending_stores.js` がエリアから補完するが、可能な限り元情報源から手動で記入する。
 >
-> `価格帯` は推定でよいので入れる（「1001～2000円」等）。空だと予算フィルタに引っかからない。
+> `価格帯` は出典で確かめられた場合だけ入れる（「1001～2000円」等）。確かめられないときは空のままにし、本文に「推定」「未確認」と明記する（根拠の無い価格を事実として載せない・基本方針 原則3・9）。
 
 外部媒体から引用する場合、記事末尾の `sources` に情報源URL（と掲載日 `date`）を必ず明記。
 
@@ -265,7 +263,7 @@ node build.js
 - docs/daily-posts/YYYY-MM-DD.md の中身プレビュー
 - pending_stores.json に追記した店がある場合はその店名リスト
 
-### 10. コミット＆プッシュ(ユーザー承認後のみ)
+### 10. コミット＆プッシュ（手動実行のときだけ。無人実行は承認を求めず、ラッパーの手順に従う・CLAUDE.md 品質ゲート原則6）
 ```bash
 git add journal/ data/journal_published.json data/pending_stores.json docs/daily-posts/ index.html sitemap.xml
 git commit -m "journal: YYYY-MM-DD — <テーマ短縮> <主題>"
@@ -285,7 +283,7 @@ git push origin HEAD:main
 
 📷 写真候補は docs/daily-posts/YYYY-MM-DD.md の「## 写真候補」セクションを確認してください。
   - store_instagram / google_maps リンクで実在写真を調達
-  - stock_keyword / Unsplash URLでフリー素材を検索
+  - 汎用ストック写真（Unsplash 等）は使わない（制約9）。実写が無ければ記事専用の図にする
 
 詳細ルール: docs/daily-posts/README.md
 ```
