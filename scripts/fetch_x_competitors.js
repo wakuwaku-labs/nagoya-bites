@@ -9,7 +9,8 @@
  * 費用: 月の上限 $1（既存の CAP_USD とは別。使用額は出力の cost）。呼ぶ前に見積もり、超えるなら呼ばない。
  * 保存: 公開リポジトリなので本文・画像・URL は保存しない。数字（metrics）と特徴（features）だけ。90 日を超えた投稿は消す（開発者ポリシー）。
  *
- * 使い方: node scripts/fetch_x_competitors.js [--dry-run]
+ * 使い方: node scripts/fetch_x_competitors.js [--dry-run] [--retag]
+ *   --retag: 保存済みの全投稿を GET /2/tweets?ids= で読み直し、features（topic_tags 含む）と metrics を置き換える（1回用）
  * 鍵: X_API_KEY / X_API_SECRET / X_ACCESS_TOKEN / X_ACCESS_TOKEN_SECRET（値はログにも JSON にも出さない）
  */
 const fs = require('fs');
@@ -119,7 +120,7 @@ function postRow(t, mediaByKey) {
 
 const bigMax = (ids) => ids.reduce((mx, v) => (mx === null || BigInt(v) > BigInt(mx) ? v : mx), null);
 
-async function run({ root = X.ROOT, env = process.env, fetchImpl = fetch, now = new Date(), dryRun = false, log = console.log } = {}) {
+async function run({ root = X.ROOT, env = process.env, fetchImpl = fetch, now = new Date(), dryRun = false, retag = false, log = console.log } = {}) {
   const cfg = readJson(root, CONFIG_REL);
   if (!cfg || !Array.isArray(cfg.accounts) || !cfg.accounts.length) return { result: 'error', reason: '競合の一覧（data/x_competitors_config.json）が読めません' };
   const capUsd = numOrNull(cfg.capUsd) != null ? cfg.capUsd : 1;
@@ -164,10 +165,47 @@ async function run({ root = X.ROOT, env = process.env, fetchImpl = fetch, now = 
     log(`[dry-run] 対象 ${handles.length}件／最大見積 $${estimateAll.toFixed(3)}／今月の使用額 $${spent.toFixed(3)}／上限 $${capUsd}`);
     return finish('skipped', 'dry-run', false);
   }
+  // 付け直し: 保存済みの全投稿を GET /2/tweets?ids= で読み直し、features と metrics を置き換える（ユーザーは読まない）。
+  // 返ってこない id（消えた投稿）はそのまま残す。費用は返ってきた件数 × POST_READ_USD。
+  async function retagAll() {
+    const ids = [];
+    for (const r of out.accounts) for (const p of r.posts) ids.push(p.id);
+    if (!ids.length) return finish('ok', '付け直す投稿がありません');
+    let redone = 0;
+    let stop = null;
+    for (let i = 0; i < ids.length; i += 100) {
+      const chunk = ids.slice(i, i + 100);
+      if (!can(POST_READ_USD * chunk.length)) { stop = `月の上限 $${capUsd} に達するため以降は読まない（使用額 $${spent.toFixed(3)}）`; break; }
+      let res;
+      try {
+        res = await M.xGet('/tweets', {
+          ids: chunk.join(','), 'tweet.fields': 'public_metrics,created_at,entities,attachments',
+          expansions: 'attachments.media_keys', 'media.fields': 'type',
+        }, cred, fetchImpl);
+      } catch (e) { stop = `通信に失敗（tweets）: ${e && e.name ? e.name : 'error'}`; break; }
+      if (res.status !== 200 || !res.body || typeof res.body !== 'object') { stop = M.errReason(res.status, res.body); break; }
+      const items = Array.isArray(res.body.data) ? res.body.data : [];
+      spent = round3(spent + POST_READ_USD * items.length);
+      const mediaByKey = new Map(((res.body.includes && res.body.includes.media) || []).map((m) => [m.media_key, m.type]));
+      const byId = new Map(items.map((t) => [String(t.id), t]));
+      for (const r of out.accounts) {
+        r.posts = r.posts.map((p) => {
+          const t = byId.get(p.id);
+          if (!t) return p;
+          redone++;
+          const n = postRow(t, mediaByKey);
+          return { ...n, created_at: n.created_at || p.created_at };
+        });
+      }
+    }
+    log(`付け直し: ${redone}件／保存済み ${ids.length}件／今月の使用額 $${spent.toFixed(3)}（上限 $${capUsd}）`);
+    return finish(stop ? (redone ? 'budget' : 'error') : 'ok', stop);
+  }
   const cred = M.credentials(env);
   if (!cred) return finish('error', '鍵（X_API_KEY など4つの Secrets）が揃っていません');
 
   const can = (usd) => round3(spent + usd) <= capUsd + 1e-9;
+  if (retag) return retagAll();
   if (!can(USER_READ_USD * handles.length)) return finish('budget', `月の上限 $${capUsd} に達するため停止（使用額 $${spent.toFixed(3)}）`);
 
   // 1) ユーザー（フォロワー数とID）
@@ -231,7 +269,7 @@ async function run({ root = X.ROOT, env = process.env, fetchImpl = fetch, now = 
 }
 
 if (require.main === module) {
-  run({ dryRun: process.argv.includes('--dry-run') })
+  run({ dryRun: process.argv.includes('--dry-run'), retag: process.argv.includes('--retag') })
     .then((r) => { process.exit(r.result === 'error' ? 1 : 0); })
     .catch((e) => { console.error('予期しない失敗:', e && e.message ? e.message : 'error'); process.exit(1); });
 }
