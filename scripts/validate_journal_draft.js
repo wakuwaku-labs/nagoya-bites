@@ -85,7 +85,8 @@ function checkJournal(htmlPath, mdPath) {
   //     md（SNS の投稿案）は投稿の面なので、順位の語も止める。
   const artHtml = (html.match(/<article[\s\S]*?<\/article>/i) || [html])[0];
   const brandArt = brandFindings(htmlToText(artHtml), { surface: 'article' });
-  const brandMd = md ? brandFindings(md, { surface: 'post' }) : { fail: [], warn: [] };
+  // md の店紹介に写した Google 評価の表示（★4.1）は記事と同じく対象外（評価の引用で、順位づけではない）
+  const brandMd = md ? brandFindings(md.replace(/★\s*[0-9０-９][.．][0-9０-９]/g, ' '), { surface: 'post' }) : { fail: [], warn: [] };
   const fmt = (list) => list.map(f => `${f.words.join('・')}（${f.why}）`).join(' / ');
   const brandFail = [...brandArt.fail, ...brandMd.fail];
   pass('5c_brand_policy', brandFail.length === 0,

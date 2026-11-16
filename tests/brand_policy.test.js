@@ -119,4 +119,6 @@ test('日次ジャーナルの検査（5c）: 本文に「実食」「必見」�
   const md = checkJournal(okPath, mdPath).find((r) => r.id === '5c_brand_policy');
   assert.strictEqual(md.ok, false);
   assert.match(md.msg, /ランキング/);
+  fs.writeFileSync(mdPath, '## Instagram\n栄の鉄板屋 ★4.5\n');
+  assert.strictEqual(checkJournal(okPath, mdPath).find((r) => r.id === '5c_brand_policy').ok, true);
 });
