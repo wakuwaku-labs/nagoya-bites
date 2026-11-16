@@ -114,6 +114,20 @@
     "until": "2026-11-21",
     "help": "URL あり／なしの実験。docs/decisions/0058（2026-11-07 本人承認・採用・期間2週間 2026-11-08〜2026-11-21 JST）。id は 1 から 2 に変更（1 だと 14 日中 URL ありが 3 日だけで比べられないため。2 は 7 日ずつ）。期間の外は自動でオフ（enabled のまま放っておいてよい）。true のとき、日付と id から決まる割り当てで noUrlShare の割合の日は本文のリンクを外して出す（検査は URL 以外すべて通す）。割り当ては再実行でも変わらない。台帳 data/x_post_log.json に experiment・url_variant（'url' か 'no_url'）が付く。since/until は YYYY-MM-DD（空なら無制限）。戻すのは enabled を false に戻す1行だけ"
   },
+  "topicExperiment": {
+    "enabled": true,
+    "since": "2026-11-22",
+    "until": "",
+    "weeklyTarget": 3,
+    "anyTopics": [
+      "名古屋ジャーナルの紹介"
+    ],
+    "skip": [
+      "x-nb-evening-post-time"
+    ],
+    "maxAgeDays": 8,
+    "help": "題材の実験（Ondine #2025）。SNS分析ツールが iCloud の next.json に出す candidates（experiment_id 付き・題材と書き方の組）のうち、今日の記事に合うものを Claude への指示に足し、守れたら台帳 data/x_post_log.json に topic_experiment（実験の id）を残す。URL の実験（urlExperiment）が終わる 2026-11-22 から自動で有効（since）。URL の実験がある日は台帳の experiment を上書きしない（topic_experiment だけ付く）。anyTopics の題材（どの記事にも当たる）は週 weeklyTarget 本まで、特定の題材（記事の題名に当たるとき）は上限なし。skip は使わない実験の id（投稿時刻の実験は postSlot 固定のため）。next.json が古い（maxAgeDays 超）・無いときは今までどおり。since/until は YYYY-MM-DD（until が空なら無制限）。戻すのは enabled を false にする1行だけ"
+  },
   "planExperiment": {
     "enabled": true,
     "maxAgeDays": 8,

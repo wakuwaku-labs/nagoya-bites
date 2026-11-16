@@ -174,8 +174,14 @@ async function sendTweet(text, cred, fetchImpl = fetch, replyToId = null, mediaI
   return { status: res.status, body };
 }
 
+/** 台帳に残す題材の実験（保存した文面を使い、指定を守れた日だけ。定型に落ちた日・守れなかった日は付けない）。 */
+function topicExpOf(built) {
+  const t = built && built.mode === 'draft' && built.topic_experiment;
+  return t && typeof t === 'object' && t.followed !== false ? t : null;
+}
+
 /** 結果を台帳・心拍に書く（live のときだけ呼ぶ）。 */
-function record(root, { date, entry, result, reason, text, textMode, draftReason, tweetId, errorClass, status, thread, experiment, plan, media }) {
+function record(root, { date, entry, result, reason, text, textMode, draftReason, tweetId, errorClass, status, thread, experiment, plan, media, topicExp }) {
   const now = new Date().toISOString();
   if (status) {
     const log = X.readLog(root);
@@ -191,6 +197,7 @@ function record(root, { date, entry, result, reason, text, textMode, draftReason
       ...(thread ? { thread } : {}),
       ...(experiment ? { experiment: experiment.experiment, url_variant: experiment.url_variant } : {}),
       ...(media ? { media: media.variant, media_reason: media.reason, ...(media.id ? { media_id: media.id } : {}) } : {}),
+      ...(topicExp && topicExp.experiment_id ? { topic_experiment: topicExp.experiment_id, ...(experiment ? {} : { experiment: topicExp.experiment_id }) } : {}),
       ...(plan && plan.cell_id ? { plan_cell: plan.cell_id } : {}),
       ...(plan && plan.experiment_id ? { plan_experiment: plan.experiment_id } : {}),
       ...(plan && typeof plan.followed === 'boolean' ? { plan_followed: plan.followed } : {}),
@@ -273,6 +280,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   if (built.replies) out.replies = built.replies;
   if (built.type) out.draftType = built.type;
   if (built.plan) out.plan = built.plan;
+  if (topicExpOf(built)) out.topic_experiment = topicExpOf(built);
 
   // 本番の記事が出ているか（出ていないページを貼るとリンクカードが壊れる）
   if (!args.skipLiveCheck) {
@@ -310,7 +318,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
 
   const cred = credentials(env);
   if (!cred) {
-    record(root, { date, entry, result: 'failed', reason: 'no_credentials', errorClass: 'auth', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, status: 'failed' });
+    record(root, { date, entry, result: 'failed', reason: 'no_credentials', errorClass: 'auth', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, status: 'failed' });
     return { ...out, result: 'failed', reason: 'no_credentials', errorClass: 'auth', exitCode: 1 };
   }
 
@@ -340,7 +348,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
     res = await sendTweet(built.text, cred, fetchImpl, null, media.id);
   } catch (e) {
     const reason = `network:${e.message || e}`;
-    record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, media, status: 'failed' });
+    record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, status: 'failed' });
     return { ...out, result: 'failed', reason, errorClass: 'server', exitCode: 1 };
   }
   // 画像つきの投稿が受け付けられなかったら、画像なしでもう1回だけ送る（重複の拒否は届いている印なのでそのまま扱う）
@@ -351,7 +359,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
     if (textWithoutPhoto !== built.text) { built = { ...built, text: textWithoutPhoto }; out.text = textWithoutPhoto; }
     try { res = await sendTweet(built.text, cred, fetchImpl, null, null); } catch (e) {
       const reason = `network:${e.message || e}`;
-      record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, media, status: 'failed' });
+      record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, status: 'failed' });
       return { ...out, result: 'failed', reason, errorClass: 'server', exitCode: 1 };
     }
   }
@@ -382,7 +390,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
         }
       }
     }
-    record(root, { date, entry, result: 'posted', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, media, tweetId: id, status: 'posted', thread });
+    record(root, { date, entry, result: 'posted', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, tweetId: id, status: 'posted', thread });
     return { ...out, result: 'posted', tweetId: id, tweetUrl: `https://x.com/i/web/status/${id}`, ...(thread ? { repliesPosted: thread.replies.length, ...(thread.failed_reason ? { repliesFailed: thread.failed_reason } : {}) } : {}), exitCode: 0 };
   }
   const errorClass = X.classifyError(res.status, res.body);
@@ -390,10 +398,10 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   const reason = `http_${res.status}: ${detail}`;
   if (errorClass === 'duplicate') {
     // 同じ文面が既に X にある＝前の回で届いていた。もう送らない
-    record(root, { date, entry, result: 'duplicate', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, media, status: 'duplicate' });
+    record(root, { date, entry, result: 'duplicate', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, status: 'duplicate' });
     return { ...out, result: 'duplicate', reason, errorClass, exitCode: 0 };
   }
-  record(root, { date, entry, result: 'failed', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, draftReason, media, status: 'failed' });
+  record(root, { date, entry, result: 'failed', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, status: 'failed' });
   return { ...out, result: 'failed', reason, errorClass, exitCode: 1 };
 }
 

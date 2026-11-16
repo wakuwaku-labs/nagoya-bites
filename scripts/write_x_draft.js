@@ -143,10 +143,82 @@ function seriesSection(date, policy) {
     '- シリーズ名の「◯」は記事の数字（evidence の引用の中にあるもの）で埋める。埋められないときは名前を入れない。'];
 }
 
-function buildPrompt({ root, entry, material, previous, plan }) {
+// ── 題材の実験（Ondine #2025・docs/decisions/0067）─────────────────────────
+function addDays(date, n) {
+  const d = new Date(`${date}T00:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+
+/** date と同じ ISO 週（JST の月〜日）の、date より前の日に保存した文面のうち、題材の実験を使った本数。 */
+function topicExperimentCountThisWeek(date, root) {
+  const wd = S.weekdayJst(date);
+  let n = 0;
+  for (let k = 1; k <= wd; k++) {
+    try {
+      const d = JSON.parse(fs.readFileSync(X.draftPath(addDays(date, -k), root), 'utf8'));
+      if (d && d.topic_experiment && d.topic_experiment.followed !== false) n++;
+    } catch (_) { /* 無い・壊れている日は数えない */ }
+  }
+  return n;
+}
+
+/**
+ * 今日（date・JST）の題材の実験。policy.topicExperiment が有効で期間内、next.json の candidates に使えるものがあり、
+ * 記事の題材に当たるときだけ { exp } を返す。使えないときは { exp: null, reason }。例外は投げない。
+ * 特定の題材（記事の題名に当たるとき）は上限なし。anyTopics（どの記事にも当たる）は週 weeklyTarget 本まで。
+ */
+function loadTopicExperiment(date, policy, entry, root = X.ROOT, now = new Date()) {
+  try {
+    const cfg = policy && policy.topicExperiment;
+    if (!cfg || cfg.enabled !== true) return { exp: null, reason: 'off' };
+    if (cfg.since && date < cfg.since) return { exp: null, reason: 'before_since' };
+    if (cfg.until && date > cfg.until) return { exp: null, reason: 'after_until' };
+    const r = S.readFresh('next.json', { schema: 'x-next/1', maxAgeDays: Number(cfg.maxAgeDays) || 8, now });
+    if (!r.ok) return { exp: null, reason: r.reason };
+    const skip = Array.isArray(cfg.skip) ? cfg.skip : [];
+    const anyTopics = Array.isArray(cfg.anyTopics) ? cfg.anyTopics : [];
+    const usable = (Array.isArray(r.data.candidates) ? r.data.candidates : []).filter((c) => c && typeof c.experiment_id === 'string'
+      && !skip.includes(c.experiment_id) && c.format && typeof c.format === 'object' && (c.format.media === 'none' || c.format.media == null));
+    if (!usable.length) return { exp: null, reason: 'no_usable_candidate' };
+    const pack = (c) => ({ experiment_id: c.experiment_id, topic: c.topic ?? null, format: c.format });
+    const specific = usable.find((c) => !anyTopics.includes(c.topic) && PT.matchesTopic({ title_draft: entry.title }, c.topic));
+    if (specific) return { exp: pack(specific) };
+    const any = usable.find((c) => anyTopics.includes(c.topic));
+    if (!any) return { exp: null, reason: 'no_topic_match' };
+    const target = Number(cfg.weeklyTarget) || 0;
+    if (topicExperimentCountThisWeek(date, root) >= target) return { exp: null, reason: 'weekly_target_reached' };
+    return { exp: pack(any) };
+  } catch (e) {
+    return { exp: null, reason: `error:${e.message}` };
+  }
+}
+
+/** 文面づくりの指示に足す節（実験が無ければ空）。 */
+function topicExperimentSection(exp) {
+  if (!exp) return [];
+  const f = exp.format || {};
+  const lines = [];
+  if (exp.topic) lines.push(`- 題材は「${exp.topic}」。記事の事実のうち、この題材で読む人の役に立つ点を前に出してよい（記事にない事実は足さない）。`);
+  if (f.thread === false) lines.push('- 返信（続き）は付けない（replies は空の配列にする）。');
+  if (f.first_line && FIRST_LINE_JA[f.first_line]) lines.push(`- ${FIRST_LINE_JA[f.first_line]}`);
+  if (!lines.length) return [];
+  return ['', '## 今日の題材の実験', '次の指定は、上の「書き方の決まり」を破らない範囲で守る（決まりが優先）。記事に無い事実は足さない。', ...lines];
+}
+
+/** 1行目の書き方（問いかけ・数字）を守れたか。確かめられない指定（言い切りなど）は守れた扱い。 */
+function firstLineFollowed(body, firstLine) {
+  const line = String(body || '').split('\n')[0] || '';
+  if (firstLine === 'question') return /[？?]/.test(line);
+  if (firstLine === 'number') return /[0-9０-９]/.test(line);
+  return true;
+}
+
+function buildPrompt({ root, entry, material, previous, plan, topicExp }) {
   const parts = [
     promptBody(root),
     ...planSection(plan, entry.title),
+    ...topicExperimentSection(topicExp),
     ...seriesSection(entry.date, X.loadPolicy(root)),
     '',
     '## 使わない言い方',
@@ -242,7 +314,14 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
   const articleText = X.htmlToText(html);
   const material = articleMaterial(html);
 
-  const { plan, reason: planReason } = loadPlan(date, policy, now);
+  let { plan, reason: planReason } = loadPlan(date, policy, now);
+  const { exp: topicExp, reason: topicReason } = loadTopicExperiment(date, policy, entry, root, now);
+  if (topicExp) out.topic_experiment = topicExp; else if (topicReason !== 'off') out.topic_experiment_skipped = topicReason;
+  // 型の割り当ての1行目と実験の1行目が食い違うときは、実験を優先して型の割り当ては使わない
+  if (plan && topicExp && plan.first_line && topicExp.format.first_line && plan.first_line !== topicExp.format.first_line) {
+    plan = null;
+    planReason = 'topic_experiment';
+  }
   if (plan) out.plan = plan; else if (planReason !== 'off') out.plan_skipped = planReason;
 
   const attempts = Math.max(1, Number(cfg.attempts) || 1);
@@ -250,7 +329,7 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
   let previous = null;
   for (let i = 1; i <= attempts; i++) {
     const started = Date.now();
-    const r = await call(args.claudeBin, buildPrompt({ root, entry, material, previous, plan }), timeoutMs);
+    const r = await call(args.claudeBin, buildPrompt({ root, entry, material, previous, plan, topicExp }), timeoutMs);
     const seconds = Math.round((Date.now() - started) / 1000);
     if (!r.ok) {
       // 応答が無い・認証切れ・利用上限は、書き直させても直らない
@@ -264,6 +343,7 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
       previous = { reason: 'JSON が見つからない', raw: String(r.out || '').trim().slice(0, 600) };
       continue;
     }
+    const noThread = !!topicExp && topicExp.format.thread === false;
     const draft = {
       version: 1,
       date,
@@ -271,10 +351,11 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
       type: reply.type,
       body: typeof reply.body === 'string' ? reply.body.trim() : reply.body,
       evidence: reply.evidence,
-      ...(reply.replies !== undefined ? { replies: Array.isArray(reply.replies) ? reply.replies.map((x) => (typeof x === 'string' ? x.trim() : x)) : reply.replies } : {}),
+      ...(reply.replies !== undefined && !noThread ? { replies: Array.isArray(reply.replies) ? reply.replies.map((x) => (typeof x === 'string' ? x.trim() : x)) : reply.replies } : {}),
       generated_at: now.toISOString(),
       generator: `claude --print（${PROMPT_REL}）`,
       ...(plan ? { plan: planRecord(plan, reply.type) } : {}),
+      ...(topicExp ? { topic_experiment: { ...topicExp, followed: firstLineFollowed(reply.body, topicExp.format.first_line) } } : {}),
     };
     const failures = checkAll(draft, { entry, policy, articleText, root });
     out.attempts.push({ i, seconds, reason: failures.join(' / ') || null });
@@ -282,6 +363,11 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
     if (!failures.length && plan && plan.nb_kind && reply.type !== plan.nb_kind && i < attempts) {
       out.attempts[out.attempts.length - 1].reason = `plan_kind_differs:${reply.type}`;
       previous = { reason: `指定の型 ${plan.nb_kind} と違う型（${reply.type}）で書かれた。記事に合う限り ${plan.nb_kind} で書き直す`, raw: JSON.stringify({ type: reply.type, body: reply.body, replies: reply.replies, evidence: reply.evidence }) };
+      continue;
+    }
+    if (!failures.length && topicExp && !draft.topic_experiment.followed && i < attempts) {
+      out.attempts[out.attempts.length - 1].reason = `topic_first_line_differs:${topicExp.format.first_line}`;
+      previous = { reason: `題材の実験の指定（1行目: ${topicExp.format.first_line}）を守っていない。${FIRST_LINE_JA[topicExp.format.first_line]}`, raw: JSON.stringify({ type: reply.type, body: reply.body, replies: reply.replies, evidence: reply.evidence }) };
       continue;
     }
     if (!failures.length) {
@@ -308,6 +394,10 @@ const RESULT_JA = {
 function summary(r) {
   const lines = [`X 用の文面 ${r.date}: ${RESULT_JA[r.result] || r.result}${r.reason ? `（${r.reason}）` : ''}`];
   for (const a of r.attempts) lines.push(`  試行${a.i}（${a.seconds}秒）: ${a.reason || '通過'}${a.detail ? ` … ${a.detail}` : ''}`);
+  if (r.topic_experiment) {
+    const d = r.draft && r.draft.topic_experiment;
+    lines.push(`  題材の実験: ${r.topic_experiment.experiment_id}${d ? (d.followed ? '（守れた）' : '（守れず・followed=false）') : ''}`);
+  } else if (r.topic_experiment_skipped) lines.push(`  題材の実験: 使わない（${r.topic_experiment_skipped}）`);
   if (r.post) lines.push('---', r.post, '---');
   ((r.draft && r.draft.replies) || []).forEach((t, i) => lines.push(`返信${i + 1}:`, t, '---'));
   return lines.join('\n') + '\n';
@@ -335,4 +425,4 @@ async function main() {
 
 if (require.main === module) main();
 
-module.exports = { seriesFor, seriesSection, loadPlan, planSection, planRecord, run, parseArgs, parseReply, articleMaterial, buildPrompt, checkAll, summary, callClaude };
+module.exports = { loadTopicExperiment, topicExperimentSection, firstLineFollowed, seriesFor, seriesSection, loadPlan, planSection, planRecord, run, parseArgs, parseReply, articleMaterial, buildPrompt, checkAll, summary, callClaude };
