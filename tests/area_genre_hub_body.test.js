@@ -47,10 +47,10 @@ test('priceBandRows: 価格帯の下限の安い順に並べ、表記の無い�
 
 test('editorPicks: おすすめポイントと同じ文は数えず、根拠の強い順に最大件数まで', () => {
   const a = { '店名': 'A', editorReason: '理由A', 'おすすめポイント': '別の文', visitStatus: 'desk_automated', 'Google評価': '4.5', '口コミ数': '100' };
-  const b = { '店名': 'B', editorReason: '理由B', 'おすすめポイント': '別の文', visitStatus: 'visited', 'Google評価': '3.5', '口コミ数': '10' };
+  const b = { '店名': 'B', editorReason: '理由B', 'おすすめポイント': '別の文', visitStatus: 'visited', visitedOn: '2026-10-01', 'Google評価': '3.5', '口コミ数': '10' };
   const c = { '店名': 'C', editorReason: '同じ文。', 'おすすめポイント': '同じ文', visitStatus: 'visited' };
   const d = { '店名': 'D', 'おすすめポイント': '理由なし' };
-  const e = { '店名': 'E', editorReason: '理由E', 'おすすめポイント': '', visitStatus: 'interview', 'Google評価': '4.0', '口コミ数': '50' };
+  const e = { '店名': 'E', editorReason: '理由E', 'おすすめポイント': '', visitStatus: 'interview', visitedOn: '2026-10-02', 'Google評価': '4.0', '口コミ数': '50' };
   assert.deepEqual(editorPicks([a, b, c, d, e], 3).map((s) => s['店名']), ['B', 'E', 'A']);
   assert.deepEqual(editorPicks([a, b, c, d, e], 1).map((s) => s['店名']), ['B']);
   assert.deepEqual(editorPicks([c, d], 3), []);

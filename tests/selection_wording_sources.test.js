@@ -349,7 +349,7 @@ test('トップ: 実績の帯から「現役の店長が編集」を外し、残
   const bar = (html.match(/<div class="authority-bar">([\s\S]*?)<\/div>\s*\n/) || [])[1] || '';
   assert.equal((bar.match(/class="auth-item"/g) || []).length, 3, '実績の帯は 3 項目');
   assert.ok(!/店長|マネージャー|編集/.test(stripTags(bar)), stripTags(bar));
-  assert.ok(stripTags(bar).includes('広告・サクラなし'), '残す項目');
+  assert.ok(stripTags(bar).includes('広告なし・掲載料なし'), '残す項目');
   assert.ok(html.includes('.auth-item:last-child:nth-child(odd){grid-column:1/-1;justify-content:center;}'), '3 項目目が 2 列の左に寄らない');
 });
 
@@ -407,11 +407,10 @@ test('特集の冒頭の導線: 「編集部が上位に挙げた」と言わず
   assert.equal(hits(html).length, 0);
 });
 
-test('特集の設定（data/featured.json）: 季節の文に人が選んだと読める言い方が無い。残る語は題の写し 1 件だけ（P-363）', () => {
+test('特集の設定（data/featured.json）: 季節の文に人が選んだと読める言い方が無い。題の写しの語も外した（基本方針 段階1 S1-3）', () => {
   const featured = JSON.parse(readRel('data/featured.json'));
   const found = hits(JSON.stringify(featured));
-  assert.equal(found.length, 1, `題の写し（業界人が通う名古屋の焼肉8選）以外に語が戻っている: ${found.join(' / ')}`);
-  assert.ok(found[0].startsWith('gyokai-jin:'), found[0]);
+  assert.equal(found.length, 0, `人が選んだと読める言い方が戻っている: ${found.join(' / ')}`);
   // build_featured.js が、この文を特集一覧と FEATURED に出す。ページ側の写し（P-364・P-365）はこの文にそろえる
   assert.equal(featured.sceneLeads['10']['nagoya-yakiniku-guide'], '食欲の秋は肉で。和牛・炭火の焼肉店を紹介します。');
   const desc = (featured.items || []).map((x) => x.seasonDesc || '').join('\n');
@@ -431,7 +430,7 @@ test('特集の生成器（gen_industry_features.js）: 語が残るのは題の
     else bad.push(`${i + 1}: ${l.trim().slice(0, 80)}`);
   });
   assert.deepEqual(bad, [], '題の系統以外に、人が選んだと読める言い方が戻っている');
-  assert.equal(titleFamily, 7, '題の系統の行数（増えていたら題でない場所に語が入っている。減ったら P-334 で CLEAN_SOURCES に足す）');
+  assert.equal(titleFamily, 0, '題の系統にも語を戻さない（基本方針 段階1 S1-3・ADR 0069 決定4）');
 });
 
 test('特集の店カードの説明文の元データ（editor_picks・manual_stores・recommendations）は CLEAN_SOURCES に入っている（P-363）', () => {
