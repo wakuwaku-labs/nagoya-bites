@@ -91,3 +91,16 @@ test('S2-3: 特集に件数・時点の無い星が残っていない（検査�
   }
   assert.deepStrictEqual(bad, []);
 });
+
+test('S2-2: 来店前に確かめたいことは基本情報の表（info-cell）に混ぜず、原文・出所・取得日つきで出る', () => {
+  const { renderStorePage } = require('../gen-store-pages');
+  const base = { 店名: 'テスト店', エリア: '栄', 都道府県: '愛知県', ジャンル: '居酒屋', アクセス: '栄駅 徒歩3分', ホットペッパーID: 'J000000001', 営業時間: '17:00〜23:00' };
+  const labels = (h) => [...h.matchAll(/<div class="info-cell"><label>([^<]*)<\/label>/g)].map(m => m[1]);
+  const plain = renderStorePage(base, 'J000000001', [], []);
+  const rich = renderStorePage({ ...base, 料金備考: 'お通し代300円', お子様連れ: 'お子様連れ歓迎', 条件取得日: '2026-11-16' }, 'J000000001', [], []);
+  assert.deepStrictEqual(labels(rich), labels(plain));
+  assert.match(rich, /来店前に確かめたいこと/);
+  assert.match(rich, /<strong>料金の備考<\/strong>：お通し代300円/);
+  assert.match(rich, /2026年11月16日取得/);
+  assert.ok(!/来店前に確かめたいこと/.test(plain), '欄が無い店は何も出さない');
+});
