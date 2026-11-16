@@ -307,6 +307,16 @@ jobs:
         run: node scripts/sync_feature_scores.js
         continue-on-error: true
 
+      - name: 特集の店カードに、閉業・一時休業の注記を出す／消す（基本方針 段階1 S1-4・冪等・日次・通信なし）
+        # Google で閉業・一時休業と表示されている店（名前と住所が掲載と合う記録だけ）に「Google では〜と表示（◯月◯日確認）」を出す。
+        # 店は外さない（外すのは一次情報で確かめた後・data/closed_stores.json）。判定は scripts/lib/operating_notice.js（店舗ページと共通）
+        run: node scripts/sync_feature_closure_notes.js
+        continue-on-error: true
+
+      - name: 特集の誤解を招く表示を監査（掲載歴・訪問済・食べログ点数・星の食い違い・休業の注記。基本方針 段階1 S1-1・退行検知）
+        run: node scripts/audit_feature_facts.js --check
+        continue-on-error: true
+
       - name: 特集上部CTAの自動付与（SEO-042・全特集対象・冪等）
         # --all で全 features/*.html を対象にする（SEO-100: 旧来は上位特集のみだったが、
         # ItemList に URL のない特集 17本は HTML 本文の shop-name/stores リンクへフォールバック）。
