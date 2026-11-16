@@ -19,6 +19,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const RD = require('./lib/rating_display');
+
 const ROOT = path.resolve(__dirname, '..');
 const FEATURES = path.join(ROOT, 'features');
 
@@ -81,26 +83,95 @@ function stripScores(html, rated) {
   return { html: out, removed };
 }
 
+/** ホットペッパーID → 店（データ） */
+function storeIndex(stores) {
+  const m = new Map();
+  for (const s of stores || []) {
+    const id = s && s['ホットペッパーID'];
+    if (id) m.set(String(id), s);
+    const sid = s && s['店舗ID']; // 手動店（stores/store-xxxx.html）
+    if (sid) m.set(String(sid), s);
+  }
+  return m;
+}
+
+/**
+ * 1 ページの★を「Google★4.5（652件・2026年11月時点）」の形に揃える（S2-3）。
+ * 件数か時点が取れない店の★は外す（件数も時点も無い星を出さない）。店を 1 つに決められないカード・データに無い店は触らず、
+ * 数えて返す（unresolved）。
+ * @returns {{html:string, unified:number, dropped:string[], unresolved:number}}
+ */
+function unifyScores(html, byId) {
+  const dropped = [];
+  let unified = 0;
+  let unresolved = 0;
+  // 店を決められない・データに無い店の★は、件数も時点も添えられない。数字の出どころを示せないので外す
+  const dropUntraceable = (m) => {
+    unresolved++;
+    if (!RD.isBareStar(m.replace(/<[^>]*>/g, '').trim())) return m;
+    dropped.push('出どころ不明');
+    return '';
+  };
+  const out = html.replace(SCORE_RE, (m, lead, offset) => {
+    const card = cardRange(html, offset + (lead ? lead.length : 0));
+    if (!card) return dropUntraceable(m);
+    const ids = new Set(Array.from(html.slice(card.start, card.end).matchAll(/stores\/([A-Za-z0-9_-]+)\.html/g), (x) => x[1]));
+    if (ids.size !== 1) return dropUntraceable(m);
+    const id = [...ids][0];
+    const store = byId.get(id);
+    if (!store) return dropUntraceable(m);
+    const text = RD.formatStoreRating(store);
+    if (!text) {
+      if (!store['Google評価']) return m; // 評価が無い店の★は stripScores の担当
+      dropped.push(id);
+      return '';
+    }
+    const next = `<span class="score">${text}</span>`;
+    if (next !== m.replace(/^\s+/, '')) unified++;
+    return (lead || '') + next;
+  });
+  return { html: out, unified, dropped, unresolved };
+}
+
+/** 件数も時点も無い星（「★ 4.8」だけ）が残っているか。残りの数と場所 */
+function bareScores(html) {
+  const found = [];
+  for (const m of html.matchAll(/<span class="score">([^<]*)<\/span>/g)) if (RD.isBareStar(m[1])) found.push(m[1].trim());
+  return found;
+}
+
 function main() {
   const args = process.argv.slice(2);
   const dryRun = args.includes('--dry-run');
   const check = args.includes('--check');
   const { loadStores } = require('./lib/load_stores');
-  const rated = ratedIndex(loadStores());
+  const stores = loadStores();
+  const rated = ratedIndex(stores);
+  const byId = storeIndex(stores);
   let total = 0;
+  let unifiedTotal = 0;
+  let bareTotal = 0;
   for (const f of fs.readdirSync(FEATURES).filter((x) => x.endsWith('.html')).sort()) {
     const p = path.join(FEATURES, f);
     const html = fs.readFileSync(p, 'utf8');
     const r = stripScores(html, rated);
-    if (!r.removed.length) continue;
-    total += r.removed.length;
-    console.log(`${f}: ★を外す ${r.removed.length}店（${r.removed.join('・')}）`);
-    if (!dryRun && !check) fs.writeFileSync(p, r.html);
+    const u = unifyScores(r.html, byId);
+    const bare = bareScores(u.html);
+    total += r.removed.length + u.dropped.length;
+    unifiedTotal += u.unified;
+    bareTotal += bare.length;
+    if (r.removed.length) console.log(`${f}: ★を外す ${r.removed.length}店（${r.removed.join('・')}）`);
+    if (u.dropped.length) console.log(`${f}: 件数か時点が無い★を外す ${u.dropped.length}店（${u.dropped.join('・')}）`);
+    if (u.unified) console.log(`${f}: ★を「Google★…（件数・時点）」の形に揃える ${u.unified}件`);
+    if (bare.length) console.log(`${f}: 件数・時点の無い★が残る ${bare.length}件（店を1つに決められない・データに無い）`);
+    if (!dryRun && !check && u.html !== html) fs.writeFileSync(p, u.html);
   }
+  console.log(`特集の★（S2-3）: 形を揃える ${unifiedTotal}件・件数・時点の無い★が残る ${bareTotal}件`);
+  if (check && (unifiedTotal || bareTotal)) process.exit(1);
   console.log(`特集の★（MEO-003）: データに評価が無い店の★ ${total}件${dryRun || check ? '（書き込みなし）' : 'を外した'}`);
   if (check && total) process.exit(1);
 }
 
 if (require.main === module) main();
 
-module.exports = { ratedIndex, stripScores, cardRange, MAX_CARD_SPAN };
+module.exports = { ratedIndex, stripScores, cardRange, MAX_CARD_SPAN, storeIndex, unifyScores, bareScores };

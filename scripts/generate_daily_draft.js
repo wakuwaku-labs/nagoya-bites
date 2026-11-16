@@ -30,7 +30,7 @@
  *     "body_html": "<p>本文HTML</p>",
  *     "insider_points": ["読み解きのポイント1", "読み解きのポイント2", "読み解きのポイント3"],
  *     "stores": [{ "name": "店名", "id": "", "genre": "", "area": "", "score": "★4.3", "desc": "", "link": "https://..." }],
- *     "sources": [{ "label": "情報源名", "url": "https://...", "date": "2026-05-15 (任意 — 掲載日。表示時に併記される)" }],
+ *     "sources": [{ "label": "情報源名", "url": "https://...", "date": "2026-05-15 (任意 — 掲載日。表示時に併記される)", "checked": "2026-05-16 (任意 — 編集部が見た日。省略時は記事の日付＝書き手の申告)", "publisher": "(任意)", "kind": "(任意: 公式/報道/一次 等)", "quote": "(任意: 短い引用)" }],
  *     "photo_suggestions": [
  *       {
  *         "type": "store_instagram | google_maps | stock_keyword | shot_type",
@@ -187,13 +187,57 @@ function buildInsiderPoints(points) {
   return points.map(p => `        <li>${esc(p)}</li>`).join('\n');
 }
 
-function buildSources(sources) {
+// 確認日の表示用（2026-11-16 → 11月16日）。形式が違えば表示しない（でたらめな日付を出さない）
+function toMonthDayJa(ymd) {
+  const m = /^\d{4}-(\d{2})-(\d{2})$/.exec(String(ymd || ''));
+  return m ? `${parseInt(m[1], 10)}月${parseInt(m[2], 10)}日` : '';
+}
+
+// 出典1件を台帳の形に正規化する。確認日は「書き手の申告」。未指定なら記事の日付（今日）を入れる。
+// 段階4で機械が取り直した日時に置き換える（docs/decisions/0070）。
+function normalizeSource(s, articleDate) {
+  const checked = /^\d{4}-\d{2}-\d{2}$/.test(String(s.checked || '')) ? s.checked : (articleDate || '');
+  let publisher = s.publisher || '';
+  if (!publisher) { try { publisher = new URL(s.url).hostname.replace(/^www\./, ''); } catch (e) { publisher = ''; } }
+  return {
+    label: s.label || '',
+    url: s.url || '',
+    publisher,
+    kind: s.kind || '',
+    published: s.date || '',
+    checked,
+    checked_by: 'writer_declared',
+    quote: String(s.quote || '').slice(0, 200)
+  };
+}
+
+function buildSources(sources, articleDate) {
   if (!sources || sources.length === 0) return '';
-  const items = sources.map(s => {
+  const items = sources.map(s0 => {
+    const s = normalizeSource(s0, articleDate);
     const link = `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`;
-    return s.date ? `${link}<span class="source-date">（${esc(s.date)}掲載）</span>` : link;
+    const pub = s.published ? `<span class="source-date">（${esc(s.published)}掲載）</span>` : '';
+    const md = toMonthDayJa(s.checked);
+    const chk = md ? `<span class="source-date">（${md}確認）</span>` : '';
+    return `${link}${pub}${chk}`;
   }).join('、 ');
   return `<div class="source-note"><strong>情報源:</strong> ${items}</div>`;
+}
+
+// 出典の台帳（S2-1）。公開済みの記事ごとに data/journal_sources/<日付>.json を残す。
+const SOURCES_LEDGER_DIR = path.join(ROOT, 'data', 'journal_sources');
+function writeSourcesLedger(input) {
+  if (!input.sources || !input.sources.length || !/^\d{4}-\d{2}-\d{2}$/.test(input.date || '')) return null;
+  fs.mkdirSync(SOURCES_LEDGER_DIR, { recursive: true });
+  const file = path.join(SOURCES_LEDGER_DIR, input.date + '.json');
+  const body = {
+    date: input.date,
+    slug: input.slug,
+    note: 'checked は書き手の申告（checked_by=writer_declared）。段階4で機械が取り直した日時に置き換える。',
+    sources: input.sources.map(s => normalizeSource(s, input.date))
+  };
+  fs.writeFileSync(file, JSON.stringify(body, null, 2) + '\n');
+  return file;
 }
 
 // --------------- 自動画像取得（Unsplash API 優先 → ジャンル別厳選写真フォールバック）-----------
@@ -682,7 +726,7 @@ function renderHtml(input) {
     '{{BODY}}': input.body_html || '',
     '{{INSIDER_POINTS}}': buildInsiderPoints(input.insider_points),
     '{{STORES}}': buildStores(input.stores),
-    '{{SOURCES}}': buildSources(input.sources),
+    '{{SOURCES}}': buildSources(input.sources, input.date),
     '{{HERO_IMAGE_SECTION}}': buildHeroImageSection(input),
     '{{INSTAGRAM_CTA}}': buildInstagramCta(input),
     '{{PHOTO_SUGGESTIONS_HTML}}': buildPhotoSuggestionsHtmlComment(input.photo_suggestions)
@@ -902,6 +946,9 @@ async function main() {
   const html = renderHtml(input);
   fs.writeFileSync(htmlPath, /cta_reserve/.test(html) ? applyReserveAsk(html) : html);
 
+  const ledger = writeSourcesLedger(input);
+  if (ledger) console.log(`  📚 出典台帳: ${path.relative(ROOT, ledger)}`);
+
   const generateSns = shouldGenerateSnsDraft();
   if (generateSns) {
     fs.writeFileSync(mdPath, renderMd(input));
@@ -917,4 +964,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch(e => { console.error(e); process.exit(1); });
-module.exports = { renderHtml, renderMd, buildStores, STORE_LIST_HEADING };
+module.exports = { renderHtml, renderMd, buildStores, STORE_LIST_HEADING, buildSources, normalizeSource, toMonthDayJa };
