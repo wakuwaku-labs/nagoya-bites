@@ -596,6 +596,12 @@ function hpAvailability(v) {
   return s.replace(/\s+/g, ' ').slice(0, 60);
 }
 
+// 来店前に確かめたいこと（S2-2・scripts/lib/store_conditions.js）。取った日（JST）も一緒に残す
+function conditionFields(shop) {
+  const c = require('./scripts/lib/store_conditions').conditionsFromShop(shop);
+  return Object.keys(c).length ? Object.assign(c, { '条件取得日': require('./scripts/lib/store_conditions').todayJst() }) : {};
+}
+
 function hpShopToStoreRecord(shop) {
   const name = shop.name || '';
   const areaName = (shop.middle_area && shop.middle_area.name) || (shop.small_area && shop.small_area.name) || '';
@@ -642,6 +648,7 @@ function hpShopToStoreRecord(shop) {
     'コース': hpAvailability(shop.course),
     '飲み放題': hpAvailability(shop.free_drink),
     '食べ放題': hpAvailability(shop.free_food),
+    ...conditionFields(shop),
     'ホットペッパーID': shop.id || '',
     '写真URL': photo,
     'Instagram': '',
@@ -1113,6 +1120,13 @@ async function main() {
     newStores.push(hpShopToStoreRecord(shop));
   }
   console.log(`Hot Pepper 新規: ${newStores.length}件（重複除外:${dupCount} / 名古屋市外除外:${outsideCount}）`);
+
+  // 既存の店（Google Sheets 由来）にも、API が返す料金備考・貸切などを足す（S2-2）。充足率をログに残す
+  {
+    const SC = require('./scripts/lib/store_conditions');
+    const r = SC.enrichConditions(gsGate.kept, hpShops, SC.todayJst());
+    console.log(`来店前に確かめたいこと（S2-2）: 照合 ${r.matched}店中 いずれかあり ${r.withAny}店 / ${Object.entries(r.stats).map(([k, v]) => `${k} ${v}`).join(' / ')}`);
+  }
 
   // 結合（Google Sheets → Hot Pepper新規の順）
   let mergedStores = gsGate.kept.concat(newStores);
