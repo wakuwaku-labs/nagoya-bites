@@ -64,6 +64,15 @@ try {
   const vc = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'view_counts.json'), 'utf8'));
   viewCounts = vc.counts || {};
 } catch (_) {}
+// GSC impression counts per store page（SEO-129）
+let gscImpressions = {};
+try {
+  const gsc = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'gsc_metrics.json'), 'utf8'));
+  for (const p of (gsc.pages || [])) {
+    const m = p.page && p.page.match(/\/stores\/([^/]+)\.html$/);
+    if (m) gscImpressions[m[1]] = (p.impressions || 0);
+  }
+} catch (_) {}
 const norm = s => String(s || '').replace(/\s|　/g, '').toLowerCase();
 const haveReason = new Set();
 for (const s of stores) {
@@ -80,6 +89,12 @@ function priorityScore(s) {
   if (rating >= 4.5 && reviews >= 100) v += 5000;
   else if (rating >= 4.3 && reviews >= 50) v += 3000;
   if (typeof s.crossCheckScore === 'number') v += s.crossCheckScore * 10;
+  // GSC 検索表示回数（SEO-129）: ページへの検索需要がある店を優先
+  const gscImp = gscImpressions[s['ホットペッパーID']] || 0;
+  if (gscImp > 500) v += 18000;
+  else if (gscImp > 100) v += 10000;
+  else if (gscImp > 50) v += 5000;
+  else if (gscImp > 10) v += 2000;
   return v;
 }
 const candidates = stores
