@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-16T10:17:12.418Z",
+  "generatedAt": "2026-11-16T10:45:12.810Z",
   "lookbackDays": 30,
   "totals": {
     "activeUsers": 7298,
-    "pageViews": 8765,
-    "sessions": 7647,
-    "avgSessionDuration": 57.5,
-    "bounceRate": 0.666,
+    "pageViews": 8768,
+    "sessions": 7657,
+    "avgSessionDuration": 57.4,
+    "bounceRate": 0.667,
     "pagesPerSession": 1.15
   },
   "dailyReference": {
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2828,
-      "direct": 4475,
+      "organic": 2830,
+      "direct": 4476,
       "social": 60,
       "ai_assistant": 248,
       "referral": 45,
@@ -27,7 +27,7 @@
     },
     "pct": {
       "organic": 36.9,
-      "direct": 58.5,
+      "direct": 58.4,
       "social": 0.8,
       "ai_assistant": 3.2,
       "referral": 0.6,
@@ -44,12 +44,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1303
+      "sessions": 1304
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 908
+      "sessions": 909
     },
     {
       "source": "yahoo",
@@ -107,6 +107,11 @@
       "sessions": 5
     },
     {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 4
+    },
+    {
       "source": "cn.bing.com",
       "medium": "referral",
       "sessions": 4
@@ -115,11 +120,6 @@
       "source": "grid",
       "medium": "(not set)",
       "sessions": 4
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 3
     },
     {
       "source": "aocr.org",

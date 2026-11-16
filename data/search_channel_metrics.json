@@ -1,15 +1,15 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-11-16T10:17:16.801Z",
+  "generatedAt": "2026-11-16T10:45:17.210Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 7656,
+  "total_sessions": 7659,
   "engines": [
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 4451,
+      "sessions": 4452,
       "pct": 58.1,
       "sources": [
         {
@@ -20,33 +20,33 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 3
+          "sessions": 4
         }
       ]
     },
     {
       "key": "google",
       "label": "Google",
-      "sessions": 1303,
+      "sessions": 1304,
       "pct": 17,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 1303
+          "sessions": 1304
         }
       ]
     },
     {
       "key": "bing",
       "label": "Bing",
-      "sessions": 912,
+      "sessions": 913,
       "pct": 11.9,
       "sources": [
         {
           "source": "bing",
           "medium": "organic",
-          "sessions": 908
+          "sessions": 909
         },
         {
           "source": "cn.bing.com",
@@ -242,19 +242,19 @@
     }
   ],
   "search_only": {
-    "total": 3077,
+    "total": 3079,
     "share": [
       {
         "key": "google",
         "label": "Google",
-        "sessions": 1303,
-        "pct_of_search": 42.3
+        "sessions": 1304,
+        "pct_of_search": 42.4
       },
       {
         "key": "bing",
         "label": "Bing",
-        "sessions": 912,
-        "pct_of_search": 29.6
+        "sessions": 913,
+        "pct_of_search": 29.7
       },
       {
         "key": "yahoo",
@@ -280,11 +280,11 @@
     "from": "2026-11-15",
     "to": "2026-11-16",
     "delta": {
-      "direct": 65,
-      "google": 0,
-      "bing": 0,
-      "yahoo": 0,
-      "ai_assistant": 0,
+      "direct": 415,
+      "google": 24,
+      "bing": 16,
+      "yahoo": 9,
+      "ai_assistant": 1,
       "other": 0,
       "social": 0,
       "duckduckgo": 0
@@ -293,7 +293,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 1303 セッションのみ。Bing(912) + 生成AI(248) の 1160 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 1304 セッションのみ。Bing(913) + 生成AI(248) の 1161 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
