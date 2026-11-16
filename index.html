@@ -5918,7 +5918,10 @@ function openM(i, source) {
   var insiderNote = (r.insiderNote || '').trim();
   var mediaFeatures = r.mediaFeatures || [];
   var visitStatusMap = {visited: '訪問済', interview: '店主取材済', desk: '公開情報ベース', industry_known: '業界内で評判', desk_automated: '公開情報ベース（自動収集）'};
-  var visitLabel = visitStatusMap[r.visitStatus || ''] || '';
+  // 訪問・取材の日付の記録(visitedOn)が無い店は「訪問済」「店主取材済」と出さない(ADR 0069 決定8)
+  var vs0 = r.visitStatus || '';
+  if ((vs0 === 'visited' || vs0 === 'interview') && !r.visitedOn) vs0 = 'desk';
+  var visitLabel = visitStatusMap[vs0] || '';
   var sigParts = [];
   if (visitLabel) sigParts.push('<strong>' + mEsc(visitLabel) + '</strong>');
   if (r['追加日']) sigParts.push('掲載 ' + mEsc(r['追加日']));
