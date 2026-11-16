@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 599" width="900" height="599" role="img" aria-label="母の日">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#301020"/>
+      <stop offset="100%" stop-color="#8a3a5a"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#301020"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#f8d0e0" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="900" height="599" fill="url(#bg)"/>
+  <rect width="900" height="599" fill="url(#grain)" opacity=".5"/>
+  <g opacity=".45" fill="#f8d0e0"><circle cx="560" cy="420" r="7"/><circle cx="602" cy="420" r="7"/><circle cx="644" cy="420" r="7"/><circle cx="686" cy="420" r="7"/><circle cx="728" cy="420" r="7"/><circle cx="770" cy="420" r="7"/><circle cx="812" cy="420" r="7"/><circle cx="854" cy="420" r="7"/><circle cx="560" cy="466" r="7"/><circle cx="602" cy="466" r="7"/><circle cx="644" cy="466" r="7"/><circle cx="686" cy="466" r="7"/><circle cx="728" cy="466" r="7"/><circle cx="770" cy="466" r="7"/><circle cx="812" cy="466" r="7"/><circle cx="854" cy="466" r="7"/><circle cx="560" cy="512" r="7"/><circle cx="602" cy="512" r="7"/><circle cx="644" cy="512" r="7"/><circle cx="686" cy="512" r="7"/><circle cx="728" cy="512" r="7"/><circle cx="770" cy="512" r="7"/><circle cx="812" cy="512" r="7"/><circle cx="854" cy="512" r="7"/></g>
+  <rect x="54" y="170" width="4" height="190" fill="#f8d0e0" opacity=".9"/>
+  <text x="70" y="300" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="56" font-weight="700" letter-spacing="0.02em">母の日</text>
+  <text x="70" y="214" fill="#f8d0e0" opacity=".8" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" letter-spacing="0.2em">MOTHER'S DAY</text>
+  <text x="70" y="340" fill="#f8d0e0" opacity=".7" font-family="'Hiragino Sans','Yu Gothic','Noto Sans JP',sans-serif" font-size="20">NAGOYA BITES 特集</text>
+</svg>

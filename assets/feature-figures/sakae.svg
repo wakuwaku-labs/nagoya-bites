@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 599" width="900" height="599" role="img" aria-label="栄・錦エリア">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1030"/>
+      <stop offset="100%" stop-color="#5a3a8a"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#1a1030"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#e0d0f8" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="900" height="599" fill="url(#bg)"/>
+  <rect width="900" height="599" fill="url(#grain)" opacity=".5"/>
+  <g opacity=".4" fill="#e0d0f8"><rect x="540" y="330" width="26" height="170" rx="3"/><rect x="584" y="304" width="26" height="196" rx="3"/><rect x="628" y="278" width="26" height="222" rx="3"/><rect x="672" y="252" width="26" height="248" rx="3"/><rect x="716" y="226" width="26" height="274" rx="3"/><rect x="760" y="200" width="26" height="300" rx="3"/><rect x="804" y="174" width="26" height="326" rx="3"/></g>
+  <rect x="54" y="170" width="4" height="190" fill="#e0d0f8" opacity=".9"/>
+  <text x="70" y="300" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="56" font-weight="700" letter-spacing="0.02em">栄・錦エリア</text>
+  <text x="70" y="214" fill="#e0d0f8" opacity=".8" font-family="'Helvetica Neue',Arial,sans-serif" font-size="22" letter-spacing="0.2em">SAKAE / NISHIKI</text>
+  <text x="70" y="340" fill="#e0d0f8" opacity=".7" font-family="'Hiragino Sans','Yu Gothic','Noto Sans JP',sans-serif" font-size="20">NAGOYA BITES 特集</text>
+</svg>
