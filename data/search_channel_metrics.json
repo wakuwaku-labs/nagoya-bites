@@ -1,21 +1,21 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-11-15T22:30:58.774Z",
+  "generatedAt": "2026-11-16T00:22:25.946Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 7191,
+  "total_sessions": 7249,
   "engines": [
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 4036,
-      "pct": 56.1,
+      "sessions": 4094,
+      "pct": 56.5,
       "sources": [
         {
           "source": "(direct)",
           "medium": "(none)",
-          "sessions": 4020
+          "sessions": 4078
         },
         {
           "source": "(not set)",
@@ -28,7 +28,7 @@
       "key": "google",
       "label": "Google",
       "sessions": 1279,
-      "pct": 17.8,
+      "pct": 17.6,
       "sources": [
         {
           "source": "google",
@@ -41,7 +41,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 896,
-      "pct": 12.5,
+      "pct": 12.4,
       "sources": [
         {
           "source": "bing",
@@ -59,7 +59,7 @@
       "key": "yahoo",
       "label": "Yahoo!",
       "sessions": 580,
-      "pct": 8.1,
+      "pct": 8,
       "sources": [
         {
           "source": "yahoo",
@@ -290,14 +290,14 @@
     "from": "2026-11-14",
     "to": "2026-11-15",
     "delta": {
-      "direct": 1217,
-      "google": 19,
+      "direct": 1493,
+      "google": 24,
       "bing": 4,
-      "yahoo": 15,
+      "yahoo": 16,
       "ai_assistant": -3,
       "other": -9,
-      "social": 3,
-      "duckduckgo": 0
+      "social": 4,
+      "duckduckgo": 1
     }
   },
   "blind_spots": [
