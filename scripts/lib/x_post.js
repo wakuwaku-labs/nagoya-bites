@@ -16,6 +16,7 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const { brandViolations } = require('./brand_policy');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 
@@ -222,6 +223,8 @@ function checkDraft(draft, { entry, policy, articleText }) {
   const body = typeof draft.body === 'string' ? draft.body.trim() : '';
   if (!body) f.push('draft_body_empty');
   if (/https?:\/\//i.test(body)) f.push('draft_body_has_url');
+  const bodyBrand = body ? brandViolations(body) : [];
+  if (bodyBrand.length) f.push(`draft_body_brand:${bodyBrand.join('/')}`);
   if (/(^|\s)[#＃][^\s#＃]/.test(body)) f.push('draft_body_has_hashtag');
   const w = weightedLength(body);
   if (w > (cfg.maxBodyWeighted || 230)) f.push(`draft_body_too_long:${w}`);
@@ -249,6 +252,8 @@ function checkDraft(draft, { entry, policy, articleText }) {
         if (!t) f.push(`draft_reply_empty:${i}`);
         else {
           if (/https?:\/\//i.test(t)) f.push(`draft_reply_has_url:${i}`);
+          const rb = brandViolations(t);
+          if (rb.length) f.push(`draft_reply_brand:${i}:${rb.join('/')}`);
           if (/(^|\s)[#＃][^\s#＃]/.test(t)) f.push(`draft_reply_has_hashtag:${i}`);
           const rw = weightedLength(t);
           if (rw > (cfg.maxReplyWeighted || 270)) f.push(`draft_reply_too_long:${i}:${rw}`);
@@ -281,6 +286,8 @@ function validateReplies(replies, { policy, articleText, root = ROOT }) {
     if (missing.length) f.push(`reply${i}_numbers_not_in_article:${missing.join(',')}`);
     const words = wordingViolations(t, root);
     if (words.length) f.push(`reply${i}_wording:${words.join(',')}`);
+    const brand = brandViolations(t, { root });
+    if (brand.length) f.push(`reply${i}_brand:${brand.join('/')}`);
     if ((String(t).match(URL_RE) || []).length) f.push(`reply${i}_has_url`);
   });
   return f;
@@ -373,6 +380,8 @@ function validatePost(text, { entry, policy, articleText, recentTexts = [], root
   if (missing.length) failures.push(`numbers_not_in_article:${missing.join(',')}`);
   const words = wordingViolations(text, root);
   if (words.length) failures.push(`wording:${words.join(',')}`);
+  const brand = brandViolations(text, { root });
+  if (brand.length) failures.push(`brand:${brand.join('/')}`);
   const urls = String(text).match(URL_RE) || [];
   // allowNoUrl は URL あり／なしの実験（判断記録 0058）の「なし」の日だけ。URL が 1 本あるときの検査は変えない
   if (urls.length === 0 && allowNoUrl) { /* URL なしを許す */ }

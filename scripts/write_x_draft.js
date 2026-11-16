@@ -26,6 +26,7 @@ const X = require('./lib/x_post');
 const { findEntry, todayJst } = require('./post_journal_to_x');
 const S = require('./lib/sns_analyzer');
 const PT = require('./lib/journal_plan_topic');
+const BP = require('./lib/brand_policy');
 
 const PROMPT_REL = 'docs/x-post-prompt.md';
 
@@ -223,6 +224,9 @@ function buildPrompt({ root, entry, material, previous, plan, topicExp }) {
     '',
     '## 使わない言い方',
     wordingList(root).map((w) => `- ${w}`).join('\n'),
+    '',
+    '## 名古屋バイツの基本方針で避ける言い回し（出たら投稿前の検査で止まる）',
+    ...BP.brandNgLines(root),
     '',
     '## 記事',
     `題名: ${entry.title}`,

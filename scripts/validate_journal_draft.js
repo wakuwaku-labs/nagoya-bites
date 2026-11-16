@@ -20,6 +20,8 @@ const { checkText, checkTitleFront } = require('./journal_seo_kw');
 const { judgeHero, judgePhoto, findReuse, extractHeroFromHtml, extractBodyPhotosFromHtml } = require('./lib/hero_photo_gate');
 const { bodyPolicy } = require('./lib/journal_photos');
 const { findPlacesPhotoUrls } = require('./lib/places_photo_url');
+const { brandFindings } = require('./lib/brand_policy');
+const { htmlToText } = require('./lib/x_post');
 
 const ROOT = path.join(__dirname, '..');
 const PUBLISHED = path.join(ROOT, 'data', 'journal_published.json');
@@ -76,6 +78,22 @@ function checkJournal(htmlPath, mdPath) {
   const bannedEmojis = pictographs.filter(c => !'★☆✦✧✓✗♪♨☎✎✍✈'.includes(c));
   pass('5b_no_emojis', bannedEmojis.length === 0,
     bannedEmojis.length ? `絵文字が含まれる: ${[...new Set(bannedEmojis)].join(' ')} (ISSUE-069 全面撤去方針)` : 'OK');
+
+  // 5c. 名古屋バイツの基本方針（本人 2026-11-16・docs/brand-policy/nagoya_bites.md・docs/decisions/0068）
+  //     行っていない店を行ったように見せる言い方・煽りの言い切りは止める。順位の語は警告だけ（「全国1位の産地」など
+  //     出典つきの事実の引用があるため）。店カードの Google 評価の表示（★4.1）は対象外。
+  //     md（SNS の投稿案）は投稿の面なので、順位の語も止める。
+  const artHtml = (html.match(/<article[\s\S]*?<\/article>/i) || [html])[0];
+  const brandArt = brandFindings(htmlToText(artHtml), { surface: 'article' });
+  const brandMd = md ? brandFindings(md, { surface: 'post' }) : { fail: [], warn: [] };
+  const fmt = (list) => list.map(f => `${f.words.join('・')}（${f.why}）`).join(' / ');
+  const brandFail = [...brandArt.fail, ...brandMd.fail];
+  pass('5c_brand_policy', brandFail.length === 0,
+    brandFail.length ? `基本方針で避ける言い回し: ${fmt(brandFail)}` : 'OK');
+  if (brandArt.warn.length) {
+    results.push({ id: '5c_brand_policy_ranking_warn', ok: true, warn: true,
+      msg: `⚠️ WARNING: 順位の語があります（出典つきの事実の引用か確かめる）: ${fmt(brandArt.warn)}` });
+  }
 
   // 6. 内部リンク切れチェック
   const links = Array.from(html.matchAll(/href="((?:\.\.\/)?(?:features|journal|stores)\/[^"#?]+)"/g)).map(m => m[1]);

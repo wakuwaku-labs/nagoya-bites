@@ -8,6 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 const { htmlToText, normalizeDigits, wordingViolations } = require('./x_post');
+const { brandViolations } = require('./brand_policy');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 
@@ -160,6 +161,9 @@ function validateNoteDraft(draft, { policy, articleText, root = ROOT }) {
   if (!draft.body.includes('utm_source=' + policy.utm.source)) f.push('utm_missing');
   const bad = wordingViolations(all, root);
   if (bad.length) f.push('wording:' + bad.join(','));
+  // 名古屋バイツの基本方針の避ける言い回し（記事の面: Google 評価の表示は対象外・順位の語は記事の検査が警告で見る。docs/decisions/0068）
+  const brand = brandViolations(all, { surface: 'article', root });
+  if (brand.length) f.push('brand:' + brand.join('/'));
   const body = normalizeDigits(all.replace(/https?:\/\/\S+/g, ' '));
   const art = normalizeDigits(articleText);
   const missing = [...new Set(body.match(/\d+(?:\.\d+)?/g) || [])]
