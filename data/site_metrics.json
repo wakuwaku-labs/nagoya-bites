@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-16T15:38:45.189Z",
+  "generatedAt": "2026-11-16T19:15:21.865Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 7252,
-    "pageViews": 8694,
-    "sessions": 7616,
-    "avgSessionDuration": 56.6,
-    "bounceRate": 0.672,
+    "activeUsers": 7283,
+    "pageViews": 8723,
+    "sessions": 7664,
+    "avgSessionDuration": 56.3,
+    "bounceRate": 0.673,
     "pagesPerSession": 1.14
   },
   "dailyReference": {
@@ -17,19 +17,19 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2785,
-      "direct": 4471,
+      "organic": 2799,
+      "direct": 4495,
       "social": 57,
       "ai_assistant": 240,
-      "referral": 45,
+      "referral": 46,
       "paid": 0,
       "other": 0
     },
     "pct": {
       "organic": 36.7,
-      "direct": 58.8,
-      "social": 0.8,
-      "ai_assistant": 3.2,
+      "direct": 58.9,
+      "social": 0.7,
+      "ai_assistant": 3.1,
       "referral": 0.6,
       "paid": 0,
       "other": 0
@@ -39,22 +39,22 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 4443
+      "sessions": 4467
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1273
+      "sessions": 1277
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 909
+      "sessions": 914
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 570
+      "sessions": 574
     },
     {
       "source": "chatgpt.com",
@@ -74,12 +74,12 @@
     {
       "source": "duckduckgo",
       "medium": "organic",
-      "sessions": 25
+      "sessions": 26
     },
     {
       "source": "service.smt.docomo.ne.jp",
       "medium": "referral",
-      "sessions": 25
+      "sessions": 26
     },
     {
       "source": "x",
@@ -210,8 +210,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 425,
-      "sessions": 402
+      "pageViews": 428,
+      "sessions": 405
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -224,14 +224,14 @@
       "sessions": 150
     },
     {
-      "path": "/features/nagoya-tebasaki.html",
-      "pageViews": 76,
-      "sessions": 79
+      "path": "/features/nagoya-unaju.html",
+      "pageViews": 78,
+      "sessions": 76
     },
     {
-      "path": "/features/nagoya-unaju.html",
-      "pageViews": 76,
-      "sessions": 74
+      "path": "/features/nagoya-tebasaki.html",
+      "pageViews": 77,
+      "sessions": 80
     }
   ],
   "cta": {
@@ -301,7 +301,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.8,
+    "ctaClickRate_organic": 9.7,
     "ctaClickRate_direct": 1.2,
     "ctaClickRate_social": 22.8,
     "byPage": [
@@ -1156,7 +1156,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 7252,
+    "value": 7283,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
