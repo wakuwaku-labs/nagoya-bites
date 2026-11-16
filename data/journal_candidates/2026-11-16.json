@@ -1,0 +1,461 @@
+{
+  "date": "2026-11-16",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅『炉端焼き 燻銀 名駅西口店』の忘年会、11月なら同じ5,000円で飲み放題150分",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 89,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 11日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (時期,繁忙,予約,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 142字 +4",
+          "title 44字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "89点（自動公開ライン 100点）。主な不足: topicality -10 / recency -7 / writability -2",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "名駅の忘年会、幹事は11月中に決めると飲み放題が30分長い — 燻銀 名駅西口店",
+      "verdict": "HOLD",
+      "total": 77,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 12,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 11日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (時期,予約,価格帯) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 104字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "名駅西口の宴会50人まで、炉端焼き 燻銀で忘年会の予約締切と席を読む",
+      "verdict": "HOLD",
+      "total": 74,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 11日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 2件 (繁忙,予約) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 85字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「宴会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "名古屋の忘年会、飲み放題の店は愛知で667店開業 — 名駅の炉端焼きで宴会を組む",
+      "verdict": "HOLD",
+      "total": 71,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 11日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (価格帯) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 103字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「宴会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅の忘年会、南部鉄器の鯛めしで締める炉端焼きコース5,000円",
+      "verdict": "HOLD",
+      "total": 69,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 11日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (価格帯) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 83字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": {
+    "topic": "イベント",
+    "week": "2026-W47",
+    "slot": 0,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "89点（自動公開ライン 100点）。主な不足: topicality -10 / recency -7 / writability -2",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "名駅『炉端焼き 燻銀 名駅西口店』の忘年会、11月なら同じ5,000円で飲み放題150分",
+      "lead_draft": "名駅西口の炉端焼き 燻銀は、大トロにしんと南部鉄器の鯛めしが入る5,000円・8品のコースを、11月30日までの予約は飲み放題150分、12月は120分で出している。同じ価格で30分の差。忘年会を11月に前倒しできる会なら、予約の締切とあわせて幹事が見ておく価格帯の読み方を整理する。",
+      "angle": "同じ5,000円・8品で11月は飲み放題150分、12月は120分。時期で変わる飲み放題の時間と、予約締切2日前23時から幹事の人数確定日と繁忙の夜の取り方を読む（宴会・価格帯・予約・時期・回転）",
+      "main_store": {
+        "name": "炉端焼き 燻銀 名駅西口店",
+        "id": "J003497896",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 燻銀 名駅西口店 150分飲み放題コース（予約期間11月30日まで）",
+          "url": "https://www.hotpepper.jp/strJ003497896/course_cnod35/",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "PR TIMES 株式会社Review 飲み放題メニューのある飲食店、約9,600店が新規開業",
+          "url": "https://prtimes.jp/main/html/rd/p/000000075.000043858.html",
+          "date": "2025-12-18"
+        },
+        {
+          "label": "Retty 炉端焼き 燻銀 名駅西口店",
+          "url": "https://retty.me/restaurant/100001699283/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "名駅の忘年会、幹事は11月中に決めると飲み放題が30分長い — 燻銀 名駅西口店",
+      "lead_draft": "名駅西口の炉端焼き 燻銀 名駅西口店では、同じ5,000円のコースが11月中の予約は飲み放題150分、12月は120分になる。忘年会の日取りを決める前に、時期によって変わる条件と予約の締切を確かめておきたい。",
+      "angle": "時期で変わる飲み放題の時間（予約・時期・価格帯）",
+      "main_store": {
+        "name": "炉端焼き 燻銀 名駅西口店",
+        "id": "J003497896",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 燻銀 名駅西口店 コース一覧",
+          "url": "https://www.hotpepper.jp/strJ003497896/course/",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "Retty 炉端焼き 燻銀 名駅西口店",
+          "url": "https://retty.me/restaurant/100001699283/"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "名古屋の忘年会、飲み放題の店は愛知で667店開業 — 名駅の炉端焼きで宴会を組む",
+      "lead_draft": "飲み放題メニューのある新規開業店は2023年以降で全国9,665件、愛知県は667件で4位。忘年会の店選びで飲み放題の有無が判断軸になる中、名駅西口の炉端焼き 燻銀のコースを例に、時間と価格の読み方を見る。",
+      "angle": "飲み放題付きの店の増加と、名駅の宴会コースの読み方（宴会・価格帯）",
+      "main_store": {
+        "name": "炉端焼き 燻銀 名駅西口店",
+        "id": "J003497896",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES 株式会社Review 飲み放題メニューのある飲食店、約9,600店が新規開業",
+          "url": "https://prtimes.jp/main/html/rd/p/000000075.000043858.html",
+          "date": "2025-12-18"
+        },
+        {
+          "label": "ホットペッパーグルメ 燻銀 名駅西口店 コース一覧",
+          "url": "https://www.hotpepper.jp/strJ003497896/course/",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "名駅西口の宴会50人まで、炉端焼き 燻銀で忘年会の予約締切と席を読む",
+      "lead_draft": "名駅西口から徒歩3分の炉端焼き 燻銀 名駅西口店は40席・宴会は最大50人、21人から貸切できる。コースの予約締切は2日前23時。忘年会の幹事が人数を決める日を逆算する。",
+      "angle": "宴会の最大人数と予約締切から人数確定日を逆算（宴会・予約・繁忙）",
+      "main_store": {
+        "name": "炉端焼き 燻銀 名駅西口店",
+        "id": "J003497896",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 燻銀 名駅西口店",
+          "url": "https://www.hotpepper.jp/strJ003497896/",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "Retty 炉端焼き 燻銀 名駅西口店",
+          "url": "https://retty.me/restaurant/100001699283/"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "名駅の忘年会、南部鉄器の鯛めしで締める炉端焼きコース5,000円",
+      "lead_draft": "名駅西口の炉端焼き 燻銀 名駅西口店の宴会コースは、大トロにしんの一本焼きから南部鉄器の鯛めしまで8品で5,000円。料理の組み方から、忘年会のコースの価格帯を読む。",
+      "angle": "コースの料理構成と価格帯（宴会・価格帯）",
+      "main_store": {
+        "name": "炉端焼き 燻銀 名駅西口店",
+        "id": "J003497896",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 燻銀 名駅西口店 コース",
+          "url": "https://www.hotpepper.jp/strJ003497896/course_cnod04/",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "Retty 炉端焼き 燻銀 名駅西口店",
+          "url": "https://retty.me/restaurant/100001699283/"
+        },
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        }
+      ]
+    }
+  ]
+}
