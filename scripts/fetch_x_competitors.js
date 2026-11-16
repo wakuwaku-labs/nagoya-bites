@@ -57,6 +57,31 @@ function topicOf(text) {
   return 'その他';
 }
 
+// 話題タグ（複数）。SNS分析ツールの x-features.ts の FOOD_TAGS と同じ。当たった物を全部、上から順に
+const FOOD_TAGS = [
+  ['スイーツ・手土産', /スイーツ|ケーキ|パフェ|チョコ|和菓子|洋菓子|クルミッ子|プリン|ドーナツ|かき氷|アイス|手土産|お土産|ベーカリー|パン屋/],
+  ['麺（ラーメン・うどん等）', /ラーメン|拉麺|らーめん|うどん|蕎麦|そば屋|きしめん|つけ麺|担々麺|まぜそば|中華そば/],
+  ['寿司・海鮮', /寿司|鮨|すし|海鮮|刺身|鮮魚|牡蠣|蛸|魚介/],
+  ['肉・焼肉', /焼肉|ステーキ|とんかつ|焼鳥|焼き鳥|ホルモン|牛タン|ジンギスカン|肉/],
+  ['名古屋めし', /名古屋めし|味噌煮込み|味噌カツ|みそかつ|ひつまぶし|手羽先|台湾ラーメン|あんかけスパ|天むす|どて煮|小倉トースト|コーチン/],
+  ['洋食・イタリアン・フレンチ', /フレンチ|イタリアン|ビストロ|ピッツァ|ピザ|パスタ|洋食|バル/],
+  ['カフェ・喫茶', /カフェ|喫茶|モーニング|コーヒー|珈琲/],
+  ['お酒・居酒屋', /居酒屋|酒場|飲み放題|日本酒|ワイン|ビール|ハイボール|SAKE|サケ|酒/],
+  ['宴会・忘年会', /忘年会|新年会|宴会|貸切|歓送迎会/],
+  ['デート・記念日', /デート|記念日|夜景|クリスマス/],
+  ['ひとりごはん', /一人|ひとり|1人|おひとりさま|カウンター/],
+  ['ランチ', /ランチ|定食/],
+  ['イベント・季節', /フェス|イベント|まつり|祭|イルミネーション|ランタン|マルシェ/],
+  ['新店・限定', /新店|オープン|OPEN|開店|新ブランド|期間限定|限定|常設|初出店|移転/],
+  ['値段・お得', /[0-9０-９][0-9０-９,]*円|コスパ|お得|無料|食べ放題|同じ値段|安い/],
+  ['営業時間・混雑', /営業時間|閉まる|閉店|時まで|深夜|翌[0-9０-９]|行列|待ち時間|混雑|予約/],
+];
+
+function topicTagsOf(text) {
+  const s = String(text || '');
+  return FOOD_TAGS.filter(([, re]) => re.test(s)).map(([name]) => name);
+}
+
 /** 本文を保存せずに特徴だけを取り出す。 */
 function features(t, mediaByKey) {
   const text = typeof t.text === 'string' ? t.text : '';
@@ -74,6 +99,7 @@ function features(t, mediaByKey) {
     first_line: firstLineType(text),
     hashtags: (ent.hashtags || []).map((h) => String(h.tag)).filter(Boolean),
     topic: topicOf(text),
+    topic_tags: topicTagsOf(text),
   };
 }
 
@@ -210,4 +236,4 @@ if (require.main === module) {
     .catch((e) => { console.error('予期しない失敗:', e && e.message ? e.message : 'error'); process.exit(1); });
 }
 
-module.exports = { run, firstLineType, features, NB_TOPICS, topicOf, postRow, USER_READ_USD, POST_READ_USD };
+module.exports = { run, firstLineType, features, NB_TOPICS, topicOf, FOOD_TAGS, topicTagsOf, postRow, USER_READ_USD, POST_READ_USD };
