@@ -106,13 +106,13 @@ const { conditionRows, acquiredText } = require('./scripts/lib/store_conditions'
 function buildPrecheck(s) {
   const rows = conditionRows(s);
   if (!rows.length) return '';
-  const cells = rows.map(r => `\n    <div class="info-cell"><label>${escapeHtml(r.label)}</label><span>${escapeHtml(r.value)}</span></div>`).join('');
+  // info-cell（基本情報の表）とは別の形で出す＝基本情報の並びを変えない（tests/store_facts.test.js）
+  const cells = rows.map(r => `\n    <p class="store-facts"><strong>${escapeHtml(r.label)}</strong>：${escapeHtml(r.value)}</p>`).join('');
   const when = acquiredText(s);
   return `
   <div class="links-section">
     <h2>来店前に確かめたいこと</h2>
-    <div class="info-grid">${cells}
-    </div>
+${cells}
     <p class="source-note">出所: ホットペッパー グルメの掲載文をそのまま表示しています${when ? `（${when}）` : ''}。最新の内容は店に確認してください。</p>
   </div>`;
 }
