@@ -304,8 +304,8 @@ function genreKey(s) {
   return genreShort(s) || 'その他';
 }
 function scoreBadge(s) {
-  const g = toNum(s['Google評価']);
-  return g !== null ? `★ ${g}` : '';
+  // 件数・時点つきの統一形（S2-3）。件数か時点が取れない店は星を出さない
+  return require('./lib/rating_display').formatStoreRating(s);
 }
 
 function renderStoreCard(entry, num, featureSlug) {

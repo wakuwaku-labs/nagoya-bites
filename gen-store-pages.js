@@ -99,6 +99,23 @@ const { gaSnippet } = require('./scripts/lib/ga_snippet');
 const storeLinkTracking = require('./scripts/lib/store_link_tracking');
 const { RESERVE_ASK_SCRIPT } = require('./scripts/lib/reservation_ask_snippet');
 const { basicFacts } = require('./scripts/lib/store_facts');
+const { conditionRows, acquiredText } = require('./scripts/lib/store_conditions');
+
+// 来店前に確かめたいこと（S2-2・docs/decisions/0070）。ホットペッパー掲載の文を原文のまま、出所と取得日つきで出す。
+// 分類・要約・料金の抜き出しはしない（規約が加工を禁じる）。欄が1つも無い店は何も出さない
+function buildPrecheck(s) {
+  const rows = conditionRows(s);
+  if (!rows.length) return '';
+  const cells = rows.map(r => `\n    <div class="info-cell"><label>${escapeHtml(r.label)}</label><span>${escapeHtml(r.value)}</span></div>`).join('');
+  const when = acquiredText(s);
+  return `
+  <div class="links-section">
+    <h2>来店前に確かめたいこと</h2>
+    <div class="info-grid">${cells}
+    </div>
+    <p class="source-note">出所: ホットペッパー グルメの掲載文をそのまま表示しています${when ? `（${when}）` : ''}。最新の内容は店に確認してください。</p>
+  </div>`;
+}
 const TRUST_POLICY = trustDisplay.loadPolicy();
 const CROSSCHECK = (() => {
   try {
@@ -651,8 +668,11 @@ function glanceWalk(access) {
 function buildStoreGlance(s) {
   const score = String(s['Google評価'] || '').trim();
   const reviews = parseInt(s['口コミ数'] || '', 10);
+  // 件数と時点（S2-3）。時点は口コミ信頼度を算出した日（reviewTrust.d）。30件未満は「件数が少ない」と添える
+  const when = score ? require('./scripts/lib/rating_display').monthText(s.reviewTrust && s.reviewTrust.d) : '';
+  const few = Number.isFinite(reviews) && reviews > 0 && reviews < 30 ? '・件数が少ない' : '';
   const note = score
-    ? `（Google${Number.isFinite(reviews) && reviews > 0 ? `・${reviews.toLocaleString('ja-JP')}件` : ''}）`
+    ? `（Google${Number.isFinite(reviews) && reviews > 0 ? `・${reviews.toLocaleString('ja-JP')}件` : ''}${when ? `・${when}時点` : ''}${few}）`
     : '';
 
   const facts = [];
@@ -1161,6 +1181,7 @@ ${igLead ? '' : igEmbedHtml}
     ${access ? `<div class="info-cell"><label>アクセス・特徴</label><span>${access}</span></div>` : ''}
   </div>
 
+${buildPrecheck(s)}
   ${tagPills ? `<div class="tags">${tagPills}</div>` : ''}
 ${trustBreakdownHtml}
   <div class="links-section">
