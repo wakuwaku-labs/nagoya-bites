@@ -1,4 +1,4 @@
-status: in_progress
+status: done
 
 # 名古屋バイツの基本方針を X 投稿・記事・投稿案の仕組みに入れる（Ondine #2041・2026-11-16）
 
@@ -15,7 +15,7 @@ status: in_progress
 - 試験 tests/brand_policy.test.js 8件 pass。判断 docs/decisions/0068
 
 ## 次にやること
-- 全試験を流す → コミット → main へ合流 → Ondine report/done/release
+- なし（main af67d9234b に合流・CI 成功）
 
 ## 試したが駄目だったこと
 - なし
