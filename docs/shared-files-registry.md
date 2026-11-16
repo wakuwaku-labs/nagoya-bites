@@ -161,3 +161,8 @@
 | `scripts/feedback_triage.js` | 消費者フィードバック triage の決定的ヘルパー（ID採番/重複検知/**台帳突合 `--unseen-msg-ids`**/PIIマスク付きログ追記/**心拍書き込み `--health-write`**/健診レポート）。健診: `node scripts/feedback_triage.js --report --days 30` |
 | `data/feedback_health.json` | 消費者フィードバックループの**心拍**。triage ルーチンが毎日（**新着0件の日も**）書いてコミットする。0件の日は成果物が無いため、これが無いと「動いて0件」と「動かなかった／Gmailを引けなかった」が外から区別できない（ISSUE-089・ISSUE-084 の再適用） |
 | `.github/workflows/feedback-watchdog.yml` | 消費者フィードバックループの**サーバ側生存監視**。毎日13:00 JST に心拍の鮮度を見て、`max_silence_days`（既定3日）を超えたら GitHub Issue を起票（＝オーナーにメール）、復旧で自動クローズ。**「フィードバックが0件」では鳴らさない**（実績で月3件程度・空白は平常。鳴らすとオオカミ少年化する）。鳴らすのは「ルーチンが報告してこないこと」だけ。判定器は `scripts/check_feedback_health.js`（鮮度は自己申告できない＝動いていないエージェントはファイルを更新できないため、制約10 を満たす） |
+| `scripts/audit_feature_facts.js` / `scripts/lib/feature_stars.js` | **特集の誤解を招く表示の再発検査**（掲載歴・編集部訪問済・食べログ点数・内部の項目名・★とデータの食い違い・休業の注記）。件数を出す／`--check` で1件でもあれば exit 1。基本方針 段階1 S1-1・ADR 0071。 |
+| `scripts/lib/operating_notice.js` / `scripts/sync_feature_closure_notes.js` | **閉業・一時休業の注記の唯一の判定器と、特集の店カードへの日次の反映**（店舗ページは gen-store-pages.js が同じ判定器を使う）。店は外さない。人の確認で営業中の店には出さない。S1-4・ADR 0071。 |
+| `scripts/lib/selection_wording_rules.js` / `scripts/rewrite_selection_wording.js` / `data/top_title_changes.json` | **「業界人」などを題・本文から外す規則と、冪等な移行**。検索流入上位2本の題は `--top`／`--revert` で1本ずつ。記録と戻す条件は `data/top_title_changes.json`（`--report`）。S1-3・ADR 0069 決定4・0071。 |
+| `scripts/clear_places_photos_in_articles.js` / `.github/workflows/article-photo-watchdog.yml` | **記事の Google Places 写真（期限切れ・個人名クレジット）を外す道具と、月次の生死確認**。S1-5・ADR 0071。 |
+| `scripts/gen_feature_theme_figures.js` | **特集7本の顔になる図（記事専用の図）の生成**。Unsplash 由来の写真の置き換え。S1-1・ADR 0071。 |
