@@ -12,7 +12,7 @@
  *   --list    変えるファイルと件数を出す
  * 対象: features/*.html・journal/20*.html・features/index.html・journal/index.html・index.html・
  *       data/journal_published.json・data/featured.json・page-names.json・llms.txt・題の元（scripts/gen_industry_features.js・scripts/lib/journal_topics.js）。
- * 店舗ページ（stores/）は元のデータと題から gen-store-pages.js が作り直すので、ここでは触らない。
+ * 店舗ページ（stores/）は毎日 gen-store-pages.js が作り直すが、掲載データに無い旧ページ（noindex の孤児）は作り直されないので、ここで直す（規則に当たらない行は触らない）。
  */
 const fs = require('fs');
 const path = require('path');
@@ -24,6 +24,8 @@ function targets() {
   const out = ['index.html', 'features/index.html', 'journal/index.html', 'data/journal_published.json', 'data/featured.json',
     'page-names.json', 'llms.txt', 'scripts/gen_industry_features.js', 'scripts/lib/journal_topics.js'];
   for (const f of fs.readdirSync(path.join(ROOT, 'features')).filter((x) => x.endsWith('.html'))) out.push('features/' + f);
+  // 店舗ページは毎日の再生成が直すが、掲載データに無い旧ページ（noindex の孤児）は再生成されないので、ここで直す
+  for (const f of fs.readdirSync(path.join(ROOT, 'stores')).filter((x) => x.endsWith('.html'))) out.push('stores/' + f);
   for (const f of fs.readdirSync(path.join(ROOT, 'journal')).filter((x) => /^20.*\.html$/.test(x))) out.push('journal/' + f);
   return [...new Set(out)].filter((f) => fs.existsSync(path.join(ROOT, f)));
 }
