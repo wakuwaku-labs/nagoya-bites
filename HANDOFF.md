@@ -1,4 +1,4 @@
-status: in_progress
+status: done
 
 # 基本方針の段階1: 読者を誤解させうる表示を直す（Ondine #2048・2026-11-17）
 
