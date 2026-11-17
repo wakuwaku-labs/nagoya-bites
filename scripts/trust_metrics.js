@@ -28,6 +28,8 @@ const ROOT = path.resolve(__dirname, '..');
 const OUT_REL = 'data/trust_metrics.json';
 const POLICY_REL = 'data/trust_metrics_policy.json';
 const RECHECK_LOG_REL = 'data/article_recheck_log.json';
+// 来店前に重要でない文など、出典で確かめる対象にしない文（claims.js・S4-5）。分母に入れない
+const NA_STATUS = '照合対象外';
 
 function readJson(file, fallback) {
   try { return JSON.parse(fs.readFileSync(file, 'utf8')); } catch (_) { return fallback; }
@@ -107,7 +109,7 @@ function computeEvidence({ ledgers, recheckArticles = {}, pages, policy }) {
   for (const l of ledgers) {
     const rel = l.slug ? `journal/${l.slug}.html` : null;
     if (!rel || !pageSet.has(rel)) continue;
-    const el = (l.claims || []).filter((c) => c.kind === kind);
+    const el = (l.claims || []).filter((c) => c.kind === kind && c.status !== NA_STATUS);
     per.set(rel, { facts: el.length, verified: el.filter((c) => c.status === okStatus).length, mismatch: el.filter((c) => c.status === '食い違い').length, at: l.generated_at || l.date || '', basis: 'ledger' });
   }
   for (const [rel, r] of Object.entries(recheckArticles)) {
@@ -246,18 +248,35 @@ function computeFactSentences({ pages, evidence }) {
   };
 }
 
+/**
+ * 読者の声（S7-2）。記事の末尾の部品から届いた声（data/feedback_log.json の source=article-widget）を数える。
+ * 率は成果の条件にしない（回答が少ない）。「情報の誤り」の指摘は、公開後の誤りを見つける経路の1つなので件数だけ並べる。無ければ 0。
+ */
+function computeReaderVoice({ feedbackLog, today, policy }) {
+  const days = (policy.windows && policy.windows.correction_days) || 90;
+  const entries = ((feedbackLog && feedbackLog.entries) || []).filter((e) => e && e.source === 'article-widget' && e.date && daysBetween(e.date, today) !== null && daysBetween(e.date, today) <= days);
+  return {
+    window_days: days,
+    recorded: entries.length,
+    error_reports: entries.filter((e) => e.article_answer === 'error').length,
+    could_not_decide: entries.filter((e) => e.article_answer === 'no').length,
+    note: '記事の末尾の部品から届いて台帳に残った声（Formspree に届くのは ひとこと／誤りの指摘 があるときだけ）。はい／いいえの数は GA4 の article_feedback。率は成果の条件にしない',
+  };
+}
+
 function summarizeRecheck(log) {
   if (!log) return null;
   return { last_run: log.last_run || null, summary: log.summary || null };
 }
 
-function compute({ root = ROOT, now = new Date(), pages = null, ledgers = null, reviewRows = null, published = null, recheckLog = null, policy = null } = {}) {
+function compute({ root = ROOT, now = new Date(), pages = null, ledgers = null, reviewRows = null, published = null, recheckLog = null, feedbackLog = null, policy = null } = {}) {
   const pol = policy || loadPolicy(root);
   const today = jstDate(now);
   const pg = pages || loadPages(root);
   const lg = ledgers || loadLedgers(root);
   const pub = published || readJson(path.join(root, 'data', 'journal_published.json'), { entries: [] });
   const rlog = recheckLog || readJson(path.join(root, RECHECK_LOG_REL), null);
+  const fblog = feedbackLog || readJson(path.join(root, 'data', 'feedback_log.json'), { entries: [] });
   let rows = reviewRows;
   if (!rows) {
     rows = require('./build_article_review_ledger').build({ root, today: now }).articles;
@@ -278,6 +297,7 @@ function compute({ root = ROOT, now = new Date(), pages = null, ledgers = null, 
     policy_version: pol.version || null,
     indicators,
     fact_sentences: computeFactSentences({ pages: pg, evidence }),
+    reader_voice: computeReaderVoice({ feedbackLog: fblog, today, policy: pol }),
     recheck: summarizeRecheck(rlog),
   };
 }
@@ -317,6 +337,7 @@ function summaryLines(m) {
     `誤情報の発生率: ${pct(i.misinformation_rate.value)}（公開${i.misinformation_rate.window_days}日の ${i.misinformation_rate.numerator}/${i.misinformation_rate.denominator}本・直近の訂正取り下げ ${i.misinformation_rate.events_in_window}本）`,
     `更新鮮度: ${pct(i.freshness_rate.value)}（検索に出ている ${i.freshness_rate.numerator}/${i.freshness_rate.denominator}本）`,
     `独自分析の充実度: ${pct(i.analysis_rate.value)}（${i.analysis_rate.numerator}/${i.analysis_rate.denominator}本）`,
+    `読者の声: 情報の誤りの指摘 ${m.reader_voice.error_reports}件・決められなかった ${m.reader_voice.could_not_decide}件（${m.reader_voice.window_days}日）`,
     `事実の文の数: 全記事 ${m.fact_sentences.total}・1本あたり平均 ${m.fact_sentences.per_article_avg}`,
   ];
 }
@@ -341,5 +362,5 @@ if (require.main === module) main();
 module.exports = {
   ROOT, OUT_REL, POLICY_REL, RECHECK_LOG_REL, readJson, loadPolicy, jstDate, daysBetween, visibleText, loadPages, loadLedgers,
   computeEvidence, computeUnconfirmed, computeMisinformation, computeFreshness, computeAnalysis, computeFactSentences,
-  hasUnconfirmedDisclosure, analysisFlags, bodyHtml, compute, snapshot, withHistory, summaryLines, pct,
+  hasUnconfirmedDisclosure, analysisFlags, bodyHtml, computeReaderVoice, NA_STATUS, compute, snapshot, withHistory, summaryLines, pct,
 };

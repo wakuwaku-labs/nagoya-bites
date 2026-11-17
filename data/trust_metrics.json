@@ -1,7 +1,7 @@
 {
  "_README": "S7-1 信頼の指標（scripts/trust_metrics.js が毎日作る。週のレポート GAS が読む）。設定は data/trust_metrics_policy.json。history は7日ごとの記録（悪化の見張りが前の週と比べるのに使う）。",
  "date": "2026-11-17",
- "generated_at": "2026-11-17T04:42:39.135Z",
+ "generated_at": "2026-11-17T04:48:05.918Z",
  "policy_version": 1,
  "indicators": {
   "evidence_rate": {
@@ -70,6 +70,13 @@
   "ledger_facts": 0,
   "ledger_articles": 0,
   "note": "数字・日付・価格を含む文の数（記事の本文から機械で取り出す。台帳の事実の文とは別の数え方で、記事ごとの増減を見る）"
+ },
+ "reader_voice": {
+  "window_days": 90,
+  "recorded": 0,
+  "error_reports": 0,
+  "could_not_decide": 0,
+  "note": "記事の末尾の部品から届いて台帳に残った声（Formspree に届くのは ひとこと／誤りの指摘 があるときだけ）。はい／いいえの数は GA4 の article_feedback。率は成果の条件にしない"
  },
  "recheck": null,
  "history": [

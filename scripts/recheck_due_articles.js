@@ -154,9 +154,14 @@ async function recheckOne(cand, { root, today, fetcher, rc, gate }) {
     const r = await fetcher(s.url);
     pool.push({ ...s, ok: !!r.ok, text: r.ok ? r.text : '', fetched_at: new Date().toISOString(), reason: r.ok ? null : r.reason || 'unknown' });
   }
-  const useLedger = ledger && Array.isArray(ledger.claims) && ledger.claims.length ? { claims: ledger.claims.map((c) => ({ text: c.text, kind: c.kind })) } : null;
+  // 書き手の台帳（<日付>.ledger.json・文と出典の対）があれば、その対で照合する（出典の引用が今も実在するかを見る）。無ければ文と種類だけ
+  let useLedger = null;
+  if (ledger && Array.isArray(ledger.claims) && ledger.claims.length) {
+    const writer = ledger.date ? T.readJson(path.join(root, 'data', 'journal_claims', `${ledger.date}.ledger.json`), null) : null;
+    useLedger = writer && C.ledgerPairs && C.ledgerPairs(writer).length ? writer : { claims: ledger.claims.map((c) => ({ text: c.text, kind: c.kind })) };
+  }
   const v = C.verifyArticle(page.html, { date: today, pool, root, ledger: useLedger });
-  const eligible = v.claims.filter((c) => c.kind === '確認済みの事実');
+  const eligible = v.claims.filter((c) => c.kind === '確認済みの事実' && c.status !== T.NA_STATUS);
   const res = {
     facts: eligible.length,
     verified: eligible.filter((c) => c.status === '照合できた').length,

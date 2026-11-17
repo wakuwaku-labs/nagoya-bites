@@ -221,3 +221,29 @@ test('夜間の検査と見張りの workflow がつながっている（相乗�
   assert.ok(wd.includes('trust_metrics.js --write') && wd.includes('check_trust_metrics_health.js') && wd.includes('自動でクローズ') && wd.includes('test_close'));
   assert.ok(/\[skip actions\]/.test(wd), 'デプロイを誘発しない');
 });
+
+test('根拠確認率: 出典で確かめる対象にしない文（照合対象外）は分母に入れない', () => {
+  const ledgers = [{ slug: '2026-11-10-a', date: '2026-11-10', claims: [
+    { kind: '確認済みの事実', status: '照合できた' },
+    { kind: '確認済みの事実', status: '取得できず照合不能' },
+    { kind: '確認済みの事実', status: T.NA_STATUS },
+    { kind: '確認済みの事実', status: T.NA_STATUS },
+  ] }];
+  const r = T.computeEvidence({ ledgers, pages: PAGES, policy });
+  assert.strictEqual(r.denominator, 2);
+  assert.strictEqual(r.numerator, 1);
+});
+
+test('読者の声: 記事の末尾の部品から届いた声だけを90日の窓で数える（無ければ0）', () => {
+  const feedbackLog = { entries: [
+    { source: 'article-widget', date: '2026-11-10', article_answer: 'error' },
+    { source: 'article-widget', date: '2026-11-11', article_answer: 'no' },
+    { source: 'article-widget', date: '2026-01-01', article_answer: 'error' },
+    { source: 'site-feedback', date: '2026-11-12', article_answer: 'error' },
+  ] };
+  const r = T.computeReaderVoice({ feedbackLog, today: '2026-11-17', policy });
+  assert.strictEqual(r.recorded, 2);
+  assert.strictEqual(r.error_reports, 1);
+  assert.strictEqual(r.could_not_decide, 1);
+  assert.strictEqual(T.computeReaderVoice({ feedbackLog: null, today: '2026-11-17', policy }).recorded, 0);
+});

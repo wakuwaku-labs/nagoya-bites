@@ -249,6 +249,9 @@ function formatTrustMetrics(m, today) {
   out += '・確認日が' + (f.window_days || 90) + '日以内（検索に出ている記事）: ' + trustPct(f.value) + '（' + f.numerator + '/' + f.denominator + ' 本）\n';
   const a = i.analysis_rate;
   out += '・比較・計算・一般則のある記事: ' + trustPct(a.value) + '（' + a.numerator + '/' + a.denominator + ' 本）\n';
+  if (m.reader_voice && typeof m.reader_voice.error_reports === 'number') {
+    out += '・読者からの「情報の誤り」の指摘: ' + m.reader_voice.error_reports + ' 件（' + (m.reader_voice.window_days || 90) + '日）\n';
+  }
   if (m.fact_sentences && m.fact_sentences.per_article_avg !== undefined && m.fact_sentences.per_article_avg !== null) {
     out += '・事実の文の数: 1 本あたり平均 ' + m.fact_sentences.per_article_avg + '（率だけ良くしていないかを見る数字）\n';
   }
