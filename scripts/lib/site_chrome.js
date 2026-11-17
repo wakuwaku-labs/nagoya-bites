@@ -307,7 +307,7 @@ function renderReaderVoice() {
   <form class="nb-rv-form" hidden novalidate>
     <label class="nb-rv-label" for="nb-rv-body" data-rv-label>ひとこと（任意）</label>
     <textarea id="nb-rv-body" class="nb-rv-body" maxlength="400" rows="3"></textarea>
-    <p class="nb-rv-hint">個人情報（お名前・連絡先など）は書かないでください。</p>
+    <p class="nb-rv-hint">お名前・連絡先は書かないでください。</p>
     <input type="text" name="_gotcha" class="nb-rv-gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
     <button type="submit" class="nb-rv-submit">送信する</button>
   </form>
@@ -346,16 +346,21 @@ function renderReaderVoice() {
 ${READER_VOICE_END}`;
 }
 
-/** 記事の <main> の末尾（フッターの手前）に部品を入れる。べき等。対象外のページと、フッターのマーカーが無いページは何もしない */
+/**
+ * 記事の本文の直後（最初の関連リンクの塊 <div class="related"> の手前）に部品を入れる。
+ * ジャーナルは「この記事で紹介したお店」の後、特集は FAQ の後・関連リンクの前になる。
+ * 関連リンクの塊が無いページはフッターの手前。べき等（今ある部品は外して入れ直す＝位置が変わっても追従する）。
+ * 対象外のページと、置き場所が見つからないページは何もしない。
+ */
 function applyReaderVoice(html, rel) {
   if (!isReaderVoicePage(rel)) return html;
-  const startRe = new RegExp(`${READER_VOICE_START}[\\s\\S]*?${READER_VOICE_END}\\n?`);
+  const stripRe = new RegExp(`${READER_VOICE_START}[\\s\\S]*?${READER_VOICE_END}\\n?`);
+  const base = html.replace(stripRe, '');
   const block = renderReaderVoice() + '\n';
-  if (startRe.test(html)) return html.replace(startRe, () => block);
-  const foot = MARK('FOOTER', 'START');
-  const i = html.indexOf(foot);
-  if (i < 0) return html;
-  return html.slice(0, i) + block + html.slice(i);
+  let at = base.indexOf('<div class="related"');
+  if (at < 0) at = base.indexOf(MARK('FOOTER', 'START'));
+  if (at < 0) return html;
+  return base.slice(0, at) + block + base.slice(at);
 }
 
 module.exports = {

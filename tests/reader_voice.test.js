@@ -28,6 +28,16 @@ test('applyReaderVoice はべき等で、フッターの手前に入り、対象
   assert.strictEqual(chrome.applyReaderVoice('<p>x</p>', 'features/x.html'), '<p>x</p>');
 });
 
+test('部品は関連リンクの塊の手前に入り、フッター位置の古い部品は移る', () => {
+  const page = '<article></article>\n<div class="related">r</div>\n<!-- NB-CHROME:FOOTER:START -->\n<footer></footer>\n';
+  const once = chrome.applyReaderVoice(page, 'journal/x.html');
+  assert.ok(once.indexOf('NB-READER-VOICE:START') < once.indexOf('<div class="related"'));
+  const old = page.replace('<!-- NB-CHROME:FOOTER:START -->', chrome.renderReaderVoice() + '\n<!-- NB-CHROME:FOOTER:START -->');
+  assert.strictEqual(chrome.applyReaderVoice(old, 'journal/x.html'), once);
+  const noRel = chrome.applyReaderVoice('<p>a</p>\n<!-- NB-CHROME:FOOTER:START -->', 'journal/x.html');
+  assert.ok(noRel.indexOf('NB-READER-VOICE:START') < noRel.indexOf('NB-CHROME:FOOTER:START'));
+});
+
 test('部品は個人情報欄を持たず、既存の Formspree に記事 URL つきで送る', () => {
   const h = chrome.renderReaderVoice();
   assert.ok(h.includes('https://formspree.io/f/xaqaygze'));
