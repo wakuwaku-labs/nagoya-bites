@@ -16,8 +16,8 @@ status: in_progress
 ## 次にやること
 - 段階3〜7の実装は main・本番に入った（#754〜#766）。GAS も配備済み
 - 本人 11-17 夕「全て推奨で」: 題 A のまま／S4-5 は台帳が1〜2週たまってから再測定（待つ）／推奨で決めた事項はすべてそのまま／季節切れ4本は noindex しない
-1. 寄せる2組（nagoya-yakitori-guide→nagoya-yakitori、industry-insiders-pick→kospa-insider）を作業役が worktree ~/nagoya-bites/.claude/worktrees/policy-s5-3-merge（ブランチ wakuwaku-labs/policy-s5-3-merge）で実装中。`gh pr list` で PR を見つけ、npm test・audit_stub_links・audit_internal_links の通過を確認して merge_chain.sh でマージ→本番で寄せ元が寄せ先へ飛ぶことを確認→Ondine #2053 に report（過去記事203本の見直しは継続中なので doing のまま）
-2. Ondine #2052 に「本人: 推奨どおり待つ（2026-11-17）」を report。再測定は 2026-12-01 ごろ（実物の台帳 data/journal_claims/*.ledger.json が2週分たまってから claims_gate_calibrate.js）→その時に enforce の承認を聞く
+1. 【済 #767・本番で転送確認・#2053 に report】寄せる2組（nagoya-yakitori-guide→nagoya-yakitori、industry-insiders-pick→kospa-insider）を作業役が worktree ~/nagoya-bites/.claude/worktrees/policy-s5-3-merge（ブランチ wakuwaku-labs/policy-s5-3-merge）で実装中。`gh pr list` で PR を見つけ、npm test・audit_stub_links・audit_internal_links の通過を確認して merge_chain.sh でマージ→本番で寄せ元が寄せ先へ飛ぶことを確認→Ondine #2053 に report（過去記事203本の見直しは継続中なので doing のまま）
+2. 【report 済】Ondine #2052 は本人「推奨どおり待つ」。再測定は 2026-12-01 ごろ（実物の台帳 data/journal_claims/*.ledger.json が2週分たまってから claims_gate_calibrate.js）→その時に enforce の承認を聞く
 3. X: 上限は上げなくてよい（毎日の投稿は 11-14 以降すべて成功。上限で止まったのは 11-13 の削除だけ）。11-13 に本人が頼んだ投稿 2120705656470810885 の削除は 11-17 に完了
 4. iPhone 実機の確認（検索の帯・ひとこと欄の拡大・Gmail 着信）は本人の返事待ち
 - merge_chain.sh: /private/tmp/claude-501/-Users-katagirijakutou-orca-workspaces-nagoya-bites-sandworm/b5398d59-8bf7-4a05-8d12-08cf9ef90118/scratchpad/merge_chain.sh
