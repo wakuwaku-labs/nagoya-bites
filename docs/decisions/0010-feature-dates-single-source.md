@@ -1,7 +1,7 @@
 # 0010 特集の公開日・更新日は JSON-LD だけを正本にし、画面には部品1つで出す
 
 - 日付: 2026-10-09
-- 状態: 採用
+- 状態: 一部置き換え済み（0069 決定4・5 と 0075: 書き手の表記「現役の飲食店マネージャー」を使わず、AI運営を明記）
 - 関連: Linear P-153 / [[SEO-145]]（親 [[SEO-131]]）/ `scripts/lib/feature_byline.js`・`scripts/apply_feature_byline.js`・`tests/feature_byline.test.js`
 
 ## 背景

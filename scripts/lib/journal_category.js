@@ -51,4 +51,18 @@ function isPublic(entry) {
   return s !== 'withdrawn';
 }
 
-module.exports = { CATEGORIES, THEME_TO_CATEGORY, categoryOf, categoryLabel, isPublic };
+/** 記事 HTML が取り下げ済みか（journal_withdraw.js が入れる noindex の印 data-withdrawn を見る） */
+function isWithdrawnHtml(html) {
+  return /<meta[^>]*name="robots"[^>]*data-withdrawn/.test(String(html || ''));
+}
+
+/** ファイル名の一覧から、取り下げ済みの記事を除く（サイトマップ用）。読めないファイルは残す */
+function filterPublicArticleFiles(dir, files) {
+  const fs = require('fs');
+  const path = require('path');
+  return files.filter(f => {
+    try { return !isWithdrawnHtml(fs.readFileSync(path.join(dir, f), 'utf8')); } catch (_) { return true; }
+  });
+}
+
+module.exports = { CATEGORIES, THEME_TO_CATEGORY, categoryOf, categoryLabel, isPublic, isWithdrawnHtml, filterPublicArticleFiles };

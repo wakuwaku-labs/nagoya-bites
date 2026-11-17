@@ -166,3 +166,15 @@
 | `scripts/lib/selection_wording_rules.js` / `scripts/rewrite_selection_wording.js` / `data/top_title_changes.json` | **「業界人」などを題・本文から外す規則と、冪等な移行**。検索流入上位2本の題は `--top`／`--revert` で1本ずつ。記録と戻す条件は `data/top_title_changes.json`（`--report`）。S1-3・ADR 0069 決定4・0071。 |
 | `scripts/clear_places_photos_in_articles.js` / `.github/workflows/article-photo-watchdog.yml` | **記事の Google Places 写真（期限切れ・個人名クレジット）を外す道具と、月次の生死確認**。S1-5・ADR 0071。 |
 | `scripts/gen_feature_theme_figures.js` | **特集7本の顔になる図（記事専用の図）の生成**。Unsplash 由来の写真の置き換え。S1-1・ADR 0071。 |
+| `scripts/lib/journal_category.js` / `scripts/journal_withdraw.js` / `scripts/journal_correct.js` | **ジャーナル記事の3分類の判定（台帳 category 優先・theme から導く）と、取り下げ・訂正の道具**。取り下げは予行が既定・noindex＋注記＋履歴・X の実削除は `--delete-x --yes` のときだけ。取り下げ済み記事はサイトマップから外す（`filterPublicArticleFiles`）。S3-3・S4-4・ADR 0073・0074。 |
+| `data/editorial_standard.json` / `scripts/lib/editorial_standard.js` | **編集基準の正本**（定型7項目・読み替え規則・記事3種の必須情報・状態の帯の文言）と判断材料の部品の組み立て・警告。S3-1・S3-2・ADR 0073。 |
+| `scripts/lib/store_stats.js` | **掲載データのエリア×ジャンル集計と店選びガイドの差し込み**（掲載店の中の集計と必ず書く・10店未満は出さない）。S3-4・ADR 0073。 |
+| `scripts/apply_confirmation_memo.js` / `tests/feature_frozen_parts.test.js` | **検索流入のある特集6本の「確認メモ」を data/stores.json から生成・再生成**（`--check` で欠けた店を表示）と、6本の題・URL・大見出し・冒頭の固定、確認メモ・季節切れ注記・AI運営の開示の検査。S5-2・S5-3・S6-2・ADR 0075。 |
+| `scripts/build_article_review_ledger.js` / `data/article_review_ledger.json` | **特集・ジャーナルの棚卸し台帳**（検索の実績・問題の型・確認日・リンク元数・直す順）。`--check` で全記事が台帳にあるか検査。毎週月曜（JST）に build.yml が更新。S5-1・ADR 0075。 |
+| `scripts/lib/claims.js` / `scripts/verify_article_claims.js` / `data/journal_claims/` | **事実台帳・出典照合の部品と毎朝の照合・記録**。`data/journal_claims/<日付>.ledger.json` は書き手（`generate_daily_draft.js` の `writeClaimsLedger`）が出す文と出典の対。S4-1・S4-2・ADR 0074。 |
+| `scripts/review_article_independent.js` / `scripts/journal_lane.js` / `data/journal_audit/` | **独立した読み手と3つの道の判定、監査の履歴**。`claims_gate` は shadow（記録だけ）。ADR 0074。 |
+| `scripts/claims_gate_calibrate.js` / `tests/fixtures/claims_calibration/cases.json` | **S4-5 の測定**（壊した20本・正しい30本の見本）。enforce の承認の根拠。ADR 0074。 |
+| `tests/reader_voice.test.js` | **記事末尾の読者の声（NB-READER-VOICE）・取り込み（`feedback_triage.js --parse-mail`）・再訪問率の試験**。S7-2・ADR 0076。 |
+| `scripts/recheck_due_articles.js` / `data/article_recheck_log.json` | **見直す日が来た記事の出典を取り直して照合**（既定は記録だけ・夜間QAに相乗り）と記録・心拍。S5-5・ADR 0076。 |
+| `scripts/trust_metrics.js` / `data/trust_metrics.json` / `data/trust_metrics_policy.json` | **信頼の指標（上位5つ＋事実の文の数＋読者の声）の機械の計数・最新値と週ごとの履歴・数え方と悪化の許容の正本**。`--write` で更新。S7-1・S7-3・ADR 0076。 |
+| `scripts/check_trust_metrics_health.js` / `.github/workflows/trust-metrics-watchdog.yml` | **前の週との悪化・数え役の停止・見直しの滞りの見張り**。毎日数えて保存し、悪化で Issue・戻ったら閉じる。ADR 0076。 |
