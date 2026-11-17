@@ -50,6 +50,12 @@
     "spam_abuse": {
       "verdict": "rejected | escalated",
       "note": "スパム・宣伝・誹謗中傷・個人情報混入は起票せず feedback_log.json に理由付きで記録のみ。名誉毀損や法的懸念があるものは verdict=escalated としてトリアージ報告の冒頭でオーナーに明示する。"
+    },
+    "article_voice": {
+      "verdict": "recorded | fact_check | adopted",
+      "source": "article-widget",
+      "note": "記事（特集・ジャーナル）の末尾の部品（S7-2）から届く声。メールに article_url と article_answer（yes=役に立った / no=決められなかった / error=情報の誤り）が付く。error は fact_check（店舗事実と同じ実在検証ゲート・この場でデータを直さない）。no に具体的な指摘があれば adopted（owner=Editor）、それ以外の感想は verdict=recorded で台帳にだけ残す。率を成果の条件にしない・中身を読む。スパム・いたずらは spam_abuse と同じく記録だけ。",
+      "counting": "はい／いいえの数は GA4 の article_feedback イベント（scripts/ga4_baseline.js が出す）で数える。Formspree に届くのは「ひとこと」か「誤りの指摘」があるときだけ（無料枠 月50件を守るため）。"
     }
   },
   "pii_rules": [
@@ -78,6 +84,12 @@
     "mitigation_automated_free": "docs/feedback-triage-runbook.md『この設計が守れていない失敗』に、Formspree ダッシュボードの提出履歴（Free プランでも30日分は無料で閲覧可）を月1回目視で feedback_log.json の件数と突合する運用を明記（acceptance で当初から想定されていた無料フォールバック）。",
     "mitigation_optional_owner_action": "Formspree Free プランは『2つの連携通知メール』を無料で設定できる（フォーム設定 → Notifications → 2つ目の宛先を追加）。宛先を wakato1251999@gmail.com とは別のメールアドレス（別プロバイダ推奨）にすると、片方のアカウントの迷惑メール判定・フィルタ・障害だけでは投稿が消えなくなる。検知ではなく予防（冗長化）だが、無料でリスクを直接下げられる。設定はオーナー本人のFormspreeアカウント操作が必要なため未実施。"
   },
-  "updated": "2026-11-03",
-  "related_plan": "消費者フィードバック自動改善ループ新設（2026-07-27）/ Gmail検索の偽陰性対策 ISSUE-089（2026-08-17）"
+  "updated": "2026-11-17",
+  "related_plan": "消費者フィードバック自動改善ループ新設（2026-07-27）/ Gmail検索の偽陰性対策 ISSUE-089（2026-08-17）",
+  "formspree_quota": {
+    "free_plan_submissions_per_month": 50,
+    "submission_archive_days": 30,
+    "source": "https://formspree.io/plans（2026-11-17 確認）",
+    "note": "サイト全体のご意見・店舗追加フォーム・記事の声が同じフォームを共有する。月の件数が40件を超えたら記事の声の送信条件をさらに絞る（有料化を勧める前に）。"
+  }
 }

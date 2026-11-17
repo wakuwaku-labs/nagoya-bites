@@ -130,6 +130,14 @@ node scripts/feedback_triage.js --check-dup "<本文>" --msg-id "<Gmailメッセ
 → `rejected`（宣伝・スパム・無意味な内容）または `escalated`（誹謗中傷・名誉毀損・法的懸念があるもの）。
 どちらも起票せずログのみ。escalated は Step 8 の冒頭で必ずユーザーに明示する。
 
+**(d) 記事の声**（メールに `article_url` と `article_answer` が付いているもの。記事の末尾の部品から届く・S7-2）
+→ 先に `node scripts/feedback_triage.js --parse-mail "<メール本文>"` で項目を取り出す（`source=article-widget`・`page`＝記事のパス）。
+- `article_answer=error`（情報の誤り）→ `fact_check`。(b) と同じく**この場でデータや記事を直さない**。acceptance は「記事の該当箇所を一次情報で確認 → 成立時のみ直す」。記事の URL を起票の source に書く。
+- `article_answer=no`（決められなかった）に具体的な指摘がある → Moat フィルターを通し `adopted`（owner=Editor）。
+- 上以外の感想・ひとことだけ → `verdict: "recorded"`（起票しない・台帳にだけ残す）。ログ追記には `source`・`page`・`article_answer` を必ず付ける。
+- 「はい／いいえ」だけの回答はメールに来ない（GA4 の `article_feedback` で数える・`scripts/ga4_baseline.js`）。Formspree の無料枠は月50件なので、**部品は「ひとこと」か誤りの指摘があるときだけ送る**。
+- 率（役に立った割合）を成果の条件にしない。件数が少ないうちは中身を読む。記事ごとの集計は `--report` の `by_article`。
+
 ### Step 5: 起票（(a) adopted と (b) fact_check のみ）
 
 採番:

@@ -277,7 +277,98 @@ document.addEventListener('touchstart',function(){},{passive:true});
 ${MARK('SCRIPT', 'END')}`;
 }
 
+// ---------------------------------------------------------------------------
+// 読者の声（S7-2）: 記事（特集・ジャーナル）の末尾に置く「この記事は店選びの役に立ちましたか」の部品。
+// 店舗ページ約 5,000 本には入れない（記事だけ）。見た目は assets/css/nb.css の .nb-reader-voice。
+// 送信先は既存の消費者フィードバックと同じ Formspree（件名タグ [site-feedback]）。記事の URL を一緒に送る。
+// Formspree の無料枠は月 50 件なので、「はい／いいえ」の数は GA4 のイベント（article_feedback）で数え、
+// Formspree に送るのは「ひとこと」か「情報の誤りの指摘」があるときだけ（docs/feedback-triage-runbook.md）。
+// ---------------------------------------------------------------------------
+const READER_VOICE_START = '<!-- NB-READER-VOICE:START -->';
+const READER_VOICE_END = '<!-- NB-READER-VOICE:END -->';
+
+/** 部品を入れるページか（features/・journal/ の記事。一覧と方針ページは除く） */
+function isReaderVoicePage(rel) {
+  const norm = String(rel).replace(/\\/g, '/').replace(/^\.\//, '');
+  if (/^features\/[^/]+\.html$/.test(norm)) return !['features/index.html', 'features/editorial-policy.html'].includes(norm);
+  if (/^journal\/[^/]+\.html$/.test(norm)) return norm !== 'journal/index.html';
+  return false;
+}
+
+function renderReaderVoice() {
+  return `${READER_VOICE_START}
+<section class="nb-reader-voice" id="nb-reader-voice" aria-labelledby="nb-rv-title">
+  <h2 class="nb-rv-title" id="nb-rv-title">この記事は店選びの役に立ちましたか？</h2>
+  <div class="nb-rv-choices">
+    <button type="button" class="nb-rv-btn" data-rv="yes">役に立った</button>
+    <button type="button" class="nb-rv-btn" data-rv="no">決められなかった</button>
+    <button type="button" class="nb-rv-btn nb-rv-btn-sub" data-rv="error">情報の誤りを知らせる</button>
+  </div>
+  <form class="nb-rv-form" hidden novalidate>
+    <label class="nb-rv-label" for="nb-rv-body" data-rv-label>ひとこと（任意）</label>
+    <textarea id="nb-rv-body" class="nb-rv-body" maxlength="400" rows="3"></textarea>
+    <p class="nb-rv-hint">お名前・連絡先は書かないでください。</p>
+    <input type="text" name="_gotcha" class="nb-rv-gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button type="submit" class="nb-rv-submit">送信する</button>
+  </form>
+  <p class="nb-rv-status" role="status" aria-live="polite"></p>
+</section>
+<script>
+(function(){
+  var root=document.getElementById('nb-reader-voice');if(!root)return;
+  var form=root.querySelector('.nb-rv-form'),body=root.querySelector('.nb-rv-body'),label=root.querySelector('[data-rv-label]'),st=root.querySelector('.nb-rv-status'),sub=root.querySelector('.nb-rv-submit');
+  var mode='',sent={},LAB={yes:'ひとこと（任意）',no:'何が足りませんでしたか？（任意）',error:'どの店・どの情報が違いますか？（必須）'};
+  var CAT={yes:'記事: 店選びの役に立った',no:'記事: 店選びを決められなかった',error:'記事: 情報の誤り'};
+  function ga(a){try{if(typeof trackEvent==='function')trackEvent('article_feedback',{answer:a,article_path:location.pathname});else if(typeof gtag==='function')gtag('event','article_feedback',{answer:a,article_path:location.pathname});}catch(e){}}
+  root.addEventListener('click',function(e){
+    var b=e.target&&e.target.closest&&e.target.closest('[data-rv]');if(!b)return;
+    mode=b.getAttribute('data-rv');
+    [].forEach.call(root.querySelectorAll('[data-rv]'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+    label.textContent=LAB[mode];form.hidden=false;st.textContent='';st.className='nb-rv-status';
+    if(mode!=='error'&&!sent[mode]){sent[mode]=1;ga(mode);st.textContent='ありがとうございます。よければひとこともお寄せください。';}
+  });
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if((form.querySelector('[name=_gotcha]')||{}).value)return;
+    var text=(body.value||'').trim();
+    if(mode==='error'&&!text){st.textContent='誤りの内容を書いてください。';st.className='nb-rv-status ng';return;}
+    if(!text){st.textContent='ありがとうございました。';return;}
+    sub.disabled=true;st.textContent='送信中…';st.className='nb-rv-status';
+    var p={_subject:'[site-feedback] '+CAT[mode],category:CAT[mode],article_answer:mode,article_url:location.origin+location.pathname,page:location.pathname.slice(0,200),body:text,submittedAt:new Date().toISOString()};
+    fetch('https://formspree.io/f/xaqaygze',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(p)}).then(function(r){
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      st.textContent='送信しました。ありがとうございます。';st.className='nb-rv-status ok';body.value='';
+      if(mode==='error')ga('error');
+    }).catch(function(){st.textContent='送信に失敗しました。時間をおいて再度お試しください。';st.className='nb-rv-status ng';}).then(function(){sub.disabled=false;});
+  });
+})();
+</script>
+${READER_VOICE_END}`;
+}
+
+/**
+ * 記事の本文の直後（最初の関連リンクの塊 <div class="related"> の手前）に部品を入れる。
+ * ジャーナルは「この記事で紹介したお店」の後、特集は FAQ の後・関連リンクの前になる。
+ * 関連リンクの塊が無いページはフッターの手前。べき等（今ある部品は外して入れ直す＝位置が変わっても追従する）。
+ * 対象外のページと、置き場所が見つからないページは何もしない。
+ */
+function applyReaderVoice(html, rel) {
+  if (!isReaderVoicePage(rel)) return html;
+  const stripRe = new RegExp(`${READER_VOICE_START}[\\s\\S]*?${READER_VOICE_END}\\n?`);
+  const base = html.replace(stripRe, '');
+  const block = renderReaderVoice() + '\n';
+  let at = base.indexOf('<div class="related"');
+  if (at < 0) at = base.indexOf(MARK('FOOTER', 'START'));
+  if (at < 0) return html;
+  return base.slice(0, at) + block + base.slice(at);
+}
+
 module.exports = {
+  READER_VOICE_START,
+  READER_VOICE_END,
+  isReaderVoicePage,
+  renderReaderVoice,
+  applyReaderVoice,
   NAV_PRIMARY,
   NAV_SECONDARY,
   FOOTER_GROUPS,

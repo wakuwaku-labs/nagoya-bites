@@ -280,7 +280,7 @@ test('CSS: 押す所は 44px 以上、文字は 13px 以上のトークンだけ
   assert.ok(Number((btn.match(/min-height:(\d+)px/) || [])[1]) >= 44, 'ボタンの高さは 44px 以上（--tap-min）');
   const sizes = [...css.matchAll(/font-size:([^;}]+)/g)].map((m) => m[1].trim());
   assert.ok(sizes.length >= 3);
-  for (const s of sizes) assert.match(s, /^var\(--fs-(xs|sm|md|lg)\)$/, `font-size は 13px 以上のトークン: ${s}`);
+  for (const s of sizes) assert.match(s, /^var\(--fs-(xs|sm|md|lg|input)\)$/, `font-size は 13px 以上のトークン: ${s}`);
   const sub = ruleBody(css, '.nb-bar-sub');
   assert.match(sub, /flex:0 0 4\.25rem/, '電話・地図の幅は、「電話する」（13px×4字）が1行に入る幅');
 });

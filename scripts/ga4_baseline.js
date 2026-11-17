@@ -72,6 +72,8 @@ function buildRequests(win, landingDim = 'landingPagePlusQueryString') {
     totalsAll: { dateRanges, metrics: [{ name: 'activeUsers' }, { name: 'sessions' }, { name: 'engagedSessions' }, { name: 'screenPageViews' }, { name: 'userEngagementDuration' }, { name: 'eventCount' }], dimensionFilter: host },
     eventSessions: { dateRanges, dimensions: [{ name: 'eventName' }, { name: 'deviceCategory' }], metrics: [{ name: 'eventCount' }, { name: 'sessions' }], dimensionFilter: and(host, eventIn(L.EVENTS)) },
     events: { dateRanges, dimensions: [{ name: 'eventName' }, { name: 'deviceCategory' }, { name: 'pagePath' }], metrics: [{ name: 'eventCount' }], dimensionFilter: and(host, eventIn(L.EVENTS)) },
+    // S7-2: 再訪問率。標準の次元 newVsReturning（new / returning）で人数とセッション数を分ける
+    returning: { dateRanges, dimensions: [{ name: 'newVsReturning' }], metrics: [{ name: 'activeUsers' }, { name: 'sessions' }], dimensionFilter: host },
     reservation: { dateRanges, dimensions: [{ name: 'deviceCategory' }, { name: 'pagePath' }, { name: 'eventName' }, { name: 'customEvent:link_domain' }], metrics: [{ name: 'eventCount' }], dimensionFilter: and(host, eventIn(['cta_click', 'cta_reserve', 'outbound_click'])) },
   };
 }
@@ -133,6 +135,10 @@ async function reportWindow(runReport, win, opts = {}) {
   try { reservationRows = await get('reservation'); }
   catch (e) { notes.push(`予約送客の内訳を取れなかった（link_domain のカスタムディメンション未登録など）: ${e.message}`); }
 
+  let returningRows = null;
+  try { returningRows = await get('returning'); }
+  catch (e) { notes.push(`再訪問率（newVsReturning）を取れなかった: ${e.message}`); }
+
   const mNames = ['activeUsers', 'sessions', 'engagedSessions', 'screenPageViews', 'userEngagementDuration'];
   const byDevice = L.aggregateByDevice(totalsByDeviceRows, mNames);
   const all = totalsAllRows[0] ? Object.fromEntries([...mNames, 'eventCount'].map((m, i) => [m, totalsAllRows[0].mets[i]])) : Object.fromEntries([...mNames, 'eventCount'].map(m => [m, 0]));
@@ -156,6 +162,7 @@ async function reportWindow(runReport, win, opts = {}) {
     events,
     eventSessions,
     reservation,
+    returning: returningRows ? L.aggregateReturning(returningRows) : null,
     lowCount: low,
     notes,
     landingDimension: land.dim,
@@ -221,6 +228,7 @@ function summaryOf(rep, title) {
     const e = rep.events[n]; const s = rep.eventSessions[n];
     lines.push(`| ${n} | ${e.total} | ${s ? s.sessions : '—'} | ${e.device.mobile} | ${e.device.desktop} |`);
   });
+  if (rep.returning) lines.push('', `再訪問率（参考・成果の条件にしない）: 人数ベース ${pct(rep.returning.returningUserRate)}（再訪 ${rep.returning.returning.users}/新規 ${rep.returning.new.users}）・セッションベース ${pct(rep.returning.returningSessionRate)}`);
   if (rep.reservation) lines.push('', `予約送客（重ならない数え方）: 合計 ${rep.reservation.total}・スマホ ${rep.reservation.device.mobile}・PC ${rep.reservation.device.desktop}`);
   const lowN = Object.keys(rep.lowCount.events).length;
   lines.push('', `件数が ${rep.lowCount.threshold} 件未満のセルがあるイベント: ${lowN} 種類（向きを判定せず「保留」にする候補）`);

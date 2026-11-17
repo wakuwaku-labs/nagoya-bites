@@ -423,6 +423,9 @@ function transform(original, rel) {
   html = s.html;
   if (s.error) errors.push(s.error);
 
+  // S7-2: 記事（特集・ジャーナル）の末尾の「読者の声」の部品
+  html = chrome.applyReaderVoice(html, rel);
+
   if (stripLegacyCss) {
     const c = stripLegacyChromeCss(html);
     html = c.html;
