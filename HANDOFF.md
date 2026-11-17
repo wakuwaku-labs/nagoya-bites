@@ -14,8 +14,8 @@ status: in_progress
 - 11-17 ジャーナル公開（~/nagoya-bites の main を origin に合わせ、旧コミットは backup/main-local-2026-11-17）
 
 ## 次にやること
-1. PR #759（S5-1 台帳・S5-4 順位/点数表示の廃止、design-qa 再検査合格、衝突解消済み・npm test 全通過）をマージ: `/private/tmp/claude-501/-Users-katagirijakutou-orca-workspaces-nagoya-bites-sandworm/b5398d59-8bf7-4a05-8d12-08cf9ef90118/scratchpad/merge_chain.sh 759`（ビルドを待って1本ずつ。CONFLICTING なら worktree ~/nagoya-bites/.claude/worktrees/agent-ae41d8169b39e077c で origin/main を取り込み直す。特集の掲載店の集合は origin/main と同じに保つ）
-2. PR #762（S7-2 読者の声）: design-qa 合格（記録 qa-log/2026-11-17-1322-nb-reader-voice.md）。軽微5件をワーカーが修正中（worktree agent-adfab281f2b4b92ea）。push を確かめてマージ
+1. PR #759 と #762 は merge_chain.sh で順にマージ中（記録 /private/tmp/claude-501/-Users-katagirijakutou-orca-workspaces-nagoya-bites-sandworm/b5398d59-8bf7-4a05-8d12-08cf9ef90118/scratchpad/chain-759-762.log）。`gh pr view 759 762 --json state` で MERGED とビルドの成功を確かめる。STOP なら原因を見て再実行（CONFLICTING は該当 worktree で origin/main を取り込み直す）
+2. #762 は design-qa 合格・軽微5件修正済み。マージ後に本番の記事末尾で部品が出ることを確かめる
 3. W-F（書き手の事実台帳→S4-5 再測定）が作業中。PR が出たら（`gh pr list`）s4-5-calibration.md の前後の数字を確認してマージ（enforce にはしない）
 4. 第2波の残り: S6-1 トップを記事中心に（#759 マージ後・index.html/build.js。決定2: 題の案を2〜3案画面つきで用意し推奨で実装、本人に最後に見せる）／S5-5 鮮度の見張り＋S7-1 信頼の指標＋S7-3 KPI 文書（#759・#760 の後）
 5. 本線の統合 PR: registry 行（各 PR 本文の「registry に足す行」）・ADR 0072〜（各 PR 本文の「ADR に書く判断」）・旧 ADR 0010/0035/0032/0021/0015/0007 に「0069 で置き換え」追記・build.yml に棚卸し台帳の週次更新・取り下げ記事を sitemap から外す（gen-store-pages.js の journalFiles）
@@ -29,6 +29,7 @@ status: in_progress
 - S4-5 の enforce 切替（W-F の再測定結果つき）・自動修正の対象を重要な文に絞る・読み手のモデル固定
 - 読者の声の実送信テスト（記事で「ひとこと」を1回送り Gmail に届くか）（#762）
 - S6-1 の題の案
+- 記事ページのフッターの「情報の誤りやご意見は こちら」の行を残すか（#762 で誤りを知らせる道が2つになった）
 
 ## 守るルール・判断メモ
 - ワーカーは PR まで、マージは本線が merge_chain.sh で1本ずつ。本番の自動公開の条件は変えない（決定6）／削除は一覧を本人に見せてから／流入記事は足すだけ
