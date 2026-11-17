@@ -1,30 +1,31 @@
-status: done
+status: in_progress
 
-# 基本方針の段階1: 読者を誤解させうる表示を直す（Ondine #2048・2026-11-17）
+# 基本方針の段階3〜7を完了まで実行する（Ondine #2051〜#2055・2026-11-17）
 
 ## 目的
-計画 docs/plans/media-policy-2026-11/03 の S1-1〜S1-5（掲載歴・訪問済・言い切り・閉業・壊れた写真）を直し、main に合流して本番で確かめる。
+本人 11-17「計画の完了まで早めに実行。承認・確認・質問はすべて終わってから最後にまとめて」。計画 docs/plans/media-policy-2026-11/03-implementation-plan.md の S3-1〜S7-3 を実装し main に入れる。
 
 ## 完了条件
-S1-1〜S1-5 の「⑪完了」を満たし、npm test が通り、main 合流後の本番で確かめた結果を report に残す。
+各施策の⑪完了を満たし、npm test 通過・main 合流・本番確認。本人の承認が要るもの（S4-5 の enforce 切替・S5-3 の削除・S6-1 の題の案）は準備まで進めて最後にまとめて聞く。
 
 ## できていること
-- S1-1: 掲載歴・編集部訪問済・食べログ点数・内部の項目名・星の食い違い（検査 scripts/audit_feature_facts.js）・Unsplash 由来の顔写真7本を図に
-- S1-2: 桜ゼロ宣言等を「編集の約束」に言い換え（assertionWords の検査）
-- S1-3: 題・本文の「業界人」等を外した（上位2本の題も 11-17 に変更・記録 data/top_title_changes.json）
-- S1-4: 閉業・休業の注記（店舗ページ・特集カード）。記事の閉店検査は記録だけ（WARNING）
-- S1-5: 記事の Google 写真を外し、月次の見張り（article-photo-watchdog.yml）
-- 判断 docs/decisions/0071
+- 段階0〜2・削減は完了（#746〜#751）
+- 11-17 朝のジャーナル HOLD（~/nagoya-bites の main に未 push の計画コミットが残り衝突）→ backup/main-local-2026-11-17 に退避し main を origin に合わせて再実行中
 
-## 次にやること
-- main 合流 → build.yml の完了を待ち、本番で stores の再生成後に audit_selection_wording を全数確認
-- 上位2本の題のクリックを 2026-12-16 以降に `node scripts/rewrite_selection_wording.js --report` で確認（半減なら --revert）
-
-## 試したが駄目だったこと
-- features の復元に git checkout を使うと未コミットの修正も消える（コミットしてから戻す）
+## 次にやること（並行の持ち分）
+- W-A: S3-1→S3-2→S3-4（editorial_standard・journal/_template.html・generate_daily_draft.js・nb.css・note/x 引用）＋S4-4 の訂正履歴欄
+- W-B: S3-3→S4-4（3分類・journal index・pick_daily_topic・取り下げ/訂正の道具）
+- W-C: S4-1→S4-2→S4-3→S4-5 の測定まで（enforce にはしない）
+- W-D: S5-1→S5-4（棚卸し台帳・一覧と店舗ページの順位/点数表示をやめる）
+- W-E: S5-2・S5-3（削除は一覧だけ）・S6-2（features/ 担当）
+- 第2波: S5-5・S6-1・S7-1〜3（本線）
 
 ## 守るルール・判断メモ
-- 本番の自動公開の条件は変えない（閉店検査は WARNING のまま）／削除は本人に一覧を見せてから（assets/features の古い jpg 14枚は参照を外しただけ）
+- ワーカーは PR まで。マージは本線が1本ずつ build.yml を待って行う。registry/CLAUDE.md 索引・ADR 番号は本線が統合時に付ける
+- 本番の自動公開の条件は変えない（決定6）／削除は一覧を本人に見せてから／流入記事は足すだけ
+
+## 最後に本人へまとめて聞くこと
+- （作業中に追記）
 
 ## 関連ファイル
-- docs/decisions/0071-stage1-misleading-display.md
+- docs/plans/media-policy-2026-11/03-implementation-plan.md・docs/decisions/0069
