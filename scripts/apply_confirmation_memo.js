@@ -54,23 +54,30 @@ function seats(s) {
   return parts.length ? parts.join('・') : UNCONFIRMED;
 }
 
+// 掲載データの営業時間は、長い文字列が途中で切れていることがある。
+// そこで「最初の曜日区分の、時間帯だけ」を完全な形で出す（ラストオーダーの括弧は出さない）。
+// 時間帯どうしが区切りなしでつながっている（05:3011:30）ものは「、」で区切る。
 function hours(s) {
   if (!has(s['営業時間'])) return UNCONFIRMED;
-  const t = String(s['営業時間']).replace(/\s+/g, ' ').trim();
-  const m = /^[^）]*）/.exec(t);
-  const first = m && m[0].length <= 80 ? m[0] : t.slice(0, 60);
-  return first.length < t.length ? `${first}…（曜日で異なります）` : first;
+  const t = String(s['営業時間']).replace(/\s+/g, ' ').replace(/(\d{1,2}:\d{2})(?=\d{1,2}:\d{2})/g, '$1、').trim();
+  const seg = t.split(/(?<=[\d）) ])(?=[月火水木金土日祝][月火水木金土日祝～、前]*[:：])/);
+  const first = seg[0];
+  const days = (/^([^:：]+)[:：]/.exec(first) || [])[1];
+  const ranges = first.match(/\d{1,2}:\d{2}～翌?\d{1,2}:\d{2}/g);
+  if (!days || !ranges) return UNCONFIRMED;
+  const head = `${days.trim()} ${ranges.join('、')}`;
+  return seg.length > 1 ? `${head}（ほかの曜日は異なります）` : head;
 }
 
 function rowsFor(s) {
   return [
     ['営業の状況', openStatus(s['営業ステータス'])],
-    ['営業時間（先頭の区分）', hours(s)],
+    ['営業時間', hours(s)],
     ['定休日', has(s['定休日']) ? s['定休日'] : UNCONFIRMED],
     ['席', seats(s)],
     ['喫煙', smoking(s['禁煙'])],
     ['お通し・席料', chargeNote(s)],
-    ['一人・少人数での予約可否／混む時間帯', UNCONFIRMED],
+    ['予約・混雑', UNCONFIRMED],
   ];
 }
 
@@ -104,10 +111,14 @@ function buildBlock(html, byId) {
   const items = ids.map((id, i) => {
     const s = byId.get(id);
     const num = String(i + 1).padStart(2, '0');
-    if (!s) return `<div class="nb-confirm-store"><p class="nb-confirm-name">${num}　（掲載データに見つかりません）</p><ul class="nb-confirm-list"><li><span class="nb-confirm-un">未確認</span></li></ul></div>`;
-    const rows = rowsFor(s).map(([k, v]) => `<li><span class="nb-confirm-k">${esc(k)}</span>${v === UNCONFIRMED ? '<span class="nb-confirm-un">未確認</span>' : esc(v)}</li>`).join('');
+    if (!s) return `<div class="nb-confirm-store"><p class="nb-confirm-name">${num}　（掲載データに見つかりません）</p><ul class="nb-confirm-list"><li class="nb-confirm-un"><span class="nb-confirm-k">未確認</span>この店の掲載データ</li></ul></div>`;
+    const all = rowsFor(s);
+    const rows = all.filter(([, v]) => v !== UNCONFIRMED).map(([k, v]) => `<li><span class="nb-confirm-k">${esc(k)}</span>${esc(v)}</li>`).join('');
+    const un = all.filter(([, v]) => v === UNCONFIRMED).map(([k]) => k);
     const d = has(s['条件取得日']) ? s['条件取得日'] : UNCONFIRMED;
-    return `<div class="nb-confirm-store"><p class="nb-confirm-name">${num}　${esc(s['店名'])}</p><ul class="nb-confirm-list">${rows}<li><span class="nb-confirm-k">確認日（取得日）</span>${d === UNCONFIRMED ? '<span class="nb-confirm-un">未確認</span>' : esc(d)}</li></ul></div>`;
+    const dateLi = d === UNCONFIRMED ? '' : `<li><span class="nb-confirm-k">確認日</span>${esc(d)}</li>`;
+    const unLi = un.length || d === UNCONFIRMED ? `<li class="nb-confirm-un"><span class="nb-confirm-k">未確認</span>${esc(un.concat(d === UNCONFIRMED ? ['確認日'] : []).join('・'))}</li>` : '';
+    return `<div class="nb-confirm-store"><p class="nb-confirm-name">${num}　${esc(s['店名'])}</p><ul class="nb-confirm-list">${rows}${dateLi}${unLi}</ul></div>`;
   }).join('\n');
   return `${START}
 <details class="nb-confirm-memo" data-nb-confirm-memo>
@@ -116,15 +127,15 @@ function buildBlock(html, byId) {
 ${items}
 <p class="nb-note nb-confirm-foot">毎月の掲載店の入れ替えのあと、確認メモを作り直すまでは、入れ替わった店の分が載っていないことがあります。</p>
 <style>
-.nb-confirm-memo{margin:var(--sp-5) 0;border:1px solid var(--card-border);border-radius:var(--r-md);background:var(--card);padding:var(--sp-3) var(--sp-4);}
+.nb-confirm-memo{margin:var(--sp-5) 0;border:1px solid var(--card-border);border-radius:var(--r-md);background:var(--bg2);border-left:3px solid var(--card-border);padding:var(--sp-3) var(--sp-4);}
 .nb-confirm-memo summary{cursor:pointer;font-weight:500;font-size:var(--fs-sm);color:var(--ink);}
 .nb-confirm-lead{font-size:var(--fs-xs);line-height:1.8;color:var(--muted);margin:var(--sp-3) 0;}
 .nb-confirm-store{border-top:1px solid var(--card-border);padding:var(--sp-3) 0;}
 .nb-confirm-name{font-size:var(--fs-sm);font-weight:500;color:var(--ink);margin-bottom:.3rem;}
 .nb-confirm-memo .nb-confirm-list{list-style:none;padding:0;margin:0;font-size:var(--fs-xs);line-height:1.8;color:var(--muted);}
 .nb-confirm-list li{display:flex;gap:.6em;}
-.nb-confirm-k{flex:0 0 8.5em;color:var(--dim);}
-.nb-confirm-un{color:var(--gold);}
+.nb-confirm-k{flex:0 0 5.5em;color:var(--dim);}
+.nb-confirm-un{color:var(--dim);}
 </style>
 </details>
 ${END}`;

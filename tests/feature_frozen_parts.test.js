@@ -76,7 +76,7 @@ test('6本とも確認メモの区画が1つあり、店の項目に「未確認
     assert.strictEqual((html.match(/NB_CONFIRM_MEMO_START/g) || []).length, 1, slug);
     const memo = MEMO_RE.exec(html)[0];
     assert.ok(/data-nb-confirm-memo/.test(memo), slug);
-    assert.ok(/一人・少人数での予約可否／混む時間帯<\/span><span class="nb-confirm-un">未確認/.test(memo), `${slug}: 予約可否はデータが無いので未確認のまま`);
+    assert.ok(/<li class="nb-confirm-un"><span class="nb-confirm-k">未確認<\/span>[^<]*予約・混雑/.test(memo), `${slug}: 予約可否はデータが無いので未確認のまま`);
     assert.ok(/確認日/.test(memo), slug);
     // 区画は店カードの外・題の前（本文の最初の見出し）より後ろにあり、店カードの中に入っていない
     assert.ok(html.indexOf('NB_CONFIRM_MEMO_START') > html.indexOf('<h1'), slug);
