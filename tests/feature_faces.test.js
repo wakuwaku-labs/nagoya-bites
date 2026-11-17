@@ -269,3 +269,29 @@ test('図（SVG）の中の文字: 選び方の言い方の検査が、公開ペ
   assert.ok(real.svg.scanned > 20);
   assert.ok(!fs.readFileSync(path.join(ROOT, 'assets', 'feature-figures', 'settai-concierge.svg'), 'utf8').includes('現役飲食人'));
 });
+
+test('顔の写真の中身が特集どうしで重ならない（md5 一致 0・縮小画像の平均ハッシュがほぼ同じ 0）。記録は scripts/update_feature_face_hashes.js が作る', () => {
+  const faces = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'feature_faces.json'), 'utf8')).faces;
+  const rec = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'feature_face_hashes.json'), 'utf8')).hashes;
+  const slugs = Object.keys(faces);
+  for (const s of slugs) {
+    assert.ok(rec[s] && rec[s].photo === faces[s].photo, `${s}: 顔の写真を替えたら node scripts/update_feature_face_hashes.js で指紋を更新する`);
+  }
+  const byMd5 = {};
+  for (const s of slugs) (byMd5[rec[s].md5] = byMd5[rec[s].md5] || []).push(s);
+  const dups = Object.values(byMd5).filter((a) => a.length > 1);
+  assert.deepStrictEqual(dups, [], `中身が同じ写真を複数の特集の顔にしている: ${JSON.stringify(dups)}`);
+  const dist = (a, b) => [...a].filter((c, i) => c !== b[i]).length;
+  const near = [];
+  for (let i = 0; i < slugs.length; i++) {
+    for (let j = i + 1; j < slugs.length; j++) {
+      if (dist(rec[slugs[i]].ahash, rec[slugs[j]].ahash) <= 6) near.push([slugs[i], slugs[j]]);
+    }
+  }
+  assert.deepStrictEqual(near, [], `ほぼ同じ写真を複数の特集の顔にしている: ${JSON.stringify(near)}`);
+});
+
+test('特集の顔の表示幅は元の幅まで（ページ内の .art-hero-image の上限に負けない選び方がある）', () => {
+  const css = fs.readFileSync(path.join(ROOT, 'assets', 'css', 'nb.css'), 'utf8');
+  assert.ok(/\.art-hero-image\.nb-feature-face[^{]*\{[^}]*max-width:min\(880px,calc\(var\(--face-w/.test(css));
+});

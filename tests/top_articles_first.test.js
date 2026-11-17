@@ -192,7 +192,10 @@ test('大きな顔の選び方: 日付の新しい順で、写真が確かで除
     assert.strictEqual(BJI.renderTopHero(null), '');
     // 新しい記事が入れば、その記事に替わる
     const more = [E('2026-11-18', 'seasonal', 'newer')].concat(entries);
-    assert.strictEqual(BJI.pickTopHero(more, dir, NO_EXCLUDE).entry.title, 'b', '同じ分類の新記事が写真を持たなければ、次の分類の最新に回る（古い a は分類の最新ではない）');
+    const pickedMore = BJI.pickTopHero(more, dir, NO_EXCLUDE);
+    assert.strictEqual(pickedMore.entry.title, 'a', '3分類の最新に640px 以上の写真が無ければ、最新10本まで広げて640px 以上の写真を先に選ぶ（a の蜀漢の写真は1236px・行に出ない記事なので題は写真の下に出す）');
+    assert.strictEqual(pickedMore.showTitle, true);
+    assert.ok(BJI.renderTopHero(pickedMore).includes('<span class="top-hero-title">a</span>'));
   });
 });
 
@@ -247,7 +250,10 @@ test('実際の index.html: 見出しの直後に大きな顔の写真が1枚あ
   assert.ok(/src="https:\/\/imgfp\.hotp\.jp\/[^"]+_480\.jpg"/.test(img), img);
   assert.ok(/width="\d+" height="\d+"/.test(img) && /fetchpriority="high"/.test(img) && !/loading="lazy"/.test(img) && /alt="[^"]+"/.test(img));
   assert.ok(/<span class="top-hero-credit">写真: [^<]+（ホットペッパーグルメ）<\/span>/.test(block));
-  assert.ok(!/top-hero-title/.test(block) && /aria-label="[^"]+"/.test(block), '題は写真の下に出さない・リンクの名前は aria-label');
+  // 題は「新しい記事」の同じ記事の行に出る。行に出ない記事（640px 以上の写真を先に選んだ場合）だけ写真の下に自分で出す
+  const heroSlug = (block.match(/href="journal\/([^"]+)\.html"/) || [])[1];
+  const inRow = new RegExp(`<a class="ta-link" href="journal/${heroSlug}\\.html"`).test(html);
+  assert.ok(/aria-label="[^"]+"/.test(block) && (inRow ? !/top-hero-title/.test(block) : /top-hero-title/.test(block)), '題は行にあれば写真の下に出さない・行に無ければ写真の下に出す');
   const ex = BJI.loadTopHeroExcluded();
   const n = (img.match(/(P\d{6,})/) || [])[1];
   assert.ok(n && !ex.photos.has(n), '除外した写真・特集の顔の写真は使わない');

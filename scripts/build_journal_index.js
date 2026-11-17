@@ -285,6 +285,16 @@ function pickTopHero(entries, journalDir, excluded, sizes) {
     if (HP.pick(bigPhotoSrc(photo.src), sizes).maxW >= TOP_HERO_MIN_W) return { entry, photo };
     if (!fallback) fallback = { entry, photo };
   }
+  // 3分類の最新の記事に640px 以上の写真が無いときは、少し前の記事（最新10本）まで広げて、640px 以上の写真を先に選ぶ。
+  // 行に出ない記事なので、題は写真の下に自分で出す（showTitle）。それも無ければ、上の最新の記事の写真に戻す
+  const rowSlugs = new Set(rows.map((r) => r.entry.slug));
+  const recent = (entries || []).slice().sort((a, b) => b.date.localeCompare(a.date)).slice(0, 10);
+  for (const entry of recent) {
+    if (rowSlugs.has(entry.slug)) continue;
+    const photo = topPhotoOf(entry, journalDir, excluded);
+    if (!photo) continue;
+    if (HP.pick(bigPhotoSrc(photo.src), sizes).maxW >= TOP_HERO_MIN_W) return { entry, photo, showTitle: true };
+  }
   return fallback;
 }
 
@@ -295,7 +305,7 @@ function renderTopHero(pick) {
   const big = HP.pick(bigPhotoSrc(photo.src));
   const srcset = big.srcset ? ` srcset="${esc(big.srcset)}" sizes="(min-width:1024px) 480px, 100vw"` : '';
   // 題は出さない（すぐ下の「新しい記事」の同じ記事の行に出るので、同じ題を2回並べない）。リンクの名前は aria-label で題にする
-  return `<figure class="top-hero"><a class="top-hero-link" href="${href}" aria-label="${esc(e.title)}"><img class="top-hero-img" src="${esc(big.src)}"${srcset} alt="${esc(photo.store)}の料理・店内" width="480" height="270" decoding="async" fetchpriority="high" onerror="this.parentNode.parentNode.style.display='none'"><span class="top-hero-cap"><span class="top-hero-credit">写真: ${esc(photo.store)}（ホットペッパーグルメ）</span></span></a></figure>`;
+  return `<figure class="top-hero"><a class="top-hero-link" href="${href}" aria-label="${esc(e.title)}"><img class="top-hero-img" src="${esc(big.src)}"${srcset} alt="${esc(photo.store)}の料理・店内" width="480" height="270" decoding="async" fetchpriority="high" onerror="this.parentNode.parentNode.style.display='none'"><span class="top-hero-cap">${pick.showTitle ? `<span class="top-hero-title">${esc(e.title)}</span>` : ''}<span class="top-hero-credit">写真: ${esc(photo.store)}（ホットペッパーグルメ）</span></span></a></figure>`;
 }
 
 // トップの大きな写真の候補（最新の記事の顔）の写真 URL。scripts/measure_hotpepper_photo_sizes.js が幅を測る対象
