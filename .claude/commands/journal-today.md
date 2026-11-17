@@ -208,6 +208,13 @@ node scripts/score_journal_candidates.js /tmp/journal-candidates-YYYY-MM-DD.json
 - input.json の `sources[]` に **最低3件**、うち **最低1件** は直近30日以内の記事を含める（各ソースに `date` フィールドを設定）
 - validator がチェックする（最新情報フレーズ不在 / sources 3件未満は FAIL）
 
+**事実台帳（claims_ledger・S4-1）**: 記事の事実ごとに「どの出典のどの記述で確かめたか」を input.json の `claims_ledger[]` に出す。機械が後から推測するより、書いた本人が出典を見ながら対にする方が正確（検査の見落としが減る）。
+- 対象は来店前に重要な文を優先: 価格・飲み放題などの時間・席数・個室・予約条件・営業時間・定休日・開店日。沿革や件数など重要でない文は後回しでよい
+- 各行: `{"text": "本文の文をそのまま写す", "source_url": "sources の URL", "quote": "出典の該当記述を出典のとおりに120字まで"}`
+- quote は出典のページにある文字をそのまま写す（言い換えない・要約しない）。出典の全文は写さない
+- 出典を見ていない・取得できなかった文は台帳に入れない（創作しない）。その文は本文でも「未確認」と書く
+- 台帳は `data/journal_claims/YYYY-MM-DD.ledger.json` に書き出され、公開後の照合（verify_article_claims.js）が対で確かめる。出さない日は警告だけで、公開は止まらない
+
 ### 5. ドラフト生成
 
 input.json を一時ファイル `/tmp/journal-input.json` に書き、以下を実行:

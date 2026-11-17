@@ -60,9 +60,12 @@ test('見本の合格の線: 壊した20本のうち19本以上を検出・正�
 });
 
 test('見本は作り直しても同じ中身（乱数なし）', () => {
+  // writer_view は作る途中の材料（保存時に台帳 ledger へ変わる）。台帳の中身は ledger の試験で確かめる
+  const strip = (cs) => cs.map(({ ledger, writer_view, ...rest }) => rest);
   const again = Cal.makeCases();
   const saved = JSON.parse(read('tests/fixtures/claims_calibration/cases.json')).cases;
-  assert.deepStrictEqual(JSON.parse(JSON.stringify(again)), saved);
+  assert.deepStrictEqual(strip(JSON.parse(JSON.stringify(again))), strip(saved));
+  assert.ok(saved.every((c) => c.ledger && Array.isArray(c.ledger.claims)), '見本に書き手の台帳がある');
 });
 
 test('3つの道: 停止条件があれば hold・照合不能だけなら auto_fix・何も無ければ auto_publish', () => {
