@@ -26,6 +26,7 @@
   --fs-xs:.8125rem;                               /* 13px メタ・kicker・キャプション */
   --fs-sm:.875rem;                                /* 14px チップ・ボタン・カードのリード */
   --fs-md:clamp(.9375rem,.9rem + .2vw,1rem);      /* 15→16px 本文・入力欄 */
+  --fs-input:1rem;                                /* 16px 入力欄（16px 未満だと iPhone の Safari が押すと拡大する） */
   --fs-lg:clamp(1.0625rem,1rem + .3vw,1.125rem);  /* 17→18px カード店名・リード段落 */
   --fs-xl:clamp(1.25rem,1.1rem + .6vw,1.5rem);    /* 20→24px h3・小見出し */
   --fs-2xl:clamp(1.5rem,1.2rem + 1.4vw,2rem);     /* 24→32px セクション h2 */
@@ -523,18 +524,20 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 }
 
 /* S7-2 読者の声（記事の本文の直後）。scripts/lib/site_chrome.js の renderReaderVoice が出す */
-.nb-reader-voice{width:min(calc(100% - 3rem),var(--container-prose));box-sizing:border-box;margin:var(--rhythm-sm,2rem) auto;padding:1.25rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-md);}
+.nb-reader-voice{width:min(calc(100% - 3rem),calc(var(--container-prose) - 3rem));box-sizing:border-box;margin:var(--rhythm-sm,2rem) auto;padding:1.25rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-md);}
 .nb-rv-title{font-size:var(--fs-lg);font-weight:600;line-height:var(--lh-heading);margin:0 0 .75rem;text-wrap:balance;}
 .nb-rv-choices{display:flex;flex-wrap:wrap;gap:.5rem;}
 .nb-rv-btn,.nb-rv-submit{min-height:var(--tap-min);padding:.5rem 1rem;font:inherit;font-size:var(--fs-sm);font-weight:600;color:var(--text);background:var(--card);border:1px solid var(--border-h);border-radius:var(--r-sm);cursor:pointer;}
 .nb-rv-btn[aria-pressed="true"]{border:2px solid var(--ink);padding:calc(.5rem - 1px) calc(1rem - 1px);}
-.nb-rv-btn[aria-pressed="true"]::before{content:"✓ ";}
+.nb-rv-btn::before{content:"✓ ";visibility:hidden;}
+.nb-rv-btn[aria-pressed="true"]::before{visibility:visible;}
+.nb-journal-next + .nb-reader-voice{margin-top:0;}
 .nb-rv-submit{background:var(--ink);color:var(--bg);border-color:var(--ink);}
 .nb-rv-btn-sub{font-weight:500;}
 .nb-rv-form{margin-top:.75rem;}
 .nb-rv-form[hidden],.nb-rv-gotcha{display:none;}
 .nb-rv-label{display:block;font-size:var(--fs-sm);font-weight:600;margin-bottom:.35rem;}
-.nb-rv-body{width:100%;box-sizing:border-box;padding:.6rem .75rem;font:inherit;font-size:var(--fs-md);line-height:1.7;border:1px solid var(--border-h);border-radius:var(--r-sm);background:var(--card);color:var(--text);resize:vertical;}
+.nb-rv-body{width:100%;box-sizing:border-box;padding:.6rem .75rem;font:inherit;font-size:var(--fs-input);line-height:1.7;border:1px solid var(--border-h);border-radius:var(--r-sm);background:var(--card);color:var(--text);resize:vertical;}
 .nb-rv-hint{font-size:var(--fs-xs);color:var(--dim);margin:.35rem 0 .6rem;}
 .nb-rv-status{font-size:var(--fs-sm);margin:.6rem 0 0;}
 .nb-rv-status:empty{display:none;}
