@@ -1,0 +1,1156 @@
+{
+ "built_by": "scripts/claims_gate_calibrate.js --build-fixtures",
+ "note": "合成の見本。出典の文章は見本のために作った短い文で、第三者のページの全文ではない",
+ "cases": [
+  {
+   "id": "correct-clean-FX001",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>炉端 そよ風のコースは3090円で飲み放題90分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"炉端 そよ風のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">炉端 そよ風のコースは3090円で飲み放題90分</h1>\n<p class=\"art-lead\">炉端 そよ風の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>炉端 そよ風のコースは3090円で、飲み放題は90分。</p>\n<p>客席数は18席で、予約受付は11月5日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX001.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX001\" target=\"_blank\" rel=\"noopener\">店舗情報 炉端 そよ風</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX001\" target=\"_blank\" rel=\"noopener\">紹介記事 炉端 そよ風</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX001": {
+     "ok": true,
+     "text": "炉端 そよ風 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 3,090円 全8品 飲み放題 90分 客席数 18席 営業時間 11時〜21時 予約受付 11月5日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX001": {
+     "ok": true,
+     "text": "炉端 そよ風の紹介記事。炉端 そよ風は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は18席。コースは3090円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX001",
+     "店名": "炉端 そよ風",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX002",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>串焼き 月あかりのコースは3221円で飲み放題120分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"串焼き 月あかりのコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">串焼き 月あかりのコースは3221円で飲み放題120分</h1>\n<p class=\"art-lead\">串焼き 月あかりの忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>串焼き 月あかりのコースは3221円で、飲み放題は120分。</p>\n<p>客席数は21席で、予約受付は12月8日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX002.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX002\" target=\"_blank\" rel=\"noopener\">店舗情報 串焼き 月あかり</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX002\" target=\"_blank\" rel=\"noopener\">紹介記事 串焼き 月あかり</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX002": {
+     "ok": true,
+     "text": "串焼き 月あかり 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 3221円 全8品 飲み放題 120分 客席数 21席 営業時間 12時〜22時 予約受付 12/8まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX002": {
+     "ok": true,
+     "text": "串焼き 月あかりの紹介記事。串焼き 月あかりは名古屋の人気店として知られ、忘年会の予約が増えている。客席数は21席。コースは3221円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX002",
+     "店名": "串焼き 月あかり",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX003",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>個室居酒屋 琥珀のコースは3362円で飲み放題150分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"個室居酒屋 琥珀のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">個室居酒屋 琥珀のコースは3362円で飲み放題150分</h1>\n<p class=\"art-lead\">個室居酒屋 琥珀の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>個室居酒屋 琥珀のコースは3362円で、飲み放題は150分。</p>\n<p>客席数は24席で、予約受付は11月11日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX003.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX003\" target=\"_blank\" rel=\"noopener\">店舗情報 個室居酒屋 琥珀</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX003\" target=\"_blank\" rel=\"noopener\">紹介記事 個室居酒屋 琥珀</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX003": {
+     "ok": true,
+     "text": "個室居酒屋 琥珀 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース ３，３６２円 全8品 飲み放題 150分 客席数 24席 営業時間 13時〜23時 予約受付 11月11日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX003": {
+     "ok": true,
+     "text": "個室居酒屋 琥珀の紹介記事。個室居酒屋 琥珀は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は24席。コースは3362円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX003",
+     "店名": "個室居酒屋 琥珀",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX004",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>海鮮 波の音のコースは3503円で飲み放題180分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"海鮮 波の音のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">海鮮 波の音のコースは3503円で飲み放題180分</h1>\n<p class=\"art-lead\">海鮮 波の音の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>海鮮 波の音のコースは3503円で、飲み放題は180分。</p>\n<p>客席数は27席で、予約受付は12月14日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX004.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX004\" target=\"_blank\" rel=\"noopener\">店舗情報 海鮮 波の音</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX004\" target=\"_blank\" rel=\"noopener\">紹介記事 海鮮 波の音</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX004": {
+     "ok": true,
+     "text": "海鮮 波の音 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 3,503円（税込） 全8品 飲み放題 180分 客席数 27席 営業時間 11時〜21時 予約受付 12/14まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX004": {
+     "ok": true,
+     "text": "海鮮 波の音の紹介記事。海鮮 波の音は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は27席。コースは3503円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX004",
+     "店名": "海鮮 波の音",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX005",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>鳥料理 朝霧のコースは3634円で飲み放題90分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"鳥料理 朝霧のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">鳥料理 朝霧のコースは3634円で飲み放題90分</h1>\n<p class=\"art-lead\">鳥料理 朝霧の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>鳥料理 朝霧のコースは3634円で、飲み放題は90分。</p>\n<p>客席数は30席で、予約受付は11月17日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX005.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX005\" target=\"_blank\" rel=\"noopener\">店舗情報 鳥料理 朝霧</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX005\" target=\"_blank\" rel=\"noopener\">紹介記事 鳥料理 朝霧</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX005": {
+     "ok": true,
+     "text": "鳥料理 朝霧 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 3,634円 全8品 飲み放題 90分 客席数 30席 営業時間 12時〜22時 予約受付 11月17日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX005": {
+     "ok": true,
+     "text": "鳥料理 朝霧の紹介記事。鳥料理 朝霧は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は30席。コースは3634円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX005",
+     "店名": "鳥料理 朝霧",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX006",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>和bar 夜明け前のコースは3775円で飲み放題120分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"和bar 夜明け前のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">和bar 夜明け前のコースは3775円で飲み放題120分</h1>\n<p class=\"art-lead\">和bar 夜明け前の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>和bar 夜明け前のコースは3775円で、飲み放題は120分。</p>\n<p>客席数は33席で、予約受付は12月20日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX006.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX006\" target=\"_blank\" rel=\"noopener\">店舗情報 和bar 夜明け前</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX006\" target=\"_blank\" rel=\"noopener\">紹介記事 和bar 夜明け前</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX006": {
+     "ok": true,
+     "text": "和bar 夜明け前 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 3775円 全8品 飲み放題 120分 客席数 33席 営業時間 13時〜23時 予約受付 12/20まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX006": {
+     "ok": true,
+     "text": "和bar 夜明け前の紹介記事。和bar 夜明け前は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は33席。コースは3775円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX006",
+     "店名": "和bar 夜明け前",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX007",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>焼肉 山の端のコースは3916円で飲み放題150分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"焼肉 山の端のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">焼肉 山の端のコースは3916円で飲み放題150分</h1>\n<p class=\"art-lead\">焼肉 山の端の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>焼肉 山の端のコースは3916円で、飲み放題は150分。</p>\n<p>客席数は36席で、予約受付は11月23日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX007.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX007\" target=\"_blank\" rel=\"noopener\">店舗情報 焼肉 山の端</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX007\" target=\"_blank\" rel=\"noopener\">紹介記事 焼肉 山の端</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX007": {
+     "ok": true,
+     "text": "焼肉 山の端 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース ３，９１６円 全8品 飲み放題 150分 客席数 36席 営業時間 11時〜21時 予約受付 11月23日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX007": {
+     "ok": true,
+     "text": "焼肉 山の端の紹介記事。焼肉 山の端は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は36席。コースは3916円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX007",
+     "店名": "焼肉 山の端",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX008",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>酒場 灯り横丁のコースは4047円で飲み放題180分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"酒場 灯り横丁のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">酒場 灯り横丁のコースは4047円で飲み放題180分</h1>\n<p class=\"art-lead\">酒場 灯り横丁の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>酒場 灯り横丁のコースは4047円で、飲み放題は180分。</p>\n<p>客席数は39席で、予約受付は12月26日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX008.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX008\" target=\"_blank\" rel=\"noopener\">店舗情報 酒場 灯り横丁</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX008\" target=\"_blank\" rel=\"noopener\">紹介記事 酒場 灯り横丁</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX008": {
+     "ok": true,
+     "text": "酒場 灯り横丁 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4,047円（税込） 全8品 飲み放題 180分 客席数 39席 営業時間 12時〜22時 予約受付 12/26まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX008": {
+     "ok": true,
+     "text": "酒場 灯り横丁の紹介記事。酒場 灯り横丁は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は39席。コースは4047円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX008",
+     "店名": "酒場 灯り横丁",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX009",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>肉バル 鉄鍋屋のコースは4188円で飲み放題90分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"肉バル 鉄鍋屋のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">肉バル 鉄鍋屋のコースは4188円で飲み放題90分</h1>\n<p class=\"art-lead\">肉バル 鉄鍋屋の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>肉バル 鉄鍋屋のコースは4188円で、飲み放題は90分。</p>\n<p>客席数は42席で、予約受付は11月6日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX009.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX009\" target=\"_blank\" rel=\"noopener\">店舗情報 肉バル 鉄鍋屋</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX009\" target=\"_blank\" rel=\"noopener\">紹介記事 肉バル 鉄鍋屋</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX009": {
+     "ok": true,
+     "text": "肉バル 鉄鍋屋 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4,188円 全8品 飲み放題 90分 客席数 42席 営業時間 13時〜23時 予約受付 11月6日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX009": {
+     "ok": true,
+     "text": "肉バル 鉄鍋屋の紹介記事。肉バル 鉄鍋屋は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は42席。コースは4188円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX009",
+     "店名": "肉バル 鉄鍋屋",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX010",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>寿司 潮騒のコースは4329円で飲み放題120分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"寿司 潮騒のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">寿司 潮騒のコースは4329円で飲み放題120分</h1>\n<p class=\"art-lead\">寿司 潮騒の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>寿司 潮騒のコースは4329円で、飲み放題は120分。</p>\n<p>客席数は45席で、予約受付は12月9日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX010.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX010\" target=\"_blank\" rel=\"noopener\">店舗情報 寿司 潮騒</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX010\" target=\"_blank\" rel=\"noopener\">紹介記事 寿司 潮騒</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX010": {
+     "ok": true,
+     "text": "寿司 潮騒 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4329円 全8品 飲み放題 120分 客席数 45席 営業時間 11時〜21時 予約受付 12/9まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX010": {
+     "ok": true,
+     "text": "寿司 潮騒の紹介記事。寿司 潮騒は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は45席。コースは4329円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX010",
+     "店名": "寿司 潮騒",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX011",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>天ぷら 若葉のコースは4470円で飲み放題150分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"天ぷら 若葉のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">天ぷら 若葉のコースは4470円で飲み放題150分</h1>\n<p class=\"art-lead\">天ぷら 若葉の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>天ぷら 若葉のコースは4470円で、飲み放題は150分。</p>\n<p>客席数は48席で、予約受付は11月12日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX011.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX011\" target=\"_blank\" rel=\"noopener\">店舗情報 天ぷら 若葉</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX011\" target=\"_blank\" rel=\"noopener\">紹介記事 天ぷら 若葉</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX011": {
+     "ok": true,
+     "text": "天ぷら 若葉 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース ４，４７０円 全8品 飲み放題 150分 客席数 48席 営業時間 12時〜22時 予約受付 11月12日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX011": {
+     "ok": true,
+     "text": "天ぷら 若葉の紹介記事。天ぷら 若葉は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は48席。コースは4470円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX011",
+     "店名": "天ぷら 若葉",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX012",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>もつ鍋 星屑のコースは4601円で飲み放題180分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"もつ鍋 星屑のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">もつ鍋 星屑のコースは4601円で飲み放題180分</h1>\n<p class=\"art-lead\">もつ鍋 星屑の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>もつ鍋 星屑のコースは4601円で、飲み放題は180分。</p>\n<p>客席数は51席で、予約受付は12月15日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX012.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX012\" target=\"_blank\" rel=\"noopener\">店舗情報 もつ鍋 星屑</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX012\" target=\"_blank\" rel=\"noopener\">紹介記事 もつ鍋 星屑</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX012": {
+     "ok": true,
+     "text": "もつ鍋 星屑 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4,601円（税込） 全8品 飲み放題 180分 客席数 51席 営業時間 13時〜23時 予約受付 12/15まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX012": {
+     "ok": true,
+     "text": "もつ鍋 星屑の紹介記事。もつ鍋 星屑は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は51席。コースは4601円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX012",
+     "店名": "もつ鍋 星屑",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX013",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>鉄板 夕凪のコースは4742円で飲み放題90分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"鉄板 夕凪のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">鉄板 夕凪のコースは4742円で飲み放題90分</h1>\n<p class=\"art-lead\">鉄板 夕凪の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>鉄板 夕凪のコースは4742円で、飲み放題は90分。</p>\n<p>客席数は54席で、予約受付は11月18日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX013.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX013\" target=\"_blank\" rel=\"noopener\">店舗情報 鉄板 夕凪</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX013\" target=\"_blank\" rel=\"noopener\">紹介記事 鉄板 夕凪</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX013": {
+     "ok": true,
+     "text": "鉄板 夕凪 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4,742円 全8品 飲み放題 90分 客席数 54席 営業時間 11時〜21時 予約受付 11月18日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX013": {
+     "ok": true,
+     "text": "鉄板 夕凪の紹介記事。鉄板 夕凪は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は54席。コースは4742円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX013",
+     "店名": "鉄板 夕凪",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX014",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>蕎麦 風待ちのコースは4883円で飲み放題120分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"蕎麦 風待ちのコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">蕎麦 風待ちのコースは4883円で飲み放題120分</h1>\n<p class=\"art-lead\">蕎麦 風待ちの忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>蕎麦 風待ちのコースは4883円で、飲み放題は120分。</p>\n<p>客席数は57席で、予約受付は12月21日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX014.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX014\" target=\"_blank\" rel=\"noopener\">店舗情報 蕎麦 風待ち</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX014\" target=\"_blank\" rel=\"noopener\">紹介記事 蕎麦 風待ち</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX014": {
+     "ok": true,
+     "text": "蕎麦 風待ち 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4883円 全8品 飲み放題 120分 客席数 57席 営業時間 12時〜22時 予約受付 12/21まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX014": {
+     "ok": true,
+     "text": "蕎麦 風待ちの紹介記事。蕎麦 風待ちは名古屋の人気店として知られ、忘年会の予約が増えている。客席数は57席。コースは4883円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX014",
+     "店名": "蕎麦 風待ち",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX015",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>餃子酒場 桜小路のコースは5014円で飲み放題150分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"餃子酒場 桜小路のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">餃子酒場 桜小路のコースは5014円で飲み放題150分</h1>\n<p class=\"art-lead\">餃子酒場 桜小路の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>餃子酒場 桜小路のコースは5014円で、飲み放題は150分。</p>\n<p>客席数は60席で、予約受付は11月24日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX015.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX015\" target=\"_blank\" rel=\"noopener\">店舗情報 餃子酒場 桜小路</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX015\" target=\"_blank\" rel=\"noopener\">紹介記事 餃子酒場 桜小路</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX015": {
+     "ok": true,
+     "text": "餃子酒場 桜小路 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース ５，０１４円 全8品 飲み放題 150分 客席数 60席 営業時間 13時〜23時 予約受付 11月24日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX015": {
+     "ok": true,
+     "text": "餃子酒場 桜小路の紹介記事。餃子酒場 桜小路は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は60席。コースは5014円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX015",
+     "店名": "餃子酒場 桜小路",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX016",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>ワイン食堂 銀杏のコースは5155円で飲み放題180分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"ワイン食堂 銀杏のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">ワイン食堂 銀杏のコースは5155円で飲み放題180分</h1>\n<p class=\"art-lead\">ワイン食堂 銀杏の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>ワイン食堂 銀杏のコースは5155円で、飲み放題は180分。</p>\n<p>客席数は63席で、予約受付は12月27日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX016.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX016\" target=\"_blank\" rel=\"noopener\">店舗情報 ワイン食堂 銀杏</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX016\" target=\"_blank\" rel=\"noopener\">紹介記事 ワイン食堂 銀杏</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX016": {
+     "ok": true,
+     "text": "ワイン食堂 銀杏 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 5,155円（税込） 全8品 飲み放題 180分 客席数 63席 営業時間 11時〜21時 予約受付 12/27まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX016": {
+     "ok": true,
+     "text": "ワイン食堂 銀杏の紹介記事。ワイン食堂 銀杏は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は63席。コースは5155円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX016",
+     "店名": "ワイン食堂 銀杏",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX017",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>韓国料理 青磁のコースは5296円で飲み放題90分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"韓国料理 青磁のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">韓国料理 青磁のコースは5296円で飲み放題90分</h1>\n<p class=\"art-lead\">韓国料理 青磁の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>韓国料理 青磁のコースは5296円で、飲み放題は90分。</p>\n<p>客席数は66席で、予約受付は11月7日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX017.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX017\" target=\"_blank\" rel=\"noopener\">店舗情報 韓国料理 青磁</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX017\" target=\"_blank\" rel=\"noopener\">紹介記事 韓国料理 青磁</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX017": {
+     "ok": true,
+     "text": "韓国料理 青磁 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 5,296円 全8品 飲み放題 90分 客席数 66席 営業時間 12時〜22時 予約受付 11月7日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX017": {
+     "ok": true,
+     "text": "韓国料理 青磁の紹介記事。韓国料理 青磁は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は66席。コースは5296円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX017",
+     "店名": "韓国料理 青磁",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX018",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>中華 紅葉亭のコースは5427円で飲み放題120分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"中華 紅葉亭のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">中華 紅葉亭のコースは5427円で飲み放題120分</h1>\n<p class=\"art-lead\">中華 紅葉亭の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>中華 紅葉亭のコースは5427円で、飲み放題は120分。</p>\n<p>客席数は69席で、予約受付は12月10日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX018.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX018\" target=\"_blank\" rel=\"noopener\">店舗情報 中華 紅葉亭</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX018\" target=\"_blank\" rel=\"noopener\">紹介記事 中華 紅葉亭</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX018": {
+     "ok": true,
+     "text": "中華 紅葉亭 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 5427円 全8品 飲み放題 120分 客席数 69席 営業時間 13時〜23時 予約受付 12/10まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX018": {
+     "ok": true,
+     "text": "中華 紅葉亭の紹介記事。中華 紅葉亭は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は69席。コースは5427円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX018",
+     "店名": "中華 紅葉亭",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX019",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>創作 和み庵のコースは5568円で飲み放題150分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"創作 和み庵のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">創作 和み庵のコースは5568円で飲み放題150分</h1>\n<p class=\"art-lead\">創作 和み庵の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>創作 和み庵のコースは5568円で、飲み放題は150分。</p>\n<p>客席数は72席で、予約受付は11月13日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX019.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX019\" target=\"_blank\" rel=\"noopener\">店舗情報 創作 和み庵</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX019\" target=\"_blank\" rel=\"noopener\">紹介記事 創作 和み庵</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX019": {
+     "ok": true,
+     "text": "創作 和み庵 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース ５，５６８円 全8品 飲み放題 150分 客席数 72席 営業時間 11時〜21時 予約受付 11月13日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX019": {
+     "ok": true,
+     "text": "創作 和み庵の紹介記事。創作 和み庵は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は72席。コースは5568円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX019",
+     "店名": "創作 和み庵",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-clean-FX020",
+   "label": "correct",
+   "type": "clean",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>牡蠣小屋 岬のコースは3209円で飲み放題180分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"牡蠣小屋 岬のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">牡蠣小屋 岬のコースは3209円で飲み放題180分</h1>\n<p class=\"art-lead\">牡蠣小屋 岬の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>牡蠣小屋 岬のコースは3209円で、飲み放題は180分。</p>\n<p>客席数は75席で、予約受付は12月16日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX020.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX020\" target=\"_blank\" rel=\"noopener\">店舗情報 牡蠣小屋 岬</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX020\" target=\"_blank\" rel=\"noopener\">紹介記事 牡蠣小屋 岬</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX020": {
+     "ok": true,
+     "text": "牡蠣小屋 岬 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 3,209円（税込） 全8品 飲み放題 180分 客席数 75席 営業時間 12時〜22時 予約受付 12/16まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX020": {
+     "ok": true,
+     "text": "牡蠣小屋 岬の紹介記事。牡蠣小屋 岬は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は75席。コースは3209円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX020",
+     "店名": "牡蠣小屋 岬",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-hedge_kept-FX021",
+   "label": "correct",
+   "type": "hedge_kept",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>炭火 鳳凰のコースは3350円で飲み放題90分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"炭火 鳳凰のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">炭火 鳳凰のコースは3350円で飲み放題90分</h1>\n<p class=\"art-lead\">炭火 鳳凰の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>炭火 鳳凰のコースは3350円で、飲み放題は90分。</p>\n<p>客席数は78席で、予約受付は11月19日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<p>ネット予約は12月3日に始まる予定だ。</p>\n<div class=\"store-card\"><a href=\"../stores/FX021.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX021\" target=\"_blank\" rel=\"noopener\">店舗情報 炭火 鳳凰</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX021\" target=\"_blank\" rel=\"noopener\">紹介記事 炭火 鳳凰</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX021": {
+     "ok": true,
+     "text": "炭火 鳳凰 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 3,350円 全8品 飲み放題 90分 客席数 78席 営業時間 13時〜23時 予約受付 11月19日まで\nネット予約の受付は12月3日開始予定です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX021": {
+     "ok": true,
+     "text": "炭火 鳳凰の紹介記事。炭火 鳳凰は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は78席。コースは3350円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX021",
+     "店名": "炭火 鳳凰",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-hedge_kept-FX022",
+   "label": "correct",
+   "type": "hedge_kept",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>居酒屋 瑠璃のコースは3481円で飲み放題120分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"居酒屋 瑠璃のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">居酒屋 瑠璃のコースは3481円で飲み放題120分</h1>\n<p class=\"art-lead\">居酒屋 瑠璃の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>居酒屋 瑠璃のコースは3481円で、飲み放題は120分。</p>\n<p>客席数は81席で、予約受付は12月22日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<p>ネット予約は12月4日に始まる予定だ。</p>\n<div class=\"store-card\"><a href=\"../stores/FX022.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX022\" target=\"_blank\" rel=\"noopener\">店舗情報 居酒屋 瑠璃</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX022\" target=\"_blank\" rel=\"noopener\">紹介記事 居酒屋 瑠璃</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX022": {
+     "ok": true,
+     "text": "居酒屋 瑠璃 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 3481円 全8品 飲み放題 120分 客席数 81席 営業時間 11時〜21時 予約受付 12/22まで\nネット予約の受付は12月4日開始予定です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX022": {
+     "ok": true,
+     "text": "居酒屋 瑠璃の紹介記事。居酒屋 瑠璃は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は81席。コースは3481円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX022",
+     "店名": "居酒屋 瑠璃",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-hedge_kept-FX023",
+   "label": "correct",
+   "type": "hedge_kept",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>焼鳥 白鷺のコースは3622円で飲み放題150分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"焼鳥 白鷺のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">焼鳥 白鷺のコースは3622円で飲み放題150分</h1>\n<p class=\"art-lead\">焼鳥 白鷺の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>焼鳥 白鷺のコースは3622円で、飲み放題は150分。</p>\n<p>客席数は84席で、予約受付は11月25日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<p>ネット予約は12月5日に始まる予定だ。</p>\n<div class=\"store-card\"><a href=\"../stores/FX023.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX023\" target=\"_blank\" rel=\"noopener\">店舗情報 焼鳥 白鷺</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX023\" target=\"_blank\" rel=\"noopener\">紹介記事 焼鳥 白鷺</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX023": {
+     "ok": true,
+     "text": "焼鳥 白鷺 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース ３，６２２円 全8品 飲み放題 150分 客席数 84席 営業時間 12時〜22時 予約受付 11月25日まで\nネット予約の受付は12月5日開始予定です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX023": {
+     "ok": true,
+     "text": "焼鳥 白鷺の紹介記事。焼鳥 白鷺は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は84席。コースは3622円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX023",
+     "店名": "焼鳥 白鷺",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-hedge_kept-FX024",
+   "label": "correct",
+   "type": "hedge_kept",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>しゃぶしゃぶ 雲海のコースは3763円で飲み放題180分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"しゃぶしゃぶ 雲海のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">しゃぶしゃぶ 雲海のコースは3763円で飲み放題180分</h1>\n<p class=\"art-lead\">しゃぶしゃぶ 雲海の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>しゃぶしゃぶ 雲海のコースは3763円で、飲み放題は180分。</p>\n<p>客席数は87席で、予約受付は12月5日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<p>ネット予約は12月6日に始まる予定だ。</p>\n<div class=\"store-card\"><a href=\"../stores/FX024.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX024\" target=\"_blank\" rel=\"noopener\">店舗情報 しゃぶしゃぶ 雲海</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX024\" target=\"_blank\" rel=\"noopener\">紹介記事 しゃぶしゃぶ 雲海</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX024": {
+     "ok": true,
+     "text": "しゃぶしゃぶ 雲海 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 3,763円（税込） 全8品 飲み放題 180分 客席数 87席 営業時間 13時〜23時 予約受付 12/5まで\nネット予約の受付は12月6日開始予定です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX024": {
+     "ok": true,
+     "text": "しゃぶしゃぶ 雲海の紹介記事。しゃぶしゃぶ 雲海は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は87席。コースは3763円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX024",
+     "店名": "しゃぶしゃぶ 雲海",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-arithmetic-FX025",
+   "label": "correct",
+   "type": "arithmetic",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>イタリアン 麦穂のコースは3894円で飲み放題90分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"イタリアン 麦穂のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">イタリアン 麦穂のコースは3894円で飲み放題90分</h1>\n<p class=\"art-lead\">イタリアン 麦穂の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>イタリアン 麦穂のコースは3894円で、飲み放題は90分。</p>\n<p>客席数は90席で、予約受付は11月8日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<p>4人で行くと1人あたり3894円、合計15576円になる。</p>\n<div class=\"store-card\"><a href=\"../stores/FX025.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX025\" target=\"_blank\" rel=\"noopener\">店舗情報 イタリアン 麦穂</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX025\" target=\"_blank\" rel=\"noopener\">紹介記事 イタリアン 麦穂</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX025": {
+     "ok": true,
+     "text": "イタリアン 麦穂 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 3,894円 全8品 飲み放題 90分 客席数 90席 営業時間 11時〜21時 予約受付 11月8日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX025": {
+     "ok": true,
+     "text": "イタリアン 麦穂の紹介記事。イタリアン 麦穂は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は90席。コースは3894円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX025",
+     "店名": "イタリアン 麦穂",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-arithmetic-FX026",
+   "label": "correct",
+   "type": "arithmetic",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>鰻 川端のコースは4035円で飲み放題120分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"鰻 川端のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">鰻 川端のコースは4035円で飲み放題120分</h1>\n<p class=\"art-lead\">鰻 川端の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>鰻 川端のコースは4035円で、飲み放題は120分。</p>\n<p>客席数は93席で、予約受付は12月11日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<p>4人で行くと1人あたり4035円、合計16140円になる。</p>\n<div class=\"store-card\"><a href=\"../stores/FX026.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX026\" target=\"_blank\" rel=\"noopener\">店舗情報 鰻 川端</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX026\" target=\"_blank\" rel=\"noopener\">紹介記事 鰻 川端</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX026": {
+     "ok": true,
+     "text": "鰻 川端 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4035円 全8品 飲み放題 120分 客席数 93席 営業時間 12時〜22時 予約受付 12/11まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX026": {
+     "ok": true,
+     "text": "鰻 川端の紹介記事。鰻 川端は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は93席。コースは4035円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX026",
+     "店名": "鰻 川端",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-arithmetic-FX027",
+   "label": "correct",
+   "type": "arithmetic",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>串揚げ 木漏れ日のコースは4176円で飲み放題150分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"串揚げ 木漏れ日のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">串揚げ 木漏れ日のコースは4176円で飲み放題150分</h1>\n<p class=\"art-lead\">串揚げ 木漏れ日の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>串揚げ 木漏れ日のコースは4176円で、飲み放題は150分。</p>\n<p>客席数は96席で、予約受付は11月14日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<p>4人で行くと1人あたり4176円、合計16704円になる。</p>\n<div class=\"store-card\"><a href=\"../stores/FX027.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX027\" target=\"_blank\" rel=\"noopener\">店舗情報 串揚げ 木漏れ日</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX027\" target=\"_blank\" rel=\"noopener\">紹介記事 串揚げ 木漏れ日</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX027": {
+     "ok": true,
+     "text": "串揚げ 木漏れ日 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース ４，１７６円 全8品 飲み放題 150分 客席数 96席 営業時間 13時〜23時 予約受付 11月14日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX027": {
+     "ok": true,
+     "text": "串揚げ 木漏れ日の紹介記事。串揚げ 木漏れ日は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は96席。コースは4176円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX027",
+     "店名": "串揚げ 木漏れ日",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-one_source_unreachable-FX028",
+   "label": "correct",
+   "type": "one_source_unreachable",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>釜飯 竹の子のコースは4307円で飲み放題180分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"釜飯 竹の子のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">釜飯 竹の子のコースは4307円で飲み放題180分</h1>\n<p class=\"art-lead\">釜飯 竹の子の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>釜飯 竹の子のコースは4307円で、飲み放題は180分。</p>\n<p>客席数は99席で、予約受付は12月17日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX028.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX028\" target=\"_blank\" rel=\"noopener\">店舗情報 釜飯 竹の子</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX028\" target=\"_blank\" rel=\"noopener\">紹介記事 釜飯 竹の子</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX028": {
+     "ok": true,
+     "text": "釜飯 竹の子 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4,307円（税込） 全8品 飲み放題 180分 客席数 99席 営業時間 11時〜21時 予約受付 12/17まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX028": {
+     "ok": false,
+     "reason": "empty_body"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX028",
+     "店名": "釜飯 竹の子",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-one_source_unreachable-FX029",
+   "label": "correct",
+   "type": "one_source_unreachable",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>鍋 いろは坂のコースは4448円で飲み放題90分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"鍋 いろは坂のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">鍋 いろは坂のコースは4448円で飲み放題90分</h1>\n<p class=\"art-lead\">鍋 いろは坂の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>鍋 いろは坂のコースは4448円で、飲み放題は90分。</p>\n<p>客席数は102席で、予約受付は11月20日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX029.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX029\" target=\"_blank\" rel=\"noopener\">店舗情報 鍋 いろは坂</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX029\" target=\"_blank\" rel=\"noopener\">紹介記事 鍋 いろは坂</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX029": {
+     "ok": true,
+     "text": "鍋 いろは坂 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4,448円 全8品 飲み放題 90分 客席数 102席 営業時間 12時〜22時 予約受付 11月20日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX029": {
+     "ok": false,
+     "reason": "empty_body"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX029",
+     "店名": "鍋 いろは坂",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "correct-one_source_unreachable-FX030",
+   "label": "correct",
+   "type": "one_source_unreachable",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>日本酒 蔵びらきのコースは4589円で飲み放題120分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"日本酒 蔵びらきのコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">日本酒 蔵びらきのコースは4589円で飲み放題120分</h1>\n<p class=\"art-lead\">日本酒 蔵びらきの忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>日本酒 蔵びらきのコースは4589円で、飲み放題は120分。</p>\n<p>客席数は105席で、予約受付は12月23日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX030.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX030\" target=\"_blank\" rel=\"noopener\">店舗情報 日本酒 蔵びらき</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX030\" target=\"_blank\" rel=\"noopener\">紹介記事 日本酒 蔵びらき</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX030": {
+     "ok": true,
+     "text": "日本酒 蔵びらき 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4589円 全8品 飲み放題 120分 客席数 105席 営業時間 13時〜23時 予約受付 12/23まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX030": {
+     "ok": false,
+     "reason": "empty_body"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX030",
+     "店名": "日本酒 蔵びらき",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-number_changed-FX031",
+   "label": "broken",
+   "type": "number_changed",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>炉端 そよ風のコースは5230円で飲み放題150分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"炉端 そよ風のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">炉端 そよ風のコースは5230円で飲み放題150分</h1>\n<p class=\"art-lead\">炉端 そよ風の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>炉端 そよ風のコースは5230円で、飲み放題は150分。</p>\n<p>客席数は108席で、予約受付は11月26日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX031.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX031\" target=\"_blank\" rel=\"noopener\">店舗情報 炉端 そよ風</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX031\" target=\"_blank\" rel=\"noopener\">紹介記事 炉端 そよ風</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX031": {
+     "ok": true,
+     "text": "炉端 そよ風 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース ４，７３０円 全8品 飲み放題 150分 客席数 108席 営業時間 11時〜21時 予約受付 11月26日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX031": {
+     "ok": true,
+     "text": "炉端 そよ風の紹介記事。炉端 そよ風は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は108席。コースは4730円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX031",
+     "店名": "炉端 そよ風",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-number_changed-FX032",
+   "label": "broken",
+   "type": "number_changed",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>串焼き 月あかりのコースは4561円で飲み放題180分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"串焼き 月あかりのコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">串焼き 月あかりのコースは4561円で飲み放題180分</h1>\n<p class=\"art-lead\">串焼き 月あかりの忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>串焼き 月あかりのコースは4561円で、飲み放題は180分。</p>\n<p>客席数は111席で、予約受付は12月6日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX032.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX032\" target=\"_blank\" rel=\"noopener\">店舗情報 串焼き 月あかり</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX032\" target=\"_blank\" rel=\"noopener\">紹介記事 串焼き 月あかり</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX032": {
+     "ok": true,
+     "text": "串焼き 月あかり 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4,861円（税込） 全8品 飲み放題 180分 客席数 111席 営業時間 12時〜22時 予約受付 12/6まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX032": {
+     "ok": true,
+     "text": "串焼き 月あかりの紹介記事。串焼き 月あかりは名古屋の人気店として知られ、忘年会の予約が増えている。客席数は111席。コースは4861円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX032",
+     "店名": "串焼き 月あかり",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-number_changed-FX033",
+   "label": "broken",
+   "type": "number_changed",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>個室居酒屋 琥珀のコースは5002円で飲み放題120分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"個室居酒屋 琥珀のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">個室居酒屋 琥珀のコースは5002円で飲み放題120分</h1>\n<p class=\"art-lead\">個室居酒屋 琥珀の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>個室居酒屋 琥珀のコースは5002円で、飲み放題は120分。</p>\n<p>客席数は114席で、予約受付は11月9日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX033.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX033\" target=\"_blank\" rel=\"noopener\">店舗情報 個室居酒屋 琥珀</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX033\" target=\"_blank\" rel=\"noopener\">紹介記事 個室居酒屋 琥珀</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX033": {
+     "ok": true,
+     "text": "個室居酒屋 琥珀 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 5,002円 全8品 飲み放題 90分 客席数 114席 営業時間 13時〜23時 予約受付 11月9日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX033": {
+     "ok": true,
+     "text": "個室居酒屋 琥珀の紹介記事。個室居酒屋 琥珀は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は114席。コースは5002円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX033",
+     "店名": "個室居酒屋 琥珀",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-number_changed-FX034",
+   "label": "broken",
+   "type": "number_changed",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>海鮮 波の音のコースは5143円で飲み放題120分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"海鮮 波の音のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">海鮮 波の音のコースは5143円で飲み放題120分</h1>\n<p class=\"art-lead\">海鮮 波の音の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>海鮮 波の音のコースは5143円で、飲み放題は120分。</p>\n<p>客席数は129席で、予約受付は12月12日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX034.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX034\" target=\"_blank\" rel=\"noopener\">店舗情報 海鮮 波の音</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX034\" target=\"_blank\" rel=\"noopener\">紹介記事 海鮮 波の音</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX034": {
+     "ok": true,
+     "text": "海鮮 波の音 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 5143円 全8品 飲み放題 120分 客席数 117席 営業時間 11時〜21時 予約受付 12/12まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX034": {
+     "ok": true,
+     "text": "海鮮 波の音の紹介記事。海鮮 波の音は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は117席。コースは5143円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX034",
+     "店名": "海鮮 波の音",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-source_swapped-FX035",
+   "label": "broken",
+   "type": "source_swapped",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>鳥料理 朝霧のコースは5274円で飲み放題150分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"鳥料理 朝霧のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">鳥料理 朝霧のコースは5274円で飲み放題150分</h1>\n<p class=\"art-lead\">鳥料理 朝霧の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>鳥料理 朝霧のコースは5274円で、飲み放題は150分。</p>\n<p>客席数は120席で、予約受付は11月15日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX035.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX035\" target=\"_blank\" rel=\"noopener\">店舗情報 鳥料理 朝霧</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX035\" target=\"_blank\" rel=\"noopener\">紹介記事 鳥料理 朝霧</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX035": {
+     "ok": true,
+     "text": "ワイン食堂 銀杏 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4295円 全8品 飲み放題 120分 客席数 153席 営業時間 11時〜21時 予約受付 12/25まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX035": {
+     "ok": true,
+     "text": "ワイン食堂 銀杏の紹介記事。ワイン食堂 銀杏は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は153席。コースは4295円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX035",
+     "店名": "鳥料理 朝霧",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-source_swapped-FX036",
+   "label": "broken",
+   "type": "source_swapped",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>和bar 夜明け前のコースは5415円で飲み放題180分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"和bar 夜明け前のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">和bar 夜明け前のコースは5415円で飲み放題180分</h1>\n<p class=\"art-lead\">和bar 夜明け前の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>和bar 夜明け前のコースは5415円で、飲み放題は180分。</p>\n<p>客席数は123席で、予約受付は12月18日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX036.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX036\" target=\"_blank\" rel=\"noopener\">店舗情報 和bar 夜明け前</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX036\" target=\"_blank\" rel=\"noopener\">紹介記事 和bar 夜明け前</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX036": {
+     "ok": true,
+     "text": "韓国料理 青磁 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース ４，４３６円 全8品 飲み放題 150分 客席数 156席 営業時間 12時〜22時 予約受付 11月5日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX036": {
+     "ok": true,
+     "text": "韓国料理 青磁の紹介記事。韓国料理 青磁は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は156席。コースは4436円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX036",
+     "店名": "和bar 夜明け前",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-source_swapped-FX037",
+   "label": "broken",
+   "type": "source_swapped",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>焼肉 山の端のコースは5556円で飲み放題90分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"焼肉 山の端のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">焼肉 山の端のコースは5556円で飲み放題90分</h1>\n<p class=\"art-lead\">焼肉 山の端の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>焼肉 山の端のコースは5556円で、飲み放題は90分。</p>\n<p>客席数は126席で、予約受付は11月21日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX037.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX037\" target=\"_blank\" rel=\"noopener\">店舗情報 焼肉 山の端</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX037\" target=\"_blank\" rel=\"noopener\">紹介記事 焼肉 山の端</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX037": {
+     "ok": true,
+     "text": "中華 紅葉亭 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4,567円（税込） 全8品 飲み放題 180分 客席数 159席 営業時間 13時〜23時 予約受付 12/8まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX037": {
+     "ok": true,
+     "text": "中華 紅葉亭の紹介記事。中華 紅葉亭は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は159席。コースは4567円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX037",
+     "店名": "焼肉 山の端",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-source_swapped-FX038",
+   "label": "broken",
+   "type": "source_swapped",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>酒場 灯り横丁のコースは3187円で飲み放題120分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"酒場 灯り横丁のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">酒場 灯り横丁のコースは3187円で飲み放題120分</h1>\n<p class=\"art-lead\">酒場 灯り横丁の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>酒場 灯り横丁のコースは3187円で、飲み放題は120分。</p>\n<p>客席数は129席で、予約受付は12月24日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX038.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX038\" target=\"_blank\" rel=\"noopener\">店舗情報 酒場 灯り横丁</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX038\" target=\"_blank\" rel=\"noopener\">紹介記事 酒場 灯り横丁</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX038": {
+     "ok": true,
+     "text": "創作 和み庵 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4,708円 全8品 飲み放題 90分 客席数 162席 営業時間 11時〜21時 予約受付 11月11日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX038": {
+     "ok": true,
+     "text": "創作 和み庵の紹介記事。創作 和み庵は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は162席。コースは4708円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX038",
+     "店名": "酒場 灯り横丁",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-hedge_dropped-FX039",
+   "label": "broken",
+   "type": "hedge_dropped",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>肉バル 鉄鍋屋のコースは3328円で飲み放題150分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"肉バル 鉄鍋屋のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">肉バル 鉄鍋屋のコースは3328円で飲み放題150分</h1>\n<p class=\"art-lead\">肉バル 鉄鍋屋の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>肉バル 鉄鍋屋のコースは3328円で、飲み放題は150分。</p>\n<p>客席数は132席で、予約受付は11月27日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<p>ネット予約は12月3日に始まる。</p>\n<div class=\"store-card\"><a href=\"../stores/FX039.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX039\" target=\"_blank\" rel=\"noopener\">店舗情報 肉バル 鉄鍋屋</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX039\" target=\"_blank\" rel=\"noopener\">紹介記事 肉バル 鉄鍋屋</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX039": {
+     "ok": true,
+     "text": "肉バル 鉄鍋屋 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース ３，３２８円 全8品 飲み放題 150分 客席数 132席 営業時間 13時〜23時 予約受付 11月27日まで\nネット予約の受付は12月3日開始予定です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX039": {
+     "ok": true,
+     "text": "肉バル 鉄鍋屋の紹介記事。肉バル 鉄鍋屋は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は132席。コースは3328円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX039",
+     "店名": "肉バル 鉄鍋屋",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-hedge_dropped-FX040",
+   "label": "broken",
+   "type": "hedge_dropped",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>寿司 潮騒のコースは3469円で飲み放題180分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"寿司 潮騒のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">寿司 潮騒のコースは3469円で飲み放題180分</h1>\n<p class=\"art-lead\">寿司 潮騒の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>寿司 潮騒のコースは3469円で、飲み放題は180分。</p>\n<p>客席数は135席で、予約受付は12月7日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<p>ネット予約は12月4日に始まる。</p>\n<div class=\"store-card\"><a href=\"../stores/FX040.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX040\" target=\"_blank\" rel=\"noopener\">店舗情報 寿司 潮騒</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX040\" target=\"_blank\" rel=\"noopener\">紹介記事 寿司 潮騒</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX040": {
+     "ok": true,
+     "text": "寿司 潮騒 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 3,469円（税込） 全8品 飲み放題 180分 客席数 135席 営業時間 11時〜21時 予約受付 12/7まで\nネット予約の受付は12月4日開始予定です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX040": {
+     "ok": true,
+     "text": "寿司 潮騒の紹介記事。寿司 潮騒は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は135席。コースは3469円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX040",
+     "店名": "寿司 潮騒",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-hedge_dropped-FX041",
+   "label": "broken",
+   "type": "hedge_dropped",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>天ぷら 若葉のコースは3610円で飲み放題90分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"天ぷら 若葉のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">天ぷら 若葉のコースは3610円で飲み放題90分</h1>\n<p class=\"art-lead\">天ぷら 若葉の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>天ぷら 若葉のコースは3610円で、飲み放題は90分。</p>\n<p>客席数は138席で、予約受付は11月10日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<p>ネット予約は12月5日に始まる。</p>\n<div class=\"store-card\"><a href=\"../stores/FX041.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX041\" target=\"_blank\" rel=\"noopener\">店舗情報 天ぷら 若葉</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX041\" target=\"_blank\" rel=\"noopener\">紹介記事 天ぷら 若葉</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX041": {
+     "ok": true,
+     "text": "天ぷら 若葉 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 3,610円 全8品 飲み放題 90分 客席数 138席 営業時間 12時〜22時 予約受付 11月10日まで\nネット予約の受付は12月5日開始予定です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX041": {
+     "ok": true,
+     "text": "天ぷら 若葉の紹介記事。天ぷら 若葉は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は138席。コースは3610円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX041",
+     "店名": "天ぷら 若葉",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-hedge_dropped-FX042",
+   "label": "broken",
+   "type": "hedge_dropped",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>もつ鍋 星屑のコースは3741円で飲み放題120分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"もつ鍋 星屑のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">もつ鍋 星屑のコースは3741円で飲み放題120分</h1>\n<p class=\"art-lead\">もつ鍋 星屑の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>もつ鍋 星屑のコースは3741円で、飲み放題は120分。</p>\n<p>客席数は141席で、予約受付は12月13日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<p>ネット予約は12月6日に始まる。</p>\n<div class=\"store-card\"><a href=\"../stores/FX042.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX042\" target=\"_blank\" rel=\"noopener\">店舗情報 もつ鍋 星屑</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX042\" target=\"_blank\" rel=\"noopener\">紹介記事 もつ鍋 星屑</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX042": {
+     "ok": true,
+     "text": "もつ鍋 星屑 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 3741円 全8品 飲み放題 120分 客席数 141席 営業時間 13時〜23時 予約受付 12/13まで\nネット予約の受付は12月6日開始予定です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX042": {
+     "ok": true,
+     "text": "もつ鍋 星屑の紹介記事。もつ鍋 星屑は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は141席。コースは3741円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX042",
+     "店名": "もつ鍋 星屑",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-closed_store-FX043",
+   "label": "broken",
+   "type": "closed_store",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>鉄板 夕凪のコースは3882円で飲み放題150分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"鉄板 夕凪のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">鉄板 夕凪のコースは3882円で飲み放題150分</h1>\n<p class=\"art-lead\">鉄板 夕凪の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>鉄板 夕凪のコースは3882円で、飲み放題は150分。</p>\n<p>客席数は144席で、予約受付は11月16日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX043.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX043\" target=\"_blank\" rel=\"noopener\">店舗情報 鉄板 夕凪</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX043\" target=\"_blank\" rel=\"noopener\">紹介記事 鉄板 夕凪</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX043": {
+     "ok": true,
+     "text": "鉄板 夕凪 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース ３，８８２円 全8品 飲み放題 150分 客席数 144席 営業時間 11時〜21時 予約受付 11月16日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX043": {
+     "ok": true,
+     "text": "鉄板 夕凪の紹介記事。鉄板 夕凪は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は144席。コースは3882円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX043",
+     "店名": "鉄板 夕凪",
+     "営業ステータス": "CLOSED_PERMANENTLY"
+    }
+   ]
+  },
+  {
+   "id": "broken-closed_store-FX044",
+   "label": "broken",
+   "type": "closed_store",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>蕎麦 風待ちのコースは4023円で飲み放題180分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"蕎麦 風待ちのコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">蕎麦 風待ちのコースは4023円で飲み放題180分</h1>\n<p class=\"art-lead\">蕎麦 風待ちの忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>蕎麦 風待ちのコースは4023円で、飲み放題は180分。</p>\n<p>客席数は147席で、予約受付は12月19日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX044.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX044\" target=\"_blank\" rel=\"noopener\">店舗情報 蕎麦 風待ち</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX044\" target=\"_blank\" rel=\"noopener\">紹介記事 蕎麦 風待ち</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX044": {
+     "ok": true,
+     "text": "蕎麦 風待ち 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4,023円（税込） 全8品 飲み放題 180分 客席数 147席 営業時間 12時〜22時 予約受付 12/19まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX044": {
+     "ok": true,
+     "text": "蕎麦 風待ちの紹介記事。蕎麦 風待ちは名古屋の人気店として知られ、忘年会の予約が増えている。客席数は147席。コースは4023円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX044",
+     "店名": "蕎麦 風待ち",
+     "営業ステータス": "CLOSED_TEMPORARILY"
+    }
+   ]
+  },
+  {
+   "id": "broken-closed_store-FX045",
+   "label": "broken",
+   "type": "closed_store",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>餃子酒場 桜小路のコースは4154円で飲み放題90分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"餃子酒場 桜小路のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">餃子酒場 桜小路のコースは4154円で飲み放題90分</h1>\n<p class=\"art-lead\">餃子酒場 桜小路の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>餃子酒場 桜小路のコースは4154円で、飲み放題は90分。</p>\n<p>客席数は150席で、予約受付は11月22日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX045.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX045\" target=\"_blank\" rel=\"noopener\">店舗情報 餃子酒場 桜小路</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX045\" target=\"_blank\" rel=\"noopener\">紹介記事 餃子酒場 桜小路</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX045": {
+     "ok": true,
+     "text": "餃子酒場 桜小路 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4,154円 全8品 飲み放題 90分 客席数 150席 営業時間 13時〜23時 予約受付 11月22日まで\nネット予約は随時受付中です。\n餃子酒場 桜小路は閉店いたしました。長らくのご愛顧ありがとうございました。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX045": {
+     "ok": true,
+     "text": "餃子酒場 桜小路の紹介記事。餃子酒場 桜小路は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は150席。コースは4154円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX045",
+     "店名": "餃子酒場 桜小路",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-closed_store-FX046",
+   "label": "broken",
+   "type": "closed_store",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>ワイン食堂 銀杏のコースは4295円で飲み放題120分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"ワイン食堂 銀杏のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">ワイン食堂 銀杏のコースは4295円で飲み放題120分</h1>\n<p class=\"art-lead\">ワイン食堂 銀杏の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>ワイン食堂 銀杏のコースは4295円で、飲み放題は120分。</p>\n<p>客席数は153席で、予約受付は12月25日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<div class=\"store-card\"><a href=\"../stores/FX046.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX046\" target=\"_blank\" rel=\"noopener\">店舗情報 ワイン食堂 銀杏</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX046\" target=\"_blank\" rel=\"noopener\">紹介記事 ワイン食堂 銀杏</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX046": {
+     "ok": true,
+     "text": "ワイン食堂 銀杏 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4295円 全8品 飲み放題 120分 客席数 153席 営業時間 11時〜21時 予約受付 12/25まで\nネット予約は随時受付中です。\nワイン食堂 銀杏は閉店いたしました。長らくのご愛顧ありがとうございました。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX046": {
+     "ok": true,
+     "text": "ワイン食堂 銀杏の紹介記事。ワイン食堂 銀杏は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は153席。コースは4295円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX046",
+     "店名": "ワイン食堂 銀杏",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-visit_claim-FX047",
+   "label": "broken",
+   "type": "visit_claim",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>韓国料理 青磁のコースは4436円で飲み放題150分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"韓国料理 青磁のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">韓国料理 青磁のコースは4436円で飲み放題150分</h1>\n<p class=\"art-lead\">韓国料理 青磁の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>韓国料理 青磁のコースは4436円で、飲み放題は150分。</p>\n<p>客席数は156席で、予約受付は11月5日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<p>実際に食べてみたところ、肉は柔らかく飲みやすかった。</p>\n<div class=\"store-card\"><a href=\"../stores/FX047.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX047\" target=\"_blank\" rel=\"noopener\">店舗情報 韓国料理 青磁</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX047\" target=\"_blank\" rel=\"noopener\">紹介記事 韓国料理 青磁</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX047": {
+     "ok": true,
+     "text": "韓国料理 青磁 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース ４，４３６円 全8品 飲み放題 150分 客席数 156席 営業時間 12時〜22時 予約受付 11月5日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX047": {
+     "ok": true,
+     "text": "韓国料理 青磁の紹介記事。韓国料理 青磁は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は156席。コースは4436円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX047",
+     "店名": "韓国料理 青磁",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-visit_claim-FX048",
+   "label": "broken",
+   "type": "visit_claim",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>中華 紅葉亭のコースは4567円で飲み放題180分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"中華 紅葉亭のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">中華 紅葉亭のコースは4567円で飲み放題180分</h1>\n<p class=\"art-lead\">中華 紅葉亭の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>中華 紅葉亭のコースは4567円で、飲み放題は180分。</p>\n<p>客席数は159席で、予約受付は12月8日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<p>編集部が行ってきたが、店内は静かだった。</p>\n<div class=\"store-card\"><a href=\"../stores/FX048.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX048\" target=\"_blank\" rel=\"noopener\">店舗情報 中華 紅葉亭</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX048\" target=\"_blank\" rel=\"noopener\">紹介記事 中華 紅葉亭</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX048": {
+     "ok": true,
+     "text": "中華 紅葉亭 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4,567円（税込） 全8品 飲み放題 180分 客席数 159席 営業時間 13時〜23時 予約受付 12/8まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX048": {
+     "ok": true,
+     "text": "中華 紅葉亭の紹介記事。中華 紅葉亭は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は159席。コースは4567円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX048",
+     "店名": "中華 紅葉亭",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-visit_claim-FX049",
+   "label": "broken",
+   "type": "visit_claim",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>創作 和み庵のコースは4708円で飲み放題90分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"創作 和み庵のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">創作 和み庵のコースは4708円で飲み放題90分</h1>\n<p class=\"art-lead\">創作 和み庵の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>創作 和み庵のコースは4708円で、飲み放題は90分。</p>\n<p>客席数は162席で、予約受付は11月11日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<p>昼に伺ったところ、店主が丁寧に説明してくれた。</p>\n<div class=\"store-card\"><a href=\"../stores/FX049.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX049\" target=\"_blank\" rel=\"noopener\">店舗情報 創作 和み庵</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX049\" target=\"_blank\" rel=\"noopener\">紹介記事 創作 和み庵</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX049": {
+     "ok": true,
+     "text": "創作 和み庵 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4,708円 全8品 飲み放題 90分 客席数 162席 営業時間 11時〜21時 予約受付 11月11日まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX049": {
+     "ok": true,
+     "text": "創作 和み庵の紹介記事。創作 和み庵は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は162席。コースは4708円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX049",
+     "店名": "創作 和み庵",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  },
+  {
+   "id": "broken-visit_claim-FX050",
+   "label": "broken",
+   "type": "visit_claim",
+   "html": "<!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<title>牡蠣小屋 岬のコースは4849円で飲み放題120分｜NAGOYA BITES Journal</title>\n<meta name=\"description\" content=\"牡蠣小屋 岬のコースと飲み放題を整理する。\">\n</head><body><article>\n<h1 class=\"art-title\">牡蠣小屋 岬のコースは4849円で飲み放題120分</h1>\n<p class=\"art-lead\">牡蠣小屋 岬の忘年会向けコースを、料金と予約の締切で整理した。</p>\n<div class=\"art-body\">\n<p>牡蠣小屋 岬のコースは4849円で、飲み放題は120分。</p>\n<p>客席数は165席で、予約受付は12月14日まで。</p>\n<p>個室や掘りごたつもあるので、少人数の会でも使いやすい。名古屋駅から徒歩5分。</p>\n<p>筆者が試したコースは量が多く、満足できた。</p>\n<div class=\"store-card\"><a href=\"../stores/FX050.html\">店舗ページを見る →</a></div>\n<div class=\"source-note\"><strong>情報源:</strong> <a href=\"https://src.example/a/FX050\" target=\"_blank\" rel=\"noopener\">店舗情報 牡蠣小屋 岬</a><span class=\"source-date\">（2026-11-05掲載）</span>、 <a href=\"https://src.example/b/FX050\" target=\"_blank\" rel=\"noopener\">紹介記事 牡蠣小屋 岬</a><span class=\"source-date\">（2026-11-04掲載）</span></div>\n</div></article><!-- NB_X_FOLLOW_START --></body></html>",
+   "sources": {
+    "https://src.example/a/FX050": {
+     "ok": true,
+     "text": "牡蠣小屋 岬 店舗情報。ご予約・ご来店の前にご確認ください。メニュー・料金は変更になる場合があります。\nコース 4849円 全8品 飲み放題 120分 客席数 165席 営業時間 12時〜22時 予約受付 12/14まで\nネット予約は随時受付中です。\n当店は名古屋駅から徒歩5分。個室・掘りごたつあり。\nお支払い方法はクレジットカード・電子マネーに対応しています。以上、店舗情報でした。"
+    },
+    "https://src.example/b/FX050": {
+     "ok": true,
+     "text": "牡蠣小屋 岬の紹介記事。牡蠣小屋 岬は名古屋の人気店として知られ、忘年会の予約が増えている。客席数は165席。コースは4849円。そのほか個室の用意もある。詳しくは店舗の案内を確認してください。"
+    }
+   },
+   "stores": [
+    {
+     "店舗ID": "FX050",
+     "店名": "牡蠣小屋 岬",
+     "営業ステータス": "OPERATIONAL"
+    }
+   ]
+  }
+ ]
+}

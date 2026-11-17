@@ -24,6 +24,20 @@
     "max_waits_per_run": 2,
     "default_time_zone": "Asia/Tokyo"
   },
+  "claims_gate": {
+    "_why": "段階4（品質の検査と自動公開）の新しい検査の切り替え。mode は off（何もしない）／shadow（記録だけ。公開には影響しない）／enforce（基準に届かない日は出さない）。最初は shadow。enforce にするのは S4-5 の検証（docs/plans/media-policy-2026-11/s4-5-calibration.md）に通り、本人が承認した後だけで、その配線は別の変更で行う（今の journal_lane.js と run_journal_local.sh は enforce と書かれていても shadow として動く）。戻すときは shadow か off に1行で戻す。",
+    "mode": "shadow",
+    "fetch_timeout_sec": 15,
+    "max_sources": 10,
+    "independent_review": {
+      "_why": "S4-2 の独立した読み手（別プロセス・道具なし）。model が null のときは実行環境の既定のモデルで、記録に『指定なし』と残る。enforce にする同じ変更でモデルを固定する（S4-5）。",
+      "enabled": true,
+      "model": null,
+      "timeout_sec": 240,
+      "prompt_version": "review-2026-11-17",
+      "max_excerpt_chars": 1500
+    }
+  },
   "updated": "2026-10-13",
   "related_issue": "ISSUE-077 / SEO-011 (SEO-007 統合) / P-333"
 }
