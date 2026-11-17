@@ -15,6 +15,8 @@ status: in_progress
 - 11-17 朝のジャーナル HOLD（~/nagoya-bites の main に未 push の計画コミットが残り衝突）→ backup/main-local-2026-11-17 に退避し main を origin に合わせて再実行中
 
 ## 次にやること（並行の持ち分）
+- #760(段階4 shadow) #759(順位表示・design-qa 不合格の修正中) も作成済み
+- 第2波（マージ後）: W-F 書き手の事実台帳→再測定 / W-G S6-1 トップ / W-H S5-5+S7-1+S7-3 / W-I S7-2 / 本線: registry・ADR 0072〜・旧ADRに置き換え追記・build.yml に台帳の週次更新・取り下げ記事を sitemap から外す
 - マージ順: build 完了を待って #758→#754→#756（軽微2件の修正待ち）→#757（design-qa 不合格の修正中）。W-C(段階4)・W-D(棚卸し・順位表示) は作業中
 - W-A: S3-1→S3-2→S3-4（editorial_standard・journal/_template.html・generate_daily_draft.js・nb.css・note/x 引用）＋S4-4 の訂正履歴欄
 - W-B: S3-3→S4-4（3分類・journal index・pick_daily_topic・取り下げ/訂正の道具）
@@ -32,7 +34,7 @@ status: in_progress
 - 日曜をガイドの回に変えた（#754）
 - 帯「AIが作成」の文言・店選びガイドの最少10店（#756）
 - 焼き鳥2本の寄せ先 nagoya-yakitori／「業界人の推薦」系2本を kospa-insider へ／季節切れ4本は noindex しない／懐石・接待ランチ・予約困難の作り替え（#757・s5-3-candidates.md）
-- S4-5 の enforce 切替（測定結果つき）
+- S4-5 の enforce 切替: 実記事の改ざん検出が合格線未達（14本中4本）→ 書き手が事実台帳を出す変更（第2波 W-F）後に再測定。自動修正の道に回る日70%→重要な文だけに絞る案／読み手のモデル固定
 
 ## 関連ファイル
 - docs/plans/media-policy-2026-11/03-implementation-plan.md・docs/decisions/0069
