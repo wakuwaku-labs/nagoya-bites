@@ -178,3 +178,4 @@
 | `scripts/recheck_due_articles.js` / `data/article_recheck_log.json` | **見直す日が来た記事の出典を取り直して照合**（既定は記録だけ・夜間QAに相乗り）と記録・心拍。S5-5・ADR 0076。 |
 | `scripts/trust_metrics.js` / `data/trust_metrics.json` / `data/trust_metrics_policy.json` | **信頼の指標（上位5つ＋事実の文の数＋読者の声）の機械の計数・最新値と週ごとの履歴・数え方と悪化の許容の正本**。`--write` で更新。S7-1・S7-3・ADR 0076。 |
 | `scripts/check_trust_metrics_health.js` / `.github/workflows/trust-metrics-watchdog.yml` | **前の週との悪化・数え役の停止・見直しの滞りの見張り**。毎日数えて保存し、悪化で Issue・戻ったら閉じる。ADR 0076。 |
+| `scripts/lib/journal_category.js` / `scripts/build_journal_index.js`（TOP_ARTICLES 区画） | **トップの最初の画面の「3分類の新しい記事」**（分類ごとの最新1本を `index.html` の `TOP_ARTICLES` の目印の間に静的に書く。build.js から毎日回る）。約束・題・大見出しは index.html に手書き（店数の主張は置かない）。S6-1・ADR 0072・`tests/top_articles_first.test.js`。 |

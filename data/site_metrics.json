@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-17T04:52:11.202Z",
+  "generatedAt": "2026-11-17T05:16:59.027Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 7357,
-    "pageViews": 8808,
-    "sessions": 7737,
+    "activeUsers": 7365,
+    "pageViews": 8813,
+    "sessions": 7738,
     "avgSessionDuration": 56.2,
-    "bounceRate": 0.674,
+    "bounceRate": 0.673,
     "pagesPerSession": 1.14
   },
   "dailyReference": {
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2825,
-      "direct": 4541,
+      "organic": 2828,
+      "direct": 4542,
       "social": 57,
       "ai_assistant": 241,
       "referral": 46,
@@ -26,7 +26,7 @@
       "other": 0
     },
     "pct": {
-      "organic": 36.6,
+      "organic": 36.7,
       "direct": 58.9,
       "social": 0.7,
       "ai_assistant": 3.1,
@@ -39,17 +39,17 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 4512
+      "sessions": 4513
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1286
+      "sessions": 1288
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 923
+      "sessions": 924
     },
     {
       "source": "yahoo",
@@ -210,8 +210,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 433,
-      "sessions": 410
+      "pageViews": 434,
+      "sessions": 411
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -230,8 +230,8 @@
     },
     {
       "path": "/features/nagoya-tebasaki.html",
-      "pageViews": 77,
-      "sessions": 80
+      "pageViews": 78,
+      "sessions": 81
     }
   ],
   "cta": {
@@ -1156,7 +1156,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 7357,
+    "value": 7365,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,

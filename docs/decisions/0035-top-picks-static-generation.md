@@ -1,7 +1,7 @@
 # 0035 トップの「今日の話題店」と「よく見られている店」を、生成時に本物のリンクとして書く（最初の画面に写真で選べる行を置く）
 
 - 日付: 2026-10-14
-- 状態: 採用
+- 状態: 一部置き換え済み（0072: 最初の画面の主役は理念・約束・3分類の新しい記事。話題店の行は検索の後ろへ）
 - 関連: Linear P-399（親 P-235・UI・UX全面改修・計画の I-24）/ 判断の記録 0026（端末の書体）・0029（トップの構造化データは画面に見える事実だけ）・0031・0032（トップの言い方）・0034 / `scripts/lib/top_picks.js` / `scripts/build_top_picks.js` / `scripts/build_journal_index.js` / `data/ranking_display_policy.json` / `tests/top_picks.test.js` / `tests/build_journal_index_photo.test.js` / `tests/index_top_structure.test.js`
 
 ## 背景

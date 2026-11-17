@@ -5,10 +5,10 @@
  *
  * 値の出どころは scripts/lib/store_count.js の1本（data/stores.json の営業中の店を 500 件単位に丸めた
  * 「約5,000」）。このスクリプトは、手で書かれたページの数字の部分だけを書き換える（言い回しは変えない）。
- * 冪等。丸めた値が変わった日に、同じ実行で追いつく。判断の記録: docs/decisions/0021-store-count-notation.md
+ * 冪等。丸めた値が変わった日に、同じ実行で追いつく。判断の記録: docs/decisions/0021-store-count-notation.md（トップの看板は 0072 で置き換え）
  *
  * 対象（scope）:
- *   index         index.html                      本文・メタ・構造化データの「N軒」と numberOfItems、権威性バーの静的な数字
+ *   index         index.html                      本文・メタ・構造化データの「N軒」と numberOfItems（S6-1: 題・大見出しは店数を言わなくなったので、あれば追随するだけ）
  *   stores-index  stores/index.html               同上
  *   faq           faq.html
  *   features      features/*.html                 「N軒」と、トップページへの導線の「全N店舗」（数字を外す）

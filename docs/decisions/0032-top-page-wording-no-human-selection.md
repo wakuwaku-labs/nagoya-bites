@@ -1,7 +1,7 @@
 # 0032 トップページの題・説明・店のモーダルとカードの言い方を、人が選んだと読めない言い方にする
 
 - 日付: 2026-10-13
-- 状態: 採用
+- 状態: 一部置き換え済み（0072: 「広告ゼロ、シーンとエリアで探せる」を看板にする題を、理念の題に置き換え）
 - 関連: Linear P-330（親 P-235・UI・UX全面改修）/ 計画 I-03c・4.4 節 #2・5.5 節 / 判断の記録 0029・0031 / `index.html` / `data/selection_wording_policy.json` / `tests/selection_wording_sources.test.js` / `scripts/inject_store_links.js` / `scripts/journal_seo_kw.js` / `data/journal_seo_keywords.json`
 
 ## 背景

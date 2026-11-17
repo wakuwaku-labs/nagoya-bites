@@ -326,9 +326,9 @@ test('トップ: 「目的から探す」のリンク文は、生成器が語彙
   assert.equal(gen.sceneLinkText({ kw: '業界人', label: '別の文' }), '別の文');
 });
 
-test('トップ: 題・OGP・Twitter・説明は、広告ゼロとシーンとエリアで探せることで書く（P-330）', () => {
+test('トップ: 題・OGP・Twitter・説明は、理念（飲食店選びの失敗を、情報の力で減らす）で書き、店数の主張を置かない（S6-1・0072）', () => {
   const html = readRel('index.html');
-  const TITLE = /^名古屋グルメ約[\d,]+軒｜広告ゼロ、シーンとエリアで探せるガイド｜NAGOYA BITES$/;
+  const TITLE = /^名古屋の飲食店選びの失敗を、情報の力で減らす｜NAGOYA BITES$/;
   assert.match((html.match(/<title>([^<]*)<\/title>/) || [])[1] || '', TITLE);
   for (const key of ['og:title', 'twitter:title']) {
     const m = html.match(new RegExp(`<meta (?:property|name)="${key}" content="([^"]*)"`));
@@ -339,29 +339,37 @@ test('トップ: 題・OGP・Twitter・説明は、広告ゼロとシーンと�
     const m = html.match(new RegExp(`<meta (?:property|name)="${key}" content="([^"]*)"`));
     assert.ok(m, key);
     assert.ok(!/現役|選び直し|厳選|マネージャー|店長|業界人/.test(m[1]), `${key} に人が選んだと読める言い方が戻っている`);
-    assert.ok(/約[\d,]+軒/.test(m[1]), `${key} に、件数の自動そろえ（sync_store_count.js）が見る「約N軒」がある`);
+    assert.ok(!/[\d,]{4,}\s?(?:軒|店)/.test(m[1]), `${key} に店数の主張（約N軒）を戻さない（0069 決定2）`);
   }
+  // 構造化データの説明にも店数の主張を置かない（画面に見える事実だけを書く・0029）
+  const ld = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => m[1]).join('\n');
+  assert.ok(!/約[\d,]{4,}軒/.test(ld.replace(/"numberOfItems"[^,}]*/g, '')), '構造化データの説明に「約N軒」を戻さない');
   assert.ok(html.includes('店舗の選定にはAIによる情報収集・分析を活用しています。'), 'オーナーの文（構造化データの説明）');
 });
 
-test('トップ: 実績の帯から「現役の店長が編集」を外し、残りの 3 項目の最後をスマホの 2 列で中央に置く（P-330）', () => {
+test('トップ: 最初の画面に、約束・3分類の新しい記事・店の検索が、この順で並ぶ。実績の帯（5,000店）は無い（S6-1・0072）', () => {
   const html = readRel('index.html');
-  const bar = (html.match(/<div class="authority-bar">([\s\S]*?)<\/div>\s*\n/) || [])[1] || '';
-  assert.equal((bar.match(/class="auth-item"/g) || []).length, 3, '実績の帯は 3 項目');
-  assert.ok(!/店長|マネージャー|編集/.test(stripTags(bar)), stripTags(bar));
-  assert.ok(stripTags(bar).includes('広告なし・掲載料なし'), '残す項目');
-  assert.ok(html.includes('.auth-item:last-child:nth-child(odd){grid-column:1/-1;justify-content:center;}'), '3 項目目が 2 列の左に寄らない');
+  assert.ok(!html.includes('class="authority-bar"'), '店数を言う実績の帯は外した');
+  assert.ok(!html.includes('id="auth-total"'));
+  const iH1 = html.indexOf('<h1>');
+  const iPromise = html.indexOf('id="site-promise-title"');
+  const iArticles = html.indexOf('id="top-articles-title"');
+  const iSearch = html.indexOf('<div class="search-wrap">');
+  assert.ok(iH1 > 0 && iH1 < iPromise && iPromise < iArticles && iArticles < iSearch, 'h1 → 約束 → 新しい記事 → 検索');
+  const promise = stripTags((html.match(/<section class="site-promise"[\s\S]*?<\/section>/) || [])[0] || '');
+  for (const w of ['広告費・掲載料は受け取りません', '出典・日付を残し', 'AIが集めて書き、検査しています']) assert.ok(promise.includes(w), w);
+  assert.ok(!/店長|マネージャー|現役|業界人|厳選/.test(promise), promise);
 });
 
-test('トップ: 最初の画面の見出し（h1）は、確かめられる情報で選ぶと書く。3 行・各行 7 字以内で、人が選んだと読める言い方を（タグで割れていても）戻さない（P-389）', () => {
+test('トップ: 最初の画面の見出し（h1）は、理念の言葉で書く。2 行・各行 10 字以内で、人が選んだと読める言い方を（タグで割れていても）戻さない（S6-1・0072）', () => {
   const html = readRel('index.html');
   const h1 = (html.match(/<h1>([\s\S]*?)<\/h1>/) || [])[1];
   assert.ok(h1, 'トップに h1 がある');
   const lines = h1.split(/<br\s*\/?>/i).map((l) => stripTags(l).trim());
-  assert.equal(lines.length, 3, '見出しは 3 行');
-  for (const l of lines) assert.ok([...l].length <= 7, `1 行は 7 字まで（スマホの 320px で折り返さない・0034）: 「${l}」`);
-  assert.ok(stripTags(h1).includes('確かめられる'), '確かめられる情報で選ぶ（運営についてと同じ意味・0034）');
-  for (const s of ['プロ', '深く選んだ', '現役', '店長', '業界人', '厳選']) assert.ok(!stripTags(h1).includes(s), `見出しに戻っている: ${s}`);
+  assert.equal(lines.length, 2, '見出しは 2 行');
+  for (const l of lines) assert.ok([...l].length <= 10, `1 行は 10 字まで（スマホの 320px で折り返さない）: 「${l}」`);
+  assert.equal(stripTags(h1).replace(/\s/g, ''), '飲食店選びの失敗を、情報の力で減らす。', '理念の文');
+  for (const s of ['プロ', '深く選んだ', '現役', '店長', '業界人', '厳選', '約5,000']) assert.ok(!stripTags(h1).includes(s), `見出しに戻っている: ${s}`);
   const compiled = audit.compilePolicy(audit.loadPolicy(ROOT));
   assert.deepEqual(audit.scanHtml(h1, compiled, { rel: 'index.html' }).phrases, [], '強調・改行のタグで割れた言い回しも数えて 0 件');
 });
