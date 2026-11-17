@@ -230,7 +230,9 @@ function updateRootLatestSection(entries, journalDir, rootIndexPath) {
   if (!/<!-- LATEST_JOURNAL_START -->[\s\S]*?<!-- LATEST_JOURNAL_END -->/.test(src)) {
     return false; // index.html にセクション未設置ならスキップ
   }
-  const latest3 = (entries || []).slice().sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
+  // 最初の画面の「新しい記事」（TOP_ARTICLES 区画）に出した記事は、この段の最新3件から除く（同じ記事が上下に並ばない・S6-1）
+  const shownAbove = /<!-- TOP_ARTICLES_START -->/.test(src) ? new Set(latestPerCategory(entries).map(x => x.entry.slug)) : new Set();
+  const latest3 = (entries || []).filter(e => !shownAbove.has(e.slug)).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
   const inner = latest3.length === 0 ? '' : latest3.map(e => renderLatestCard(e, readHeroPhoto(e.slug, journalDir))).join('\n');
   let out = src.replace(
     /<!-- LATEST_JOURNAL_START -->[\s\S]*?<!-- LATEST_JOURNAL_END -->/,

@@ -379,7 +379,6 @@ body.search-active .top-articles,
 body.search-active .feature-strip,
 body.search-active #ranking-picks,
 body.search-active #latest-journal-section,
-body.search-active .no-sakura-banner,
 body.search-active #store-index{display:none !important;}
 /* 検索中は「All Listings / 掲載店舗」の大見出しを視覚的に畳む（直下の絞り込み結果サマリーと重複するため）。
    display:none にせず clip で隠し、見出し構造はスクリーンリーダーに残す */
@@ -927,6 +926,11 @@ body.search-query-active .card-why{display:flex;}
 .ta-link:hover .ta-title{text-decoration:underline;text-underline-offset:3px;}
 .ta-link:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:var(--r-sm);}
 .nb-cover-copy .search-wrap{margin-top:var(--sp-4);}
+/* 本文の検索窓が画面に見えている間は、下の固定の検索の帯とご意見ボタンを隠す（検索欄が2つ並ばない・帯の陰に検索窓が入らない・記事の題にボタンが重ならない）。見えなくなったら出す */
+@media(max-width:768px){
+  body.hero-search-in-view .mobile-cta-bar{display:none !important;}
+  body.hero-search-in-view #fb-fab{visibility:hidden;}
+}
 @media(min-width:1024px){
   .hero .nb-cover-copy>h1{font-size:clamp(2.25rem,3.4vw,3rem);}
   .site-promise{padding:var(--sp-4) var(--sp-5);}
@@ -1132,23 +1136,6 @@ h3.cn{margin:0 0 6px;font-family:var(--font-body);}
   .latest-journal-card.has-photo .ljc-theme{margin-top:0;}
 }
 /* ── NO-SAKURA BANNER ── */
-.no-sakura-banner{background:var(--ink);color:var(--bg);padding:clamp(2.5rem,5vw,3.8rem) 1.5rem clamp(2.8rem,5.5vw,4rem);}
-.no-sakura-inner{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:1.3rem;}
-.no-sakura-eyebrow{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:500;letter-spacing:0;color:var(--gold);}
-.no-sakura-title{font-family:var(--font-display);font-weight:400;font-size:clamp(1.3rem,2.8vw,1.75rem);line-height:1.5;color:var(--bg);letter-spacing:.005em;}
-.no-sakura-title strong{color:var(--gold);font-weight:500;font-style:italic;}
-.no-sakura-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:.5rem;border-top:1px solid rgba(247,245,241,.16);border-bottom:1px solid rgba(247,245,241,.16);}
-.no-sakura-pillar{background:transparent;border:none;border-left:1px solid rgba(247,245,241,.14);padding:1.4rem 1.4rem 1.5rem;}
-.no-sakura-pillar:first-child{border-left:none;}
-.no-sakura-pillar-label{font-family:var(--font-display);font-weight:500;font-size:var(--fs-3xl);color:var(--gold);margin-bottom:.4rem;line-height:1;}
-.no-sakura-pillar-title{font-family:var(--font-display);font-size:1.05rem;font-weight:500;color:var(--bg);margin-bottom:.5rem;letter-spacing:.01em;line-height:1.4;}
-.no-sakura-pillar-body{font-size:var(--fs-sm);line-height:1.85;color:rgba(247,245,241,.68);}
-.no-sakura-links{display:flex;flex-wrap:wrap;gap:.6rem .9rem;margin-top:.6rem;}
-.no-sakura-link{font-family:var(--font-body);font-size:var(--fs-sm);letter-spacing:0;color:var(--bg);text-decoration:none;border:1px solid rgba(247,245,241,.4);padding:0 1.1rem;min-height:var(--tap-min);display:inline-flex;align-items:center;border-radius:var(--r-sm);transition:background var(--dur-base) var(--ease-out),border-color var(--dur-base) var(--ease-out);text-transform:none;}
-.no-sakura-link:hover{background:rgba(247,245,241,.1);border-color:var(--bg);}
-.nsl-arrow{display:inline-block;width:14px;color:var(--gold);margin-right:.55rem;font-weight:400;transition:transform var(--dur-fast) var(--ease-out);}
-@media(hover:hover){.no-sakura-link:hover .nsl-arrow{transform:translateX(4px);}}
-@media(max-width:720px){.no-sakura-pillars{grid-template-columns:1fr;border-top:1px solid rgba(122,92,16,.2);}.no-sakura-pillar{border-left:none;border-top:1px solid rgba(122,92,16,.12);padding:1.1rem 0 1.2rem;}.no-sakura-pillar:first-child{border-top:none;}.no-sakura-banner{padding:1.6rem 1rem 1.8rem;}}
 /* ── A11y: SKIP LINK ── */
 .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
 .skip-link:focus{position:fixed;left:1rem;top:1rem;width:auto;height:auto;z-index:9999;background:var(--gold);color:#fff;padding:.7rem 1.2rem;border-radius:4px;font-weight:600;font-size:.9rem;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25);}
@@ -1413,14 +1400,6 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 .ljc-theme{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;text-transform:none;}
 .ljc-theme::before,.feature-strip-label::before{display:none;}
 .feature-strip-label{font-family:var(--font-body);letter-spacing:0;font-weight:600;}
-.no-sakura-banner{padding:2rem 1.5rem;}
-.no-sakura-title strong{font-style:normal;}
-.no-sakura-pillars{list-style:none;padding:0;margin:.4rem 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;border:0;}
-.no-sakura-pillar{display:grid;grid-template-columns:auto 1fr;column-gap:.7rem;align-items:center;border:0;padding:0;}
-.no-sakura-pillar .ic{grid-row:span 2;width:28px;height:28px;color:#c9a24a;}
-.no-sakura-pillar-title{font-family:var(--font-body);font-weight:700;font-size:var(--fs-md);margin:0;}
-.no-sakura-pillar-body{font-size:var(--fs-xs);line-height:1.5;}
-.no-sakura-link{display:inline-flex;align-items:center;gap:.25rem;min-height:var(--tap-min);}
 .results-summary{background:transparent;padding:.6rem 1rem;}
 .results-summary-label,.results-summary-cond{display:none;}
 .search-interpret{border:0;background:none;padding:0;margin:0 0 .5rem;}
@@ -1468,7 +1447,6 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 /* スマホの一覧は 2 列の写真タイル。リスト表示は .grid.list-mode の !important で 1 列（I-19） */
 @media(max-width:768px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(min-width:769px) and (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
-@media(max-width:720px){.no-sakura-pillars{grid-template-columns:1fr;border:0;}.no-sakura-pillar{border:0;padding:0;}}
 /* ===== 動きの段階 2・3a（P-490・段階 3a・動きの計画 2 章）: 押した結果を処理より先に見た目で返す ===== */
 /* 押した見た目（A1・段階 3a の A-1〜A-3）: 押した物が沈み、色が濃くなる。押し込み 50ms（--dur-instant）・戻り 200ms（--dur-base）。
    色は内側の影で濃くする（暗さ .16。グラデーションの背景でも同じに濃くなる。filter は動かさない）。暗い面（写真の上の ♡・写真の左右）は白 .16 で明るくする。
@@ -1867,17 +1845,6 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
     <!-- LATEST_JOURNAL_START -->
         <article class="latest-journal-card has-photo">
           <figure class="ljc-photo">
-            <img class="ljc-img" src="https://imgfp.hotp.jp/IMGH/33/69/P037623369/P037623369.jpg" alt="四川伝統火鍋 蜀漢 ショクカン 金山駅店" width="480" height="320" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'">
-            <figcaption class="ljc-credit">写真: <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">店舗公式写真</a> / <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">HotPepper</a></figcaption>
-          </figure>
-          <div class="ljc-date">2026-11-17</div>
-          <h3 class="ljc-title"><a class="ljc-link" href="journal/2026-11-17-kanayama-shokukan-hotpot-bonenkai-private-room.html">金山の忘年会に火鍋『蜀漢 ショクカン 金山駅店』、飲み放題込み5,000円と個室20名まで</a></h3>
-          <p class="ljc-desc">金山駅1分の四川火鍋店「蜀漢 ショクカン 金山駅店」の忘年会。120分飲み放題込み5,000円は、料理3,850円に飲み放題2,200円を足すより1,050円安い。ラストオーダー90分、個室は最大20名、貸切は50名から。予約前の確認点を整理。</p>
-          <span class="ljc-theme">季節短信</span>
-        </article>
-
-        <article class="latest-journal-card has-photo">
-          <figure class="ljc-photo">
             <img class="ljc-img" src="https://imgfp.hotp.jp/IMGH/77/13/P045697713/P045697713_480.jpg" alt="炉端焼き 燻銀 名駅西口店" width="480" height="320" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'">
             <figcaption class="ljc-credit">写真: <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">店舗公式写真</a> / <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">HotPepper</a></figcaption>
           </figure>
@@ -1896,6 +1863,17 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
           <h3 class="ljc-title"><a class="ljc-link" href="journal/2026-11-15-sakae-sakana-no-hachibe-bonenkai-enkai.html">栄の忘年会・宴会に海鮮居酒屋『サカナのハチベエ 栄3丁目店』、飲み放題4,500円から</a></h3>
           <p class="ljc-desc">忘年会の予約が動き出す11月中旬。栄駅徒歩5分の海鮮居酒屋サカナのハチベエ 栄3丁目店は、120分飲み放題付きのコースが4,500円から6,000円。前日17時の締切と当日15時からのキャンセル料、42席・最大26人の席から、幹事の予約の組み方を整理する。</p>
           <span class="ljc-theme">季節短信</span>
+        </article>
+
+        <article class="latest-journal-card has-photo">
+          <figure class="ljc-photo">
+            <img class="ljc-img" src="https://imgfp.hotp.jp/IMGH/73/89/P051867389/P051867389.jpg" alt="焼鳥ごりょう 栄" width="480" height="320" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'">
+            <figcaption class="ljc-credit">写真: <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">店舗公式写真</a> / <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">HotPepper</a></figcaption>
+          </figure>
+          <div class="ljc-date">2026-11-14</div>
+          <h3 class="ljc-title"><a class="ljc-link" href="journal/2026-11-14-yabacho-yakitori-goryo-sakae-date-solo.html">焼鳥ごりょう 栄（矢場町）でデートと一人飲み、コース3本の差は〆の土鍋</a></h3>
+          <p class="ljc-desc">2026年11月10日、矢場町駅から徒歩2分に開いた焼鳥ごりょう 栄。三河赤鳥を店内でさばく22席の焼鳥の店で、14席がカウンター。5,500円から7,700円のコース3本の違いと、20時を境に変わる予約の形から、デートと一人飲みでの使い方を整理する。</p>
+          <span class="ljc-theme">今日の1軒</span>
         </article>
       <!-- LATEST_JOURNAL_END -->
   </div>
@@ -1936,25 +1914,6 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 <!-- よく見られている店（直近30日の閲覧数が下限に届く日だけ出る）。↓ この区画は scripts/build_top_picks.js が data/view_counts.json と data/ranking_display_policy.json から自動生成。手で編集しない。 -->
 <!-- VIEW_RANKING_START -->
 <!-- VIEW_RANKING_END -->
-
-<!-- 編集の約束バナー：編集部の自分の行い（口コミを書かない・掲載料を受け取らない）の約束（編集独立性の訴求。回遊コンテンツの下に配置） -->
-<section class="no-sakura-banner" aria-labelledby="no-sakura-title">
-  <div class="no-sakura-inner">
-    <h2 class="no-sakura-title" id="no-sakura-title">
-      <strong>編集の約束</strong> ― 編集部は口コミを書きません。店から掲載料・広告費を受け取りません。
-    </h2>
-    <ul class="no-sakura-pillars">
-      <li class="no-sakura-pillar"><svg class="ic" aria-hidden="true"><use href="#i-ban"/></svg><span class="no-sakura-pillar-title">広告ゼロ</span><span class="no-sakura-pillar-body">掲載料・PR費は受け取りません</span></li>
-      <li class="no-sakura-pillar"><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span class="no-sakura-pillar-title">開示義務</span><span class="no-sakura-pillar-body">招待・無償提供は必ず明記</span></li>
-      <li class="no-sakura-pillar"><svg class="ic" aria-hidden="true"><use href="#i-user-check"/></svg><span class="no-sakura-pillar-title">違反は永久追放</span><span class="no-sakura-pillar-body">嘘の寄稿者は二度と書けません</span></li>
-    </ul>
-    <div class="no-sakura-links">
-      <a class="no-sakura-link" href="features/editorial-policy.html#trust-mechanisms">信頼の仕組みを読む<svg class="ic" aria-hidden="true"><use href="#i-chevron-right"/></svg></a>
-      <a class="no-sakura-link" href="features/no-fake-reviews.html">桜の実態を読む<svg class="ic" aria-hidden="true"><use href="#i-chevron-right"/></svg></a>
-      <a class="no-sakura-link" href="features/review-trust.html">口コミ信頼度の読み方<svg class="ic" aria-hidden="true"><use href="#i-chevron-right"/></svg></a>
-    </div>
-  </div>
-</section>
 
 <!-- スティッキー検索バー + アクティブフィルターチップ -->
 <div class="sticky-search" id="sticky-search">
@@ -6872,6 +6831,17 @@ window.addEventListener('scroll', function() {
     }, {threshold:0});
     obs.observe(hero);
   }
+})();
+
+// ================================================================
+// 本文の検索窓が見えている間は、固定の検索の帯とご意見ボタンを隠す（S6-1）。IntersectionObserver が無い環境では何もしない（帯は出たまま）
+// ================================================================
+(function(){
+  var w = document.querySelector('.nb-cover-copy .search-wrap');
+  if (!w || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(function(entries){
+    document.body.classList.toggle('hero-search-in-view', entries[entries.length - 1].isIntersecting);
+  }, {threshold:0}).observe(w);
 })();
 
 // ================================================================
