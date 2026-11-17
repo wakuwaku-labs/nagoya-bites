@@ -22,6 +22,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const { categoryOf } = require('./lib/journal_category');
+
 const DATA = path.join(__dirname, '..', 'data');
 
 function loadJSON(file) {
@@ -43,6 +45,26 @@ function daysBetween(a, b) {
   return Math.abs(ms / 86400000);
 }
 
+function pickTrending(trending, published, date) {
+  const stores = (trending && trending.stores) || [];
+  const recentText = (published.entries || [])
+    .filter(e => daysBetween(e.date, date) <= 90)
+    .map(e => `${e.title || ''} ${e.description || ''}`).join('\n');
+  const hit = stores.filter(s => {
+    const score = s['話題スコア'] != null ? s['話題スコア'] : (s.buzz_score || 0);
+    if (score < 90 || s.journaled) return false;
+    const detected = s['検出日'] || date;
+    if (detected > date || daysBetween(detected, date) > 14) return false;
+    if (s['有効期限'] && s['有効期限'] < date) return false;
+    if (Array.isArray(s['出典URL']) && s['出典URL'].length < 2) return false;
+    const name = s['店名'];
+    if (name && recentText.includes(name)) return false;
+    return true;
+  });
+  hit.sort((a, b) => (b['話題スコア'] || 0) - (a['話題スコア'] || 0));
+  return hit[0] || null;
+}
+
 function pickDailyTopic(date) {
   const queue = loadJSON('journal_queue.json');
   const seasonal = loadJSON('seasonal_events.json');
@@ -58,22 +80,25 @@ function pickDailyTopic(date) {
   let source = slot ? 'queue' : 'rotation';
 
   // Seasonal override
+  // 上書きは「話題のお店紹介」の日だけ（S3-3）。忘年会など長い期間の上書きが、ガイド・比較の回まで
+  // 全部季節短信に塗りつぶして配分（話題4・ガイド2・比較1）を崩すため。
   const season = seasonal.events.find(e => inRange(date, e.date_range) && e.priority >= 80);
-  if (season) {
+  if (season && categoryOf({ theme }) === 'topic') {
     theme = 'seasonal';
     label = '季節・イベント短信';
     source = 'seasonal_override';
   }
 
-  // Trending override
-  let trendingPick = null;
-  if (trending.stores) {
-    trendingPick = trending.stores.find(s => (s.buzz_score || 0) >= 90 && !s.journaled);
-    if (trendingPick && theme !== 'seasonal') {
-      theme = 'today_one';
-      label = '今日の1軒';
-      source = 'trending_override';
-    }
+  // Trending override（S3-3 で修正）
+  // 旧版は buzz_score / journaled を見ていたが、trending_stores.json の項目は 話題スコア・検出日・有効期限・出典URL
+  // で、旧版の条件は一度も真にならなかった（実測）。今の条件は検証できる事実だけ:
+  //   話題スコア>=90・検出日が14日以内・有効期限内・出典URLが2件以上・直近90日の記事の題・概要に店名が無い。
+  // 上書きは「話題のお店紹介」の日だけ（ガイド・比較の日は配分を守るため上書きしない）。
+  const trendingPick = pickTrending(trending, published, date);
+  if (trendingPick && theme !== 'seasonal' && categoryOf({ theme }) === 'topic') {
+    theme = 'today_one';
+    label = '今日の1軒';
+    source = 'trending_override';
   }
 
   // Published history check
@@ -120,11 +145,14 @@ function pickDailyTopic(date) {
     date,
     weekday,
     theme,
+    category: categoryOf({ theme }),
+    // ガイド・比較の回で基準に届く材料が集まらない日の逃げ道（話題のお店紹介に切り替える・基準は下げない）
+    fallback_theme: categoryOf({ theme }) === 'topic' ? null : (queue.fallback_theme || 'today_one'),
     label,
     source,
     candidates,
     column,
-    seasonal: season || null,
+    seasonal: (season && theme === 'seasonal') ? season : null,
     recent_store_ids: Array.from(recentStoreIds),
     recent_themes: recent.map(e => e.theme)
   };
@@ -138,10 +166,29 @@ function jstToday() {
   return new Date(ms).toISOString().slice(0, 10);
 }
 
-if (require.main === module) {
+/** 題材決めだけを from から days 日分回して、分類ごとの本数を数える（公開しない・S3-3 ⑩の試算） */
+function simulateDistribution(from, days) {
+  const counts = { topic: 0, guide: 0, compare: 0 };
+  const rows = [];
+  for (let i = 0; i < days; i++) {
+    const d = new Date(new Date(from + 'T00:00:00+09:00').getTime() + i * 86400000);
+    const date = new Date(d.getTime() + 9 * 3600000).toISOString().slice(0, 10);
+    const r = pickDailyTopic(date);
+    counts[r.category]++;
+    rows.push({ date, weekday: r.weekday, theme: r.theme, category: r.category, source: r.source });
+  }
+  return { counts, rows };
+}
+
+if (require.main === module && process.argv[2] === '--simulate') {
+  const from = process.argv[3] || jstToday();
+  const days = Number(process.argv[4] || 30);
+  const r = simulateDistribution(from, days);
+  console.log(JSON.stringify({ from, days, counts: r.counts, per_week: Object.fromEntries(Object.entries(r.counts).map(([k, v]) => [k, +(v / days * 7).toFixed(1)])) }, null, 2));
+} else if (require.main === module) {
   const date = process.argv[2] || jstToday();
   const result = pickDailyTopic(date);
   console.log(JSON.stringify(result, null, 2));
 }
 
-module.exports = { pickDailyTopic };
+module.exports = { pickDailyTopic, pickTrending, simulateDistribution };
