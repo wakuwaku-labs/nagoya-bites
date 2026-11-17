@@ -156,7 +156,7 @@ test('推定の規則は変えない: 24本・順序・最後は全店に当た�
     'features/settai-guide.html', 'features/private-room.html', 'features/banquet.html', 'features/girls-party.html',
     'features/birthday.html', 'features/nagoya-hitsumabushi.html', 'features/nagoya-tebasaki.html',
     'features/nagoya-miso-nikomi-udon.html', 'features/nagoya-ramen.html', 'features/nagoya-tonkatsu.html',
-    'features/nagoya-yakitori-guide.html', 'features/nagoya-cafe.html', 'features/nagoya-italian-guide.html',
+    'features/nagoya-yakitori.html', 'features/nagoya-cafe.html', 'features/nagoya-italian-guide.html',
     'features/nagoya-french-guide.html', 'features/nagoya-bar-guide.html', 'features/nagoya-seafood.html',
     'features/nagoya-korean.html', 'features/nagoya-chinese-guide.html', 'features/nagoya-yakiniku-guide.html',
     'features/nagoya-lunch-washoku.html', 'features/nagoya-sushi-guide.html', 'features/meieki.html',

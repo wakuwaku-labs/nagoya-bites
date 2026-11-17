@@ -92,7 +92,8 @@ function collectTargets() {
   const rootFiles = ['index.html', 'about.html', 'faq.html', 'contact.html', 'privacy-policy.html', '404.html']
     .map(f => path.join(ROOT, f))
     .filter(f => fs.existsSync(f));
-  const featureFiles = listHtmlFiles(path.join(ROOT, 'features'));
+  // 統合して転送ページにした特集（S5-3・0077）は、ヘッダー等を持たない最小のページなので対象にしない
+  const featureFiles = listHtmlFiles(path.join(ROOT, 'features')).filter(f => !require('./lib/feature_merges').isMergedStub(fs.readFileSync(f, 'utf8')));
   const journalFiles = listHtmlFiles(path.join(ROOT, 'journal'), { excludeTemplate: true });
   let storeFiles = listHtmlFiles(path.join(ROOT, 'stores'));
   // SEO-094: stores/area/ 配下（エリア×ジャンル×条件ページ）は生成器が全ページを一律に

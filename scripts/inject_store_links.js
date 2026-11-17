@@ -268,9 +268,12 @@ function renderSceneIndexBlock() {
   ];
 
   const rendered = groups.map(([label, list]) => {
+    const seenFeature = new Set();
     const items = list
       // 実在する特集ファイルにしかリンクしない（リンク切れをビルド時に防ぐ）
       .filter(x => x.feature && fs.existsSync(path.join(ROOT, x.feature)))
+      // 統合した特集（kw は検索語の対応づけに残る）が同じ特集を指す語は、最初の1つだけ出す（S5-3・0077）
+      .filter(x => !seenFeature.has(x.feature) && seenFeature.add(x.feature))
       .map(x => `<li><a href="${escapeHtml(x.feature)}">${escapeHtml(sceneLinkText(x))}</a></li>`);
     if (!items.length) return '';
     return `<div class="scene-index-group">

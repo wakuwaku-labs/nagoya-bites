@@ -69,7 +69,7 @@ const SCENE_VOCAB = [
   { kw: 'モーニング', aliases: ['モーニング', '喫茶'],            feature: 'features/nagoya-morning.html' },
   { kw: '食べ歩き', aliases: ['食べ歩き'],                       feature: 'features/osu-food-walk.html' },
   // label: トップ「目的から探す」のリンク文（省くと「名古屋の<kw>」）。kw は検索語の対応づけに使うので変えない（P-330）
-  { kw: '業界人',   aliases: ['業界人', '飲食人'],               feature: 'features/industry-insiders-pick.html',
+  { kw: '業界人',   aliases: ['業界人', '飲食人'],               feature: 'features/kospa-insider.html', // industry-insiders-pick は kospa-insider に統合した（S5-3・0077）。トップの一覧は同じ特集を2回出さない（inject_store_links.js）
     label: '飲食業界の人が通う店' }
 ];
 
@@ -104,7 +104,7 @@ const GENRE_VOCAB = [
   { kw: '居酒屋', aliases: ['居酒屋'],                     feature: 'features/nagoya-izakaya.html' },
   { kw: '寿司',   aliases: ['寿司', '鮨'],                 feature: 'features/nagoya-sushi-guide.html' },
   { kw: 'ひつまぶし', aliases: ['ひつまぶし', 'うなぎ'],   feature: 'features/nagoya-hitsumabushi.html' },
-  { kw: '焼き鳥', aliases: ['焼き鳥', '焼鳥'],             feature: 'features/nagoya-yakitori-guide.html' },
+  { kw: '焼き鳥', aliases: ['焼き鳥', '焼鳥'],             feature: 'features/nagoya-yakitori.html' }, // nagoya-yakitori-guide は nagoya-yakitori に統合した（S5-3・0077）
   { kw: 'ラーメン', aliases: ['ラーメン'],                 feature: 'features/nagoya-ramen.html' },
   { kw: '手羽先', aliases: ['手羽先'],                     feature: 'features/nagoya-tebasaki.html' },
   { kw: '味噌煮込みうどん', aliases: ['味噌煮込み'],       feature: 'features/nagoya-miso-nikomi-udon.html' },

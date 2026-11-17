@@ -32,8 +32,8 @@ const TOPIC_FEATURES = [
   [/ステーキ/, 'nagoya-steak', 'ステーキ10選'],
   [/鉄板焼/, 'nagoya-teppanyaki', '鉄板焼き10選'],
   [/すき焼き|しゃぶしゃぶ/, 'nagoya-sukiyaki', 'すき焼き・しゃぶしゃぶ10選'],
-  [/コーチン|地鶏/, 'nagoya-yakitori-guide', '炭火・地鶏の焼き鳥10選', 'nagoya-yakitori'],
-  [/焼鳥|焼き鳥|やきとり|串焼/, 'nagoya-yakitori', '焼き鳥10選'],
+  // コーチン・地鶏の記事を受けていた nagoya-yakitori-guide は nagoya-yakitori に統合した（S5-3・0077）
+  [/コーチン|地鶏|焼鳥|焼き鳥|やきとり|串焼/, 'nagoya-yakitori', '焼き鳥10選'],
   [/寿司|鮨|すし/, 'nagoya-sushi-guide', '鮨8選'],
   [/ラーメン|まぜそば|つけ麺/, 'nagoya-ramen', 'ラーメン12選'],
   [/餃子/, 'nagoya-gyoza', '餃子10選'],

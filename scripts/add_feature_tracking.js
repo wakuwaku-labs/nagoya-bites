@@ -176,7 +176,9 @@ function checkMachineCheck() {
 function main() {
 const files = fs.readdirSync(FEATURES_DIR)
   .filter(f => f.endsWith('.html') && (!ONLY || f.startsWith(ONLY)))
-  .map(f => path.join(FEATURES_DIR, f));
+  .map(f => path.join(FEATURES_DIR, f))
+  // 統合して転送ページにした特集（S5-3・0077）は、計測のスクリプトを足さない（転送だけの最小のページ）
+  .filter(f => !require('./lib/feature_merges').isMergedStub(fs.readFileSync(f, 'utf8')));
 
 for (const f of files) processFile(f);
 

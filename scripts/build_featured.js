@@ -265,7 +265,9 @@ function validateConfig(cfg, featMap, featureSlugs) {
 }
 function listFeatureSlugs() {
   const dir = path.join(ROOT, 'features');
-  return new Set(fs.readdirSync(dir).filter(f => f.endsWith('.html')).map(f => f.replace(/\.html$/, '')));
+  // 統合して転送ページにした特集は、特集の一覧・おすすめの対象にしない（S5-3・0077）
+  const live = require('./lib/feature_merges').filterLiveFeatureFiles(dir, fs.readdirSync(dir).filter(f => f.endsWith('.html')));
+  return new Set(live.map(f => f.replace(/\.html$/, '')));
 }
 
 // ───────── 季節バナー注入（記事本文がその月のシーンに「伴う」ようにする） ─────────

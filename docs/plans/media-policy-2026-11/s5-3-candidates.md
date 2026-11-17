@@ -53,3 +53,9 @@
 1. **B の向き（決定7の実行）**: yakitori の2本はどちらを残すか（推奨: 流入が多い `nagoya-yakitori` に寄せる。ただし役割表の「主」は guide）。「業界人の推薦」系は `kospa-insider` に寄せてよいか。実行は、内部リンクの張り替えを済ませてから別のPRで行う。
 2. **A-2**: 季節切れ4本を検索に出さない設定にしない（推奨）で良いか。
 3. **C**: 作り替え・絞り込みを S2 の掲載条件と一緒に進めてよいか。
+
+## 実行済み（2026-11-17・決定 0077）
+本人の返事「全て推奨で」を受け、次の2組だけを寄せた。ほかの組は寄せない。季節が過ぎた4本は検索に残したまま（A-2＝しない）。
+- nagoya-yakitori-guide → nagoya-yakitori
+- industry-insiders-pick → kospa-insider
+手順・戻し方は `docs/decisions/0077-merge-overlapping-features.md`。記録の正本は `data/feature_merges.json`、実行は `node scripts/merge_features.js`。

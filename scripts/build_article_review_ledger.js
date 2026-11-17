@@ -39,6 +39,7 @@
 const fs = require('fs');
 const path = require('path');
 const { listPublishedPages } = require('./lib/published_pages');
+const { isMergedStub } = require('./lib/feature_merges');
 const { compilePolicy, loadPolicy: loadWording, scanHtml } = require('./audit_selection_wording');
 
 const ROOT = path.join(__dirname, '..');
@@ -120,7 +121,8 @@ function seasonalExpired(title, today) {
 
 function build({ root = ROOT, today = new Date() } = {}) {
   const pages = listPublishedPages({ root });
-  const articles = pages.filter((p) => (p.type === 'feature' || p.type === 'journal') && !/\/(index)\.html$/.test(p.rel));
+  // 統合して転送ページにした特集（S5-3・0077）は記事ではないので台帳に載せない
+  const articles = pages.filter((p) => (p.type === 'feature' || p.type === 'journal') && !/\/(index)\.html$/.test(p.rel) && !isMergedStub(fs.readFileSync(p.abs, 'utf8')));
   const compiled = compilePolicy(loadWording(root));
   const trust = readJson('data/trust_display_policy.json', {});
   const assertion = trust.assertionWords || [];
@@ -202,7 +204,7 @@ function build({ root = ROOT, today = new Date() } = {}) {
 function missingFrom(ledger, root = ROOT) {
   const have = new Set(ledger.articles.map((a) => a.path));
   return listPublishedPages({ root })
-    .filter((p) => (p.type === 'feature' || p.type === 'journal') && !/\/index\.html$/.test(p.rel))
+    .filter((p) => (p.type === 'feature' || p.type === 'journal') && !/\/index\.html$/.test(p.rel) && !isMergedStub(fs.readFileSync(p.abs, 'utf8')))
     .map((p) => p.rel).filter((r) => !have.has(r));
 }
 
