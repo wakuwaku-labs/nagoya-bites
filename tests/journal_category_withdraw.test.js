@@ -231,3 +231,9 @@ test('x-delete.yml: slug 指定・dry_run・失敗の原因の要約がある（
   for (const s of ['slug:', 'dry_run:', 'GITHUB_STEP_SUMMARY', 'spend cap', '"kind":"payment"']) assert.ok(y.includes(s), s);
   assert.ok(/tweet_id:[\s\S]*?required: false/.test(y));
 });
+
+test('曜日は端末の時間帯に依らない（UTC の CI でも日曜は日曜）', () => {
+  const { execFileSync } = require('child_process');
+  const out = execFileSync(process.execPath, ['-e', "process.stdout.write(require('./scripts/pick_daily_topic').pickDailyTopic('2026-11-22').weekday)"], { cwd: require('path').join(__dirname, '..'), env: { ...process.env, TZ: 'UTC' } }).toString();
+  assert.strictEqual(out, '日');
+});
