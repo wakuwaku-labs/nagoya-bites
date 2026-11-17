@@ -10,15 +10,23 @@ const { scanFeatureStars } = require('../scripts/lib/feature_stars');
 
 const ctx = makeContext();
 
-test('特集の現在の中身は、誤解を招く表示が0件', () => {
+// 星の食い違い・休業の注記は日々のデータ（build.js の再取得）で変わり、build.yml では npm test の
+// 後の sync_feature_scores.js / sync_feature_closure_notes.js が直し、その後の
+// audit_feature_facts.js --check が確かめる。ここ（npm test は同期より前に走る）では、
+// 記事に書かれた文だけで決まる種類に絞る（2026-11-17 定時ビルドがデータ更新だけで落ちた）。
+const DATA_DEPENDENT = new Set(['星の食い違い', '休業の注記']);
+
+test('特集の現在の中身は、誤解を招く表示が0件（データの日々の更新で変わる種類は build.yml の同期後の監査で見る）', () => {
   const fs = require('fs');
   const path = require('path');
   const dir = path.join(__dirname, '..', 'features');
-  let n = 0;
+  const found = [];
   for (const f of fs.readdirSync(dir).filter((x) => x.endsWith('.html'))) {
-    n += auditHtml(fs.readFileSync(path.join(dir, f), 'utf8'), ctx).length;
+    for (const x of auditHtml(fs.readFileSync(path.join(dir, f), 'utf8'), ctx)) {
+      if (!DATA_DEPENDENT.has(x.kind)) found.push(`${f}: ${x.kind} ${x.text}`);
+    }
   }
-  assert.strictEqual(n, 0);
+  assert.deepStrictEqual(found, []);
 });
 
 test('掲載歴・訪問済バッジ・食べログ点数・内部の項目名を検出する', () => {

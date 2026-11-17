@@ -63,14 +63,6 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .cta-box{max-width:900px;margin:0 auto;padding:0 1.5rem 3rem;text-align:center;}
 .cta-link{display:inline-block;font-size:.82rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.7rem 1.6rem;border-radius:3px;transition:background .2s;letter-spacing:.06em;margin:.3rem;}
 .cta-link:hover{background:rgba(122,92,16,.08);}
-.journal-filter{display:flex;flex-wrap:wrap;gap:var(--sp-2);padding:var(--sp-3) 0 var(--sp-4);border-bottom:1px solid var(--border);}
-.journal-filter[hidden]{display:none;}
-.jf-chip{font-family:var(--font-body);font-size:var(--fs-sm);line-height:var(--lh-ui);min-height:var(--tap-min);padding:0 var(--sp-4);border:1px solid var(--card-border);background:var(--card);color:var(--text);border-radius:var(--r-pill);cursor:pointer;display:inline-flex;align-items:center;gap:var(--sp-2);transition:background var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out);}
-.jf-chip:hover{border-color:var(--gold);}
-.jf-chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#fff;}
-.jf-chip:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
-.jf-count{font-family:var(--font-mono);font-size:var(--fs-2xs);opacity:.8;}
-.journal-entry[hidden]{display:none;}
 @media(max-width:640px){.journal-entry{grid-template-columns:1fr;gap:.4rem;}}</style>
 </head>
 <body>
@@ -122,11 +114,20 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <div class="journal-list" id="journal-list">
   <!-- ENTRIES_START -->
 <div class="journal-filter" id="journal-filter" role="group" aria-label="記事の分類で絞り込む" hidden>
-    <button type="button" class="jf-chip" data-filter="all" aria-pressed="true">すべて<span class="jf-count">185</span></button>
-    <button type="button" class="jf-chip" data-filter="topic" aria-pressed="false">話題のお店紹介<span class="jf-count">138</span></button>
+    <button type="button" class="jf-chip" data-filter="all" aria-pressed="true">すべて<span class="jf-count">186</span></button>
+    <button type="button" class="jf-chip" data-filter="topic" aria-pressed="false">話題のお店紹介<span class="jf-count">139</span></button>
     <button type="button" class="jf-chip" data-filter="guide" aria-pressed="false">店選びガイド<span class="jf-count">32</span></button>
     <button type="button" class="jf-chip" data-filter="compare" aria-pressed="false">比較・特集<span class="jf-count">15</span></button>
   </div>
+
+  <a class="journal-entry" href="2026-11-17-kanayama-shokukan-hotpot-bonenkai-private-room.html" data-category="topic">
+    <div class="entry-date">2026-11-17</div>
+    <div class="entry-body">
+      <h2>金山の忘年会に火鍋『蜀漢 ショクカン 金山駅店』、飲み放題込み5,000円と個室20名まで</h2>
+      <p>金山駅1分の四川火鍋店「蜀漢 ショクカン 金山駅店」の忘年会。120分飲み放題込み5,000円は、料理3,850円に飲み放題2,200円を足すより1,050円安い。ラストオーダー90分、個室は最大20名、貸切は50名から。予約前の確認点を整理。</p>
+      <span class="entry-theme">季節短信</span>
+    </div>
+  </a>
 
   <a class="journal-entry" href="2026-11-16-meieki-ibushigin-bonenkai-nomihoudai-150.html" data-category="topic">
     <div class="entry-date">2026-11-16</div>
@@ -1849,23 +1850,6 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   var timer=null;
   window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
   check();
-})();
-</script>
-<script class="journal-filter-script">
-(function(){
-  var bar=document.getElementById('journal-filter');
-  if(!bar)return;
-  var chips=bar.querySelectorAll('.jf-chip'),rows=document.querySelectorAll('.journal-entry');
-  var valid={all:1,topic:1,guide:1,compare:1};
-  function apply(key){
-    if(!valid[key])key='all';
-    chips.forEach(function(c){c.setAttribute('aria-pressed',c.getAttribute('data-filter')===key?'true':'false');});
-    rows.forEach(function(r){r.hidden=!(key==='all'||r.getAttribute('data-category')===key);});
-    try{history.replaceState(null,'',key==='all'?location.pathname+location.search:'#'+key);}catch(e){}
-  }
-  chips.forEach(function(c){c.addEventListener('click',function(){apply(c.getAttribute('data-filter'));});});
-  bar.hidden=false;
-  apply((location.hash||'').replace('#',''));
 })();
 </script>
 <!-- NB-CHROME:SCRIPT:START -->
