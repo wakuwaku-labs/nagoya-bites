@@ -62,6 +62,19 @@ for (const e of published.entries || []) byDate.set(e.date, e);
 
 const checked = [];
 const missing = [];
+// 基準に届かず「出さなかった日」（S4-3）。故障ではないので欠番（missing）に数えず、別に知らせる。
+// 判定は監査の履歴（data/journal_audit/<日付>.json）の検証できる事実だけ:
+//   enforced=true（本番の条件として動いた）・lane_if_enforced=hold・published=false のすべてを満たす日。
+// shadow の間（今）は enforced が常に false なので、この区別は働かない（従来どおり欠番は故障として扱う）。
+const withheld = [];
+function gateWithheld(date) {
+  try {
+    const a = JSON.parse(fs.readFileSync(path.join(REPO, 'data', 'journal_audit', `${date}.json`), 'utf8'));
+    return a && a.enforced === true && a.lane_if_enforced === 'hold' && a.published === false ? a : null;
+  } catch (e) {
+    return null;
+  }
+}
 
 for (let i = skipToday ? 1 : 0; i < DAYS + (skipToday ? 1 : 0); i++) {
   const date = jstDate(i);
@@ -85,8 +98,15 @@ for (let i = skipToday ? 1 : 0; i < DAYS + (skipToday ? 1 : 0); i++) {
 
   const row = { date, status, detail };
   if (entry && entry.backfilled) row.backfilled = entry.backfilled;
+  if (status === 'missing') {
+    const w = gateWithheld(date);
+    if (w) {
+      row.status = 'withheld';
+      row.detail = `基準に届かず出さなかった日（故障ではない）: ${(w.reasons || []).slice(0, 2).map((r) => r.type).join(', ')}`;
+      withheld.push(row);
+    } else missing.push(row);
+  }
   checked.push(row);
-  if (status === 'missing') missing.push(row);
 }
 
 // ローカル実行ラッパーが最後に残した状態（あれば原因を添える）。
@@ -117,6 +137,8 @@ const result = {
   window_days: DAYS,
   missing_count: missing.length,
   missing,
+  withheld_count: withheld.length,
+  withheld,
   checked,
   last_local_run: health,
   local_run_died: !!localRunDied,
@@ -128,7 +150,7 @@ if (asJson) {
 } else {
   console.log(`日次ジャーナル健全性チェック（JST ${result.today_jst} / 直近${DAYS}日）`);
   for (const r of checked) {
-    const mark = r.status === 'ok' ? '✅' : '❌';
+    const mark = r.status === 'ok' ? '✅' : r.status === 'withheld' ? 'ℹ️' : '❌';
     console.log(`  ${mark} ${r.date}  ${r.detail}${r.backfilled ? `（${r.backfilled} にバックフィル）` : ''}`);
   }
   if (health) {
@@ -138,6 +160,7 @@ if (asJson) {
   }
   console.log('');
   console.log(result.ok ? '✅ 欠番なし' : `❌ 欠番 ${missing.length} 件: ${missing.map((m) => m.date).join(', ')}`);
+  if (withheld.length) console.log(`ℹ️ 基準に届かず出さなかった日 ${withheld.length} 件（故障ではありません）: ${withheld.map((m) => m.date).join(', ')}`);
   if (result.local_run_died) {
     console.log(`⚠️  ローカル実行が今日(${todayJst}) die で終了しています — 自動化が壊れています`);
     if (health.reason) console.log(`   理由: ${health.reason}`);

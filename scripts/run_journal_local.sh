@@ -773,6 +773,29 @@ if ! node scripts/validate_journal_draft.js "$ARTICLE_HTML" ${DAILY_MD:+"$DAILY_
 fi
 log "✅ ラッパー独立 validator PASS"
 
+# (d2) 記事の事実の検査（S4-1〜S4-3・記録だけ）。
+#     出典を取り直して本文の数字と照らし（事実台帳）、別プロセスの読み手に所見を出させ（独立した読み手）、
+#     「本番の条件ならどの道か」を data/journal_audit/ に残す。公開の条件には一切使わない（claims_gate.mode が
+#     shadow の間）。どの段が失敗・打ち切りでも公開は止めない（|| log のみ）。off にすると全部飛ばす。
+#     enforce に切り替える配線は S4-5（本人の承認後）の別の変更で行う。ここは HOLD 判定を変えない。
+CLAIMS_GATE_MODE=$(node -e "
+  try { process.stdout.write(String((require('./data/journal_gate_policy.json').claims_gate||{}).mode||'shadow')); }
+  catch (e) { process.stdout.write('shadow'); }
+" 2>/dev/null)
+if [ "$CLAIMS_GATE_MODE" = "off" ]; then
+  log "ℹ️ claims_gate=off のため事実の検査（記録）を飛ばします"
+else
+  log "事実台帳と出典の照合（verify_article_claims.js・記録だけ）"
+  run_with_timeout 300 node scripts/verify_article_claims.js --date "$TODAY_JST" >>"$LOG" 2>&1 \
+    || log "⚠️ verify_article_claims.js 失敗（非ブロッキング・記録だけの段）"
+  log "独立した読み手（review_article_independent.js・記録だけ）"
+  run_with_timeout 300 caffeinate -s -i -d -u node scripts/review_article_independent.js --date "$TODAY_JST" --claude-bin "$CLAUDE_BIN" >>"$LOG" 2>&1 \
+    || log "⚠️ review_article_independent.js 失敗（非ブロッキング・記録だけの段）"
+  log "3つの道と監査の履歴（journal_lane.js・記録だけ）"
+  node scripts/journal_lane.js --date "$TODAY_JST" >>"$LOG" 2>&1 \
+    || log "⚠️ journal_lane.js 失敗（非ブロッキング・記録だけの段）"
+fi
+
 # (e) 記事 slug が feed.xml に載っているか。漏れていれば build_journal_index.js を走らせて救済。
 if ! grep -q "${TODAY_SLUG}" journal/feed.xml 2>/dev/null; then
   log "feed.xml に ${TODAY_SLUG} が見当たらないため build_journal_index.js を再実行"
@@ -846,6 +869,9 @@ for p in \
   "assets/journal-figures/${TODAY_JST}"-*.png \
   "data/x_post_drafts/${TODAY_JST}.json" \
   "data/x_post_cards/${TODAY_JST}.json" \
+  "data/journal_claims/${TODAY_JST}.json" \
+  "data/journal_claims/${TODAY_JST}.review.json" \
+  "data/journal_audit/${TODAY_JST}.json" \
   "assets/x-cards/${TODAY_JST}.png" ; do
   for f in $p; do
     [ -e "$f" ] && TODAY_FILES+=("$f")
