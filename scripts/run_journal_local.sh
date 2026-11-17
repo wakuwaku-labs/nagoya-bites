@@ -873,7 +873,10 @@ TRACKED_UPDATES=(
 CUR_BRANCH=$(git branch --show-current)
 if [ "$CUR_BRANCH" != "main" ]; then
   log "⚠️ 現在のブランチが main ではありません（${CUR_BRANCH}）。main へ戻します。"
-  if [ -n "$CUR_BRANCH" ] && git merge-base --is-ancestor main HEAD; then
+  # 生成の途中で main 自体が origin へ進むと（取り込みの同期）、Autopilot ブランチは main の子孫で
+  # なくなる（2026-11-17: 記事はできたのにここで止まり未公開）。autopilot/work-* は記事を含む
+  # こちらの作業なので main として付け替え、push の段の journal_sync_origin_main（rebase）で origin に重ねる。
+  if [ -n "$CUR_BRANCH" ] && { git merge-base --is-ancestor main HEAD || [[ "$CUR_BRANCH" == autopilot/work-* ]]; }; then
     git checkout -B main HEAD >>"$LOG" 2>&1 || die "main への付け替えに失敗（${CUR_BRANCH}）"
     git branch -D "$CUR_BRANCH" >>"$LOG" 2>&1 || true
     log "main を ${CUR_BRANCH} の先端へ早送りしました。"
