@@ -3,7 +3,7 @@
  * scripts/build_journal_index.js
  *
  * journal/index.html の記事一覧と journal/feed.xml を journal_published.json から生成。
- * index.html のトップ `<section id="latest-journal">` に最新3件を静的挿入する。
+ * index.html のトップ `<section id="latest-journal">` に最新3件を、最初の画面に分類ごとの最新1本（TOP_ARTICLES 区画・S6-1）を静的挿入する。
  * 記事に「顔の写真」（figure.art-hero-img・写真ゲートを通したもの）があれば、その写真と出所のクレジットをカードに添える（I-24）。
  *
  * 使い方:
@@ -201,6 +201,28 @@ function renderLatestCard(e, photo) {
         </article>`;
 }
 
+// ── トップの最初の画面に置く「3分類の新しい記事」（S6-1・判断の記録 0072）─────────────────
+// 分類（scripts/lib/journal_category.js の3つ）ごとに、公開中の最新1本。分類が空ならその行は出さない。
+// 並びは CATEGORIES の順（話題のお店紹介 → 店選びガイド → 比較・特集）。写真は載せない（最初の画面を軽く保つ）。
+function latestPerCategory(entries) {
+  const sorted = (entries || []).slice().sort((a, b) => b.date.localeCompare(a.date));
+  const out = [];
+  for (const key of Object.keys(CATEGORIES)) {
+    const hit = sorted.find(e => categoryOf(e) === key);
+    if (hit) out.push({ key, entry: hit });
+  }
+  return out;
+}
+
+function renderTopArticles(entries) {
+  const rows = latestPerCategory(entries);
+  if (rows.length === 0) return '';
+  const items = rows.map(({ key, entry: e }) => `
+      <li class="ta-item"><a class="ta-link" href="journal/${esc(e.slug)}.html" data-category="${key}"><span class="ta-meta"><span class="ta-cat">${esc(CATEGORIES[key].label)}</span><time datetime="${esc(e.date)}">${esc(e.date.slice(5).replace('-', '/'))}</time></span><span class="ta-title">${esc(e.title)}</span></a></li>`).join('');
+  return `<ul class="top-articles-list">${items}
+    </ul>`;
+}
+
 // journalDir / rootIndexPath はテスト用（既定は実物の journal/ と index.html）
 function updateRootLatestSection(entries, journalDir, rootIndexPath) {
   const rootIndex = rootIndexPath || path.join(ROOT, 'index.html');
@@ -210,10 +232,17 @@ function updateRootLatestSection(entries, journalDir, rootIndexPath) {
   }
   const latest3 = (entries || []).slice().sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
   const inner = latest3.length === 0 ? '' : latest3.map(e => renderLatestCard(e, readHeroPhoto(e.slug, journalDir))).join('\n');
-  const out = src.replace(
+  let out = src.replace(
     /<!-- LATEST_JOURNAL_START -->[\s\S]*?<!-- LATEST_JOURNAL_END -->/,
     `<!-- LATEST_JOURNAL_START -->${inner}\n      <!-- LATEST_JOURNAL_END -->`
   );
+  // 最初の画面の「3分類の新しい記事」。区画が無いページ（古い試験用の index.html など）では触らない
+  if (/<!-- TOP_ARTICLES_START -->[\s\S]*?<!-- TOP_ARTICLES_END -->/.test(out)) {
+    out = out.replace(
+      /<!-- TOP_ARTICLES_START -->[\s\S]*?<!-- TOP_ARTICLES_END -->/,
+      `<!-- TOP_ARTICLES_START -->\n    ${renderTopArticles(entries)}\n    <!-- TOP_ARTICLES_END -->`
+    );
+  }
   fs.writeFileSync(rootIndex, out);
   return true;
 }
@@ -246,4 +275,4 @@ if (require.main === module) main();
 
 // build.js から呼ぶための export — トップ Daily Journal セクションの
 // 同期忘れを防ぐため、build.js 末尾でも自動実行される。
-module.exports = { buildFilterBar, buildList, buildFeed, main, readHeroPhoto, readCredit, renderLatestCard, updateRootLatestSection };
+module.exports = { buildFilterBar, buildList, buildFeed, main, readHeroPhoto, readCredit, renderLatestCard, updateRootLatestSection, latestPerCategory, renderTopArticles };

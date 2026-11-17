@@ -1,7 +1,7 @@
 # 0039 トップの「全店の索引」を、エリア別の一覧ページへのリンクに置き換える（トップは約半分の重さに・店舗ページまでは 1 回から 2 回・ItemList は 1 本）
 
 - 日付: 2026-10-14
-- 状態: 採用
+- 状態: 一部置き換え済み（0072: トップは「店を探す場所」という位置づけを、記事中心に置き換え）
 - 関連: Linear P-403（親 P-235・UI・UX全面改修・計画の I-25）/ 判断の記録 0021（掲載店数の書き方）・0029（トップの構造化データ）・0036（カードの店舗ページへのリンク）/ `scripts/inject_store_links.js` / `scripts/audit_store_reachability.js` / `tests/top_light_index.test.js` / `tests/audit_store_reachability.test.js` / `tests/index_card_compact.test.js` / `tests/selection_wording_sources.test.js` / `data/page_weight_policy.json`
 
 ## 背景

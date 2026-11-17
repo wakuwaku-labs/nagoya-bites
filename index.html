@@ -251,9 +251,10 @@ document.addEventListener('touchstart',function(){},{passive:true});
 <!-- タイトル/説明文は SERP の切り詰め（モバイル約25〜30字）を前提に、
      競合と同じ「決定版」ではなく差別化要因（広告ゼロ・シーンとエリアで探せる）を
      先頭25字以内に置く。SEO-050 / GSC 2026-08-05 の CTR 0.6% を受けた改稿。
-     2026-10-13 P-330: 店を人が選んだと読める言い方を外した（判断の記録 0032）。 -->
-<title>名古屋グルメ約5,000軒｜広告ゼロ、シーンとエリアで探せるガイド｜NAGOYA BITES</title>
-<meta name="description" content="広告も掲載料も受け取らない、名古屋・愛知だけのグルメガイド。名駅・栄・大須・伏見・金山の居酒屋・焼肉・和食・個室など約5,000軒を掲載。接待・宴会・デート・女子会・一人飲みまで、シーン×エリア×人数で絞り込めます。">
+     2026-10-13 P-330: 店を人が選んだと読める言い方を外した（判断の記録 0032）。
+     2026-11-17 S6-1: 題を理念「飲食店選びの失敗を、情報の力で減らす。」に合わせ、店数の主張を外した（判断の記録 0072・0069 決定2）。 -->
+<title>名古屋の飲食店選びの失敗を、情報の力で減らす｜NAGOYA BITES</title>
+<meta name="description" content="名古屋の飲食店選びの失敗を、情報の力で減らすメディア。広告も掲載料も受け取らず、出典と日付を残した記事で、話題の店・店選びのガイド・比較を伝えます。名駅・栄・大須・伏見・金山の店は、シーン×エリア×人数で絞り込んで探せます。">
 <meta name="keywords" content="名古屋 グルメ,名古屋グルメ,名古屋 居酒屋,名古屋 焼肉,名古屋駅 居酒屋 個室,名古屋 宴会 30人,名古屋 忘年会 宴会場,名古屋 接待 和食,名古屋 個室 大人数,名駅 居酒屋,栄 宴会場,名古屋 忘年会 幹事,大須 グルメ,伏見 ランチ,名古屋めし,名古屋 デート ディナー">
 <!-- Canonical -->
 <link rel="canonical" href="https://nagoya-bites.com/">
@@ -264,8 +265,8 @@ document.addEventListener('touchstart',function(){},{passive:true});
 <!-- ======================================================= -->
 <!-- OGP / Twitter Card                                       -->
 <!-- ======================================================= -->
-<meta property="og:title" content="名古屋グルメ約5,000軒｜広告ゼロ、シーンとエリアで探せるガイド【NAGOYA BITES】">
-<meta property="og:description" content="広告も掲載料も受け取らない、名古屋・愛知だけのグルメガイド。名駅・栄・大須・伏見・金山の居酒屋・焼肉・和食・個室など約5,000軒を掲載。">
+<meta property="og:title" content="名古屋の飲食店選びの失敗を、情報の力で減らす【NAGOYA BITES】">
+<meta property="og:description" content="広告も掲載料も受け取らない、名古屋・愛知だけの飲食店メディア。出典と日付を残した記事で、店選びの失敗を減らします。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nagoya-bites.com/">
 <meta property="og:site_name" content="NAGOYA BITES">
@@ -276,8 +277,8 @@ document.addEventListener('touchstart',function(){},{passive:true});
 <meta property="og:image:alt" content="NAGOYA BITES — 名古屋グルメガイド">
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="名古屋グルメ約5,000軒｜広告ゼロ、シーンとエリアで探せるガイド【NAGOYA BITES】">
-<meta name="twitter:description" content="名古屋（名駅・栄・大須・伏見・金山ほか）の居酒屋・焼肉・和食・個室を約5,000軒掲載。広告も掲載料も受け取らない名古屋グルメガイド。店舗の選定にはAIによる情報収集・分析を活用しています。">
+<meta name="twitter:title" content="名古屋の飲食店選びの失敗を、情報の力で減らす【NAGOYA BITES】">
+<meta name="twitter:description" content="名古屋（名駅・栄・大須・伏見・金山ほか）の飲食店選びの失敗を、出典と日付を残した記事で減らします。広告も掲載料も受け取りません。店舗の選定にはAIによる情報収集・分析を活用しています。">
 <meta name="twitter:image" content="https://nagoya-bites.com/icons/og-default.png">
 <meta name="twitter:image:alt" content="NAGOYA BITES — 名古屋グルメガイド">
 <meta name="twitter:site" content="@NAGOYABITES">
@@ -373,6 +374,8 @@ body:not(.search-active) #grid,
 body:not(.search-active) #pagination{display:none !important;}
 /* SEARCH MODE — 検索/フィルター中は特集・ランキング等の回遊面を畳み、結果を最上部に出す
    （結果が特集や人気店の下に埋もれて見つけられない問題への対処。リセットで元に戻る） */
+body.search-active .site-promise,
+body.search-active .top-articles,
 body.search-active .feature-strip,
 body.search-active #ranking-picks,
 body.search-active #latest-journal-section,
@@ -896,6 +899,50 @@ body.search-query-active .card-why{display:flex;}
 .tp-reason span{white-space:nowrap;}
 .nb-cover-featured{margin-top:var(--sp-5);}
 .nb-cover-featured .trend-picks-list{margin-inline:calc(-1 * var(--hero-gutter,1.5rem));padding-inline:var(--hero-gutter,1.5rem);scroll-padding-inline:var(--hero-gutter,1.5rem);}
+/* ── 最初の画面：理念・このサイトの約束・3分類の新しい記事（S6-1・判断の記録 0072）。店の検索はその次 ── */
+.hero .nb-cover-copy>h1{font-size:clamp(1.75rem,7.4vw,2.75rem);line-height:1.3;}
+.hero .nb-cover-copy>.eyebrow{margin-bottom:.6rem;}
+.site-promise{margin-top:var(--sp-3);padding:var(--sp-1) var(--sp-4) var(--sp-3);background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:var(--r-md);}
+.site-promise-head{display:flex;justify-content:space-between;align-items:center;gap:var(--sp-3);}
+.site-promise-title{font-family:var(--font-body);font-size:var(--fs-sm);font-weight:700;color:var(--text);letter-spacing:0;}
+.site-promise-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+.site-promise-list li{display:flex;gap:var(--sp-2);align-items:flex-start;font-size:var(--fs-xs);line-height:1.5;color:var(--text);}
+.site-promise-list li span{word-break:auto-phrase;text-wrap:pretty;}
+.site-promise-list li .ic{flex:0 0 auto;width:16px;height:16px;margin-top:2px;color:var(--gold);}
+.site-promise-more{display:inline-flex;align-items:center;gap:2px;min-height:var(--tap-min);white-space:nowrap;font-size:var(--fs-xs);font-weight:600;color:var(--gold);text-decoration:none;}
+.site-promise-more .ic{width:14px;height:14px;}
+.site-promise-more:hover{text-decoration:underline;text-underline-offset:3px;}
+.top-articles{margin-top:var(--sp-2);}
+.top-articles-head{display:flex;justify-content:space-between;align-items:baseline;gap:var(--sp-3);}
+.top-articles-title{font-family:var(--font-body);font-size:var(--fs-md);font-weight:700;color:var(--text);letter-spacing:0;}
+.top-articles-all{display:inline-flex;align-items:center;min-height:var(--tap-min);font-size:var(--fs-xs);font-weight:600;color:var(--gold);text-decoration:none;white-space:nowrap;}
+.top-articles-all .ic{width:14px;height:14px;}
+.top-articles-all:hover{text-decoration:underline;text-underline-offset:3px;}
+.top-articles-list{list-style:none;margin:0;padding:0;}
+.ta-item{border-top:1px solid var(--border);}
+.ta-link{display:flex;flex-direction:column;gap:2px;padding:var(--sp-2) 0;min-height:var(--tap-min);color:inherit;text-decoration:none;}
+.ta-meta{display:flex;align-items:center;gap:var(--sp-2);font-size:var(--fs-xs);line-height:1.4;color:var(--dim);}
+.ta-cat{font-weight:700;color:var(--gold);}
+.ta-title{font-size:var(--fs-sm);font-weight:600;line-height:1.45;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.ta-link:hover .ta-title{text-decoration:underline;text-underline-offset:3px;}
+.ta-link:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:var(--r-sm);}
+.nb-cover-copy .search-wrap{margin-top:var(--sp-4);}
+@media(min-width:1024px){
+  .hero .nb-cover-copy>h1{font-size:clamp(2.25rem,3.4vw,3rem);}
+  .site-promise{padding:var(--sp-4) var(--sp-5);}
+  .site-promise-list li{font-size:var(--fs-sm);}
+  .site-promise-list li .ic{width:18px;height:18px;}
+  .ta-title{font-size:var(--fs-md);}
+  /* 広い画面: 左は 理念→約束→検索→入口、右は 新しい記事→今日の話題店。検索は左の列の最初の画面に収める */
+  .hero.nb-cover{column-gap:var(--sp-7);row-gap:0;padding-top:clamp(1.5rem,3vw,2.5rem);padding-bottom:clamp(1.5rem,3vw,2.5rem);}
+  .hero .nb-cover-copy{display:contents;}
+  .hero .nb-cover-copy>*{grid-column:1;}
+  .hero .nb-cover-copy>.top-articles{grid-column:2;grid-row:1 / span 3;margin-top:0;align-self:start;padding-top:var(--sp-5);}
+  .hero .nb-cover-copy>.eyebrow{margin-bottom:.6rem;}
+  .hero .nb-cover-featured{grid-column:2;grid-row:4 / span 3;padding-top:var(--sp-5);}
+  .hero .nb-cover-copy>.search-wrap{margin-top:var(--sp-5);}
+  .hero .nb-cover-copy>.scene-nav{margin-top:var(--sp-4);}
+}
 .ranking-picks{margin:clamp(2rem,4vw,3rem) auto 0;max-width:var(--container-wide);padding:0 1.5rem;}
 .ranking-picks .tp-item{flex-basis:min(44vw,200px);}
 @media(min-width:1024px){
@@ -1084,13 +1131,6 @@ h3.cn{margin:0 0 6px;font-family:var(--font-body);}
   .latest-journal-card.has-photo .ljc-title{font-size:var(--fs-sm);}
   .latest-journal-card.has-photo .ljc-theme{margin-top:0;}
 }
-/* ── AUTHORITY BAR ── */
-.authority-bar{background:var(--text);color:var(--bg);padding:.65rem 1.5rem;display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;align-items:center;justify-content:center;font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;}
-.auth-item{display:flex;align-items:center;gap:.4rem;white-space:nowrap;}
-.auth-item strong{color:var(--gold);font-weight:700;}
-.auth-item .auth-icon{font-size:.9rem;line-height:1;}
-.auth-sep{color:rgba(247,245,241,.25);font-size:var(--fs-xs);}
-@media(max-width:640px){.authority-bar{padding:.55rem 1rem;font-size:var(--fs-xs);gap:.35rem 1rem;}.auth-sep{display:none;}}
 /* ── NO-SAKURA BANNER ── */
 .no-sakura-banner{background:var(--ink);color:var(--bg);padding:clamp(2.5rem,5vw,3.8rem) 1.5rem clamp(2.8rem,5.5vw,4rem);}
 .no-sakura-inner{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:1.3rem;}
@@ -1366,10 +1406,6 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 .area-pills-ic{color:var(--gold);width:20px;height:20px;}
 .scene-chip{min-width:var(--tap-min);min-height:var(--tap-min);justify-content:center;border-radius:var(--r-pill);box-shadow:none;letter-spacing:0;font-size:var(--fs-sm);}
 @media(hover:hover){.scene-chip:hover{box-shadow:none;}}
-.authority-bar{background:transparent;color:var(--text);display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem 2rem;padding:.9rem 1rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.auth-item{display:inline-flex;align-items:center;gap:.45rem;font-size:var(--fs-sm);font-weight:500;white-space:nowrap;}
-.auth-item .ic{color:var(--gold);width:20px;height:20px;}
-.authority-bar .num-serif{font-family:var(--font-body);font-weight:700;}
 .nb-more-lite{display:inline-flex;align-items:center;gap:.15rem;min-height:var(--tap-min);font-size:var(--fs-sm);font-weight:600;color:var(--gold);text-decoration:none;}
 .ljc-date{font-family:var(--font-body);font-style:normal;font-size:var(--fs-xs);color:var(--dim);letter-spacing:0;}
 .ljc-title{font-family:var(--font-body);font-weight:700;line-height:1.5;}
@@ -1433,7 +1469,6 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 @media(max-width:768px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(min-width:769px) and (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(max-width:720px){.no-sakura-pillars{grid-template-columns:1fr;border:0;}.no-sakura-pillar{border:0;padding:0;}}
-@media(max-width:640px){.authority-bar{display:grid;grid-template-columns:1fr 1fr;gap:.6rem 1rem;}.auth-item{font-size:var(--fs-xs);}.auth-item:last-child:nth-child(odd){grid-column:1/-1;justify-content:center;}}
 /* ===== 動きの段階 2・3a（P-490・段階 3a・動きの計画 2 章）: 押した結果を処理より先に見た目で返す ===== */
 /* 押した見た目（A1・段階 3a の A-1〜A-3）: 押した物が沈み、色が濃くなる。押し込み 50ms（--dur-instant）・戻り 200ms（--dur-base）。
    色は内側の影で濃くする（暗さ .16。グラデーションの背景でも同じに濃くなる。filter は動かさない）。暗い面（写真の上の ♡・写真の左右）は白 .16 で明るくする。
@@ -1522,7 +1557,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
   "name": "NAGOYA BITES",
   "alternateName": "名古屋グルメガイド NAGOYA BITES",
   "url": "https://nagoya-bites.com/",
-  "description": "名古屋（名駅・栄・大須・伏見・金山ほか）の居酒屋・焼肉・和食・個室・宴会場を約5,000軒掲載した名古屋グルメガイド。店舗の選定にはAIによる情報収集・分析を活用しています。",
+  "description": "名古屋（名駅・栄・大須・伏見・金山ほか）の飲食店選びの失敗を、情報の力で減らす記事中心の名古屋グルメガイド。店舗の選定にはAIによる情報収集・分析を活用しています。",
   "inLanguage": "ja",
   "publisher": {
     "@type": "Organization",
@@ -1541,9 +1576,9 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "名古屋グルメ決定版｜飲食店約5,000軒を掲載【NAGOYA BITES】",
+  "name": "名古屋の飲食店選びの失敗を、情報の力で減らす【NAGOYA BITES】",
   "url": "https://nagoya-bites.com/",
-  "description": "名古屋（名駅・栄・大須・伏見・金山ほか）の居酒屋・焼肉・和食・宴会場・個室グルメを約5,000軒掲載。ジャンル・エリア・シーン・人数から絞り込み検索できる名古屋グルメの総合ガイド。",
+  "description": "名古屋（名駅・栄・大須・伏見・金山ほか）の飲食店選びの失敗を、出典と日付を残した記事で減らす。店はジャンル・エリア・シーン・人数から絞り込んで探せる。",
   "inLanguage": "ja",
   "isPartOf": {
     "@type": "WebSite",
@@ -1630,7 +1665,34 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 
 <section class="hero nb-cover">
   <div class="nb-cover-copy">
-  <h1>名古屋の店を、<br><em>確かめられる</em><br><span class="fade">情報で選ぶ。</span></h1>
+  <!-- 最初の画面（S6-1・判断の記録 0072）: 理念 → このサイトの約束 → 3分類の新しい記事 → 店の検索（2番目）の順。店数の主張は置かない -->
+  <p class="eyebrow">名古屋の飲食店ガイド</p>
+  <h1>飲食店選びの失敗を、<br><em>情報の力</em>で減らす。</h1>
+  <section class="site-promise" aria-labelledby="site-promise-title">
+    <div class="site-promise-head">
+      <h2 class="site-promise-title" id="site-promise-title">このサイトの約束</h2>
+      <a class="site-promise-more" href="features/editorial-policy.html">編集規約<svg class="ic" aria-hidden="true"><use href="#i-chevron-right"/></svg></a>
+    </div>
+    <ul class="site-promise-list">
+      <li><svg class="ic" aria-hidden="true"><use href="#i-ban"/></svg><span>広告費・掲載料は受け取りません</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span>出典・日付を残し、不確かな記述は取り下げます</span></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><span>AIが集めて書き、検査しています（人が店で確かめた記事ではありません）</span></li>
+    </ul>
+  </section>
+  <!-- 3分類の新しい記事。↓ この区画は scripts/build_journal_index.js が data/journal_published.json から自動生成（分類ごとの最新1本）。手で編集しない。 -->
+  <section class="top-articles" aria-labelledby="top-articles-title">
+    <div class="top-articles-head">
+      <h2 class="top-articles-title" id="top-articles-title">新しい記事</h2>
+      <a class="top-articles-all" href="journal/index.html">記事をすべて見る<svg class="ic" aria-hidden="true"><use href="#i-chevron-right"/></svg></a>
+    </div>
+    <!-- TOP_ARTICLES_START -->
+    <ul class="top-articles-list">
+      <li class="ta-item"><a class="ta-link" href="journal/2026-11-17-kanayama-shokukan-hotpot-bonenkai-private-room.html" data-category="topic"><span class="ta-meta"><span class="ta-cat">話題のお店紹介</span><time datetime="2026-11-17">11/17</time></span><span class="ta-title">金山の忘年会に火鍋『蜀漢 ショクカン 金山駅店』、飲み放題込み5,000円と個室20名まで</span></a></li>
+      <li class="ta-item"><a class="ta-link" href="journal/2026-11-11-sakae-teppanya-daikichi-10-seats-late-night.html" data-category="guide"><span class="ta-meta"><span class="ta-cat">店選びガイド</span><time datetime="2026-11-11">11/11</time></span><span class="ta-title">栄の地下「鉄板屋大吉」10席で朝5時まで、一人飲み・二軒目の少席店が回る理由</span></a></li>
+      <li class="ta-item"><a class="ta-link" href="journal/2026-11-09-sakae-mitsukoshi-sushi-no-midori-alain-ducasse.html" data-category="compare"><span class="ta-meta"><span class="ta-cat">比較・特集</span><time datetime="2026-11-09">11/09</time></span><span class="ta-title">栄三越の寿司「すしの美登利」とアラン・デュカス・ショコラ、新店2軒を予約と時間で使い分け</span></a></li>
+    </ul>
+    <!-- TOP_ARTICLES_END -->
+  </section>
   <div class="search-wrap">
     <label for="si" class="visually-hidden">レストランを検索</label>
     <span class="search-field">
@@ -1779,13 +1841,6 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
   </div><!-- /feature-top-rail -->
   <div class="feature-top-foot"><a class="feature-top-all" href="features/index.html">特集をすべて見る ›</a></div>
 </section>
-
-<!-- 権威性バー -->
-<div class="authority-bar">
-  <span class="auth-item"><svg class="ic" aria-hidden="true"><use href="#i-store"/></svg><span><span class="num-serif" id="auth-total">5,000</span>店</span></span>
-  <span class="auth-item"><svg class="ic" aria-hidden="true"><use href="#i-ban"/></svg><span>広告なし・掲載料なし</span></span>
-  <span class="auth-item"><svg class="ic" aria-hidden="true"><use href="#i-layout-grid"/></svg><span>4媒体を比較</span></span>
-</div>
 
 <!-- アクティブフィルターチップ -->
 <div class="active-chips" id="active-chips"></div>
@@ -2604,12 +2659,6 @@ function fetchFullCatalog() {
 function loadStores(stores) {
   ALL_STORES = stores.filter(function(s){ return s['公開フラグ'] !== 'FALSE'; });
   FILTERED = ALL_STORES.slice();
-  // 権威性バーの数値を実データから動的に反映（自己申告値を置かない：制約10）
-  var totalTxt = ALL_STORES.length.toLocaleString();
-  ['auth-total'].forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el) el.textContent = totalTxt;
-  });
   readHash();       // restore filter state from URL hash
   applyFilters();   // apply restored state (replaces the initial renderGrid call)
   nbRefreshFilterSheet();   // 絞り込みシートが開いている間に全店のデータが届いたら、件数とジャンルの並びを更新する

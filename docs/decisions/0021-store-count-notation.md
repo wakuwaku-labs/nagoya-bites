@@ -1,7 +1,7 @@
 # 0021 サイト全体の掲載店数は、営業中の店を 500 件単位に丸めた「約5,000」と書く
 
 - 日付: 2026-10-12
-- 状態: 採用
+- 状態: 一部置き換え済み（0072: トップの看板から店数の主張を外した（題・説明・権威性バー））
 - 関連: Linear P-272（親 P-235）/ 計画 I-06・U-08 / `scripts/lib/store_count.js` / `scripts/sync_store_count.js` / `scripts/gen_llms_txt.js` / `scripts/add_journal_site_intro.js` / `.github/workflows/build.yml`
 
 ## 背景
