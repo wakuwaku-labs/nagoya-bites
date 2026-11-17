@@ -94,14 +94,17 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .score{display:inline-flex;align-items:center;gap:.3rem;font-size:var(--fs-sm);font-weight:600;color:#d4a017;margin-bottom:1.2rem;}
 .score svg{width:14px;height:14px;fill:#d4a017;}
 .store-glance{margin-bottom:1.2rem;}
-.store-glance-row{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;}
-.score-note{font-size:var(--fs-xs);color:var(--muted);}
+.store-glance-row{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem .5rem;}
+.store-glance-row .score,.store-glance-row .score-note,.store-glance-row .ccs-badge{margin:0;}
+.score-note{word-break:keep-all;overflow-wrap:anywhere;font-size:var(--fs-xs);color:var(--muted);}
+.nb-nowrap{white-space:nowrap;}
+.store-provenance{max-width:none;margin:.4rem 0 0;font-size:var(--fs-sm);line-height:var(--lh-ui);color:var(--muted);}
 .store-facts{margin:.6rem 0 0;font-size:var(--fs-sm);line-height:var(--lh-ui);color:var(--text);}
 .store-chips{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0;padding:0;}
 .store-chips li{font-size:var(--fs-xs);letter-spacing:0;color:var(--muted);border:1px solid var(--border);padding:.3rem .7rem;border-radius:2px;background:var(--surface);}
-.ccs-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.25rem .7rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;margin-left:.6rem;}
+.ccs-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.25rem .7rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;white-space:nowrap;margin:0;}
 .ccs-badge.ccs-badge-pending{color:#767676;border-color:rgba(120,120,120,.35);background:rgba(120,120,120,.06);}
-.ccs-badge .ccs-tier{font-weight:700;font-size:var(--fs-xs);margin-left:.25rem;letter-spacing:0;}
+.ccs-badge .ccs-tier{font-weight:700;font-size:var(--fs-xs);margin-left:.25rem;letter-spacing:0;font-family:var(--font-body);}
 .cc-tier-SS{color:#1b5e20;}.cc-tier-A{color:#2e7d32;}.cc-tier-B{color:#46752a;}.cc-tier-C{color:#5f6b63;}.cc-tier-D{color:#767676;}.cc-tier-NA{color:#767676;font-style:italic;}
 .point-box{background:rgba(122,92,16,.07);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:.9rem 1.1rem;margin-bottom:1.6rem;}
 .point-box p{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--text);}
@@ -215,9 +218,10 @@ button.link-btn{font:inherit;cursor:pointer;}
   
   <div class="store-glance">
   <div class="store-glance-row">
-    <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>4</div><span class="score-note">（Google・1件・2026年5月時点・件数が少ない）</span>
-    <span class="ccs-badge ccs-badge-pending" title="口コミ信頼度 —：判定材料不足（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）">口コミ信頼度<span class="ccs-tier cc-tier-NA">—</span></span>
+    <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>4.0</div><span class="score-note">（Google・1件・2026年5月時点・件数が少ない）</span>
+    <span class="ccs-badge ccs-badge-pending" title="口コミ信頼度：判定材料不足（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）">★の見方<span class="ccs-tier cc-tier-NA">判定材料不足</span></span>
   </div>
+    <p class="store-provenance">出所: Googleマップの口コミ（2026年5月22日取得）。件数と★は取得時点のものです。</p>
     <p class="store-facts">久屋大通駅から徒歩3分・予算4001～5000円</p>
     <ul class="store-chips" aria-label="この店の条件"><li>飲み放題あり</li><li>深夜営業（翌1時以降）</li><li>喫煙できる店</li></ul>
   </div>
@@ -253,19 +257,19 @@ button.link-btn{font:inherit;cursor:pointer;}
 
   <div class="trust-breakdown">
     <h2>口コミ信頼度</h2>
-    <p class="trust-headline"><span class="trust-tier cc-tier-NA">—</span><span class="trust-score">— / 100</span> — Google★4（1件）は、判定材料が足りません。</p>
-    <p class="trust-meta-line">検証 2/9項目 ・ Google口コミ取得日 2026-05-22</p>
+    <p class="trust-headline">Google★4.0（1件）は、判定材料が足りません。</p>
+    <p class="trust-meta-line">9項目中2項目を確認</p>
     <details class="trust-details">
       <summary>内訳を見る（9つの検証項目）</summary>
       <p class="trust-breakdown-intro">口コミ信頼度は「この店のGoogle★と件数は、そのまま信じてよいか」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
       <div class="trust-axis-row">
         <span class="trust-axis-name">件数は十分か</span>
-        <span class="trust-axis-score">2/10点</span>
+        <span class="trust-axis-score">確認</span>
         <span class="trust-axis-reason">1件（サンプル不足）</span>
       </div>
       <div class="trust-axis-row">
         <span class="trust-axis-name">★と件数のバランス</span>
-        <span class="trust-axis-score">5/15点</span>
+        <span class="trust-axis-score">確認</span>
         <span class="trust-axis-reason">★4・件数1件（評価は標準）</span>
       </div>
       <div class="trust-axis-row trust-axis-unobserved">
@@ -296,17 +300,17 @@ button.link-btn{font:inherit;cursor:pointer;}
       <p class="trust-meta-heading">掲載データの充実度（口コミ信頼度には含めません）</p>
       <div class="trust-axis-row trust-axis-meta">
         <span class="trust-axis-name">掲載情報の充実</span>
-        <span class="trust-axis-score">9/15点</span>
+        <span class="trust-axis-score"></span>
         <span class="trust-axis-reason">IG解決・推薦文・写真 あり</span>
       </div>
       <div class="trust-axis-row trust-axis-meta">
         <span class="trust-axis-name">営業確認</span>
-        <span class="trust-axis-score">5/5点</span>
+        <span class="trust-axis-score"></span>
         <span class="trust-axis-reason">Hot Pepper 営業継続中</span>
       </div>
       <div class="trust-axis-row trust-axis-meta">
         <span class="trust-axis-name">公式Instagram</span>
-        <span class="trust-axis-score">7/10点</span>
+        <span class="trust-axis-score"></span>
         <span class="trust-axis-reason">公式アカウント あり</span>
       </div>
     </details>
