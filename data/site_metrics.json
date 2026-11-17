@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-17T16:18:14.189Z",
+  "generatedAt": "2026-11-17T22:32:06.595Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 7448,
-    "pageViews": 8923,
-    "sessions": 7844,
+    "activeUsers": 7495,
+    "pageViews": 8973,
+    "sessions": 7884,
     "avgSessionDuration": 55.5,
     "bounceRate": 0.674,
     "pagesPerSession": 1.14
@@ -17,19 +17,19 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2859,
-      "direct": 4727,
+      "organic": 2883,
+      "direct": 4746,
       "social": 55,
       "ai_assistant": 235,
-      "referral": 52,
+      "referral": 53,
       "paid": 0,
-      "other": 2
+      "other": 3
     },
     "pct": {
-      "organic": 36.1,
-      "direct": 59.6,
+      "organic": 36.2,
+      "direct": 59.5,
       "social": 0.7,
-      "ai_assistant": 3,
+      "ai_assistant": 2.9,
       "referral": 0.7,
       "paid": 0,
       "other": 0
@@ -39,22 +39,22 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 4691
+      "sessions": 4704
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1297
+      "sessions": 1314
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 943
+      "sessions": 945
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 584
+      "sessions": 589
     },
     {
       "source": "chatgpt.com",
@@ -89,7 +89,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 14
+      "sessions": 20
     },
     {
       "source": "trend_today",
@@ -109,7 +109,7 @@
     {
       "source": "cn.bing.com",
       "medium": "referral",
-      "sessions": 5
+      "sessions": 6
     },
     {
       "source": "openai",
@@ -210,23 +210,28 @@
       "source": "yahoo.com",
       "medium": "referral",
       "sessions": 1
+    },
+    {
+      "source": "trend_today",
+      "medium": "",
+      "sessions": 1
     }
   ],
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 434,
-      "sessions": 408
+      "pageViews": 437,
+      "sessions": 411
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 238,
-      "sessions": 225
+      "pageViews": 239,
+      "sessions": 226
     },
     {
       "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
-      "pageViews": 158,
-      "sessions": 151
+      "pageViews": 159,
+      "sessions": 152
     },
     {
       "path": "/features/nagoya-unaju.html",
@@ -234,18 +239,18 @@
       "sessions": 86
     },
     {
-      "path": "/features/nagoya-tebasaki.html",
-      "pageViews": 81,
-      "sessions": 84
+      "path": "/",
+      "pageViews": 82,
+      "sessions": 74
     }
   ],
   "cta": {
-    "outboundClicks": 417,
+    "outboundClicks": 420,
     "ctaClickRate": 5.3,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 151
+        "clicks": 152
       },
       {
         "domain": "www.google.com",
@@ -253,11 +258,11 @@
       },
       {
         "domain": "prtimes.jp",
-        "clicks": 51
+        "clicks": 52
       },
       {
         "domain": "tabelog.com",
-        "clicks": 41
+        "clicks": 42
       },
       {
         "domain": "www.instagram.com",
@@ -298,7 +303,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 273,
+      "organic": 276,
       "direct": 69,
       "social": 13,
       "ai_assistant": 52,
@@ -306,13 +311,13 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.5,
+    "ctaClickRate_organic": 9.6,
     "ctaClickRate_direct": 1.5,
     "ctaClickRate_social": 23.6,
     "byPage": [
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-        "clicks": 60
+        "clicks": 61
       },
       {
         "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -435,7 +440,7 @@
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
         "domain": "prtimes.jp",
-        "clicks": 48
+        "clicks": 49
       },
       {
         "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -1142,11 +1147,11 @@
     "reservationClicks": 121,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
-      "ctaEvents": 61,
-      "reservationOutbound": 64,
-      "naiveSum": 125,
-      "deduped": 65,
-      "overlap": 60,
+      "ctaEvents": 62,
+      "reservationOutbound": 65,
+      "naiveSum": 127,
+      "deduped": 66,
+      "overlap": 61,
       "bySite": [
         {
           "site": "hotpepper.jp",
@@ -1156,16 +1161,16 @@
         },
         {
           "site": "tabelog.com",
-          "cta": 9,
-          "outbound": 13,
-          "deduped": 13
+          "cta": 10,
+          "outbound": 14,
+          "deduped": 14
         }
       ]
     }
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 7448,
+    "value": 7495,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
