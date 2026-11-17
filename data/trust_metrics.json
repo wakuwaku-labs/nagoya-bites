@@ -1,0 +1,95 @@
+{
+ "_README": "S7-1 信頼の指標（scripts/trust_metrics.js が毎日作る。週のレポート GAS が読む）。設定は data/trust_metrics_policy.json。history は7日ごとの記録（悪化の見張りが前の週と比べるのに使う）。",
+ "date": "2026-11-17",
+ "generated_at": "2026-11-17T04:48:05.918Z",
+ "policy_version": 1,
+ "indicators": {
+  "evidence_rate": {
+   "value": null,
+   "numerator": 0,
+   "denominator": 0,
+   "measured_articles": 0,
+   "public_articles": 266,
+   "article_mean": null,
+   "mismatch_facts": 0,
+   "facts_per_article": null,
+   "note": "台帳のある記事がまだ無い（事実台帳は新しい記事から貯まる）"
+  },
+  "unconfirmed_disclosure_rate": {
+   "value": 0,
+   "numerator": 0,
+   "denominator": 266,
+   "measured_articles": 266,
+   "public_articles": 266,
+   "recent": {
+    "days": 30,
+    "numerator": 0,
+    "denominator": 31,
+    "value": 0
+   },
+   "note": "「確認できなかったこと」の札または見出しがある記事。全項目を確認できた記事も「なし」になる（計画 1-7 の数え方のまま）"
+  },
+  "misinformation_rate": {
+   "value": 0,
+   "numerator": 0,
+   "denominator": 91,
+   "measured_articles": 91,
+   "public_articles": 186,
+   "window_days": 90,
+   "events_in_window": 0,
+   "note": "公開から90日以内のジャーナル記事のうち、訂正・取り下げの記録がある記事。events_in_window は直近90日に訂正・取り下げの記録がついた記事の本数（古い記事の見直しで見つけたものも入る）。特集は訂正の台帳が無く対象外"
+  },
+  "freshness_rate": {
+   "value": 0.1231,
+   "numerator": 8,
+   "denominator": 65,
+   "measured_articles": 65,
+   "public_articles": 266,
+   "window_days": 90,
+   "no_confirm_date": 57,
+   "note": "検索に出ている記事のうち、本文の確認日が90日以内の割合。確認日の無い記事は鮮度なしとして数える（棚卸し台帳 S5-1 と同じ読み方）"
+  },
+  "analysis_rate": {
+   "value": 0.4211,
+   "numerator": 112,
+   "denominator": 266,
+   "measured_articles": 266,
+   "public_articles": 266,
+   "breakdown": {
+    "calculation": 4,
+    "comparison": 99,
+    "general_rule": 21
+   },
+   "note": "式・比較（表または比べる言い回し）・一般則の言い回しのどれかがある記事。機械が見つけられる形だけを数え、質は毎月10本の読み手の所見で見る"
+  }
+ },
+ "fact_sentences": {
+  "articles": 266,
+  "total": 8174,
+  "per_article_avg": 30.7,
+  "ledger_facts": 0,
+  "ledger_articles": 0,
+  "note": "数字・日付・価格を含む文の数（記事の本文から機械で取り出す。台帳の事実の文とは別の数え方で、記事ごとの増減を見る）"
+ },
+ "reader_voice": {
+  "window_days": 90,
+  "recorded": 0,
+  "error_reports": 0,
+  "could_not_decide": 0,
+  "note": "記事の末尾の部品から届いて台帳に残った声（Formspree に届くのは ひとこと／誤りの指摘 があるときだけ）。はい／いいえの数は GA4 の article_feedback。率は成果の条件にしない"
+ },
+ "recheck": null,
+ "history": [
+  {
+   "date": "2026-11-17",
+   "evidence_rate": null,
+   "unconfirmed_disclosure_rate": 0,
+   "misinformation_rate": 0,
+   "misinformation_events": 0,
+   "freshness_rate": 0.1231,
+   "analysis_rate": 0.4211,
+   "fact_per_article_avg": 30.7,
+   "evidence_measured": 0
+  }
+ ]
+}

@@ -49,6 +49,73 @@ jobs:
           node scripts/nightly_qa.js --window-only --no-advance \
             --hours "${{ github.event.inputs.hours || '26' }}"
 
+      # ── 公開後の鮮度の見張り（媒体方針 S5-5・ADR 0069）──────────────────────────────
+      # 見直す日が来た記事を毎日数本だけ拾い、出典を取り直して照合する。既定は「記録だけ」:
+      # 本番の記事は書き換えない。訂正案と保留は GitHub Issue（→メール）で人に届ける（警報を防音室で鳴らさない・CLAUDE.md 原則2）。
+      # 軽い訂正を自動で書くのは data/trust_metrics_policy.json の recheck.mode=apply_light のときだけ（本人の再承認まで入れない）。
+      # continue-on-error: 見直しの失敗で夜間QAの「FAIL」Issue を汚さない。失敗は下の専用 Issue で知らせる。
+      - name: 公開後の鮮度を見直す（記録だけ）
+        id: recheck
+        if: always() && !cancelled()
+        continue-on-error: true
+        run: node scripts/recheck_due_articles.js --report "${RUNNER_TEMP}/recheck-report.json"
+
+      - name: 見直しで見つけた変更を Issue にする（訂正案・保留）
+        id: recheck_issues
+        if: always() && !cancelled() && steps.recheck.outcome == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = JSON.parse(fs.readFileSync(`${process.env.RUNNER_TEMP}/recheck-report.json`, 'utf8'));
+            const label = 'article-recheck';
+            const { owner, repo } = context.repo;
+            const { data: open } = await github.rest.issues.listForRepo({ owner, repo, state: 'open', labels: label, per_page: 100 });
+            for (const a of report.alerts) {
+              const marker = `<!-- recheck-key: ${a.key} -->`;
+              if (open.some(i => (i.body || '').includes(marker))) { core.info(`起票済み: ${a.key}`); continue; }
+              const { data: created } = await github.rest.issues.create({ owner, repo, title: a.title, body: `${a.body}\n\n${marker}`, labels: [label] });
+              core.info(`起票: #${created.number} ${a.key}`);
+            }
+            core.info(`見直す日が来た記事 ${report.due} 本・見直した ${report.processed.length} 本・Issue の材料 ${report.alerts.length} 件`);
+
+      - name: 見直しの記録をコミット（Issue の起票が通ったときだけ）
+        if: always() && !cancelled() && steps.recheck_issues.outcome == 'success'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/article_recheck_log.json journal data/journal_published.json || true
+          if git diff --cached --quiet; then echo "変更なし"; exit 0; fi
+          git commit -m "chore(recheck): 公開後の鮮度の見直しの記録 [skip actions]"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((i * 5))
+          done
+          echo "::error::見直しの記録を push できませんでした"
+          exit 1
+
+      - name: 見直しが動かなかったら Issue を起票/更新、動いたらクローズ
+        if: always() && !cancelled()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const label = 'article-recheck';
+            const title = '🔴 公開後の鮮度の見直しが動いていません';
+            const { data: open } = await github.rest.issues.listForRepo({ owner, repo, state: 'open', labels: label, per_page: 100 });
+            const existing = open.find(i => i.title === title);
+            const failed = '${{ steps.recheck.outcome }}' === 'failure' || '${{ steps.recheck_issues.outcome }}' === 'failure';
+            const run = `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
+            if (failed) {
+              const body = `夜間の検査に相乗りしている公開後の鮮度の見直し（scripts/recheck_due_articles.js）が失敗しました。\n\n- 原因の候補: 見直す日が来た記事があるのに1本も見直せなかった／例外／Issue の起票の失敗\n- 実行: ${run}\n\n見直しが止まると、公開後に古くなった記事を見つけられません（見張りの見張りは scripts/check_trust_metrics_health.js の recheck_stale）。成功すると自動でクローズします。`;
+              if (existing) await github.rest.issues.createComment({ owner, repo, issue_number: existing.number, body: `再発: ${run}` });
+              else await github.rest.issues.create({ owner, repo, title, body, labels: [label] });
+            } else if (existing && '${{ steps.recheck.outcome }}' === 'success') {
+              await github.rest.issues.createComment({ owner, repo, issue_number: existing.number, body: `✅ 復旧を確認しました（${run}）。自動クローズします。` });
+              await github.rest.issues.update({ owner, repo, issue_number: existing.number, state: 'closed' });
+            }
+
       - name: Upload QA report
         if: always()
         uses: actions/upload-artifact@v4
