@@ -53,7 +53,7 @@ function siteStoreCount(stores) {
 //   (1) 過去にサイト全体の掲載数として書かれた値（scope.legacy）に、店・店舗・軒が続くもの
 //   (2) このスクリプト自身が入れた「約N」（N は 500 の倍数）。丸めた値が変わった日に追随するため
 //   (3) 構造化データの "numberOfItems"（scope.itemCount が真のファイルだけ・1,000 以上のとき）
-//   (4) トップの権威性バー <span id="auth-total"> の静的な数字（scope.authTotal が真のファイルだけ。実行時は JS が上書きする）
+//   (4) 権威性バー <span id="auth-total"> の静的な数字（scope.authTotal が真のファイルだけ。いまトップは外したので対象なし・S6-1）
 //   触らないもの: 「2026年5月時点で4,584店」のような日付つきの数（当時の事実）、ジャンル・エリアごとの件数、
 //   記事が実測した母数（「掲載4,768店の営業時間を実測」）、legacy に無い値。
 // ================================================================
@@ -90,7 +90,8 @@ const DATED_BEFORE = /(?:時点で|現在で|現在、)$/;
 
 /** @type {Record<string, Scope & {files:string[]|{dir:string, ext:string}}>} */
 const SCOPES = {
-  index: { id: 'index', files: ['index.html'], legacy: new Set([4500, 4559, 4584, 5000]), itemCount: true, authTotal: true },
+  // S6-1（0072）: トップの看板から店数の主張を外した（権威性バーも無い）ので authTotal は付けない。numberOfItems と本文の「約N軒」は、あれば追随する
+  index: { id: 'index', files: ['index.html'], legacy: new Set([4500, 4559, 4584, 5000]), itemCount: true },
   'stores-index': { id: 'stores-index', files: ['stores/index.html'], legacy: new Set([4500, 4559, 4584, 5000]), itemCount: true },
   faq: { id: 'faq', files: ['faq.html'], legacy: new Set([1000]) },
   features: { id: 'features', files: { dir: 'features', ext: '.html' }, legacy: new Set([4500, 4559, 4584, 4664, 4910, 5000]), align: true },

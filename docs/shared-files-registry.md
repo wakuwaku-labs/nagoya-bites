@@ -166,3 +166,4 @@
 | `scripts/lib/selection_wording_rules.js` / `scripts/rewrite_selection_wording.js` / `data/top_title_changes.json` | **「業界人」などを題・本文から外す規則と、冪等な移行**。検索流入上位2本の題は `--top`／`--revert` で1本ずつ。記録と戻す条件は `data/top_title_changes.json`（`--report`）。S1-3・ADR 0069 決定4・0071。 |
 | `scripts/clear_places_photos_in_articles.js` / `.github/workflows/article-photo-watchdog.yml` | **記事の Google Places 写真（期限切れ・個人名クレジット）を外す道具と、月次の生死確認**。S1-5・ADR 0071。 |
 | `scripts/gen_feature_theme_figures.js` | **特集7本の顔になる図（記事専用の図）の生成**。Unsplash 由来の写真の置き換え。S1-1・ADR 0071。 |
+| `scripts/lib/journal_category.js` / `scripts/build_journal_index.js`（TOP_ARTICLES 区画） | **トップの最初の画面の「3分類の新しい記事」**（分類ごとの最新1本を `index.html` の `TOP_ARTICLES` の目印の間に静的に書く。build.js から毎日回る）。約束・題・大見出しは index.html に手書き（店数の主張は置かない）。S6-1・ADR 0072・`tests/top_articles_first.test.js`。 |

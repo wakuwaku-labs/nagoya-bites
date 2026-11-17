@@ -63,6 +63,13 @@
       "affects": ["ga4"],
       "summary": "トップの「エリア別 全店舗一覧」（全店の索引）を、エリア×ジャンルの一覧ページ 101 本へのリンクに置き換えた。旧索引のエリアを開くと出ていたカード（modal_open、cta_click の location=card・card_media）は出なくなるため、これらの件数は使われ方の変化ではなく構造の段差として減る（イベント名とパラメータは変えていない）。トップの HTML は約 1.3MB から約 0.65MB に軽くなる。トップから店舗ページへのリンクが無くなる店が 245 店（掲載の約 5%）あり、サイトマップには全店が残る。検索エンジンへの登録の変化は data/index_probe.json（P-437）で見る",
       "evidence": "PR #560・docs/decisions/0039（トップの全店の索引の置き換え）・scripts/audit_store_reachability.js・data/index_probe.json（観測の履歴）・Linear P-403 のコメント（本番での確認結果）"
+    },
+    {
+      "date": "2026-11-17",
+      "id": "S6-1",
+      "affects": ["ga4", "gsc"],
+      "summary": "トップの題・大見出し・最初の画面を、理念「飲食店選びの失敗を、情報の力で減らす。」と記事中心に組み替えた。題は「名古屋グルメ約5,000軒｜広告ゼロ、シーンとエリアで探せるガイド」から「名古屋の飲食店選びの失敗を、情報の力で減らす｜NAGOYA BITES」に変わり、店数の主張と権威性バーを外した。最初の画面は 約束 → 3分類の新しい記事 → 店の検索（下端）→ 入口 → 今日の話題店 の順で、話題店の行・検索窓の位置が下がるため、トップ内の internal_link_click（block=trend_picks など）・search の件数は使われ方の変化ではなく構造の段差として動きうる。GSC のトップの表示・CTR は題の変更前後で比べない（変更日をまたぐ）",
+      "evidence": "docs/decisions/0072-top-first-screen-articles-first.md・tests/top_articles_first.test.js・0069 決定2"
     }
   ]
 }
