@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T08:47:54.947Z",
+  "generatedAt": "2026-11-17T16:18:07.116Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -8,11 +8,11 @@
   },
   "totals": {
     "exits": {
-      "hotpepper": 161,
-      "tabelog": 19,
+      "hotpepper": 159,
+      "tabelog": 20,
       "tel": 8,
       "other": 0,
-      "total": 188
+      "total": 187
     },
     "reports": {
       "yes": 1,
@@ -24,11 +24,11 @@
     "start": "2026-11-01",
     "totals": {
       "exits": {
-        "hotpepper": 101,
-        "tabelog": 14,
+        "hotpepper": 106,
+        "tabelog": 15,
         "tel": 8,
         "other": 0,
-        "total": 123
+        "total": 129
       },
       "reports": {
         "yes": 1,
@@ -52,6 +52,24 @@
       },
       "thisMonth": {
         "exits": 6,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "ひつまぶし 名古屋 備長 エスカ店",
+      "exits": {
+        "hotpepper": 6,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 6
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 3,
         "reportsYes": 0
       }
     },
@@ -110,13 +128,13 @@
       }
     },
     {
-      "store_name": "ひつまぶし 名古屋 備長 エスカ店",
+      "store_name": "ひつまぶし稲生 いのう エスカ店",
       "exits": {
-        "hotpepper": 5,
+        "hotpepper": 4,
         "tabelog": 0,
         "tel": 0,
         "other": 0,
-        "total": 5
+        "total": 4
       },
       "reports": {
         "yes": 0,
@@ -164,10 +182,10 @@
       }
     },
     {
-      "store_name": "ひつまぶし 名古屋 備長 大名古屋ビルヂング店",
+      "store_name": "しら河 浄心本店",
       "exits": {
-        "hotpepper": 3,
-        "tabelog": 0,
+        "hotpepper": 2,
+        "tabelog": 1,
         "tel": 0,
         "other": 0,
         "total": 3
@@ -177,12 +195,12 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 1,
+        "exits": 3,
         "reportsYes": 0
       }
     },
     {
-      "store_name": "ひつまぶし稲生 いのう エスカ店",
+      "store_name": "ひつまぶし 名古屋 備長 大名古屋ビルヂング店",
       "exits": {
         "hotpepper": 3,
         "tabelog": 0,
@@ -236,7 +254,7 @@
       }
     },
     {
-      "store_name": "純系名古屋コーチン 鳥力",
+      "store_name": "鳥心 名駅本店",
       "exits": {
         "hotpepper": 3,
         "tabelog": 0,
@@ -249,7 +267,7 @@
         "no": 0
       },
       "thisMonth": {
-        "exits": 0,
+        "exits": 3,
         "reportsYes": 0
       }
     },
@@ -380,24 +398,6 @@
       }
     },
     {
-      "store_name": "しら河 浄心本店",
-      "exits": {
-        "hotpepper": 2,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 2
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 2,
-        "reportsYes": 0
-      }
-    },
-    {
       "store_name": "ひつまぶし 一葉",
       "exits": {
         "hotpepper": 2,
@@ -466,24 +466,6 @@
       },
       "thisMonth": {
         "exits": 2,
-        "reportsYes": 0
-      }
-    },
-    {
-      "store_name": "居酒屋 炭ス すみす 名古屋駅前店",
-      "exits": {
-        "hotpepper": 2,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 2
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 1,
         "reportsYes": 0
       }
     },
@@ -596,24 +578,6 @@
       }
     },
     {
-      "store_name": "鳥心 名駅本店",
-      "exits": {
-        "hotpepper": 2,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 2
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 1,
-        "reportsYes": 0
-      }
-    },
-    {
       "store_name": "伏見ホルモン 名古屋名物味噌とんちゃん屋",
       "exits": {
         "hotpepper": 2,
@@ -718,24 +682,6 @@
       },
       "thisMonth": {
         "exits": 1,
-        "reportsYes": 0
-      }
-    },
-    {
-      "store_name": "DINING&BAR 青ノ月",
-      "exits": {
-        "hotpepper": 1,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 1
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -952,24 +898,6 @@
       },
       "thisMonth": {
         "exits": 1,
-        "reportsYes": 0
-      }
-    },
-    {
-      "store_name": "うまかばい 名古屋駅前店",
-      "exits": {
-        "hotpepper": 1,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 1
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1388,6 +1316,24 @@
       }
     },
     {
+      "store_name": "居酒屋 炭ス すみす 名古屋駅前店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "魚心あれば酒心 名古屋駅店",
       "exits": {
         "hotpepper": 1,
@@ -1636,6 +1582,24 @@
       },
       "thisMonth": {
         "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "精肉店直営 はなぶさ精肉店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
         "reportsYes": 0
       }
     },
@@ -2277,10 +2241,10 @@
     "geoSearch": "現在地: トップの「現在地」ボタンを押した回数と結果（granted・denied・unsupported・error）。位置・エリア名は送っていない"
   },
   "actions": {
-    "reserve": 180,
+    "reserve": 179,
     "reserveBySite": {
-      "hotpepper": 161,
-      "tabelog": 19,
+      "hotpepper": 159,
+      "tabelog": 20,
       "other": 0
     },
     "tel": 8,
@@ -2289,7 +2253,7 @@
   "map": {
     "total": 134,
     "unattributed": 0,
-    "stores": 62,
+    "stores": 63,
     "top": [
       {
         "store_name": "うな祥",
@@ -2308,12 +2272,12 @@
         "count": 4
       },
       {
-        "store_name": "なかがわ 街仲食堂 by ジーバーFOOD",
+        "store_name": "酔いどれ 名古屋駅前店",
         "count": 4
       },
       {
-        "store_name": "酔いどれ 名古屋駅前店",
-        "count": 4
+        "store_name": "なかがわ 街仲食堂 by ジーバーFOOD",
+        "count": 3
       },
       {
         "store_name": "魚心あれば酒心 名古屋駅店",
@@ -2333,16 +2297,16 @@
       }
     ],
     "byLocation": {
-      "store_page": 69,
-      "journal_store_card": 53,
+      "store_page": 70,
+      "journal_store_card": 52,
       "store_page_bar": 9,
       "modal_sticky": 2,
       "modal_cta": 1
     },
     "byLinkKind": {
       "search": 75,
-      "place_id": 49,
-      "(not set)": 10
+      "place_id": 50,
+      "(not set)": 9
     }
   },
   "callLookup": {
