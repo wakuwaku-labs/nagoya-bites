@@ -292,6 +292,13 @@ jobs:
         run: node scripts/refresh_feature_rosters.js --if-stale
         continue-on-error: true
 
+      - name: 特集の顔を、その特集の掲載店の実写にする（Ondine #2097・冪等・日次・通信なし）
+        # data/feature_faces.json（人が目で選んだ写真）を features/<slug>.html の先頭と features/index.html のカードへ反映する。
+        # 写真はホットペッパー公式写真の URL 参照だけ（加工・自ホストなし）。月次の入れ替え（上の refresh_feature_rosters.js）で
+        # 決めた店が外れた日は、先頭の店で代えて警告を出す（ビルドは止めない）。トップの特集ストリップは build_featured.js が同じ lib で決める。
+        run: node scripts/apply_feature_faces.js
+        continue-on-error: true
+
       - name: 特集の店カードに店舗ページへのリンクを足し、ItemList に url を入れる（冪等・日次・通信なし）
         # 店舗ページが実在するのにリンクの無い店カードへ「詳細ページを見る」を足し、店一覧の構造化データ（ItemList）の
         # url の無い項目へ同じページの店カードのリンク先を入れる。ひも付けは完全一致か先頭一致で1店だけ

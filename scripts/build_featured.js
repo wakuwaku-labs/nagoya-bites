@@ -30,6 +30,8 @@ const fs = require('fs');
 const path = require('path');
 // カードの「N選」「N店掲載」は data/featured.json の手書きではなく、特集ページの確かめられる掲載数に合わせる（SEO-146）
 const { relabelForSlug, featureSlugOf } = require('./lib/feature_counts');
+// 特集の顔は、図ではなくその特集の掲載店の実写（Ondine #2097・data/feature_faces.json）
+const FACE = require('./lib/feature_face');
 
 const ROOT = path.join(__dirname, '..');
 const CONFIG = path.join(ROOT, 'data', 'featured.json');
@@ -66,6 +68,22 @@ function isoWeek(today) {
   return 1 + Math.round(((d - firstThu) / 86400000 - 3 + ((firstThu.getUTCDay() + 6) % 7)) / 7);
 }
 
+// ───────── 特集の顔（図 → 掲載店の実写）─────────
+// 図（feature-figures の svg）を使っているカード、または顔と同じ写真のカードを、顔の写真にして出所を添える。
+// 手で別の写真を入れたカードには触らない。顔を持たない特集（keepFigure・掲載店の写真が無い特集）は図のまま。
+function applyFaceToItem(item, faceCfg) {
+  const slug = featureSlugOf(item.href, '');
+  if (!slug || !(faceCfg.faces && faceCfg.faces[slug])) return item;
+  const file = path.join(ROOT, 'features', `${slug}.html`);
+  if (!fs.existsSync(file)) return item;
+  const face = FACE.resolveFace(slug, fs.readFileSync(file, 'utf8'), faceCfg);
+  if (!face) return item;
+  const isFigure = /feature-figures\/[^"]*\.svg/.test(item.thumb || '');
+  if (!isFigure && FACE.photoId(item.thumb) !== FACE.photoId(face.src)) return item;
+  const credit = FACE.creditText(face, faceCfg).replace(/&/g, '&amp;');
+  return Object.assign({}, item, { thumb: face.src, thumb600: face.src, thumbW: 480, thumbH: 320, thumbCredit: credit });
+}
+
 // ───────── ストリップ HTML 生成 (index.html 用) ─────────
 function renderStripCard(item, idx) {
   const eager = idx < 3;
@@ -84,7 +102,7 @@ function renderStripCard(item, idx) {
       <img class="feature-card-thumb" src="${item.thumb}" srcset="${t600} 600w, ${item.thumb} 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="${alt}" width="${w}" height="${h}" loading="${loading}" decoding="async"${fp}>
       <div class="feature-card-body">
         <div class="feature-card-title">${title}</div>
-        <div class="feature-card-sub">${item.sub}</div>
+        <div class="feature-card-sub">${item.sub}</div>${item.thumbCredit ? `\n        <span class="feature-card-credit">${item.thumbCredit}</span>` : ''}
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
@@ -374,6 +392,8 @@ function main() {
   }
   const sceneIds = new Set(sceneItems.map(s => s.id));
   let stripList = [...sceneItems, ...active.filter(it => !sceneIds.has(it.id))].slice(0, maxSlots);
+  const faceCfg = FACE.loadConfig();
+  stripList = stripList.map(it => applyFaceToItem(it, faceCfg));
 
   console.log(`[build_featured] ストリップ採用 ${stripList.length}件:`);
   stripList.forEach((it, i) => {

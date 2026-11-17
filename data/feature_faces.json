@@ -1,0 +1,112 @@
+{
+  "_comment": "特集の「顔」の写真の正本（Ondine #2097）。scripts/apply_feature_faces.js が特集ページの先頭・特集一覧のカードに、scripts/build_featured.js がトップの特集ストリップに使う。閾値・選定の変更はこのファイルで行いスクリプトは触らない（CLAUDE.md 制約10）。",
+  "rule": "顔の写真は、その特集の掲載店（特集ページの店カード）のホットペッパー公式写真を URL で参照するだけ（加工・切り抜き・自ホストをしない。object-fit は加工にあたらない）。人が候補を目で見て選んだ（reviewedAt）。機械で良し悪しを判定しない。文字が主役の販促バナー・ロゴの看板は選ばない",
+  "reviewedAt": "2026-11-17",
+  "credit": "ホットペッパーグルメ",
+  "fallbackWhenUnlisted": "pinned の店が月次の入れ替えなどで掲載から外れたら、特集ページの店カードの先頭から、rejectedPhotos に無い写真を使う（人の目の再確認が要るので、apply_feature_faces.js が警告を出す）",
+  "faces": {
+    "banquet": {
+      "store": "炉端焼き燻銀 伏見店にかい",
+      "photo": "https://imgfp.hotp.jp/IMGH/89/55/P050938955/P050938955_480.jpg"
+    },
+    "meieki": {
+      "store": "那古野 しば福や 名駅店",
+      "photo": "https://imgfp.hotp.jp/IMGH/41/34/P044174134/P044174134_480.jpg"
+    },
+    "sakae": {
+      "store": "栄ホルモン 名古屋名物味噌とんちゃん屋",
+      "photo": "https://imgfp.hotp.jp/IMGH/31/50/P044673150/P044673150_480.jpg"
+    },
+    "private-room": {
+      "store": "焼肉くまちゃん",
+      "photo": "https://imgfp.hotp.jp/IMGH/77/81/P012197781/P012197781_480.jpg"
+    },
+    "gw-2026": {
+      "store": "炭火和牛焼肉　もうもう亭　栄　広小路店",
+      "photo": "https://imgfp.hotp.jp/IMGH/59/27/P043365927/P043365927_480.jpg"
+    },
+    "spring-terrace": {
+      "store": "BBQ＆ビアガーデン 空にわテラス金山",
+      "photo": "https://imgfp.hotp.jp/IMGH/72/92/P044307292/P044307292_480.jpg"
+    },
+    "mothers-day": {
+      "store": "四間道レストランMATSUURA",
+      "photo": "https://imgfp.hotp.jp/IMGH/25/19/P045912519/P045912519_480.jpg"
+    },
+    "nagoya-meieki-business-dinner": {
+      "store": "すだく 名古屋国際センター店",
+      "photo": "https://imgfp.hotp.jp/IMGH/12/40/P049711240/P049711240_480.jpg"
+    },
+    "nagoya-kaoawase-washoku": {
+      "store": "旬彩倶楽部 鱗",
+      "photo": "https://imgfp.hotp.jp/IMGH/25/77/P020872577/P020872577.jpg"
+    },
+    "nagoya-kaiseki-guide": {
+      "store": "鮨 江戸富士",
+      "photo": "https://imgfp.hotp.jp/IMGH/46/43/P044164643/P044164643_480.jpg"
+    },
+    "nagoya-dining-professionals": {
+      "store": "台所 宗や 金山",
+      "photo": "https://imgfp.hotp.jp/IMGH/68/85/P048876885/P048876885.jpg"
+    },
+    "nagoya-cafe": {
+      "store": "Panel Cafe パネルカフエ 名古屋駅前店",
+      "photo": "https://imgfp.hotp.jp/IMGH/23/55/P049252355/P049252355_480.jpg"
+    },
+    "nagoya-settai-secret": {
+      "store": "焼肉苑 万大 錦店",
+      "photo": "https://imgfp.hotp.jp/IMGH/12/59/P045631259/P045631259_480.jpg"
+    },
+    "fathers-day-2026": {
+      "store": "飛騨牛焼肉　牛ざんまい　納屋橋リバーサイド店",
+      "photo": "https://imgfp.hotp.jp/IMGH/05/80/P047780580/P047780580_480.jpg"
+    },
+    "nagoya-izakaya": {
+      "store": "餃子のかっちゃん 栄錦店",
+      "photo": "https://imgfp.hotp.jp/IMGH/01/43/P039270143/P039270143_480.jpg"
+    },
+    "nagoya-morning": {
+      "store": "コンパル サンロード店",
+      "photo": "https://imgfp.hotp.jp/IMGH/23/63/P038412363/P038412363_480.jpg"
+    },
+    "nagoya-solo-dining": {
+      "store": "おでん 拍子木",
+      "photo": "https://imgfp.hotp.jp/IMGH/69/39/P049516939/P049516939_480.jpg"
+    },
+    "nagoya-steak": {
+      "store": "ステーキハウスSHAKA シャカ JY熱田店",
+      "photo": "https://imgfp.hotp.jp/IMGH/36/79/P041533679/P041533679_480.jpg"
+    },
+    "nagoya-summer-2026": {
+      "store": "炉端とおでん 呼炉凪来 名古屋駅前店",
+      "photo": "https://imgfp.hotp.jp/IMGH/07/22/P042510722/P042510722_480.jpg"
+    },
+    "nagoya-teppanyaki": {
+      "store": "鉄板屋大吉",
+      "photo": "https://imgfp.hotp.jp/IMGH/30/43/P037723043/P037723043_480.jpg"
+    },
+    "nagoya-yakitori": {
+      "store": "やきとり屋 燦",
+      "photo": "https://imgfp.hotp.jp/IMGH/64/09/P049366409/P049366409_480.jpg"
+    }
+  },
+  "rejectedPhotos": [],
+  "replaceHero": [
+    "nagoya-meieki-business-dinner",
+    "nagoya-kaiseki-guide",
+    "nagoya-dining-professionals"
+  ],
+  "keepFigure": {
+    "_comment": "掲載店の写真を持たない特集（方針・仕組みの説明ページ）は、今の図のまま。取り繕わない",
+    "slugs": [
+      "become-reviewer",
+      "integrity-method",
+      "no-fake-reviews",
+      "review-trust",
+      "editorial-policy",
+      "nagoya-gourmet-guide",
+      "nagoya-settai-concierge"
+    ]
+  },
+  "_replaceHero": "人が見て顔にふさわしくない（ロゴが主役など）と判断した、手で入れた顔の写真を、区画の顔に置き換える特集。他の手で入れた顔は触らない"
+}

@@ -338,6 +338,12 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .art-img-credit{font-family:var(--font-mono);font-size:var(--fs-2xs);letter-spacing:.06em;color:var(--dim);text-align:right;padding:.3rem 0;max-width:var(--container-mid);margin:0 auto;}
 .art-img-credit a{color:var(--dim);text-decoration:none;}
 .art-img-credit a:hover{color:var(--gold);}
+/* 特集の顔（掲載店の実写・scripts/apply_feature_faces.js が入れる。出所は文字で添える・Ondine #2097） */
+.nb-feature-face{max-width:880px;margin:.5rem auto 1.2rem;padding:0 1.5rem;}
+.nb-feature-face img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}
+.nb-feature-face .art-hero-credit{font-family:var(--font-body);font-size:var(--fs-xs);line-height:1.5;color:var(--dim);text-align:right;margin:.35rem 0 0;}
+@media(max-width:640px){.nb-feature-face{padding:0;}.nb-feature-face img{aspect-ratio:3/2;border-radius:0;}.nb-feature-face .art-hero-credit{padding:0 1rem;}}
+.card-photo-credit{font-size:var(--fs-xs);line-height:1.5;color:var(--dim);margin:-.4rem 0 .8rem;}
 
 /* 本文中の写真（記事の途中に散らす。判定・配置は scripts/lib/journal_photos.js が持つ）。
    ヒーローより一回り小さくして、本文の流れを断ち切らない見え方にする。 */

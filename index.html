@@ -925,6 +925,13 @@ body.search-query-active .card-why{display:flex;}
 .ta-title{font-size:var(--fs-sm);font-weight:600;line-height:1.45;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .ta-link:hover .ta-title{text-decoration:underline;text-underline-offset:3px;}
 .ta-link:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:var(--r-sm);}
+.ta-link{position:relative;}
+.ta-has-photo .ta-link{flex-direction:row;align-items:center;gap:var(--sp-3);}
+.ta-photo{flex:0 0 80px;width:80px;height:80px;border-radius:var(--r-md);overflow:hidden;background:var(--surface);display:block;}
+.ta-item:first-child.ta-has-photo .ta-photo{flex-basis:112px;width:112px;height:112px;}
+.ta-img{display:block;width:100%;height:100%;object-fit:cover;}
+.ta-text{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.ta-credit{font-size:var(--fs-xs);line-height:1.4;color:var(--dim);}
 .nb-cover-copy .search-wrap{margin-top:var(--sp-4);}
 /* 本文の検索窓が画面に見えている間は、下の固定の検索の帯とご意見ボタンを隠す（検索欄が2つ並ばない・帯の陰に検索窓が入らない・記事の題にボタンが重ならない）。見えなくなったら出す */
 @media(max-width:768px){
@@ -937,6 +944,8 @@ body.search-query-active .card-why{display:flex;}
   .site-promise-list li{font-size:var(--fs-sm);}
   .site-promise-list li .ic{width:18px;height:18px;}
   .ta-title{font-size:var(--fs-md);}
+  .ta-photo{flex-basis:112px;width:112px;height:112px;}
+  .ta-item:first-child.ta-has-photo .ta-photo{flex-basis:152px;width:152px;height:152px;}
   /* 広い画面: 左は 理念→約束→検索→入口、右は 新しい記事→今日の話題店。検索は左の列の最初の画面に収める */
   .hero.nb-cover{column-gap:var(--sp-7);row-gap:0;padding-top:clamp(1.5rem,3vw,2.5rem);padding-bottom:clamp(1.5rem,3vw,2.5rem);}
   .hero .nb-cover-copy{display:contents;}
@@ -1044,6 +1053,7 @@ footer{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom));}
 .feature-card-body{padding:1.15rem 1.25rem 1.3rem;display:flex;flex-direction:column;gap:.5rem;flex:1;}
 .feature-card-title{font-family:var(--font-body);font-size:1.05rem;font-weight:500;color:var(--text);line-height:1.5;letter-spacing:.005em;position:relative;display:inline-block;}
 .feature-card-sub{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);}
+.feature-card-credit{font-family:var(--font-body);font-size:var(--fs-xs);line-height:1.4;color:var(--dim);}
 .feature-card-arrow{display:none;}
 .feature-card-cta{margin-top:auto;padding-top:.6rem;font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--ember);font-weight:600;display:inline-flex;align-items:center;gap:.45rem;transition:color var(--dur-fast) var(--ease-out);}
 @media(hover:hover){.feature-card:hover .feature-card-cta{color:var(--ember-deep);}}
@@ -1077,6 +1087,7 @@ h3.cn{margin:0 0 6px;font-family:var(--font-body);}
 .feature-top .feature-card-title{font-size:1.15rem;font-weight:600;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.4);}
 .feature-top .feature-card-title::after{display:none;}
 .feature-top .feature-card-sub{color:rgba(255,255,255,.82);letter-spacing:0;text-shadow:0 1px 5px rgba(0,0,0,.4);font-family:var(--font-body);}
+.feature-top .feature-card-credit{color:rgba(255,255,255,.82);text-shadow:0 1px 5px rgba(0,0,0,.4);}
 .feature-top .feature-card-cta{display:none;}
 .feature-top-rail{position:relative;}
 /* 送りボタンはマウス環境の発見性のためだけに出す（指で払える端末では邪魔なので出さない） */
@@ -1670,8 +1681,8 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
     </div>
     <!-- TOP_ARTICLES_START -->
     <ul class="top-articles-list">
-      <li class="ta-item"><a class="ta-link" href="journal/2026-11-17-kanayama-shokukan-hotpot-bonenkai-private-room.html" data-category="topic"><span class="ta-meta"><span class="ta-cat">話題のお店紹介</span><time datetime="2026-11-17">11/17</time></span><span class="ta-title">金山の忘年会に火鍋『蜀漢 ショクカン 金山駅店』、飲み放題込み5,000円と個室20名まで</span></a></li>
-      <li class="ta-item"><a class="ta-link" href="journal/2026-11-11-sakae-teppanya-daikichi-10-seats-late-night.html" data-category="guide"><span class="ta-meta"><span class="ta-cat">店選びガイド</span><time datetime="2026-11-11">11/11</time></span><span class="ta-title">栄の地下「鉄板屋大吉」10席で朝5時まで、一人飲み・二軒目の少席店が回る理由</span></a></li>
+      <li class="ta-item ta-has-photo"><a class="ta-link" href="journal/2026-11-17-kanayama-shokukan-hotpot-bonenkai-private-room.html" data-category="topic"><span class="ta-photo"><img class="ta-img" src="https://imgfp.hotp.jp/IMGH/33/69/P037623369/P037623369.jpg" alt="四川伝統火鍋 蜀漢 ショクカン 金山駅店" width="160" height="160" decoding="async" fetchpriority="high" onerror="this.parentNode.style.display='none'"></span><span class="ta-text"><span class="ta-meta"><span class="ta-cat">話題のお店紹介</span><time datetime="2026-11-17">11/17</time></span><span class="ta-title">金山の忘年会に火鍋『蜀漢 ショクカン 金山駅店』、飲み放題込み5,000円と個室20名まで</span><span class="ta-credit">写真: 店舗公式写真 / HotPepper</span></span></a></li>
+      <li class="ta-item ta-has-photo"><a class="ta-link" href="journal/2026-11-11-sakae-teppanya-daikichi-10-seats-late-night.html" data-category="guide"><span class="ta-photo"><img class="ta-img" src="https://imgfp.hotp.jp/IMGH/30/43/P037723043/P037723043.jpg" alt="鉄板屋大吉" width="160" height="160" decoding="async" onerror="this.parentNode.style.display='none'"></span><span class="ta-text"><span class="ta-meta"><span class="ta-cat">店選びガイド</span><time datetime="2026-11-11">11/11</time></span><span class="ta-title">栄の地下「鉄板屋大吉」10席で朝5時まで、一人飲み・二軒目の少席店が回る理由</span><span class="ta-credit">写真: 店舗公式写真 / HotPepper</span></span></a></li>
       <li class="ta-item"><a class="ta-link" href="journal/2026-11-09-sakae-mitsukoshi-sushi-no-midori-alain-ducasse.html" data-category="compare"><span class="ta-meta"><span class="ta-cat">比較・特集</span><time datetime="2026-11-09">11/09</time></span><span class="ta-title">栄三越の寿司「すしの美登利」とアラン・デュカス・ショコラ、新店2軒を予約と時間で使い分け</span></a></li>
     </ul>
     <!-- TOP_ARTICLES_END -->
@@ -1744,10 +1755,11 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
     <!-- FEATURED_START -->
     <a class="feature-card" href="features/banquet.html">
       <span class="feature-card-season">忘年会予約</span>
-      <img class="feature-card-thumb" src="assets/feature-figures/banquet.svg" srcset="assets/feature-figures/banquet.svg 600w, assets/feature-figures/banquet.svg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 忘年会おすすめ15選" width="900" height="599" loading="eager" decoding="async" fetchpriority="high">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/89/55/P050938955/P050938955_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/89/55/P050938955/P050938955_480.jpg 600w, https://imgfp.hotp.jp/IMGH/89/55/P050938955/P050938955_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 忘年会おすすめ15選" width="480" height="320" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 忘年会おすすめ15選</div>
         <div class="feature-card-sub">忘年会予約は11月が勝負</div>
+        <span class="feature-card-credit">写真: 炉端焼き燻銀 伏見店にかい（ホットペッパーグルメ）</span>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
@@ -1764,10 +1776,11 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
     </a>
     <a class="feature-card" href="features/nagoya-meieki-business-dinner.html">
       <span class="feature-card-season">会食</span>
-      <img class="feature-card-thumb" src="assets/feature-figures/nagoya-meieki-business-dinner.svg" srcset="assets/feature-figures/nagoya-meieki-business-dinner.svg 600w, assets/feature-figures/nagoya-meieki-business-dinner.svg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名駅 失敗しない会食10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/12/40/P049711240/P049711240_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/12/40/P049711240/P049711240_480.jpg 600w, https://imgfp.hotp.jp/IMGH/12/40/P049711240/P049711240_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名駅 失敗しない会食10選" width="480" height="320" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
         <div class="feature-card-title">名駅 失敗しない会食10選</div>
         <div class="feature-card-sub">年末のご挨拶・会食に</div>
+        <span class="feature-card-credit">写真: すだく 名古屋国際センター店（ホットペッパーグルメ）</span>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
@@ -1802,19 +1815,21 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/private-room.html">
-      <img class="feature-card-thumb" src="assets/feature-figures/private-room.svg" srcset="assets/feature-figures/private-room.svg 600w, assets/feature-figures/private-room.svg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="温かい灯りに包まれた上質な個室ダイニング" width="900" height="600" loading="lazy" decoding="async">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/77/81/P012197781/P012197781_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/77/81/P012197781/P012197781_480.jpg 600w, https://imgfp.hotp.jp/IMGH/77/81/P012197781/P012197781_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="温かい灯りに包まれた上質な個室ダイニング" width="480" height="320" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 個室グルメおすすめ9選</div>
         <div class="feature-card-sub">接待・女子会・デートに</div>
+        <span class="feature-card-credit">写真: 焼肉くまちゃん（ホットペッパーグルメ）</span>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/meieki.html">
-      <img class="feature-card-thumb" src="assets/feature-figures/meieki.svg" srcset="assets/feature-figures/meieki.svg 600w, assets/feature-figures/meieki.svg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名駅エリアで接待・出張・仕事帰りに集う夜のグループ食事" width="900" height="601" loading="lazy" decoding="async">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/41/34/P044174134/P044174134_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/41/34/P044174134/P044174134_480.jpg 600w, https://imgfp.hotp.jp/IMGH/41/34/P044174134/P044174134_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名駅エリアで接待・出張・仕事帰りに集う夜のグループ食事" width="480" height="320" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋・名駅グルメおすすめ15選</div>
         <div class="feature-card-sub">出張・接待・仕事帰りに</div>
+        <span class="feature-card-credit">写真: 那古野 しば福や 名駅店（ホットペッパーグルメ）</span>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>

@@ -201,9 +201,15 @@ function renderLatestCard(e, photo) {
         </article>`;
 }
 
-// ── トップの最初の画面に置く「3分類の新しい記事」（S6-1・判断の記録 0072）─────────────────
+// ── トップの最初の画面に置く「3分類の新しい記事」（S6-1・判断の記録 0072／写真つき・Ondine #2097）─────────────────
 // 分類（scripts/lib/journal_category.js の3つ）ごとに、公開中の最新1本。分類が空ならその行は出さない。
-// 並びは CATEGORIES の順（話題のお店紹介 → 店選びガイド → 比較・特集）。写真は載せない（最初の画面を軽く保つ）。
+// 並びは日付の新しい順（その日の記事を必ず先頭に置く・同じ日は CATEGORIES の順）。
+// 写真は、記事自身の「顔の写真」（readHeroPhoto・写真ゲートを通し出所を書けるもの）だけを小さく添える。ここで新しく選ばない。
+//   ・ホットペッパー公式写真だけ（配信元は imgfp.hotp.jp の小さな画像）。プレスリリース写真は原寸が1MB を超えることがあり、
+//     最初の画面を重くするので載せない（その行は文字だけ）。Places の写真は URL が失効しうるので載せない（CLAUDE.md の優先4の注意）
+//   ・出所は文字で添える（行全体が1つのリンクなので、入れ子のリンクにしない）
+const TOP_PHOTO_SOURCES = ['hotpepper'];
+
 function latestPerCategory(entries) {
   const sorted = (entries || []).slice().sort((a, b) => b.date.localeCompare(a.date));
   const out = [];
@@ -214,11 +220,32 @@ function latestPerCategory(entries) {
   return out;
 }
 
-function renderTopArticles(entries) {
-  const rows = latestPerCategory(entries);
+function plainCredit(html) {
+  return decodeEntities(String(html || '').replace(/<[^>]*>/g, '')).replace(/\s+/g, ' ').trim();
+}
+
+function topPhotoOf(entry, journalDir) {
+  const p = readHeroPhoto(entry.slug, journalDir);
+  return p && TOP_PHOTO_SOURCES.includes(p.source) ? p : null;
+}
+
+function renderTopArticles(entries, journalDir) {
+  const rows = latestPerCategory(entries)
+    .map((r, i) => Object.assign({ order: i }, r))
+    .sort((a, b) => b.entry.date.localeCompare(a.entry.date) || a.order - b.order);
   if (rows.length === 0) return '';
-  const items = rows.map(({ key, entry: e }) => `
-      <li class="ta-item"><a class="ta-link" href="journal/${esc(e.slug)}.html" data-category="${key}"><span class="ta-meta"><span class="ta-cat">${esc(CATEGORIES[key].label)}</span><time datetime="${esc(e.date)}">${esc(e.date.slice(5).replace('-', '/'))}</time></span><span class="ta-title">${esc(e.title)}</span></a></li>`).join('');
+  const items = rows.map(({ key, entry: e }, i) => {
+    const photo = topPhotoOf(e, journalDir);
+    const meta = `<span class="ta-meta"><span class="ta-cat">${esc(CATEGORIES[key].label)}</span><time datetime="${esc(e.date)}">${esc(e.date.slice(5).replace('-', '/'))}</time></span>`;
+    const title = `<span class="ta-title">${esc(e.title)}</span>`;
+    if (!photo) {
+      return `
+      <li class="ta-item"><a class="ta-link" href="journal/${esc(e.slug)}.html" data-category="${key}">${meta}${title}</a></li>`;
+    }
+    const fp = i === 0 ? ' fetchpriority="high"' : '';
+    return `
+      <li class="ta-item ta-has-photo"><a class="ta-link" href="journal/${esc(e.slug)}.html" data-category="${key}"><span class="ta-photo"><img class="ta-img" src="${esc(photo.src)}" alt="${esc(photo.store)}" width="160" height="160" decoding="async"${fp} onerror="this.parentNode.style.display='none'"></span><span class="ta-text">${meta}${title}<span class="ta-credit">${esc(plainCredit(photo.credit))}</span></span></a></li>`;
+  }).join('');
   return `<ul class="top-articles-list">${items}
     </ul>`;
 }
@@ -242,7 +269,7 @@ function updateRootLatestSection(entries, journalDir, rootIndexPath) {
   if (/<!-- TOP_ARTICLES_START -->[\s\S]*?<!-- TOP_ARTICLES_END -->/.test(out)) {
     out = out.replace(
       /<!-- TOP_ARTICLES_START -->[\s\S]*?<!-- TOP_ARTICLES_END -->/,
-      `<!-- TOP_ARTICLES_START -->\n    ${renderTopArticles(entries)}\n    <!-- TOP_ARTICLES_END -->`
+      `<!-- TOP_ARTICLES_START -->\n    ${renderTopArticles(entries, journalDir)}\n    <!-- TOP_ARTICLES_END -->`
     );
   }
   fs.writeFileSync(rootIndex, out);
