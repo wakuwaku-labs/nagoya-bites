@@ -9,11 +9,13 @@ status: in_progress
 各施策の⑪完了を満たし、npm test 通過・main 合流・本番確認。本人の承認が要るもの（S4-5 の enforce 切替・S5-3 の削除・S6-1 の題の案）は準備まで進めて最後にまとめて聞く。
 
 ## できていること
+- 11-17 ジャーナル: 公開済み(8891215e3e)。止まった原因2つ=朝は未push計画コミット、再実行では Autopilot ブランチが main の子孫でない→#758 で恒久対策
 - PR: #754(3分類・取り下げ) #756(記事の型) #757(特集・規約) 作成済み。#755 で定時ビルドの失敗(テストが同期前に走る)を修正
 - 段階0〜2・削減は完了（#746〜#751）
 - 11-17 朝のジャーナル HOLD（~/nagoya-bites の main に未 push の計画コミットが残り衝突）→ backup/main-local-2026-11-17 に退避し main を origin に合わせて再実行中
 
 ## 次にやること（並行の持ち分）
+- マージ順: build 完了を待って #758→#754→#756（軽微2件の修正待ち）→#757（design-qa 不合格の修正中）。W-C(段階4)・W-D(棚卸し・順位表示) は作業中
 - W-A: S3-1→S3-2→S3-4（editorial_standard・journal/_template.html・generate_daily_draft.js・nb.css・note/x 引用）＋S4-4 の訂正履歴欄
 - W-B: S3-3→S4-4（3分類・journal index・pick_daily_topic・取り下げ/訂正の道具）
 - W-C: S4-1→S4-2→S4-3→S4-5 の測定まで（enforce にはしない）
