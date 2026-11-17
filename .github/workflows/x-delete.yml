@@ -1,17 +1,32 @@
 name: NAGOYA BITES — X 投稿の削除（手動のみ）
 
-# 本人の指示で X の投稿を1件消すためだけの手動実行。台帳（data/x_post_log.json）に載っている tweet_id しか受け付けない。
+# 本人の指示（または scripts/journal_withdraw.js --delete-x）で X の投稿を1件消すためだけの手動実行。
+# 台帳（data/x_post_log.json）に載っている tweet_id しか受け付けない。
 # 台帳の書き込みは x-post.yml と同じ作法（取り込み直して最大5回 push）。
+#
+# 2026-11-13 に2回失敗した原因（S4-4 で調査）: コードの不具合ではなく、X の API が
+#   403 "Your monthly spend cap has been reached."（kind=payment）を返していた（月額の利用上限）。
+#   → 失敗の原因を実行の「要約」に日本語で出す。tweet_id の代わりに記事の slug でも指定できる。
+#   → dry_run=true なら X に何も送らず、何を消すかだけ確認できる（既定は false＝実際に消す）。
 
 on:
   workflow_dispatch:
     inputs:
       tweet_id:
-        description: '消す投稿の tweet_id（data/x_post_log.json にあるもの）'
-        required: true
+        description: '消す投稿の tweet_id（data/x_post_log.json にあるもの）。slug を指定するなら空でよい'
+        required: false
+        default: ''
+      slug:
+        description: '記事の slug（tweet_id の代わり。台帳でその記事の親投稿を引く）'
+        required: false
+        default: ''
       reason:
         description: '消す理由（台帳に残す）'
         required: true
+      dry_run:
+        description: 'true なら X に送らず対象だけ確認する'
+        required: false
+        default: 'false'
 
 permissions:
   contents: write
@@ -34,15 +49,64 @@ jobs:
         with:
           node-version: '20'
 
+      - name: 消す投稿を決める
+        id: target
+        env:
+          INPUT_ID: ${{ github.event.inputs.tweet_id }}
+          INPUT_SLUG: ${{ github.event.inputs.slug }}
+        run: |
+          id="$INPUT_ID"
+          if [ -z "$id" ] && [ -n "$INPUT_SLUG" ]; then
+            id=$(node -e '
+              const log = JSON.parse(require("fs").readFileSync("data/x_post_log.json", "utf8"));
+              const hit = (log.posts || []).filter(p => p.slug === process.argv[1] && p.tweet_id && !p.deleted_at);
+              if (hit.length !== 1) { console.error("slug に合う未削除の投稿が " + hit.length + " 件です（1件だけのときに進みます）"); process.exit(2); }
+              process.stdout.write(hit[0].tweet_id);
+            ' "$INPUT_SLUG")
+          fi
+          if [ -z "$id" ]; then
+            echo "::error::tweet_id か slug のどちらかを指定してください"
+            exit 1
+          fi
+          echo "id=$id" >> "$GITHUB_OUTPUT"
+
       - name: 投稿を消す
         env:
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
-          INPUT_ID: ${{ github.event.inputs.tweet_id }}
+          TARGET_ID: ${{ steps.target.outputs.id }}
           INPUT_REASON: ${{ github.event.inputs.reason }}
-        run: node scripts/delete_x_post.js --id "$INPUT_ID" --reason "$INPUT_REASON" --yes
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: |
+          yes_flag="--yes"
+          if [ "$DRY_RUN" = "true" ]; then yes_flag=""; fi
+          set +e
+          node scripts/delete_x_post.js --id "$TARGET_ID" --reason "$INPUT_REASON" $yes_flag | tee /tmp/x-delete.out
+          code=${PIPESTATUS[0]}
+          set -e
+          if [ "$code" -ne 0 ]; then
+            {
+              echo "## X の投稿を消せませんでした"
+              echo
+              if grep -q '"kind":"payment"' /tmp/x-delete.out; then
+                echo "原因: X の API の月額利用上限（spend cap）に達しています（HTTP 403 / payment）。コードの不具合ではありません。"
+                echo "対処: X Developer Console の Billing で上限を上げるか、翌月の初めまで待ってから、同じ指定でもう一度実行してください。"
+              elif grep -q '"kind":"auth"\|"kind":"forbidden"' /tmp/x-delete.out; then
+                echo "原因: X の鍵（GitHub Secrets の X_API_KEY など4つ）が無効か、権限（Read and Write）が足りません。"
+              elif grep -q '"code":"not_in_log"' /tmp/x-delete.out; then
+                echo "原因: 台帳（data/x_post_log.json）に載っていない tweet_id です。"
+              else
+                echo "原因: 下のログの応答を見てください。"
+              fi
+              echo
+              echo '```'
+              cat /tmp/x-delete.out
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit "$code"
 
       - name: 台帳をコミット
         run: |

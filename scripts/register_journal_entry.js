@@ -101,6 +101,7 @@ function extractEntry(htmlPath, opts = {}) {
     slug: base,
     date,
     theme,
+    category: require('./lib/journal_category').categoryOf({ theme, title }),
     title,
     description,
     store_ids: storeIds,

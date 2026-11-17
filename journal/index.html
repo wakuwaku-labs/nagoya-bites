@@ -63,6 +63,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .cta-box{max-width:900px;margin:0 auto;padding:0 1.5rem 3rem;text-align:center;}
 .cta-link{display:inline-block;font-size:.82rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.7rem 1.6rem;border-radius:3px;transition:background .2s;letter-spacing:.06em;margin:.3rem;}
 .cta-link:hover{background:rgba(122,92,16,.08);}
+.journal-filter{display:flex;flex-wrap:wrap;gap:var(--sp-2);padding:var(--sp-3) 0 var(--sp-4);border-bottom:1px solid var(--border);}
+.journal-filter[hidden]{display:none;}
+.jf-chip{font-family:var(--font-body);font-size:var(--fs-sm);line-height:var(--lh-ui);min-height:var(--tap-min);padding:0 var(--sp-4);border:1px solid var(--card-border);background:var(--card);color:var(--text);border-radius:var(--r-pill);cursor:pointer;display:inline-flex;align-items:center;gap:var(--sp-2);transition:background var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out);}
+.jf-chip:hover{border-color:var(--gold);}
+.jf-chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#fff;}
+.jf-chip:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.jf-count{font-family:var(--font-mono);font-size:var(--fs-2xs);opacity:.8;}
+.journal-entry[hidden]{display:none;}
 @media(max-width:640px){.journal-entry{grid-template-columns:1fr;gap:.4rem;}}</style>
 </head>
 <body>
@@ -113,8 +121,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 
 <div class="journal-list" id="journal-list">
   <!-- ENTRIES_START -->
+<div class="journal-filter" id="journal-filter" role="group" aria-label="記事の分類で絞り込む" hidden>
+    <button type="button" class="jf-chip" data-filter="all" aria-pressed="true">すべて<span class="jf-count">186</span></button>
+    <button type="button" class="jf-chip" data-filter="topic" aria-pressed="false">話題のお店紹介<span class="jf-count">139</span></button>
+    <button type="button" class="jf-chip" data-filter="guide" aria-pressed="false">店選びガイド<span class="jf-count">32</span></button>
+    <button type="button" class="jf-chip" data-filter="compare" aria-pressed="false">比較・特集<span class="jf-count">15</span></button>
+  </div>
 
-  <a class="journal-entry" href="2026-11-17-kanayama-shokukan-hotpot-bonenkai-private-room.html">
+  <a class="journal-entry" href="2026-11-17-kanayama-shokukan-hotpot-bonenkai-private-room.html" data-category="topic">
     <div class="entry-date">2026-11-17</div>
     <div class="entry-body">
       <h2>金山の忘年会に火鍋『蜀漢 ショクカン 金山駅店』、飲み放題込み5,000円と個室20名まで</h2>
@@ -123,7 +137,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-16-meieki-ibushigin-bonenkai-nomihoudai-150.html">
+  <a class="journal-entry" href="2026-11-16-meieki-ibushigin-bonenkai-nomihoudai-150.html" data-category="topic">
     <div class="entry-date">2026-11-16</div>
     <div class="entry-body">
       <h2>名駅の居酒屋『炉端焼き 燻銀 名駅西口店』忘年会は11月なら同じ5,000円で飲み放題150分</h2>
@@ -132,7 +146,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-15-sakae-sakana-no-hachibe-bonenkai-enkai.html">
+  <a class="journal-entry" href="2026-11-15-sakae-sakana-no-hachibe-bonenkai-enkai.html" data-category="topic">
     <div class="entry-date">2026-11-15</div>
     <div class="entry-body">
       <h2>栄の忘年会・宴会に海鮮居酒屋『サカナのハチベエ 栄3丁目店』、飲み放題4,500円から</h2>
@@ -141,7 +155,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-14-yabacho-yakitori-goryo-sakae-date-solo.html">
+  <a class="journal-entry" href="2026-11-14-yabacho-yakitori-goryo-sakae-date-solo.html" data-category="topic">
     <div class="entry-date">2026-11-14</div>
     <div class="entry-body">
       <h2>焼鳥ごりょう 栄（矢場町）でデートと一人飲み、コース3本の差は〆の土鍋</h2>
@@ -150,7 +164,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-13-meieki-endoji-paris-festival-kaisen-en-solo.html">
+  <a class="journal-entry" href="2026-11-13-meieki-endoji-paris-festival-kaisen-en-solo.html" data-category="topic">
     <div class="entry-date">2026-11-13</div>
     <div class="entry-body">
       <h2>名駅・円頓寺「秋のパリ祭」の後に海鮮食堂 enで一人飲み（11/14・15）</h2>
@@ -159,7 +173,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-12-meieki-yashiori-kaiseki-settai-anniversary.html">
+  <a class="journal-entry" href="2026-11-12-meieki-yashiori-kaiseki-settai-anniversary.html" data-category="topic">
     <div class="entry-date">2026-11-12</div>
     <div class="entry-body">
       <h2>名駅『八塩折 yashiori』接待と記念日に、会席12,400円と17,400円・焚き火を囲む22席</h2>
@@ -168,7 +182,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-11-sakae-teppanya-daikichi-10-seats-late-night.html">
+  <a class="journal-entry" href="2026-11-11-sakae-teppanya-daikichi-10-seats-late-night.html" data-category="guide">
     <div class="entry-date">2026-11-11</div>
     <div class="entry-body">
       <h2>栄の地下「鉄板屋大吉」10席で朝5時まで、一人飲み・二軒目の少席店が回る理由</h2>
@@ -177,7 +191,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-10-higashibetsuin-chashumen-susuru-solo-lunch.html">
+  <a class="journal-entry" href="2026-11-10-higashibetsuin-chashumen-susuru-solo-lunch.html" data-category="topic">
     <div class="entry-date">2026-11-10</div>
     <div class="entry-body">
       <h2>東別院のラーメン『チャーシューメン ススル』950円とカウンター12席の一人ランチ</h2>
@@ -186,7 +200,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-09-sakae-mitsukoshi-sushi-no-midori-alain-ducasse.html">
+  <a class="journal-entry" href="2026-11-09-sakae-mitsukoshi-sushi-no-midori-alain-ducasse.html" data-category="compare">
     <div class="entry-date">2026-11-09</div>
     <div class="entry-body">
       <h2>栄三越の寿司「すしの美登利」とアラン・デュカス・ショコラ、新店2軒を予約と時間で使い分け</h2>
@@ -195,7 +209,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html">
+  <a class="journal-entry" href="2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html" data-category="topic">
     <div class="entry-date">2026-11-08</div>
     <div class="entry-body">
       <h2>栄・白川公園『圧釜うどん もちり』一人ランチに、大盛り無料とぶっかけ1,100円から</h2>
@@ -204,7 +218,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-07-ozone-daikinboshi-hakata-kushiyaki-solo-bonenkai.html">
+  <a class="journal-entry" href="2026-11-07-ozone-daikinboshi-hakata-kushiyaki-solo-bonenkai.html" data-category="topic">
     <div class="entry-date">2026-11-07</div>
     <div class="entry-body">
       <h2>大曽根の焼き鳥『大金星』一人飲みと忘年会、串275円と12月の2時間制</h2>
@@ -213,7 +227,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-06-hisaya-dam-sake-festa-manmarumura.html">
+  <a class="journal-entry" href="2026-11-06-hisaya-dam-sake-festa-manmarumura.html" data-category="topic">
     <div class="entry-date">2026-11-06</div>
     <div class="entry-body">
       <h2>久屋大通ダムSAKEフェスタ、栄の発酵喫茶まんまる村も出店（11/7・8）</h2>
@@ -222,7 +236,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-05-sakae-teiban-tune-aozakana-izakaya.html">
+  <a class="journal-entry" href="2026-11-05-sakae-teiban-tune-aozakana-izakaya.html" data-category="topic">
     <div class="entry-date">2026-11-05</div>
     <div class="entry-body">
       <h2>栄の青魚居酒屋『定番チューン。』一人飲みにアジフライ790円と〆さば1貫500円</h2>
@@ -231,7 +245,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-04-meieki-luca-bar-contract-farm-vegetables.html">
+  <a class="journal-entry" href="2026-11-04-meieki-luca-bar-contract-farm-vegetables.html" data-category="guide">
     <div class="entry-date">2026-11-04</div>
     <div class="entry-body">
       <h2>名駅 Lucaバルの農家直送バーニャカウダ、契約農家の開示で野菜の鮮度を読む</h2>
@@ -240,7 +254,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-03-kakuozan-amelie-french-date-course.html">
+  <a class="journal-entry" href="2026-11-03-kakuozan-amelie-french-date-course.html" data-category="topic">
     <div class="entry-date">2026-11-03</div>
     <div class="entry-body">
       <h2>覚王山フレンチ『Amélie（アメリ）』デートに全10品9,900円、12席の予約制</h2>
@@ -249,7 +263,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-02-meieki-takashimaya-kamakura-beniya-butter-no-itoko.html">
+  <a class="journal-entry" href="2026-11-02-meieki-takashimaya-kamakura-beniya-butter-no-itoko.html" data-category="compare">
     <div class="entry-date">2026-11-02</div>
     <div class="entry-body">
       <h2>名駅『鎌倉紅谷』クルミッ子が常設に、バターのいとこも 手土産は予算で</h2>
@@ -258,7 +272,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-01-meito-nishiyama-pizzeria-belo-solo-lunch.html">
+  <a class="journal-entry" href="2026-11-01-meito-nishiyama-pizzeria-belo-solo-lunch.html" data-category="topic">
     <div class="entry-date">2026-11-01</div>
     <div class="entry-body">
       <h2>名東区・西山商店街『ピッツェリア ベーロ』一人ランチと家族に、薪窯マルゲリータ1,080円</h2>
@@ -267,7 +281,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-31-yabacho-gotoni-sushi-kushikatsu.html">
+  <a class="journal-entry" href="2026-10-31-yabacho-gotoni-sushi-kushikatsu.html" data-category="topic">
     <div class="entry-date">2026-10-31</div>
     <div class="entry-body">
       <h2>栄・矢場町『鮨食人 五と二』一人飲みと宴会に、1貫142円からの寿司と串カツ</h2>
@@ -276,7 +290,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-30-hisaya-taichung-yeshi-osu-sarikaka.html">
+  <a class="journal-entry" href="2026-10-30-hisaya-taichung-yeshi-osu-sarikaka.html" data-category="topic">
     <div class="entry-date">2026-10-30</div>
     <div class="entry-body">
       <h2>台中夜市2026（久屋大通）を食べ歩き 大須の台湾屋台 SARIKAKAも出店</h2>
@@ -285,7 +299,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-29-sakae-chitaka-tonkatsu-donabe-solo.html">
+  <a class="journal-entry" href="2026-10-29-sakae-chitaka-tonkatsu-donabe-solo.html" data-category="topic">
     <div class="entry-date">2026-10-29</div>
     <div class="entry-body">
       <h2>栄・セントラルパーク『CHITAKA』一人飲みと昼1,280円の御膳、とんかつ知多家の新店</h2>
@@ -294,7 +308,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-28-meieki-soramame-sofa-seat-bill.html">
+  <a class="journal-entry" href="2026-10-28-meieki-soramame-sofa-seat-bill.html" data-category="guide">
     <div class="entry-date">2026-10-28</div>
     <div class="entry-body">
       <h2>名駅の居酒屋『そら豆』ソファ席、デート・女子会で会計が上がる理由</h2>
@@ -303,7 +317,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-27-nonami-ramen-arch-nagoya-cochin-kosupa.html">
+  <a class="journal-entry" href="2026-10-27-nonami-ramen-arch-nagoya-cochin-kosupa.html" data-category="topic">
     <div class="entry-date">2026-10-27</div>
     <div class="entry-body">
       <h2>野並『拉麺あるひ』天白区のラーメンをコスパで読む、名古屋コーチンの鶏清湯1,100円</h2>
@@ -312,7 +326,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html">
+  <a class="journal-entry" href="2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html" data-category="compare">
     <div class="entry-date">2026-10-26</div>
     <div class="entry-body">
       <h2>丸の内のフレンチ『BISTRO DIA』ほか3店、デート・ランチ・二次会に</h2>
@@ -321,7 +335,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-25-motoyama-laughs-bistro-counter-solo-date.html">
+  <a class="journal-entry" href="2026-10-25-motoyama-laughs-bistro-counter-solo-date.html" data-category="topic">
     <div class="entry-date">2026-10-25</div>
     <div class="entry-body">
       <h2>本山・猫洞通『Laughs ラフス』一人飲みとデートに、カウンター8席と600円台の小皿</h2>
@@ -330,7 +344,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-24-sakae-conrad-house-of-mon-rooftop-bar.html">
+  <a class="journal-entry" href="2026-10-24-sakae-conrad-house-of-mon-rooftop-bar.html" data-category="topic">
     <div class="entry-date">2026-10-24</div>
     <div class="entry-body">
       <h2>栄・コンラッド名古屋『ハウス・オブ・モン』デートと一人飲みのバー</h2>
@@ -339,7 +353,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-23-hisaya-halloween-snowpeak-cafe-lantern.html">
+  <a class="journal-entry" href="2026-10-23-hisaya-halloween-snowpeak-cafe-lantern.html" data-category="topic">
     <div class="entry-date">2026-10-23</div>
     <div class="entry-body">
       <h2>栄・久屋大通のハロウィン、スノーピークカフェでデート前に食べてランタンの抽選へ（10/24）</h2>
@@ -348,7 +362,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-22-nagono-new-poppy-kissa-night-hours.html">
+  <a class="journal-entry" href="2026-10-22-nagono-new-poppy-kissa-night-hours.html" data-category="topic">
     <div class="entry-date">2026-10-22</div>
     <div class="entry-body">
       <h2>名古屋・那古野の喫茶ニューポピー、金・土は22時まで。モーニングも夜の一杯も使える純喫茶</h2>
@@ -357,7 +371,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-21-fushimi-kuchikou-last-order-timing.html">
+  <a class="journal-entry" href="2026-10-21-fushimi-kuchikou-last-order-timing.html" data-category="guide">
     <div class="entry-date">2026-10-21</div>
     <div class="entry-body">
       <h2>伏見・錦の居酒家 くちこうで読む、ラストオーダー30分前に入っていい店の見分け方</h2>
@@ -366,7 +380,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-20-otoshi-refuse-sakae-cowcow.html">
+  <a class="journal-entry" href="2026-10-20-otoshi-refuse-sakae-cowcow.html" data-category="guide">
     <div class="entry-date">2026-10-20</div>
     <div class="entry-body">
       <h2>居酒屋のお通しは断れるのか——栄の新店330円で読む、価格帯と席に着く前の説明の境目</h2>
@@ -375,7 +389,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-19-sakae-sumibi-sakaba-cowcow.html">
+  <a class="journal-entry" href="2026-10-19-sakae-sumibi-sakaba-cowcow.html" data-category="topic">
     <div class="entry-date">2026-10-19</div>
     <div class="entry-body">
       <h2>栄・矢場町『炭火酒場COWCOW』一人飲みと二軒目に、26席・深夜1時までを読む</h2>
@@ -384,7 +398,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html">
+  <a class="journal-entry" href="2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html" data-category="topic">
     <div class="entry-date">2026-10-18</div>
     <div class="entry-body">
       <h2>黒川『さく蛸』たこ焼きのコスパ、名古屋焼き醤油10個600円と持ち帰り専門の22時営業を読む</h2>
@@ -393,7 +407,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-17-sakae-rokurokudou-settai-enkai-wine-cellar.html">
+  <a class="journal-entry" href="2026-10-17-sakae-rokurokudou-settai-enkai-wine-cellar.html" data-category="topic">
     <div class="entry-date">2026-10-17</div>
     <div class="entry-body">
       <h2>栄『お台所 六六堂』接待・宴会に、150席と元金庫室のワインセラーを読む</h2>
@@ -402,7 +416,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-16-sakae-nagoya-matsuri-lachic-maruha-yabaton-torikai.html">
+  <a class="journal-entry" href="2026-10-16-sakae-nagoya-matsuri-lachic-maruha-yabaton-torikai.html" data-category="topic">
     <div class="entry-date">2026-10-16</div>
     <div class="entry-body">
       <h2>栄の名古屋まつりで食べ歩き、まるは食堂・矢場とん・鳥開総本家はブースか向かいのラシックか</h2>
@@ -411,7 +425,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-15-ikeshita-qq-quinto-quinte-kakuuchi-pairing.html">
+  <a class="journal-entry" href="2026-10-15-ikeshita-qq-quinto-quinte-kakuuchi-pairing.html" data-category="topic">
     <div class="entry-date">2026-10-15</div>
     <div class="entry-body">
       <h2>池下のイタリアン「QQ（クイント・クインテ）」でデート、棚のワインと抜栓料20%</h2>
@@ -420,7 +434,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-14-sakae-yakiniku-niji-tsurami-bui.html">
+  <a class="journal-entry" href="2026-10-14-sakae-yakiniku-niji-tsurami-bui.html" data-category="guide">
     <div class="entry-date">2026-10-14</div>
     <div class="entry-body">
       <h2>知多牛焼肉と馬肉 虹（栄）で一人飲み、ツラミ1,078円の部位の話</h2>
@@ -429,7 +443,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-13-fushimi-himonoya-kanbee-teishoku.html">
+  <a class="journal-entry" href="2026-10-13-fushimi-himonoya-kanbee-teishoku.html" data-category="topic">
     <div class="entry-date">2026-10-13</div>
     <div class="entry-body">
       <h2>栄・伏見の干物定食「ひものや 官兵衛」、おかわり自由のコスパを読む</h2>
@@ -438,7 +452,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-12-nakagawa-machinaka-shokudo-omusubi.html">
+  <a class="journal-entry" href="2026-10-12-nakagawa-machinaka-shokudo-omusubi.html" data-category="topic">
     <div class="entry-date">2026-10-12</div>
     <div class="entry-body">
       <h2>中川区「なかがわ 街仲食堂」開店、シニアが握るおむすび550円と3時間営業を読む</h2>
@@ -447,7 +461,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-11-hoshigaoka-afros-bbq-enkai.html">
+  <a class="journal-entry" href="2026-10-11-hoshigaoka-afros-bbq-enkai.html" data-category="topic">
     <div class="entry-date">2026-10-11</div>
     <div class="entry-body">
       <h2>星ヶ丘「Afro&#39;s BBQ」アメリカンBBQで宴会、飲み放題3,500円とバックリブ2,849円を読む</h2>
@@ -456,7 +470,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html">
+  <a class="journal-entry" href="2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html" data-category="topic">
     <div class="entry-date">2026-10-10</div>
     <div class="entry-body">
       <h2>新栄町の「ちひろ菓子店 新栄葵店」名古屋初上陸｜フィナンシェ330円を手土産に買う前に</h2>
@@ -465,7 +479,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-09-nagoyajo-kinshachi-yokocho-autumn-menu.html">
+  <a class="journal-entry" href="2026-10-09-nagoyajo-kinshachi-yokocho-autumn-menu.html" data-category="topic">
     <div class="entry-date">2026-10-09</div>
     <div class="entry-body">
       <h2>名古屋城・金シャチ横丁の秋限定21品を食べ歩き、寿司コース8,800円までの値付けを読む</h2>
@@ -474,7 +488,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-08-sakae-mitsukoshi-miyakishimen-ihyoe.html">
+  <a class="journal-entry" href="2026-10-08-sakae-mitsukoshi-miyakishimen-ihyoe.html" data-category="topic">
     <div class="entry-date">2026-10-08</div>
     <div class="entry-body">
       <h2>栄三越9階に「宮きしめん伊兵衛 栄店」10月31日開店｜会席3,300円と味噌煮込1,800円を読む</h2>
@@ -483,7 +497,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-07-meieki-izakaya-hiyaoroshi-onitaiji.html">
+  <a class="journal-entry" href="2026-10-07-meieki-izakaya-hiyaoroshi-onitaiji.html" data-category="guide">
     <div class="entry-date">2026-10-07</div>
     <div class="entry-body">
       <h2>名駅の居酒屋で一人飲み、ひやおろしを頼む前に</h2>
@@ -492,7 +506,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-06-sakae-hilton-inplace33-autumn-buffet.html">
+  <a class="journal-entry" href="2026-10-06-sakae-hilton-inplace33-autumn-buffet.html" data-category="topic">
     <div class="entry-date">2026-10-06</div>
     <div class="entry-body">
       <h2>栄・伏見のホテルビュッフェで女子会｜ヒルトン名古屋の秋、平日昼5,800円と夜6,000円</h2>
@@ -501,7 +515,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-05-atsuta-sapporo-miso-tokura-arahata.html">
+  <a class="journal-entry" href="2026-10-05-atsuta-sapporo-miso-tokura-arahata.html" data-category="compare">
     <div class="entry-date">2026-10-05</div>
     <div class="entry-body">
       <h2>熱田区に札幌味噌ラーメンの新店が2軒｜金山「札幌らーめん 戸倉」と神宮前「サッポロラーメン専門 荒畑」を読む</h2>
@@ -510,7 +524,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-04-sakae-brianza-nagoya-haera-lunch.html">
+  <a class="journal-entry" href="2026-10-04-sakae-brianza-nagoya-haera-lunch.html" data-category="topic">
     <div class="entry-date">2026-10-04</div>
     <div class="entry-body">
       <h2>栄のイタリアン「BRIANZA NAGOYA HAERA」は昼が本番｜平日3,800円と昼夜同額コース</h2>
@@ -519,7 +533,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-03-fushimi-jardin-pierre-herme-afternoon-tea.html">
+  <a class="journal-entry" href="2026-10-03-fushimi-jardin-pierre-herme-afternoon-tea.html" data-category="topic">
     <div class="entry-date">2026-10-03</div>
     <div class="entry-body">
       <h2>錦・伏見のホテルカフェ「ラウンジ ジャルダン」ピエール・エルメ第二幕、実質7,820円を女子会で読む</h2>
@@ -528,7 +542,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-02-meieki-shanghai-crab-rinka-ouchou-price.html">
+  <a class="journal-entry" href="2026-10-02-meieki-shanghai-crab-rinka-ouchou-price.html" data-category="topic">
     <div class="entry-date">2026-10-02</div>
     <div class="entry-body">
       <h2>名駅の上海蟹、10月解禁——マリオット梨杏の美食会35,000円と伏見・王朝の中華コース16,000円、接待の相場を読む</h2>
@@ -537,7 +551,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-01-sakae-yabamisen-matsuzakaya-solo.html">
+  <a class="journal-entry" href="2026-10-01-sakae-yabamisen-matsuzakaya-solo.html" data-category="topic">
     <div class="entry-date">2026-10-01</div>
     <div class="entry-body">
       <h2>栄・矢場町に「矢場味仙 松坂屋名古屋店」今日開店、台湾ラーメン38席を一人飲みで読む</h2>
@@ -546,7 +560,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-30-nishiki-yakitori-yaoyorozu-haccp-5years.html">
+  <a class="journal-entry" href="2026-09-30-nishiki-yakitori-yaoyorozu-haccp-5years.html" data-category="guide">
     <div class="entry-date">2026-09-30</div>
     <div class="entry-body">
       <h2>錦の焼き鳥「八百万」で接待、HACCP義務化5年で残る店の条件</h2>
@@ -555,7 +569,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-29-sakae-tsukemen-tou-counter12.html">
+  <a class="journal-entry" href="2026-09-29-sakae-tsukemen-tou-counter12.html" data-category="topic">
     <div class="entry-date">2026-09-29</div>
     <div class="entry-body">
       <h2>栄の深夜ラーメン新店「燈 tou」つけ麺1100円と12席を読む</h2>
@@ -564,7 +578,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-28-arahata-tonkatsu-nakayoshi-lunch1200.html">
+  <a class="journal-entry" href="2026-09-28-arahata-tonkatsu-nakayoshi-lunch1200.html" data-category="topic">
     <div class="entry-date">2026-09-28</div>
     <div class="entry-body">
       <h2>鶴舞・荒畑のとんかつ「仲由」ランチ1200円と定食1800円を読む</h2>
@@ -573,7 +587,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-27-marunouchi-masuhan-matcha-price.html">
+  <a class="journal-entry" href="2026-09-27-marunouchi-masuhan-matcha-price.html" data-category="topic">
     <div class="entry-date">2026-09-27</div>
     <div class="entry-body">
       <h2>丸の内の喫茶「升半茶店」——抹茶2.6倍でもスイーツ2200円の理由</h2>
@@ -582,7 +596,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-26-sakae-chanko-kokonoe-bonenkai.html">
+  <a class="journal-entry" href="2026-09-26-sakae-chanko-kokonoe-bonenkai.html" data-category="topic">
     <div class="entry-date">2026-09-26</div>
     <div class="entry-body">
       <h2>栄の忘年会に「ちゃんこ九重」10月16日開店、横綱コース1万円の読み方</h2>
@@ -591,7 +605,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-25-sakae-unafuji-autumn-course.html">
+  <a class="journal-entry" href="2026-09-25-sakae-unafuji-autumn-course.html" data-category="topic">
     <div class="entry-date">2026-09-25</div>
     <div class="entry-body">
       <h2>栄・炭焼うな富士の秋コース8800円——接待向きのひつまぶし店が本店ではコースを出さない理由</h2>
@@ -600,7 +614,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-24-kurumamichi-pizzeria-mimi-counter12.html">
+  <a class="journal-entry" href="2026-09-24-kurumamichi-pizzeria-mimi-counter12.html" data-category="topic">
     <div class="entry-date">2026-09-24</div>
     <div class="entry-body">
       <h2>千種・車道のイタリアン「Pizzeria mimi」カウンター12席で1人1ピッツァ</h2>
@@ -609,7 +623,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-23-meieki-izakaya-morning-minimum-wage.html">
+  <a class="journal-entry" href="2026-09-23-meieki-izakaya-morning-minimum-wage.html" data-category="guide">
     <div class="entry-date">2026-09-23</div>
     <div class="entry-body">
       <h2>名駅の居酒屋がモーニングを始めた理由——最低賃金1,195円の朝</h2>
@@ -618,7 +632,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-22-sakae-sawee-nakgopsae.html">
+  <a class="journal-entry" href="2026-09-22-sakae-sawee-nakgopsae.html" data-category="topic">
     <div class="entry-date">2026-09-22</div>
     <div class="entry-body">
       <h2>栄の韓国料理「サウィ食堂」ナッコプセ2180円を女子会で読み解く</h2>
@@ -627,7 +641,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-21-meieki-dote-daikoku-bel-butter-waffle.html">
+  <a class="journal-entry" href="2026-09-21-meieki-dote-daikoku-bel-butter-waffle.html" data-category="compare">
     <div class="entry-date">2026-09-21</div>
     <div class="entry-body">
       <h2>名駅の一人飲み、99円の居酒屋「どての大黒」とBEL BUTTER WAFFLE</h2>
@@ -636,7 +650,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-20-nishiki-maruhachi-fushimi-bettei-enkai.html">
+  <a class="journal-entry" href="2026-09-20-nishiki-maruhachi-fushimi-bettei-enkai.html" data-category="topic">
     <div class="entry-date">2026-09-20</div>
     <div class="entry-body">
       <h2>錦の名古屋めし食堂 丸八 伏見別邸、手羽先も味噌かつも一会計の宴会</h2>
@@ -645,7 +659,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-19-kiyosu-yabaton-boochan-house.html">
+  <a class="journal-entry" href="2026-09-19-kiyosu-yabaton-boochan-house.html" data-category="topic">
     <div class="entry-date">2026-09-19</div>
     <div class="entry-body">
       <h2>矢場とん「ぶーちゃんハウス」が清須に開店、名古屋のとんかつ店が市内を選ばなかった理由を読む</h2>
@@ -654,7 +668,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-18-sakae-akizake-fes-2026-coin-price.html">
+  <a class="journal-entry" href="2026-09-18-sakae-akizake-fes-2026-coin-price.html" data-category="topic">
     <div class="entry-date">2026-09-18</div>
     <div class="entry-body">
       <h2>栄・久屋大通に27蔵81銘柄「秋酒祭 愛知2026」、コイン制の相場を読む</h2>
@@ -663,7 +677,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-17-marunouchi-unashiromura-koshitsu-ryo.html">
+  <a class="journal-entry" href="2026-09-17-marunouchi-unashiromura-koshitsu-ryo.html" data-category="topic">
     <div class="entry-date">2026-09-17</div>
     <div class="entry-body">
       <h2>うなぎのしろむら丸の内店の個室利用料10% — 5連休に鰻を囲む前に</h2>
@@ -672,7 +686,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-16-sakae-hitorinomi-shinya-ryokin-kozo.html">
+  <a class="journal-entry" href="2026-09-16-sakae-hitorinomi-shinya-ryokin-kozo.html" data-category="guide">
     <div class="entry-date">2026-09-16</div>
     <div class="entry-body">
       <h2>栄の居酒屋で一人飲み、0時をまたぐ一杯が高くつく理由 — 深夜料金7%時代のwakamaru栄店</h2>
@@ -681,7 +695,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-15-imaike-okute-yamamotoya-misonikomi-export.html">
+  <a class="journal-entry" href="2026-09-15-imaike-okute-yamamotoya-misonikomi-export.html" data-category="topic">
     <div class="entry-date">2026-09-15</div>
     <div class="entry-body">
       <h2>今池・大久手山本屋の味噌煮込みが海外の棚へ——輸出の設計を読む</h2>
@@ -690,7 +704,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-14-sakae-izakaya-new-openings-bonenkai.html">
+  <a class="journal-entry" href="2026-09-14-sakae-izakaya-new-openings-bonenkai.html" data-category="compare">
     <div class="entry-date">2026-09-14</div>
     <div class="entry-body">
       <h2>栄に居酒屋の大箱が2軒、同じ週に開いた — 忘年会の下見は9月がいい</h2>
@@ -699,7 +713,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-13-kanayama-late-night-gyoza-group.html">
+  <a class="journal-entry" href="2026-09-13-kanayama-late-night-gyoza-group.html" data-category="topic">
     <div class="entry-date">2026-09-13</div>
     <div class="entry-body">
       <h2>アジア大会の夜は22時が勝負、金山で大人数が座れる餃子居酒屋</h2>
@@ -708,7 +722,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-12-sakae-sulbing-korean-bingsu.html">
+  <a class="journal-entry" href="2026-09-12-sakae-sulbing-korean-bingsu.html" data-category="topic">
     <div class="entry-date">2026-09-12</div>
     <div class="entry-body">
       <h2>韓国かき氷が名古屋初上陸、栄の40席デザートカフェをコスパで読む</h2>
@@ -717,7 +731,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-11-sakae-mirai-tower-tsukimi-date-lastorder.html">
+  <a class="journal-entry" href="2026-09-11-sakae-mirai-tower-tsukimi-date-lastorder.html" data-category="topic">
     <div class="entry-date">2026-09-11</div>
     <div class="entry-body">
       <h2>栄のテレビ塔でお月見デート、21時閉館から逆算する夕食のラストオーダー</h2>
@@ -726,7 +740,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-10-marunouchi-italian-sunday-closed-settai.html">
+  <a class="journal-entry" href="2026-09-10-marunouchi-italian-sunday-closed-settai.html" data-category="topic">
     <div class="entry-date">2026-09-10</div>
     <div class="entry-body">
       <h2>名古屋城前のイタリアンが日曜定休に。丸の内で接待を組む日の選び方</h2>
@@ -735,7 +749,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-09-meieki-izakaya-jikyu1500-enkai.html">
+  <a class="journal-entry" href="2026-09-09-meieki-izakaya-jikyu1500-enkai.html" data-category="guide">
     <div class="entry-date">2026-09-09</div>
     <div class="entry-body">
       <h2>名駅の居酒屋、時給1,500円でも人が集まらない — 宴会予約前の3点</h2>
@@ -744,7 +758,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html">
+  <a class="journal-entry" href="2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html" data-category="topic">
     <div class="entry-date">2026-09-08</div>
     <div class="entry-body">
       <h2>覚王山・池下に焼肉の新顔。全面禁煙44席が語る、接待に使えるかの判断軸</h2>
@@ -753,7 +767,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-07-meieki-meichika-new-shops-weekly.html">
+  <a class="journal-entry" href="2026-09-07-meieki-meichika-new-shops-weekly.html" data-category="compare">
     <div class="entry-date">2026-09-07</div>
     <div class="entry-body">
       <h2>名駅メイチカ復活の週、朝7時の中国茶と23時のラーメン — 今週の新店をコスパで比較</h2>
@@ -762,7 +776,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-06-mizuho-asian-games-venue-yakiniku.html">
+  <a class="journal-entry" href="2026-09-06-mizuho-asian-games-venue-yakiniku.html" data-category="topic">
     <div class="entry-date">2026-09-06</div>
     <div class="entry-body">
       <h2>アジア大会の瑞穂、栄へ戻る前に会場徒歩5分の焼肉で宴会を組む</h2>
@@ -771,7 +785,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-05-meieki-nagoyameshi-izakaya-enkai.html">
+  <a class="journal-entry" href="2026-09-05-meieki-nagoyameshi-izakaya-enkai.html" data-category="topic">
     <div class="entry-date">2026-09-05</div>
     <div class="entry-body">
       <h2>名駅の名古屋めし居酒屋と伏見の新フードホール、宴会の幹事が選ぶべきはどちらか</h2>
@@ -780,7 +794,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-04-meieki-shokudo-tomoru-sanma-price.html">
+  <a class="journal-entry" href="2026-09-04-meieki-shokudo-tomoru-sanma-price.html" data-category="topic">
     <div class="entry-date">2026-09-04</div>
     <div class="entry-body">
       <h2>名駅『食堂 灯ル』の秋刀魚定食2,178円は高いのか安いのか</h2>
@@ -789,7 +803,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-03-meieki-meichika-sharin-tsukemen.html">
+  <a class="journal-entry" href="2026-09-03-meieki-meichika-sharin-tsukemen.html" data-category="topic">
     <div class="entry-date">2026-09-03</div>
     <div class="entry-body">
       <h2>名駅メイチカの舎鈴、20時に閉まる地下街で23時まで開くコスパ</h2>
@@ -798,7 +812,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-02-sakae-counter-sushi-nakaoroshi.html">
+  <a class="journal-entry" href="2026-09-02-sakae-counter-sushi-nakaoroshi.html" data-category="guide">
     <div class="entry-date">2026-09-02</div>
     <div class="entry-body">
       <h2>栄のカウンター寿司で産地がバラバラな理由 — 名古屋の魚は仲卸で決まる</h2>
@@ -807,7 +821,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-01-nishiki-steakhouse-settai-price.html">
+  <a class="journal-entry" href="2026-09-01-nishiki-steakhouse-settai-price.html" data-category="topic">
     <div class="entry-date">2026-09-01</div>
     <div class="entry-body">
       <h2>錦のステーキハウスで接待、9,900円のランチと「サ別」の読み方</h2>
@@ -816,7 +830,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-31-nagoya-roadside-newstores-price.html">
+  <a class="journal-entry" href="2026-08-31-nagoya-roadside-newstores-price.html" data-category="compare">
     <div class="entry-date">2026-08-31</div>
     <div class="entry-body">
       <h2>栄の味噌ラーメンが中川区へ、900円と1,300円を読む</h2>
@@ -825,7 +839,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-30-nagoya-tebasaki-osaka.html">
+  <a class="journal-entry" href="2026-08-30-nagoya-tebasaki-osaka.html" data-category="topic">
     <div class="entry-date">2026-08-30</div>
     <div class="entry-body">
       <h2>栄の手羽先が大阪へ — 12席カウンターと22店舗、外に出る名古屋の鶏</h2>
@@ -834,7 +848,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-29-fujigaoka-nama-donut-cospa.html">
+  <a class="journal-entry" href="2026-08-29-fujigaoka-nama-donut-cospa.html" data-category="topic">
     <div class="entry-date">2026-08-29</div>
     <div class="entry-body">
       <h2>藤が丘に北海道の生ドーナツ、290円のスイーツをコスパで読む</h2>
@@ -843,7 +857,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-28-meieki-autumn-sweets-weekday.html">
+  <a class="journal-entry" href="2026-08-28-meieki-autumn-sweets-weekday.html" data-category="topic">
     <div class="entry-date">2026-08-28</div>
     <div class="entry-body">
       <h2>名駅の秋スイーツ、9月解禁 — 平日のコスパが高い理由</h2>
@@ -852,7 +866,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-27-sakae-mitsukoshi-kihachi-cafe.html">
+  <a class="journal-entry" href="2026-08-27-sakae-mitsukoshi-kihachi-cafe.html" data-category="topic">
     <div class="entry-date">2026-08-27</div>
     <div class="entry-body">
       <h2>名鉄百貨店で消えたキハチ カフェが栄三越6階に、19時閉店・予約なしの設計を読む</h2>
@@ -861,7 +875,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-26-marunouchi-friday-19ji-reservation.html">
+  <a class="journal-entry" href="2026-08-26-marunouchi-friday-19ji-reservation.html" data-category="guide">
     <div class="entry-date">2026-08-26</div>
     <div class="entry-body">
       <h2>丸の内の予約が取れない鮨と日本料理、金曜19時が空かないのは席が埋まっているからではない</h2>
@@ -870,7 +884,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-25-misen-five-lineages-osu-solo.html">
+  <a class="journal-entry" href="2026-08-25-misen-five-lineages-osu-solo.html" data-category="topic">
     <div class="entry-date">2026-08-25</div>
     <div class="entry-body">
       <h2>同じ看板で経営が5つ、大須の矢場味仙で台湾ラーメンを一人飲みするなら知っておく話</h2>
@@ -879,7 +893,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-24-sakae-korean-buffet-price-split.html">
+  <a class="journal-entry" href="2026-08-24-sakae-korean-buffet-price-split.html" data-category="compare">
     <div class="entry-date">2026-08-24</div>
     <div class="entry-body">
       <h2>栄の韓国料理食べ放題2,500円と5,000円、差額を読む</h2>
@@ -888,7 +902,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-23-meieki-kokokara-yakiniku.html">
+  <a class="journal-entry" href="2026-08-23-meieki-kokokara-yakiniku.html" data-category="topic">
     <div class="entry-date">2026-08-23</div>
     <div class="entry-body">
       <h2>名駅3丁目に名古屋初上陸の焼肉、30席が飲み放題を半額で出す理由を読む</h2>
@@ -897,7 +911,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-22-osu-malachuan-self-price.html">
+  <a class="journal-entry" href="2026-08-22-osu-malachuan-self-price.html" data-category="topic">
     <div class="entry-date">2026-08-22</div>
     <div class="entry-body">
       <h2>大須に名古屋初の麻辣串、串1本50円の中華を読む</h2>
@@ -906,7 +920,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-21-meieki-1bansen-rokurinsha.html">
+  <a class="journal-entry" href="2026-08-21-meieki-1bansen-rokurinsha.html" data-category="topic">
     <div class="entry-date">2026-08-21</div>
     <div class="entry-body">
       <h2>JR名古屋駅1番線に六厘舎が90日だけ — 名駅のつけめん1,080円＋入場券150円を読む</h2>
@@ -915,7 +929,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-20-hirabari-doteni-counter.html">
+  <a class="journal-entry" href="2026-08-20-hirabari-doteni-counter.html" data-category="topic">
     <div class="entry-date">2026-08-20</div>
     <div class="entry-body">
       <h2>「どて煮の平針」29席の居酒屋、カウンター5席は誰のためか</h2>
@@ -924,7 +938,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-19-sakae-solo-last-order-signs.html">
+  <a class="journal-entry" href="2026-08-19-sakae-solo-last-order-signs.html" data-category="guide">
     <div class="entry-date">2026-08-19</div>
     <div class="entry-body">
       <h2>栄の居酒屋で一人飲み、ラストオーダー30分前に入れる店の見分け方</h2>
@@ -933,7 +947,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-18-noritake-garden-pasta.html">
+  <a class="journal-entry" href="2026-08-18-noritake-garden-pasta.html" data-category="topic">
     <div class="entry-date">2026-08-18</div>
     <div class="entry-body">
       <h2>名駅から徒歩12分のフードコート、980円のパスタ専門店は何を捨てたか</h2>
@@ -942,7 +956,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-17-meieki-sanno-shinten-digest.html">
+  <a class="journal-entry" href="2026-08-17-meieki-sanno-shinten-digest.html" data-category="compare">
     <div class="entry-date">2026-08-17</div>
     <div class="entry-body">
       <h2>29席のラーメンと150席の食べ放題——名駅と山王の新店を読む</h2>
@@ -951,7 +965,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-16-sakae-magari-kakigori.html">
+  <a class="journal-entry" href="2026-08-16-sakae-magari-kakigori.html" data-category="topic">
     <div class="entry-date">2026-08-16</div>
     <div class="entry-body">
       <h2>栄のかき氷は昼だけ立つ——食べ歩きで挟む間借り営業のオペと価格</h2>
@@ -960,7 +974,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-15-osu-neriden-hanare-tabearuki.html">
+  <a class="journal-entry" href="2026-08-15-osu-neriden-hanare-tabearuki.html" data-category="topic">
     <div class="entry-date">2026-08-15</div>
     <div class="entry-body">
       <h2>大須の食べ歩きに戻ってきた300円の練り物——老舗メーカー95年ぶりの直営店</h2>
@@ -969,7 +983,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-14-obon-latter-half-marunouchi.html">
+  <a class="journal-entry" href="2026-08-14-obon-latter-half-marunouchi.html" data-category="topic">
     <div class="entry-date">2026-08-14</div>
     <div class="entry-body">
       <h2>お盆後半の栄・丸の内、予約が取れない居酒屋が空く数日間</h2>
@@ -978,7 +992,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-13-meieki-nishi-niboshi-ramen-rin.html">
+  <a class="journal-entry" href="2026-08-13-meieki-nishi-niboshi-ramen-rin.html" data-category="topic">
     <div class="entry-date">2026-08-13</div>
     <div class="entry-body">
       <h2>名駅西の煮干しラーメン18席、カウンター980円の使いどころ</h2>
@@ -987,7 +1001,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-12-sakae-qr-order-kyakutanka.html">
+  <a class="journal-entry" href="2026-08-12-sakae-qr-order-kyakutanka.html" data-category="guide">
     <div class="entry-date">2026-08-12</div>
     <div class="entry-body">
       <h2>栄の居酒屋のQR注文、客単価の分かれ目を読む</h2>
@@ -996,7 +1010,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-11-imaike-mitsushi-sosaku-udon.html">
+  <a class="journal-entry" href="2026-08-11-imaike-mitsushi-sosaku-udon.html" data-category="topic">
     <div class="entry-date">2026-08-11</div>
     <div class="entry-body">
       <h2>今池の創作うどん15席、カウンターで昼夜どう使うか</h2>
@@ -1005,7 +1019,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-10-nagoya-shinten-cospa-week.html">
+  <a class="journal-entry" href="2026-08-10-nagoya-shinten-cospa-week.html" data-category="compare">
     <div class="entry-date">2026-08-10</div>
     <div class="entry-body">
       <h2>大須のかき氷と千種の790円パスタ——名古屋の新店がコスパで割れた週</h2>
@@ -1014,7 +1028,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-09-nagoyadome-pekin-honten.html">
+  <a class="journal-entry" href="2026-08-09-nagoyadome-pekin-honten.html" data-category="topic">
     <div class="entry-date">2026-08-09</div>
     <div class="entry-body">
       <h2>ナゴヤドーム前の中華、980円の北京飯はコスパか</h2>
@@ -1023,7 +1037,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-08-osu-wakasa-cafe-blueberry.html">
+  <a class="journal-entry" href="2026-08-08-osu-wakasa-cafe-blueberry.html" data-category="topic">
     <div class="entry-date">2026-08-08</div>
     <div class="entry-body">
       <h2>大須の食べ歩きに1,500円のかき氷が加わる</h2>
@@ -1032,7 +1046,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-07-risshu-obon-week-nagoya.html">
+  <a class="journal-entry" href="2026-08-07-risshu-obon-week-nagoya.html" data-category="topic">
     <div class="entry-date">2026-08-07</div>
     <div class="entry-body">
       <h2>立秋の名古屋、お盆の会食が動き出す一週間</h2>
@@ -1041,7 +1055,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-06-meieki-toribura-yakitori-90yen.html">
+  <a class="journal-entry" href="2026-08-06-meieki-toribura-yakitori-90yen.html" data-category="topic">
     <div class="entry-date">2026-08-06</div>
     <div class="entry-body">
       <h2>名駅・焼鳥90円の「鳥ぶら」名駅東口店、一人飲みでいくらになるか</h2>
@@ -1050,7 +1064,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-05-otoshi-450yen-nagoya.html">
+  <a class="journal-entry" href="2026-08-05-otoshi-450yen-nagoya.html" data-category="guide">
     <div class="entry-date">2026-08-05</div>
     <div class="entry-body">
       <h2>「お通し450円」に込められた名古屋の居酒屋の意思</h2>
@@ -1059,7 +1073,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-04-sakae-leesar-coffee.html">
+  <a class="journal-entry" href="2026-08-04-sakae-leesar-coffee.html" data-category="topic">
     <div class="entry-date">2026-08-04</div>
     <div class="entry-body">
       <h2>栄『リサールコーヒー』日本初出店——カフェ400円の設計を読む</h2>
@@ -1068,7 +1082,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-03-osu-shindo-weekly.html">
+  <a class="journal-entry" href="2026-08-03-osu-shindo-weekly.html" data-category="compare">
     <div class="entry-date">2026-08-03</div>
     <div class="entry-body">
       <h2>大須で中華とバーガーが同時に動いた——名古屋外食の1週間を読む</h2>
@@ -1077,7 +1091,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-02-meieki-honoma-namahiyamugi.html">
+  <a class="journal-entry" href="2026-08-02-meieki-honoma-namahiyamugi.html" data-category="topic">
     <div class="entry-date">2026-08-02</div>
     <div class="entry-body">
       <h2>名駅の生ひやむぎ『穂の間』、猛暑の一杯を読む</h2>
@@ -1086,7 +1100,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-01-alma-de-churrasco-meieki.html">
+  <a class="journal-entry" href="2026-08-01-alma-de-churrasco-meieki.html" data-category="topic">
     <div class="entry-date">2026-08-01</div>
     <div class="entry-body">
       <h2>名駅で開いた和牛シュラスコ食べ放題を接待とデート視点で読む</h2>
@@ -1095,7 +1109,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-07-31-sakae-settai-sushi.html">
+  <a class="journal-entry" href="2026-07-31-sakae-settai-sushi.html" data-category="topic">
     <div class="entry-date">2026-07-31</div>
     <div class="entry-body">
       <h2>栄で接待の鮨をどう選ぶか——高級ホテル開業日の名古屋</h2>
@@ -1104,7 +1118,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-07-30-meieki-tabearuki-sweets.html">
+  <a class="journal-entry" href="2026-07-30-meieki-tabearuki-sweets.html" data-category="topic">
     <div class="entry-date">2026-07-30</div>
     <div class="entry-body">
       <h2>名駅の食べ歩き、スイーツで手土産まで決める動線</h2>
@@ -1113,7 +1127,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-07-29-nagoya-beergarden.html">
+  <a class="journal-entry" href="2026-07-29-nagoya-beergarden.html" data-category="topic">
     <div class="entry-date">2026-07-29</div>
     <div class="entry-body">
       <h2>名古屋の屋上ビアガーデン、120分6,500円の元の取り方</h2>
@@ -1122,7 +1136,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-07-28-nagoya-unagi-ushinohi.html">
+  <a class="journal-entry" href="2026-07-28-nagoya-unagi-ushinohi.html" data-category="topic">
     <div class="entry-date">2026-07-28</div>
     <div class="entry-body">
       <h2>丑の日が終わった今こそ、名古屋の鰻は狙い目</h2>
@@ -1131,7 +1145,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-07-27-owarisanso-kurogi.html">
+  <a class="journal-entry" href="2026-07-27-owarisanso-kurogi.html" data-category="topic">
     <div class="entry-date">2026-07-27</div>
     <div class="entry-body">
       <h2>予約困難な名店くろぎ、名古屋初出店の使い方</h2>
@@ -1140,7 +1154,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-07-26-mirine-yankoppuchan-sakae.html">
+  <a class="journal-entry" href="2026-07-26-mirine-yankoppuchan-sakae.html" data-category="topic">
     <div class="entry-date">2026-07-26</div>
     <div class="entry-body">
       <h2>丑の日にうなぎを逃したら、栄・釜山式ホルモンという夏の正解</h2>
@@ -1149,7 +1163,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-07-23-ushinohi-shibafukuya.html">
+  <a class="journal-entry" href="2026-07-23-ushinohi-shibafukuya.html" data-category="topic">
     <div class="entry-date">2026-07-23</div>
     <div class="entry-body">
       <h2>丑の日は7月26日の一度だけ——名駅『しば福や』の並び方と回転を読む</h2>
@@ -1158,7 +1172,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-07-22-unagi-kikukawa-oroshi.html">
+  <a class="journal-entry" href="2026-07-22-unagi-kikukawa-oroshi.html" data-category="topic">
     <div class="entry-date">2026-07-22</div>
     <div class="entry-body">
       <h2>うなぎが安い夏——名駅『四代目菊川』、卸問屋直営という丑の日の選び方</h2>
@@ -1167,7 +1181,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-07-18-kiwami-tachigui-sushi.html">
+  <a class="journal-entry" href="2026-07-18-kiwami-tachigui-sushi.html" data-category="topic">
     <div class="entry-date">2026-07-18</div>
     <div class="entry-body">
       <h2>名駅の寿司、座るか立つかで会計が変わる——立ち食い『極』の使い分け設計</h2>
@@ -1176,7 +1190,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-07-17-nagoya-kakigori-shime.html">
+  <a class="journal-entry" href="2026-07-17-nagoya-kakigori-shime.html" data-category="topic">
     <div class="entry-date">2026-07-17</div>
     <div class="entry-body">
       <h2>夜22時まで、名古屋のかき氷は〆にも効く</h2>
@@ -1185,7 +1199,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-07-16-unafuji-taikoguchi-doyo.html">
+  <a class="journal-entry" href="2026-07-16-unafuji-taikoguchi-doyo.html" data-category="topic">
     <div class="entry-date">2026-07-16</div>
     <div class="entry-body">
       <h2>土用の丑の日は7月26日——名駅『炭焼うな富士 名古屋駅太閤口店』の青うなぎを読む</h2>
@@ -1194,7 +1208,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-07-13-weekly-shinten-tsurumai-sakae.html">
+  <a class="journal-entry" href="2026-07-13-weekly-shinten-tsurumai-sakae.html" data-category="compare">
     <div class="entry-date">2026-07-13</div>
     <div class="entry-body">
       <h2>今週の名古屋 新店ダイジェスト——鶴舞・栄の話題5軒</h2>
@@ -1203,7 +1217,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-27-karamen-hanabi-shinsakae.html">
+  <a class="journal-entry" href="2026-06-27-karamen-hanabi-shinsakae.html" data-category="topic">
     <div class="entry-date">2026-06-27</div>
     <div class="entry-body">
       <h2>深夜3時、カウンター8席の『辛麺 華火』新栄町本店を読む</h2>
@@ -1212,7 +1226,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-26-portama-haera-nimousaku.html">
+  <a class="journal-entry" href="2026-06-26-portama-haera-nimousaku.html" data-category="topic">
     <div class="entry-date">2026-06-26</div>
     <div class="entry-body">
       <h2>ポーたま 名古屋HAERA店——朝650円と夜900円、二毛作の値付けを読む</h2>
@@ -1221,7 +1235,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-25-kisoji-kawaramachi-hokkaido-matsuri.html">
+  <a class="journal-entry" href="2026-06-25-kisoji-kawaramachi-hokkaido-matsuri.html" data-category="topic">
     <div class="entry-date">2026-06-25</div>
     <div class="entry-body">
       <h2>木曽路 瓦町店 — 『北海道祭り』3,850円の中身と会計の読み方</h2>
@@ -1230,7 +1244,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-24-ranchi-1000en-yoru-kyakutanka.html">
+  <a class="journal-entry" href="2026-06-24-ranchi-1000en-yoru-kyakutanka.html" data-category="guide">
     <div class="entry-date">2026-06-24</div>
     <div class="entry-body">
       <h2>名古屋のランチ1,000円店、夜はなぜ高いのか——客単価設計の裏側</h2>
@@ -1239,7 +1253,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-23-kojitsu-vs-counter-settai.html">
+  <a class="journal-entry" href="2026-06-23-kojitsu-vs-counter-settai.html" data-category="guide">
     <div class="entry-date">2026-06-23</div>
     <div class="entry-body">
       <h2>個室が多い店 vs 一枚板カウンター——名古屋の接待シーンでどちらを選ぶか</h2>
@@ -1248,7 +1262,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-22-hatcho-miso-akamiso-katareru-mise.html">
+  <a class="journal-entry" href="2026-06-22-hatcho-miso-akamiso-katareru-mise.html" data-category="guide">
     <div class="entry-date">2026-06-22</div>
     <div class="entry-body">
       <h2>「八丁味噌」と「赤味噌」の違いを語れる店・語れない店——名古屋めしの仕入を読む</h2>
@@ -1257,7 +1271,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-21-nomihoudai-genka-de-miwakeru.html">
+  <a class="journal-entry" href="2026-06-21-nomihoudai-genka-de-miwakeru.html" data-category="guide">
     <div class="entry-date">2026-06-21</div>
     <div class="entry-body">
       <h2>飲み放題の原価率から見抜く「本当にお得な店」——絞っているメニューの読み方</h2>
@@ -1266,7 +1280,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-20-hall-staff-level-no-deru-mise.html">
+  <a class="journal-entry" href="2026-06-20-hall-staff-level-no-deru-mise.html" data-category="guide">
     <div class="entry-date">2026-06-20</div>
     <div class="entry-body">
       <h2>ホールのレベル差が「もっとも出る店」のタイプ——人手不足時代の店選び</h2>
@@ -1275,7 +1289,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-19-natsu-reibou-kikisugi-no-mise.html">
+  <a class="journal-entry" href="2026-06-19-natsu-reibou-kikisugi-no-mise.html" data-category="guide">
     <div class="entry-date">2026-06-19</div>
     <div class="entry-body">
       <h2>夏、冷房が効きすぎる店・ちょうどいい店——業態で変わる「店内の温度」の読み方</h2>
@@ -1284,7 +1298,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-18-yoyaku-jikan-doori-ka.html">
+  <a class="journal-entry" href="2026-06-18-yoyaku-jikan-doori-ka.html" data-category="guide">
     <div class="entry-date">2026-06-18</div>
     <div class="entry-body">
       <h2>予約時間ちょうどに行くべきか、5分遅れてもいいのか——業態で変わる「正解の到着」</h2>
@@ -1293,7 +1307,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-17-shinya-eigyo-jorei-to-genba.html">
+  <a class="journal-entry" href="2026-06-17-shinya-eigyo-jorei-to-genba.html" data-category="guide">
     <div class="entry-date">2026-06-17</div>
     <div class="entry-body">
       <h2>名古屋の深夜営業、条例とリアル運用の差——「届出」と「許可」の違いを業界目線で</h2>
@@ -1302,7 +1316,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-16-yokoi-ankake-spa-nishiki.html">
+  <a class="journal-entry" href="2026-06-16-yokoi-ankake-spa-nishiki.html" data-category="topic">
     <div class="entry-date">2026-06-16</div>
     <div class="entry-body">
       <h2>あんかけスパ発祥『スパゲッティハウス ヨコイ 錦店』を読む</h2>
@@ -1311,7 +1325,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-15-yoroniku-nagoya-haera.html">
+  <a class="journal-entry" href="2026-06-15-yoroniku-nagoya-haera.html" data-category="topic">
     <div class="entry-date">2026-06-15</div>
     <div class="entry-body">
       <h2>よろにく 名古屋 — 東京の予約困難焼肉が栄に持ち込んだ席設計と価格帯</h2>
@@ -1320,7 +1334,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-14-yoroniku-nagoya-haera.html">
+  <a class="journal-entry" href="2026-06-14-yoroniku-nagoya-haera.html" data-category="topic">
     <div class="entry-date">2026-06-14</div>
     <div class="entry-body">
       <h2>専属焼き手が焼く名古屋の夜 ── YORONIKU NAGOYA</h2>
@@ -1329,7 +1343,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-13-nikuya-setsugekka-nagoya-meieki.html">
+  <a class="journal-entry" href="2026-06-13-nikuya-setsugekka-nagoya-meieki.html" data-category="topic">
     <div class="entry-date">2026-06-13</div>
     <div class="entry-body">
       <h2>肉屋 雪月花 NAGOYA（名駅）── ミシュランプレート×4年連続食べログアワード、松阪牛おまかせコースの実態</h2>
@@ -1338,7 +1352,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-12-tsuyu-nagoya-meshi-guide.html">
+  <a class="journal-entry" href="2026-06-12-tsuyu-nagoya-meshi-guide.html" data-category="topic">
     <div class="entry-date">2026-06-12</div>
     <div class="entry-body">
       <h2>梅雨の名古屋メシ──雨の日に足を運びたい「屋内集中型」の5ジャンル</h2>
@@ -1347,7 +1361,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-11-chikame-yakitori-sakae.html">
+  <a class="journal-entry" href="2026-06-11-chikame-yakitori-sakae.html" data-category="topic">
     <div class="entry-date">2026-06-11</div>
     <div class="entry-body">
       <h2>千亀（栄）── ミシュラン・百名店で「電話のみ予約」を貫く焼鳥の聖域</h2>
@@ -1356,7 +1370,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-10-aromafresca-sakae-italian.html">
+  <a class="journal-entry" href="2026-06-10-aromafresca-sakae-italian.html" data-category="topic">
     <div class="entry-date">2026-06-10</div>
     <div class="entry-body">
       <h2>栄・松坂屋10Fのアロマフレスカを読む</h2>
@@ -1365,7 +1379,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-09-hitsumabushi-touga-nagono.html">
+  <a class="journal-entry" href="2026-06-09-hitsumabushi-touga-nagono.html" data-category="topic">
     <div class="entry-date">2026-06-09</div>
     <div class="entry-body">
       <h2>築90年の古民家でうなぎを食べる——四間道『ひつまぶし 登河 那古野本店』を読む</h2>
@@ -1374,7 +1388,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-08-uonotana-sushi-marunouchi.html">
+  <a class="journal-entry" href="2026-06-08-uonotana-sushi-marunouchi.html" data-category="topic">
     <div class="entry-date">2026-06-08</div>
     <div class="entry-body">
       <h2>料亭河文の予約制鮨『うおのたな』を読む</h2>
@@ -1383,7 +1397,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-07-susuru-toripaitan-marunouchi.html">
+  <a class="journal-entry" href="2026-06-07-susuru-toripaitan-marunouchi.html" data-category="topic">
     <div class="entry-date">2026-06-07</div>
     <div class="entry-body">
       <h2>丸の内のランチ激戦区で行列が絶えない——鶏そば 啜る 丸の内本店を読む</h2>
@@ -1392,7 +1406,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-06-nagotei-teppan-meieki.html">
+  <a class="journal-entry" href="2026-06-06-nagotei-teppan-meieki.html" data-category="topic">
     <div class="entry-date">2026-06-06</div>
     <div class="entry-body">
       <h2>名駅18Fの鉄板焼『那古亭』を読む</h2>
@@ -1401,7 +1415,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-05-daiginkyo-yakitori-sakae.html">
+  <a class="journal-entry" href="2026-06-05-daiginkyo-yakitori-sakae.html" data-category="topic">
     <div class="entry-date">2026-06-05</div>
     <div class="entry-body">
       <h2>栄の焼鳥百名店『大銀杏』を読む</h2>
@@ -1410,7 +1424,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-04-tebasaki-summit-yotteba-meieki.html">
+  <a class="journal-entry" href="2026-06-04-tebasaki-summit-yotteba-meieki.html" data-category="topic">
     <div class="entry-date">2026-06-04</div>
     <div class="entry-body">
       <h2>手羽先サミット開幕の週末、名駅で手羽を一杯 ―『酔っ手羽 名駅3丁目店』</h2>
@@ -1419,7 +1433,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-03-nagoya-cochin-honmono-guide.html">
+  <a class="journal-entry" href="2026-06-03-nagoya-cochin-honmono-guide.html" data-category="guide">
     <div class="entry-date">2026-06-03</div>
     <div class="entry-body">
       <h2>名古屋コーチン「本物」を出している店の見分け方——仕入れルート3系統とメニュー表記の読み方</h2>
@@ -1428,7 +1442,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-02-sumiyaki-unafuji-nagoya-station.html">
+  <a class="journal-entry" href="2026-06-02-sumiyaki-unafuji-nagoya-station.html" data-category="topic">
     <div class="entry-date">2026-06-02</div>
     <div class="entry-body">
       <h2>名古屋駅降りてすぐ本格うなぎを食べたい——炭焼うな富士 太閤口店を読む</h2>
@@ -1437,7 +1451,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-01-weekly-digest-sakae-meiki-trending.html">
+  <a class="journal-entry" href="2026-06-01-weekly-digest-sakae-meiki-trending.html" data-category="compare">
     <div class="entry-date">2026-06-01</div>
     <div class="entry-body">
       <h2>5月最終週の名古屋グルメ話題5選——焼鳥・餃子・日本料理・フレンチが揃い踏み</h2>
@@ -1446,7 +1460,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-31-grill-tsubaki-meiekimae.html">
+  <a class="journal-entry" href="2026-05-31-grill-tsubaki-meiekimae.html" data-category="topic">
     <div class="entry-date">2026-05-31</div>
     <div class="entry-body">
       <h2>名駅前「グリルつばき」——雪月花が和牛洋食へ転換した理由を読む</h2>
@@ -1455,7 +1469,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-30-issen-kamimaezu-590yen.html">
+  <a class="journal-entry" href="2026-05-30-issen-kamimaezu-590yen.html" data-category="topic">
     <div class="entry-date">2026-05-30</div>
     <div class="entry-body">
       <h2>上前津『博多豚骨 一閃』はなぜ590円で成立するのか</h2>
@@ -1464,7 +1478,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-29-haera-sakae-weekend.html">
+  <a class="journal-entry" href="2026-05-29-haera-sakae-weekend.html" data-category="topic">
     <div class="entry-date">2026-05-29</div>
     <div class="entry-body">
       <h2>栄が『変わる前』の週末に — 6/11 HAERA開業を読む</h2>
@@ -1473,7 +1487,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-28-jyunikagetsu-joshin-revival.html">
+  <a class="journal-entry" href="2026-05-28-jyunikagetsu-joshin-revival.html" data-category="topic">
     <div class="entry-date">2026-05-28</div>
     <div class="entry-body">
       <h2>上前津28年の『十二ヵ月』が浄心で復活した意味を読む</h2>
@@ -1482,7 +1496,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-27-chigame-cochin-insider.html">
+  <a class="journal-entry" href="2026-05-27-chigame-cochin-insider.html" data-category="topic">
     <div class="entry-date">2026-05-27</div>
     <div class="entry-body">
       <h2>栄『千亀』が名古屋コーチンと三河赤鶏を使い分ける理由</h2>
@@ -1491,7 +1505,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-26-risho-bettei-meieki.html">
+  <a class="journal-entry" href="2026-05-26-risho-bettei-meieki.html" data-category="topic">
     <div class="entry-date">2026-05-26</div>
     <div class="entry-body">
       <h2>名駅9階の新焼肉「李昇別邸」を読む — コース価格・席・予約・接待シーンの使い方</h2>
@@ -1500,7 +1514,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-25-nagoya-may-w4-digest.html">
+  <a class="journal-entry" href="2026-05-25-nagoya-may-w4-digest.html" data-category="topic">
     <div class="entry-date">2026-05-25</div>
     <div class="entry-body">
       <h2>5月第4週 名古屋話題店ダイジェスト 専門特化5軒の裏側</h2>
@@ -1509,7 +1523,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-24-yanagibashi-beer-garden-insider.html">
+  <a class="journal-entry" href="2026-05-24-yanagibashi-beer-garden-insider.html" data-category="topic">
     <div class="entry-date">2026-05-24</div>
     <div class="entry-body">
       <h2>初夏のビアガーデンは柳橋市場直結</h2>
@@ -1518,7 +1532,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-23-yakisoba-stand-rafu-tsuruzato.html">
+  <a class="journal-entry" href="2026-05-23-yakisoba-stand-rafu-tsuruzato.html" data-category="topic">
     <div class="entry-date">2026-05-23</div>
     <div class="entry-body">
       <h2>鶴里『焼きそばスタンド らふ』を読む</h2>
@@ -1527,7 +1541,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-22-tsuyu-fish-quality.html">
+  <a class="journal-entry" href="2026-05-22-tsuyu-fish-quality.html" data-category="guide">
     <div class="entry-date">2026-05-22</div>
     <div class="entry-body">
       <h2>梅雨の魚は本当に味が落ちるのか —— 仕入れ視点で読む初夏の名古屋</h2>
@@ -1536,7 +1550,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-21-chef-in-kitchen.html">
+  <a class="journal-entry" href="2026-05-21-chef-in-kitchen.html" data-category="guide">
     <div class="entry-date">2026-05-21</div>
     <div class="entry-body">
       <h2>シェフが厨房に立つ店と立たない店、味は変わるのか</h2>
@@ -1545,7 +1559,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-20-bib-gourmand-economics.html">
+  <a class="journal-entry" href="2026-05-20-bib-gourmand-economics.html" data-category="guide">
     <div class="entry-date">2026-05-20</div>
     <div class="entry-body">
       <h2>ビブグルマン価格帯の名古屋店は、なぜこの値段でやれるのか</h2>
@@ -1554,7 +1568,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-19-uto-kakigori-sakae.html">
+  <a class="journal-entry" href="2026-05-19-uto-kakigori-sakae.html" data-category="topic">
     <div class="entry-date">2026-05-19</div>
     <div class="entry-body">
       <h2>栄『かき氷 うと』名古屋初出店を読む</h2>
@@ -1563,7 +1577,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-18-menya-matsuri-fukiage.html">
+  <a class="journal-entry" href="2026-05-18-menya-matsuri-fukiage.html" data-category="topic">
     <div class="entry-date">2026-05-18</div>
     <div class="entry-body">
       <h2>千種・吹上『麺屋まつり』を読む</h2>
@@ -1572,7 +1586,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-17-yakiniku-fuku-meieki-west.html">
+  <a class="journal-entry" href="2026-05-17-yakiniku-fuku-meieki-west.html" data-category="topic">
     <div class="entry-date">2026-05-17</div>
     <div class="entry-body">
       <h2>名駅西口『焼肉 福』を読み解く — 日曜夜の黒毛和牛と立地戦略</h2>
@@ -1581,7 +1595,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-15-friday-night-restaurant-guide.html">
+  <a class="journal-entry" href="2026-05-15-friday-night-restaurant-guide.html" data-category="guide">
     <div class="entry-date">2026-05-15</div>
     <div class="entry-body">
       <h2>金曜夜の「使える店」と「使えない店」— 曜日別の店の顔</h2>
@@ -1590,7 +1604,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-14-last-order-timing-guide.html">
+  <a class="journal-entry" href="2026-05-14-last-order-timing-guide.html" data-category="guide">
     <div class="entry-date">2026-05-14</div>
     <div class="entry-body">
       <h2>ラストオーダー30分前に入っていい店・ダメな店 — 「終盤サイン」の読み方</h2>
@@ -1599,7 +1613,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-13-counter-six-seats-formula.html">
+  <a class="journal-entry" href="2026-05-13-counter-six-seats-formula.html" data-category="guide">
     <div class="entry-date">2026-05-13</div>
     <div class="entry-body">
       <h2>「カウンター6席、テーブル2卓」が名物店に多い理由 — 名古屋の少席舗が高単価で回るカラクリ</h2>
@@ -1608,7 +1622,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-12-katteguchi-kawachiya-marunouchi.html">
+  <a class="journal-entry" href="2026-05-12-katteguchi-kawachiya-marunouchi.html" data-category="topic">
     <div class="entry-date">2026-05-12</div>
     <div class="entry-body">
       <h2>料亭『河文』の板場が&quot;勝手口&quot;の隠れ家になった意味 — 丸の内『勝手口 河内屋』を読み解く</h2>
@@ -1617,7 +1631,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-11-trending-4-stores-sakae-kanayama.html">
+  <a class="journal-entry" href="2026-05-11-trending-4-stores-sakae-kanayama.html" data-category="compare">
     <div class="entry-date">2026-05-11</div>
     <div class="entry-body">
       <h2>GW明けに名古屋で『満点評価』が並ぶ4軒 — 絞り込みの正体を読み解く</h2>
@@ -1626,7 +1640,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-10-mikan-sakae-nishiki-fushimi.html">
+  <a class="journal-entry" href="2026-05-10-mikan-sakae-nishiki-fushimi.html" data-category="topic">
     <div class="entry-date">2026-05-10</div>
     <div class="entry-body">
       <h2>5000円台のカウンターに『お晩菜』が並ぶ意味 — 栄『みかん』を読み解く</h2>
@@ -1635,7 +1649,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-08-post-gw-friday-nagoya-strategy.html">
+  <a class="journal-entry" href="2026-05-08-post-gw-friday-nagoya-strategy.html" data-category="topic">
     <div class="entry-date">2026-05-08</div>
     <div class="entry-body">
       <h2>GW明け最初の金曜、名古屋は『谷間の予約』が一気に取れる — 5/8夜だけ狙う3つの理由</h2>
@@ -1644,7 +1658,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-06-gw-wrap-up-light-quick-nagoya.html">
+  <a class="journal-entry" href="2026-05-06-gw-wrap-up-light-quick-nagoya.html" data-category="topic">
     <div class="entry-date">2026-05-06</div>
     <div class="entry-body">
       <h2>GW最終夜5/6、名古屋は『軽め・近場・予約なし』が効く — 振替休日に長居しない3つの理由</h2>
@@ -1653,7 +1667,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-05-gw-final-day-tourist-exodus-nagoya.html">
+  <a class="journal-entry" href="2026-05-05-gw-final-day-tourist-exodus-nagoya.html" data-category="topic">
     <div class="entry-date">2026-05-05</div>
     <div class="entry-body">
       <h2>5/5こどもの日、名古屋は『地元の夜』に戻る — GW最終日に観光圏の予約困難店が一気に空く理由</h2>
@@ -1662,7 +1676,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-04-gw-nagoya-early-evening-strategy.html">
+  <a class="journal-entry" href="2026-05-04-gw-nagoya-early-evening-strategy.html" data-category="topic">
     <div class="entry-date">2026-05-04</div>
     <div class="entry-body">
       <h2>5/4みどりの日、名古屋『早夕の隙間』戦略 — 連休中盤の17〜18時を狙う理由</h2>
@@ -1671,7 +1685,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-03-gw-holiday-open-spots-nagoya.html">
+  <a class="journal-entry" href="2026-05-03-gw-holiday-open-spots-nagoya.html" data-category="topic">
     <div class="entry-date">2026-05-03</div>
     <div class="entry-body">
       <h2>5/3憲法記念日の名古屋 — 「祝日も通常営業」を見抜く3シグナル</h2>
@@ -1680,7 +1694,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-02-gw-walk-in-nagoya-strategy.html">
+  <a class="journal-entry" href="2026-05-02-gw-walk-in-nagoya-strategy.html" data-category="topic">
     <div class="entry-date">2026-05-02</div>
     <div class="entry-body">
       <h2>GW土曜の予約難民へ — 名古屋で『今からでも入れる』店の見分け方</h2>
@@ -1689,7 +1703,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-01-gw-second-half-nagoya-strategy.html">
+  <a class="journal-entry" href="2026-05-01-gw-second-half-nagoya-strategy.html" data-category="topic">
     <div class="entry-date">2026-05-01</div>
     <div class="entry-body">
       <h2>GW後半5連休、名古屋で『取れる席』を今夜決める</h2>
@@ -1698,7 +1712,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-04-30-gw-nagoya-valley-days.html">
+  <a class="journal-entry" href="2026-04-30-gw-nagoya-valley-days.html" data-category="topic">
     <div class="entry-date">2026-04-30</div>
     <div class="entry-body">
       <h2>GWの『谷間日』を取り戻せ — 4月30日と5月1日を狙う理由</h2>
@@ -1707,7 +1721,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-04-29-gw-nagoya-walk-in.html">
+  <a class="journal-entry" href="2026-04-29-gw-nagoya-walk-in.html" data-category="topic">
     <div class="entry-date">2026-04-29</div>
     <div class="entry-body">
       <h2>GW本番、予約なしで滑り込める名古屋 — 『当日勝負』のレイヤー</h2>
@@ -1716,7 +1730,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-04-28-gw-nagoya-lunch-pivot.html">
+  <a class="journal-entry" href="2026-04-28-gw-nagoya-lunch-pivot.html" data-category="topic">
     <div class="entry-date">2026-04-28</div>
     <div class="entry-body">
       <h2>GW名古屋、夜が無理なら昼を取れ — 連休中に『ランチ予約』を切り札にする理由</h2>
@@ -1725,7 +1739,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-04-27-gw-nagoya-genre-hack.html">
+  <a class="journal-entry" href="2026-04-27-gw-nagoya-genre-hack.html" data-category="topic">
     <div class="entry-date">2026-04-27</div>
     <div class="entry-body">
       <h2>GW名古屋、まだ間に合う『穴場ジャンル』— 今、ここで動く</h2>
@@ -1734,7 +1748,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-04-26-gw-nagoya-timing-guide.html">
+  <a class="journal-entry" href="2026-04-26-gw-nagoya-timing-guide.html" data-category="topic">
     <div class="entry-date">2026-04-26</div>
     <div class="entry-body">
       <h2>GW名古屋グルメ2026——混雑を避けて「本物」にたどり着く方法</h2>
@@ -1743,7 +1757,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-04-25-wakamaru-akita-sakae.html">
+  <a class="journal-entry" href="2026-04-25-wakamaru-akita-sakae.html" data-category="topic">
     <div class="entry-date">2026-04-25</div>
     <div class="entry-body">
       <h2>名古屋で「秋田」を貫く一軒 — wakamaru 栄店を読み解く</h2>
@@ -1752,7 +1766,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-04-24-gw-nagoya-reservation-now.html">
+  <a class="journal-entry" href="2026-04-24-gw-nagoya-reservation-now.html" data-category="topic">
     <div class="entry-date">2026-04-24</div>
     <div class="entry-body">
       <h2>GW直前、名古屋グルメの予約はまだ間に合う？</h2>
@@ -1761,7 +1775,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-04-23-katteguchi-kawachiya-marunouchi.html">
+  <a class="journal-entry" href="2026-04-23-katteguchi-kawachiya-marunouchi.html" data-category="topic">
     <div class="entry-date">2026-04-23</div>
     <div class="entry-body">
       <h2>400年の料亭が産んだ居酒屋 — 丸の内・勝手口 河内屋</h2>
@@ -1770,7 +1784,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-04-22-nagoya-course-5000-real-cost.html">
+  <a class="journal-entry" href="2026-04-22-nagoya-course-5000-real-cost.html" data-category="guide">
     <div class="entry-date">2026-04-22</div>
     <div class="entry-body">
       <h2>名古屋の『コース5,000円』は結局いくら払うのか</h2>
@@ -1779,7 +1793,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-04-21-yabamisen-nagoya-insider.html">
+  <a class="journal-entry" href="2026-04-21-yabamisen-nagoya-insider.html" data-category="topic">
     <div class="entry-date">2026-04-21</div>
     <div class="entry-body">
       <h2>名古屋の〆はここ一択 — 矢場味仙を正しく頼む</h2>
@@ -1844,6 +1858,23 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   var timer=null;
   window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
   check();
+})();
+</script>
+<script class="journal-filter-script">
+(function(){
+  var bar=document.getElementById('journal-filter');
+  if(!bar)return;
+  var chips=bar.querySelectorAll('.jf-chip'),rows=document.querySelectorAll('.journal-entry');
+  var valid={all:1,topic:1,guide:1,compare:1};
+  function apply(key){
+    if(!valid[key])key='all';
+    chips.forEach(function(c){c.setAttribute('aria-pressed',c.getAttribute('data-filter')===key?'true':'false');});
+    rows.forEach(function(r){r.hidden=!(key==='all'||r.getAttribute('data-category')===key);});
+    try{history.replaceState(null,'',key==='all'?location.pathname+location.search:'#'+key);}catch(e){}
+  }
+  chips.forEach(function(c){c.addEventListener('click',function(){apply(c.getAttribute('data-filter'));});});
+  bar.hidden=false;
+  apply((location.hash||'').replace('#',''));
 })();
 </script>
 <!-- NB-CHROME:SCRIPT:START -->
