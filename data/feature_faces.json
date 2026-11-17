@@ -1,7 +1,7 @@
 {
   "_comment": "特集の「顔」の写真の正本（Ondine #2097）。scripts/apply_feature_faces.js が特集ページの先頭・特集一覧のカードに、scripts/build_featured.js がトップの特集ストリップに使う。閾値・選定の変更はこのファイルで行いスクリプトは触らない（CLAUDE.md 制約10）。",
   "rule": "顔の写真は、その特集の掲載店（特集ページの店カード）のホットペッパー公式写真を URL で参照するだけ（加工・切り抜き・自ホストをしない。object-fit は加工にあたらない）。人が候補を目で見て選んだ（reviewedAt）。機械で良し悪しを判定しない。文字が主役の販促バナー・ロゴの看板は選ばない",
-  "reviewedAt": "2026-11-17",
+  "reviewedAt": "2026-11-18",
   "credit": "ホットペッパーグルメ",
   "fallbackWhenUnlisted": "pinned の店が月次の入れ替えなどで掲載から外れたら、特集ページの店カードの先頭から、rejectedPhotos に無い写真を使う（人の目の再確認が要るので、apply_feature_faces.js が警告を出す）",
   "faces": {
@@ -54,8 +54,8 @@
       "photo": "https://imgfp.hotp.jp/IMGH/23/55/P049252355/P049252355_480.jpg"
     },
     "nagoya-settai-secret": {
-      "store": "焼肉苑 万大 錦店",
-      "photo": "https://imgfp.hotp.jp/IMGH/12/59/P045631259/P045631259_480.jpg"
+      "store": "炉端焼き 燻銀 伏見店",
+      "photo": "https://imgfp.hotp.jp/IMGH/62/29/P046206229/P046206229.jpg"
     },
     "fathers-day-2026": {
       "store": "飛騨牛焼肉　牛ざんまい　納屋橋リバーサイド店",
@@ -144,6 +144,118 @@
     "large-group": {
       "store": "伏見ホルモン 名古屋名物味噌とんちゃん屋",
       "photo": "https://imgfp.hotp.jp/IMGH/31/72/P044673172/P044673172_480.jpg"
+    },
+    "nagoya-hitsumabushi": {
+      "store": "ひつまぶし 名古屋 備長 大名古屋ビルヂング店",
+      "photo": "https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg"
+    },
+    "nagoya-miso-nikomi-udon": {
+      "store": "山本屋総本家 金シャチ横丁店",
+      "photo": "https://imgfp.hotp.jp/IMGH/64/36/P043876436/P043876436_480.jpg"
+    },
+    "nagoya-miso-oden-doteni": {
+      "store": "どて煮と串揚げ みつだ",
+      "photo": "https://imgfp.hotp.jp/IMGH/32/48/P049843248/P049843248.jpg"
+    },
+    "nagoya-industry-pick-izakaya": {
+      "store": "サカナのハチベエ 矢場町店",
+      "photo": "https://imgfp.hotp.jp/IMGH/88/84/P045598884/P045598884_480.jpg"
+    },
+    "nagoya-yakiniku-guide": {
+      "store": "完全個室　千賀牛園　栄本館",
+      "photo": "https://imgfp.hotp.jp/IMGH/89/88/P047618988/P047618988_480.jpg"
+    },
+    "nagoya-reservation-difficult": {
+      "store": "京都焼肉なおき",
+      "photo": "https://imgfp.hotp.jp/IMGH/89/52/P048508952/P048508952_480.jpg"
+    },
+    "nagoya-winter-2026": {
+      "store": "玄品 名古屋錦本町",
+      "photo": "https://imgfp.hotp.jp/IMGH/16/78/P051131678/P051131678.jpg"
+    },
+    "osu-food-walk": {
+      "store": "餃子のネオ大衆酒場ニューカムラ 栄プリンセス大通り店",
+      "photo": "https://imgfp.hotp.jp/IMGH/14/64/P050751464/P050751464_480.jpg"
+    },
+    "settai-guide": {
+      "store": "Vineria Cassini ヴィネリア カッシーニ",
+      "photo": "https://imgfp.hotp.jp/IMGH/16/78/P017921678/P017921678_480.jpg"
+    },
+    "kospa-insider": {
+      "store": "焼肉 矢場町ホルモン 味噌とんちゃん屋",
+      "photo": "https://imgfp.hotp.jp/IMGH/31/93/P044673193/P044673193_480.jpg"
+    },
+    "enmkai-kanji": {
+      "store": "inari いなり 栄店",
+      "photo": "https://imgfp.hotp.jp/IMGH/77/51/P044587751/P044587751_480.jpg"
+    },
+    "nagoya-yakiniku": {
+      "store": "焼肉ホルモン じょうじ",
+      "photo": "https://imgfp.hotp.jp/IMGH/87/45/P036678745/P036678745_480.jpg"
+    },
+    "meieki-hitori-nomi": {
+      "store": "シーシャカフェバー Red Magic 名古屋駅店",
+      "photo": "https://imgfp.hotp.jp/IMGH/68/83/P042216883/P042216883_480.jpg"
+    },
+    "sakae-hitori-nomi": {
+      "store": "肝屋嘉正亭みその",
+      "photo": "https://imgfp.hotp.jp/IMGH/61/74/P046966174/P046966174.jpg"
+    },
+    "kanayama-hitori-nomi": {
+      "store": "出世魚 人情屋台金山店",
+      "photo": "https://imgfp.hotp.jp/IMGH/31/33/P046653133/P046653133.jpg"
+    },
+    "nagoya-korean": {
+      "store": "炭いぶし極上サムギョプサル テジワン",
+      "photo": "https://imgfp.hotp.jp/IMGH/41/45/P046094145/P046094145_480.jpg"
+    },
+    "nagoya-sushi-guide": {
+      "store": "鮨食人 五と二 栄店",
+      "photo": "https://imgfp.hotp.jp/IMGH/93/41/P039939341/P039939341_480.jpg"
+    },
+    "nagoya-seafood": {
+      "store": "サカナのハチベエ 栄3丁目店",
+      "photo": "https://imgfp.hotp.jp/IMGH/12/79/P040351279/P040351279_480.jpg"
+    },
+    "nagoya-french-guide": {
+      "store": "BOU THE ROOF ボウザルーフ 金山店",
+      "photo": "https://imgfp.hotp.jp/IMGH/71/68/P046307168/P046307168_480.jpg"
+    },
+    "nagoya-chinese-guide": {
+      "store": "來杏 Chinese Restaurant",
+      "photo": "https://imgfp.hotp.jp/IMGH/45/76/P051354576/P051354576_480.jpg"
+    },
+    "nagoya-ramen": {
+      "store": "豚骨麺屋 一番軒 則武新町店",
+      "photo": "https://imgfp.hotp.jp/IMGH/35/37/P038303537/P038303537_480.jpg"
+    },
+    "nagoya-tonkatsu": {
+      "store": "とんかつ家 比呂野",
+      "photo": "https://imgfp.hotp.jp/IMGH/82/91/P017688291/P017688291_480.jpg"
+    },
+    "nagoya-unaju": {
+      "store": "鰻のノリスケ",
+      "photo": "https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg"
+    },
+    "nagoya-yoshoku": {
+      "store": "ラケル RAKERU 名古屋スパイラルタワーズ店",
+      "photo": "https://imgfp.hotp.jp/IMGH/60/66/P049126066/P049126066_480.jpg"
+    },
+    "nagoya-kakuozan": {
+      "store": "ハロキ 山手通店",
+      "photo": "https://imgfp.hotp.jp/IMGH/16/19/P034931619/P034931619_480.jpg"
+    },
+    "nagoya-sukiyaki": {
+      "store": "しゃぶしゃぶ 創作料理居酒屋 豚吟 栄店",
+      "photo": "https://imgfp.hotp.jp/IMGH/95/62/P049769562/P049769562_480.jpg"
+    },
+    "nagoya-gyoza": {
+      "store": "餃子のかっちゃん 名古屋駅南口2号店",
+      "photo": "https://imgfp.hotp.jp/IMGH/90/00/P048789000/P048789000_480.jpg"
+    },
+    "nagoya-sweets": {
+      "store": "parfait de ruelle パフェ ド リュエル",
+      "photo": "https://imgfp.hotp.jp/IMGH/82/67/P040958267/P040958267_480.jpg"
     }
   },
   "rejectedPhotos": [],
@@ -164,7 +276,36 @@
     "nagoya-settai-lunch",
     "nagoya-tebasaki",
     "birthday-surprise",
-    "large-group"
+    "large-group",
+    "nagoya-hitsumabushi",
+    "nagoya-miso-nikomi-udon",
+    "nagoya-miso-oden-doteni",
+    "nagoya-industry-pick-izakaya",
+    "nagoya-yakiniku-guide",
+    "nagoya-reservation-difficult",
+    "nagoya-winter-2026",
+    "osu-food-walk",
+    "settai-guide",
+    "kospa-insider",
+    "enmkai-kanji",
+    "nagoya-yakiniku",
+    "meieki-hitori-nomi",
+    "sakae-hitori-nomi",
+    "kanayama-hitori-nomi",
+    "nagoya-korean",
+    "nagoya-sushi-guide",
+    "nagoya-seafood",
+    "nagoya-french-guide",
+    "nagoya-chinese-guide",
+    "nagoya-ramen",
+    "nagoya-tonkatsu",
+    "nagoya-unaju",
+    "nagoya-yoshoku",
+    "nagoya-kakuozan",
+    "nagoya-sukiyaki",
+    "nagoya-gyoza",
+    "nagoya-sweets",
+    "nagoya-settai-secret"
   ],
   "keepFigure": {
     "_comment": "掲載店の写真を持たない特集（方針・仕組みの説明ページ）は、今の図のまま。取り繕わない",

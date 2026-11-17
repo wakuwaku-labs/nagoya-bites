@@ -69,8 +69,8 @@ function isoWeek(today) {
 }
 
 // ───────── 特集の顔（図 → 掲載店の実写）─────────
-// 図（feature-figures の svg）を使っているカード、または顔と同じ写真のカードを、顔の写真にして出所を添える。
-// 手で別の写真を入れたカードには触らない。顔を持たない特集（keepFigure・掲載店の写真が無い特集）は図のまま。
+// 顔（data/feature_faces.json）を持つ特集のカードは、図でも手で入れた写真でも、顔の写真にして出所を添える。
+// 顔を持たない特集（keepFigure・掲載店の写真が無い特集）は図のまま。
 function applyFaceToItem(item, faceCfg) {
   const slug = featureSlugOf(item.href, '');
   if (!slug || !(faceCfg.faces && faceCfg.faces[slug])) return item;
@@ -78,10 +78,9 @@ function applyFaceToItem(item, faceCfg) {
   if (!fs.existsSync(file)) return item;
   const face = FACE.resolveFace(slug, fs.readFileSync(file, 'utf8'), faceCfg);
   if (!face) return item;
-  const isFigure = /feature-figures\/[^"]*\.svg/.test(item.thumb || '');
-  if (!isFigure && FACE.photoId(item.thumb) !== FACE.photoId(face.src)) return item;
+  // 顔を持つ特集は、トップの札も特集ページの顔にそろえる（手で入れた写真・ロゴが主役の写真もここで置き換える）
   const credit = FACE.creditText(face, faceCfg).replace(/&/g, '&amp;');
-  return Object.assign({}, item, { thumb: face.src, thumb600: face.src, thumbW: 480, thumbH: 320, thumbCredit: credit });
+  return Object.assign({}, item, { thumb: face.src, thumb600: face.src, thumbW: 480, thumbH: 320, thumbCredit: credit, thumbSrcset: face.srcset || '' });
 }
 
 // ───────── ストリップ HTML 生成 (index.html 用) ─────────
@@ -99,7 +98,7 @@ function renderStripCard(item, idx) {
   const title = slug ? relabelForSlug(item.title, slug) : item.title;
   const alt = slug ? relabelForSlug(item.alt, slug) : item.alt;
   return `    <a class="feature-card" href="${item.href}">${badge}
-      <img class="feature-card-thumb" src="${item.thumb}" srcset="${t600} 600w, ${item.thumb} 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="${alt}" width="${w}" height="${h}" loading="${loading}" decoding="async"${fp}>
+      <img class="feature-card-thumb" src="${item.thumb}" srcset="${item.thumbSrcset || `${t600} 600w, ${item.thumb} 900w`}" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="${alt}" width="${w}" height="${h}" loading="${loading}" decoding="async"${fp}>
       <div class="feature-card-body">
         <div class="feature-card-title">${title}</div>
         <div class="feature-card-sub">${item.sub}</div>${item.thumbCredit ? `\n        <span class="feature-card-credit">${item.thumbCredit}</span>` : ''}

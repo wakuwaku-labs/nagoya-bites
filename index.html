@@ -929,15 +929,16 @@ body.search-query-active .card-why{display:flex;}
 .ta-has-photo .ta-link{flex-direction:row;align-items:center;gap:var(--sp-3);}
 .top-hero{margin:var(--sp-4) calc(-1 * var(--hero-gutter,1.5rem)) 0;}
 .top-hero-link{display:block;color:inherit;text-decoration:none;}
-.top-hero-img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;background:var(--surface);}
+.top-hero-img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:var(--surface);}
 .top-hero-cap{display:flex;flex-direction:column;gap:.15rem;padding:.55rem var(--hero-gutter,1.5rem) 0;}
 .top-hero-credit{font-size:var(--fs-xs);color:var(--muted);line-height:1.5;}
 .top-hero-title{font-size:var(--fs-xs);color:var(--text);line-height:1.5;font-weight:500;}
 .top-hero-link:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+@media(max-width:480px){.top-hero{margin-top:var(--sp-3);}.top-hero-img{aspect-ratio:2/1;}.top-hero-cap{padding-top:.4rem;}}/* 小さい画面は写真を低くして、1画面目に最新記事の題が全部見えるように */
 @media(hover:hover){.top-hero-link:hover .top-hero-title{color:var(--gold);}}
 @media(min-width:1024px){
   .top-hero{margin-inline:0;max-width:480px;}/* 写真は 480px 幅（それ以上に伸ばすとぼやける） */
-  .top-hero-img{aspect-ratio:16/10;border-radius:var(--r-md);}
+  .top-hero-img{aspect-ratio:16/9;border-radius:var(--r-md);}
   .top-hero-cap{padding-inline:0;}
 }
 .ta-photo{flex:0 0 80px;width:80px;height:80px;border-radius:var(--r-md);overflow:hidden;background:var(--surface);display:block;}
@@ -1676,7 +1677,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
   <p class="eyebrow">名古屋の飲食店ガイド</p>
   <h1>飲食店選びの失敗を、<br><em>情報の力</em>で減らす。</h1>
   <!-- 1画面目の大きな写真1枚。↓ この区画は scripts/build_journal_index.js が自動生成（3分類の新しい記事のうち、data/top_hero_excluded.json に無い最新の記事の顔写真）。手で編集しない。 -->
-  <!-- TOP_HERO_START --><figure class="top-hero"><a class="top-hero-link" href="journal/2026-11-11-sakae-teppanya-daikichi-10-seats-late-night.html"><img class="top-hero-img" src="https://imgfp.hotp.jp/IMGH/30/43/P037723043/P037723043_480.jpg" alt="鉄板屋大吉の料理・店内" width="480" height="300" decoding="async" fetchpriority="high" onerror="this.parentNode.parentNode.style.display='none'"><span class="top-hero-cap"><span class="top-hero-credit">写真: 鉄板屋大吉（ホットペッパーグルメ）</span><span class="top-hero-title">栄の地下「鉄板屋大吉」10席で朝5時まで、一人飲み・二軒目の少席店が回る理由</span></span></a></figure><!-- TOP_HERO_END -->
+  <!-- TOP_HERO_START --><figure class="top-hero"><a class="top-hero-link" href="journal/2026-11-11-sakae-teppanya-daikichi-10-seats-late-night.html" aria-label="栄の地下「鉄板屋大吉」10席で朝5時まで、一人飲み・二軒目の少席店が回る理由"><img class="top-hero-img" src="https://imgfp.hotp.jp/IMGH/30/43/P037723043/P037723043_480.jpg" alt="鉄板屋大吉の料理・店内" width="480" height="270" decoding="async" fetchpriority="high" onerror="this.parentNode.parentNode.style.display='none'"><span class="top-hero-cap"><span class="top-hero-credit">写真: 鉄板屋大吉（ホットペッパーグルメ）</span></span></a></figure><!-- TOP_HERO_END -->
   <section class="site-promise" aria-labelledby="site-promise-title">
     <div class="site-promise-head">
       <h2 class="site-promise-title" id="site-promise-title">このサイトの約束</h2>
@@ -1770,7 +1771,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
     <!-- FEATURED_START -->
     <a class="feature-card" href="features/banquet.html">
       <span class="feature-card-season">忘年会予約</span>
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/89/55/P050938955/P050938955_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/89/55/P050938955/P050938955_480.jpg 600w, https://imgfp.hotp.jp/IMGH/89/55/P050938955/P050938955_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 忘年会おすすめ15選" width="480" height="320" loading="eager" decoding="async" fetchpriority="high">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/89/55/P050938955/P050938955_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/89/55/P050938955/P050938955_480.jpg 480w, https://imgfp.hotp.jp/IMGH/89/55/P050938955/P050938955.jpg 1280w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 忘年会おすすめ15選" width="480" height="320" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 忘年会おすすめ15選</div>
         <div class="feature-card-sub">忘年会予約は11月が勝負</div>
@@ -1781,17 +1782,18 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
     </a>
     <a class="feature-card" href="features/nagoya-autumn-2026.html">
       <span class="feature-card-season">晩秋</span>
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/93/41/P039939341/P039939341.jpg" srcset="https://imgfp.hotp.jp/IMGH/93/41/P039939341/P039939341.jpg 600w, https://imgfp.hotp.jp/IMGH/93/41/P039939341/P039939341.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 秋グルメ10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/07/54/P051190754/P051190754_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/07/54/P051190754/P051190754_480.jpg 600w, https://imgfp.hotp.jp/IMGH/07/54/P051190754/P051190754_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 秋グルメ10選" width="480" height="320" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 秋グルメ10選</div>
         <div class="feature-card-sub">秋の味覚もいよいよ最終盤</div>
+        <span class="feature-card-credit">写真: 勝手口河内屋（ホットペッパーグルメ）</span>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/nagoya-meieki-business-dinner.html">
       <span class="feature-card-season">会食</span>
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/12/40/P049711240/P049711240_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/12/40/P049711240/P049711240_480.jpg 600w, https://imgfp.hotp.jp/IMGH/12/40/P049711240/P049711240_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名駅 失敗しない会食10選" width="480" height="320" loading="eager" decoding="async" fetchpriority="high">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/12/40/P049711240/P049711240_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/12/40/P049711240/P049711240_480.jpg 480w, https://imgfp.hotp.jp/IMGH/12/40/P049711240/P049711240.jpg 1107w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名駅 失敗しない会食10選" width="480" height="320" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
         <div class="feature-card-title">名駅 失敗しない会食10選</div>
         <div class="feature-card-sub">年末のご挨拶・会食に</div>
@@ -1802,35 +1804,38 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
     </a>
     <a class="feature-card" href="features/nagoya-winter-2026.html">
       <span class="feature-card-season">冬限定</span>
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/47/65/P050054765/P050054765.jpg" srcset="https://imgfp.hotp.jp/IMGH/47/65/P050054765/P050054765.jpg 600w, https://imgfp.hotp.jp/IMGH/47/65/P050054765/P050054765.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋の冬に味わうかにと鍋" width="480" height="600" loading="lazy" decoding="async">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/16/78/P051131678/P051131678_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/16/78/P051131678/P051131678_480.jpg 480w, https://imgfp.hotp.jp/IMGH/16/78/P051131678/P051131678.jpg 1210w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋の冬に味わうかにと鍋" width="480" height="320" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 冬グルメ 2026-27・10選</div>
         <div class="feature-card-sub">ふぐ・牡蠣・かに・鍋</div>
+        <span class="feature-card-credit">写真: 玄品 名古屋錦本町（ホットペッパーグルメ）</span>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/nagoya-miso-oden-doteni.html">
       <span class="feature-card-season">冬の名古屋めし</span>
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/36/87/P050843687/P050843687.jpg" srcset="https://imgfp.hotp.jp/IMGH/36/87/P050843687/P050843687.jpg 600w, https://imgfp.hotp.jp/IMGH/36/87/P050843687/P050843687.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋の味噌おでん・どて煮" width="480" height="600" loading="lazy" decoding="async">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/32/48/P049843248/P049843248_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/32/48/P049843248/P049843248_480.jpg 479w, https://imgfp.hotp.jp/IMGH/32/48/P049843248/P049843248.jpg 958w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋の味噌おでん・どて煮" width="480" height="320" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 味噌おでん・どて煮ガイド・13選</div>
         <div class="feature-card-sub">違いと頼み方・エリア別</div>
+        <span class="feature-card-credit">写真: どて煮と串揚げ みつだ（ホットペッパーグルメ）</span>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/nagoya-solo-dining.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/69/23/P047636923/P047636923_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/69/23/P047636923/P047636923_480.jpg 600w, https://imgfp.hotp.jp/IMGH/69/23/P047636923/P047636923_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋の一人飲みで落ち着けるカウンター席" width="480" height="600" loading="lazy" decoding="async">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/69/39/P049516939/P049516939_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/69/39/P049516939/P049516939_480.jpg 480w, https://imgfp.hotp.jp/IMGH/69/39/P049516939/P049516939.jpg 640w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋の一人飲みで落ち着けるカウンター席" width="480" height="320" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 一人飲み完全ガイド 2026</div>
         <div class="feature-card-sub">カウンター名店から立ち飲みまで</div>
+        <span class="feature-card-credit">写真: おでん 拍子木（ホットペッパーグルメ）</span>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/private-room.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/77/81/P012197781/P012197781_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/77/81/P012197781/P012197781_480.jpg 600w, https://imgfp.hotp.jp/IMGH/77/81/P012197781/P012197781_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="温かい灯りに包まれた上質な個室ダイニング" width="480" height="320" loading="lazy" decoding="async">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/77/81/P012197781/P012197781_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/77/81/P012197781/P012197781_480.jpg 480w, https://imgfp.hotp.jp/IMGH/77/81/P012197781/P012197781.jpg 1016w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="温かい灯りに包まれた上質な個室ダイニング" width="480" height="320" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 個室グルメおすすめ9選</div>
         <div class="feature-card-sub">接待・女子会・デートに</div>
@@ -1840,7 +1845,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/meieki.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/41/34/P044174134/P044174134_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/41/34/P044174134/P044174134_480.jpg 600w, https://imgfp.hotp.jp/IMGH/41/34/P044174134/P044174134_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名駅エリアで接待・出張・仕事帰りに集う夜のグループ食事" width="480" height="320" loading="lazy" decoding="async">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/41/34/P044174134/P044174134_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/41/34/P044174134/P044174134_480.jpg 480w, https://imgfp.hotp.jp/IMGH/41/34/P044174134/P044174134.jpg 710w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名駅エリアで接待・出張・仕事帰りに集う夜のグループ食事" width="480" height="320" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋・名駅グルメおすすめ15選</div>
         <div class="feature-card-sub">出張・接待・仕事帰りに</div>
@@ -1920,7 +1925,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
   <div class="feature-strip-cards">
     <!-- SHOWCASE_START -->
     <a class="feature-card" href="features/nagoya-hitsumabushi.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422.jpg" srcset="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422.jpg 480w, https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 ひつまぶし完全ガイド" width="480" height="600" loading="lazy" decoding="async">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg 480w, https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 ひつまぶし完全ガイド" width="480" height="600" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 ひつまぶし完全ガイド</div>
         <div class="feature-card-sub">名古屋めし · 厳選8店</div>
@@ -1929,7 +1934,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/nagoya-ramen.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/83/92/P038078392/P038078392.jpg" srcset="https://imgfp.hotp.jp/IMGH/83/92/P038078392/P038078392.jpg 480w, https://imgfp.hotp.jp/IMGH/83/92/P038078392/P038078392.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋ラーメンおすすめ11選" width="480" height="600" loading="lazy" decoding="async">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/35/37/P038303537/P038303537_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/35/37/P038303537/P038303537_480.jpg 480w, https://imgfp.hotp.jp/IMGH/35/37/P038303537/P038303537_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋ラーメンおすすめ11選" width="480" height="600" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋ラーメンおすすめ11選</div>
         <div class="feature-card-sub">ラーメン · 台湾・煮干し</div>

@@ -275,6 +275,12 @@ jobs:
         run: node scripts/build_featured.js --check
         continue-on-error: true
 
+      - name: ホットペッパー写真の幅を測る（特集の顔・トップの大きな写真を元の幅までに抑えるため・Ondine #2097）
+        # data/hotpepper_photo_sizes.json に、写真の `_480` とサフィックス無しの URL の幅を残す（測り済みは測らない・JPEG の頭だけ取る）。
+        # 測れない写真は 480px のまま（引き伸ばさない）。通信できなくてもビルドは止めない。
+        run: node scripts/measure_hotpepper_photo_sizes.js
+        continue-on-error: true
+
       - name: 特集の鮮度自動更新（今月の旬リード＋週替わりショーケース＋期間切れ除外）
         # data/featured.json を JST 当日で評価し index.html / features/index.html の特集ブロックを再生成。
         # monthlyFeature(毎月の旬) と season.recurring(毎年判定) により常に最新感を保つ。冪等。
@@ -601,6 +607,7 @@ jobs:
           git add data/spreadsheet_address_gate.json 2>/dev/null || true
           # HotPepper の取得の記録（ISSUE-143）。初回の実行で初めてできるため分ける
           git add data/hotpepper_fetch_log.json 2>/dev/null || true
+          git add data/hotpepper_photo_sizes.json 2>/dev/null || true
           # 検索エンジンへの登録状況の観測（P-437）。鍵が無い回は書かれないので分ける
           git add data/index_probe.json 2>/dev/null || true
           git add data/article_review_ledger.json 2>/dev/null || true

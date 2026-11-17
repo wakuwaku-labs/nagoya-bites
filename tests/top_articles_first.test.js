@@ -196,17 +196,30 @@ test('大きな顔の選び方: 日付の新しい順で、写真が確かで除
   });
 });
 
-test('大きな顔の描画: 記事へのリンク・出所と題を写真の下に・480px の URL・幅と高さ・fetchpriority・遅延しない', () => {
+test('大きな顔の選び方: 元の幅が 640px 以上の写真を先に（3分類の最新の記事の中だけ）。無ければ最新の記事の顔', () => {
+  const entries = [E('2026-11-17', 'seasonal', 'a'), E('2026-11-11', 'industry_insider', 'b')];
+  withJournal({
+    '2026-11-17-x-seasonal': FIGURE('hotpepper', 'https://imgfp.hotp.jp/IMGH/33/69/P037623369/P037623369.jpg', '蜀漢', HP_CREDIT),
+    '2026-11-11-x-industry_insider': FIGURE('hotpepper', 'https://imgfp.hotp.jp/IMGH/30/43/P037723043/P037723043.jpg', '鉄板屋大吉', HP_CREDIT),
+  }, (dir) => {
+    const small = { P037623369: { s: 480, l: 300 }, P037723043: { s: 480, l: 1280 } };
+    assert.strictEqual(BJI.pickTopHero(entries, dir, NO_EXCLUDE, small).entry.title, 'b', '最新の a は 480px までなので、大きく出せる b を先に');
+    const none = { P037623369: { s: 480, l: 300 }, P037723043: { s: 480, l: 400 } };
+    assert.strictEqual(BJI.pickTopHero(entries, dir, NO_EXCLUDE, none).entry.title, 'a', '両方小さければ最新の記事の顔');
+  });
+});
+
+test('大きな顔の描画: 記事へのリンク（題は aria-label）・出所だけを写真の下に・480px の URL・幅と高さ・fetchpriority・遅延しない', () => {
   const entries = [E('2026-11-11', 'industry_insider', 'タイトル<b>')];
   withJournal({
     '2026-11-11-x-industry_insider': FIGURE('hotpepper', 'https://imgfp.hotp.jp/IMGH/30/43/P037723043/P037723043.jpg', '鉄板屋大吉', HP_CREDIT),
   }, (dir) => {
     const html = BJI.renderTopHero(BJI.pickTopHero(entries, dir, NO_EXCLUDE));
-    assert.ok(html.startsWith('<figure class="top-hero"><a class="top-hero-link" href="journal/2026-11-11-x-industry_insider.html">'), html);
+    assert.ok(html.startsWith('<figure class="top-hero"><a class="top-hero-link" href="journal/2026-11-11-x-industry_insider.html" aria-label="タイトル&lt;b&gt;">'), html);
     assert.ok(html.includes('src="https://imgfp.hotp.jp/IMGH/30/43/P037723043/P037723043_480.jpg"'), '小さな画像の URL を大きく伸ばさず _480 にそろえる');
-    assert.ok(/width="480" height="300"/.test(html) && /fetchpriority="high"/.test(html) && !/loading="lazy"/.test(html));
+    assert.ok(/width="480" height="270"/.test(html) && /fetchpriority="high"/.test(html) && !/loading="lazy"/.test(html));
     assert.ok(html.includes('<span class="top-hero-credit">写真: 鉄板屋大吉（ホットペッパーグルメ）</span>'));
-    assert.ok(html.includes('<span class="top-hero-title">タイトル&lt;b&gt;</span>'), '題は文字として出す');
+    assert.ok(!html.includes('top-hero-title'), '題は写真の下に出さない（すぐ下の新しい記事の行と同じ題が2回並ばない）');
     assert.strictEqual((html.match(/<a\b/g) || []).length, 1, 'リンクは1つ（入れ子にしない）');
     assert.strictEqual(BJI.bigPhotoSrc('https://imgfp.hotp.jp/IMGH/1/2/P000000001/P000000001_168.jpg'), 'https://imgfp.hotp.jp/IMGH/1/2/P000000001/P000000001_480.jpg');
   });
@@ -234,15 +247,15 @@ test('実際の index.html: 見出しの直後に大きな顔の写真が1枚あ
   assert.ok(/src="https:\/\/imgfp\.hotp\.jp\/[^"]+_480\.jpg"/.test(img), img);
   assert.ok(/width="\d+" height="\d+"/.test(img) && /fetchpriority="high"/.test(img) && !/loading="lazy"/.test(img) && /alt="[^"]+"/.test(img));
   assert.ok(/<span class="top-hero-credit">写真: [^<]+（ホットペッパーグルメ）<\/span>/.test(block));
-  assert.ok(/<span class="top-hero-title">[^<]+<\/span>/.test(block));
+  assert.ok(!/top-hero-title/.test(block) && /aria-label="[^"]+"/.test(block), '題は写真の下に出さない・リンクの名前は aria-label');
   const ex = BJI.loadTopHeroExcluded();
   const n = (img.match(/(P\d{6,})/) || [])[1];
   assert.ok(n && !ex.photos.has(n), '除外した写真・特集の顔の写真は使わない');
   const slug = (block.match(/href="journal\/([^"]+)\.html"/) || [])[1];
   assert.ok(slug && !ex.slugs.has(slug));
-  // CSS: 13px のトークン・全幅（16:10）の枠
-  assert.ok(/\.top-hero-img\{[^}]*aspect-ratio:16\/10/.test(html));
-  assert.ok(/\.top-hero-credit\{font-size:var\(--fs-xs\)/.test(html) && /\.top-hero-title\{font-size:var\(--fs-xs\)/.test(html));
+  // CSS: 13px のトークン・全幅（16:9）の枠
+  assert.ok(/\.top-hero-img\{[^}]*aspect-ratio:16\/9/.test(html));
+  assert.ok(/\.top-hero-credit\{font-size:var\(--fs-xs\)/.test(html) && true);
   assert.strictEqual((html.match(/class="top-hero-img"/g) || []).length, 1, '大きな顔は1枚');
 });
 

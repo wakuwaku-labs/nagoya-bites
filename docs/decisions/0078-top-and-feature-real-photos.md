@@ -30,3 +30,10 @@
 ## 戻し方
 1. `data/feature_faces.json` の `faces` から該当の特集を消し、`node scripts/build_featured.js`・このPRの前のコミットの `features/<slug>.html`・`features/index.html` に戻す。
 2. トップの行の写真は `scripts/build_journal_index.js` の `TOP_PHOTO_SOURCES` を空にして `node scripts/build_journal_index.js` を実行する。
+
+## 追記（2026-11-18・検査の差し戻し）
+- ぼやけ: 大きい版の URL（`_480` を外した同じ写真）を、元の幅が測れた写真だけ `srcset` に足す。画面に出す幅は元の幅まで（`--face-w`）。測った幅は `data/hotpepper_photo_sizes.json`（`measure_hotpepper_photo_sizes.js` が日次で測る）。店のデータ `data/stores.json` の写真 URL もサフィックス無し（API が返す URL）をそのまま参照しているので、同じ写真の大きさ違いの参照で、加工にあたらないと判断した。迷う店（測れていない・大きい版が狭い）は 480px のまま。
+- 特集一覧の札は、手で入れた写真・図・写真の無い札も、特集ページの顔にそろえる（顔のある特集全部）。出所は写真の枠のすぐ下に全札で同じ形。顔の無い手書きの特集のうち、ロゴ・文字が主役の顔（手羽先・味噌おでん・接待の秘密ほか）は目で見て掲載店の料理・空間の写真に替えた（顔の写真は `data/feature_faces.json` が正本）。
+- トップの大きな写真は 16:9（スマホ幅 480px 以下は 2:1）。題は写真の下に出さず、すぐ下の「新しい記事」の同じ記事の行に出す。元の幅が 640px 以上の写真を先に選ぶ。
+- 図（SVG）の中の文字も、選び方の言い方の検査（`audit_selection_wording.js`）の対象にした（公開ページが参照する図だけ。特集の図は違反で `--check` が落ちる・日次記事の図は報告のみ）。特集の題「飲食人おすすめ10選」は 0069 で別に扱うので変えない（残し）。
+

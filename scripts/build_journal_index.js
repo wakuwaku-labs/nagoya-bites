@@ -20,6 +20,7 @@ const FEED = path.join(ROOT, 'journal', 'feed.xml');
 const ATOM_FEED = path.join(ROOT, 'journal', 'feed.atom');
 const SITE_URL = 'https://nagoya-bites.com';
 const { CATEGORIES, categoryOf, isPublic } = require('./lib/journal_category');
+const HP = require('./lib/hotpepper_photo');
 
 function esc(s) {
   return String(s || '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
@@ -209,6 +210,7 @@ function renderLatestCard(e, photo) {
 //     最初の画面を重くするので載せない（その行は文字だけ）。Places の写真は URL が失効しうるので載せない（CLAUDE.md の優先4の注意）
 //   ・出所は文字で添える（行全体が1つのリンクなので、入れ子のリンクにしない）
 const TOP_PHOTO_SOURCES = ['hotpepper'];
+const TOP_HERO_MIN_W = 640;
 
 function latestPerCategory(entries) {
   const sorted = (entries || []).slice().sort((a, b) => b.date.localeCompare(a.date));
@@ -270,22 +272,39 @@ function bigPhotoSrc(src) {
 
 // 1画面目に置く大きな写真1枚。「3分類の新しい記事」の行（日付の新しい順）のうち、写真が確かで、除外リストに無い最新の記事。
 // 規則は生成側で決める（記事が更新されれば自動で入れ替わる）。該当が無ければ置かない（取り繕わない）
-function pickTopHero(entries, journalDir, excluded) {
+function pickTopHero(entries, journalDir, excluded, sizes) {
   const rows = latestPerCategory(entries)
     .map((r, i) => Object.assign({ order: i }, r))
     .sort((a, b) => b.entry.date.localeCompare(a.entry.date) || a.order - b.order);
+  // 写真が画面いっぱいに伸びてぼやけないよう、元の幅が 640px 以上の写真（data/hotpepper_photo_sizes.json に測った幅がある）を先に選ぶ。
+  // 3分類の最新の記事の中だけで比べる（無ければ、幅の分からない・小さい写真でも最新の記事の顔を出す。取り繕わない）
+  let fallback = null;
   for (const { entry } of rows) {
     const photo = topPhotoOf(entry, journalDir, excluded);
-    if (photo) return { entry, photo };
+    if (!photo) continue;
+    if (HP.pick(bigPhotoSrc(photo.src), sizes).maxW >= TOP_HERO_MIN_W) return { entry, photo };
+    if (!fallback) fallback = { entry, photo };
   }
-  return null;
+  return fallback;
 }
 
 function renderTopHero(pick) {
   if (!pick) return '';
   const { entry: e, photo } = pick;
   const href = `journal/${esc(e.slug)}.html`;
-  return `<figure class="top-hero"><a class="top-hero-link" href="${href}"><img class="top-hero-img" src="${esc(bigPhotoSrc(photo.src))}" alt="${esc(photo.store)}の料理・店内" width="480" height="300" decoding="async" fetchpriority="high" onerror="this.parentNode.parentNode.style.display='none'"><span class="top-hero-cap"><span class="top-hero-credit">写真: ${esc(photo.store)}（ホットペッパーグルメ）</span><span class="top-hero-title">${esc(e.title)}</span></span></a></figure>`;
+  const big = HP.pick(bigPhotoSrc(photo.src));
+  const srcset = big.srcset ? ` srcset="${esc(big.srcset)}" sizes="(min-width:1024px) 480px, 100vw"` : '';
+  // 題は出さない（すぐ下の「新しい記事」の同じ記事の行に出るので、同じ題を2回並べない）。リンクの名前は aria-label で題にする
+  return `<figure class="top-hero"><a class="top-hero-link" href="${href}" aria-label="${esc(e.title)}"><img class="top-hero-img" src="${esc(big.src)}"${srcset} alt="${esc(photo.store)}の料理・店内" width="480" height="270" decoding="async" fetchpriority="high" onerror="this.parentNode.parentNode.style.display='none'"><span class="top-hero-cap"><span class="top-hero-credit">写真: ${esc(photo.store)}（ホットペッパーグルメ）</span></span></a></figure>`;
+}
+
+// トップの大きな写真の候補（最新の記事の顔）の写真 URL。scripts/measure_hotpepper_photo_sizes.js が幅を測る対象
+function topHeroCandidateSources(limit) {
+  try {
+    const published = JSON.parse(fs.readFileSync(PUBLISHED, 'utf8'));
+    const entries = (published.entries || []).filter(isPublic).sort((a, b) => b.date.localeCompare(a.date)).slice(0, limit || 12);
+    return entries.map((e) => readHeroPhoto(e.slug)).filter((p) => p && TOP_PHOTO_SOURCES.includes(p.source)).map((p) => p.src);
+  } catch (_) { return []; }
 }
 
 function renderTopArticles(entries, journalDir, excluded) {
@@ -372,4 +391,4 @@ if (require.main === module) main();
 
 // build.js から呼ぶための export — トップ Daily Journal セクションの
 // 同期忘れを防ぐため、build.js 末尾でも自動実行される。
-module.exports = { buildFilterBar, buildList, buildFeed, main, readHeroPhoto, readCredit, renderLatestCard, updateRootLatestSection, latestPerCategory, renderTopArticles, pickTopHero, renderTopHero, loadTopHeroExcluded, bigPhotoSrc };
+module.exports = { buildFilterBar, buildList, buildFeed, main, readHeroPhoto, readCredit, renderLatestCard, updateRootLatestSection, latestPerCategory, renderTopArticles, pickTopHero, renderTopHero, loadTopHeroExcluded, bigPhotoSrc, topHeroCandidateSources };
