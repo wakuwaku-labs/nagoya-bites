@@ -30,6 +30,7 @@ const EVENTS = [
   'reserve_report_yes', 'reserve_report_no',
   'feature_store_click', 'journal_store_click', 'hub_store_click', 'internal_link_click',
   'reel_play', 'feedback_open', 'feedback_submit',
+  'article_feedback', // 記事末尾の「役に立ちましたか」（S7-2・answer=yes/no/error）
   // 計画で足すイベント（まだ送っていなくてよい。送り始めたら基線の「後」に出る）
   'filter_apply', 'zero_result', 'related_click', 'call_lookup',
 ];
@@ -267,6 +268,27 @@ function aggregateReservation(rows, dedupe) {
   return { total, device, pageType, cell };
 }
 
+/**
+ * 新規・再訪の内訳（S7-2・再訪問率）。GA4 標準の次元 newVsReturning（new / returning / (not set)）の行
+ * [[区分], [activeUsers, sessions]] から、人数とセッション数の「再訪」の割合を出す。分母が 0 なら null。
+ * 人数は端末をまたぐと二重に数えうる（totals.note と同じ注意）。率は参考値で、成果の条件にしない。
+ */
+function aggregateReturning(rows) {
+  const out = { new: { users: 0, sessions: 0 }, returning: { users: 0, sessions: 0 }, other: { users: 0, sessions: 0 } };
+  for (const r of rows) {
+    const k = r.dims[0] === 'new' ? 'new' : r.dims[0] === 'returning' ? 'returning' : 'other';
+    out[k].users += r.mets[0] || 0;
+    out[k].sessions += r.mets[1] || 0;
+  }
+  const u = out.new.users + out.returning.users;
+  const s = out.new.sessions + out.returning.sessions;
+  return {
+    ...out,
+    returningUserRate: u > 0 ? round(out.returning.users / u) : null,
+    returningSessionRate: s > 0 ? round(out.returning.sessions / s) : null,
+  };
+}
+
 /** 件数が LOW_COUNT 未満のセル（保留の候補）。値が 0 のセルは「無かった」のでそのまま出す */
 function lowCountCells(cell, threshold = LOW_COUNT) {
   return Object.keys(cell).filter(k => cell[k] > 0 && cell[k] < threshold).sort();
@@ -277,5 +299,5 @@ module.exports = {
   classifyPage, classifyDevice,
   parseYmd, addDays, daysBetween, todayJst, lastSettledDay, windowOf, windowPair,
   rowsOf, aggregateLanding, aggregatePages, aggregateByDevice, aggregateEvents, aggregateEventSessions,
-  aggregateReservation, lowCountCells,
+  aggregateReservation, aggregateReturning, lowCountCells,
 };

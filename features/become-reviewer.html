@@ -29,7 +29,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   "@type": "Article",
   "headline": "レビュワー募集｜NAGOYA BITES",
   "description": "飲食業界経験者を対象としたレビュワー認証制度の募集要項。経歴公開・利害開示・無報酬・独立性担保。",
-  "author": {"@type": "Organization", "name": "NAGOYA BITES"},
+  "author": {"@type": "Organization", "name": "NAGOYA BITES", "description": "記事の収集・執筆・検査・公開はAIが行い、運営者（個人）が基準を決めて例外に対応する"},
   "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
   "url": "https://nagoya-bites.com/features/become-reviewer.html",
   "datePublished": "2026-05-08",
@@ -140,6 +140,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       <span>認証制度</span>
     </div>
     <div class="art-lead">
+      <p><strong>【現在、募集を停止しています】</strong>NAGOYA BITES の記事は、AIが情報収集・執筆・検査・公開しており、人のレビュワーが記事を書く段階は止めています（<a href="editorial-policy.html#ai-operation">AIによる運営と検査</a>）。以下は、制度を再開する場合の決まりとして残しています。応募は受け付けていません。</p>
       <p>NAGOYA BITES は<strong style="color:var(--text);">「桜（やらせ口コミ）が混じれない構造」と「嘘がついても発覚する構造」を併せ持つ</strong>飲食媒体として運営しています。</p>
       <p>その仕組みの中心にあるのが、レビュワー認証制度です。飲食業界の経験者で、編集独立性のルールに同意できる方を募集します。</p>
       <p>これは<strong style="color:var(--text);">無報酬で、店舗との利害関係を全面開示する制度</strong>です。報酬目当ての方には向きません。読者の信頼に応える媒体を一緒につくりたい方の応募をお待ちしています。</p>
@@ -272,21 +273,68 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
 
     <div class="cta-block">
-      <p class="cta-eyebrow">Send Your Application</p>
-      <p class="cta-headline">桜が混じれない口コミ媒体を、一緒につくりませんか。</p>
-      <a class="cta-link" href="mailto:editor@nagoya-bites.com?subject=%E3%83%AC%E3%83%93%E3%83%A5%E3%83%AF%E3%83%BC%E5%BF%9C%E5%8B%9F%EF%BC%88%E6%A5%AD%E7%95%8C%E4%BA%BA%E8%AA%8D%E8%A8%BC%EF%BC%89">編集部に応募する →</a>
-      <p class="cta-note">応募先: editor@nagoya-bites.com<br>件名は「レビュワー応募（経験者認証）」のままで構いません。<br>追ってフォーム化を予定しています。</p>
+      <p class="cta-eyebrow">募集停止中</p>
+      <p class="cta-headline">レビュワーの募集は、現在停止しています。</p>
+      <p class="cta-note">記事はAIが書いています。再開する場合は、このページでお知らせします。</p>
     </div>
 
     <p class="body-para" style="margin-top:1.5rem;">
-      応募前に <a href="editorial-policy.html#trust-mechanisms" style="color:var(--gold);">編集規約 04 — Trust Mechanisms</a> と
-      <a href="no-fake-reviews.html" style="color:var(--gold);">桜の実態と仕組みを解説したコラム</a> をご一読ください。
+      制度の考え方は <a href="editorial-policy.html#trust-mechanisms" style="color:var(--gold);">編集規約 04（信頼の仕組み）</a> と
+      <a href="no-fake-reviews.html" style="color:var(--gold);">桜の実態と仕組みを解説したコラム</a> をご覧ください。
       ご質問・規約への意見は <a href="../contact.html" style="color:var(--gold);">お問い合わせ</a> からどうぞ。
     </p>
 
   </div>
 </article>
 
+<!-- NB-READER-VOICE:START -->
+<section class="nb-reader-voice" id="nb-reader-voice" aria-labelledby="nb-rv-title">
+  <h2 class="nb-rv-title" id="nb-rv-title">この記事は店選びの役に立ちましたか？</h2>
+  <div class="nb-rv-choices">
+    <button type="button" class="nb-rv-btn" data-rv="yes">役に立った</button>
+    <button type="button" class="nb-rv-btn" data-rv="no">決められなかった</button>
+    <button type="button" class="nb-rv-btn nb-rv-btn-sub" data-rv="error">情報の誤りを知らせる</button>
+  </div>
+  <form class="nb-rv-form" hidden novalidate>
+    <label class="nb-rv-label" for="nb-rv-body" data-rv-label>ひとこと（任意）</label>
+    <textarea id="nb-rv-body" class="nb-rv-body" maxlength="400" rows="3"></textarea>
+    <p class="nb-rv-hint">お名前・連絡先は書かないでください。</p>
+    <input type="text" name="_gotcha" class="nb-rv-gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button type="submit" class="nb-rv-submit">送信する</button>
+  </form>
+  <p class="nb-rv-status" role="status" aria-live="polite"></p>
+</section>
+<script>
+(function(){
+  var root=document.getElementById('nb-reader-voice');if(!root)return;
+  var form=root.querySelector('.nb-rv-form'),body=root.querySelector('.nb-rv-body'),label=root.querySelector('[data-rv-label]'),st=root.querySelector('.nb-rv-status'),sub=root.querySelector('.nb-rv-submit');
+  var mode='',sent={},LAB={yes:'ひとこと（任意）',no:'何が足りませんでしたか？（任意）',error:'どの店・どの情報が違いますか？（必須）'};
+  var CAT={yes:'記事: 店選びの役に立った',no:'記事: 店選びを決められなかった',error:'記事: 情報の誤り'};
+  function ga(a){try{if(typeof trackEvent==='function')trackEvent('article_feedback',{answer:a,article_path:location.pathname});else if(typeof gtag==='function')gtag('event','article_feedback',{answer:a,article_path:location.pathname});}catch(e){}}
+  root.addEventListener('click',function(e){
+    var b=e.target&&e.target.closest&&e.target.closest('[data-rv]');if(!b)return;
+    mode=b.getAttribute('data-rv');
+    [].forEach.call(root.querySelectorAll('[data-rv]'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+    label.textContent=LAB[mode];form.hidden=false;st.textContent='';st.className='nb-rv-status';
+    if(mode!=='error'&&!sent[mode]){sent[mode]=1;ga(mode);st.textContent='ありがとうございます。よければひとこともお寄せください。';}
+  });
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if((form.querySelector('[name=_gotcha]')||{}).value)return;
+    var text=(body.value||'').trim();
+    if(mode==='error'&&!text){st.textContent='誤りの内容を書いてください。';st.className='nb-rv-status ng';return;}
+    if(!text){st.textContent='ありがとうございました。';return;}
+    sub.disabled=true;st.textContent='送信中…';st.className='nb-rv-status';
+    var p={_subject:'[site-feedback] '+CAT[mode],category:CAT[mode],article_answer:mode,article_url:location.origin+location.pathname,page:location.pathname.slice(0,200),body:text,submittedAt:new Date().toISOString()};
+    fetch('https://formspree.io/f/xaqaygze',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(p)}).then(function(r){
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      st.textContent='送信しました。ありがとうございます。';st.className='nb-rv-status ok';body.value='';
+      if(mode==='error')ga('error');
+    }).catch(function(){st.textContent='送信に失敗しました。時間をおいて再度お試しください。';st.className='nb-rv-status ng';}).then(function(){sub.disabled=false;});
+  });
+})();
+</script>
+<!-- NB-READER-VOICE:END -->
 <div class="related">
   <p class="related-title">関連ページ</p>
   <div class="related-links">

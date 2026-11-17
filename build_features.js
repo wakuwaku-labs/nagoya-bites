@@ -510,7 +510,6 @@ function generateStoreCard(store, index, config) {
     : '';
 
   return `      <div class="store-card">
-        <div class="store-num">${num}</div>
         ${photoHtml}
         <div class="store-info">
           <div class="store-name"><a href="${escapeHtml(internalUrl)}">${name}</a></div>

@@ -62,8 +62,10 @@ test('見えるのは 見出し・段階と助言の 1 行・観測できた項�
   const html = buildTrustBreakdown(fixtureCc(['s4', 's9']), RT);
   const { outside, inside } = split(html);
   assert.ok(outside.includes(`<h2>${P.name}</h2>`), `見出しは「${P.name}」`);
-  assert.match(outside, /<p class="trust-headline">[\s\S]*cc-tier-B[\s\S]*72 \/ 100[\s\S]*Google★4\.3（39件）は、おおむね参考にできます。/, '段階・点数・助言の 1 行');
-  assert.match(outside, /<p class="trust-meta-line">検証 7\/9項目 ・ Google口コミ取得日 2026-06-01<\/p>/, 'いくつの項目を観測できたか（段階の重みを読む手がかり）');
+  // 段階の記号・点数は出さず、助言の 1 行だけ（ADR 0069 決定1・段階5 S5-4）
+  assert.match(outside, /<p class="trust-headline">Google★4\.3（39件）は、おおむね参考にできます。/, '助言の 1 行');
+  assert.ok(!outside.includes('72 / 100') && !outside.includes('class="trust-tier'), '点数・段階の記号は出さない');
+  assert.match(outside, /<p class="trust-meta-line">9項目中7項目を確認<\/p>/, 'いくつの項目を観測できたか（段階の重みを読む手がかり）');
   for (const cls of ['trust-axis-row', 'trust-breakdown-intro', 'trust-meta-heading']) {
     assert.ok(!outside.includes(cls), `${cls} は畳む側（外に出さない）`);
     assert.ok(inside.includes(cls), `${cls} は <details> の中`);
@@ -113,7 +115,8 @@ test('公開文言の監査が頼る目印を残す: <div class="trust-breakdown
 test('段階が「—」（判定材料不足）のページも同じ型で畳む。行が 1 つも作れない場合は何も出さない', () => {
   const na = { ...RT, tier: P.na.id, score: null, headline: P.headlineNoRating.replace('{advice}', P.na.advice) };
   const { outside, inside } = split(buildTrustBreakdown(fixtureCc(), na));
-  assert.ok(outside.includes('cc-tier-NA') && outside.includes('— / 100'));
+  // 段階の記号・点数は出さない（ADR 0069 決定1・段階5 S5-4）。助言の見出しと出所だけが畳みの外に出る
+  assert.ok(outside.includes('trust-headline') && !outside.includes('/ 100') && !outside.includes('class="trust-tier'));
   assert.ok(inside.includes('trust-axis-row'));
   assert.equal(buildTrustBreakdown(null, RT), '');
   assert.equal(buildTrustBreakdown(fixtureCc(), null), '');

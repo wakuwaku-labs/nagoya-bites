@@ -160,9 +160,9 @@ function withLink(body, url, tags, max) {
 }
 
 // ── ポイント入りの定型（保存した文面が使えない日の代わり）────────────────────
-/** 記事の「知っておきたいポイント」（insider-box の箇条書き）を、読める文字にして返す。 */
+/** 記事の「先に結論」または「知っておきたいポイント」（insider-box の箇条書き）を、読める文字にして返す。 */
 function insiderPoints(html) {
-  const m = String(html || '').match(/class="insider-box"[\s\S]*?<\/ul>/);
+  const m = String(html || '').match(/class="insider-box[^"]*"[\s\S]*?<\/ul>/);
   if (!m) return [];
   return [...m[0].matchAll(/<li[^>]*>([\s\S]*?)<\/li>/g)].map((x) => htmlToText(x[1]).trim()).filter(Boolean);
 }

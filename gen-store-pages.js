@@ -118,6 +118,8 @@ ${cells}
   </div>`;
 }
 const TRUST_POLICY = trustDisplay.loadPolicy();
+// 段階の記号・0-100の点数・検証項目ごとの点数を出すか（ADR 0069 決定1: 既定は出さない＝言葉の助言だけ）
+const TRUST_DISPLAY = trustDisplay.displayOf(TRUST_POLICY);
 const CROSSCHECK = (() => {
   try {
     return JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'crosscheck.json'), 'utf8'));
@@ -212,7 +214,7 @@ function buildTrustBreakdown(cc, rt) {
     const sc = k ? k[2] : node.score, mx = k ? k[3] : node.max;
     return `      <div class="trust-axis-row${observed ? '' : ' trust-axis-unobserved'}">
         <span class="trust-axis-name">${escapeHtml(chk.label)}</span>
-        <span class="trust-axis-score">${observed ? `${sc}/${mx}点` : '—'}</span>
+        <span class="trust-axis-score">${observed ? (TRUST_DISPLAY.showCheckPoints ? `${sc}/${mx}点` : escapeHtml(TRUST_DISPLAY.checkedLabel)) : '—'}</span>
         <span class="trust-axis-reason">${escapeHtml(node.reason || '')}${observed ? '' : `（${escapeHtml(P.notObservedLabel)}・採点に含めません）`}</span>
       </div>`;
   }).filter(Boolean).join('\n');
@@ -221,18 +223,18 @@ function buildTrustBreakdown(cc, rt) {
     if (!axis) return '';
     return `      <div class="trust-axis-row trust-axis-meta">
         <span class="trust-axis-name">${escapeHtml(m.label)}</span>
-        <span class="trust-axis-score">${axis.score}/${axis.max}点</span>
+        <span class="trust-axis-score">${TRUST_DISPLAY.showCheckPoints ? `${axis.score}/${axis.max}点` : ''}</span>
         <span class="trust-axis-reason">${escapeHtml(axis.reason || '')}</span>
       </div>`;
   }).filter(Boolean).join('\n');
   if (!rows) return '';
   const tierDef = rt.tier === P.na.id ? P.na : (P.tiers.find(t => t.id === rt.tier) || P.na);
   const scoreTxt = typeof rt.score === 'number' ? `${rt.score}` : '—';
-  const metaLine = `${P.coverageLabel.replace('{observed}', rt.coverage.observed).replace('{total}', rt.coverage.total)}${rt.lastChecked ? ' ・ ' + P.lastCheckedLabel.replace('{date}', rt.lastChecked) : ''}`;
+  const metaLine = P.coverageLabel.replace('{observed}', rt.coverage.observed).replace('{total}', rt.coverage.total);
   return `
   <div class="trust-breakdown">
     <h2>${escapeHtml(P.name)}</h2>
-    <p class="trust-headline"><span class="trust-tier ${tierDef.cssClass}">${escapeHtml(rt.tier)}</span><span class="trust-score">${scoreTxt} / 100</span> — ${escapeHtml(rt.headline || '')}</p>
+    <p class="trust-headline">${TRUST_DISPLAY.showTierId ? `<span class="trust-tier ${tierDef.cssClass}">${escapeHtml(rt.tier)}</span>` : ''}${TRUST_DISPLAY.showScore ? `<span class="trust-score">${scoreTxt} / 100</span> — ` : ''}${escapeHtml(rt.headline || '')}</p>
     <p class="trust-meta-line">${escapeHtml(metaLine)}</p>
     <details class="trust-details">
       <summary>内訳を見る（${P.checks.length}つの検証項目）</summary>
@@ -587,7 +589,7 @@ function buildDescription(s) {
   // Part3b（SEO-095）: 口コミ信頼度。既存の trust_display.js が算出した段階（SS〜D）を
   // そのまま出す（新規のスコアリングは実装しない）。判定材料不足（—）の店は出さない。
   const trustTier = reviewTrustTier(s);
-  if (trustTier) parts.push(`口コミ信頼度${trustTier}`);
+  if (trustTier) parts.push(TRUST_DISPLAY.showTierId ? `口コミ信頼度${trustTier}` : `★の見方は「${trustDisplay.shortAdviceOf(trustTier, TRUST_POLICY)}」`);
 
   // Part3c（SEO-095）: 翌1時以降営業。「営業時間」フィールドから機械判定できる場合のみ出す
   // （欠損店は無理に埋めず自然に省略＝取り繕わない）。
@@ -750,18 +752,19 @@ function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals)
     score: typeof rtSlim.s === 'number' ? rtSlim.s : null,
     tier: rtSlim.t,
     headline: (rtRating > 0 && rtCount > 0)
-      ? TRUST_POLICY.headline.replace('{rating}', rtRating).replace('{count}', rtCount).replace('{advice}', rtTierDef.advice)
+      ? TRUST_POLICY.headline.replace('{rating}', rtRating.toFixed(1)).replace('{count}', rtCount.toLocaleString('ja-JP')).replace('{advice}', rtTierDef.advice)
       : TRUST_POLICY.headlineNoRating.replace('{advice}', rtTierDef.advice),
     coverage: { observed: rtCov[0] || '0', total: rtCov[1] || TRUST_POLICY.checks.length },
     lastChecked: rtSlim.d || ''
   } : null;
   const ccsPending  = !!(rt && rt.tier === TRUST_POLICY.na.id);
-  const ccsLabel = rt ? `${TRUST_POLICY.name} ${rt.tier}` : '';
+  const ccsLabel = rt ? (TRUST_DISPLAY.showTierId ? `${TRUST_POLICY.name} ${rt.tier}` : `${TRUST_DISPLAY.label} ${trustDisplay.shortAdviceOf(rt.tier, TRUST_POLICY)}`) : '';
   // 最初の画面の要約（I-14a）: ★と出典・件数と口コミ信頼度の札を 1 行に、その下に距離と予算の 1 行、条件のラベル。中身の無い行は出さない
   const glance = buildStoreGlance(s);
-  const glanceScoreHtml = score ? `<div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>${score}</div>${glance.note ? `<span class="score-note">${escapeHtml(glance.note)}</span>` : ''}` : '';
-  const glanceBadgeHtml = ccsLabel ? `<span class="ccs-badge${ccsPending ? ' ccs-badge-pending' : ''}" title="${escapeHtml(TRUST_POLICY.name)} ${escapeHtml(rt.tier)}：${escapeHtml(rtTierDef.label)}${ccsPending ? '（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）' : ''}">${escapeHtml(TRUST_POLICY.name)}<span class="ccs-tier ${rtTierDef.cssClass}">${escapeHtml(rt.tier)}</span></span>` : '';
+  const glanceScoreHtml = score ? `<div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>${parseFloat(score) > 0 ? parseFloat(score).toFixed(1) : score}</div>${glance.note ? `<span class="score-note">${glance.note}</span>` : ''}` : '';
+  const glanceBadgeHtml = ccsLabel ? `<span class="ccs-badge${ccsPending ? ' ccs-badge-pending' : ''}" title="${escapeHtml(TRUST_POLICY.name)}：${escapeHtml(rtTierDef.label)}${ccsPending ? '（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）' : ''}">${TRUST_DISPLAY.showTierId ? `${escapeHtml(TRUST_POLICY.name)}<span class="ccs-tier ${rtTierDef.cssClass}">${escapeHtml(rt.tier)}</span>` : `${escapeHtml(TRUST_DISPLAY.label)}<span class="ccs-tier ${rtTierDef.cssClass}">${escapeHtml(trustDisplay.shortAdviceOf(rt.tier, TRUST_POLICY))}</span>`}</span>` : '';
   const glanceRowHtml = (glanceScoreHtml || glanceBadgeHtml) ? `\n  <div class="store-glance-row">\n    ${[glanceScoreHtml, glanceBadgeHtml].filter(Boolean).join('\n    ')}\n  </div>` : '';
+  const glanceProvHtml = (score && rt && rt.lastChecked && TRUST_DISPLAY.provenance) ? `\n    <p class="store-provenance">${escapeHtml(TRUST_DISPLAY.provenance.replace('{date}', require('./scripts/lib/rating_display').dateText(rt.lastChecked) || rt.lastChecked))}</p>` : '';
   const glanceFactsHtml = glance.facts.length ? `\n    <p class="store-facts">${glance.facts.map(escapeHtml).join('・')}</p>` : '';
   const glanceChipsHtml = glance.chips.length ? `\n    <ul class="store-chips" aria-label="この店の条件">${glance.chips.map(c => `<li>${escapeHtml(c)}</li>`).join('')}</ul>` : '';
   const point    = s['おすすめポイント'] || '';
@@ -840,7 +843,7 @@ function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals)
   if (tbUrl) sameAs.push(tbUrl);
   if (hpUrl) sameAs.push(hpUrl);
   if (sameAs.length) jsonLd.sameAs = sameAs;
-  if (rt && typeof rt.score === 'number') {
+  if (TRUST_DISPLAY.showScore && rt && typeof rt.score === 'number') {
     jsonLd.additionalProperty = [{
       '@type': 'PropertyValue',
       'name': `${TRUST_POLICY.name}（独自算定・広告非関与・段階 ${rt.tier}）`,
@@ -1083,14 +1086,17 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .score{display:inline-flex;align-items:center;gap:.3rem;font-size:var(--fs-sm);font-weight:600;color:#d4a017;margin-bottom:1.2rem;}
 .score svg{width:14px;height:14px;fill:#d4a017;}
 .store-glance{margin-bottom:1.2rem;}
-.store-glance-row{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;}
-.score-note{font-size:var(--fs-xs);color:var(--muted);}
+.store-glance-row{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem .5rem;}
+.store-glance-row .score,.store-glance-row .score-note,.store-glance-row .ccs-badge{margin:0;}
+.score-note{word-break:keep-all;overflow-wrap:anywhere;font-size:var(--fs-xs);color:var(--muted);}
+.nb-nowrap{white-space:nowrap;}
+.store-provenance{max-width:none;margin:.4rem 0 0;font-size:var(--fs-sm);line-height:var(--lh-ui);color:var(--muted);}
 .store-facts{margin:.6rem 0 0;font-size:var(--fs-sm);line-height:var(--lh-ui);color:var(--text);}
 .store-chips{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0;padding:0;}
 .store-chips li{font-size:var(--fs-xs);letter-spacing:0;color:var(--muted);border:1px solid var(--border);padding:.3rem .7rem;border-radius:2px;background:var(--surface);}
-.ccs-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.25rem .7rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;margin-left:.6rem;}
+.ccs-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.25rem .7rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;white-space:nowrap;margin:0;}
 .ccs-badge.ccs-badge-pending{color:#767676;border-color:rgba(120,120,120,.35);background:rgba(120,120,120,.06);}
-.ccs-badge .ccs-tier{font-weight:700;font-size:var(--fs-xs);margin-left:.25rem;letter-spacing:0;}
+.ccs-badge .ccs-tier{font-weight:700;font-size:var(--fs-xs);margin-left:.25rem;letter-spacing:0;font-family:var(--font-body);}
 .cc-tier-SS{color:#1b5e20;}.cc-tier-A{color:#2e7d32;}.cc-tier-B{color:#46752a;}.cc-tier-C{color:#5f6b63;}.cc-tier-D{color:#767676;}.cc-tier-NA{color:#767676;font-style:italic;}
 .point-box{background:rgba(122,92,16,.07);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:.9rem 1.1rem;margin-bottom:1.6rem;}
 .point-box p{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--text);}
@@ -1179,7 +1185,7 @@ ${heroHtml}
   <div class="genre-badge">${genre}</div>
   <h1>${nameHtml}</h1>
   ${closureNoteHtml(s)}
-  <div class="store-glance">${glanceRowHtml}${glanceFactsHtml}${glanceChipsHtml}
+  <div class="store-glance">${glanceRowHtml}${glanceProvHtml}${glanceFactsHtml}${glanceChipsHtml}
   </div>
 ${igLead ? igEmbedHtml + '\n' : ''}
   ${point ? `<div class="point-box"><p>${point}</p></div>` : ''}

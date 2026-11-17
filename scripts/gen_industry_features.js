@@ -208,7 +208,6 @@ const renderStoreCard = (idx, store) => {
   const insiderHtml = store.insiderNote ? `<p class="insider-quote">知っておきたいこと: ${store.insiderNote}</p>` : '';
   const visitBadge = store.visitStatus === 'visited' && store.visitedOn ? '<span class="store-badge">編集部訪問済</span>' : store.visitStatus === 'interview' ? '<span class="store-badge">取材済</span>' : '';
   return `      <div class="store-card">
-        <div class="store-num">${idx + 1}</div>
         <div class="store-info">
           <div class="store-name">${store.店名}${visitBadge}</div>
           <div class="store-meta">

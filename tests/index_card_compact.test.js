@@ -128,14 +128,14 @@ test('CSS: スマホ（768px 以下）のグリッドは 2 列の写真タイル
   const block = INDEX.slice(a, INDEX.indexOf('/* ── FAV BUTTON ── */', a));
   assert.ok(/^\/\*[^\n]*\*\/\n@media\(max-width:768px\)\{/.test(block), 'タイルの規則は @media(max-width:768px) の中だけ');
   assert.ok(block.includes('.grid:not(.list-mode) .ci{aspect-ratio:1/1;'), 'タイルの写真は 1:1');
-  for (const s of ['.grid:not(.list-mode) .card-actions{display:none;}', '.grid:not(.list-mode) .card-lead{display:none;}', '.grid:not(.list-mode) .cm-price,.grid:not(.list-mode) .card-rating-n{display:none;}']) {
+  for (const s of ['.grid:not(.list-mode) .card-actions{display:none;}', '.grid:not(.list-mode) .card-lead{display:none;}', '.grid:not(.list-mode) .cm-price{display:none;}']) {
     assert.ok(block.includes(s), `タイルでは出さない: ${s}`);
   }
   assert.ok(cssBody('.cm-near').includes('display:none'), '2 行目（cm-near）は PC のカードでは出さない（従来の地域名の行を残す）');
 });
 
 test('CSS: 口コミ件数は割れずに折り返す（320px で「（2,170」と「件）」に割れた）', () => {
-  assert.ok(cssBody('.card-rating-n').includes('white-space:nowrap'));
+  assert.ok(cssBody('.card-rating-n').includes('word-break:keep-all') && cssBody('.card-rating-n').includes('overflow-wrap:anywhere'));
   assert.ok(cssBody('.card-rating').includes('flex-wrap:wrap') || /(?:^|\n)\.card-rating\{flex-wrap:wrap;\}/.test(INDEX));
 });
 
@@ -216,7 +216,7 @@ function load(opts) {
   };
   ctx.window.localStorage = storage;
   vm.createContext(ctx);
-  const names = ['nbEscHtml', 'mWalkFromAccess', 'nbStationKey', 'nbNearText', 'nbCardSizes', 'nbCardClick', 'nbPhotoCredit', 'nbPhotoCreditLine',
+  const names = ['nbEscHtml', 'mWalkFromAccess', 'nbStationKey', 'nbNearText', 'nbRatingNote', 'nbTrustShows', 'nbTrustWord', 'nbCardSizes', 'nbCardClick', 'nbPhotoCredit', 'nbPhotoCreditLine',
     'nbStoreHref', 'nbStoreKey', 'nbImgFallback', 'nbSavedView', 'nbDefaultView', 'applyViewMode', 'setViewMode', 'restoreViewMode', 'buildCardHtml'];
   // 例外の表（NB_STORE_PAGES）は、生成器が STORE-INDEX の区画に書く。渡さなければ「表が無い」状態（例外なし）で動かす
   vm.runInContext((opts.pages ? 'var NB_STORE_PAGES = ' + JSON.stringify(opts.pages) + ';\n' : '') + names.map(fnSource).join('\n'), ctx);

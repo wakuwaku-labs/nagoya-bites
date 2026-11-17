@@ -120,7 +120,7 @@ test('本日の営業時間（P-442）: 祝日の別時間がある店は、祝�
 function loadFacts(trust) {
   const ctx = { TRUST_POLICY: trust === undefined ? null : trust };
   vm.createContext(ctx);
-  vm.runInContext([fn('mEsc'), fn('mWalkFromAccess'), fn('nbStationKey'), fn('nbNearText'), fn('nbTodayClosedState'), fn('nbTodayHours'), fn('nbQvFactsHtml')].join('\n'), ctx);
+  vm.runInContext([fn('mEsc'), fn('mWalkFromAccess'), fn('nbStationKey'), fn('nbNearText'), fn('nbRatingNote'), fn('nbTrustShows'), fn('nbTrustWord'), fn('nbTodayClosedState'), fn('nbTodayHours'), fn('nbQvFactsHtml')].join('\n'), ctx);
   return ctx;
 }
 const POLICY = {

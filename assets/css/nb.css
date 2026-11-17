@@ -26,6 +26,7 @@
   --fs-xs:.8125rem;                               /* 13px メタ・kicker・キャプション */
   --fs-sm:.875rem;                                /* 14px チップ・ボタン・カードのリード */
   --fs-md:clamp(.9375rem,.9rem + .2vw,1rem);      /* 15→16px 本文・入力欄 */
+  --fs-input:1rem;                                /* 16px 入力欄（16px 未満だと iPhone の Safari が押すと拡大する） */
   --fs-lg:clamp(1.0625rem,1rem + .3vw,1.125rem);  /* 17→18px カード店名・リード段落 */
   --fs-xl:clamp(1.25rem,1.1rem + .6vw,1.5rem);    /* 20→24px h3・小見出し */
   --fs-2xl:clamp(1.5rem,1.2rem + 1.4vw,2rem);     /* 24→32px セクション h2 */
@@ -366,6 +367,29 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .tips-box li,.tips-box p,.insider-box li{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);margin-bottom:.3rem;overflow-wrap:break-word;}
 .source-note{font-size:var(--fs-xs);line-height:var(--lh-ui);color:var(--dim);}
 .source-note a{color:var(--gold);text-decoration:none;}
+/* 記事の判断材料（媒体方針 S3-2・正本: data/editorial_standard.json / scripts/lib/editorial_standard.js）。
+   状態の帯・先に結論・確かめたいこと・訂正の履歴・集計は1つの型（.nb-jbox: 地・枠・見出し・余白）にそろえる。
+   確認できなかった行だけ目立つ札にする（言葉で書く＝色だけで区別しない）。文字は13px以上。 */
+.nb-status-band{display:block;margin:0 0 var(--sp-4);padding:var(--sp-2) var(--sp-3);background:var(--bg2);border:1px solid var(--border-h);border-left:3px solid var(--gold);border-radius:0 var(--r-md) var(--r-md) 0;font-size:var(--fs-sm);font-weight:500;line-height:var(--lh-ui);color:var(--text);overflow-wrap:anywhere;}
+.nb-jbox{margin:var(--sp-4) 0;padding:var(--sp-3) var(--sp-4);background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 var(--r-md) var(--r-md) 0;}
+.nb-jbox > summary,.nb-jbox .insider-title,.nb-jbox .nb-guide-title{font-family:var(--font-body);font-size:var(--fs-md);font-weight:600;line-height:var(--lh-ui);letter-spacing:0;text-transform:none;color:var(--text);margin:0 0 var(--sp-2);padding:0;}
+.nb-jbox > summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:var(--sp-2);min-height:var(--tap-min);margin:0;}
+.nb-jbox > summary::-webkit-details-marker{display:none;}
+.nb-jbox > summary::before{content:"\25B8";color:var(--gold);}
+.nb-jbox[open] > summary::before{content:"\25BE";}
+.nb-jbox ul{list-style:none;padding:0;margin:0;}
+.nb-jbox li{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);padding:var(--sp-2) 0;margin:0;border-top:1px solid var(--border);overflow-wrap:anywhere;}
+.nb-jbox li:first-child{border-top:0;padding-top:0;}
+.nb-jbox[hidden]{display:none;}
+.nb-jconclusion{margin-top:var(--sp-4);}
+.nb-check-name{font-weight:600;color:var(--text);}
+.nb-check-state{display:inline-block;font-size:var(--fs-xs);font-weight:600;background:var(--ink);color:var(--bg);border-radius:var(--r-sm);padding:0 var(--sp-2);margin:0 var(--sp-1);}
+.nb-fit{display:grid;grid-template-columns:1fr;gap:var(--sp-4);}
+.nb-fit-title{font-size:var(--fs-md);font-weight:600;color:var(--text);margin:0;}
+@media(min-width:640px){.nb-fit{grid-template-columns:1fr 1fr;}}
+.nb-corr-date{font-weight:600;color:var(--text);}
+.nb-guide-note{font-size:var(--fs-xs);line-height:var(--lh-ui);color:var(--dim);margin:var(--sp-2) 0 0;}
+.art-img-kind{color:inherit;}
 .nb-site-intro{font-size:var(--fs-xs);color:var(--dim);line-height:var(--lh-ui);}
 .nb-site-intro a{color:var(--gold);text-decoration:none;}
 
@@ -498,3 +522,24 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
   .nb-bar-sub{flex:0 0 4.25rem;flex-direction:column;gap:2px;padding:var(--sp-1);font-size:var(--fs-xs);}
   .nb-action-bar .nb-call-status{order:-1;}
 }
+
+/* S7-2 読者の声（記事の本文の直後）。scripts/lib/site_chrome.js の renderReaderVoice が出す */
+.nb-reader-voice{width:min(calc(100% - 3rem),calc(var(--container-prose) - 3rem));box-sizing:border-box;margin:var(--rhythm-sm,2rem) auto;padding:1.25rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-md);}
+.nb-rv-title{font-size:var(--fs-lg);font-weight:600;line-height:var(--lh-heading);margin:0 0 .75rem;text-wrap:balance;}
+.nb-rv-choices{display:flex;flex-wrap:wrap;gap:.5rem;}
+.nb-rv-btn,.nb-rv-submit{min-height:var(--tap-min);padding:.5rem 1rem;font:inherit;font-size:var(--fs-sm);font-weight:600;color:var(--text);background:var(--card);border:1px solid var(--border-h);border-radius:var(--r-sm);cursor:pointer;}
+.nb-rv-btn[aria-pressed="true"]{border:2px solid var(--ink);padding:calc(.5rem - 1px) calc(1rem - 1px);}
+.nb-rv-btn::before{content:"✓ ";visibility:hidden;}
+.nb-rv-btn[aria-pressed="true"]::before{visibility:visible;}
+.nb-journal-next + .nb-reader-voice{margin-top:0;}
+.nb-rv-submit{background:var(--ink);color:var(--bg);border-color:var(--ink);}
+.nb-rv-btn-sub{font-weight:500;}
+.nb-rv-form{margin-top:.75rem;}
+.nb-rv-form[hidden],.nb-rv-gotcha{display:none;}
+.nb-rv-label{display:block;font-size:var(--fs-sm);font-weight:600;margin-bottom:.35rem;}
+.nb-rv-body{width:100%;box-sizing:border-box;padding:.6rem .75rem;font:inherit;font-size:var(--fs-input);line-height:1.7;border:1px solid var(--border-h);border-radius:var(--r-sm);background:var(--card);color:var(--text);resize:vertical;}
+.nb-rv-hint{font-size:var(--fs-xs);color:var(--dim);margin:.35rem 0 .6rem;}
+.nb-rv-status{font-size:var(--fs-sm);margin:.6rem 0 0;}
+.nb-rv-status:empty{display:none;}
+.nb-rv-status.ok{color:var(--text);font-weight:600;}
+.nb-rv-status.ng{color:var(--text);font-weight:600;text-decoration:underline wavy;text-underline-offset:3px;}

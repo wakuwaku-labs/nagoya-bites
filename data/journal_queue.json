@@ -1,6 +1,14 @@
 {
-  "description": "向こう14日分のテーマスロット。曜日ローテ(月:週次話題店 / 火:今日の1軒 / 水:業界の裏側 / 木:今日の1軒 / 金:季節短信 / 土:今日の1軒 / 日:flexible)をベースに、seasonal_events.json や trending_stores.json で上書きされる。候補店は手動で事前にメモしておくと Editor の選定精度が上がる。",
+  "description": "向こう14日分のテーマスロット。曜日ローテ(月:週次話題店[比較・特集] / 火:今日の1軒 / 水:業界の裏側[店選びガイド] / 木:今日の1軒 / 金:季節短信 / 土:今日の1軒 / 日:業界の裏側[店選びガイド]。話題4・ガイド2・比較1・2026-11 S3-3 で日曜を flexible から変更)をベースに、seasonal_events.json や trending_stores.json で上書きされる。候補店は手動で事前にメモしておくと Editor の選定精度が上がる。",
   "generated_at": "2026-04-20",
+  "categories": {
+    "_comment": "S3-3（media-policy-2026-11）。記事の3分類と、1週間（7本）の配分の目安。分類の判定は scripts/lib/journal_category.js。配分を変えるときは rotation_rules の theme を替える（この数字は試算の目標値で、公開の条件ではない）",
+    "topic": { "label": "話題のお店紹介", "weekly_target": 4 },
+    "guide": { "label": "店選びガイド", "weekly_target": 2 },
+    "compare": { "label": "比較・特集", "weekly_target": 1 }
+  },
+  "fallback_theme": "today_one",
+  "fallback_note": "ガイド・比較の回で基準に届く材料が集まらない日は、題材を fallback_theme（話題のお店紹介）に切り替えて書く。基準を下げて出さない・盛らない（CLAUDE.md 品質ゲート原則4）。",
   "rotation_rules": {
     "月": { "theme": "weekly_digest", "label": "🔥 週次の話題店ダイジェスト", "length": "800-1200字" },
     "火": { "theme": "today_one", "label": "🍶 今日の1軒", "length": "700-1000字" },
@@ -8,7 +16,7 @@
     "木": { "theme": "today_one", "label": "🍶 今日の1軒", "length": "700-1000字" },
     "金": { "theme": "seasonal", "label": "🗓 季節・イベント短信", "length": "300-600字" },
     "土": { "theme": "today_one", "label": "🍶 今日の1軒", "length": "700-1000字" },
-    "日": { "theme": "flexible", "label": "🍶 今日の1軒 or 🗓 季節短信", "length": "短〜中" }
+    "日": { "theme": "industry_insider", "label": "🗝 店選びガイド（業界の裏側コラム）", "length": "500-900字" }
   },
   "override_rules": [
     "seasonal_events.json 該当日 → 季節短信を強制",

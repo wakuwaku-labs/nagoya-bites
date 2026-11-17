@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-17T00:11:29.141Z",
+  "generatedAt": "2026-11-17T04:29:59.875Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 7315,
-    "pageViews": 8760,
-    "sessions": 7700,
-    "avgSessionDuration": 56,
+    "activeUsers": 7352,
+    "pageViews": 8805,
+    "sessions": 7737,
+    "avgSessionDuration": 56.2,
     "bounceRate": 0.674,
     "pagesPerSession": 1.14
   },
@@ -17,10 +17,10 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2811,
-      "direct": 4518,
+      "organic": 2824,
+      "direct": 4541,
       "social": 57,
-      "ai_assistant": 240,
+      "ai_assistant": 241,
       "referral": 46,
       "paid": 0,
       "other": 0
@@ -39,22 +39,22 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 4490
+      "sessions": 4512
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1279
+      "sessions": 1285
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 918
+      "sessions": 923
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 579
+      "sessions": 581
     },
     {
       "source": "chatgpt.com",
@@ -64,7 +64,7 @@
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 72
+      "sessions": 73
     },
     {
       "source": "note",
@@ -102,14 +102,14 @@
       "sessions": 8
     },
     {
-      "source": "openai",
+      "source": "(not set)",
       "medium": "(not set)",
       "sessions": 5
     },
     {
-      "source": "(not set)",
+      "source": "openai",
       "medium": "(not set)",
-      "sessions": 4
+      "sessions": 5
     },
     {
       "source": "cn.bing.com",
@@ -210,13 +210,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 431,
-      "sessions": 408
+      "pageViews": 433,
+      "sessions": 410
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 235,
-      "sessions": 222
+      "pageViews": 236,
+      "sessions": 223
     },
     {
       "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -225,8 +225,8 @@
     },
     {
       "path": "/features/nagoya-unaju.html",
-      "pageViews": 80,
-      "sessions": 78
+      "pageViews": 85,
+      "sessions": 81
     },
     {
       "path": "/features/nagoya-tebasaki.html",
@@ -235,12 +235,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 397,
+    "outboundClicks": 406,
     "ctaClickRate": 5.2,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 136
+        "clicks": 144
       },
       {
         "domain": "www.google.com",
@@ -252,7 +252,7 @@
       },
       {
         "domain": "tabelog.com",
-        "clicks": 38
+        "clicks": 39
       },
       {
         "domain": "www.instagram.com",
@@ -293,16 +293,16 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 273,
-      "direct": 54,
+      "organic": 274,
+      "direct": 61,
       "social": 13,
-      "ai_assistant": 47,
+      "ai_assistant": 48,
       "referral": 10,
       "paid": 0,
       "other": 0
     },
     "ctaClickRate_organic": 9.7,
-    "ctaClickRate_direct": 1.2,
+    "ctaClickRate_direct": 1.3,
     "ctaClickRate_social": 22.8,
     "byPage": [
       {
@@ -370,6 +370,10 @@
         "clicks": 5
       },
       {
+        "path": "/stores/J004026266.html",
+        "clicks": 5
+      },
+      {
         "path": "/journal/2026-06-17-shinya-eigyo-jorei-to-genba.html",
         "clicks": 4
       },
@@ -410,19 +414,15 @@
         "clicks": 3
       },
       {
+        "path": "/stores/J003984968.html",
+        "clicks": 3
+      },
+      {
         "path": "/stores/area/sakae/izakaya-nomihodai.html",
         "clicks": 3
       },
       {
         "path": "/features/nagoya-sweets.html",
-        "clicks": 2
-      },
-      {
-        "path": "/journal/2026-10-15-ikeshita-qq-quinto-quinte-kakuuchi-pairing.html",
-        "clicks": 2
-      },
-      {
-        "path": "/journal/2026-10-17-sakae-rokurokudou-settai-enkai-wine-cellar.html",
         "clicks": 2
       }
     ],
@@ -503,6 +503,11 @@
         "clicks": 4
       },
       {
+        "path": "/stores/J004026266.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 4
+      },
+      {
         "path": "/features/nagoya-yakiniku-guide.html",
         "domain": "www.hotpepper.jp",
         "clicks": 3
@@ -520,6 +525,11 @@
       {
         "path": "/stores/J001279923.html",
         "domain": "www.google.com",
+        "clicks": 3
+      },
+      {
+        "path": "/stores/J003984968.html",
+        "domain": "www.hotpepper.jp",
         "clicks": 3
       },
       {
@@ -595,6 +605,11 @@
       {
         "path": "/journal/2026-11-10-higashibetsuin-chashumen-susuru-solo-lunch.html",
         "domain": "www.instagram.com",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/J000107620.html",
+        "domain": "www.hotpepper.jp",
         "clicks": 2
       },
       {
@@ -911,21 +926,6 @@
         "path": "/stores/J001134166.html",
         "domain": "www.instagram.com",
         "clicks": 1
-      },
-      {
-        "path": "/stores/J001155162.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001178025.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001201932.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
       }
     ],
     "reservationClicksByPage": [
@@ -954,7 +954,15 @@
         "clicks": 5
       },
       {
+        "path": "/stores/J004026266.html",
+        "clicks": 4
+      },
+      {
         "path": "/features/nagoya-yakiniku-guide.html",
+        "clicks": 3
+      },
+      {
+        "path": "/stores/J003984968.html",
         "clicks": 3
       },
       {
@@ -975,6 +983,10 @@
       },
       {
         "path": "/journal/2026-10-17-sakae-rokurokudou-settai-enkai-wine-cellar.html",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/J000107620.html",
         "clicks": 2
       },
       {
@@ -1116,21 +1128,9 @@
       {
         "path": "/stores/J001128882.html",
         "clicks": 1
-      },
-      {
-        "path": "/stores/J001155162.html",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001178025.html",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001201932.html",
-        "clicks": 1
       }
     ],
-    "reservationClicks": 106,
+    "reservationClicks": 112,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 38,
@@ -1156,7 +1156,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 7315,
+    "value": 7352,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
