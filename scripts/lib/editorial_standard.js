@@ -89,7 +89,7 @@ function buildConclusion(input, std = loadStandard()) {
   const lines = [];
   if (fit) lines.push(`向く人: ${fit}`);
   if (not) lines.push(`向かない人: ${not}`);
-  if (c.check_first) lines.push(`来店前にいちばん確かめたい点: ${c.check_first}（分からなかった点: ${unknown}点・下の一覧）`);
+  if (c.check_first) lines.push(`来店前にいちばん確かめたい点: ${String(c.check_first).trim().replace(/[。.]$/, '')}。分からなかった点は${unknown}点で、項目ごとに下の一覧に書いています。`);
   return `<div class="insider-box nb-jbox nb-jconclusion"><p class="insider-title">先に結論</p><ul>${liList(lines)}</ul></div>`;
 }
 

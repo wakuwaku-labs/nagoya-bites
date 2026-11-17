@@ -101,19 +101,23 @@ function aggregate(opts = {}, stores) {
 const yen = (n) => `${Number(n).toLocaleString('en-US')}円`;
 function ymdJa(ymd) { const m = /^\d{4}-(\d{2})-(\d{2})$/.exec(String(ymd || '')); return m ? `${parseInt(m[1], 10)}月${parseInt(m[2], 10)}日` : ''; }
 
-/** 集計を、読者向けの文の配列にする（記事本文にも、ガイドの入力にもそのまま使える）。先頭は必ず「このサイトに載っている◯店のうち」 */
-function guideSentences(stats, std = loadStandard()) {
-  const scope = std.guide.scopeSentence.replace('{n}', String(stats.n));
+/** 集計の前置き（「このサイトに載っている◯店のうち」）。文ごとには繰り返さず、箱の見出しに置く */
+function scopeText(stats, std = loadStandard()) {
+  return std.guide.scopeSentence.replace('{n}', String(stats.n));
+}
+
+/** 集計を、読者向けの文の配列にする。前置きは scopeText（箱の見出し）に寄せているので、文は前置きなしで始める */
+function guideSentences(stats) {
   const out = [];
   const p = stats.price;
-  if (p.withBand) out.push(`${scope}、価格帯の記載がある${p.withBand}店では「${p.medianBand}」が真ん中です（店ごとの内訳は下の一覧）。`);
-  if (stats.budget.withPlain) out.push(`${scope}、平均予算が金額だけで書かれている${stats.budget.withPlain}店の中央値は${yen(stats.budget.median)}です（文章混じりの記載は含めません）。`);
+  if (p.withBand) out.push(`価格帯の記載がある${p.withBand}店では、「${p.medianBand}」が真ん中です。`);
+  if (stats.budget.withPlain) out.push(`平均予算が金額だけで書かれている${stats.budget.withPlain}店の中央値は${yen(stats.budget.median)}です（文章混じりの記載は含めません）。`);
   const pr = stats.privateRoom;
-  out.push(`${scope}、個室ありの記載がある店は${pr.yes}店です（記載のない${pr.noRecord}店は、無いとは限りません）。`);
+  out.push(`個室ありの記載がある店は${pr.yes}店です（記載のない${pr.noRecord}店は、無いとは限りません）。`);
   const sm = stats.smoking;
-  out.push(`${scope}、喫煙の区分は 全面禁煙${sm['全面禁煙']}店・一部禁煙${sm['一部禁煙']}店・禁煙席なし${sm['禁煙席なし']}店・記載なし${sm['記載なし']}店です。`);
+  out.push(`喫煙の区分は、全面禁煙${sm['全面禁煙']}店・一部禁煙${sm['一部禁煙']}店・禁煙席なし${sm['禁煙席なし']}店・記載なし${sm['記載なし']}店です。`);
   const f = stats.feeNote;
-  out.push(`${scope}、料金の備考がある${f.withNote}店のうち、お通し・席料などの記載がある店は${f.otoshiMention}店、深夜料金の記載がある店は${f.midnightMention}店です（備考のない${f.noNote}店は、無料とは限りません）。`);
+  out.push(`料金の備考がある${f.withNote}店のうち、お通し・席料などの記載がある店は${f.otoshiMention}店、深夜料金の記載がある店は${f.midnightMention}店です（備考のない${f.noNote}店は、無料とは限りません）。`);
   return out;
 }
 
@@ -124,9 +128,9 @@ function buildGuideBlock({ area, genre, checked, stores } = {}) {
   if (stats.n < std.guide.minStores) throw new Error(`集計の対象が${stats.n}店で、基準（${std.guide.minStores}店）に満たない（${area || '全エリア'}・${genre || '全ジャンル'}）`);
   const asOf = checked || stats.asOf;
   const when = ymdJa(asOf) ? `${ymdJa(asOf)}時点` : '取得日不明';
-  const lis = guideSentences(stats, std).map((t) => `<li>${esc(t)}</li>`).join('');
+  const lis = guideSentences(stats).map((t) => `<li>${esc(t)}</li>`).join('');
   const target = [area, genre].filter(Boolean).join('・') || '全エリア・全ジャンル';
-  return `<div class="nb-guide-stats nb-jbox"><p class="nb-guide-title">掲載データの集計（${esc(target)}・対象${stats.n}店・${esc(when)}）</p><ul>${lis}</ul><p class="nb-guide-note">このサイトに載っている店の中での集計です。名古屋全体の実態を表すものではありません。営業中の店だけを数え、掲載情報は店が公開した内容にもとづきます。</p></div>`;
+  return `<div class="nb-guide-stats nb-jbox"><p class="nb-guide-title">${esc(scopeText(stats, std))}（${esc(target)}・${esc(when)}の掲載データ）</p><ul>${lis}</ul><p class="nb-guide-note">このサイトに載っている店の中での集計です。名古屋全体の実態を表すものではありません。営業中の店だけを数え、掲載情報は店が公開した内容にもとづきます。</p></div>`;
 }
 
-module.exports = { aggregate, selectStores, guideSentences, buildGuideBlock, bandLower, plainBudget, median };
+module.exports = { aggregate, selectStores, scopeText, guideSentences, buildGuideBlock, bandLower, plainBudget, median };

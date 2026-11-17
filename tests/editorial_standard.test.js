@@ -74,7 +74,7 @@ test('記事: 6つの部品が出て、従来の要点欄は置き換わる。�
   assert.match(html, /class="insider-box nb-jbox nb-jconclusion"><p class="insider-title">先に結論/);
   assert.match(html, /向く人: 少人数の宴会/);
   assert.match(html, /向かない人: 煙が苦手な人/);
-  assert.match(html, /分からなかった点: 6点/);
+  assert.match(html, /確かめたい点: 飲み放題の最終注文。分からなかった点は6点で、項目ごとに下の一覧に書いています。/);
   // 帯は日付の行の直下、先に結論はリードの直後（1画面目に出す）
   assert.ok(html.indexOf('class="art-meta"') < html.indexOf('nb-status-band') && html.indexOf('nb-status-band') < html.indexOf('art-lead') && html.indexOf('art-lead') < html.indexOf('nb-jconclusion'));
   assert.match(html, /来店前に確かめたいこと/);
@@ -127,13 +127,15 @@ test('店選びガイド: 手計算の標本と集計が一致し、書き出し
   assert.deepStrictEqual(st.smoking, { 全面禁煙: 1, 一部禁煙: 1, 禁煙席なし: 1, 記載なし: 1 });
   assert.deepStrictEqual(st.feeNote, { withNote: 2, noNote: 2, otoshiMention: 1, midnightMention: 1 });
   const s = SS.guideSentences(st);
-  assert.ok(s.every((t) => t.startsWith('このサイトに載っている4店のうち')));
+  assert.strictEqual(SS.scopeText(st), 'このサイトに載っている4店のうち');
+  assert.ok(s.every((t) => !t.includes('このサイトに載っている')) && !s.join('').includes('下の一覧'));
   assert.throws(() => SS.buildGuideBlock({ area: '名古屋駅', genre: '居酒屋', stores }), /基準（10店）に満たない/);
 });
 
 test('店選びガイド: 実データで作れ、対象件数・取得日・「名古屋全体の実態ではない」断りが入る。記事に差し込める', () => {
   const block = SS.buildGuideBlock({ area: '名古屋駅', genre: '居酒屋', checked: '2026-11-17' });
-  assert.match(block, /対象\d+店・11月17日時点/);
+  assert.match(block, /このサイトに載っている\d+店のうち（名古屋駅・居酒屋・11月17日時点の掲載データ）/);
+  assert.ok(!block.includes('下の一覧'));
   assert.match(block, /名古屋全体の実態を表すものではありません/);
   const html = renderHtml({ ...INPUT, article_type: 'guide', guide: { area: '名古屋駅', genre: '居酒屋', checked: '2026-11-17' } });
   assert.match(html, /class="nb-guide-stats nb-jbox"/);
