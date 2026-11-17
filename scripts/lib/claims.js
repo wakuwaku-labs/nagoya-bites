@@ -252,6 +252,9 @@ function hedgeWindow(tok, text) {
 // 計算で導ける数字（合計・差・割り算・掛け算）。前後の文の数字から作れるものは出典に無くてよい。
 const ARITH_CUE_RE = /足|合計|総額|差額|安い|高い|あたり|ずつ|倍|換算|概算|掛け|割る|割り|×|÷|＋|増し|収ま|当たる|最低でも|引く|人分|席時間|開ければ|ぶん/;
 
+// 計算の文らしい言い回し（出典に無い数字を計算で導いた文の目印）。照合不能を修正の対象にするかの判定にだけ使う
+const CALC_CUE_RE = /足|合計|総額|差|約|合わせ|込み|あたり|ずつ|倍|換算|概算|掛け|割|人で|人分|ぶん|なら|ほど|台/;
+
 function derivedFrom(tok, neighbors) {
   if (tok.kind !== 'num') return false;
   const v = Number(tok.key);
@@ -563,6 +566,16 @@ function verifyArticle(html, { date, pool, root = ROOT, ledger = null, storesMap
       const still = toks.filter((t) => r.missing.includes(t.raw) && !(ARITH_CUE_RE.test(sc.text) && derivedFrom(t, neigh)));
       if (!still.length) r = { ...r, status: '照合できた', missing: [], note: '計算で導ける数字（前後の文の数字の合計・差など）' };
       else r = { ...r, missing: still.map((t) => t.raw) };
+    }
+    // 出典に同じ項目が無い数字でも、前後の文の数字から計算で導けるもの（人数分・差・合計・割り算）は修正の対象にしない
+    if (r.status === '取得できず照合不能' && kind === '確認済みの事実' && r.unknown && r.unknown.length && CALC_CUE_RE.test(sc.text)) {
+      const idx = sentences.indexOf(sc);
+      const neigh = [];
+      for (let k = Math.max(0, idx - 3); k <= Math.min(sentences.length - 1, idx + 3); k++) {
+        for (const t of claimTokens(sentences[k].text)) if (t.kind === 'num' && !r.unknown.includes(t.raw)) neigh.push(Number(t.key));
+      }
+      const unk = toks.filter((t) => r.unknown.includes(t.raw));
+      if (unk.length && unk.every((t) => t.kind === 'num' && derivedFrom(t, neigh))) r = { ...r, status: '照合対象外', note: '計算で導ける数字（前後の文の数字の合計・差・人数分など）' };
     }
     const pillar = !ARITH_CUE_RE.test(sc.text) && toks.some((t) => titleToks.has(t.key) && (t.kind === 'date' || t.key.length >= 3));
     const src = all.find((p) => p.url === r.source_url) || null;
