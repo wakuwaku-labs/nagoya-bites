@@ -1,6 +1,6 @@
 status: in_progress
 
-# 基本方針の段階3〜7を完了まで実行する（Ondine #2051〜#2055・2026-11-17）
+# 基本方針の段階3〜7（完了）→ トップと特集に実写の写真（Ondine #2097）（Ondine #2051〜#2055・2026-11-17）
 
 ## 目的
 本人 11-17「計画の完了まで早めに実行。承認・確認・質問はすべて終わってから最後にまとめて」。計画 docs/plans/media-policy-2026-11/03-implementation-plan.md の S3-1〜S7-3 を実装し main に入れる。最初の依頼は「計画の進捗確認」と「今日のジャーナルが出ていない確認」（11-17 公開済み・本番 200 確認）。
@@ -13,14 +13,14 @@ status: in_progress
 - #754 S3-3 3分類・S4-4 取り下げ/訂正 / #756 S3-1・S3-2・S3-4 / #757 S6-2・S5-2・S5-3(一覧だけ) / #760 S4-1〜S4-3 shadow・S4-5 測定（合格線未達）
 - 11-17 ジャーナル公開（~/nagoya-bites の main を origin に合わせ、旧コミットは backup/main-local-2026-11-17）
 
-## 次にやること
-- 段階3〜7の実装は main・本番に入った（#754〜#766）。GAS も配備済み
-- 本人 11-17 夕「全て推奨で」: 題 A のまま／S4-5 は台帳が1〜2週たまってから再測定（待つ）／推奨で決めた事項はすべてそのまま／季節切れ4本は noindex しない
-1. 【済 #767・本番で転送確認・#2053 に report】寄せる2組（nagoya-yakitori-guide→nagoya-yakitori、industry-insiders-pick→kospa-insider）を作業役が worktree ~/nagoya-bites/.claude/worktrees/policy-s5-3-merge（ブランチ wakuwaku-labs/policy-s5-3-merge）で実装中。`gh pr list` で PR を見つけ、npm test・audit_stub_links・audit_internal_links の通過を確認して merge_chain.sh でマージ→本番で寄せ元が寄せ先へ飛ぶことを確認→Ondine #2053 に report（過去記事203本の見直しは継続中なので doing のまま）
-2. 【report 済】Ondine #2052 は本人「推奨どおり待つ」。再測定は 2026-12-01 ごろ（実物の台帳 data/journal_claims/*.ledger.json が2週分たまってから claims_gate_calibrate.js）→その時に enforce の承認を聞く
-3. X: 上限は上げなくてよい（毎日の投稿は 11-14 以降すべて成功。上限で止まったのは 11-13 の削除だけ）。11-13 に本人が頼んだ投稿 2120705656470810885 の削除は 11-17 に完了
-4. iPhone 実機の確認（検索の帯・ひとこと欄の拡大・Gmail 着信）は本人の返事待ち
-- merge_chain.sh: /private/tmp/claude-501/-Users-katagirijakutou-orca-workspaces-nagoya-bites-sandworm/b5398d59-8bf7-4a05-8d12-08cf9ef90118/scratchpad/merge_chain.sh
+## 次にやること（新しい依頼・Ondine #2097・2026-11-17 夕）
+本人の原文:「まずトップページ開いた瞬間に、写真がないので、何か写真を表示するようにしてほしい。写真選びの基準は、このサイトがどういうサイトかが、感覚・直感・視覚的、動画なら聴覚的に、五感にしっかり訴えかける形で載せてほしい。まだ今日のジャーナルがトップから 11月17 のものが見えないので表示して。特集も写真がないので、図ではなく、特集の話題がイメージできる実際の写真をどこから取ってくるなどして対応して。」
+進め方: Skill build-loop（要件カード→制作→usability-qa→修正→design-qa→報告）。止まらずに main・本番まで。
+1. 原因調査（Explore に任せる）: ①本番トップで 11-17 のジャーナルが見えない理由（#764 の TOP_ARTICLES は分類ごとの最新1本＝11-17 が出るはずだった。本番の index.html と scripts/build_journal_index.js・build.yml の生成順を確認）②特集カード・特集ページの顔が図（og_figure など）になっている箇所と、掲載店の HotPepper 写真が使えるか
+2. 写真の基準（CLAUDE.md の写真ソースの優先順を守る）: 汎用ストック禁止・生成画像禁止・その記事/特集の掲載店の実写だけ。HotPepper 写真は加工・自ホスト不可＝URL参照のみ。Places は特集・ジャーナルでは不可。動画は店公式 IG の埋め込み（embed.js）だけ可（重さ・1画面目に置くかは要検討）。トップの1画面目は「名古屋の店の料理・空間の実写」を最新ジャーナルの顔写真＋掲載店の写真から選ぶ（記事と写真の対応を壊さない・販促バナーは目で見て除く）
+3. 実装: トップ1画面目に実写（記事カードに写真を付ける、または理念の背景に最新記事の顔写真）・トップに最新日のジャーナル・特集カード/特集ページの顔を掲載店の実写に。index.html/build.js/build_journal_index.js/特集の生成元。制約5・12・ページの重さの上限を守る
+4. 検査: npm test・audit_design_system・audit_image_sources・audit_page_weight・制約5の操作・usability-qa・design-qa（記録は qa-log）→ merge_chain.sh でマージ→本番で3点確認→ #2097 report→done
+（前の依頼の残り: 12-01 ごろ S4-5 の再測定→enforce の承認を聞く・iPhone 実機確認は本人の返事待ち）
 
 ## 最後に本人へまとめて聞くこと
 - X の月額利用上限（X API 403 monthly spend cap）に達している→Billing で上限を上げるか（投稿・削除が通らない）
