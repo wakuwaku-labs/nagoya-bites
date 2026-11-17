@@ -165,6 +165,42 @@ function scanHtml(html, compiled, { rel = '', keepScripts = false } = {}) {
   return { counts, phrases, exempted };
 }
 
+/**
+ * 図（SVG）の文字の検査（Ondine #2097）。ページの文字だけを数えていたので、特集の顔・日次記事の図・OGP の図の中の文字
+ * （例: 「現役飲食人が、名古屋の一軒を無料で見立てる」）を見落としていた。
+ * 公開ページが参照している図だけを数える（<img src>・og:image・JSON-LD の image。og:image は同名の .png が参照されていれば、
+ * 元の .svg の文字がそのまま画像になっているので、その .svg を数える）。参照されていない図は数えない。
+ * policy.svgScan.dirs の図を数え、hardDirs の図の違反だけが ok を落とす（日次記事の図は info として数えて報告する）。
+ */
+function scanSvgs({ root, compiled, svgScan, refs, onlyHard }) {
+  const out = { scanned: 0, hard_files: 0, hard_occurrences: 0, info_files: 0, info_occurrences: 0, violations: [] };
+  if (!svgScan || !Array.isArray(svgScan.dirs)) return out;
+  const hardDirs = new Set(svgScan.hardDirs || []);
+  for (const dir of svgScan.dirs) {
+    const abs = path.join(root, dir);
+    if (!fs.existsSync(abs)) continue;
+    for (const f of fs.readdirSync(abs).sort()) {
+      if (!f.endsWith('.svg') || !refs.has(f)) continue;
+      const rel = `${dir}/${f}`;
+      const r = scanHtml(fs.readFileSync(path.join(abs, f), 'utf8'), compiled, { rel });
+      out.scanned++;
+      let n = 0;
+      for (const t of compiled.terms) if (t.severity === 'error') n += r.counts[t.id] || 0;
+      if (!n) continue;
+      const hard = hardDirs.has(dir);
+      if (hard) { out.hard_files++; out.hard_occurrences += n; } else { out.info_files++; out.info_occurrences += n; }
+      out.violations.push({ file: rel, hard, occurrences: n, terms: r.counts });
+    }
+  }
+  out.violations.sort((a, b) => Number(b.hard) - Number(a.hard) || b.occurrences - a.occurrences);
+  return out;
+}
+
+// ページの HTML が参照している図のファイル名（.svg と、同名の .svg がある .png）
+function collectFigureRefs(html, refs) {
+  for (const m of html.matchAll(/([A-Za-z0-9_%.\-]+)\.(svg|png)\b/g)) refs.add(`${m[1]}.svg`);
+}
+
 function audit({ root = DEFAULT_ROOT, policy = null, only = null } = {}) {
   policy = policy || loadPolicy(root);
   const compiled = compilePolicy(policy);
@@ -177,11 +213,13 @@ function audit({ root = DEFAULT_ROOT, policy = null, only = null } = {}) {
   let overflow = 0;
   let exempted = 0;
   const violations = [];
+  const figureRefs = new Set();
   const errorBySection = Object.fromEntries(SECTIONS.map((s) => [s, { pages: 0, occurrences: 0 }]));
   let errorPages = 0;
   let errorOccurrences = 0;
   for (const p of pages) {
     const html = fs.readFileSync(p.abs, 'utf8');
+    collectFigureRefs(html, figureRefs);
     const r = scanHtml(html, compiled, { rel: p.rel, keepScripts: compiled.scanScripts.has(p.rel) });
     exempted += r.exempted;
     let pageError = 0;
@@ -220,8 +258,10 @@ function audit({ root = DEFAULT_ROOT, policy = null, only = null } = {}) {
     stat[t.id].top_phrases = list.map((e) => ({ phrase: e.phrase, pages: e.pages, occurrences: e.occurrences }));
   }
   violations.sort((a, b) => b.occurrences - a.occurrences);
+  const svg = only ? scanSvgs({ root, compiled, svgScan: null, refs: figureRefs }) : scanSvgs({ root, compiled, svgScan: policy.svgScan, refs: figureRefs });
   return {
-    ok: errorOccurrences === 0,
+    ok: errorOccurrences === 0 && svg.hard_occurrences === 0,
+    svg,
     files_scanned: pages.length,
     error_pages: errorPages,
     error_occurrences: errorOccurrences,
@@ -282,6 +322,12 @@ function main() {
     }
     if (result.phrase_keys_overflow) console.log(`  ℹ️ 言い回しの種類が多く、${result.phrase_keys_overflow} か所は例の集計から外した`);
     console.log('     セクション別（ページ数）: ' + SECTIONS.map((s) => `${s} ${result.by_section[s].pages}`).join(' / '));
+    const sv = result.svg;
+    if (sv.scanned) {
+      console.log(`  ${sv.hard_files ? '❌' : '✅'} 図（SVG・特集の図）の中の文字: ${sv.hard_files} 枚・${sv.hard_occurrences} か所（公開ページが参照する図 ${sv.scanned} 枚を数えた）`);
+      if (sv.info_files) console.log(`  ℹ️ 日次記事の図の中の文字（報告のみ・書き直しは別の課題）: ${sv.info_files} 枚・${sv.info_occurrences} か所`);
+      for (const v of sv.violations.filter((x) => x.hard).slice(0, 5)) console.log(`       ❌ ${v.file}`);
+    }
     console.log(`  ${result.ok ? '✅' : '❌'} 人が選んだと読める言い方（合計）: ${result.error_pages} ページ・${result.error_occurrences} か所` + (result.exempted ? `（例外 ${result.exempted} か所は除く）` : ''));
   }
   if (argv.includes('--check') && !result.ok) process.exit(1);
