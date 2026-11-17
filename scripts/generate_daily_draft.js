@@ -39,6 +39,8 @@
  *     "article_type": "shop_intro | guide | comparison (省略時 shop_intro)",
  *     "guide": { "area": "名古屋駅", "genre": "居酒屋", "checked": "2026-11-17 (集計の取得日)" }   // article_type=guide のとき、掲載データの集計を本文末に差し込む（store_stats.js）
  *     "stores": [{ "name": "店名", "id": "", "genre": "", "area": "", "score": "★4.3", "desc": "", "link": "https://..." }],
+ *     // --- 事実台帳（S4-1・来店前に重要な文を優先。価格・時間・席数・予約条件・営業日）---
+ *     "claims_ledger": [{ "text": "記事の本文の文をそのまま写す", "source_url": "sources にある URL", "quote": "出典の該当記述を出典のとおりに最大120字", "kind": "(任意: 確認済みの事実 | 編集部の分析 | 口コミの数字)" }],
  *     "sources": [{ "label": "情報源名", "url": "https://...", "date": "2026-05-15 (任意 — 掲載日。表示時に併記される)", "checked": "2026-05-16 (任意 — 編集部が見た日。省略時は記事の日付＝書き手の申告)", "publisher": "(任意)", "kind": "(任意: 公式/報道/一次 等)", "quote": "(任意: 短い引用)" }],
  *     "photo_suggestions": [
  *       {
@@ -253,6 +255,38 @@ function writeSourcesLedger(input) {
     sources: input.sources.map(s => normalizeSource(s, input.date))
   };
   fs.writeFileSync(file, JSON.stringify(body, null, 2) + '\n');
+  return file;
+}
+
+// 事実台帳（S4-1・書き手が出す「記事の事実ごとの出典 URL と出典内の該当記述」の対）。
+// data/journal_claims/<日付>.ledger.json に残し、scripts/verify_article_claims.js が対で照合する。
+// 無い日は従来どおり機械が推測して照合する（警告だけ・公開は止めない）。
+const CLAIMS_LEDGER_DIR = path.join(ROOT, 'data', 'journal_claims');
+function writeClaimsLedger(input, html) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(input.date || '')) return null;
+  const list = Array.isArray(input.claims_ledger) ? input.claims_ledger : [];
+  const srcUrls = new Set((input.sources || []).map(s => String(s.url || '').replace(/\/+$/, '')));
+  const warn = [];
+  const claims = [];
+  for (const c of list) {
+    const text = String((c && c.text) || '').trim();
+    const url = String((c && c.source_url) || '').trim();
+    const quote = String((c && c.quote) || '').replace(/\s+/g, ' ').trim().slice(0, 120);
+    if (!text || !url || !quote) { warn.push('text・source_url・quote のどれかが空の台帳の行を捨てました'); continue; }
+    if (!srcUrls.has(url.replace(/\/+$/, ''))) warn.push(`台帳の出典が sources に無い: ${url}`);
+    claims.push({ text, source_url: url, quote, ...(c.kind ? { kind: String(c.kind) } : {}) });
+  }
+  // 台帳の文は記事の本文にそのまま載っている文であること（機械が記事の文と対にするため）
+  const plain = html ? String(html).replace(/<[^>]+>/g, '').replace(/\s+/g, '') : '';
+  if (plain) for (const c of claims) if (!plain.includes(c.text.replace(/\s+/g, ''))) warn.push(`台帳の文が記事に無い（そのまま写す）: ${c.text.slice(0, 40)}`);
+  warn.forEach(w => console.warn(`  ⚠️  事実台帳: ${w}`));
+  if (!claims.length) {
+    console.warn('  ⚠️  事実台帳: claims_ledger が空です（価格・時間・席数・予約条件の文ごとに、出典 URL と出典内の該当記述を対で出す）。機械の推測で照合します');
+    return null;
+  }
+  fs.mkdirSync(CLAIMS_LEDGER_DIR, { recursive: true });
+  const file = path.join(CLAIMS_LEDGER_DIR, input.date + '.ledger.json');
+  fs.writeFileSync(file, JSON.stringify({ date: input.date, slug: input.slug, note: '書き手が出した事実台帳。quote は出典内の該当記述（最大120字）。公開リポジトリには出典の全文を置かない', claims }, null, 2) + '\n');
   return file;
 }
 
@@ -976,6 +1010,8 @@ async function main() {
 
   const ledger = writeSourcesLedger(input);
   if (ledger) console.log(`  📚 出典台帳: ${path.relative(ROOT, ledger)}`);
+  const claimsLedger = writeClaimsLedger(input, html);
+  if (claimsLedger) console.log(`  🧾 事実台帳: ${path.relative(ROOT, claimsLedger)}`);
 
   // 判断材料の欠けは警告だけ（止める条件にするのは段階4の承認後・決定6）。記事の種類が guide なら集計の有無も見る
   ES.judgementWarnings(input).forEach((w) => console.warn(`  ⚠️  判断材料: ${w}`));
@@ -996,4 +1032,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch(e => { console.error(e); process.exit(1); });
-module.exports = { renderHtml, renderMd, buildStores, STORE_LIST_HEADING, buildSources, normalizeSource, toMonthDayJa };
+module.exports = { writeClaimsLedger, renderHtml, renderMd, buildStores, STORE_LIST_HEADING, buildSources, normalizeSource, toMonthDayJa };

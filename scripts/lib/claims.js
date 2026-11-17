@@ -252,6 +252,9 @@ function hedgeWindow(tok, text) {
 // 計算で導ける数字（合計・差・割り算・掛け算）。前後の文の数字から作れるものは出典に無くてよい。
 const ARITH_CUE_RE = /足|合計|総額|差額|安い|高い|あたり|ずつ|倍|換算|概算|掛け|割る|割り|×|÷|＋|増し|収ま|当たる|最低でも|引く|人分|席時間|開ければ|ぶん/;
 
+// 計算の文らしい言い回し（出典に無い数字を計算で導いた文の目印）。照合不能を修正の対象にするかの判定にだけ使う
+const CALC_CUE_RE = /足|合計|総額|差|約|合わせ|込み|あたり|ずつ|倍|換算|概算|掛け|割|人で|人分|ぶん|なら|ほど|台/;
+
 function derivedFrom(tok, neighbors) {
   if (tok.kind !== 'num') return false;
   const v = Number(tok.key);
@@ -425,6 +428,96 @@ function articleIssues(html, { pool, stores, bodyText }) {
   return issues;
 }
 
+
+// ── 書き手の台帳（文と出典の対）での照合 ────────────────────────────────
+// 台帳の1件: { text: 記事の文（そのまま）, source_url, quote: 出典内の該当記述（最大120字）, kind? }
+const PRE_VISIT_RE = /円|料金|価格|予算|コース|飲み放題|食べ放題|席|名様|人以上|人まで|名まで|個室|貸切|予約|営業時間|定休|休み|ラストオーダー|LO|時間|\d\s*時|開店|オープン|閉店|開業|期間|まで|から|禁煙|喫煙|お通し|席料|サービス料|チャージ|キャンセル|徒歩|駅/;
+
+/** 来店前に重要な文か（価格・時間・席数・予約条件・営業日など）。照合不能のとき自動修正の道に回す対象を絞るのに使う。 */
+function isPreVisit(sentence) { return PRE_VISIT_RE.test(String(sentence || '')); }
+
+function sentenceKey(s) { return compact(s).replace(/[。、，,．.！!？?「」『』（）()・\-ー〜~]/g, ''); }
+
+function bigramSet(s) {
+  const k = sentenceKey(s);
+  const set = new Set();
+  for (let i = 0; i < k.length - 1; i++) set.add(k.slice(i, i + 2));
+  return set;
+}
+function similarity(a, b) {
+  const x = bigramSet(a);
+  const y = bigramSet(b);
+  if (!x.size || !y.size) return 0;
+  let n = 0;
+  for (const g of x) if (y.has(g)) n++;
+  return n / (x.size + y.size - n);
+}
+
+function urlKey(u) { return String(u || '').trim().replace(/#.*$/, '').replace(/\/+$/, ''); }
+
+function ledgerPairs(ledger) {
+  if (!ledger || !Array.isArray(ledger.claims)) return [];
+  return ledger.claims
+    .filter((c) => c && c.text && c.source_url && c.quote)
+    .map((c) => ({ text: String(c.text), kind: c.kind || null, source_url: String(c.source_url), quote: String(c.quote).slice(0, QUOTE_MAX * 2) }));
+}
+
+function sameTokens(a, b) {
+  const ka = claimTokens(a).map((t) => t.key).sort().join('|');
+  const kb = claimTokens(b).map((t) => t.key).sort().join('|');
+  return ka === kb;
+}
+
+/**
+ * 台帳の対で1文を照合する。対が使えない文は null（呼び出し側が従来の機械の照合に回す）。
+ *  - 記事の文と台帳の文が同じ → その対の引用が出典に実在し、文の数字が引用に含まれるか
+ *  - 台帳の文に似ているが数字・日付が違う → 台帳を書いた後に数字が変わった（食い違い）
+ */
+function checkWithPairs(sentence, pairs, pool) {
+  const key = sentenceKey(sentence);
+  let entries = pairs.filter((p) => sentenceKey(p.text) === key);
+  if (!entries.length) {
+    let best = null;
+    for (const p of pairs) {
+      const sim = similarity(sentence, p.text);
+      if (sim >= 0.55 && (!best || sim > best.sim)) best = { p, sim };
+    }
+    if (!best) return null;
+    if (!sameTokens(sentence, best.p.text)) {
+      const a = claimTokens(best.p.text).map((t) => t.raw);
+      const b = claimTokens(sentence).map((t) => t.raw);
+      const was = a.filter((x) => !b.includes(x));
+      const now = b.filter((x) => !a.includes(x));
+      return { status: '食い違い', source_url: best.p.source_url, evidence_quote: '', missing: now.length ? now : b, contradictions: [`台帳の文と数字が違う: 台帳 ${was.join('・') || '—'} ／ 記事 ${now.join('・') || '—'}`], unknown: [], hedge_dropped: false, note: '事実台帳を書いた後に、記事の数字・日付が変わっている' };
+    }
+    entries = pairs.filter((p) => sentenceKey(p.text) === sentenceKey(best.p.text));
+  }
+  const toks = claimTokens(sentence);
+  const usable = [];
+  for (const e of entries) {
+    const src = pool.find((p) => urlKey(p.url) === urlKey(e.source_url));
+    if (src) usable.push({ e, src });
+  }
+  if (!usable.length) return null;
+  const live = usable.filter((u) => u.src.ok && u.src.text);
+  if (!live.length) return { status: '取得できず照合不能', source_url: null, evidence_quote: '', missing: [], unknown: [], hedge_dropped: false, note: '台帳の出典を取得できなかった' };
+  // 引用が出典に実在するもの。無ければ従来の照合に回す（引用の写し間違いでも、数字の食い違いは拾う）
+  const confirmed = live.filter((u) => compact(u.src.text).includes(compact(u.e.quote)));
+  if (!confirmed.length) return null;
+  const quoteText = confirmed.map((u) => u.e.quote).join(' ');
+  if (toks.some((t) => !tokenInText(t, quoteText))) return null; // 引用に無い数字（計算の文・別の出典の数字）は従来の照合
+  const first = confirmed[0];
+  let hedgeDropped = false;
+  if (!HEDGE_RE.test(sentence)) {
+    for (const t of toks) {
+      if (t.kind === 'num' && t.key.length < 3) continue;
+      const w = hedgeWindow(t, first.e.quote);
+      if (w && HEDGE_SRC_RE.test(w)) { hedgeDropped = true; break; }
+    }
+  }
+  return { status: '照合できた', source_url: first.src.url, evidence_quote: normText(first.e.quote).slice(0, QUOTE_MAX), missing: [], unknown: [], hedge_dropped: hedgeDropped, note: '書き手の台帳の対（文＋出典の該当記述）で照合' };
+}
+
 /**
  * 記事1本の照合。pool は取得済みの出典（{url,label,type,date,ok,text,...}）。
  * 返り値: { claims, issues, summary }
@@ -439,9 +532,12 @@ function verifyArticle(html, { date, pool, root = ROOT, ledger = null, storesMap
   const sitePool = stores.length ? [{ url: 'site:data/stores.json', ok: true, text: storeDataText(stores), label: '店舗データ（サイト内）', type: '掲載サイト' }] : [];
   const all = [...pool, ...sitePool];
 
-  const sentences = ledger && Array.isArray(ledger.claims) && ledger.claims.length
+  // 台帳に出典の対（source_url と quote）があれば、記事の文を台帳の対で照合する。無い古い記事・古い形の台帳は従来どおり
+  const pairs = ledgerPairs(ledger);
+  const pairKinds = new Map(pairs.map((p) => [sentenceKey(p.text), p.kind]));
+  const sentences = !pairs.length && ledger && Array.isArray(ledger.claims) && ledger.claims.length
     ? ledger.claims.map((c) => ({ text: String(c.text || ''), kind: c.kind || null }))
-    : extractClaimSentences(html).map((t) => ({ text: t, kind: null }));
+    : extractClaimSentences(html).map((t) => ({ text: t, kind: pairKinds.get(sentenceKey(t)) || null }));
 
   const claims = [];
   const fetchedAt = new Date().toISOString();
@@ -454,7 +550,11 @@ function verifyArticle(html, { date, pool, root = ROOT, ledger = null, storesMap
       // 口コミの数字はサイト内の店舗データ（Google 評価・件数）と照らす。本文は保存しない
       r = checkClaim(sc.text, all.filter((p) => p.url.startsWith('site:')), kind);
       if (r.status === '食い違い') r = { ...r, status: '取得できず照合不能', missing: [], note: '口コミの数字は店舗データに無い（算出日が違う可能性）。食い違いにはしない' };
-    } else r = checkClaim(sc.text, all, kind);
+    } else {
+      const paired = pairs.length ? checkWithPairs(sc.text, pairs, all) : null;
+      r = paired || checkClaim(sc.text, all, kind);
+      if (paired) r.paired = true;
+    }
     const toks = claimTokens(sc.text);
     if (r.status === '食い違い') {
       // 計算で導ける数字（前後の文の数字の合計・差・割り算）は、計算の文として扱う
@@ -467,8 +567,21 @@ function verifyArticle(html, { date, pool, root = ROOT, ledger = null, storesMap
       if (!still.length) r = { ...r, status: '照合できた', missing: [], note: '計算で導ける数字（前後の文の数字の合計・差など）' };
       else r = { ...r, missing: still.map((t) => t.raw) };
     }
+    // 出典に同じ項目が無い数字でも、前後の文の数字から計算で導けるもの（人数分・差・合計・割り算）は修正の対象にしない
+    if (r.status === '取得できず照合不能' && kind === '確認済みの事実' && r.unknown && r.unknown.length && CALC_CUE_RE.test(sc.text)) {
+      const idx = sentences.indexOf(sc);
+      const neigh = [];
+      for (let k = Math.max(0, idx - 3); k <= Math.min(sentences.length - 1, idx + 3); k++) {
+        for (const t of claimTokens(sentences[k].text)) if (t.kind === 'num' && !r.unknown.includes(t.raw)) neigh.push(Number(t.key));
+      }
+      const unk = toks.filter((t) => r.unknown.includes(t.raw));
+      if (unk.length && unk.every((t) => t.kind === 'num' && derivedFrom(t, neigh))) r = { ...r, status: '照合対象外', note: '計算で導ける数字（前後の文の数字の合計・差・人数分など）' };
+    }
     const pillar = !ARITH_CUE_RE.test(sc.text) && toks.some((t) => titleToks.has(t.key) && (t.kind === 'date' || t.key.length >= 3));
     const src = all.find((p) => p.url === r.source_url) || null;
+    const preVisit = pillar || isPreVisit(sc.text);
+    // 来店前に重要でない文（沿革・件数・まとめなど）は、出典で確かめられなくても自動修正の道に回さない（食い違いは対象のまま）
+    if (r.status === '取得できず照合不能' && kind === '確認済みの事実' && !preVisit) r = { ...r, status: '照合対象外', note: `来店前に重要な文（価格・時間・席数・予約条件など）ではないため、修正の対象にしない${r.note ? `（${r.note}）` : ''}` };
     claims.push({
       text: sc.text,
       kind,
@@ -480,6 +593,8 @@ function verifyArticle(html, { date, pool, root = ROOT, ledger = null, storesMap
       recheck_after: recheckAfter(sc.text, date),
       rights: src && src.url.startsWith('site:') ? 'サイト内データ' : '引用（短い抜粋のみ）',
       pillar,
+      pre_visit: preVisit,
+      ...(r.paired ? { paired: true } : {}),
       ...(r.missing.length ? { missing: r.missing } : {}),
       ...(r.contradictions && r.status === '食い違い' ? { contradictions: r.contradictions } : {}),
       ...(r.unknown && r.unknown.length ? { unknown: r.unknown } : {}),
@@ -492,7 +607,7 @@ function verifyArticle(html, { date, pool, root = ROOT, ledger = null, storesMap
   // 出典がすべて取得できているのに、題の事実が照合できない／事実の半分以上が出典に見つからない（出典の取り違え）
   const allFetched = pool.length > 0 && pool.every((p) => p.ok);
   if (allFetched) {
-    const elig = claims.filter((c) => c.kind === '確認済みの事実');
+    const elig = claims.filter((c) => c.kind === '確認済みの事実' && c.status !== '照合対象外');
     const okN = elig.filter((c) => c.status === '照合できた').length;
     if (elig.length >= 6 && okN / elig.length < 0.5) issues.push({ type: 'sources_do_not_support', severity: 'core', detail: `出典はすべて取得できたが、事実の文 ${elig.length} 件のうち出典で確かめられたのは ${okN} 件（半分未満）` });
   }
@@ -511,6 +626,8 @@ function verifyArticle(html, { date, pool, root = ROOT, ledger = null, storesMap
       unverifiable: count('取得できず照合不能'),
       mismatch: count('食い違い'),
       stale: count('古い'),
+      not_applicable: count('照合対象外'),
+      paired: claims.filter((c) => c.paired).length,
       hedge_dropped: claims.filter((c) => c.hedge_dropped).length,
       issues: issues.length,
       core_issues: issues.filter((i) => i.severity === 'core').length,
@@ -523,5 +640,5 @@ function sha256(s) { return crypto.createHash('sha256').update(String(s)).digest
 module.exports = {
   ROOT, QUOTE_MAX, compact, normText, articleHeads, extractSources, sourceType, articleBodyText, splitSentences,
   claimTokens, tokenInText, quoteAround, contextWord, unitAfter, numbersAfterContext, classify, extractClaimSentences, loadStores, articleStoreIds, storeDataText,
-  cacheDir, fetchSourceLive, checkClaim, derivedFrom, recheckAfter, articleIssues, verifyArticle, sha256,
+  isPreVisit, checkWithPairs, ledgerPairs, cacheDir, fetchSourceLive, checkClaim, derivedFrom, recheckAfter, articleIssues, verifyArticle, sha256,
 };

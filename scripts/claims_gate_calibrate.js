@@ -104,13 +104,16 @@ function makeCases() {
   const cases = [];
   const bases = Array.from({ length: 50 }, (_, i) => base(i));
   const store = (b, status = 'OPERATIONAL') => ({ 店舗ID: b.id, 店名: b.name, 営業ステータス: status });
-  const mk = (b, label, type, html, srcA, srcB, stores) => cases.push({
+  const srcMap = (b, srcA, srcB) => ({
+    [`https://src.example/a/${b.id}`]: srcA === null ? { ok: false, reason: 'http_404' } : { ok: true, text: srcA },
+    [`https://src.example/b/${b.id}`]: srcB === null ? { ok: false, reason: 'empty_body' } : { ok: true, text: srcB },
+  });
+  // writer: 書き手が事実台帳を書いたときに見ていた記事・出典（壊した記事は「台帳を書いた後に壊れた」「出典が後で変わった」を表す）。省略時は検査時と同じ
+  const mk = (b, label, type, html, srcA, srcB, stores, writer = null) => cases.push({
     id: `${label}-${type}-${b.id}`, label, type, html,
-    sources: {
-      [`https://src.example/a/${b.id}`]: srcA === null ? { ok: false, reason: 'http_404' } : { ok: true, text: srcA },
-      [`https://src.example/b/${b.id}`]: srcB === null ? { ok: false, reason: 'empty_body' } : { ok: true, text: srcB },
-    },
+    sources: srcMap(b, srcA, srcB),
     stores: stores || [store(b)],
+    writer_view: writer ? { html: writer.html, sources: srcMap(b, writer.a, writer.b) } : null,
   });
 
   // 正しい記事30本: 20 通常 + 4 予定の書き方が出典と合っている + 3 計算の文 + 3 出典の1つが取得できない
@@ -127,8 +130,8 @@ function makeCases() {
     (b) => ({ html: articleHtml(b, { extraMins: b.mins + 30 }), a: sourceA(b), b: sourceB(b) }), // 飲み放題の分数
     (b) => ({ html: articleHtml(b, { extraSeats: b.seats + 12 }), a: sourceA(b), b: sourceB(b) }), // 客席数
   ];
-  for (let n = 0; n < 4; n++, k++) { const b = bases[k]; const t = tam[n](b); mk(b, 'broken', 'number_changed', t.html, t.a, t.b); }
-  for (let n = 0; n < 4; n++, k++) { const b = bases[k]; const o = bases[(k + 11) % 50]; mk(b, 'broken', 'source_swapped', articleHtml(b), sourceA(o), sourceB(o)); }
+  for (let n = 0; n < 4; n++, k++) { const b = bases[k]; const t = tam[n](b); mk(b, 'broken', 'number_changed', t.html, t.a, t.b, null, { html: articleHtml(b), a: sourceA(b), b: sourceB(b) }); }
+  for (let n = 0; n < 4; n++, k++) { const b = bases[k]; const o = bases[(k + 11) % 50]; mk(b, 'broken', 'source_swapped', articleHtml(b), sourceA(o), sourceB(o), null, { html: articleHtml(b), a: sourceA(b), b: sourceB(b) }); }
   for (let n = 0; n < 4; n++, k++) { const b = bases[k]; mk(b, 'broken', 'hedge_dropped', articleHtml(b, { hedgeDropped: true }), sourceA(b, { hedge: true }), sourceB(b)); }
   for (let n = 0; n < 4; n++, k++) {
     const b = bases[k];
@@ -141,20 +144,43 @@ function makeCases() {
 }
 
 // ── 測る ──────────────────────────────────────────────────────────────
-async function evalCase(c) {
-  const storesMap = new Map((c.stores || []).map((s) => [String(s['店舗ID']), s]));
-  const fetcher = async (url) => {
-    const s = (c.sources || {})[url];
+/**
+ * 書き手が台帳に書く「文と出典の該当記述の対」を、照合できた文から作る（見本・計測用）。
+ * 本番の書き手は、出典を読みながら自分で出す（scripts/generate_daily_draft.js の claims_ledger）。
+ */
+function pairsFromLedger(L) {
+  return (L.claims || [])
+    .filter((c) => c.status === '照合できた' && c.kind === '確認済みの事実' && c.source && !c.source.url.startsWith('site:') && c.evidence_quote)
+    .map((c) => ({ text: c.text, kind: c.kind, source_url: c.source.url, quote: c.evidence_quote }));
+}
+
+function fixtureFetcher(sources) {
+  return async (url) => {
+    const s = (sources || {})[url];
     return s && s.ok ? { ok: true, status: 200, text: s.text } : { ok: false, status: 404, reason: (s && s.reason) || 'no_fixture' };
   };
-  const L = await buildLedger(c.html, { date: '2026-11-17', slug: c.id, fetcher, storesMap, cache: false, gate: { mode: 'shadow', fetchTimeoutSec: 1, maxSources: 10 } });
+}
+
+const FIXTURE_GATE = { mode: 'shadow', fetchTimeoutSec: 1, maxSources: 10 };
+
+async function writerLedgerFor(c) {
+  const w = c.writer_view || { html: c.html, sources: c.sources };
+  const storesMap = new Map((c.stores || []).map((s) => [String(s['店舗ID']), s]));
+  const L = await buildLedger(w.html, { date: '2026-11-17', slug: c.id, fetcher: fixtureFetcher(w.sources), storesMap, cache: false, gate: FIXTURE_GATE });
+  return { claims: pairsFromLedger(L) };
+}
+
+async function evalCase(c, { withLedger = true } = {}) {
+  const storesMap = new Map((c.stores || []).map((s) => [String(s['店舗ID']), s]));
+  const ledger = withLedger && c.ledger ? c.ledger : null;
+  const L = await buildLedger(c.html, { date: '2026-11-17', slug: c.id, fetcher: fixtureFetcher(c.sources), storesMap, cache: false, gate: FIXTURE_GATE, ledger });
   const d = decide({ claims: L });
   return { id: c.id, label: c.label, type: c.type, lane: d.lane, stop: d.stop.map((x) => x.type), fixable: d.fixable.length };
 }
 
-async function runFixtures(cases) {
+async function runFixtures(cases, opts = {}) {
   const rows = [];
-  for (const c of cases) rows.push(await evalCase(c));
+  for (const c of cases) rows.push(await evalCase(c, opts));
   const broken = rows.filter((r) => r.label === 'broken');
   const correct = rows.filter((r) => r.label === 'correct');
   const detected = broken.filter((r) => r.lane !== 'auto_publish');
@@ -183,12 +209,23 @@ async function runLive(n) {
   const rows = [];
   let srcTotal = 0;
   let srcOk = 0;
+  const laneWriter = [];
+  let fixableMachine = 0;
+  let fixableWriter = 0;
   const failReasons = {};
   const byHost = {};
   for (const e of entries) {
     const html = fs.readFileSync(path.join(ROOT, 'journal', `${e.slug}.html`), 'utf8');
-    const L = await buildLedger(html, { date: e.date, slug: e.slug, cache: false });
+    const memo = new Map();
+    const fetcher = async (u) => { if (!memo.has(u)) memo.set(u, await C.fetchSourceLive(u, { timeoutMs: 15000 })); return memo.get(u); };
+    const L = await buildLedger(html, { date: e.date, slug: e.slug, cache: false, fetcher });
     const d = decide({ claims: L });
+    // 書き手が台帳を出した場合（照合できた文を、その出典と該当記述の対として出したと仮定）
+    const Lw = await buildLedger(html, { date: e.date, slug: e.slug, cache: false, fetcher, ledger: { claims: pairsFromLedger(L) } });
+    const dw = decide({ claims: Lw });
+    laneWriter.push(dw.lane);
+    fixableMachine += d.fixable.length;
+    fixableWriter += dw.fixable.length;
     srcTotal += L.fetch_summary.sources;
     srcOk += L.fetch_summary.ok;
     for (const s of L.sources) {
@@ -209,6 +246,8 @@ async function runLive(n) {
     sources: { total: srcTotal, fetched: srcOk, rate: srcTotal ? Number((srcOk / srcTotal).toFixed(3)) : null, fail_reasons: failReasons, by_host: topHosts },
     claims: { total: claimsAll, verified: verifiedAll, rate: claimsAll ? Number((verifiedAll / claimsAll).toFixed(3)) : null },
     lanes: { auto_publish: count('auto_publish'), auto_fix: count('auto_fix'), hold: count('hold') },
+    lanes_with_writer_ledger: { auto_publish: laneWriter.filter((x) => x === 'auto_publish').length, auto_fix: laneWriter.filter((x) => x === 'auto_fix').length, hold: laneWriter.filter((x) => x === 'hold').length },
+    fixable_sentences: { machine_only: fixableMachine, with_writer_ledger: fixableWriter },
     hold_rows: rows.filter((r) => r.lane === 'hold'),
     note: '過去の記事は出典のページが書き換わっていることがある（毎朝の本番は公開直後に動くので、出典が新しい分だけ誤保留は減る）',
   };
@@ -260,18 +299,34 @@ async function runLiveTamper(n) {
     const L1 = await buildLedger(tampered, { date: e.date, slug: e.slug, fetcher, cache: false });
     const d1 = decide({ claims: L1 });
     const d0 = decide({ claims: L0 });
-    out.push({ date: e.date, tampered: true, changed: `${digits} → ${newVal}`, before_lane: d0.lane, after_lane: d1.lane, detected: d1.lane !== 'auto_publish' && (d1.lane === 'hold' || d0.lane !== d1.lane || d1.fixable.length > d0.fixable.length) });
+    // 台帳つき: 書き手は改ざん前の記事で台帳を書いた（文と出典の該当記述の対）。その後に記事の価格が変わった
+    const ledger = { claims: pairsFromLedger(L0) };
+    const W0 = await buildLedger(html, { date: e.date, slug: e.slug, fetcher, cache: false, ledger });
+    const W1 = await buildLedger(tampered, { date: e.date, slug: e.slug, fetcher, cache: false, ledger });
+    const dw0 = decide({ claims: W0 });
+    const dw1 = decide({ claims: W1 });
+    out.push({
+      date: e.date, tampered: true, changed: `${digits} → ${newVal}`,
+      before_lane: d0.lane, after_lane: d1.lane, detected: d1.lane !== 'auto_publish' && (d1.lane === 'hold' || d0.lane !== d1.lane || d1.fixable.length > d0.fixable.length),
+      ledger_before_lane: dw0.lane, ledger_after_lane: dw1.lane, ledger_detected: dw1.lane === 'hold' && dw0.lane !== 'hold',
+    });
   }
   const done = out.filter((r) => r.tampered);
-  return { articles: out.length, tampered: done.length, detected: done.filter((r) => r.detected).length, detected_as_hold: done.filter((r) => r.after_lane === 'hold').length, rows: out };
+  return {
+    articles: out.length, tampered: done.length,
+    machine_only: { detected: done.filter((r) => r.detected).length, detected_as_hold: done.filter((r) => r.after_lane === 'hold').length },
+    with_writer_ledger: { detected_as_hold: done.filter((r) => r.ledger_detected).length, already_hold_before: done.filter((r) => r.ledger_before_lane === 'hold').length },
+    rows: out,
+  };
 }
 
 async function main() {
   const argv = process.argv.slice(2);
   if (argv.includes('--build-fixtures')) {
     const cases = makeCases();
+    for (const c of cases) { c.ledger = await writerLedgerFor(c); delete c.writer_view; }
     fs.mkdirSync(path.dirname(FIXTURE), { recursive: true });
-    fs.writeFileSync(FIXTURE, `${JSON.stringify({ built_by: 'scripts/claims_gate_calibrate.js --build-fixtures', note: '合成の見本。出典の文章は見本のために作った短い文で、第三者のページの全文ではない', cases }, null, 1)}\n`);
+    fs.writeFileSync(FIXTURE, `${JSON.stringify({ built_by: 'scripts/claims_gate_calibrate.js --build-fixtures', note: '合成の見本。出典の文章は見本のために作った短い文で、第三者のページの全文ではない。ledger は書き手が記事と一緒に出す事実台帳（文と出典の該当記述の対）で、壊した記事では「台帳を書いた後に壊れた」状態を表す', cases }, null, 1)}\n`);
     console.log(`見本を作りました: ${path.relative(ROOT, FIXTURE)}（正しい ${cases.filter((c) => c.label === 'correct').length} 本・壊した ${cases.filter((c) => c.label === 'broken').length} 本）`);
     return;
   }
@@ -298,4 +353,4 @@ if (require.main === module) {
   main().catch((e) => { console.error(e); process.exit(1); });
 }
 
-module.exports = { makeCases, runFixtures, runLive, runLiveTamper, LINE, FIXTURE };
+module.exports = { pairsFromLedger, makeCases, runFixtures, runLive, runLiveTamper, LINE, FIXTURE };
