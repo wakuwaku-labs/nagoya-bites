@@ -1325,7 +1325,9 @@ function buildSitemap(slugs, storeLastmod = new Map()) {
   // journal/ articles (exclude index.html, _template.html, and feed files)
   const journalDir = path.join(__dirname, 'journal');
   const journalFiles = fs.existsSync(journalDir)
-    ? fs.readdirSync(journalDir).filter(f => /^\d{4}-\d{2}-\d{2}.*\.html$/.test(f)).sort().reverse()
+    ? require('./scripts/lib/journal_category').filterPublicArticleFiles(
+        journalDir,
+        fs.readdirSync(journalDir).filter(f => /^\d{4}-\d{2}-\d{2}.*\.html$/.test(f)).sort().reverse()) // 取り下げた記事（noindex）はサイトマップに載せない（S4-4・ADR 0069）
     : [];
   const journalDates = journalFiles.map(f => readDate(journalDir, f, f.slice(0, 10)));
   const journalUrls = journalFiles

@@ -1,7 +1,7 @@
 # 0007 SEO の成否を北極星指標4つで判定し、GA4 の真値が出るまで PV を比べない
 
 - 日付: 2026-10-09
-- 状態: 採用
+- 状態: 置き換え済み（0069 と 0076: 成果の物差しの第一は信頼の指標。SEO 北極星4指標は第三位）
 - 関連: SEO-115（GA4 修復）/ SEO-116（90日計画の親）/ SEO-043（判定基準）/ SEO-090 / `docs/seo-strategy-2026-10.md` / `data/gsc_metrics.json` / `data/search_channel_metrics.json`
 
 ## 背景
