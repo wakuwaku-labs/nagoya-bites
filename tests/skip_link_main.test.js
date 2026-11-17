@@ -175,7 +175,9 @@ test('transform: トップ（index.html）は、ヘッダーのブロックで�
 
 function staticPages() {
   const pages = ['index.html', 'about.html', 'faq.html', 'contact.html', 'privacy-policy.html', 'stores/index.html', 'journal/_template.html'];
-  for (const f of fs.readdirSync(path.join(ROOT, 'features')).sort()) if (f.endsWith('.html') && !f.startsWith('_')) pages.push(`features/${f}`);
+  // 統合して転送ページにした特集（S5-3・0077）は、ヘッダー等を持たない最小のページなので数えない
+  const { isMergedStub } = require('../scripts/lib/feature_merges');
+  for (const f of fs.readdirSync(path.join(ROOT, 'features')).sort()) if (f.endsWith('.html') && !f.startsWith('_') && !isMergedStub(read(`features/${f}`))) pages.push(`features/${f}`);
   return pages;
 }
 

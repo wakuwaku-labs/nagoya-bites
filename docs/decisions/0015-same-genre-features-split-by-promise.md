@@ -1,7 +1,7 @@
 # 0015 同じジャンルの特集は統合せず、記事の約束で選定とリンクを切り分ける
 
 - 日付: 2026-10-09
-- 状態: 一部置き換え済み（0069 決定7 と 0075: 掲載店の半分以上が同じ特集の組は流入の多い方へ寄せる。実行は本人確認後）
+- 状態: 一部置き換え済み（0069 決定7 と 0077: 掲載店の半分以上が同じ特集の組は流入の多い方へ寄せる。焼き鳥の2本は 2026-11-17 に統合した）
 - 関連: Linear P-55 / backlog SEO-102 / `data/feature_rosters.json`・`scripts/refresh_feature_rosters.js`・`scripts/lib/journal_topics.js`・[[0011-feature-conclusions-from-roster]]
 
 ## 背景

@@ -42,6 +42,7 @@ const ROOT = path.resolve(__dirname, '..');
 const CONFIG = path.join(ROOT, 'data', 'feature_rosters.json');
 const CLOSED = path.join(ROOT, 'data', 'closed_stores.json');
 const FEATURES_DIR = path.join(ROOT, 'features');
+const { isMergedStub } = require('./lib/feature_merges');
 const HEALTH = path.join(ROOT, 'data', 'feature_roster_health.json');
 
 // ───────── ユーティリティ ─────────
@@ -471,6 +472,8 @@ function main() {
   for (const [slug, fc] of targets) {
     const file = path.join(FEATURES_DIR, `${slug}.html`);
     if (!fs.existsSync(file)) { console.error(`  ✗ ${slug}: features/${slug}.html が無い`); shortfalls++; continue; }
+    // 統合して転送ページにした特集は入れ替えない（掲載店を書き込むと転送ページが壊れる・S5-3・0077）
+    if (isMergedStub(fs.readFileSync(file, 'utf8'))) { console.log(`  - ${slug}: 統合済みの転送ページのため入れ替えない`); continue; }
 
     // 複数セクション構成（同じコンテナが2つ以上）は最初のセクションしか置換できず、
     // ItemList も最初のセクション分に縮むため、見出しの N選 と実掲載数がずれる（ISSUE-141・

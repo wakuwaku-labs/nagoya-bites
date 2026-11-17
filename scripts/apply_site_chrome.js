@@ -78,7 +78,8 @@ function collectTargets() {
   const groups = {
     root: ['index.html', 'about.html', 'faq.html', 'contact.html', 'privacy-policy.html']
       .map(f => path.join(ROOT, f)).filter(f => fs.existsSync(f)),
-    features: listHtmlFiles(path.join(ROOT, 'features')),
+    // 統合して転送ページにした特集（S5-3・0077）は、ヘッダー等を持たない最小のページなので対象にしない
+    features: listHtmlFiles(path.join(ROOT, 'features')).filter(f => !require('./lib/feature_merges').isMergedStub(fs.readFileSync(f, 'utf8'))),
     journal: listHtmlFiles(path.join(ROOT, 'journal'), { excludeTemplate: true })
       .concat(path.join(ROOT, 'journal/_template.html')).filter(f => fs.existsSync(f)),
     stores: [path.join(ROOT, 'stores/index.html')].filter(f => fs.existsSync(f))

@@ -38,7 +38,8 @@ test('フッターの「エリア別 店舗一覧」は、転送だけのペー�
 function staticPages() {
   const list = ['index.html', 'about.html', 'faq.html', 'contact.html', 'privacy-policy.html', 'stores/index.html', 'journal/_template.html'];
   for (const dir of ['features', 'journal']) {
-    for (const f of fs.readdirSync(path.join(ROOT, dir))) if (f.endsWith('.html') && !f.startsWith('_')) list.push(`${dir}/${f}`);
+    // 統合して転送ページにした特集（S5-3・0077）は、フッター等を持たない最小のページなので数えない
+    for (const f of fs.readdirSync(path.join(ROOT, dir))) if (f.endsWith('.html') && !f.startsWith('_') && !require('../scripts/lib/feature_merges').isMergedStub(fs.readFileSync(path.join(ROOT, dir, f), 'utf8'))) list.push(`${dir}/${f}`);
   }
   return list;
 }

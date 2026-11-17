@@ -21,6 +21,7 @@ const path = require('path');
 const ROOT         = path.join(__dirname, '..');
 const STORES_DIR   = path.join(ROOT, 'stores');
 const FEATURES_DIR = path.join(ROOT, 'features');
+const { isMergedStub } = require('./lib/feature_merges');
 const JOURNAL_DIR  = path.join(ROOT, 'journal');
 const OUT_PATH     = path.join(ROOT, 'page-names.json');
 
@@ -90,6 +91,7 @@ function main() {
       .filter(f => f.endsWith('.html') && f !== 'index.html')
       .sort();
     for (const f of files) {
+      if (isMergedStub(fs.readFileSync(path.join(FEATURES_DIR, f), 'utf8'))) continue; // 統合して転送ページにした特集は載せない（S5-3・0077）
       const title = readTitle(path.join(FEATURES_DIR, f));
       if (!title) continue;
       map[`${BASE}/features/${f}`] = shortenFeatureTitle(title);

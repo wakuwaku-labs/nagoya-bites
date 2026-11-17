@@ -32,13 +32,13 @@ test('inject_journal_feature_cta.js も同じ表を使う（表を2本持たな�
   assert.doesNotMatch(src, /const TOPIC_FEATURES = \[/);
 });
 
-test('焼肉・焼き鳥: 記事の語で2本の特集に振り分ける', () => {
+test('焼肉は記事の語で2本の特集に、焼き鳥は統合後の1本（nagoya-yakitori）に振り分ける', () => {
   assert.equal(slugOf('覚王山・池下に焼肉の新顔'), 'nagoya-yakiniku-guide');
   assert.equal(slugOf('ホルモンの名店'), 'nagoya-yakiniku-guide');
   assert.equal(slugOf('名駅で松阪牛の肉割烹'), 'nagoya-yakiniku');
   assert.equal(slugOf('和牛焼肉の新店'), 'nagoya-yakiniku'); // 和牛の行が先
-  assert.equal(slugOf('名古屋コーチンの見分け方'), 'nagoya-yakitori-guide');
-  assert.equal(slugOf('地鶏の炭火焼き'), 'nagoya-yakitori-guide');
+  assert.equal(slugOf('名古屋コーチンの見分け方'), 'nagoya-yakitori'); // nagoya-yakitori-guide は nagoya-yakitori に統合（S5-3・0077）
+  assert.equal(slugOf('地鶏の炭火焼き'), 'nagoya-yakitori');
   assert.equal(slugOf('栄の焼き鳥の新店'), 'nagoya-yakitori');
   assert.equal(slugOf('串焼きの立ち飲み'), 'nagoya-yakitori');
   assert.equal(slugOf('四間道のひつまぶし'), 'nagoya-hitsumabushi'); // SEO-091 の振り分けを保つ

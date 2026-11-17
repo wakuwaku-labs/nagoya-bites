@@ -43,15 +43,6 @@
       ]
     },
     {
-      "theme": "焼き鳥",
-      "main": "nagoya-yakitori-guide",
-      "members": ["nagoya-yakitori-guide", "nagoya-yakitori"],
-      "edges": [
-        { "from": "nagoya-yakitori-guide", "to": "nagoya-yakitori", "label": "店ごとの紹介を並べて見る焼き鳥" },
-        { "from": "nagoya-yakitori", "to": "nagoya-yakitori-guide", "label": "炭火・地鶏・業態・価格帯から選び方を読む（総合ガイド）" }
-      ]
-    },
-    {
       "theme": "バー",
       "main": "nagoya-bar",
       "members": ["nagoya-bar", "nagoya-bar-guide"],

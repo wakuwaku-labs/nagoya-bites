@@ -1,0 +1,27 @@
+{
+  "_comment": "重なっている特集を寄せた記録の正本（基本方針 段階5 S5-3・決定 0069 の7・0077）。from の特集は寄せ先 to への転送ページ（scripts/lib/feature_merges.js が作る）になり、サイトマップ・特集の一覧・llms.txt・毎月の掲載店の入れ替え・役割表から外れる。URL は消さない（被リンク・検索に残るため）。戻し方は docs/decisions/0077 を見る。寄せ先の題・URL・冒頭は変えない。実行は scripts/merge_features.js（冪等）。",
+  "merges": [
+    {
+      "from": "nagoya-yakitori-guide",
+      "to": "nagoya-yakitori",
+      "date": "2026-11-17",
+      "reason": "掲載店の10店中8店が同じ。流入の多い nagoya-yakitori に寄せる（28日の検索流入 2クリック／64表示 対 0／0）。",
+      "fromTitle": "名古屋 焼き鳥おすすめ 2026（炭火・地鶏・個室）",
+      "toLabel": "焼き鳥10選",
+      "oldLabels": ["焼き鳥ガイド10選", "炭火・地鶏の焼き鳥10選"],
+      "storeFromLabels": ["名古屋 焼き鳥おすすめ 2026"],
+      "storeToLabel": "名古屋焼き鳥 おすすめ10選【2026年版】"
+    },
+    {
+      "from": "industry-insiders-pick",
+      "to": "kospa-insider",
+      "date": "2026-11-17",
+      "reason": "掲載店の5店中3店が同じ。流入の多い kospa-insider に寄せる（28日の検索流入 9クリック／146表示 対 0／0）。題から「業界人」を外す決定 0069 の4と同じ方向。",
+      "fromTitle": "名古屋の店",
+      "toLabel": "コスパ最強店",
+      "oldLabels": ["", "店6選", "本音ピック"],
+      "storeFromLabels": ["名古屋の店【6選】"],
+      "storeToLabel": "名古屋のコスパ最強グルメ【見極め方】"
+    }
+  ]
+}

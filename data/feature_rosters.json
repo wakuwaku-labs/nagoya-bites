@@ -156,11 +156,6 @@
       "scene": { "keyword": "予約困難|争奪|即完売|プレミア|人気店|行列", "gateKeyword": true },
       "fixed": []
     },
-    "industry-insiders-pick": {
-      "format": "store-card", "container": "store-list", "slots": 6, "coreCount": 4,
-      "scene": { "genre": "居酒屋|ダイニング|フレンチ|イタリアン|懐石|和食|割烹", "keyword": "", "gateKeyword": false },
-      "fixed": []
-    },
     "kospa-insider": {
       "format": "store-card", "container": "store-list", "slots": 5, "coreCount": 3,
       "scene": { "genre": "居酒屋|ダイニング|イタリアン|中華|焼肉|バー", "keyword": "", "gateKeyword": false },
@@ -262,11 +257,6 @@
     "nagoya-tonkatsu": {
       "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
       "scene": { "keyword": "とんかつ|カツ", "gateKeyword": true },
-      "fixed": []
-    },
-    "nagoya-yakitori-guide": {
-      "format": "store-card", "container": "store-list", "slots": 10, "coreCount": 5,
-      "scene": { "keyword": "焼き鳥|焼鳥|串焼き|やきとり|炭火焼き鳥|地鶏", "gateKeyword": true },
       "fixed": []
     },
     "nagoya-yakitori": {

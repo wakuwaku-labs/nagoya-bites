@@ -413,7 +413,7 @@ const TAG_TO_FEATURES = [
   { match: s => /中華|チャイニーズ|台湾料理|点心|餃子|担々麺|麻婆|上海|四川/.test(s['ジャンル']||''),
     file: 'nagoya-chinese-guide.html', label: '名古屋 中華料理おすすめ 2026' },
   { match: s => /焼き鳥|焼鳥|やきとり/.test(s['ジャンル']||'') || /焼き鳥|焼鳥|やきとり/.test(s['店名']||''),
-    file: 'nagoya-yakitori-guide.html', label: '名古屋 焼き鳥おすすめ 2026' },
+    file: 'nagoya-yakitori.html', label: '名古屋焼き鳥 おすすめ10選【2026年版】' }, // nagoya-yakitori-guide は nagoya-yakitori に統合（S5-3・0077）
   { match: s => /フレンチ|鉄板焼|日本料理|割烹/.test(s['ジャンル']||''),
     file: 'settai-guide.html', label: '接待で失敗しない名古屋の店選び完全マニュアル' },
 
@@ -1315,7 +1315,9 @@ function buildSitemap(slugs, storeLastmod = new Map()) {
   // features/ articles (exclude index.html)
   const featuresDir = path.join(__dirname, 'features');
   const featureFiles = fs.existsSync(featuresDir)
-    ? fs.readdirSync(featuresDir).filter(f => /^[^_].*\.html$/.test(f) && f !== 'index.html').sort()
+    ? require('./scripts/lib/feature_merges').filterLiveFeatureFiles(
+        featuresDir,
+        fs.readdirSync(featuresDir).filter(f => /^[^_].*\.html$/.test(f) && f !== 'index.html').sort()) // 統合して転送ページにした特集はサイトマップに載せない（S5-3・0077）
     : [];
   const featureDates = featureFiles.map(f => readDate(featuresDir, f, null));
   const featureUrls = featureFiles

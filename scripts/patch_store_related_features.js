@@ -37,11 +37,11 @@ const TAG_TO_FEATURES = [
   { match: s => /カフェ・スイーツ|カフェ|喫茶/.test(s['ジャンル']||''), file: 'girls-party.html', label: '名古屋・女子会ランチ&ディナー10選' },
   { match: s => /和食|寿司|割烹|料亭/.test(s['ジャンル']||''), file: 'settai-guide.html', label: '名古屋・接待ガイド' },
   { match: s => /うどん|そば|ラーメン|麺/.test(s['ジャンル']||''), file: 'kospa-insider.html', label: '名古屋・コスパで選ぶ業界人推薦' },
-  { match: s => /焼肉|ホルモン/.test(s['ジャンル']||''),      file: 'industry-insiders-pick.html', label: '業界人が本気で選ぶ名古屋の名店' },
+  { match: s => /焼肉|ホルモン/.test(s['ジャンル']||''),      file: 'kospa-insider.html', label: '名古屋のコスパ最強グルメ【見極め方】' },
   { match: s => /名古屋駅|名駅|中村区/.test(s['エリア']||''), file: 'meieki.html', label: '名駅グルメ15選' },
   { match: s => /栄|錦|矢場町|東桜|新栄/.test(s['エリア']||''), file: 'sakae.html', label: '栄グルメ15選' },
   { match: s => /大須|上前津/.test(s['エリア']||''),         file: 'osu-food-walk.html', label: '大須食べ歩きガイド' },
-  { match: s => true,                                        file: 'industry-insiders-pick.html', label: '業界人が本気で選ぶ名古屋の名店' },
+  { match: s => true,                                        file: 'kospa-insider.html', label: '名古屋のコスパ最強グルメ【見極め方】' },
 ];
 
 function buildRelatedFeatures(store) {

@@ -43,6 +43,7 @@ const ROOT = path.resolve(__dirname, '..');
 const LLMS_PATH = path.join(ROOT, 'llms.txt');
 const MANIFEST_PATH = path.join(ROOT, 'data', 'area_genre_pages_manifest.json');
 const FEATURES_DIR = path.join(ROOT, 'features');
+const { isMergedStub } = require('./lib/feature_merges');
 const BASE_URL = 'https://nagoya-bites.com';
 
 const CHECK = process.argv.includes('--check');
@@ -136,6 +137,7 @@ function pickDescriptionSentence(fullDesc, title) {
 function collectFeatures() {
   const files = fs.readdirSync(FEATURES_DIR)
     .filter((f) => f.endsWith('.html') && !FEATURE_EXCLUDE.has(f))
+    .filter((f) => !isMergedStub(fs.readFileSync(path.join(FEATURES_DIR, f), 'utf8'))) // 統合して転送ページにした特集は載せない（S5-3・0077）
     .sort(); // アルファベット順=決定的（mtimeはCIチェックアウトのたびにリセットされ非決定的になるため使わない）
 
   const items = [];

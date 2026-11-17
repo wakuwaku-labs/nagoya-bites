@@ -307,7 +307,7 @@ test('トップ: 店のデータ・特集・ジャーナル・構造化データ
   assert.ok(/検索/.test(ex[0].reason) && /画面には出ない/.test(ex[0].reason), '例外の理由は「画面に出ない検索の辞書」');
 });
 
-test('トップ: 「目的から探す」のリンク文は、生成器が語彙表から作る。業界人の導線は label の文で、語が出ない（P-330）', () => {
+test('トップ: 「目的から探す」のリンク文は、生成器が語彙表から作る。業界人の導線は統合で1つにまとまり、語が出ない（P-330・S5-3）', () => {
   const gen = require('../scripts/inject_store_links');
   const block = gen.renderSceneIndexBlock();
   assert.ok(block, '語彙表（data/journal_seo_keywords.json）が読める');
@@ -315,7 +315,10 @@ test('トップ: 「目的から探す」のリンク文は、生成器が語彙
   const r = audit.scanHtml(block, compiled, { rel: 'index.html' });
   const errorIds = new Set(policy.terms.filter((t) => t.severity === 'error').map((t) => t.id));
   assert.deepEqual(r.phrases.filter((p) => errorIds.has(p.term)), [], '生成器が作るリンク文に、人が選んだと読める言い方が出ている');
-  assert.ok(block.includes('<a href="features/industry-insiders-pick.html">飲食業界の人が通う店</a>'), '業界人の導線は label の文');
+  // industry-insiders-pick は kospa-insider に統合した（S5-3・0077）。業界人の語は同じ特集を指すので、一覧には「コスパ」の1つだけが出る
+  assert.ok(!block.includes('industry-insiders-pick'), '統合した特集へのリンクを出さない');
+  assert.ok(!block.includes('飲食業界の人が通う店'), '業界人の導線は、コスパと同じ特集を指すため重ねて出さない');
+  assert.equal((block.match(/href="features\/kospa-insider\.html"/g) || []).length, 1, 'kospa-insider へのリンクは1つだけ');
   assert.ok(!block.includes('名古屋の業界人'));
   // kw（検索語の対応づけ・採点・GSC の分類が使う）は変えず、画面に出す文だけを label で替える
   const master = JSON.parse(readRel('data/journal_seo_keywords.json'));
