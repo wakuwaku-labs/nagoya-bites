@@ -36,8 +36,9 @@ function inRange(dateStr, range) {
 }
 
 function weekdayJa(dateStr) {
-  const d = new Date(dateStr + 'T00:00:00+09:00');
-  return ['日', '月', '火', '水', '木', '金', '土'][d.getDay()];
+  // 日付の文字列そのものの曜日。端末の時間帯に依らない（UTC の CI で日曜が土曜になっていた・2026-11-17）
+  const d = new Date(dateStr + 'T00:00:00Z');
+  return ['日', '月', '火', '水', '木', '金', '土'][d.getUTCDay()];
 }
 
 function daysBetween(a, b) {
