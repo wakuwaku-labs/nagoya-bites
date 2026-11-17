@@ -113,3 +113,13 @@ test('実際の index.html: 3分類の行が入り、検索中は約束と記事
   // 実態と違う約束を置かない: 下の黒い帯（寄稿者・永久追放）は外し、約束は最初の画面の1か所にする
   assert.ok(!html.includes('no-sakura') && !html.includes('嘘の寄稿者') && !html.includes('永久追放'));
 });
+
+test('スマホ: 固定の検索の帯がフッター最後の行を隠さない／ご意見ボタンは帯の左の枠に入る', () => {
+  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const mobile = (html.match(/MOBILE CTA BAR[\s\S]*?@media/) || [html])[0];
+  assert.ok(/body\{padding-bottom:calc\(4\.5rem \+ env\(safe-area-inset-bottom,0px\)\);\}/.test(html), '本文の下に帯の高さ分の余白');
+  assert.ok(/\.mobile-cta-bar\{padding-left:calc\(1rem \+ var\(--tap-min\) \+ \.5rem\);\}/.test(html), '帯の左にご意見ボタンの枠');
+  assert.ok(/#fb-fab\{left:1rem;bottom:10px;\}/.test(html), 'ご意見ボタンは帯の中');
+  assert.ok(/\.mobile-cta-bar \.cta-filter\{white-space:nowrap;flex-shrink:0;\}/.test(html), '絞り込みの字を折り返さない');
+  assert.ok(mobile.length > 0);
+});
