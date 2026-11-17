@@ -11,6 +11,8 @@
  *
  * サブコマンド:
  *   --next-id                    次の FB-NNN を返す（agent-backlog.md + ログを走査）
+ *   --parse-mail '<メール本文>'  Formspree 通知メールの本文からフィールドを取り出す。記事の声（article_url つき）は
+ *                                source=article-widget・page=記事のパスで返す（S7-2）
  *   --check-dup "<text>" [--msg-id <gmail-message-id>]
  *                                正規化テキスト（数値保持版）と msg_id を既存ログと照合。
  *                                msg_id 一致 = 同一メールの再処理（ログ追記も不要な完全スキップ対象）
@@ -199,7 +201,40 @@ function backlogStatusById() {
   return map;
 }
 
-const VERDICTS = ['adopted', 'fact_check', 'rejected', 'duplicate', 'escalated'];
+// recorded: 記事の声（S7-2）で、直す対象が無い感想（「役に立った」だけ等）。起票せず台帳にだけ残す
+const VERDICTS = ['adopted', 'fact_check', 'rejected', 'duplicate', 'escalated', 'recorded'];
+
+// ──────────────────────────────────────────────────────────
+// Formspree 通知メールの読み取り（記事の声・S7-2。決定的・判断はしない）
+// ──────────────────────────────────────────────────────────
+
+const MAIL_KEYS = ['category', 'store', 'body', 'page', 'article_url', 'article_answer', 'submittedAt'];
+
+/** メール本文の「キー: 値」の行から、既知のキーだけを取り出す。body だけは次のキーまで複数行を許す */
+function parseFormspreeMail(text) {
+  const fields = {};
+  const lines = String(text || '').split(/\r?\n/);
+  let cur = null;
+  for (const raw of lines) {
+    const m = raw.match(/^\s*([A-Za-z_]+)\s*[:：]\s*(.*)$/);
+    if (m && MAIL_KEYS.includes(m[1])) { cur = m[1]; fields[cur] = m[2].trim(); continue; }
+    if (cur === 'body' && raw.trim()) fields.body += '\n' + raw.trim();
+  }
+  const url = fields.article_url || '';
+  const isArticle = /^https:\/\/nagoya-bites\.com\/(features|journal)\/[^\s]+\.html$/.test(url);
+  const answer = ['yes', 'no', 'error'].includes(fields.article_answer) ? fields.article_answer : null;
+  return {
+    source: isArticle ? 'article-widget' : 'site-widget',
+    category: fields.category || null,
+    store: fields.store || null,
+    feedback: fields.body || '',
+    page: isArticle ? url.replace('https://nagoya-bites.com', '') : (fields.page || null),
+    article_url: isArticle ? url : null,
+    article_answer: isArticle ? answer : null,
+    // 誤りの指摘は店舗事実の確認ゲート（fact_check）の対象。分類の最終判断はエージェント（runbook Step 4）
+    suggested_verdict: isArticle && answer === 'error' ? 'fact_check' : null,
+  };
+}
 
 function report(days, sourceFilter) {
   const log = loadLog();
@@ -236,12 +271,20 @@ function report(days, sourceFilter) {
     byCategory[c] = (byCategory[c] || 0) + 1;
   }
 
+  // 記事ごとの声（S7-2）。page が記事のパスのもの。誤り指摘が多い記事＝直す順番の根拠
+  const byArticle = {};
+  for (const e of entries.filter((x) => x.source === 'article-widget' && x.page)) {
+    const a = (byArticle[e.page] = byArticle[e.page] || { yes: 0, no: 0, error: 0, other: 0 });
+    a[e.article_answer || 'other']++;
+  }
+
   return {
     ok: true,
     window: days ? `直近${days}日` : '全期間',
     source: sourceFilter || 'all',
     totals,
     by_category: byCategory,
+    by_article: byArticle,
     reject_reasons: rejectReasons,
     open_tickets: openTickets,
     tickets_done: ticketed.filter((e) => status[e.id] === 'done').length,
@@ -266,6 +309,13 @@ function main() {
       out({ ok: false, error: 'policy read failed: ' + e.message });
       process.exit(1);
     }
+    return;
+  }
+
+  if (args.includes('--parse-mail')) {
+    const i = args.indexOf('--parse-mail');
+    if (args[i + 1] === undefined) { out({ ok: false, error: '--parse-mail requires mail text' }); process.exit(1); }
+    out({ ok: true, ...parseFormspreeMail(args[i + 1]) });
     return;
   }
 
@@ -328,6 +378,7 @@ function main() {
         page: scrubPII(item.page || '').slice(0, 200) || null,
         store: item.store ? scrubPII(item.store).slice(0, 60) : null,
         category: item.category || null,
+        article_answer: ['yes', 'no', 'error'].includes(item.article_answer) ? item.article_answer : undefined,
         feedback,
         verdict: VERDICTS.includes(item.verdict) ? item.verdict : 'rejected',
         brand_reason: item.brand_reason || '',
@@ -358,6 +409,7 @@ function main() {
     error: 'no subcommand',
     usage: [
       '--next-id',
+      '--parse-mail "<Formspree 通知メール本文>"',
       '--check-dup "<text>" [--msg-id <gmail-message-id>]',
       '--unseen-msg-ids \'["<gmail-msg-id>", ...]\'',
       "--log-append '<json>'",
@@ -371,4 +423,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { nextId, checkDup, report, scrubPII, unseenMsgIds, healthWrite };
+module.exports = { parseFormspreeMail, nextId, checkDup, report, scrubPII, unseenMsgIds, healthWrite };

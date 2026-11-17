@@ -89,6 +89,7 @@ const CANNED = {
   'deviceCategory,pagePath': [R(['mobile', '/stores/J1.html'], [12, 120]), R(['desktop', '/'], [5, 60]), R(['mobile', '/features/a.html'], [3, 30])],
   'deviceCategory': [R(['mobile', ], [9, 12, 7, 17, 180]), R(['desktop'], [4, 4, 3, 5, 60])],
   '': [R([], [13, 16, 10, 22, 240, 200])],
+  'newVsReturning': [R(['new'], [60, 70]), R(['returning'], [40, 90])],
   'eventName,deviceCategory': [R(['modal_open', 'mobile'], [8, 5]), R(['cta_click', 'mobile'], [3, 3]), R(['cta_call_click', 'mobile'], [40, 30])],
   'eventName,deviceCategory,pagePath': [R(['cta_click', 'mobile', '/stores/J1.html'], [3]), R(['modal_open', 'desktop', '/'], [8]), R(['cta_call_click', 'mobile', '/stores/J1.html'], [40])],
   'deviceCategory,pagePath,eventName,customEvent:link_domain': [
@@ -115,7 +116,7 @@ function fakeGa4(overrides = {}) {
 test('buildRequests: すべての問い合わせが期間とホストで絞られ、イベントは一覧に絞られる', () => {
   const win = L.windowOf('2026-10-09', '2026-10-20', { today: '2026-11-01' });
   const req = B.buildRequests(win);
-  assert.deepStrictEqual(Object.keys(req).sort(), ['events', 'eventSessions', 'landing', 'pages', 'reservation', 'totalsAll', 'totalsByDevice'].sort());
+  assert.deepStrictEqual(Object.keys(req).sort(), ['events', 'eventSessions', 'landing', 'pages', 'reservation', 'returning', 'totalsAll', 'totalsByDevice'].sort());
   for (const [name, body] of Object.entries(req)) {
     assert.deepStrictEqual(body.dateRanges, [{ startDate: '2026-10-09', endDate: '2026-10-20' }], name);
     const s = JSON.stringify(body.dimensionFilter);
@@ -220,6 +221,7 @@ test('reportWindow: 端末とページ種別に分け、割合は分子と分母
   assert.deepStrictEqual(rep.lowCount.events.cta_click, ['store|mobile']);
   assert.strictEqual(rep.lowCount.events.cta_call_click, undefined, '40件は保留にしない');
   assert.deepStrictEqual(rep.notes, []);
+  assert.strictEqual(rep.returning.returningUserRate, 0.4); // S7-2 再訪問率
 });
 
 test('reportWindow: 予約送客の内訳が取れなくても、ほかの数字は返し、理由を残す', async () => {
