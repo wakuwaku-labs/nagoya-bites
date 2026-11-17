@@ -29,6 +29,11 @@
     "mode": "shadow",
     "fetch_timeout_sec": 15,
     "max_sources": 10,
+    "writer_ledger": {
+      "_why": "記録用（コードは読まない。実装は scripts/lib/claims.js・scripts/generate_daily_draft.js）。書き手（日次ジャーナルの生成）が、記事の事実ごとに出典 URL と出典内の該当記述（最大120字）を対にした事実台帳 claims_ledger を出し、data/journal_claims/<日付>.ledger.json に残る。台帳があれば文を対で照合し、台帳を書いた後に数字が変わった文は食い違いにする。台帳が無い日・古い記事は従来の機械の推測で照合する（警告だけ）。台帳の対象は来店前に重要な文（価格・時間・席数・予約条件・営業日）を優先。照合不能でも自動修正の道に回すのは来店前に重要な文だけで、沿革・件数・計算で導ける数字は対象外（食い違いは対象のまま）。測定は docs/plans/media-policy-2026-11/s4-5-calibration.md の6節。",
+      "priority": "来店前に重要な文（価格・時間・席数・予約条件・営業日）",
+      "quote_max_chars": 120
+    },
     "independent_review": {
       "_why": "S4-2 の独立した読み手（別プロセス・道具なし）。model が null のときは実行環境の既定のモデルで、記録に『指定なし』と残る。enforce にする同じ変更でモデルを固定する（S4-5）。",
       "enabled": true,
