@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-17T00:11:29.141Z",
+  "generatedAt": "2026-11-17T04:05:17.434Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 7315,
-    "pageViews": 8760,
-    "sessions": 7700,
-    "avgSessionDuration": 56,
+    "activeUsers": 7346,
+    "pageViews": 8790,
+    "sessions": 7728,
+    "avgSessionDuration": 55.9,
     "bounceRate": 0.674,
     "pagesPerSession": 1.14
   },
@@ -17,10 +17,10 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2811,
-      "direct": 4518,
+      "organic": 2820,
+      "direct": 4532,
       "social": 57,
-      "ai_assistant": 240,
+      "ai_assistant": 241,
       "referral": 46,
       "paid": 0,
       "other": 0
@@ -39,22 +39,22 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 4490
+      "sessions": 4504
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1279
+      "sessions": 1284
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 918
+      "sessions": 920
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 579
+      "sessions": 581
     },
     {
       "source": "chatgpt.com",
@@ -64,7 +64,7 @@
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 72
+      "sessions": 73
     },
     {
       "source": "note",
@@ -210,13 +210,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 431,
-      "sessions": 408
+      "pageViews": 433,
+      "sessions": 410
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 235,
-      "sessions": 222
+      "pageViews": 236,
+      "sessions": 223
     },
     {
       "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -225,8 +225,8 @@
     },
     {
       "path": "/features/nagoya-unaju.html",
-      "pageViews": 80,
-      "sessions": 78
+      "pageViews": 82,
+      "sessions": 80
     },
     {
       "path": "/features/nagoya-tebasaki.html",
@@ -235,12 +235,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 397,
+    "outboundClicks": 399,
     "ctaClickRate": 5.2,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 136
+        "clicks": 137
       },
       {
         "domain": "www.google.com",
@@ -252,7 +252,7 @@
       },
       {
         "domain": "tabelog.com",
-        "clicks": 38
+        "clicks": 39
       },
       {
         "domain": "www.instagram.com",
@@ -293,10 +293,10 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 273,
+      "organic": 274,
       "direct": 54,
       "social": 13,
-      "ai_assistant": 47,
+      "ai_assistant": 48,
       "referral": 10,
       "paid": 0,
       "other": 0
@@ -1156,7 +1156,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 7315,
+    "value": 7346,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,

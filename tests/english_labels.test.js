@@ -127,7 +127,7 @@ test('ジャーナル: 写真の出所は「写真:」で始まる（生成器2�
   assert.ok(!/Photo:/.test(fig));
 
   const gen = read('scripts/generate_daily_draft.js');
-  assert.ok(gen.includes('<figcaption class="art-img-credit">写真: ${creditHtml}</figcaption>'), 'ヒーローの出所の書式');
+  assert.ok(gen.includes('<figcaption class="art-img-credit">写真: ${creditHtml}${kindHtml}</figcaption>'), 'ヒーローの出所の書式');
   assert.ok(!/art-img-credit">Photo:/.test(gen));
 
   const bad = [];

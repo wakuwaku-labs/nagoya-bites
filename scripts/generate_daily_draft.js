@@ -28,7 +28,16 @@
  *     "eyebrow": "今日の1軒",
  *     "lead": "リード文",
  *     "body_html": "<p>本文HTML</p>",
- *     "insider_points": ["読み解きのポイント1", "読み解きのポイント2", "読み解きのポイント3"],
+ *     "insider_points": ["読み解きのポイント1", "読み解きのポイント2", "読み解きのポイント3"],   // conclusion があれば使わない（「先に結論」に置き換わる）
+ *     // --- 判断材料（S3-2・無い項目は警告だけ。基準は data/editorial_standard.json）---
+ *     "status": { "checked": "2026-11-16 (確認日)", "visited": false, "pre_open": false },
+ *     "conclusion": { "fit": "向く人", "check_first": "来店前にいちばん確かめたい点" },
+ *     "checklist": [{ "item": "お通し・席料", "status": "confirmed | unconfirmed", "value": "お通し代 300円", "source": "ホットペッパー掲載", "checked": "2026-11-16" }],
+ *     "fit_for": ["向く人 2〜3行"], "not_fit_for": ["向かない人 2〜3行"],
+ *     "corrections": [{ "date": "2026-11-20", "text": "訂正の内容（S4-4 の道具が積む。空なら欄は出ない）" }],
+ *     "hero_image_kind": "store_provided | press_release | rendering (写真の種類。省略可)",
+ *     "article_type": "shop_intro | guide | comparison (省略時 shop_intro)",
+ *     "guide": { "area": "名古屋駅", "genre": "居酒屋", "checked": "2026-11-17 (集計の取得日)" }   // article_type=guide のとき、掲載データの集計を本文末に差し込む（store_stats.js）
  *     "stores": [{ "name": "店名", "id": "", "genre": "", "area": "", "score": "★4.3", "desc": "", "link": "https://..." }],
  *     "sources": [{ "label": "情報源名", "url": "https://...", "date": "2026-05-15 (任意 — 掲載日。表示時に併記される)", "checked": "2026-05-16 (任意 — 編集部が見た日。省略時は記事の日付＝書き手の申告)", "publisher": "(任意)", "kind": "(任意: 公式/報道/一次 等)", "quote": "(任意: 短い引用)" }],
  *     "photo_suggestions": [
@@ -70,6 +79,9 @@ const OG = require('./lib/og_figure_png.js');
 // 本文写真（ヒーロー以外の記事内写真）の収集・選定・配置は scripts/lib/journal_photos.js に一元化
 const { isPlacesPhotoUrl } = require('./lib/places_photo_url');
 const JP = require('./lib/journal_photos.js');
+// 記事の「判断材料」の部品（状態の帯・先に結論・来店前に確かめたいこと・向く人・訂正の履歴）は編集基準 data/editorial_standard.json を読む（S3-1/S3-2）
+const ES = require('./lib/editorial_standard');
+const { buildGuideBlock } = require('./lib/store_stats');
 
 const ROOT = path.join(__dirname, '..');
 const HTML_TEMPLATE = path.join(ROOT, 'journal', '_template.html');
@@ -180,6 +192,11 @@ function buildStores(stores) {
       </div>`;
   }).join('\n');
   return `\n      ${STORE_LIST_HEADING}${cards}`;
+}
+
+// 店選びガイド（S3-4）の掲載データの集計。集計できなければ空（警告は main で出す）
+function buildGuideStatsBlock(input) {
+  try { return buildGuideBlock(input.guide || {}); } catch (e) { console.warn(`  ⚠️  店選びガイドの集計を作れませんでした: ${e.message}`); return ''; }
 }
 
 function buildInsiderPoints(points) {
@@ -570,9 +587,12 @@ function buildHeroImageSection(input) {
   const heroStore = input.hero_image_store_name || '';
   const attrs = ` data-hero-source="${esc(heroSource)}"` + (heroStore ? ` data-hero-store="${esc(heroStore)}"` : '');
 
+  // 写真の種類（店の提供写真・プレスリリース・完成予想図）を添える（S3-2）。明示（hero_image_kind）が優先、無ければ出所から決められるものだけ
+  const kindLabel = ES.photoKindLabel(input) || (isPressPhoto ? 'プレスリリース' : (isHotPepper ? '店の提供写真' : ''));
+  const kindHtml = kindLabel ? ` <span class="art-img-kind">（種類: ${esc(kindLabel)}）</span>` : '';
   return `<figure class="art-hero-img"${attrs}>
   <img src="${esc(imgUrl)}" alt="${esc(input.title)}" loading="eager" decoding="async" fetchpriority="high">
-  <figcaption class="art-img-credit">写真: ${creditHtml}</figcaption>
+  <figcaption class="art-img-credit">写真: ${creditHtml}${kindHtml}</figcaption>
 </figure>`;
 }
 
@@ -725,6 +745,13 @@ function renderHtml(input) {
     '{{LEAD}}': esc(input.lead),
     '{{BODY}}': input.body_html || '',
     '{{INSIDER_POINTS}}': buildInsiderPoints(input.insider_points),
+    // 判断材料の部品（S3-2）。「先に結論」があるとき、従来の「知っておきたいポイント」の箱は出さずに置き換える
+    '{{STATUS_BAND}}': ES.buildStatusBand(input),
+    '{{CONCLUSION_BOX}}': ES.buildConclusion(input),
+    '{{CHECKLIST}}': ES.buildChecklist(input),
+    '{{FIT}}': ES.buildFit(input),
+    '{{GUIDE_STATS}}': input.article_type === 'guide' ? buildGuideStatsBlock(input) : '',
+    '{{CORRECTIONS}}': ES.buildCorrections(input),
     '{{STORES}}': buildStores(input.stores),
     '{{SOURCES}}': buildSources(input.sources, input.date),
     '{{HERO_IMAGE_SECTION}}': buildHeroImageSection(input),
@@ -732,6 +759,8 @@ function renderHtml(input) {
     '{{PHOTO_SUGGESTIONS_HTML}}': buildPhotoSuggestionsHtmlComment(input.photo_suggestions)
   };
   Object.entries(replacements).forEach(([k, v]) => { html = html.split(k).join(v); });
+  // 従来の「知っておきたいポイント」の箱は、「先に結論」があるとき置き換えて出さない。印の行は常に外す
+  html = html.replace(/[ \t]*<!-- NB-LEGACY-INSIDER:START -->[\s\S]*?<!-- NB-LEGACY-INSIDER:END -->\n?/, (blk) => (replacements['{{CONCLUSION_BOX}}'] ? '' : blk.replace(/[ \t]*<!-- NB-LEGACY-INSIDER:(START|END) -->\n?/g, '')));
   return dropEmptyImageLine(html); // 使える画像が無い日は image の行ごと外す（無い画像を作らない）
 }
 
@@ -948,6 +977,10 @@ async function main() {
 
   const ledger = writeSourcesLedger(input);
   if (ledger) console.log(`  📚 出典台帳: ${path.relative(ROOT, ledger)}`);
+
+  // 判断材料の欠けは警告だけ（止める条件にするのは段階4の承認後・決定6）。記事の種類が guide なら集計の有無も見る
+  ES.judgementWarnings(input).forEach((w) => console.warn(`  ⚠️  判断材料: ${w}`));
+  if (input.article_type === 'guide' && !/nb-guide-stats/.test(html)) console.warn('  ⚠️  判断材料: 店選びガイドなのに掲載データの集計が入っていません（guide.area / guide.genre を確認）');
 
   const generateSns = shouldGenerateSnsDraft();
   if (generateSns) {
