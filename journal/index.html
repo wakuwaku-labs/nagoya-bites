@@ -63,6 +63,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .cta-box{max-width:900px;margin:0 auto;padding:0 1.5rem 3rem;text-align:center;}
 .cta-link{display:inline-block;font-size:.82rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.7rem 1.6rem;border-radius:3px;transition:background .2s;letter-spacing:.06em;margin:.3rem;}
 .cta-link:hover{background:rgba(122,92,16,.08);}
+.journal-filter{display:flex;flex-wrap:wrap;gap:var(--sp-2);padding:var(--sp-3) 0 var(--sp-4);border-bottom:1px solid var(--border);}
+.journal-filter[hidden]{display:none;}
+.jf-chip{font-family:var(--font-body);font-size:var(--fs-sm);line-height:var(--lh-ui);min-height:var(--tap-min);padding:0 var(--sp-4);border:1px solid var(--card-border);background:var(--card);color:var(--text);border-radius:var(--r-pill);cursor:pointer;display:inline-flex;align-items:center;gap:var(--sp-2);transition:background var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out);}
+.jf-chip:hover{border-color:var(--gold);}
+.jf-chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#fff;}
+.jf-chip:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.jf-count{font-family:var(--font-mono);font-size:var(--fs-2xs);opacity:.8;}
+.journal-entry[hidden]{display:none;}
 @media(max-width:640px){.journal-entry{grid-template-columns:1fr;gap:.4rem;}}</style>
 </head>
 <body>
@@ -1850,6 +1858,23 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   var timer=null;
   window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
   check();
+})();
+</script>
+<script class="journal-filter-script">
+(function(){
+  var bar=document.getElementById('journal-filter');
+  if(!bar)return;
+  var chips=bar.querySelectorAll('.jf-chip'),rows=document.querySelectorAll('.journal-entry');
+  var valid={all:1,topic:1,guide:1,compare:1};
+  function apply(key){
+    if(!valid[key])key='all';
+    chips.forEach(function(c){c.setAttribute('aria-pressed',c.getAttribute('data-filter')===key?'true':'false');});
+    rows.forEach(function(r){r.hidden=!(key==='all'||r.getAttribute('data-category')===key);});
+    try{history.replaceState(null,'',key==='all'?location.pathname+location.search:'#'+key);}catch(e){}
+  }
+  chips.forEach(function(c){c.addEventListener('click',function(){apply(c.getAttribute('data-filter'));});});
+  bar.hidden=false;
+  apply((location.hash||'').replace('#',''));
 })();
 </script>
 <!-- NB-CHROME:SCRIPT:START -->
