@@ -14,7 +14,7 @@ status: in_progress
 - 11-17 ジャーナル公開（~/nagoya-bites の main を origin に合わせ、旧コミットは backup/main-local-2026-11-17）
 
 ## 次にやること
-1. PR #759 と #762 は merge_chain.sh で順にマージ中（記録 /private/tmp/claude-501/-Users-katagirijakutou-orca-workspaces-nagoya-bites-sandworm/b5398d59-8bf7-4a05-8d12-08cf9ef90118/scratchpad/chain-759-762.log）。`gh pr view 759 762 --json state` で MERGED とビルドの成功を確かめる。STOP なら原因を見て再実行（CONFLICTING は該当 worktree で origin/main を取り込み直す）
+1. #759 はマージ済み（ビルドの成功を確認）。#762→#763 を merge_chain.sh で順にマージ中（記録 /private/tmp/claude-501/-Users-katagirijakutou-orca-workspaces-nagoya-bites-sandworm/b5398d59-8bf7-4a05-8d12-08cf9ef90118/scratchpad/chain-762-763.log）。止まっていたら `gh pr view 762` / `763` の state を見て再実行
 2. #762 は design-qa 合格・軽微5件修正済み。マージ後に本番の記事末尾で部品が出ることを確かめる
 3. PR #763（書き手の事実台帳・S4-5 再測定: 価格改ざん 4/14→13/13・自動修正の道 70%→57%・npm test 全通過）を #759・#762 の後にマージ: merge_chain.sh 763。翌朝のジャーナルの記録 data/journal_claims/<日付>.ledger.json が出るか確認
 4. 第2波の残り: S6-1 トップを記事中心に（#759 マージ後・index.html/build.js。決定2: 題の案を2〜3案画面つきで用意し推奨で実装、本人に最後に見せる）／S5-5 鮮度の見張り＋S7-1 信頼の指標＋S7-3 KPI 文書（#759・#760 の後）
