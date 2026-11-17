@@ -9,6 +9,7 @@ status: in_progress
 各施策の⑪完了を満たし、npm test 通過・main 合流・本番確認。本人の承認が要るもの（S4-5 の enforce 切替・S5-3 の削除・S6-1 の題の案）は準備まで進めて最後にまとめて聞く。
 
 ## できていること
+- PR: #754(3分類・取り下げ) #756(記事の型) #757(特集・規約) 作成済み。#755 で定時ビルドの失敗(テストが同期前に走る)を修正
 - 段階0〜2・削減は完了（#746〜#751）
 - 11-17 朝のジャーナル HOLD（~/nagoya-bites の main に未 push の計画コミットが残り衝突）→ backup/main-local-2026-11-17 に退避し main を origin に合わせて再実行中
 
@@ -25,7 +26,11 @@ status: in_progress
 - 本番の自動公開の条件は変えない（決定6）／削除は一覧を本人に見せてから／流入記事は足すだけ
 
 ## 最後に本人へまとめて聞くこと
-- （作業中に追記）
+- X の月額利用上限（X API 403 monthly spend cap）に達している → Billing で上限を上げるか（投稿・削除が通らない）
+- 日曜をガイドの回に変えた（#754）
+- 帯「AIが作成」の文言・店選びガイドの最少10店（#756）
+- 焼き鳥2本の寄せ先 nagoya-yakitori／「業界人の推薦」系2本を kospa-insider へ／季節切れ4本は noindex しない／懐石・接待ランチ・予約困難の作り替え（#757・s5-3-candidates.md）
+- S4-5 の enforce 切替（測定結果つき）
 
 ## 関連ファイル
 - docs/plans/media-policy-2026-11/03-implementation-plan.md・docs/decisions/0069
