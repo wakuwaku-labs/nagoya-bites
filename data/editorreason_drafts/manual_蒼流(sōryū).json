@@ -1,0 +1,78 @@
+{
+  "status": "OK",
+  "editorReason": "コンラッド名古屋内に位置する「蒼流」は、上質な鮨懐石を提供する日本料理店。名古屋の新たな食のランドマークとして、洗練された体験が期待されます。",
+  "insiderNote": "ミシュラン2つ星「京料理たか木」高木一雄氏監修。愛知県産希少米「ミネアサヒ」や伊勢湾・三河湾の旬の食材、2種の酢を使い分けるこだわりが光る。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEE6wM_ZisX9dYnrbsYQwgaA_qf7oOcjWdZteezNxvZuhg5DYZZvXEoTItxWa5Re-GKZWBXNfvdTK8kAdLskU6EuY-Uyu4LeEovDxQ8TaD5BNMVJWjwGCIT7yLsM1nPzhoKQTdoKdAf1bHlSgdVzLoY51cw",
+      "snippet_quote": "2026年7月31日に開業したコンラッド名古屋の40階に位置する日本料理（鮨懐石）店です。",
+      "supports": "蒼流がコンラッド名古屋内に位置すること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFII4MOdCYYQXFAa6U-lJJGMwrs48vCOpMu58bqUQIz7CqhJPka0RYeLWqLKhD3mTT3Rmuo4f_jR9l6Ed29TZ-siUpQ0OYpFUWdYcoEZFf_LNyzRGWiW_Qfqgr4KscAnqyvzLE=",
+      "snippet_quote": "「蒼流」が鮨懐石として、愛知県産の希少米「ミネアサヒ」や三重県産の2種類の酢、伊勢湾・三河湾の食材を使用している点などが詳しく紹介されています。",
+      "supports": "蒼流が鮨懐石店であること、および食材へのこだわり"
+    }
+  ],
+  "warnings": [
+    "2件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「蒼流 (SŌRYŪ)」（栄・日本料理（鮨懐石））に関する業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「蒼流 (SŌRYŪ)」は、2026年7月31日に開業したコンラッド名古屋の40階に位置する日本料理（鮨懐石）店です。ミシュラン2つ星の「京料理たか木」高木一雄氏が監修しており、その料理人としての高い評価が店のこだわりを裏付けています。三河湾や伊勢湾の豊かな恵みを、熟練の技で昇華させた珠玉の鮨体験を提供することを目指しています。伝統を守りつつ技を磨き、新たな感性を取り入れた現代的な解釈を提案しており、一貫一貫に素材への深い理解と職人の美意識が宿っています。長い歴史を持つ鮨文化に現代の息吹を重ねた、静謐で力強い味わいを提供することにこだわっています。\n\n使用する食材にもこだわりが見られ、米は愛知県の山間部で育まれる希少なブランド米「ミネアサヒ」を使用しています。また、酢は三重県多気町の赤酢と、酒粕由来のほのかな甘みが特徴の白酢の2種類を使い分け、ネタに合わせてシャリを調整しています。\n\n**提供スタイルの特徴**\n「蒼流」は鮨懐石のスタイルで料理を提供しており、ディナー専業です。店内には24席のカウンター席があり、コンラッド名古屋の最上階40階というロケーションから、圧巻のパノラマを眺めながら食事ができるのが特徴です。開業を記念した「黎明（Reimei）コース」や、店名を冠した「蒼穹（Sokyu）コース」などがあり、鮨職人の技と美意識に加え、「蒼流」ならではの「おもてなしの心」を堪能できるとされています。\n\n**地元グルメメディアでの紹介**\n「蒼流」は複数の地元グルメメディアで紹介されています。\n*   **NAGOYA BITES**では、栄駅直結の日本料理（鮨懐石）として、予算帯や高木一雄氏監修であることなどが掲載されています。\n*   **サカエ経済新聞**では、コンラッド名古屋の開業とともに、「すし懐石『蒼流（そうりゅう）』のカウンター席」が紹介されています。\n*   **大人の名古屋**では、「蒼流」が鮨懐石として、愛知県産の希少米「ミネアサヒ」や三重県産の2種類の酢、伊勢湾・三河湾の食材を使用している点などが詳しく紹介されています。\n*   その他、**ヒトサラ**や**TableCheck**、**NAVITIME**などのグルメサイトでも店舗情報やメニュー、アクセスなどが掲載されています。\n\n**料理人としての評価**\n「蒼流」は、ミシュラン2つ星の「京料理たか木」高木一雄氏が監修していることから、その料理の質と技術は高く評価されていると推測されます。提供される鮨は「熟練の技」と「職人の美意識」が宿ると表現されており、コースでは鮨職人の技と美意識、そして「蒼流」ならではの「おもてなしの心」を堪能できると紹介されています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEZC7AOzvpGyHMWhQQ3mqcN4wGMcBVuMRAWvl8MzBgtkSFnBPlVNjps1jaPYfnorD1fZGN1y_7RhlWKcww6Oa3HP7_t14Nz88cT5VBlhdVWbjOYGA-R00_2UrQ83Ve858hCCg==",
+        "title": "nagoya-bites.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEE6wM_ZisX9dYnrbsYQwgaA_qf7oOcjWdZteezNxvZuhg5DYZZvXEoTItxWa5Re-GKZWBXNfvdTK8kAdLskU6EuY-Uyu4LeEovDxQ8TaD5BNMVJWjwGCIT7yLsM1nPzhoKQTdoKdAf1bHlSgdVzLoY51cw",
+        "title": "hiltonjapan.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF-8KO2zxmk6IWWV4iGXVE_JSBT1ntmYMZPn4M5VNV7qNAwe1ANi1vusuS5nTrt3uNltr6V6duIgN0-z1wt_w4TYB6AskBQfQY_LwlmZajL4jOnbYfHd4PjLfjF2OplSVxKVyZ6NbksXRcjqQ==",
+        "title": "tablecheck.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFyYyVAkH8zkmSiB9TZoR-F8NE9tsNhB_orObUzPrVGb5gjINRyRdt9miOHQlCgoha1RdQQWR8aj0mruw3Nh3wPrBvO6n8eymCO2pEmaqZ7xhS2YvgC-5-1rI-WH0PNITfNkmOEktVd2SxJkz30UA==",
+        "title": "tablecheck.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGX5GQb_4_YaP2k76t_7SLWyqYCJG6rGKCkj0uvw2iMLOQADifmtJQJ0UYuL7shLinstPEV3wzVprc5zG_8hy-mLk1ab79VXqYMJfDwPeuO_4LAXXaztYa88eQRwuVQ6fb8Ox8IFzFCpGICbA==",
+        "title": "tablecheck.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFdRdeR_ziQ7GcE7F3gZQ6yAS9rjklDcrOopGtyMR8oOEH2CXJ9EYM9lmbO6E2dtDi-Nm35WYXCz2sPO_Q_hGUvsygWV4ZGNZz1UgvgzbiicA1sNN2hQAXSHEXgdFIYabYeX5SKriGFuhbAmtpnTwo=",
+        "title": "navitime.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFII4MOdCYYQXFAa6U-lJJGMwrs48vCOpMu58bqUQIz7CqhJPka0RYeLWqLKhD3mTT3Rmuo4f_jR9l6Ed29TZ-siUpQ0OYpFUWdYcoEZFf_LNyzRGWiW_Qfqgr4KscAnqyvzLE=",
+        "title": "otona-no-nagoya.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFzkfzkkk4DCuKRiXhlUZBBbomAd-5OoL0sxLYDycMx23tNPCEujdV79KbDZjzgY924DYUzMfk5rGeEgdO0YEEmNQKcg39V9AuDVc5ISy76E83imgbk3ndxxm_lG9V4n27K1cM=",
+        "title": "keizai.biz"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHls1px6HYktOa64gVtMhu2XibqdBZPd4CwQq5DzvueDI71zT_Wnq8FeSv_CJreI_A2XRjLztj61dkoczyXd8GP0CacEGqAgvSjp2wb2rSsWCiRUzfJ4G_AQfEwatRJ1M1g8h9sVKpLjSDiee8=",
+        "title": "navitime.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH-Yg9MI39I3Lfn9VKRymQzZH_a7ugBQh0s2YtW5ZFHWPqe1cGtpePbzZFHxsy3sN-JpzsMZXYUp7oJ2-xuOpfGfGa-DgnGBJQ9nYLfj_6TMlx-6oiXZmUgEKA=",
+        "title": "hitosara.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEqtCiqSWhS2nEDeA9qvKGNud1I4P3_dOSHJSPZghrqJ-yP1IGURzz--wcmyGmMvcoayJohCehWCpXPKcjU_yJLeuCJ3Tt0BPEQWphOE3pjOQuwfS8WTHdHWQSzRRuNWYac-KOoYj4dcrx77iSU1A==",
+        "title": "tablecheck.com"
+      }
+    ]
+  },
+  "store_id": "manual_蒼流(sōryū)",
+  "store_name": "蒼流 (SŌRYŪ)",
+  "area": "栄",
+  "genre": "日本料理（鮨懐石）",
+  "rating": "5",
+  "generated_at": "2026-11-17T01:43:08.989Z"
+}
