@@ -14,12 +14,10 @@ status: in_progress
 - 11-17 ジャーナル公開（~/nagoya-bites の main を origin に合わせ、旧コミットは backup/main-local-2026-11-17）
 
 ## 次にやること
-1. #759 はマージ済み（ビルドの成功を確認）。#762→#763 を merge_chain.sh で順にマージ中（記録 /private/tmp/claude-501/-Users-katagirijakutou-orca-workspaces-nagoya-bites-sandworm/b5398d59-8bf7-4a05-8d12-08cf9ef90118/scratchpad/chain-762-763.log）。止まっていたら `gh pr view 762` / `763` の state を見て再実行
-2. #762 は design-qa 合格・軽微5件修正済み。マージ後に本番の記事末尾で部品が出ることを確かめる
-3. PR #763（書き手の事実台帳・S4-5 再測定: 価格改ざん 4/14→13/13・自動修正の道 70%→57%・npm test 全通過）を #759・#762 の後にマージ: merge_chain.sh 763。翌朝のジャーナルの記録 data/journal_claims/<日付>.ledger.json が出るか確認
-4. 第2波の残り: S6-1 トップを記事中心に（#759 マージ後・index.html/build.js。決定2: 題の案を2〜3案画面つきで用意し推奨で実装、本人に最後に見せる）／S5-5 鮮度の見張り＋S7-1 信頼の指標＋S7-3 KPI 文書（#759・#760 の後）
-5. 本線の統合 PR: registry 行（各 PR 本文の「registry に足す行」）・ADR 0072〜（各 PR 本文の「ADR に書く判断」）・旧 ADR 0010/0035/0032/0021/0015/0007 に「0069 で置き換え」追記・build.yml に棚卸し台帳の週次更新・取り下げ記事を sitemap から外す（gen-store-pages.js の journalFiles）
-6. 全部終わったら Ondine #2051〜#2055 に report→done、最終チェック、本人へまとめて確認
+1. マージ待ち（背景で merge_chain が1本ずつ）: #759 マージ済み→ #763（W-F 書き手の事実台帳・shadow のまま）→ #762（読者の声・design-qa 合格・軽微5件修正済み）
+2. 作業役が実装中（2026-11-17 13:35 開始）: S6-1 トップ（worktree .claude/worktrees/policy-s6-1-top・PR 後に本線が design-qa を呼ぶ）／S5-5・S7-1・S7-3（worktree .claude/worktrees/policy-s5-5-s7）
+3. 本線の統合 PR: registry 行（各 PR 本文の「registry に足す行」）・ADR 0072〜（各 PR 本文の「ADR に書く判断」）・旧 ADR 0010/0035/0032/0039/0021/0015/0007 に「0069 で置き換え」追記・build.yml に棚卸し台帳の週次更新・取り下げ記事を sitemap から外す（gen-store-pages.js の journalFiles）
+4. 全部終わったら Ondine #2051〜#2055 に report→done、最終チェック、本人へまとめて確認
 
 ## 最後に本人へまとめて聞くこと
 - X の月額利用上限（X API 403 monthly spend cap）に達している→Billing で上限を上げるか（投稿・削除が通らない）
@@ -27,7 +25,7 @@ status: in_progress
 - 焼き鳥2本の寄せ先 nagoya-yakitori／「業界人の推薦」系2本を kospa-insider へ／季節切れ4本は noindex しない／懐石・接待ランチ・予約困難の作り替え（#757・docs/plans/media-policy-2026-11/s5-3-candidates.md）
 - 一覧の並びを駅から近い順に／「口コミ信頼度」の名前を残す／件数・時点が無い店は星を出さない／特集は番号を外したが並びは今月はスコア順のまま（来月の入れ替えでエリア順）（#759）
 - S4-5 の enforce 切替: 再測定は合格線を満たす（13/13 は機械が作った台帳での値）。推奨は本物の台帳が数日たまるまで shadow。自動修正の道 57%（enforce だとほぼ毎日価格文が「未確認」に書き直される）を許容するか／台帳を必須にするか・自動修正の対象を重要な文に絞る・読み手のモデル固定
-- 読者の声の実送信テスト（記事で「ひとこと」を1回送り Gmail に届くか）（#762）
+- iPhone 実機でひとこと欄の拡大が無いか・読者の声の実送信テスト（記事で「ひとこと」を1回送り Gmail に届くか）（#762）
 - S6-1 の題の案
 - 記事ページのフッターの「情報の誤りやご意見は こちら」の行を残すか（#762 で誤りを知らせる道が2つになった）
 
