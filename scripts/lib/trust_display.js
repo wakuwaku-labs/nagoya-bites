@@ -46,6 +46,28 @@ function tierOf(score, policy) {
   return tiers[tiers.length - 1];
 }
 
+/**
+ * 公開面の出し方（policy.display・ADR 0069 決定1）。段階の記号（SS〜D）・0-100の点数・検証項目ごとの点数・並べ替えは出さず、
+ * 言葉の助言（tiers[].short）だけを出す。policy に display が無ければ従来どおり（記号・点数あり）。
+ */
+function displayOf(policy) {
+  const p = policy || loadPolicy();
+  const d = p.display || {};
+  const on = (k) => (p.display ? d[k] === true : true);
+  return {
+    showTierId: on('showTierId'), showScore: on('showScore'),
+    showCheckPoints: on('showCheckPoints'), sortByTrust: on('sortByTrust'),
+    label: d.label || p.name, checkedLabel: d.checkedLabel || '確認', provenance: d.provenance || ''
+  };
+}
+
+/** 段階 ID（SS〜D／—）の短い助言語。tier.short → label の順。未知の ID は na */
+function shortAdviceOf(tierId, policy) {
+  const p = policy || loadPolicy();
+  const def = tierId === p.na.id ? p.na : (p.tiers.find(t => t.id === tierId) || p.na);
+  return def.short || def.label;
+}
+
 /** 検証項目 1 つの {score,max,observed,reason} を breakdown から取り出す */
 function pickCheck(breakdown, check) {
   const axis = breakdown && breakdown[check.axis];
@@ -176,7 +198,7 @@ function publicPolicy(policy) {
     headline: p.headline, headlineNoRating: p.headlineNoRating,
     coverageLabel: p.coverageLabel, lastCheckedLabel: p.lastCheckedLabel,
     pendingLabel: p.pendingLabel, notObservedLabel: p.notObservedLabel,
-    checks: p.checks, metaHeading: p.metaHeading, meta: p.meta, pages: p.pages
+    checks: p.checks, metaHeading: p.metaHeading, meta: p.meta, pages: p.pages, display: p.display || null
   };
 }
 
@@ -188,6 +210,6 @@ function injectTrustPolicy(html, policy) {
 }
 
 module.exports = {
-  loadPolicy, tierOf, evaluate, toSlim, toCompact, fromCompact,
+  loadPolicy, displayOf, shortAdviceOf, tierOf, evaluate, toSlim, toCompact, fromCompact,
   lastCheckedFrom, injectTrustPolicy, publicPolicy, TRUST_POLICY_RE, POLICY_PATH
 };

@@ -64,7 +64,6 @@ function shopCard(s, num, pageId) {
   const link = pageId ? `\n          <a href="../stores/${esc(pageId)}.html" class="shop-detail-link">詳細ページを見る</a>` : '';
   return `    <div class="shop-card">
       <img class="shop-card-photo" src="${photo}" alt="${name}" loading="lazy" decoding="async">
-      <div class="shop-num">${String(num).padStart(2, '0')}</div>
       <div class="shop-name">${name}</div>
       <div class="shop-area">${area}${genre ? ' / ' + genre : ''}</div>
       <p class="shop-desc">${desc}</p>

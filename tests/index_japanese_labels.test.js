@@ -334,7 +334,7 @@ test('結果の上の帯（絞り込み結果・件数・シェア）と並べ�
   const options = Array.from(sortBar.matchAll(/<option value="([^"]+)"[^>]*>([^<]*)<\/option>/g)).map((m) => [m[1], m[2]]);
   assert.deepStrictEqual(options, [
     ['recommend', 'おすすめ順'], ['view-desc', '人気順'], ['trend-desc', '話題沸騰順'], ['new-desc', '新着順'],
-    ['price-asc', '予算が安い順'], ['price-desc', '予算が高い順'], ['cc-desc', '口コミ信頼度順'],
+    ['price-asc', '予算が安い順'], ['price-desc', '予算が高い順'],
   ]);
   [['結果の上の帯', summary], ['並べ替えの行', sortBar]].forEach(([name, html]) => {
     assertNoEnglish(visibleText(html), name + 'の文字');
