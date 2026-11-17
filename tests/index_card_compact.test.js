@@ -135,7 +135,7 @@ test('CSS: スマホ（768px 以下）のグリッドは 2 列の写真タイル
 });
 
 test('CSS: 口コミ件数は割れずに折り返す（320px で「（2,170」と「件）」に割れた）', () => {
-  assert.ok(cssBody('.card-rating-n').includes('white-space:nowrap'));
+  assert.ok(cssBody('.card-rating-n').includes('word-break:keep-all') && cssBody('.card-rating-n').includes('overflow-wrap:anywhere'));
   assert.ok(cssBody('.card-rating').includes('flex-wrap:wrap') || /(?:^|\n)\.card-rating\{flex-wrap:wrap;\}/.test(INDEX));
 });
 

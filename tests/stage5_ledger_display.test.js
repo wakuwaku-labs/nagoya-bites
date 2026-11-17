@@ -96,7 +96,8 @@ test('店舗ページ: 内訳の見出しに段階の記号・点数・項目ご
   assert.ok(!/ \/ 100/.test(html), '0〜100点を出さない');
   assert.ok(!/\d+\/\d+点/.test(html), '項目ごとの点数を出さない');
   assert.ok(!/class="trust-tier/.test(html), '段階の記号を出さない');
-  assert.match(html, /出所: Googleマップの口コミ（2026-11-07取得）/);
+  assert.match(html, /9項目中9項目を確認/);
+  assert.ok(!/出所:/.test(html), '出所は最初の画面の1か所だけ');
 });
 
 test('店舗ページ: 生成器に点数の構造化データ・記号つきの題が残っていない', () => {

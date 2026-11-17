@@ -230,13 +230,12 @@ function buildTrustBreakdown(cc, rt) {
   if (!rows) return '';
   const tierDef = rt.tier === P.na.id ? P.na : (P.tiers.find(t => t.id === rt.tier) || P.na);
   const scoreTxt = typeof rt.score === 'number' ? `${rt.score}` : '—';
-  const metaLine = `${P.coverageLabel.replace('{observed}', rt.coverage.observed).replace('{total}', rt.coverage.total)}${rt.lastChecked ? ' ・ ' + P.lastCheckedLabel.replace('{date}', rt.lastChecked) : ''}`;
+  const metaLine = P.coverageLabel.replace('{observed}', rt.coverage.observed).replace('{total}', rt.coverage.total);
   return `
   <div class="trust-breakdown">
     <h2>${escapeHtml(P.name)}</h2>
     <p class="trust-headline">${TRUST_DISPLAY.showTierId ? `<span class="trust-tier ${tierDef.cssClass}">${escapeHtml(rt.tier)}</span>` : ''}${TRUST_DISPLAY.showScore ? `<span class="trust-score">${scoreTxt} / 100</span> — ` : ''}${escapeHtml(rt.headline || '')}</p>
     <p class="trust-meta-line">${escapeHtml(metaLine)}</p>
-${rt.lastChecked && TRUST_DISPLAY.provenance ? `    <p class="trust-meta-line trust-provenance">${escapeHtml(TRUST_DISPLAY.provenance.replace('{date}', rt.lastChecked))}</p>\n` : ''}
     <details class="trust-details">
       <summary>内訳を見る（${P.checks.length}つの検証項目）</summary>
       <p class="trust-breakdown-intro">${escapeHtml(P.name)}は「${escapeHtml(P.question)}」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
@@ -753,7 +752,7 @@ function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals)
     score: typeof rtSlim.s === 'number' ? rtSlim.s : null,
     tier: rtSlim.t,
     headline: (rtRating > 0 && rtCount > 0)
-      ? TRUST_POLICY.headline.replace('{rating}', rtRating).replace('{count}', rtCount).replace('{advice}', rtTierDef.advice)
+      ? TRUST_POLICY.headline.replace('{rating}', rtRating.toFixed(1)).replace('{count}', rtCount.toLocaleString('ja-JP')).replace('{advice}', rtTierDef.advice)
       : TRUST_POLICY.headlineNoRating.replace('{advice}', rtTierDef.advice),
     coverage: { observed: rtCov[0] || '0', total: rtCov[1] || TRUST_POLICY.checks.length },
     lastChecked: rtSlim.d || ''
@@ -762,10 +761,10 @@ function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals)
   const ccsLabel = rt ? (TRUST_DISPLAY.showTierId ? `${TRUST_POLICY.name} ${rt.tier}` : `${TRUST_DISPLAY.label} ${trustDisplay.shortAdviceOf(rt.tier, TRUST_POLICY)}`) : '';
   // 最初の画面の要約（I-14a）: ★と出典・件数と口コミ信頼度の札を 1 行に、その下に距離と予算の 1 行、条件のラベル。中身の無い行は出さない
   const glance = buildStoreGlance(s);
-  const glanceScoreHtml = score ? `<div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>${score}</div>${glance.note ? `<span class="score-note">${escapeHtml(glance.note)}</span>` : ''}` : '';
+  const glanceScoreHtml = score ? `<div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>${parseFloat(score) > 0 ? parseFloat(score).toFixed(1) : score}</div>${glance.note ? `<span class="score-note">${glance.note}</span>` : ''}` : '';
   const glanceBadgeHtml = ccsLabel ? `<span class="ccs-badge${ccsPending ? ' ccs-badge-pending' : ''}" title="${escapeHtml(TRUST_POLICY.name)}：${escapeHtml(rtTierDef.label)}${ccsPending ? '（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）' : ''}">${TRUST_DISPLAY.showTierId ? `${escapeHtml(TRUST_POLICY.name)}<span class="ccs-tier ${rtTierDef.cssClass}">${escapeHtml(rt.tier)}</span>` : `${escapeHtml(TRUST_DISPLAY.label)}<span class="ccs-tier ${rtTierDef.cssClass}">${escapeHtml(trustDisplay.shortAdviceOf(rt.tier, TRUST_POLICY))}</span>`}</span>` : '';
   const glanceRowHtml = (glanceScoreHtml || glanceBadgeHtml) ? `\n  <div class="store-glance-row">\n    ${[glanceScoreHtml, glanceBadgeHtml].filter(Boolean).join('\n    ')}\n  </div>` : '';
-  const glanceProvHtml = (score && rt && rt.lastChecked && TRUST_DISPLAY.provenance) ? `\n    <p class="store-provenance">${escapeHtml(TRUST_DISPLAY.provenance.replace('{date}', rt.lastChecked))}</p>` : '';
+  const glanceProvHtml = (score && rt && rt.lastChecked && TRUST_DISPLAY.provenance) ? `\n    <p class="store-provenance">${escapeHtml(TRUST_DISPLAY.provenance.replace('{date}', require('./scripts/lib/rating_display').dateText(rt.lastChecked) || rt.lastChecked))}</p>` : '';
   const glanceFactsHtml = glance.facts.length ? `\n    <p class="store-facts">${glance.facts.map(escapeHtml).join('・')}</p>` : '';
   const glanceChipsHtml = glance.chips.length ? `\n    <ul class="store-chips" aria-label="この店の条件">${glance.chips.map(c => `<li>${escapeHtml(c)}</li>`).join('')}</ul>` : '';
   const point    = s['おすすめポイント'] || '';
@@ -1088,12 +1087,13 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .score svg{width:14px;height:14px;fill:#d4a017;}
 .store-glance{margin-bottom:1.2rem;}
 .store-glance-row{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;}
-.score-note{font-size:var(--fs-xs);color:var(--muted);}
-.store-provenance{margin:.4rem 0 0;font-size:var(--fs-sm);line-height:var(--lh-ui);color:var(--muted);}
+.score-note{word-break:keep-all;overflow-wrap:anywhere;font-size:var(--fs-xs);color:var(--muted);}
+.nb-nowrap{white-space:nowrap;}
+.store-provenance{word-break:keep-all;overflow-wrap:anywhere;margin:.4rem 0 0;font-size:var(--fs-sm);line-height:var(--lh-ui);color:var(--muted);}
 .store-facts{margin:.6rem 0 0;font-size:var(--fs-sm);line-height:var(--lh-ui);color:var(--text);}
 .store-chips{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0;padding:0;}
 .store-chips li{font-size:var(--fs-xs);letter-spacing:0;color:var(--muted);border:1px solid var(--border);padding:.3rem .7rem;border-radius:2px;background:var(--surface);}
-.ccs-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.25rem .7rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;margin-left:.6rem;}
+.ccs-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.25rem .7rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;}
 .ccs-badge.ccs-badge-pending{color:#767676;border-color:rgba(120,120,120,.35);background:rgba(120,120,120,.06);}
 .ccs-badge .ccs-tier{font-weight:700;font-size:var(--fs-xs);margin-left:.25rem;letter-spacing:0;font-family:var(--font-body);}
 .cc-tier-SS{color:#1b5e20;}.cc-tier-A{color:#2e7d32;}.cc-tier-B{color:#46752a;}.cc-tier-C{color:#5f6b63;}.cc-tier-D{color:#767676;}.cc-tier-NA{color:#767676;font-style:italic;}

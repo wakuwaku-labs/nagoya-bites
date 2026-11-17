@@ -65,7 +65,7 @@ test('見えるのは 見出し・段階と助言の 1 行・観測できた項�
   // 段階の記号・点数は出さず、助言の 1 行だけ（ADR 0069 決定1・段階5 S5-4）
   assert.match(outside, /<p class="trust-headline">Google★4\.3（39件）は、おおむね参考にできます。/, '助言の 1 行');
   assert.ok(!outside.includes('72 / 100') && !outside.includes('class="trust-tier'), '点数・段階の記号は出さない');
-  assert.match(outside, /<p class="trust-meta-line">検証 7\/9項目 ・ Google口コミ取得日 2026-06-01<\/p>/, 'いくつの項目を観測できたか（段階の重みを読む手がかり）');
+  assert.match(outside, /<p class="trust-meta-line">9項目中7項目を確認<\/p>/, 'いくつの項目を観測できたか（段階の重みを読む手がかり）');
   for (const cls of ['trust-axis-row', 'trust-breakdown-intro', 'trust-meta-heading']) {
     assert.ok(!outside.includes(cls), `${cls} は畳む側（外に出さない）`);
     assert.ok(inside.includes(cls), `${cls} は <details> の中`);
