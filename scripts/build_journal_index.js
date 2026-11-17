@@ -19,6 +19,7 @@ const JOURNAL_INDEX = path.join(ROOT, 'journal', 'index.html');
 const FEED = path.join(ROOT, 'journal', 'feed.xml');
 const ATOM_FEED = path.join(ROOT, 'journal', 'feed.atom');
 const SITE_URL = 'https://nagoya-bites.com';
+const { CATEGORIES, categoryOf, isPublic } = require('./lib/journal_category');
 
 function esc(s) {
   return String(s || '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
@@ -34,6 +35,20 @@ function themeLabel(theme) {
   })[theme] || theme;
 }
 
+// 一覧の分類切り替え（S3-3）。JS が無い環境では隠れたまま（hidden）で、全記事がそのまま並ぶ。
+// 切り替えは journal/index.html 側のスクリプトが data-category を見て行う。URL（記事・一覧）は変えない。
+function buildFilterBar(entries) {
+  const counts = { topic: 0, guide: 0, compare: 0 };
+  entries.forEach(e => { counts[categoryOf(e)]++; });
+  const chip = (key, label, n, pressed) =>
+    `<button type="button" class="jf-chip" data-filter="${key}" aria-pressed="${pressed ? 'true' : 'false'}">${esc(label)}<span class="jf-count">${n}</span></button>`;
+  const chips = [chip('all', 'すべて', entries.length, true)]
+    .concat(Object.keys(CATEGORIES).map(k => chip(k, CATEGORIES[k].label, counts[k], false)));
+  return `<div class="journal-filter" id="journal-filter" role="group" aria-label="記事の分類で絞り込む" hidden>
+    ${chips.join('\n    ')}
+  </div>`;
+}
+
 function buildList(entries) {
   if (!entries || entries.length === 0) {
     return `<div class="empty-state">
@@ -42,8 +57,8 @@ function buildList(entries) {
   </div>`;
   }
   const sorted = entries.slice().sort((a, b) => b.date.localeCompare(a.date));
-  return sorted.map(e => `
-  <a class="journal-entry" href="${esc(e.slug)}.html">
+  return buildFilterBar(sorted) + '\n' + sorted.map(e => `
+  <a class="journal-entry" href="${esc(e.slug)}.html" data-category="${categoryOf(e)}">
     <div class="entry-date">${esc(e.date)}</div>
     <div class="entry-body">
       <h2>${esc(e.title)}</h2>
@@ -215,8 +230,8 @@ function main() {
   const published = JSON.parse(fs.readFileSync(PUBLISHED, 'utf8'));
   const allEntries = published.entries || [];
   const today = todayJST();
-  // 未来日付のエントリは掲載しない
-  const entries = allEntries.filter(e => e.date <= today);
+  // 未来日付のエントリと、取り下げた記事（status: withdrawn・S4-4）は一覧・フィード・トップに載せない
+  const entries = allEntries.filter(e => e.date <= today && isPublic(e));
   const listHtml = buildList(entries);
   updateJournalIndex(listHtml);
   fs.writeFileSync(FEED, buildFeed(entries));
@@ -231,4 +246,4 @@ if (require.main === module) main();
 
 // build.js から呼ぶための export — トップ Daily Journal セクションの
 // 同期忘れを防ぐため、build.js 末尾でも自動実行される。
-module.exports = { buildList, buildFeed, main, readHeroPhoto, readCredit, renderLatestCard, updateRootLatestSection };
+module.exports = { buildFilterBar, buildList, buildFeed, main, readHeroPhoto, readCredit, renderLatestCard, updateRootLatestSection };
