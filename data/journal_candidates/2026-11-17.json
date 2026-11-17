@@ -1,0 +1,456 @@
+{
+  "date": "2026-11-17",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "金山の忘年会に火鍋『蜀漢 ショクカン 金山駅店』、飲み放題込み5,000円と個室20名まで",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 93,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "金山",
+          "feature": "stores/area/kanayama/index.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 7日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 4件 (時期,繁忙,予約,価格帯) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 171字 +4",
+          "title 45字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「金山」+4",
+          "タイトルにシーン語「個室」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "93点（自動公開ライン 100点）。主な不足: topicality -10 / recency -3 / writability -2",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "金山駅1分の個室で忘年会、四川火鍋 蜀漢は2名から8名の個室をつないで20名",
+      "verdict": "HOLD",
+      "total": 67,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "金山",
+          "feature": "stores/area/kanayama/index.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 12日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (予約) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 110字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「金山」+4",
+          "タイトルにシーン語「個室」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "金山で忘年会の幹事に、火鍋の蜀漢は料理3,850円より飲み放題込み5,000円",
+      "verdict": "HOLD",
+      "total": 63,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 8,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "金山",
+          "feature": "stores/area/kanayama/index.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 8日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (価格帯) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 144字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「金山」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "金山の深夜まで開く火鍋店で遅い時間の忘年会",
+      "verdict": "HOLD",
+      "total": 58,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "金山",
+          "feature": "stores/area/kanayama/index.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 8日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 55字 +2",
+          "title 21字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「金山」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "名古屋の忘年会、会費5,000円に収める店選び",
+      "verdict": "HOLD",
+      "total": 52,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 3,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 8日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 51字 +2",
+          "title 23字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「忘年会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": {
+    "topic": "喫茶・カフェ",
+    "week": "2026-W47",
+    "slot": 1,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "93点（自動公開ライン 100点）。主な不足: topicality -10 / recency -3 / writability -2",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "金山の忘年会に火鍋『蜀漢 ショクカン 金山駅店』、飲み放題込み5,000円と個室20名まで",
+      "lead_draft": "忘年会の予約が動き出す11月中旬。金山駅2番出口から徒歩1分の四川火鍋店「蜀漢 金山駅店」は、120分飲み放題つきのコースを5,000円から出している。料理だけのコースに飲み放題を足すより安くなる組み合わせがある一方、ラストオーダーは90分。個室は最大20名、それを超えると貸切の相談になる。幹事が予約前に見ておく価格帯と席の条件をまとめた。",
+      "angle": "飲み放題込みコースと料理のみ＋飲み放題追加の価格帯を比べ、個室の上限20名・貸切50名からの席の段差と予約締切・繁忙時期の動き方を幹事目線で読む",
+      "main_store": {
+        "name": "四川伝統火鍋 蜀漢 ショクカン 金山駅店",
+        "id": "J001260825",
+        "area": "金山",
+        "genre": "四川火鍋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 蜀漢 金山駅店（5,000円・120分飲み放題コース）",
+          "url": "https://www.hotpepper.jp/strJ001260825/course_cnod12/",
+          "date": "2026-07-14"
+        },
+        {
+          "label": "ホットペッパーグルメ 蜀漢 金山駅店（店舗情報・席数・個室）",
+          "url": "https://www.hotpepper.jp/strJ001260825/"
+        },
+        {
+          "label": "ぐるなび 四川伝統火鍋 蜀漢 金山店（個室・辛さ3段階）",
+          "url": "https://r.gnavi.co.jp/e9jvawph0000/"
+        },
+        {
+          "label": "PR TIMES ミクステンド（調整さん）「忘年会に参加予定で去年の会費把握する8割強『会費値上げ』予想」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000072.000032995.html",
+          "date": "2026-11-02"
+        },
+        {
+          "label": "@DIME 調整さん調査「忘年会の会費の値上げを検討している幹事の割合」",
+          "url": "https://dime.jp/genre/2169842/",
+          "date": "2026-11-09"
+        },
+        {
+          "label": "PR TIMES 健康そむりえ「21時までにお開きにしてほしい」64.3%",
+          "url": "https://prtimes.jp/main/html/rd/p/000000012.000102768.html",
+          "date": "2026-11-10"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "金山で忘年会の幹事に、火鍋の蜀漢は料理3,850円より飲み放題込み5,000円",
+      "lead_draft": "金山駅前の四川火鍋店「蜀漢 金山駅店」には、料理だけの3,850円コースと、120分飲み放題つきの5,000円コースがある。料理のみに飲み放題2,200円を足すと6,050円。飲む人が多い会なら込みのコースが1,050円安い。会費の値上げを考える幹事が多い今年、価格帯の選び方を整理した。",
+      "angle": "料理のみコース＋飲み放題追加と飲み放題込みコースの価格帯差を数字で比べ、飲まない人が多い会との分かれ目を読む",
+      "main_store": {
+        "name": "四川伝統火鍋 蜀漢 ショクカン 金山駅店",
+        "id": "J001260825",
+        "area": "金山",
+        "genre": "四川火鍋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 蜀漢 金山駅店（5,000円コース）",
+          "url": "https://www.hotpepper.jp/strJ001260825/course_cnod12/",
+          "date": "2026-07-14"
+        },
+        {
+          "label": "ホットペッパーグルメ 蜀漢 金山駅店（3,850円コース）",
+          "url": "https://www.hotpepper.jp/strJ001260825/course_cnod16/",
+          "date": "2026-07-14"
+        },
+        {
+          "label": "@DIME 調整さん調査",
+          "url": "https://dime.jp/genre/2169842/",
+          "date": "2026-11-09"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "金山駅1分の個室で忘年会、四川火鍋 蜀漢は2名から8名の個室をつないで20名",
+      "lead_draft": "金山駅2番出口から徒歩1分の「蜀漢 金山駅店」は、2名から8名までの個室をつなげて最大20名まで使える。コースの予約も4〜20名。21名を超える会は50名からの貸切との間で店への相談になる。席の段差を幹事向けにまとめた。",
+      "angle": "個室の組み合わせと貸切人数の段差から、人数ごとの予約の取り方を読む",
+      "main_store": {
+        "name": "四川伝統火鍋 蜀漢 ショクカン 金山駅店",
+        "id": "J001260825",
+        "area": "金山",
+        "genre": "四川火鍋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 蜀漢 金山駅店（店舗情報）",
+          "url": "https://www.hotpepper.jp/strJ001260825/"
+        },
+        {
+          "label": "ぐるなび 四川伝統火鍋 蜀漢 金山店",
+          "url": "https://r.gnavi.co.jp/e9jvawph0000/"
+        },
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "名古屋の忘年会、会費5,000円に収める店選び",
+      "lead_draft": "今年の忘年会は会費の値上げを考える幹事が5割近い。会費5,000円に収めるための店の選び方を整理した。",
+      "angle": "会費据え置きのための店選びの一般論",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "@DIME 調整さん調査",
+          "url": "https://dime.jp/genre/2169842/",
+          "date": "2026-11-09"
+        },
+        {
+          "label": "東京商工リサーチ",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "金山の深夜まで開く火鍋店で遅い時間の忘年会",
+      "lead_draft": "金山の蜀漢は翌1時まで営業し、コースは22時30分まで予約できる。仕事終わりが遅い職場の忘年会向けに整理した。",
+      "angle": "遅い開始時刻の忘年会の時間帯",
+      "main_store": {
+        "name": "四川伝統火鍋 蜀漢 ショクカン 金山駅店",
+        "id": "J001260825",
+        "area": "金山",
+        "genre": "四川火鍋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 蜀漢 金山駅店",
+          "url": "https://www.hotpepper.jp/strJ001260825/"
+        },
+        {
+          "label": "@DIME 調整さん調査",
+          "url": "https://dime.jp/genre/2169842/",
+          "date": "2026-11-09"
+        }
+      ]
+    }
+  ]
+}

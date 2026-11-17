@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-17T00:11:29.141Z",
+  "generatedAt": "2026-11-17T03:16:43.745Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 7315,
-    "pageViews": 8760,
-    "sessions": 7700,
+    "activeUsers": 7332,
+    "pageViews": 8773,
+    "sessions": 7710,
     "avgSessionDuration": 56,
     "bounceRate": 0.674,
     "pagesPerSession": 1.14
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2811,
-      "direct": 4518,
+      "organic": 2814,
+      "direct": 4527,
       "social": 57,
       "ai_assistant": 240,
       "referral": 46,
@@ -39,12 +39,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 4490
+      "sessions": 4499
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1279
+      "sessions": 1282
     },
     {
       "source": "bing",
@@ -210,8 +210,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 431,
-      "sessions": 408
+      "pageViews": 432,
+      "sessions": 409
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -236,7 +236,7 @@
   ],
   "cta": {
     "outboundClicks": 397,
-    "ctaClickRate": 5.2,
+    "ctaClickRate": 5.1,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -1156,7 +1156,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 7315,
+    "value": 7332,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
