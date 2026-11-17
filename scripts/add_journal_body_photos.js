@@ -71,12 +71,12 @@ function bodyRange(html) {
   if (start < 0) return null;
   let from = start + startTag.length;
   // 判断材料つきの記事（S3-2）は本文の前に「先に結論」の箱がある。箱の後ろから本文が始まり、判断材料の部品（<details>・nb-judge）の手前までが本文
-  const conc = html.indexOf('<div class="insider-box nb-conclusion">', from);
+  const conc = html.indexOf('<div class="insider-box nb-jbox nb-jconclusion">', from);
   if (conc >= 0 && html.slice(from, conc).trim() === '') {
     const closeAt = html.indexOf('</ul></div>', conc);
     if (closeAt >= 0) from = closeAt + '</ul></div>'.length;
   }
-  const ends = ['<div class="insider-box">', '<div class="nb-guide-stats', '<details class="nb-judge', '<div class="nb-judge', '<div class="store-list">']
+  const ends = ['<div class="insider-box">', '<div class="nb-guide-stats', '<details class="nb-jbox', '<div class="nb-jbox', '<div class="store-list">']
     .map((t) => html.indexOf(t, from)).filter((i) => i >= 0);
   let to = ends.length ? Math.min(...ends) : -1;
   if (to < 0) return null;

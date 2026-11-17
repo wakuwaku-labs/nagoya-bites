@@ -76,25 +76,28 @@ function liList(arr) { return (arr || []).map((s) => String(s || '').trim()).fil
 
 /**
  * 「先に結論」（3行）。class に insider-box を残す: X（x_post.js）・note（note_draft.js）が箇条書きを引用元にしているため。
- * 入力 conclusion: { fit: 向く人, check_first: 来店前にいちばん確かめたい点 }。分からなかった点の数は checklist から数える。
- * fit も check_first も無ければ空（古い入力は従来の「知っておきたいポイント」のまま）。
+ * 向く人・向かない人・来店前にいちばん確かめたい点（分からなかった点の数つき）を1つの箱にまとめる（箱を増やさない）。
+ * 向く人は conclusion.fit、無ければ fit_for をつなぐ。向かない人は not_fit_for。分からなかった点の数は checklist から数える。
+ * 向く人も確かめたい点も無ければ空（古い入力は従来の「知っておきたいポイント」のまま）。
  */
 function buildConclusion(input, std = loadStandard()) {
   const c = (input && input.conclusion) || {};
-  if (!c.fit && !c.check_first) return '';
+  const fit = String(c.fit || '').trim() || (input && input.fit_for || []).map((x) => String(x || '').trim()).filter(Boolean).join('／');
+  if (!fit && !c.check_first) return '';
+  const not = ((input && input.not_fit_for) || []).map((x) => String(x || '').trim()).filter(Boolean).join('／');
   const unknown = unknownCount(input, std);
   const lines = [];
-  if (c.fit) lines.push(`向く人: ${c.fit}`);
-  if (c.check_first) lines.push(`来店前にいちばん確かめたい点: ${c.check_first}`);
-  lines.push(`分からなかった点: ${unknown}点（下の「来店前に確かめたいこと」に項目ごとに書いています）`);
-  return `<div class="insider-box nb-conclusion"><p class="insider-title">先に結論</p><ul>${liList(lines)}</ul></div>`;
+  if (fit) lines.push(`向く人: ${fit}`);
+  if (not) lines.push(`向かない人: ${not}`);
+  if (c.check_first) lines.push(`来店前にいちばん確かめたい点: ${c.check_first}（分からなかった点: ${unknown}点・下の一覧）`);
+  return `<div class="insider-box nb-jbox nb-jconclusion"><p class="insider-title">先に結論</p><ul>${liList(lines)}</ul></div>`;
 }
 
 function rowText(r, std) {
   const md = monthDayJa(r.checked);
   const tail = [r.source, md ? `${md}確認` : ''].filter(Boolean).join('・');
   if (r.status === 'confirmed') return `${r.value}${tail ? `（${tail}）` : ''}`;
-  return `${std.unconfirmed.notFoundText}${tail ? `（${tail}）` : '（確認先・確認日は未記入）'}`;
+  return `${std.unconfirmed.notFoundText}${tail ? `（${tail}）` : ''}。予約時に店へ確認を`;
 }
 
 /** 「来店前に確かめたいこと」。定型7項目を1項目1行。確認できた／確認できなかったは言葉で書く（色だけで区別しない） */
@@ -103,10 +106,11 @@ function buildChecklist(input, std = loadStandard()) {
   if (!has) return '';
   const { rows, extras } = normalizeChecklist(input.checklist, std);
   const li = (r) => {
-    const state = r.status === 'confirmed' ? '確認できた' : '確認できなかった';
-    return `<li><span class="nb-check-name">${esc(r.label)}</span> <span class="nb-check-state">${state}</span>: ${esc(rowText(r, std))}</li>`;
+    // 札は確認できなかった行だけ（全行に付けると目立たない）。確認できた行は項目名と値だけ
+    const flag = r.status === 'confirmed' ? '' : ' <span class="nb-check-state">確認できなかった</span>';
+    return `<li><span class="nb-check-name">${esc(r.label)}</span>${flag}: ${esc(rowText(r, std))}</li>`;
   };
-  return `<details class="nb-judge nb-check" open><summary>来店前に確かめたいこと</summary><ul>${rows.concat(extras).map(li).join('')}</ul></details>`;
+  return `<details class="nb-jbox nb-check" open><summary>来店前に確かめたいこと</summary><ul>${rows.concat(extras).map(li).join('')}</ul></details>`;
 }
 
 /** 「向く人・向かない人」。両方空なら出さない */
@@ -115,7 +119,7 @@ function buildFit(input) {
   const no = liList(input && input.not_fit_for);
   if (!yes && !no) return '';
   const col = (title, list) => (list ? `<div class="nb-fit-col"><h3 class="nb-fit-title">${title}</h3><ul>${list}</ul></div>` : '');
-  return `<div class="nb-judge nb-fit">${col('向く人', yes)}${col('向かない人', no)}</div>`;
+  return `<div class="nb-jbox nb-fit">${col('向く人', yes)}${col('向かない人', no)}</div>`;
 }
 
 /**
@@ -125,7 +129,7 @@ function buildFit(input) {
 function buildCorrections(input) {
   const list = ((input && input.corrections) || []).filter((c) => c && c.text);
   const lis = list.map((c) => `<li>${c.date ? `<span class="nb-corr-date">${esc(monthDayJa(c.date) || c.date)}</span> ` : ''}${esc(c.text)}</li>`).join('');
-  return `<details class="nb-judge nb-corrections" data-correction-log${list.length ? '' : ' hidden'}><summary>訂正の履歴</summary><ul>${lis}</ul></details>`;
+  return `<details class="nb-jbox nb-corrections" data-correction-log${list.length ? '' : ' hidden'}><summary>訂正の履歴</summary><ul>${lis}</ul></details>`;
 }
 
 /** 写真の種類（店の提供写真・プレスリリース・完成予想図）。不明なら空 */

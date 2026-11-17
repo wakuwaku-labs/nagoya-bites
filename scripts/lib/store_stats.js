@@ -126,7 +126,7 @@ function buildGuideBlock({ area, genre, checked, stores } = {}) {
   const when = ymdJa(asOf) ? `${ymdJa(asOf)}時点` : '取得日不明';
   const lis = guideSentences(stats, std).map((t) => `<li>${esc(t)}</li>`).join('');
   const target = [area, genre].filter(Boolean).join('・') || '全エリア・全ジャンル';
-  return `<div class="nb-guide-stats"><p class="nb-guide-title">掲載データの集計（${esc(target)}・対象${stats.n}店・${esc(when)}）</p><ul>${lis}</ul><p class="nb-guide-note">このサイトに載っている店の中での集計です。名古屋全体の実態を表すものではありません。営業中の店だけを数え、掲載情報は店が公開した内容にもとづきます。</p></div>`;
+  return `<div class="nb-guide-stats nb-jbox"><p class="nb-guide-title">掲載データの集計（${esc(target)}・対象${stats.n}店・${esc(when)}）</p><ul>${lis}</ul><p class="nb-guide-note">このサイトに載っている店の中での集計です。名古屋全体の実態を表すものではありません。営業中の店だけを数え、掲載情報は店が公開した内容にもとづきます。</p></div>`;
 }
 
 module.exports = { aggregate, selectStores, guideSentences, buildGuideBlock, bandLower, plainBudget, median };

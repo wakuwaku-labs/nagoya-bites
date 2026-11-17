@@ -45,9 +45,9 @@ function parseArticle(html) {
   // 本文は art-body の頭から店カードの前まで。「先に結論」「知っておきたいポイント」の箱と判断材料の部品（S3-2）は本文に混ぜない
   const bodyHtml = between(html, /<div class="art-body">/, /<div class="store-list">|<\/article>/)
     .replace(/<div class="insider-box[^"]*">[\s\S]*?<\/ul>\s*<\/div>/g, '')
-    .replace(/<details class="nb-judge[\s\S]*?<\/details>/g, '')
-    .replace(/<div class="nb-judge[\s\S]*?<\/div>\s*<\/div>/g, '')
-    .replace(/<div class="nb-guide-stats">[\s\S]*?<\/p>\s*<\/div>/g, '')
+    .replace(/<details class="nb-jbox[\s\S]*?<\/details>/g, '')
+    .replace(/<div class="nb-jbox nb-fit[\s\S]*?<\/div>\s*<\/div>/g, '')
+    .replace(/<div class="nb-guide-stats[^"]*">[\s\S]*?<\/p>\s*<\/div>/g, '')
     .replace(/<!--[\s\S]*?-->/g, '')
     .replace(/<div class="tips-box"[\s\S]*?<\/div>/g, '')
     .replace(/<p class="nb-site-intro">[\s\S]*?<\/p>/g, '');

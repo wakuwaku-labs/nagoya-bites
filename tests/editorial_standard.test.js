@@ -39,9 +39,12 @@ test('状態の帯: 確認日・未訪問・AIが作成（決定5）。開店前
 test('チェックリスト: 定型7項目を順に出し、未記入・確認できなかった項目は空欄にせず言葉で書く', () => {
   const html = ES.buildChecklist(INPUT);
   assert.strictEqual((html.match(/<li>/g) || []).length, 7);
-  assert.match(html, /お通し・席料<\/span> <span class="nb-check-state">確認できた<\/span>: お通し代 300円（ホットペッパー掲載・11月16日確認）/);
-  assert.match(html, /喫煙<\/span> <span class="nb-check-state">確認できなかった<\/span>: 記載なし（公式・ホットペッパー・11月16日確認）/);
-  assert.match(html, /支払い方法<\/span> <span class="nb-check-state">確認できなかった<\/span>: 記載なし（確認先・確認日は未記入）/);
+  // 札は確認できなかった行だけ
+  assert.match(html, /お通し・席料<\/span>: お通し代 300円（ホットペッパー掲載・11月16日確認）/);
+  assert.match(html, /喫煙<\/span> <span class="nb-check-state">確認できなかった<\/span>: 記載なし（公式・ホットペッパー・11月16日確認）。予約時に店へ確認を/);
+  assert.match(html, /支払い方法<\/span> <span class="nb-check-state">確認できなかった<\/span>: 記載なし。予約時に店へ確認を/);
+  assert.strictEqual((html.match(/nb-check-state/g) || []).length, 6);
+  assert.ok(!html.includes('未記入'));
   assert.strictEqual(ES.unknownCount(INPUT), 6);
 });
 
@@ -68,13 +71,17 @@ test('訂正の履歴: 空でも data-correction-log の要素と空の ul を�
 test('記事: 6つの部品が出て、従来の要点欄は置き換わる。部品が無い入力は従来どおり', () => {
   const html = renderHtml(INPUT);
   assert.match(html, /<p class="nb-status-band" role="note">11月16日確認・編集部は未訪問・公開情報をもとにAIが作成<\/p>/);
-  assert.match(html, /class="insider-box nb-conclusion"><p class="insider-title">先に結論/);
+  assert.match(html, /class="insider-box nb-jbox nb-jconclusion"><p class="insider-title">先に結論/);
+  assert.match(html, /向く人: 少人数の宴会/);
+  assert.match(html, /向かない人: 煙が苦手な人/);
+  assert.match(html, /分からなかった点: 6点/);
+  // 帯は日付の行の直下、先に結論はリードの直後（1画面目に出す）
+  assert.ok(html.indexOf('class="art-meta"') < html.indexOf('nb-status-band') && html.indexOf('nb-status-band') < html.indexOf('art-lead') && html.indexOf('art-lead') < html.indexOf('nb-jconclusion'));
   assert.match(html, /来店前に確かめたいこと/);
-  assert.match(html, /向く人<\/h3>/);
   assert.match(html, /data-correction-log hidden/);
   assert.ok(!html.includes('知っておきたいポイント'));
   assert.ok(!html.includes('NB-LEGACY-INSIDER'));
-  const legacy = renderHtml({ ...INPUT, conclusion: undefined, checklist: undefined });
+  const legacy = renderHtml({ ...INPUT, conclusion: undefined, checklist: undefined, fit_for: undefined, not_fit_for: undefined });
   assert.ok(legacy.includes('<p class="insider-title">知っておきたいポイント</p>'));
   assert.ok(legacy.includes('旧ポイント'));
   assert.ok(!legacy.includes('NB-LEGACY-INSIDER'));
@@ -129,13 +136,13 @@ test('店選びガイド: 実データで作れ、対象件数・取得日・「
   assert.match(block, /対象\d+店・11月17日時点/);
   assert.match(block, /名古屋全体の実態を表すものではありません/);
   const html = renderHtml({ ...INPUT, article_type: 'guide', guide: { area: '名古屋駅', genre: '居酒屋', checked: '2026-11-17' } });
-  assert.match(html, /class="nb-guide-stats"/);
+  assert.match(html, /class="nb-guide-stats nb-jbox"/);
   assert.ok(html.indexOf('nb-guide-stats') < html.indexOf('<summary>来店前に確かめたいこと'));
 });
 
 test('記事の部品のスタイルが nb.css にあり、文字は13px未満のトークンを使わない', () => {
   const css = fs.readFileSync(path.join(__dirname, '..', 'assets/css/nb.css'), 'utf8');
-  for (const sel of ['.nb-status-band', '.nb-judge', '.nb-fit', '.nb-guide-stats']) assert.ok(css.includes(sel), sel);
+  for (const sel of ['.nb-status-band', '.nb-jbox', '.nb-fit', '.nb-jconclusion']) assert.ok(css.includes(sel), sel);
   const block = css.slice(css.indexOf('.nb-status-band{'), css.indexOf('.art-img-kind'));
   assert.ok(!/fs-2xs/.test(block));
 });
