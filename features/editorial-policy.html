@@ -29,11 +29,11 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   "@type": "Article",
   "headline": "編集規約｜NAGOYA BITES",
   "description": "名古屋の飲食店をどう選び、どう載せているか。データの出どころ、AIの使い方、金銭関係の扱い、口コミ信頼度の仕組みを公開。広告や忖度に左右されない、独立したグルメガイドの編集規約。",
-  "author": {"@type": "Organization", "name": "NAGOYA BITES"},
+  "author": {"@type": "Organization", "name": "NAGOYA BITES", "description": "記事の収集・執筆・検査・公開はAIが行い、運営者（個人）が基準を決めて例外に対応する"},
   "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
   "url": "https://nagoya-bites.com/features/editorial-policy.html",
   "datePublished": "2026-04-20",
-  "dateModified": "2026-10-13",
+  "dateModified": "2026-11-17",
   "mainEntityOfPage": "https://nagoya-bites.com/features/editorial-policy.html"
 }
 </script>
@@ -110,10 +110,10 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <div class="art-hero">
     <p class="art-eyebrow">NAGOYA BITES 編集部</p>
     <h1 class="art-title">編集<em>規約</em></h1>
-    <!-- NB_BYLINE_START --><p class="nb-byline nb-byline--end"><span>公開 <time datetime="2026-04-20">2026年4月20日</time></span><span>更新 <time datetime="2026-10-13">2026年10月13日</time></span><span>執筆 NAGOYA BITES 編集部</span></p><!-- NB_BYLINE_END -->
+    <!-- NB_BYLINE_START --><p class="nb-byline nb-byline--end"><span>公開 <time datetime="2026-04-20">2026年4月20日</time></span><span>更新 <time datetime="2026-11-17">2026年11月17日</time></span><span>執筆 NAGOYA BITES 編集部</span></p><!-- NB_BYLINE_END -->
     <div class="art-lead">
       <p>このページは、私たち編集部が NAGOYA BITES を運営するにあたって守っていることを、読者のみなさんに公開するためのものです。</p>
-      <p>運営は個人で、AIを使いながら行っています。氏名・経歴・所属は公開していません（理由は<a href="#anonymous">05</a>に書きました）。</p>
+      <p><strong>このサイトの情報収集・記事の執筆・公開前の検査・公開は、AIが行っています。</strong>人が書いた記事ではありません。運営者は個人で、選び方の基準と止める条件を決め、指摘や例外に対応します。氏名・経歴・所属は公開していません（理由は<a href="#anonymous">05</a>に書きました）。AIの役割と検査の中身は<a href="#ai-operation">02-B</a>に書きました。</p>
       <p>代わりに、<strong>どう選び、どう書いているか</strong>を、実際の手順のとおりに書きます。</p>
     </div>
   </div>
@@ -123,6 +123,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     <ol>
       <li><a href="#principles"><span class="num">01</span>編集方針の三本柱</a></li>
       <li><a href="#selection"><span class="num">02</span>掲載基準</a></li>
+      <li><a href="#ai-operation"><span class="num">02-B</span>AIによる運営と検査</a></li>
       <li><a href="#independence"><span class="num">03</span>編集の独立性</a></li>
       <li><a href="#revenue-separation"><span class="num">03-B</span>収益と編集の分離</a></li>
       <li><a href="#trust-mechanisms"><span class="num">04</span>信頼の仕組み</a></li>
@@ -195,7 +196,41 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
         <li><strong>実在を確かめる。</strong>手動で加える店は、Google の店舗情報で店名・住所・業態を照らし、確認できない店は載せません。載せたあとも、ホットペッパーの掲載終了や閉店の表示などを照らし、閉店と確かめた店は外します。</li>
         <li><strong>Google の評価はそのまま載せ、参考度を併記する。</strong>★と件数に手を加えず、直近の口コミの傾向などから「口コミ信頼度」を機械的に出します（04-D）。</li>
         <li><strong>特集に載せる店は、条件と点数で決める。</strong>テーマごとの条件（例: 価格の表示がある・Google の評価が一定以上）で絞り、点数をつけて選びます。多くの特集は毎月、掲載店を組み替えています。点数の中身と、特集の番号の意味は 07 に書きました。</li>
-        <li><strong>選定理由を添える店には、根拠の語を付ける。</strong>「訪問済」は編集部が実際に訪れた店、「公開情報ベース」は公開されている情報をもとに書いた店、「公開情報ベース（自動収集）」はAIが集めた公開情報を運営者が確認して載せた店です。</li>
+        <li><strong>選定理由を添える店には、根拠の語を付ける。</strong>「訪問済」は、訪れた日の記録を示せる店だけに付けます（いま、この語を付けている店はありません。記録のない店には付けません）。「公開情報ベース」は公開されている情報をもとにAIが書いた店、「公開情報ベース（自動収集）」はAIが集めた公開情報を、人が個別に見ないまま載せた店です。</li>
+      </ul>
+    </div>
+
+    <h2 class="section-label" id="ai-operation">02-B — AI Operation</h2>
+    <p class="art-intro">
+      <strong>NAGOYA BITES の記事は、AIが情報を集め、書き、検査し、公開しています。</strong>
+      人（運営者）が記事を1本ずつ読んで承認しているわけではありません。「人が確かめて載せている」と受け取られないよう、実態をそのまま書きます。
+    </p>
+    <div class="tips-box">
+      <p class="tips-title">AIがすること・人がすること</p>
+      <ul>
+        <li><strong>AIがすること。</strong>店と話題の情報収集、出典の照合、記事の下書きと執筆、公開前の検査、公開、公開後の定期的な見直し。</li>
+        <li><strong>運営者（個人）がすること。</strong>選び方の基準と「公開を止める条件」を決める。検査の仕組み自体を見直す。読者・店舗からの指摘や異議に対応する。検査が止めた記事のうち、判断が要る例外を見る。</li>
+        <li><strong>人が見ないこと。</strong>基準を満たして公開される記事を、公開前に人が1本ずつ読むことはしません。店を訪れて確かめた記事でもありません（記事の書き手を「訪問した人」と読ませる表現は使いません）。</li>
+      </ul>
+    </div>
+    <div class="tips-box">
+      <p class="tips-title">検査と、止める条件</p>
+      <ul>
+        <li><strong>日々のジャーナル記事は、出典を3件以上付けたものだけを公開する。</strong>出典の URL と日付を記事に残し、第三者が確かめられる形にします。</li>
+        <li><strong>載せる店は、掲載データにある実在の店だけ。</strong>記事に出す店名を掲載データ（ホットペッパーグルメ・Google の店舗情報）と照らし、見つからない店は載せません。閉店・一時休業の記録がある店は警告として記録します（いまは、これだけでは公開を止めません）。特集に載せる店も、毎日、掲載データと照合しています。</li>
+        <li><strong>写真は、その記事が扱う店のものだけ。</strong>記事の主役の店に帰属する写真だけを顔にし、出どころを書けない写真は載せません。</li>
+        <li><strong>避ける表現を検査する。</strong>人の業界関係者が店を選んだように読める語など、決めた語を全ページで検査し、見つかれば直します。</li>
+        <li><strong>基準に届かない日は出さない。</strong>点を盛って通すことはせず、日々のジャーナルは基準に届かなければその日の公開を見送ります。</li>
+      </ul>
+      <p class="nb-note" style="margin-top:.8rem;">※ 検査は機械が行うもので、事実の正しさを保証するものではありません。記事ごとの「確認できたこと」と「未確認のこと」は、記事の中に書き分けます。</p>
+    </div>
+    <div class="tips-box">
+      <p class="tips-title">間違いを見つけたとき（訂正と取り下げ）</p>
+      <ul>
+        <li><strong>事実の誤りは、見つけ次第直す。</strong>読者・店舗からの指摘は <a href="mailto:editor@nagoya-bites.com">editor@nagoya-bites.com</a> で受け付け、10 営業日以内に一次回答します。</li>
+        <li><strong>根拠を示せない記述・確かめられない記述は、取り下げる。</strong>店側から事実誤認の申し立てがあった場合も、確認して、事実と異なれば直し、確かめられなければ該当の記述を外します。</li>
+        <li><strong>直したときは、記事の更新日を変える。</strong>誤りの内容が読者の選択に関わるものは、記事内にその旨を書き残します。</li>
+        <li>各記事の冒頭に、確認日・未訪問・AIが作成、を示す状態の帯を順次出していきます。帯のない記事もあります。</li>
       </ul>
     </div>
 
@@ -267,10 +302,10 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
         <div class="pillar-title">嘘がバレる仕組み</div>
         <div class="pillar-body">
           <ul>
-            <li>飲食業界の経験者によるレビュワー認証（経歴・ハンドル公開）</li>
+            <li>レビュワー認証制度は現在、募集を停止しています（下記）</li>
             <li>店舗側からの異議申立て窓口</li>
             <li>読者からの通報窓口</li>
-            <li>編集部によるファクトチェック</li>
+            <li>AIによる出典・実在の照合（02-B）と、指摘を受けての訂正</li>
           </ul>
         </div>
       </div>
@@ -337,8 +372,9 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
 
     <p class="body-para" style="margin-top:1.4rem;">
-      飲食業界の経験者向けのレビュワー認証制度に応募したい方は、
-      <a href="become-reviewer.html">レビュワー募集ページ</a>から募集要項・必須義務・認証フローをご確認ください。
+      <strong>人のレビュワーによる投稿の制度は、現在、募集を停止しています。</strong>
+      上の申告事項・ペナルティは、制度を再開する場合の決まりとして残しています。当サイトの記事は、レビュワーではなくAIが書いています（02-B）。
+      経緯は<a href="become-reviewer.html">レビュワー募集ページ</a>に書きました。
     </p>
 
     <h2 class="section-label" id="anonymous">05 — Why Anonymous</h2>
@@ -360,10 +396,10 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     <div class="tips-box">
       <p class="tips-title">編集部の構成（役割のみ開示）</p>
       <ul class="role-list">
-        <li><strong>運営者</strong>（個人）<span class="role-note">選び方の基準を決め、問い合わせや指摘に対応する。AIが集めた情報の一部（選定理由など）は、確認してから載せる</span></li>
-        <li><strong>AIエージェント</strong>（データ収集・突き合わせ・下書き作成）<span class="role-note">店舗データの収集・整合性チェック・記事下書きの生成を担当。公開前は、実在・出典・写真の出どころなど、決めた検査を通ったものだけを公開する</span></li>
+        <li><strong>運営者</strong>（個人）<span class="role-note">選び方の基準と公開を止める条件を決め、問い合わせや指摘に対応する。検査が止めた記事のうち、判断が要る例外を見る。公開される記事を1本ずつ確認することはしない</span></li>
+        <li><strong>AIエージェント</strong>（収集・執筆・検査・公開）<span class="role-note">店舗データの収集・整合性チェック・記事の執筆・公開前の検査・公開を担当。実在・出典・写真の出どころなど、決めた検査を通ったものだけを公開する</span></li>
       </ul>
-      <p class="nb-note" style="margin-top:.8rem;">※ 「編集部」は、運営者とAIエージェントを合わせた呼び名です。氏名・経歴・所属は公開していません。</p>
+      <p class="nb-note" style="margin-top:.8rem;">※ 「編集部」は、運営者とAIエージェントを合わせた呼び名で、記事の書き手の実態はAIエージェントです。氏名・経歴・所属は公開していません。</p>
     </div>
 
     <h2 class="section-label" id="inside-perspective">06 — How We Read</h2>
@@ -422,7 +458,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       <p class="tips-title">やらないこと</p>
       <ul>
         <li><strong>独自性のない記事の量産はしない。</strong>他のメディアで読める内容ならば、わざわざ書きません。</li>
-        <li><strong>未確認の店舗情報は掲載しない。</strong>営業実態・基本情報は継続的にチェックします。</li>
+        <li><strong>確かめていないことを、確かめたように書かない。</strong>営業実態・基本情報は継続的に照合し、確認できていない項目は「未確認」と書きます。</li>
         <li><strong>特定店舗を不当に持ち上げる記述はしない。</strong>関係性・しがらみで評価を変えません。</li>
         <li><strong>閉店店舗の情報を放置しない。</strong>確認でき次第、速やかに更新します。</li>
         <li><strong>SEO のための不自然な文章は書かない。</strong>検索最適化より読者の理解を優先します。</li>
