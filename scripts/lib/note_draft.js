@@ -42,7 +42,12 @@ function between(html, startRe, endRe) {
 function parseArticle(html) {
   const titleHtml = (/<h1 class="art-title">([\s\S]*?)<\/h1>/.exec(html) || [])[1] || '';
   const lead = inline((/<p class="art-lead">([\s\S]*?)<\/p>/.exec(html) || [])[1] || '');
-  const bodyHtml = between(html, /<div class="art-body">/, /<div class="insider-box">/)
+  // 本文は art-body の頭から店カードの前まで。「先に結論」「知っておきたいポイント」の箱と判断材料の部品（S3-2）は本文に混ぜない
+  const bodyHtml = between(html, /<div class="art-body">/, /<div class="store-list">|<\/article>/)
+    .replace(/<div class="insider-box[^"]*">[\s\S]*?<\/ul>\s*<\/div>/g, '')
+    .replace(/<details class="nb-judge[\s\S]*?<\/details>/g, '')
+    .replace(/<div class="nb-judge[\s\S]*?<\/div>\s*<\/div>/g, '')
+    .replace(/<div class="nb-guide-stats">[\s\S]*?<\/p>\s*<\/div>/g, '')
     .replace(/<!--[\s\S]*?-->/g, '')
     .replace(/<div class="tips-box"[\s\S]*?<\/div>/g, '')
     .replace(/<p class="nb-site-intro">[\s\S]*?<\/p>/g, '');
@@ -53,9 +58,13 @@ function parseArticle(html) {
     const paras = [...m[2].matchAll(/<p>([\s\S]*?)<\/p>/g)].map((x) => inline(x[1])).filter(Boolean);
     sections.push({ heading: inline(m[1]), paras });
   }
-  const box = between(html, /<div class="insider-box">/, /<div class="store-list">|<\/article>/);
+  const boxes = [...html.matchAll(/<div class="insider-box[^"]*">[\s\S]*?<\/ul>/g)];
+  const box = boxes.length ? boxes[0][0] : '';
   const points = [...box.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((x) => inline(x[1])).filter(Boolean);
-  return { title: inline(titleHtml), lead, sections, points };
+  const pointsTitle = (/<p class="insider-title">([\s\S]*?)<\/p>/.exec(box) || [])[1] || '知っておきたいポイント';
+  // 状態の帯（確認日・未訪問・AI が作成）。note の冒頭にそのまま載せる（決定5）
+  const band = inline((/<p class="nb-status-band"[^>]*>([\s\S]*?)<\/p>/.exec(html) || [])[1] || '');
+  return { title: inline(titleHtml), lead, sections, points, pointsTitle, band };
 }
 
 /** 本文のうち「文言: URL」だけの行。post_note.js がこの URL をリンクカードにする（元記事の行）。クレジットの行はこの形にしない */
@@ -85,7 +94,7 @@ function articlePhoto(html, policy) {
     let host = '';
     try { host = new URL(src).hostname; } catch { /* src が無い */ }
     if (!sources.includes(source) || !hosts.some((h) => host === h || host.endsWith('.' + h)) || !creditUrl) continue;
-    const credit = inline(cap.replace(/<a [^>]*>([\s\S]*?)<\/a>/gi, '$1')).replace(/^写真[:：]\s*/, '');
+    const credit = inline(cap.replace(/<span class="art-img-kind">[\s\S]*?<\/span>/gi, '').replace(/<a [^>]*>([\s\S]*?)<\/a>/gi, '$1')).replace(/^写真[:：]\s*/, '');
     return { kind, source, src, credit, creditUrl, store: decode((/data-(?:hero|photo)-store="([^"]*)"/.exec(attrs) || [])[1] || '') };
   }
   return null;
@@ -136,11 +145,12 @@ function buildNoteDraft(entry, html, policy, stores = storesOf(entry)) {
   const shown = a.sections.slice(0, take);
   const url = utmUrl(entry, policy);
   const out = [];
+  if (a.band) out.push(a.band, '');
   if (a.lead) out.push(a.lead, '');
   for (const s of shown) {
     out.push(`## ${s.heading}`, '', ...s.paras.flatMap((p) => [p, '']));
   }
-  if (a.points.length) out.push('## 知っておきたいポイント', '', ...a.points.map((p) => `- ${p}`), '');
+  if (a.points.length) out.push(`## ${a.pointsTitle || '知っておきたいポイント'}`, '', ...a.points.map((p) => `- ${p}`), '');
   if (shown.length < a.sections.length) {
     out.push(`この先は元記事で読めます。`, '');
   }
