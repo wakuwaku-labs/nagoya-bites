@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-17T03:16:43.745Z",
+  "generatedAt": "2026-11-17T03:39:11.202Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 7332,
-    "pageViews": 8773,
-    "sessions": 7710,
+    "activeUsers": 7340,
+    "pageViews": 8780,
+    "sessions": 7721,
     "avgSessionDuration": 56,
     "bounceRate": 0.674,
     "pagesPerSession": 1.14
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2814,
-      "direct": 4527,
+      "organic": 2818,
+      "direct": 4530,
       "social": 57,
       "ai_assistant": 240,
       "referral": 46,
@@ -39,12 +39,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 4499
+      "sessions": 4502
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1282
+      "sessions": 1284
     },
     {
       "source": "bing",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 579
+      "sessions": 581
     },
     {
       "source": "chatgpt.com",
@@ -210,13 +210,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 432,
-      "sessions": 409
+      "pageViews": 433,
+      "sessions": 410
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 235,
-      "sessions": 222
+      "pageViews": 236,
+      "sessions": 223
     },
     {
       "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -1156,7 +1156,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 7332,
+    "value": 7340,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
