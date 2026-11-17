@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-17T04:52:11.202Z",
+  "generatedAt": "2026-11-17T05:05:22.507Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 7357,
-    "pageViews": 8808,
-    "sessions": 7737,
+    "activeUsers": 7365,
+    "pageViews": 8813,
+    "sessions": 7738,
     "avgSessionDuration": 56.2,
-    "bounceRate": 0.674,
+    "bounceRate": 0.673,
     "pagesPerSession": 1.14
   },
   "dailyReference": {
@@ -17,19 +17,19 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2825,
-      "direct": 4541,
-      "social": 57,
-      "ai_assistant": 241,
-      "referral": 46,
+      "organic": 2758,
+      "direct": 4532,
+      "social": 55,
+      "ai_assistant": 229,
+      "referral": 42,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 36.6,
-      "direct": 58.9,
+      "organic": 36.2,
+      "direct": 59.5,
       "social": 0.7,
-      "ai_assistant": 3.1,
+      "ai_assistant": 3,
       "referral": 0.6,
       "paid": 0,
       "other": 0
@@ -39,32 +39,32 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 4512
+      "sessions": 4503
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1286
+      "sessions": 1249
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 923
+      "sessions": 910
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 581
+      "sessions": 564
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 159
+      "sessions": 148
     },
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 73
+      "sessions": 72
     },
     {
       "source": "note",
@@ -79,12 +79,12 @@
     {
       "source": "service.smt.docomo.ne.jp",
       "medium": "referral",
-      "sessions": 26
+      "sessions": 24
     },
     {
       "source": "x",
       "medium": "social",
-      "sessions": 24
+      "sessions": 23
     },
     {
       "source": "trend_today",
@@ -122,11 +122,6 @@
       "sessions": 4
     },
     {
-      "source": "aocr.org",
-      "medium": "referral",
-      "sessions": 3
-    },
-    {
       "source": "teams.public.onecdn.static.microsoft",
       "medium": "referral",
       "sessions": 3
@@ -147,6 +142,11 @@
       "sessions": 2
     },
     {
+      "source": "aocr.org",
+      "medium": "referral",
+      "sessions": 1
+    },
+    {
       "source": "copilot.com",
       "medium": "ai-assistant",
       "sessions": 1
@@ -154,11 +154,6 @@
     {
       "source": "facebook.com",
       "medium": "referral",
-      "sessions": 1
-    },
-    {
-      "source": "ig",
-      "medium": "social",
       "sessions": 1
     },
     {
@@ -210,13 +205,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 433,
-      "sessions": 410
+      "pageViews": 420,
+      "sessions": 396
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 236,
-      "sessions": 223
+      "pageViews": 234,
+      "sessions": 221
     },
     {
       "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -225,34 +220,34 @@
     },
     {
       "path": "/features/nagoya-unaju.html",
-      "pageViews": 85,
-      "sessions": 81
+      "pageViews": 84,
+      "sessions": 80
     },
     {
       "path": "/features/nagoya-tebasaki.html",
       "pageViews": 77,
-      "sessions": 80
+      "sessions": 79
     }
   ],
   "cta": {
-    "outboundClicks": 406,
-    "ctaClickRate": 5.2,
+    "outboundClicks": 396,
+    "ctaClickRate": 5.1,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 144
+        "clicks": 137
       },
       {
         "domain": "www.google.com",
-        "clicks": 128
+        "clicks": 127
       },
       {
         "domain": "prtimes.jp",
-        "clicks": 50
+        "clicks": 49
       },
       {
         "domain": "tabelog.com",
-        "clicks": 39
+        "clicks": 38
       },
       {
         "domain": "www.instagram.com",
@@ -293,21 +288,21 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 274,
-      "direct": 61,
+      "organic": 266,
+      "direct": 60,
       "social": 13,
-      "ai_assistant": 48,
+      "ai_assistant": 47,
       "referral": 10,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.7,
+    "ctaClickRate_organic": 9.6,
     "ctaClickRate_direct": 1.3,
-    "ctaClickRate_social": 22.8,
+    "ctaClickRate_social": 23.6,
     "byPage": [
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-        "clicks": 60
+        "clicks": 59
       },
       {
         "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -1156,7 +1151,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 7357,
+    "value": 7365,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
