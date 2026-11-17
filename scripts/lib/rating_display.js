@@ -21,6 +21,12 @@ function monthText(d) {
   return m ? `${m[1]}年${parseInt(m[2], 10)}月` : '';
 }
 
+/** 'YYYY-MM-DD' → '2026年11月17日'。形式が違えば '' */
+function dateText(d) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d || ''));
+  return m ? `${m[1]}年${parseInt(m[2], 10)}月${parseInt(m[3], 10)}日` : '';
+}
+
 /**
  * @param {{rating:*, count:*, date:string}} p
  * @returns {string} 出せなければ ''
@@ -31,7 +37,7 @@ function formatRating(p) {
   const when = monthText(p && p.date);
   if (rating === null || !Number.isFinite(count) || count <= 0 || !when) return '';
   const few = count < FEW_REVIEWS ? '・件数が少ない' : '';
-  return `Google★${rating}（${count}件・${when}時点${few}）`;
+  return `Google★${rating.toFixed(1)}（${count.toLocaleString('ja-JP')}件・${when}時点${few}）`;
 }
 
 /** data/stores.json の1店から */
@@ -46,4 +52,4 @@ function isBareStar(text) {
   return /^[★☆]\s*\d(\.\d+)?$/.test(t);
 }
 
-module.exports = { FEW_REVIEWS, formatRating, formatStoreRating, isBareStar, monthText };
+module.exports = { FEW_REVIEWS, formatRating, formatStoreRating, isBareStar, monthText, dateText };

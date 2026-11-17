@@ -60,12 +60,12 @@ test('ツールバー: 「絞り込み」ボタン・見える並べ替え selec
   assert.ok(order[0] > 0 && order[0] < order[1] && order[1] < order[2], '並びは 絞り込み → 並べ替え → 表示切り替え');
 });
 
-test('ツールバー: 選択肢はこの 7 つ（関連度順は動的）・チップ・帯・近い順は無い', () => {
+test('ツールバー: 選択肢はこの 6 つ（口コミ信頼度順は 2026-11 に廃止・ADR 0069 決定1）（関連度順は動的）・チップ・帯・近い順は無い', () => {
   const sel = BAR.match(/<select[\s\S]*?<\/select>/)[0];
   const opts = [...sel.matchAll(/<option value="([^"]+)"[^>]*>([^<]*)<\/option>/g)].map((m) => [m[1], m[2]]);
   assert.deepStrictEqual(opts, [
     ['recommend', 'おすすめ順'], ['view-desc', '人気順'], ['trend-desc', '話題沸騰順'], ['new-desc', '新着順'],
-    ['price-asc', '予算が安い順'], ['price-desc', '予算が高い順'], ['cc-desc', '口コミ信頼度順'],
+    ['price-asc', '予算が安い順'], ['price-desc', '予算が高い順'],
   ]);
   assert.ok(/<option value="recommend" selected>/.test(sel), '既定はおすすめ順');
   assert.ok(!sel.includes('relevance'), '関連度順は HTML に書かない（検索語があるときに JS が入れる）');

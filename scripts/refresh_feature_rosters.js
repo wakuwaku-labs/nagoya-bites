@@ -279,6 +279,15 @@ function selectRoster(pool, featCfg, seed, diversity) {
   return { list: [...core, ...picked], coreIds };
 }
 
+/** 表示順: エリア → 店名の五十音（評価・点数に依らない）。選定のスコアは並びに使わない */
+function displayOrder(entries) {
+  const key = (e) => [String(e.store['エリア'] || ''), String(e.store['店名'] || '')];
+  return [...entries].sort((a, b) => {
+    const [aa, an] = key(a); const [ba, bn] = key(b);
+    return aa.localeCompare(ba, 'ja') || an.localeCompare(bn, 'ja');
+  });
+}
+
 // ───────── カード生成 ─────────
 function descOf(s, maxLen) {
   let d = (s['editorReason'] || s['insiderNote'] || s['おすすめポイント'] || '').trim();
@@ -313,6 +322,7 @@ function scoreBadge(s) {
   return require('./lib/rating_display').formatStoreRating(s);
 }
 
+// 番号は出さない（2026-11 基本方針 段階5 S5-4・ADR 0069 決定1: 点数・評価の順に見える番号をやめる）。num は互換のため残す引数で使わない
 function renderStoreCard(entry, num, featureSlug) {
   const s = entry.store;
   const id = esc(s['ホットペッパーID']);
@@ -322,7 +332,6 @@ function renderStoreCard(entry, num, featureSlug) {
   const genre = genreShort(s);
   const price = esc(s['価格帯'] || '');
   const sb = scoreBadge(s);
-  const nn = String(num).padStart(2, '0');
   const isNew = entry.isNew ? '<span class="store-new">今月の新顔</span>' : '';
   const meta = [area && `<span>${area}</span>`, genre && `<span>${genre}</span>`, sb && `<span class="score">${sb}</span>`, price && `<span>${price}</span>`].filter(Boolean).join('');
   const tags = tagsOf(s, 3).map(t => `<span class="store-tag">${esc(t)}</span>`).join('');
@@ -332,7 +341,6 @@ function renderStoreCard(entry, num, featureSlug) {
   const nameAttr = esc(String(s['店名'] || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'"));
   const trackCta = `onclick="(window.nbReserveExit||trackEvent)('cta_click',{store_name:'${nameAttr}',store_id:'${id}',link_domain:'www.hotpepper.jp',location:'feature',feature:'${featureSlug}'})"`;
   return `      <div class="store-card">
-        <div class="store-num">${nn}</div>
 ${photo ? `        <div class="store-photo"><img src="${photo}" alt="${name}" loading="lazy" width="160" height="120" decoding="async"></div>\n` : ''}        <div class="store-info">
           <h3 class="store-name"><a href="https://nagoya-bites.com/stores/${id}.html" ${track}>${name}</a>${isNew}</h3>
           <div class="store-meta">${meta}</div>
@@ -354,7 +362,6 @@ function renderShopCard(entry, num, featureSlug) {
   const area = esc(s['エリア'] || '');
   const genre = genreShort(s);
   const sb = scoreBadge(s);
-  const nn = String(num).padStart(2, '0');
   const isNew = entry.isNew ? '<span class="shop-new">今月の新顔</span>' : '';
   const tagList = tagsOf(s, 2);
   if (sb) tagList.push(sb);
@@ -362,8 +369,7 @@ function renderShopCard(entry, num, featureSlug) {
   // 店の値は店名ではなく ID（I-08。集計で店名の表記ゆれと重複が出ないように、ほかの特集の部品と同じ featureStoreOnclick を使う）
   const track = `onclick="${featureStoreOnclick(s['ホットペッパーID'], featureSlug)}"`;
   return `    <div class="shop-card">
-${photo ? `      <img class="shop-card-photo" src="${photo}" alt="${name}" loading="lazy" decoding="async">\n` : ''}      <div class="shop-num">${nn}</div>
-      <h3 class="shop-name">${name}${isNew}</h3>
+${photo ? `      <img class="shop-card-photo" src="${photo}" alt="${name}" loading="lazy" decoding="async">\n` : ''}      <h3 class="shop-name">${name}${isNew}</h3>
       <div class="shop-area">${area}${genre ? ' / ' + genre : ''}</div>
       <p class="shop-desc">${descOf(s, 150)}</p>
       <div class="shop-tags">
@@ -488,7 +494,8 @@ function main() {
     if (pool.length === 0) continue;
 
     const { list, coreIds } = selectRoster(pool, fc, seed, cfg.diversity);
-    const final = list.slice(0, fc.slots);
+    // 選ぶ基準（スコア）はそのまま、読者に見せる並びは評価に依らない順（エリア → 店名）にする（S5-4・決定1）
+    const final = displayOrder(list.slice(0, fc.slots));
     final.forEach(e => { e.isNew = !coreIds.has(String(e.store['ホットペッパーID'])); });
 
     if (dryRun || checkMode) {
@@ -554,4 +561,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { sceneMatch, balanceScore, buildPool, selectRoster, replaceContainerInner, replaceItemList, touchDateModified, monthSeed, renderStoreCard, renderShopCard };
+module.exports = { displayOrder, sceneMatch, balanceScore, buildPool, selectRoster, replaceContainerInner, replaceItemList, touchDateModified, monthSeed, renderStoreCard, renderShopCard };

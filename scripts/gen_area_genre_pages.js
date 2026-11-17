@@ -23,6 +23,7 @@ const {
   loadPolicy, planPages, parsePriceBand, accessSummary, areaSlugsOf, openStores, normalizeGenre,
 } = require('./lib/area_genre_pages');
 const trustDisplay = require('./lib/trust_display');
+const ratingDisplay = require('./lib/rating_display');
 const { gaSnippet } = require('./lib/ga_snippet');
 const { editorReasonOf, visitStatusLabel, visitStatusRank } = require('./lib/editor_reason');
 const { firstAichiStation } = require('./lib/station_names');
@@ -91,7 +92,7 @@ function priceBandRows(stores) {
 }
 
 // 選定理由がある店（SEO-124）。判定は店舗ページと同じ scripts/lib/editor_reason.js。
-// 根拠の強い順（訪問済→店主取材済→業界内で評判→公開情報）、同じ根拠なら一覧と同じ機械的な順。一覧の順位は動かさない
+// 根拠の強い順（訪問済→店主取材済→業界内で評判→公開情報）、同じ根拠なら一覧と同じ機械的な順（徒歩分数→店名）。一覧の並びは動かさない
 function editorPicks(stores, max) {
   const order = new Map(sortForDisplay(stores).map((s, i) => [s, i]));
   return stores.filter(s => editorReasonOf(s))
@@ -107,15 +108,18 @@ function countHighRating(stores) {
   }).length;
 }
 
+// 一覧の並び（ADR 0069 決定1・基本方針 段階5 S5-4）: 評価（★・口コミ数・点数）に依らない。
+// 最寄り駅からの徒歩の分数が短い順、徒歩の記載が無い店は末尾、同じなら店名（コード順＝環境に依らず決定的）。
+// 旧: Google評価の高い順に 1,2,3 と番号を振っていた（口コミ10件の★5が1位になる）。番号は出さない。
+function walkMinutesOf(s) {
+  const m = /徒歩\s*(\d+)\s*分/.exec(accessSummary(s['アクセス']) || '');
+  return m ? parseInt(m[1], 10) : Infinity;
+}
 function sortForDisplay(stores) {
   return [...stores].sort((a, b) => {
-    const ra = parseInt(a['口コミ数'], 10) || 0, rb = parseInt(b['口コミ数'], 10) || 0;
-    const sa = parseFloat(a['Google評価']) || 0, sb = parseFloat(b['Google評価']) || 0;
-    const okA = ra >= 5 ? 1 : 0, okB = rb >= 5 ? 1 : 0;
-    if (okA !== okB) return okB - okA;
-    if (okA && sb !== sa) return sb - sa;
-    if (rb !== ra) return rb - ra;
-    return (a['店名'] || '').localeCompare(b['店名'] || '', 'ja');
+    const wa = walkMinutesOf(a), wb = walkMinutesOf(b);
+    if (wa !== wb) return wa < wb ? -1 : 1;
+    return byCodeUnit(a['店名'] || '', b['店名'] || '');
   });
 }
 
@@ -187,7 +191,7 @@ function descriptionFor(page) {
   const priceStat = priceModeStat(page.stores);
   const priceStr = priceStat ? `予算は${priceStat.band}が最多（${priceStat.count}軒）。` : '';
   if (page.type === 'area') {
-    return `${page.area.label}の飲食店${n}軒。${priceStr}Google評価と口コミ信頼度を並べて整理。予約・地図は各店ページへ。`;
+    return `${page.area.label}の飲食店${n}軒。${priceStr}Google評価（件数と取得時点つき）を並べて整理。予約・地図は各店ページへ。`;
   }
   const condStr = page.type === 'condition' ? `${page.cond.label}の店だけを${n}軒に絞りました。` : `${n}軒を掲載。`;
   return `${page.area.label}の${page.genre.label}${condStr}${priceStr}広告掲載料ゼロ・PR記事ゼロの独立編集で選定順位を操作していません。`;
@@ -233,7 +237,10 @@ function trustBadge(s, TRUST_POLICY) {
   const rt = s.reviewTrust;
   if (!rt || !rt.t) return '';
   const tierDef = rt.t === TRUST_POLICY.na.id ? TRUST_POLICY.na : (TRUST_POLICY.tiers.find(t => t.id === rt.t) || TRUST_POLICY.na);
-  return `<span class="ccs-badge" title="${esc(TRUST_POLICY.name)} ${esc(rt.t)}：${esc(tierDef.label)}">${esc(TRUST_POLICY.name)}<span class="ccs-tier ${esc(tierDef.cssClass)}">${esc(rt.t)}</span></span>`;
+  const D = trustDisplay.displayOf(TRUST_POLICY);
+  // 記号（SS〜D）は出さない（ADR 0069 決定1）。言葉の助言だけ。policy が記号を許す設定のときだけ従来の形
+  if (D.showTierId) return `<span class="ccs-badge" title="${esc(TRUST_POLICY.name)} ${esc(rt.t)}：${esc(tierDef.label)}">${esc(TRUST_POLICY.name)}<span class="ccs-tier ${esc(tierDef.cssClass)}">${esc(rt.t)}</span></span>`;
+  return `<span class="ccs-badge" title="${esc(TRUST_POLICY.name)}：${esc(tierDef.label)}">${esc(D.label)}：<span class="ccs-tier ${esc(tierDef.cssClass)}">${esc(trustDisplay.shortAdviceOf(rt.t, TRUST_POLICY))}</span></span>`;
 }
 
 /**
@@ -249,22 +256,20 @@ function hubReserveOnclick(name, hpId) {
 function storeCard(s, idx, depth, TRUST_POLICY, applicableConditions) {
   const name = s['店名'] || '';
   const slug = storeSlug(s);
-  const score = parseFloat(s['Google評価']);
-  const reviews = parseInt(s['口コミ数'], 10);
-  const showScore = Number.isFinite(score) && Number.isFinite(reviews) && reviews >= 5;
+  // 星は件数と取得時点を添えた統一形（S2-3）。件数か時点が取れない店は星を出さない
+  const ratingText = ratingDisplay.formatStoreRating(s);
   const access = accessSummary(s['アクセス']);
   const price = s['価格帯'] || '';
   const summary = (s.editorReason || s['おすすめポイント'] || '').split(/[。\n]/)[0].slice(0, 80);
   const hpId = s['ホットペッパーID'];
   const hpUrl = hpId ? `https://www.hotpepper.jp/str${hpId}/` : '';
   const metaParts = [access, price].filter(Boolean);
-  if (showScore) metaParts.push(`<span class="score">Google★${score}（口コミ${reviews}件）</span>`);
+  if (ratingText) metaParts.push(`<span class="score">${esc(ratingText)}</span>`);
   const condTags = applicableConditions
     .filter(c => require('./lib/area_genre_pages').storeMatchesCondition(s, c.rule))
     .map(c => c.label).slice(0, 2);
   const prefix = siteChrome.prefix(depth);
   return `        <li class="store-card">
-          <span class="store-num">${idx + 1}</span>
           <div>
             <p class="store-name"><a href="${prefix}stores/${esc(slug)}.html">${esc(name)}</a></p>
             <p class="store-meta">${metaParts.join(' ・ ')}${trustBadge(s, TRUST_POLICY)}</p>
@@ -469,7 +474,7 @@ function renderAreaPage(page, allPages, policy) {
 
   const body = `  <p class="art-eyebrow">店舗データベース — ${esc(page.area.label)}</p>
   <h1 class="art-title">${esc(page.area.label)}の<em>飲食店</em></h1>
-  <div class="art-lead"><p>${esc(page.area.label)}に掲載中の飲食店${page.stores.length}軒をジャンル別に整理。並び順は各ジャンルページで Google評価×口コミ件数の機械的な順に統一しています。編集部推薦や広告で順位は動かしていません。</p></div>
+  <div class="art-lead"><p>${esc(page.area.label)}に掲載中の飲食店${page.stores.length}軒をジャンル別に整理。並び順は各ジャンルページで最寄り駅からの徒歩分数の順に統一しています（評価・口コミ数には依りません）。編集部推薦や広告で順番は動かしていません。</p></div>
   <dl class="hub-stats">
 ${statCells.map(([k, v]) => `    <div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('\n')}
   </dl>
@@ -569,7 +574,7 @@ ${guides.map(g => `    <p>${esc(g)}</p>`).join('\n')}
   const picks = editorPicks(page.stores, (policy.editorPicks && policy.editorPicks.max) || 0);
   const picksHtml = picks.length ? `  <section class="hub-picks" aria-label="選定理由がある店">
     <h2 class="nb-section-head"><span>選定理由がある店</span></h2>
-    <p class="hub-picks-note">下の一覧の並び順とは別に、選定理由がある店を先に示します。選定の根拠は各店の下に書いています（一覧の順位は動かしていません）。</p>
+    <p class="hub-picks-note">下の一覧の並び順とは別に、選定理由がある店を先に示します。選定の根拠は各店の下に書いています（一覧の並びは動かしていません）。</p>
     <ul>
 ${picks.map(s => {
     const label = visitStatusLabel(s);
@@ -607,7 +612,7 @@ ${[
 
   const body = `  <p class="art-eyebrow">店舗データベース — ${esc(page.area.label)} × ${esc(page.genre.label)}${isCondition ? ' × ' + esc(page.cond.label) : ''}</p>
   <h1 class="art-title">${h1}</h1>
-  <div class="art-lead"><p>${leadFacts.map(esc).join('。')}。並び順はGoogle評価×口コミ件数の機械的な順（口コミ5件未満の店は評価を出さず末尾）。編集部推薦や広告で順位は動かしていません。</p></div>
+  <div class="art-lead"><p>${leadFacts.map(esc).join('。')}。並び順は最寄り駅からの徒歩分数の順で、評価・口コミ数には依りません（徒歩の記載が無い店は末尾）。編集部推薦や広告で順番は動かしていません。</p></div>
   ${condChips ? `<div class="hero-tags">${condChips}</div>` : ''}
 ${guideHtml}
 ${picksHtml}
@@ -909,4 +914,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { priceBandRows, editorPicks, topStations, contentHashOf, storeCard, hubReserveOnclick, prepare, renderHubPage, buildSlugMap, baseSlugOf };
+module.exports = { sortForDisplay, priceBandRows, editorPicks, topStations, contentHashOf, storeCard, hubReserveOnclick, prepare, renderHubPage, buildSlugMap, baseSlugOf };

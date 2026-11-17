@@ -178,7 +178,6 @@ function buildStores(stores) {
       : '';
     return `
       <div class="store-card"${s.id ? ` data-store-id="${esc(s.id)}"` : ''}>
-        <div class="store-num">${String(i + 1).padStart(2, '0')}</div>
         <div class="store-info">
           <h3 class="store-name">${esc(s.name)}</h3>
           <div class="store-meta">
