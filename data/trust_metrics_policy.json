@@ -1,0 +1,54 @@
+{
+  "_doc": "信頼の指標の数え方・悪化の見張り・公開後の鮮度の見直しの設定の正本（媒体方針 計画 S7-1・S5-5・ADR 0069）。scripts/trust_metrics.js・scripts/check_trust_metrics_health.js・scripts/recheck_due_articles.js が読む。閾値や型の変更はここで行い、スクリプトは触らない（CLAUDE.md 品質ゲート原則5: 先に分布を実測してから動かす）。",
+  "version": 1,
+  "windows": {
+    "_doc": "数える期間（日）。correction_days=誤情報の発生率の期間（公開から90日）、fresh_days=確認日が新しいとみなす日数",
+    "correction_days": 90,
+    "fresh_days": 90,
+    "recent_days": 30
+  },
+  "evidence": {
+    "_doc": "根拠確認率: 事実の文（事実台帳 data/journal_claims/<日付>.json の kind）のうち、出典の本文と照合できた（status）割合。台帳の無い記事は数えない（0とも100とも扱わず、数えた記事の数を並べる）。",
+    "eligible_kind": "確認済みの事実",
+    "verified_status": "照合できた"
+  },
+  "unconfirmed": {
+    "_doc": "未確認の明示率: 「確認できなかったこと」を読者に見える形で書いている記事の割合。記事の構造（札のクラスか見出しの語）だけで数え、本文の意味は読まない。",
+    "markers": ["nb-check-state", "確認できなかったこと"]
+  },
+  "original_analysis": {
+    "_doc": "独自分析の充実度: 比較・計算・一般則の解説のどれかを持つ記事の割合。機械が見つけられる形（構造・式・決まった言い回し）だけを数える。質は毎月10本の独立した読み手の所見で見る（計画 1-7）。",
+    "calculation": "\\d[\\d,]*(?:\\.\\d+)?\\s*(?:円|分|人|%|％|名|品|席|時間)?\\s*[＋+－−×÷*/]\\s*[^\\d。＝=]{0,10}\\d[\\d,]*(?:\\.\\d+)?\\s*(?:円|分|人|%|％|名|品|席|時間)?[^。]{0,24}[＝=]\\s*\\d",
+    "comparison_table": "<table\\b",
+    "comparison_phrase": "より[0-9,]+円(?:安|高)|より(?:安|高|短|長|早|遅)[いくか]|との違い|に比べ|と比べ|を比べ|比較すると|差額|との差|円の差|差は|差が|[0-9,]+円(?:安|高)く",
+    "general_rule": "一般に|一般的に|目安として|になりやすい|ほど振れ|と考えると安全|数え方"
+  },
+  "alert": {
+    "_doc": "悪化の見張り。絶対値の下限は置かない（今は基線が低く、置けば毎日鳴ってオオカミ少年になる＝原則6）。前の週の記録と比べた悪化と、数えられなくなったことだけを知らせる。",
+    "min_measured_articles": 5,
+    "compare_min_days": 6,
+    "worsen_points": {
+      "evidence_rate": 5,
+      "unconfirmed_disclosure_rate": 5,
+      "freshness_rate": 10,
+      "analysis_rate": 10
+    },
+    "misinformation_rise_points": 2,
+    "facts_drop_ratio": 0.2,
+    "stale_days": 10,
+    "history_keep": 26
+  },
+  "recheck": {
+    "_doc": "公開後の鮮度の見直し（S5-5）。mode: record=記録と Issue だけ（本番の記事を書き換えない・既定）／apply_light=軽い訂正だけ訂正の道具で書く（本人の再承認まで使わない・決定6）。",
+    "mode": "record",
+    "max_per_run": 3,
+    "max_issues_per_run": 3,
+    "cooldown_days": 14,
+    "min_interval_days": 30,
+    "overdue_alert_days": 14,
+    "heartbeat_stale_days": 3,
+    "core_types": ["store_closed", "source_says_closed", "hedge_dropped", "number_mismatch_pillar", "number_mismatch_ambiguous", "period_ended"],
+    "legacy_pre_open": "(?:開店|オープン|開業)予定|プレオープン|グランドオープン予定|オープン前|開店前",
+    "legacy_limited": "期間限定|限定メニュー|数量限定|まで(?:の)?(?:限定|開催|販売|提供)"
+  }
+}

@@ -197,13 +197,62 @@ function sendWeeklyReport() {
   const prevData = fetchWeek(prevStart, prevEnd, spikePrev);
   let referrals = null;
   try { referrals = fetchStoreReferrals(startDate, endDate); } catch (e) { Logger.log('店舗別送客の取得に失敗: ' + e.message); }
-  const report = formatWeeklyReport(data, prevData, startDate, endDate, referrals);
+  // 信頼の指標（S7-1）。GitHub の data/trust_metrics.json を読む。取れなくてもレポート自体は止めない
+  let trust = null;
+  try { trust = fetchTrustMetrics(); } catch (e) { Logger.log('信頼の指標の取得に失敗（週次・段落なしで出す）: ' + e.message); }
+  const report = formatWeeklyReport(data, prevData, startDate, endDate, referrals, trust);
 
   sendLineMessage(report);
   if (REPORT_EMAIL) {
     sendReportEmail('NAGOYA BITES 週次レポート ' + startDate + '〜' + endDate, report);
   }
   Logger.log('週次レポート送信完了');
+}
+
+// ─── 信頼の指標（S7-1・媒体方針 計画）───
+// 成果の物差しの第一は信頼の指標（記事の根拠・鮮度・訂正）。検索・訪問者の数字より先に1段落で出す。
+// 数字は GitHub の data/trust_metrics.json（scripts/trust_metrics.js が毎日、台帳と記事の構造から機械で数える）を読むだけ。
+// GAS に判定ロジックは持たせない（配信だけ）。取れない・古いときは段落を出さない／古いと書く（数字を創作しない）。
+const TRUST_METRICS_URL = 'https://raw.githubusercontent.com/wakuwaku-labs/nagoya-bites/main/data/trust_metrics.json';
+const TRUST_METRICS_STALE_DAYS = 10;
+function fetchTrustMetrics() {
+  const res = UrlFetchApp.fetch(TRUST_METRICS_URL, { muteHttpExceptions: true });
+  if (res.getResponseCode() !== 200) {
+    Logger.log('信頼の指標の取得失敗: HTTP ' + res.getResponseCode());
+    return null;
+  }
+  return JSON.parse(res.getContentText());
+}
+
+function trustPct(v) {
+  return (typeof v === 'number') ? (Math.round(v * 1000) / 10) + '%' : '未計測';
+}
+
+// 週次レポートの「信頼の指標」1段落。m が無い・壊れているときは空文字（段落ごと出さない）。today は YYYY-MM-DD（古さの判定用）
+function formatTrustMetrics(m, today) {
+  if (!m || !m.indicators) return '';
+  const i = m.indicators;
+  const need = ['evidence_rate', 'unconfirmed_disclosure_rate', 'misinformation_rate', 'freshness_rate', 'analysis_rate'];
+  for (let k = 0; k < need.length; k++) if (!i[need[k]]) return '';
+  let out = '【信頼の指標】（計測 ' + (m.date || '日付不明') + '）\n';
+  if (m.date && today) {
+    const age = Math.round((Date.parse(today + 'T00:00:00Z') - Date.parse(m.date + 'T00:00:00Z')) / 86400000);
+    if (age > TRUST_METRICS_STALE_DAYS) out += '⚠️ 数字が ' + age + ' 日前のままです（数え役が止まっている可能性）\n';
+  }
+  const e = i.evidence_rate;
+  out += '・根拠の確認率: ' + trustPct(e.value) + (e.denominator ? '（事実の文 ' + e.denominator + ' 件中 ' + e.numerator + ' 件を出典で確認・' + e.measured_articles + ' 本分）' : '（事実台帳のある記事がまだ無い）') + '\n';
+  const u = i.unconfirmed_disclosure_rate;
+  out += '・「確認できなかったこと」を書いた記事: ' + trustPct(u.value) + '（' + u.numerator + '/' + u.denominator + ' 本）\n';
+  const x = i.misinformation_rate;
+  out += '・公開後の訂正・取り下げ: ' + trustPct(x.value) + '（公開' + (x.window_days || 90) + '日の ' + x.numerator + '/' + x.denominator + ' 本）\n';
+  const f = i.freshness_rate;
+  out += '・確認日が' + (f.window_days || 90) + '日以内（検索に出ている記事）: ' + trustPct(f.value) + '（' + f.numerator + '/' + f.denominator + ' 本）\n';
+  const a = i.analysis_rate;
+  out += '・比較・計算・一般則のある記事: ' + trustPct(a.value) + '（' + a.numerator + '/' + a.denominator + ' 本）\n';
+  if (m.fact_sentences && m.fact_sentences.per_article_avg !== undefined && m.fact_sentences.per_article_avg !== null) {
+    out += '・事実の文の数: 1 本あたり平均 ' + m.fact_sentences.per_article_avg + '（率だけ良くしていないかを見る数字）\n';
+  }
+  return out;
 }
 
 // ─── GA4 Data API ───
@@ -1475,7 +1524,7 @@ function fetchStoreReferrals(startDate, endDate) {
 }
 
 // ─── 週次レポート フォーマット（素人向け） ───
-function formatWeeklyReport(data, prevData, startDate, endDate, referrals) {
+function formatWeeklyReport(data, prevData, startDate, endDate, referrals, trust) {
   const t = data.totals;
   const pt = prevData.totals;
   const a = analyze(data);
@@ -1545,6 +1594,9 @@ function formatWeeklyReport(data, prevData, startDate, endDate, referrals) {
       msg += medal + ' ' + sourceToName(s.dimensions[0], s.dimensions[1]) + '（' + pct + '%）\n';
     });
   }
+
+  const trustText = formatTrustMetrics(trust, endDate);
+  if (trustText) msg += '\n' + trustText;
 
   msg += '\n━━━━━━━━━━━━━━━\n';
   msg += '💡 今週のアドバイス\n';

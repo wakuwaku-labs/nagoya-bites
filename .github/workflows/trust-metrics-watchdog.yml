@@ -1,0 +1,122 @@
+name: NAGOYA BITES — 信頼の指標の計測と悪化の見張り
+
+# 媒体方針 S7-1（ADR 0069）。成果の物差しの第一は「信頼の指標」（根拠確認率・未確認の明示率・誤情報の発生率・更新鮮度・独自分析の充実度）。
+#   1. 毎朝、台帳と記事の構造から機械で数え、data/trust_metrics.json を更新する（週のレポート GAS がこのファイルを読む）
+#   2. 前の週より許容を超えて悪化した・事実の文が減った・数え役や見直し役が止まったら、GitHub Issue（→メール）で知らせる
+#   3. 健全に戻ったら自動でクローズする（オオカミ少年にしない）
+# 警報は当人（Mac や記事を書く側）と別の場所＝GitHub Actions と Issue から出す（CLAUDE.md「無人自動化の監視」原則1・2）。
+# 判定の線は data/trust_metrics_policy.json（絶対値の下限は置かない。前の週との比較と、数えられなくなったことだけを知らせる）。
+# 通知テスト: workflow_dispatch の test=true で「[通知テスト] 信頼の指標の見張り」Issue を1件立てる（test_close=true で閉じる）。
+
+on:
+  schedule:
+    - cron: '40 21 * * *'  # 06:40 JST（夜間QAの公開後の鮮度の見直し 06:00 JST のあと）
+  workflow_dispatch:
+    inputs:
+      test:
+        description: '通知テスト: 試験の Issue を立てる'
+        type: boolean
+        required: false
+        default: false
+      test_close:
+        description: '通知テスト: 試験の Issue を閉じる'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write   # data/trust_metrics.json を更新してコミットするため
+  issues: write
+
+concurrency:
+  group: trust-metrics
+  cancel-in-progress: false
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 信頼の指標を数える
+        run: node scripts/trust_metrics.js --write
+
+      - name: 結果をコミット（[skip actions] でデプロイは誘発しない）
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/trust_metrics.json
+          if git diff --cached --quiet; then echo "変更なし"; exit 0; fi
+          git commit -m "chore: 信頼の指標を更新 [skip actions]"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            echo "push 失敗（試行 ${i}/5）。$((i * 5))秒待って再試行します"
+            sleep $((i * 5))
+          done
+          echo "::error::data/trust_metrics.json を push できませんでした"
+          exit 1
+
+      - name: 判定
+        run: |
+          set +e
+          node scripts/check_trust_metrics_health.js --json > /tmp/trust-health.json
+          set -e
+          node scripts/check_trust_metrics_health.js || true
+
+      - name: Issue を起票・更新・クローズ
+        uses: actions/github-script@v7
+        env:
+          TEST: ${{ github.event.inputs.test }}
+          TEST_CLOSE: ${{ github.event.inputs.test_close }}
+        with:
+          script: |
+            const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('/tmp/trust-health.json', 'utf8'));
+            const { owner, repo } = context.repo;
+            const label = 'trust-metrics-watchdog';
+            const ensureLabel = async () => {
+              try { await github.rest.issues.getLabel({ owner, repo, name: label }); }
+              catch (_) { await github.rest.issues.createLabel({ owner, repo, name: label, color: 'd73a4a', description: '信頼の指標の悪化の見張り（trust-metrics-watchdog.yml）' }); }
+            };
+            const { data: issues } = await github.rest.issues.listForRepo({ owner, repo, state: 'open', labels: label, per_page: 20 });
+            const TEST_TITLE = '[通知テスト] 信頼の指標の見張り';
+            if (process.env.TEST_CLOSE === 'true') {
+              for (const i of issues.filter(i => i.title === TEST_TITLE)) {
+                await github.rest.issues.update({ owner, repo, issue_number: i.number, state: 'closed' });
+                core.info(`試験の Issue #${i.number} を閉じました`);
+              }
+              return;
+            }
+            if (process.env.TEST === 'true') {
+              await ensureLabel();
+              const { data: c } = await github.rest.issues.create({ owner, repo, title: TEST_TITLE, labels: [label], body: '通知が届くことの試験です。確認したらすぐ閉じます。対応は不要です。' });
+              core.warning(`試験の Issue #${c.number} を起票しました`);
+              return;
+            }
+            const existing = issues.find(i => i.title.startsWith('🔴 信頼の指標'));
+            if (r.ok) {
+              if (existing) {
+                await github.rest.issues.createComment({ owner, repo, issue_number: existing.number, body: `✅ 復旧を確認しました（JST ${r.today_jst}）。自動でクローズします。` });
+                await github.rest.issues.update({ owner, repo, issue_number: existing.number, state: 'closed' });
+              } else { core.info('健全。Issue の起票は不要です。'); }
+              return;
+            }
+            const kinds = r.problems.map(p => p.kind).join(', ');
+            const title = `🔴 信頼の指標が悪化・停止しています（${kinds}）`;
+            if (existing) {
+              await github.rest.issues.update({ owner, repo, issue_number: existing.number, title, body: r.issue_body });
+              await github.rest.issues.createComment({ owner, repo, issue_number: existing.number, body: `再検出（JST ${r.today_jst}）。現在の問題: ${kinds}` });
+              core.setFailed(`信頼の指標の異常が継続しています: ${kinds}`);
+            } else {
+              await ensureLabel();
+              const { data: c } = await github.rest.issues.create({ owner, repo, title, body: r.issue_body, labels: [label] });
+              core.setFailed(`信頼の指標の異常を検出し Issue #${c.number} を起票しました: ${kinds}`);
+            }
