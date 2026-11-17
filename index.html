@@ -927,6 +927,19 @@ body.search-query-active .card-why{display:flex;}
 .ta-link:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:var(--r-sm);}
 .ta-link{position:relative;}
 .ta-has-photo .ta-link{flex-direction:row;align-items:center;gap:var(--sp-3);}
+.top-hero{margin:var(--sp-4) calc(-1 * var(--hero-gutter,1.5rem)) 0;}
+.top-hero-link{display:block;color:inherit;text-decoration:none;}
+.top-hero-img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;background:var(--surface);}
+.top-hero-cap{display:flex;flex-direction:column;gap:.15rem;padding:.55rem var(--hero-gutter,1.5rem) 0;}
+.top-hero-credit{font-size:var(--fs-xs);color:var(--muted);line-height:1.5;}
+.top-hero-title{font-size:var(--fs-xs);color:var(--text);line-height:1.5;font-weight:500;}
+.top-hero-link:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+@media(hover:hover){.top-hero-link:hover .top-hero-title{color:var(--gold);}}
+@media(min-width:1024px){
+  .top-hero{margin-inline:0;max-width:480px;}/* 写真は 480px 幅（それ以上に伸ばすとぼやける） */
+  .top-hero-img{aspect-ratio:16/10;border-radius:var(--r-md);}
+  .top-hero-cap{padding-inline:0;}
+}
 .ta-photo{flex:0 0 80px;width:80px;height:80px;border-radius:var(--r-md);overflow:hidden;background:var(--surface);display:block;}
 .ta-item:first-child.ta-has-photo .ta-photo{flex-basis:112px;width:112px;height:112px;}
 .ta-img{display:block;width:100%;height:100%;object-fit:cover;}
@@ -1662,6 +1675,8 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
   <!-- 最初の画面（S6-1・判断の記録 0072）: 理念 → このサイトの約束 → 3分類の新しい記事 → 店の検索（2番目）の順。店数の主張は置かない -->
   <p class="eyebrow">名古屋の飲食店ガイド</p>
   <h1>飲食店選びの失敗を、<br><em>情報の力</em>で減らす。</h1>
+  <!-- 1画面目の大きな写真1枚。↓ この区画は scripts/build_journal_index.js が自動生成（3分類の新しい記事のうち、data/top_hero_excluded.json に無い最新の記事の顔写真）。手で編集しない。 -->
+  <!-- TOP_HERO_START --><figure class="top-hero"><a class="top-hero-link" href="journal/2026-11-11-sakae-teppanya-daikichi-10-seats-late-night.html"><img class="top-hero-img" src="https://imgfp.hotp.jp/IMGH/30/43/P037723043/P037723043_480.jpg" alt="鉄板屋大吉の料理・店内" width="480" height="300" decoding="async" fetchpriority="high" onerror="this.parentNode.parentNode.style.display='none'"><span class="top-hero-cap"><span class="top-hero-credit">写真: 鉄板屋大吉（ホットペッパーグルメ）</span><span class="top-hero-title">栄の地下「鉄板屋大吉」10席で朝5時まで、一人飲み・二軒目の少席店が回る理由</span></span></a></figure><!-- TOP_HERO_END -->
   <section class="site-promise" aria-labelledby="site-promise-title">
     <div class="site-promise-head">
       <h2 class="site-promise-title" id="site-promise-title">このサイトの約束</h2>
@@ -1681,8 +1696,8 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
     </div>
     <!-- TOP_ARTICLES_START -->
     <ul class="top-articles-list">
-      <li class="ta-item ta-has-photo"><a class="ta-link" href="journal/2026-11-17-kanayama-shokukan-hotpot-bonenkai-private-room.html" data-category="topic"><span class="ta-photo"><img class="ta-img" src="https://imgfp.hotp.jp/IMGH/33/69/P037623369/P037623369.jpg" alt="四川伝統火鍋 蜀漢 ショクカン 金山駅店" width="160" height="160" decoding="async" fetchpriority="high" onerror="this.parentNode.style.display='none'"></span><span class="ta-text"><span class="ta-meta"><span class="ta-cat">話題のお店紹介</span><time datetime="2026-11-17">11/17</time></span><span class="ta-title">金山の忘年会に火鍋『蜀漢 ショクカン 金山駅店』、飲み放題込み5,000円と個室20名まで</span><span class="ta-credit">写真: 店舗公式写真 / HotPepper</span></span></a></li>
-      <li class="ta-item ta-has-photo"><a class="ta-link" href="journal/2026-11-11-sakae-teppanya-daikichi-10-seats-late-night.html" data-category="guide"><span class="ta-photo"><img class="ta-img" src="https://imgfp.hotp.jp/IMGH/30/43/P037723043/P037723043.jpg" alt="鉄板屋大吉" width="160" height="160" decoding="async" onerror="this.parentNode.style.display='none'"></span><span class="ta-text"><span class="ta-meta"><span class="ta-cat">店選びガイド</span><time datetime="2026-11-11">11/11</time></span><span class="ta-title">栄の地下「鉄板屋大吉」10席で朝5時まで、一人飲み・二軒目の少席店が回る理由</span><span class="ta-credit">写真: 店舗公式写真 / HotPepper</span></span></a></li>
+      <li class="ta-item"><a class="ta-link" href="journal/2026-11-17-kanayama-shokukan-hotpot-bonenkai-private-room.html" data-category="topic"><span class="ta-meta"><span class="ta-cat">話題のお店紹介</span><time datetime="2026-11-17">11/17</time></span><span class="ta-title">金山の忘年会に火鍋『蜀漢 ショクカン 金山駅店』、飲み放題込み5,000円と個室20名まで</span></a></li>
+      <li class="ta-item"><a class="ta-link" href="journal/2026-11-11-sakae-teppanya-daikichi-10-seats-late-night.html" data-category="guide"><span class="ta-meta"><span class="ta-cat">店選びガイド</span><time datetime="2026-11-11">11/11</time></span><span class="ta-title">栄の地下「鉄板屋大吉」10席で朝5時まで、一人飲み・二軒目の少席店が回る理由</span></a></li>
       <li class="ta-item"><a class="ta-link" href="journal/2026-11-09-sakae-mitsukoshi-sushi-no-midori-alain-ducasse.html" data-category="compare"><span class="ta-meta"><span class="ta-cat">比較・特集</span><time datetime="2026-11-09">11/09</time></span><span class="ta-title">栄三越の寿司「すしの美登利」とアラン・デュカス・ショコラ、新店2軒を予約と時間で使い分け</span></a></li>
     </ul>
     <!-- TOP_ARTICLES_END -->

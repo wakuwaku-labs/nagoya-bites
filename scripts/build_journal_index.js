@@ -224,34 +224,94 @@ function plainCredit(html) {
   return decodeEntities(String(html || '').replace(/<[^>]*>/g, '')).replace(/\s+/g, ' ').trim();
 }
 
-function topPhotoOf(entry, journalDir) {
-  const p = readHeroPhoto(entry.slug, journalDir);
-  return p && TOP_PHOTO_SOURCES.includes(p.source) ? p : null;
+// 目で見て「トップの顔にしない」と決めた写真（店のロゴ・文字・看板が主役など）。data/top_hero_excluded.json が正本。
+// 写真の番号（P000000000）か記事の slug で照合する。小さな行の写真・大きな顔の写真の両方に効く。
+const TOP_HERO_EXCLUDED = path.join(ROOT, 'data', 'top_hero_excluded.json');
+
+function photoNumber(url) {
+  const m = String(url || '').match(/(P\d{6,})/);
+  return m ? m[1] : '';
 }
 
-function renderTopArticles(entries, journalDir) {
+function loadTopHeroExcluded(file, facesFile) {
+  const photos = new Set();
+  const slugs = new Set();
+  try {
+    const j = JSON.parse(fs.readFileSync(file || TOP_HERO_EXCLUDED, 'utf8'));
+    for (const x of Array.isArray(j.excluded) ? j.excluded : []) {
+      if (x && x.photo) photos.add(x.photo);
+      if (x && x.slug) slugs.add(x.slug);
+    }
+  } catch (_) { /* 除外リストが読めなければ空（落とさない） */ }
+  // 特集の顔（data/feature_faces.json）に使っている写真は、同じ写真を別の記事の顔にしない（CLAUDE.md）ので、トップの顔にもしない
+  try {
+    const f = JSON.parse(fs.readFileSync(facesFile || path.join(ROOT, 'data', 'feature_faces.json'), 'utf8'));
+    for (const v of Object.values(f.faces || {})) if (v && v.photo) photos.add(photoNumber(v.photo));
+  } catch (_) { /* 無ければ何もしない */ }
+  return { photos, slugs };
+}
+
+function isExcluded(entry, photo, excluded) {
+  if (!excluded) return false;
+  return excluded.slugs.has(entry.slug) || excluded.photos.has(photoNumber(photo.src));
+}
+
+function topPhotoOf(entry, journalDir, excluded) {
+  const p = readHeroPhoto(entry.slug, journalDir);
+  if (!p || !TOP_PHOTO_SOURCES.includes(p.source)) return null;
+  return isExcluded(entry, p, excluded) ? null : p;
+}
+
+// 大きな顔に使う写真の URL。ホットペッパーの写真は大きさ違いの URL があり、サフィックス無しが小さな画像（180px 前後）の店もあるので、
+// 画面幅いっぱいに出すときは _480（480px）にそろえる。同じ写真の大きさ違いの参照で、加工ではない
+function bigPhotoSrc(src) {
+  return String(src).replace(/(\/P\d{6,})(?:_\d+)?\.jpg$/, '$1_480.jpg');
+}
+
+// 1画面目に置く大きな写真1枚。「3分類の新しい記事」の行（日付の新しい順）のうち、写真が確かで、除外リストに無い最新の記事。
+// 規則は生成側で決める（記事が更新されれば自動で入れ替わる）。該当が無ければ置かない（取り繕わない）
+function pickTopHero(entries, journalDir, excluded) {
+  const rows = latestPerCategory(entries)
+    .map((r, i) => Object.assign({ order: i }, r))
+    .sort((a, b) => b.entry.date.localeCompare(a.entry.date) || a.order - b.order);
+  for (const { entry } of rows) {
+    const photo = topPhotoOf(entry, journalDir, excluded);
+    if (photo) return { entry, photo };
+  }
+  return null;
+}
+
+function renderTopHero(pick) {
+  if (!pick) return '';
+  const { entry: e, photo } = pick;
+  const href = `journal/${esc(e.slug)}.html`;
+  return `<figure class="top-hero"><a class="top-hero-link" href="${href}"><img class="top-hero-img" src="${esc(bigPhotoSrc(photo.src))}" alt="${esc(photo.store)}の料理・店内" width="480" height="300" decoding="async" fetchpriority="high" onerror="this.parentNode.parentNode.style.display='none'"><span class="top-hero-cap"><span class="top-hero-credit">写真: ${esc(photo.store)}（ホットペッパーグルメ）</span><span class="top-hero-title">${esc(e.title)}</span></span></a></figure>`;
+}
+
+function renderTopArticles(entries, journalDir, excluded) {
   const rows = latestPerCategory(entries)
     .map((r, i) => Object.assign({ order: i }, r))
     .sort((a, b) => b.entry.date.localeCompare(a.entry.date) || a.order - b.order);
   if (rows.length === 0) return '';
+  // 大きな顔にした記事の行は、同じ写真を小さく繰り返さず文字の行にする
+  const hero = pickTopHero(entries, journalDir, excluded);
   const items = rows.map(({ key, entry: e }, i) => {
-    const photo = topPhotoOf(e, journalDir);
+    const photo = hero && hero.entry.slug === e.slug ? null : topPhotoOf(e, journalDir, excluded);
     const meta = `<span class="ta-meta"><span class="ta-cat">${esc(CATEGORIES[key].label)}</span><time datetime="${esc(e.date)}">${esc(e.date.slice(5).replace('-', '/'))}</time></span>`;
     const title = `<span class="ta-title">${esc(e.title)}</span>`;
     if (!photo) {
       return `
       <li class="ta-item"><a class="ta-link" href="journal/${esc(e.slug)}.html" data-category="${key}">${meta}${title}</a></li>`;
     }
-    const fp = i === 0 ? ' fetchpriority="high"' : '';
     return `
-      <li class="ta-item ta-has-photo"><a class="ta-link" href="journal/${esc(e.slug)}.html" data-category="${key}"><span class="ta-photo"><img class="ta-img" src="${esc(photo.src)}" alt="${esc(photo.store)}" width="160" height="160" decoding="async"${fp} onerror="this.parentNode.style.display='none'"></span><span class="ta-text">${meta}${title}<span class="ta-credit">${esc(plainCredit(photo.credit))}</span></span></a></li>`;
+      <li class="ta-item ta-has-photo"><a class="ta-link" href="journal/${esc(e.slug)}.html" data-category="${key}"><span class="ta-photo"><img class="ta-img" src="${esc(photo.src)}" alt="${esc(photo.store)}" width="160" height="160" decoding="async" onerror="this.parentNode.style.display='none'"></span><span class="ta-text">${meta}${title}<span class="ta-credit">${esc(plainCredit(photo.credit))}</span></span></a></li>`;
   }).join('');
   return `<ul class="top-articles-list">${items}
     </ul>`;
 }
 
 // journalDir / rootIndexPath はテスト用（既定は実物の journal/ と index.html）
-function updateRootLatestSection(entries, journalDir, rootIndexPath) {
+function updateRootLatestSection(entries, journalDir, rootIndexPath, excludedOverride) {
   const rootIndex = rootIndexPath || path.join(ROOT, 'index.html');
   const src = fs.readFileSync(rootIndex, 'utf8');
   if (!/<!-- LATEST_JOURNAL_START -->[\s\S]*?<!-- LATEST_JOURNAL_END -->/.test(src)) {
@@ -265,11 +325,19 @@ function updateRootLatestSection(entries, journalDir, rootIndexPath) {
     /<!-- LATEST_JOURNAL_START -->[\s\S]*?<!-- LATEST_JOURNAL_END -->/,
     `<!-- LATEST_JOURNAL_START -->${inner}\n      <!-- LATEST_JOURNAL_END -->`
   );
+  const excluded = excludedOverride || loadTopHeroExcluded();
   // 最初の画面の「3分類の新しい記事」。区画が無いページ（古い試験用の index.html など）では触らない
   if (/<!-- TOP_ARTICLES_START -->[\s\S]*?<!-- TOP_ARTICLES_END -->/.test(out)) {
     out = out.replace(
       /<!-- TOP_ARTICLES_START -->[\s\S]*?<!-- TOP_ARTICLES_END -->/,
-      `<!-- TOP_ARTICLES_START -->\n    ${renderTopArticles(entries, journalDir)}\n    <!-- TOP_ARTICLES_END -->`
+      `<!-- TOP_ARTICLES_START -->\n    ${renderTopArticles(entries, journalDir, excluded)}\n    <!-- TOP_ARTICLES_END -->`
+    );
+  }
+  // 1画面目の大きな写真（見出しの直後）。区画が無いページでは触らない
+  if (/<!-- TOP_HERO_START -->[\s\S]*?<!-- TOP_HERO_END -->/.test(out)) {
+    out = out.replace(
+      /<!-- TOP_HERO_START -->[\s\S]*?<!-- TOP_HERO_END -->/,
+      () => `<!-- TOP_HERO_START -->${renderTopHero(pickTopHero(entries, journalDir, excluded))}<!-- TOP_HERO_END -->`
     );
   }
   fs.writeFileSync(rootIndex, out);
@@ -304,4 +372,4 @@ if (require.main === module) main();
 
 // build.js から呼ぶための export — トップ Daily Journal セクションの
 // 同期忘れを防ぐため、build.js 末尾でも自動実行される。
-module.exports = { buildFilterBar, buildList, buildFeed, main, readHeroPhoto, readCredit, renderLatestCard, updateRootLatestSection, latestPerCategory, renderTopArticles };
+module.exports = { buildFilterBar, buildList, buildFeed, main, readHeroPhoto, readCredit, renderLatestCard, updateRootLatestSection, latestPerCategory, renderTopArticles, pickTopHero, renderTopHero, loadTopHeroExcluded, bigPhotoSrc };

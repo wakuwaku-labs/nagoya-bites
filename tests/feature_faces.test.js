@@ -142,3 +142,34 @@ test('実際のトップの特集ストリップ: 顔を決めた特集の図が
     if (/class="feature-card-credit"/.test(inner)) assert.ok(/class="feature-card-credit">写真: [^<]+（ホットペッパーグルメ）</.test(inner), `${slug}: 出所の文字`);
   }
 });
+
+// CLAUDE.md「同じ画像を複数の記事の顔に使い回さない」: 特集ページの顔（先頭の画像）の写真が、特集どうしで重ならない
+function heroPhotoOf(html) {
+  const m = html.match(/<div class="art-hero-image[^"]*">\s*(?:<!--[^>]*-->\s*)*<img[^>]*?src="([^"]+)"/);
+  return m ? m[1] : null;
+}
+
+test('特集ページの顔: どの2本の特集も同じ写真を顔にしない（図・転送ページ・顔の無い型は数えない）', () => {
+  const dir = path.join(ROOT, 'features');
+  const seen = new Map();
+  let withPhoto = 0;
+  for (const f of fs.readdirSync(dir).filter((n) => n.endsWith('.html'))) {
+    const src = heroPhotoOf(fs.readFileSync(path.join(dir, f), 'utf8'));
+    if (!src || /feature-figures\//.test(src)) continue;
+    withPhoto++;
+    const id = F.photoId(src);
+    assert.ok(!seen.has(id), `顔の写真が重なっている: ${f} と ${seen.get(id)}（${id}）`);
+    seen.set(id, f);
+  }
+  assert.ok(withPhoto >= 30, `写真の顔を持つ特集の数: ${withPhoto}`);
+});
+
+test('data/feature_faces.json: 顔に決めた写真が特集どうしで重ならない', () => {
+  const real = F.loadConfig();
+  const seen = new Map();
+  for (const [slug, f] of Object.entries(real.faces)) {
+    const id = F.photoId(f.photo);
+    assert.ok(!seen.has(id), `${slug} と ${seen.get(id)} が同じ写真（${id}）`);
+    seen.set(id, slug);
+  }
+});

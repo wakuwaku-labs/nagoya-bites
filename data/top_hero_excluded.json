@@ -1,0 +1,26 @@
+{
+  "_comment": "トップの1画面目の大きな写真・小さな行の写真にしない写真（目で見て外したもの）。写真の番号（P000000000）か記事の slug で照合する。scripts/build_journal_index.js が読む。新しい記事の写真を目で見て、店のロゴ・文字・看板・販促が主役ならここに足す（取り繕わない・機械では判定しない）。",
+  "reviewedAt": "2026-11-17",
+  "excluded": [
+    {
+      "photo": "P037623369",
+      "slug": "2026-11-17-kanayama-shokukan-hotpot-bonenkai-private-room",
+      "reason": "店のロゴ（蜀漢）が主役で、料理より文字が目立つ"
+    },
+    {
+      "photo": "P051668187",
+      "slug": "2026-11-07-ozone-daikinboshi-hakata-kushiyaki-solo",
+      "reason": "店名のロゴが写真の中心"
+    },
+    {
+      "photo": "P026759080",
+      "slug": "2026-11-04-meieki-luca-bar-contract-farm-vegetable",
+      "reason": "ロゴを重ねた複数枚の寄せ集め"
+    },
+    {
+      "photo": "P039149824",
+      "slug": "2026-10-30-hisaya-taichung-yeshi-osu-sarikaka",
+      "reason": "看板の文字が主役の外観"
+    }
+  ]
+}
