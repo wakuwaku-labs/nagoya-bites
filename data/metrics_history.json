@@ -2,29 +2,6 @@
   "version": 1,
   "entries": [
     {
-      "date": "2026-07-17",
-      "totals": {
-        "activeUsers": 374,
-        "pageViews": 488,
-        "sessions": 413,
-        "avgSessionDuration": 85,
-        "bounceRate": 0.446,
-        "pagesPerSession": 1.18
-      },
-      "channels_pct": {
-        "organic": 56.3,
-        "direct": 34.8,
-        "social": 7.2,
-        "referral": 1.4,
-        "paid": 0,
-        "other": 0.2
-      },
-      "cta": {
-        "outboundClicks": 16,
-        "ctaClickRate": 3.9
-      }
-    },
-    {
       "date": "2026-07-18",
       "totals": {
         "activeUsers": 371,
@@ -8247,6 +8224,106 @@
       },
       "search_channels": {
         "direct": 4724,
+        "google": 1314,
+        "bing": 951,
+        "yahoo": 594,
+        "ai_assistant": 235,
+        "other": 75,
+        "social": 55,
+        "duckduckgo": 27
+      },
+      "cta": {
+        "outboundClicks": 420,
+        "ctaClickRate": 5.3,
+        "ctaClickRate_organic": 9.6,
+        "ctaClickRate_direct": 1.5,
+        "ctaClickRate_social": 23.6
+      }
+    },
+    {
+      "date": "2026-11-18",
+      "totals": {
+        "activeUsers": 7500,
+        "pageViews": 8977,
+        "sessions": 7888,
+        "avgSessionDuration": 55.5,
+        "bounceRate": 0.674,
+        "pagesPerSession": 1.14
+      },
+      "gsc": {
+        "generatedAt": "2026-11-18T00:25:34.227Z",
+        "dateRange": {
+          "startDate": "2026-10-21",
+          "endDate": "2026-11-17"
+        },
+        "totals": {
+          "clicks": 1804,
+          "impressions": 67420,
+          "ctr": 0.0268,
+          "position": 10.6,
+          "impressionsPerDay": 2407.9
+        },
+        "intent_kpi": {
+          "discovery_impressions": 2348,
+          "discovery_clicks": 222,
+          "discovery_impressions_share": 6.7
+        },
+        "pageTypes": {
+          "feature": {
+            "pages": 45,
+            "clicks": 431,
+            "impressions": 7481,
+            "ctr": 0.0576,
+            "position": 8.1
+          },
+          "journal": {
+            "pages": 109,
+            "clicks": 390,
+            "impressions": 14797,
+            "ctr": 0.0264,
+            "position": 8.3
+          },
+          "store": {
+            "pages": 3107,
+            "clicks": 951,
+            "impressions": 44227,
+            "ctr": 0.0215,
+            "position": 11.4
+          },
+          "home": {
+            "pages": 1,
+            "clicks": 9,
+            "impressions": 472,
+            "ctr": 0.0191,
+            "position": 43.7
+          },
+          "area_hub": {
+            "pages": 97,
+            "clicks": 24,
+            "impressions": 752,
+            "ctr": 0.0319,
+            "position": 15.6
+          },
+          "other": {
+            "pages": 2,
+            "clicks": 0,
+            "impressions": 3,
+            "ctr": 0,
+            "position": 5
+          }
+        }
+      },
+      "channels_pct": {
+        "organic": 36.1,
+        "direct": 59.5,
+        "social": 0.7,
+        "ai_assistant": 2.9,
+        "referral": 0.7,
+        "paid": 0,
+        "other": 0
+      },
+      "search_channels": {
+        "direct": 4726,
         "google": 1314,
         "bing": 951,
         "yahoo": 594,

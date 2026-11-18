@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T22:32:11.664Z",
+  "generatedAt": "2026-11-18T00:30:15.389Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -18,21 +18,21 @@
     "ctrFixGeoless": [
       {
         "query": "ひものや官兵衛 伏見",
-        "impressions": 368,
-        "clicks": 9,
-        "position": 6,
-        "ctr": 2.45,
-        "expectedCtr": 5,
-        "missedClicks": 9.4
+        "impressions": 343,
+        "clicks": 8,
+        "position": 5.9,
+        "ctr": 2.33,
+        "expectedCtr": 5.1,
+        "missedClicks": 9.5
       },
       {
         "query": "さく蛸 黒川",
-        "impressions": 581,
-        "clicks": 9,
-        "position": 9.6,
-        "ctr": 1.55,
+        "impressions": 528,
+        "clicks": 6,
+        "position": 9.8,
+        "ctr": 1.14,
         "expectedCtr": 2.6,
-        "missedClicks": 6.2
+        "missedClicks": 7.5
       }
     ],
     "rankPush": []
@@ -41,12 +41,12 @@
     "ctrFix": [
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 1655,
+        "impressions": 1622,
         "clicks": 34,
         "position": 6.7,
-        "ctr": 2.05,
+        "ctr": 2.1,
         "expectedCtr": 4.3,
-        "missedClicks": 37.2
+        "missedClicks": 35.7
       },
       {
         "page": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -59,12 +59,12 @@
       },
       {
         "page": "/journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
-        "impressions": 1506,
-        "clicks": 23,
-        "position": 8.8,
-        "ctr": 1.53,
-        "expectedCtr": 2.9,
-        "missedClicks": 20.3
+        "impressions": 1363,
+        "clicks": 17,
+        "position": 9.1,
+        "ctr": 1.25,
+        "expectedCtr": 2.8,
+        "missedClicks": 20.7
       },
       {
         "page": "/journal/2026-11-10-higashibetsuin-chashumen-susuru-solo-lunch.html",
@@ -74,6 +74,15 @@
         "ctr": 2.39,
         "expectedCtr": 3.8,
         "missedClicks": 8
+      },
+      {
+        "page": "/stores/J004576448.html",
+        "impressions": 610,
+        "clicks": 11,
+        "position": 8.4,
+        "ctr": 1.8,
+        "expectedCtr": 3,
+        "missedClicks": 7.6
       }
     ],
     "ctrFixGeoless": [],
@@ -93,7 +102,7 @@
     "queryCtrFix": 1,
     "queryCtrFixGeoless": 2,
     "queryRankPush": 0,
-    "pageCtrFix": 4,
+    "pageCtrFix": 5,
     "pageRankPush": 1,
     "topPageCtrFix": [
       "/features/nagoya-tebasaki.html",
