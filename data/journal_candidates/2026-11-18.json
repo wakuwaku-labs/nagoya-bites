@@ -1,0 +1,467 @@
+{
+  "date": "2026-11-18",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名古屋の忘年会、キャンセル料はいつから？吟 名古屋駅店など居酒屋4店",
+      "verdict": "PASS",
+      "total": 100,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 5件 (原価,仕込み,構造,相場,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 152字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名古屋駅」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "名古屋の居酒屋の2時間制、90分で切り上げると会計と席はどうなるか",
+      "verdict": "HOLD",
+      "total": 71,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 5,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 3
+      },
+      "search_intent_links": [
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 1件 (回転) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 110字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「宴会」+1",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "名古屋の忘年会、12月第2週と第3週で予約の取りやすさはどう変わるか",
+      "verdict": "HOLD",
+      "total": 67,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 124字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「忘年会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "名古屋でデートの席選び、カウンター・テーブル・ソファで会話の距離が変わる",
+      "verdict": "HOLD",
+      "total": 61,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 120字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初出コラム (COL-SEAT-007) → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「デート」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "名古屋の居酒屋で忘年会、全席喫煙可の店が多い理由と予約時に聞くこと",
+      "verdict": "HOLD",
+      "total": 45,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 182日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 116字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「名駅」+1",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "plan_topic": {
+    "topic": "イベント",
+    "week": "2026-W47",
+    "slot": 2,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "industry_insider",
+      "title_draft": "名古屋の忘年会、キャンセル料はいつから？吟 名古屋駅店など居酒屋4店",
+      "lead_draft": "12月の宴会予約は第2・第3週の金曜と土曜に集まっている。名駅・栄・金山の居酒屋4店のホットペッパーに載るキャンセル規定を並べると、料金が発生し始める時刻は前日22時から当日0時まで、率は50%から100%まで分かれた。人数が減ったときの扱いが書かれていない店もある。幹事が予約前に確かめる点を整理した。",
+      "angle": "キャンセル料の発生時刻と率、席のみ予約の定額、人数減の扱いを4店の規定で比べ、コースの仕込みと原価、繁忙期に席を埋め直せない構造、No Show対策レポートの相場（コース全額・席のみ5〜7割）から規定の差を読む",
+      "main_store": {
+        "name": "地酒と創作和食 吟 名古屋駅店",
+        "id": "J001194933",
+        "area": "名古屋駅",
+        "genre": "居酒屋"
+      },
+      "column_id": "COL-LAW-005",
+      "sources": [
+        {
+          "label": "ワタミ 2026年忘年会 予約動向レポート",
+          "url": "https://prtimes.jp/main/html/rd/p/000001971.000009215.html",
+          "date": "2026-11-17"
+        },
+        {
+          "label": "シンクロ・フード 飲食店の予約キャンセルに関する実態調査",
+          "url": "https://prtimes.jp/main/html/rd/p/000000728.000001049.html",
+          "date": "2026-05-20"
+        },
+        {
+          "label": "トラベルボイス No Show対策レポート",
+          "url": "https://www.travelvoice.jp/20181105-120588",
+          "date": "2018-11-05"
+        },
+        {
+          "label": "ホットペッパーグルメ 地酒と創作和食 吟 名古屋駅店",
+          "url": "https://www.hotpepper.jp/strJ001194933/"
+        },
+        {
+          "label": "ホットペッパーグルメ 串とメシにはサケキタル 栄住吉店",
+          "url": "https://www.hotpepper.jp/strJ004068355/"
+        },
+        {
+          "label": "ホットペッパーグルメ 定楽屋 名古屋金山店（宴会）",
+          "url": "https://www.hotpepper.jp/strJ001193045/party/"
+        },
+        {
+          "label": "ホットペッパーグルメ 和蔵 名古屋栄店",
+          "url": "https://www.hotpepper.jp/strJ001217403/"
+        },
+        {
+          "label": "e-Gov法令検索 消費者契約法（第9条）",
+          "url": "https://laws.e-gov.go.jp/law/412AC0000000061"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c2",
+      "theme": "industry_insider",
+      "title_draft": "名古屋でデートの席選び、カウンター・テーブル・ソファで会話の距離が変わる",
+      "lead_draft": "デートの店を選ぶとき、料理や価格帯と同じくらい席の形が会話を左右する。カウンターは横並びで視線がぶつからず、テーブルは正面で表情が見え、ソファは距離が近い。名古屋の店の席の書き方を読み、関係の段階ごとにどの席を予約時に指定するかを整理する。",
+      "angle": "カウンター・テーブル・ソファの席タイプ別に、会話の距離と予約時の指定方法、価格帯の違いを読む",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "栄",
+        "genre": ""
+      },
+      "column_id": "COL-SEAT-007",
+      "sources": [
+        {
+          "label": "ワタミ 2026年忘年会 予約動向レポート",
+          "url": "https://prtimes.jp/main/html/rd/p/000001971.000009215.html",
+          "date": "2026-11-17"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c3",
+      "theme": "industry_insider",
+      "title_draft": "名古屋の居酒屋で忘年会、全席喫煙可の店が多い理由と予約時に聞くこと",
+      "lead_draft": "忘年会の候補をホットペッパーで見ていくと、名駅や栄の居酒屋には全席喫煙可の店が今も並ぶ。改正健康増進法の経過措置や喫煙専用室の有無で、同じ居酒屋でも席の条件が変わる。たばこを吸わない人が多い会の幹事が、予約前に確かめる点を整理する。",
+      "angle": "改正健康増進法後の喫煙・分煙の表示を、席の区切り方と予約時の確認方法から読む",
+      "main_store": {
+        "name": "地酒と創作和食 吟 名古屋駅店",
+        "id": "J001194933",
+        "area": "名古屋駅",
+        "genre": "居酒屋"
+      },
+      "column_id": "COL-LAW-006",
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 地酒と創作和食 吟 名古屋駅店",
+          "url": "https://www.hotpepper.jp/strJ001194933/"
+        },
+        {
+          "label": "ホットペッパーグルメ 和蔵 名古屋栄店",
+          "url": "https://www.hotpepper.jp/strJ001217403/"
+        },
+        {
+          "label": "シンクロ・フード 飲食店の予約キャンセルに関する実態調査",
+          "url": "https://prtimes.jp/main/html/rd/p/000000728.000001049.html",
+          "date": "2026-05-20"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c4",
+      "theme": "industry_insider",
+      "title_draft": "名古屋の居酒屋の2時間制、90分で切り上げると会計と席はどうなるか",
+      "lead_draft": "名古屋の居酒屋の宴会コースは2時間制が多く、飲み放題のラストオーダーは90分前後に置かれる。早めに切り上げても料金は変わらない一方、次の予約に席を渡せる店もある。時間制の書き方と、幹事が開始時刻をどう決めるかを整理する。",
+      "angle": "2時間制と飲み放題ラストオーダーの関係を、席の回転と価格帯から読む",
+      "main_store": {
+        "name": "串とメシにはサケキタル 栄住吉店",
+        "id": "J004068355",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "column_id": "COL-OPS-003",
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 串とメシにはサケキタル 栄住吉店",
+          "url": "https://www.hotpepper.jp/strJ004068355/"
+        },
+        {
+          "label": "ワタミ 2026年忘年会 予約動向レポート",
+          "url": "https://prtimes.jp/main/html/rd/p/000001971.000009215.html",
+          "date": "2026-11-17"
+        },
+        {
+          "label": "PR TIMES 健康そむりえ 忘年会シーズン調査",
+          "url": "https://prtimes.jp/main/html/rd/p/000000012.000102768.html",
+          "date": "2026-11-10"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c5",
+      "theme": "industry_insider",
+      "title_draft": "名古屋の忘年会、12月第2週と第3週で予約の取りやすさはどう変わるか",
+      "lead_draft": "ワタミの予約動向では、12月の宴会予約の45%が第2週と第3週の金曜・土曜に集まり、ピークは18日と19日だった。名古屋の居酒屋で忘年会の席を取るなら、曜日と開始時刻をずらすだけで選べる店が増える。予約が集まる日と、空いている日の使い方を整理する。",
+      "angle": "予約の集中日と席の埋まり方を、曜日・開始時刻・コースの価格帯から読む",
+      "main_store": {
+        "name": "定楽屋 名古屋金山店",
+        "id": "J001193045",
+        "area": "金山",
+        "genre": "居酒屋"
+      },
+      "column_id": "COL-SEASON-006",
+      "sources": [
+        {
+          "label": "ワタミ 2026年忘年会 予約動向レポート",
+          "url": "https://prtimes.jp/main/html/rd/p/000001971.000009215.html",
+          "date": "2026-11-17"
+        },
+        {
+          "label": "ホットペッパーグルメ 定楽屋 名古屋金山店（宴会）",
+          "url": "https://www.hotpepper.jp/strJ001193045/party/"
+        },
+        {
+          "label": "PR TIMES 健康そむりえ 忘年会シーズン調査",
+          "url": "https://prtimes.jp/main/html/rd/p/000000012.000102768.html",
+          "date": "2026-11-10"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}
