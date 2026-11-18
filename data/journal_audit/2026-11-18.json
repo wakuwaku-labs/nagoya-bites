@@ -1,0 +1,155 @@
+{
+  "date": "2026-11-18",
+  "slug": "2026-11-18-nagoya-bonenkai-cancel-fee-izakaya-4",
+  "recorded_at": "2026-11-18T00:23:08.631Z",
+  "mode": "shadow",
+  "enforced": false,
+  "note": "記録だけ。公開は止めていない",
+  "lane_if_enforced": "auto_publish",
+  "published": true,
+  "published_by_lane": "existing_gate",
+  "reasons": [],
+  "checks": {
+    "validator": "pass",
+    "claims": {
+      "ledger_by": "writer",
+      "summary": {
+        "claims": 56,
+        "verified": 54,
+        "unverifiable": 2,
+        "mismatch": 0,
+        "stale": 0,
+        "not_applicable": 0,
+        "paired": 2,
+        "hedge_dropped": 0,
+        "issues": 0,
+        "core_issues": 0
+      },
+      "fetch": {
+        "sources": 8,
+        "ok": 7,
+        "failed": [
+          {
+            "url": "https://laws.e-gov.go.jp/law/412AC0000000061",
+            "reason": "empty_body"
+          }
+        ]
+      }
+    },
+    "independent_review": {
+      "ok": true,
+      "reason": null,
+      "model": null,
+      "prompt_version": "review-2026-11-17",
+      "findings": 0,
+      "verified_findings": 0
+    }
+  },
+  "score": null,
+  "sources": [
+    {
+      "url": "https://prtimes.jp/main/html/rd/p/000001971.000009215.html",
+      "label": "PR TIMES ワタミ「【ミライザカ・鳥メロ】2026年忘年会 予約動向レポート」",
+      "type": "報道用の発表",
+      "date": "2026-11-17",
+      "fetched_at": "2026-11-18T00:22:38.600Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 4804,
+        "sha256": "3421a1b99fd543df2107f5cae2677b58601dc4a4cf71fb47f4ac969ee983b44b"
+      }
+    },
+    {
+      "url": "https://prtimes.jp/main/html/rd/p/000000728.000001049.html",
+      "label": "PR TIMES シンクロ・フード「飲食店の予約キャンセルに関する実態調査結果を発表」",
+      "type": "報道用の発表",
+      "date": "2026-05-20",
+      "fetched_at": "2026-11-18T00:22:38.679Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 7313,
+        "sha256": "040b45b67429ce35354f8c631da8ab7e08e7c957df9085954f21a02ba2b7c8fd"
+      }
+    },
+    {
+      "url": "https://www.travelvoice.jp/20181105-120588",
+      "label": "トラベルボイス「No Show（飲食店における無断キャンセル）対策レポート」の報道",
+      "type": "公式・その他",
+      "date": "2018-11-05",
+      "fetched_at": "2026-11-18T00:22:38.873Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 4923,
+        "sha256": "4edd3f315826c629ce0bb8f70a6e67e322bea054f492752d050f07d788341385"
+      }
+    },
+    {
+      "url": "https://laws.e-gov.go.jp/law/412AC0000000061",
+      "label": "e-Gov法令検索 消費者契約法（第9条）",
+      "type": "公式・その他",
+      "date": "11月18日確認",
+      "fetched_at": "2026-11-18T00:22:39.068Z",
+      "fetch": {
+        "ok": false,
+        "status": 200,
+        "reason": "empty_body"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001194933/",
+      "label": "ホットペッパーグルメ 地酒と創作和食 吟 名古屋駅店（キャンセル規定・席・支払い）",
+      "type": "掲載サイト",
+      "date": "11月18日確認",
+      "fetched_at": "2026-11-18T00:22:39.504Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 8422,
+        "sha256": "7ce732e3c57cae3b909ea2b04437e23637c668a08d549b5cfad944c82062f125"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ004068355/",
+      "label": "ホットペッパーグルメ 串とメシにはサケキタル 栄住吉店（キャンセル規定・コース・喫煙）",
+      "type": "掲載サイト",
+      "date": "11月18日確認",
+      "fetched_at": "2026-11-18T00:22:39.975Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 8727,
+        "sha256": "d9a45b13a378280a154f5e49fb808f83ec5e08ef62d1f7ec845dacfad0da963e"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001193045/party/",
+      "label": "ホットペッパーグルメ 定楽屋 名古屋金山店 宴会ページ（キャンセル規定・コース・年末料金）",
+      "type": "掲載サイト",
+      "date": "11月18日確認",
+      "fetched_at": "2026-11-18T00:22:40.379Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 9194,
+        "sha256": "80c7ae36426f5661d13a631ea97567d238fd4d97a337d4c5d43b68402b17d920"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001217403/",
+      "label": "ホットペッパーグルメ 和蔵 名古屋栄店（キャンセル規定・お通し・料金備考）",
+      "type": "掲載サイト",
+      "date": "11月18日確認",
+      "fetched_at": "2026-11-18T00:22:40.634Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 8274,
+        "sha256": "7f3cd4e9f3e0ee26806f49a56247cdd0ece3ede294738a2edb867044cda8f5a4"
+      }
+    }
+  ],
+  "findings": []
+}
