@@ -1,0 +1,84 @@
+{
+ "version": 1,
+ "articles": {
+  "journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html": {
+   "last_checked": "2026-11-18",
+   "last_checked_at": "2026-11-18T02:52:36.420Z",
+   "outcome": "findings",
+   "reason": "pre_open",
+   "basis": "machine",
+   "facts": 24,
+   "verified": 21,
+   "unverifiable": 3,
+   "mismatch": 0,
+   "sources": {
+    "ok": 3,
+    "total": 5
+   },
+   "findings": [
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-10-22）を過ぎた記述: 公式Instagramの最新の案内では、10月10日（土）は11:00〜19:00、 10月11日（日）〜22日（木）は",
+     "claim": "公式Instagramの最新の案内では、10月10日（土）は11:00〜19:00、 10月11日（日）〜22日（木）は10:00〜18:00 、10月23日（金）のグランドオープン後は10:00〜20:00です。",
+     "reported_at": "2026-11-18"
+    }
+   ],
+   "next_due": "2026-12-02"
+  },
+  "features/hard-to-book.html": {
+   "last_checked": "2026-11-18",
+   "last_checked_at": "2026-11-18T02:52:36.420Z",
+   "outcome": "no_sources",
+   "reason": "pre_open",
+   "basis": "machine",
+   "facts": 11,
+   "verified": 0,
+   "unverifiable": 11,
+   "mismatch": 0,
+   "sources": {
+    "ok": 0,
+    "total": 0
+   },
+   "findings": [],
+   "next_due": "2026-12-02"
+  },
+  "journal/2026-07-23-ushinohi-shibafukuya.html": {
+   "last_checked": "2026-11-18",
+   "last_checked_at": "2026-11-18T02:52:36.420Z",
+   "outcome": "ok",
+   "reason": "pre_open",
+   "basis": "machine",
+   "facts": 15,
+   "verified": 15,
+   "unverifiable": 0,
+   "mismatch": 0,
+   "sources": {
+    "ok": 3,
+    "total": 3
+   },
+   "findings": [],
+   "next_due": "2027-02-15"
+  }
+ },
+ "summary": {
+  "overdue": 199,
+  "overdue_ledger": 0,
+  "oldest_overdue_ledger_days": 0,
+  "overdue_legacy": 199,
+  "oldest_overdue_legacy_days": 198,
+  "due_total": 202,
+  "no_base_date": 3,
+  "pending_findings": 0
+ },
+ "last_run": {
+  "date": "2026-11-18",
+  "at": "2026-11-18T02:52:36.420Z",
+  "mode": "record",
+  "due": 202,
+  "processed": 3,
+  "alerts": 1,
+  "applied": 0
+ },
+ "_README": "公開後の鮮度の見直し（S5-5）の記録。scripts/recheck_due_articles.js が毎日の夜間の検査で更新する。articles は記事のパスごとの直近の結果（次の見直す日・照合の件数・見つけた変更）。根拠確認率（trust_metrics）はここの facts/verified も読む。"
+}
