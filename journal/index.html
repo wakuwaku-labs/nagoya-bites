@@ -76,7 +76,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .journal-entry.has-thumb{grid-template-columns:112px minmax(0,1fr) 168px;}
 .entry-thumb{display:flex;flex-direction:column;gap:var(--sp-1);min-width:0;}
 .entry-img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:4px;background:var(--surface);}
-.entry-credit{font-size:var(--fs-xs);line-height:1.4;color:var(--dim);overflow-wrap:anywhere;}
+.entry-credit{font-size:var(--fs-xs);line-height:1.4;color:var(--dim);word-break:keep-all;overflow-wrap:anywhere;}
 @media(max-width:640px){.journal-entry.has-thumb{grid-template-columns:minmax(0,1fr) 112px;column-gap:var(--sp-3);row-gap:var(--sp-1);}.journal-entry.has-thumb .entry-date,.journal-entry.has-thumb .entry-body{grid-column:1;}.journal-entry.has-thumb .entry-thumb{grid-column:2;grid-row:1 / span 2;}}</style>
 </head>
 <body>
