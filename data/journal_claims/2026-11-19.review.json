@@ -1,0 +1,92 @@
+{
+  "date": "2026-11-19",
+  "slug": "2026-11-19-nagoya-izakaya-bonenkai-year-end-surcharge",
+  "recorded_at": "2026-11-19T00:26:41.110Z",
+  "model": null,
+  "model_note": "指定なし（実行環境の既定のモデル）",
+  "prompt_version": "review-2026-11-17",
+  "prompt_sha256": "375b91c37b043d68",
+  "excerpts": [
+    {
+      "id": "E1",
+      "url": "https://prtimes.jp/main/html/rd/p/000001971.000009215.html",
+      "lines": 14
+    },
+    {
+      "id": "E2",
+      "url": "https://www.hotpepper.jp/strJ003942920/",
+      "lines": 20
+    },
+    {
+      "id": "E3",
+      "url": "https://www.hotpepper.jp/strJ003942920/course/",
+      "lines": 10
+    },
+    {
+      "id": "E4",
+      "url": "https://www.hotpepper.jp/strJ004470692/",
+      "lines": 11
+    },
+    {
+      "id": "E5",
+      "url": "https://www.hotpepper.jp/strJ004470692/course/",
+      "lines": 12
+    },
+    {
+      "id": "E6",
+      "url": "https://www.hotpepper.jp/strJ003850868/",
+      "lines": 8
+    },
+    {
+      "id": "E7",
+      "url": "https://www.hotpepper.jp/strJ003850868/course/",
+      "lines": 11
+    },
+    {
+      "id": "E8",
+      "url": "https://www.hotpepper.jp/strJ004067788/",
+      "lines": 16
+    },
+    {
+      "id": "E9",
+      "url": "https://www.hotpepper.jp/strJ004067788/course/",
+      "lines": 8
+    },
+    {
+      "id": "E10",
+      "url": "https://www.hotpepper.jp/strJ001209417/",
+      "lines": 9
+    }
+  ],
+  "ok": true,
+  "elapsed_sec": 34,
+  "findings": [
+    {
+      "sentence": "居酒屋 名古屋駅（徒歩5分） 。",
+      "kind": "number_mismatch",
+      "quote": "名古屋駅徒歩3分♪幹事様必見の特典あり!",
+      "reason": "十八番舟の駅からの所要時間が、記事は徒歩5分、抜粋は徒歩3分で異なる",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "80席、宴会は最大30人。",
+      "kind": "number_mismatch",
+      "quote": "お忍び個室は2名様からOK!最大宴会40名様まで対応可能!",
+      "reason": "抜粋には最大30名様の記載もあるが最大40名様の記載もあり、30人と言い切る記事と合わない",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "ほかの5店は確かめた欄に記載が見つからなかった（各店のホットペッパーグルメ・11月19日確認）。",
+      "kind": "other",
+      "quote": "チャージ別・金・土・祝前日は+500円。",
+      "reason": "兎二角のページにチャージ別の記載があり、席料等の記載が見つからないとする記事と合わない",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    }
+  ]
+}

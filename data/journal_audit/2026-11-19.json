@@ -1,0 +1,270 @@
+{
+  "date": "2026-11-19",
+  "slug": "2026-11-19-nagoya-izakaya-bonenkai-year-end-surcharge",
+  "recorded_at": "2026-11-19T00:27:21.650Z",
+  "mode": "shadow",
+  "enforced": false,
+  "note": "記録だけ。公開は止めていない",
+  "lane_if_enforced": "hold",
+  "published": true,
+  "published_by_lane": "existing_gate",
+  "reasons": [
+    {
+      "type": "number_mismatch",
+      "detail": "出典の同じ項目と数字が違う（台帳の文と数字が違う: 台帳 1・1000・1・500 ／ 記事 —）: 兎二角 とにかく 栄駅店 （栄）：12月25日から1月11日まで、席のみの利用は会計の10%。"
+    },
+    {
+      "type": "review:number_mismatch",
+      "detail": "居酒屋 名古屋駅（徒歩5分） 。 ／ 十八番舟の駅からの所要時間が、記事は徒歩5分、抜粋は徒歩3分で異なる"
+    },
+    {
+      "type": "review:number_mismatch",
+      "detail": "80席、宴会は最大30人。 ／ 抜粋には最大30名様の記載もあるが最大40名様の記載もあり、30人と言い切る記事と合わない"
+    },
+    {
+      "type": "review:other",
+      "detail": "ほかの5店は確かめた欄に記載が見つからなかった（各店のホットペッパーグルメ・11月19日確認）。 ／ 兎二角のページにチャージ別の記載があり、席料等の記載が見つからないとする記事と合わない"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "焼き鳥 きんざん 名駅三丁目店 （名古屋駅）：12月28日から1月4日まで、アラカルトは会計の10%。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "価格帯の記載がある1867店では、「3001～4000円」が真ん中です。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "平均予算が金額だけで書かれている453店の中央値は3,000円です（文章混じりの記載は含めません）。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "個室ありの記載がある店は472店です（記載のない1438店は、無いとは限りません）。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "喫煙の区分は、全面禁煙809店・一部禁煙137店・禁煙席なし579店・記載なし385店です。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "料金の備考がある1161店のうち、お通し・席料などの記載がある店は813店、深夜料金の記載がある店は77店です（備考のない749店は、無料とは限りません）。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "ほかの5店は確かめた欄に記載が見つからなかった（各店のホットペッパーグルメ・11月19日確認）。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "深夜料金は6店とも確かめた欄に記載が見つからなかった（各店のホットペッパーグルメ・11月19日確認）。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "ほかの5店は記載が見つからなかった（各店のホットペッパーグルメ・11月19日確認）。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "アカリバの全7品・120分飲み放題付きは6名以上（各店のホットペッパーグルメのコースページ・11月19日確認）。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "予約・キャンセル 確認できなかった : 記載なし（この記事では6店のキャンセル規定を確かめていない・11月19日確認）。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "12月28日から1月4日までアラカルトは会計の10%。"
+    }
+  ],
+  "checks": {
+    "validator": "pass",
+    "claims": {
+      "ledger_by": "writer",
+      "summary": {
+        "claims": 79,
+        "verified": 57,
+        "unverifiable": 15,
+        "mismatch": 1,
+        "stale": 0,
+        "not_applicable": 6,
+        "paired": 9,
+        "hedge_dropped": 0,
+        "issues": 1,
+        "core_issues": 1
+      },
+      "fetch": {
+        "sources": 10,
+        "ok": 10,
+        "failed": []
+      }
+    },
+    "independent_review": {
+      "ok": true,
+      "reason": null,
+      "model": null,
+      "prompt_version": "review-2026-11-17",
+      "findings": 3,
+      "verified_findings": 3
+    }
+  },
+  "score": "91点 PASS_WITH_NOTE（自動公開ライン100点）。不足は話題性 -17（年末料金を扱う報道や話題の証跡URLが無く、独立ドメインが少ない）・執筆 -2。季節（忘年会予約開幕・幹事向け）の指定に沿い、前日までのキャンセル料・飲み放題時間・個室と重ならない年末料金を題材にした。件数は data/stores.json の営業中の居酒屋1,910店（11月18日時点）の料金備考・平均予算から数え、昨季の記載と読める1店を除いた45店。6店はホットペッパーを11月19日に確認。兎二角 栄駅店はコースの上乗せが店舗ページ1,000円・コースページ500円で食い違うため両方を書いた。本文に自動で入った勝男・兎二角の写真は価格入りの販促画像だったので外し、十八番舟の料理写真に替えた（記事内2枚・取り繕って増やさない）",
+  "sources": [
+    {
+      "url": "https://prtimes.jp/main/html/rd/p/000001971.000009215.html",
+      "label": "ワタミ株式会社「忘年会の予約動向」（PR TIMES）",
+      "type": "報道用の発表",
+      "date": "2026-11-17",
+      "fetched_at": "2026-11-19T00:26:31.129Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 4801,
+        "sha256": "335d52de93975c1b3519da4c0e41b7f47d8e12d11c9ffe0fd937fe40a9f442e1"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ003942920/",
+      "label": "海乃鶏 名古屋駅前店（ホットペッパーグルメ）",
+      "type": "掲載サイト",
+      "date": "2026-09-30",
+      "fetched_at": "2026-11-19T00:26:31.739Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 9171,
+        "sha256": "328323083b1fab5c0cffc3edfd74d41d242b691d4f3d5a0ebbe72671bca0bf30"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ003942920/course/",
+      "label": "海乃鶏 名古屋駅前店 コース一覧（ホットペッパーグルメ）",
+      "type": "掲載サイト",
+      "date": "11月19日確認",
+      "fetched_at": "2026-11-19T00:26:32.237Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 6723,
+        "sha256": "de930712e6beb213ccaa7d80b15e011289e890edfabf6d7b0df4de2eb3d06d39"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ004470692/",
+      "label": "アカリバ 金山（ホットペッパーグルメ）",
+      "type": "掲載サイト",
+      "date": "2026-10-13",
+      "fetched_at": "2026-11-19T00:26:32.536Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 7381,
+        "sha256": "b6399c875f60ed75de6f063c47e39f513e6f3d737feb7928fc23d740a405982b"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ004470692/course/",
+      "label": "アカリバ 金山 コース一覧（ホットペッパーグルメ）",
+      "type": "掲載サイト",
+      "date": "11月19日確認",
+      "fetched_at": "2026-11-19T00:26:32.855Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 4104,
+        "sha256": "cdc0bd01965d66f232c622ce1a6575101a6656495e02562765d5cb821153703c"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ003850868/",
+      "label": "勝男 名駅西口応援団（ホットペッパーグルメ）",
+      "type": "掲載サイト",
+      "date": "2026-11-10",
+      "fetched_at": "2026-11-19T00:26:33.275Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 7885,
+        "sha256": "055afa6c2b1b082658dcc2a4125bf9a2b372b7be4b0000717a48f86ba3e0997b"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ003850868/course/",
+      "label": "勝男 名駅西口応援団 コース一覧（ホットペッパーグルメ）",
+      "type": "掲載サイト",
+      "date": "11月19日確認",
+      "fetched_at": "2026-11-19T00:26:33.601Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 4217,
+        "sha256": "821179e23e5e1bc8d5dcadc23b938737d00f63eab65e95d5015ace0830939ed4"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ004067788/",
+      "label": "兎二角 栄駅店（ホットペッパーグルメ）",
+      "type": "掲載サイト",
+      "date": "2026-10-21",
+      "fetched_at": "2026-11-19T00:26:33.846Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 8821,
+        "sha256": "ee35b53fcba6ac32ae800c98e4ac7b1ea09bf8898230f624e8e421890d967901"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ004067788/course/",
+      "label": "兎二角 栄駅店 コース一覧（ホットペッパーグルメ）",
+      "type": "掲載サイト",
+      "date": "11月19日確認",
+      "fetched_at": "2026-11-19T00:26:34.093Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 5396,
+        "sha256": "86555ed79ecf541a061bea4f8916350be4817dc7fac17c1b5c7cd400f848ec6c"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001209417/",
+      "label": "十八番舟 名古屋駅前店（ホットペッパーグルメ）",
+      "type": "掲載サイト",
+      "date": "2026-11-13",
+      "fetched_at": "2026-11-19T00:26:34.600Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 10329,
+        "sha256": "2b6468b20cc0d12d1447e1c629d491dbde758b6cca1cea42eb298285b17cfdb9"
+      }
+    }
+  ],
+  "findings": [
+    {
+      "sentence": "居酒屋 名古屋駅（徒歩5分） 。",
+      "kind": "number_mismatch",
+      "quote": "名古屋駅徒歩3分♪幹事様必見の特典あり!",
+      "reason": "十八番舟の駅からの所要時間が、記事は徒歩5分、抜粋は徒歩3分で異なる",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "80席、宴会は最大30人。",
+      "kind": "number_mismatch",
+      "quote": "お忍び個室は2名様からOK!最大宴会40名様まで対応可能!",
+      "reason": "抜粋には最大30名様の記載もあるが最大40名様の記載もあり、30人と言い切る記事と合わない",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "ほかの5店は確かめた欄に記載が見つからなかった（各店のホットペッパーグルメ・11月19日確認）。",
+      "kind": "other",
+      "quote": "チャージ別・金・土・祝前日は+500円。",
+      "reason": "兎二角のページにチャージ別の記載があり、席料等の記載が見つからないとする記事と合わない",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    }
+  ]
+}
