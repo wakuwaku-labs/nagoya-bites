@@ -932,6 +932,16 @@
       "確認日": "2026-11-14",
       "出典": "https://www.hotpepper.jp/strJ001223732/（HTTP 404・掲載終了）/ https://www.google.com/maps/place/?q=place_id:ChIJry3-HftxA2ARSFALpql-94k（CLOSED_PERMANENTLY・焼肉 夜桜 OSU店・大須4-9-3）",
       "理由": "閉店（ISSUE-186・2026-11-14 再検証）。HP 掲載終了（HTTP 404）＋ Google Places 閉業（CLOSED_PERMANENTLY）の2情報源で確認。名前（焼肉 夜桜 OSU店）・住所（大須4-9-3）が掲載データと一致。根拠の全体は data/store_liveness_reviews.json"
+    },
+    {
+      "店名": "世界の山ちゃん 栄店",
+      "エリア": "栄",
+      "ホットペッパーID": "J000389514",
+      "閉店日": "2026-11-18",
+      "確認日": "2026-11-19",
+      "出典": "https://www.yamachan.co.jp/shop/aichi/sakae.php",
+      "理由": "閉店。公式の栄店ページに『11月18日(水)営業終了後をもちまして閉店』、公式の愛知店舗一覧に『栄店 2026年11月18日 閉店』。運営会社の発表は https://syfood-japan.com/bekkan_open/ 。近くの本店・矢場町店を公式が案内",
+      "差し替え先": "世界の山ちゃん 矢場町店"
     }
   ]
 }
