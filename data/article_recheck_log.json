@@ -59,25 +59,76 @@
    },
    "findings": [],
    "next_due": "2027-02-15"
+  },
+  "features/nagoya-kakuozan.html": {
+   "last_checked": "2026-11-19",
+   "last_checked_at": "2026-11-19T02:30:05.980Z",
+   "outcome": "no_sources",
+   "reason": "pre_open",
+   "basis": "machine",
+   "facts": 20,
+   "verified": 0,
+   "unverifiable": 20,
+   "mismatch": 0,
+   "sources": {
+    "ok": 0,
+    "total": 0
+   },
+   "findings": [],
+   "next_due": "2026-12-03"
+  },
+  "journal/2026-06-01-weekly-digest-sakae-meiki-trending.html": {
+   "last_checked": "2026-11-19",
+   "last_checked_at": "2026-11-19T02:30:05.980Z",
+   "outcome": "ok",
+   "reason": "pre_open",
+   "basis": "machine",
+   "facts": 20,
+   "verified": 11,
+   "unverifiable": 9,
+   "mismatch": 0,
+   "sources": {
+    "ok": 1,
+    "total": 4
+   },
+   "findings": [],
+   "next_due": "2027-02-16"
+  },
+  "journal/2026-06-02-sumiyaki-unafuji-nagoya-station.html": {
+   "last_checked": "2026-11-19",
+   "last_checked_at": "2026-11-19T02:30:05.980Z",
+   "outcome": "ok",
+   "reason": "pre_open",
+   "basis": "machine",
+   "facts": 13,
+   "verified": 1,
+   "unverifiable": 12,
+   "mismatch": 0,
+   "sources": {
+    "ok": 1,
+    "total": 4
+   },
+   "findings": [],
+   "next_due": "2027-02-16"
   }
  },
  "summary": {
-  "overdue": 199,
+  "overdue": 197,
   "overdue_ledger": 0,
   "oldest_overdue_ledger_days": 0,
-  "overdue_legacy": 199,
-  "oldest_overdue_legacy_days": 198,
-  "due_total": 202,
+  "overdue_legacy": 197,
+  "oldest_overdue_legacy_days": 199,
+  "due_total": 200,
   "no_base_date": 3,
   "pending_findings": 0
  },
  "last_run": {
-  "date": "2026-11-18",
-  "at": "2026-11-18T02:52:36.420Z",
+  "date": "2026-11-19",
+  "at": "2026-11-19T02:30:05.980Z",
   "mode": "record",
-  "due": 202,
+  "due": 200,
   "processed": 3,
-  "alerts": 1,
+  "alerts": 0,
   "applied": 0
  },
  "_README": "公開後の鮮度の見直し（S5-5）の記録。scripts/recheck_due_articles.js が毎日の夜間の検査で更新する。articles は記事のパスごとの直近の結果（次の見直す日・照合の件数・見つけた変更）。根拠確認率（trust_metrics）はここの facts/verified も読む。"
