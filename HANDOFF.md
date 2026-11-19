@@ -16,10 +16,11 @@ status: in_progress
 - 並行: X 側（x-post-prompt.md・x_post.js 等）と基準・validator・採点（editorial_standard.*・validate_journal_draft.js・score_journal_candidates.js）を作業役2つに依頼中
 
 ## 次にやること
-- 作業役の結果を統合 → npm test → コミット → main 合流 → Ondine #2224 report/done
+- PR #778 合流済み（b46dae6e1）。build.yml の完了を見て #2224 を report/done
+- 2026-11-21 13:00 に #2225（初回の◯選の確認）を relay 予約済み
 
 ## 試したが駄目だったこと
-- なし
+- 同じ worktree の別セッション（bluegill-d9・一覧の写真 0079）の変更が autopilot の自動コミット a0568c4af9 に混ざった → main へは origin/main から切った別ブランチ（scratchpad の wt-voice）で自分の分だけ出した
 
 ## 守るルール・判断メモ
 - 基本方針の原文は書き換えない（本人の確認が要る）。過去記事は書き直さない（0069 決定4）
