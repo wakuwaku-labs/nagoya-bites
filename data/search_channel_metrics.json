@@ -1,21 +1,21 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-11-19T00:35:07.369Z",
+  "generatedAt": "2026-11-19T01:05:11.029Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 8132,
+  "total_sessions": 8133,
   "engines": [
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 4839,
+      "sessions": 4840,
       "pct": 59.5,
       "sources": [
         {
           "source": "(direct)",
           "medium": "(none)",
-          "sessions": 4822
+          "sessions": 4823
         },
         {
           "source": "(not set)",
@@ -280,7 +280,7 @@
     "from": "2026-11-18",
     "to": "2026-11-19",
     "delta": {
-      "direct": 111,
+      "direct": 113,
       "google": 15,
       "bing": 20,
       "yahoo": 3,
