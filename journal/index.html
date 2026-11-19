@@ -71,7 +71,13 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .jf-chip:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 .jf-count{font-family:var(--font-mono);font-size:var(--fs-2xs);opacity:.8;}
 .journal-entry[hidden]{display:none;}
-@media(max-width:640px){.journal-entry{grid-template-columns:1fr;gap:.4rem;}}</style>
+@media(max-width:640px){.journal-entry{grid-template-columns:1fr;gap:.4rem;}}
+/* 記事の写真（判断の記録 0079・scripts/build_journal_index.js の listThumbOf）。写真の無い記事は従来どおり文字だけ */
+.journal-entry.has-thumb{grid-template-columns:90px minmax(0,1fr) 168px;}
+.entry-thumb{display:flex;flex-direction:column;gap:var(--sp-1);min-width:0;}
+.entry-img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:4px;background:var(--surface);}
+.entry-credit{font-size:var(--fs-xs);line-height:1.4;color:var(--dim);overflow-wrap:anywhere;}
+@media(max-width:640px){.journal-entry.has-thumb{grid-template-columns:minmax(0,1fr) 112px;column-gap:var(--sp-3);row-gap:var(--sp-1);}.journal-entry.has-thumb .entry-date,.journal-entry.has-thumb .entry-body{grid-column:1;}.journal-entry.has-thumb .entry-thumb{grid-column:2;grid-row:1 / span 2;}}</style>
 </head>
 <body>
 <!-- NB-CHROME:HEADER:START -->
@@ -128,67 +134,74 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     <button type="button" class="jf-chip" data-filter="compare" aria-pressed="false">比較・特集<span class="jf-count">15</span></button>
   </div>
 
-  <a class="journal-entry" href="2026-11-19-nagoya-izakaya-bonenkai-year-end-surcharge.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-11-19-nagoya-izakaya-bonenkai-year-end-surcharge.html" data-category="topic">
     <div class="entry-date">2026-11-19</div>
     <div class="entry-body">
       <h2>名古屋の居酒屋、忘年会の年末料金はいつから？海乃鶏 名古屋駅前店など6店</h2>
       <p>名古屋の居酒屋の年末料金はいつからか。掲載1,910店のうち開始日の記載があった45店を並べ、海乃鶏 名古屋駅前店など6店の上乗せ額と対象を確認。12月18・19日と25・26日で変わる点、幹事が予約前に確かめる点を整理。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/98/87/P047359887/P047359887.jpg" alt="海乃鶏 名古屋駅前店" width="320" height="240" loading="eager" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 海乃鶏 名古屋駅前店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-11-18-nagoya-bonenkai-cancel-fee-izakaya-4.html" data-category="guide">
+  <a class="journal-entry has-thumb" href="2026-11-18-nagoya-bonenkai-cancel-fee-izakaya-4.html" data-category="guide">
     <div class="entry-date">2026-11-18</div>
     <div class="entry-body">
       <h2>名古屋の居酒屋で忘年会、キャンセル料はいつから？吟 名古屋駅店など4店</h2>
       <p>名古屋の忘年会、予約のキャンセル料はいつから何%かかるのか。吟 名古屋駅店・サケキタル 栄住吉店・定楽屋 名古屋金山店・和蔵 名古屋栄店のホットペッパーの規定を比べ、人数が減ったときの扱いと予約前に確かめる点を整理。</p>
       <span class="entry-theme">業界の裏側</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/63/37/P039486337/P039486337.jpg" alt="地酒と創作和食 吟 名古屋駅店" width="320" height="240" loading="eager" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 地酒と創作和食 吟 名古屋駅店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-11-17-kanayama-shokukan-hotpot-bonenkai-private-room.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-11-17-kanayama-shokukan-hotpot-bonenkai-private-room.html" data-category="topic">
     <div class="entry-date">2026-11-17</div>
     <div class="entry-body">
       <h2>金山の忘年会に火鍋『蜀漢 ショクカン 金山駅店』、飲み放題込み5,000円と個室20名まで</h2>
       <p>金山駅1分の四川火鍋店「蜀漢 ショクカン 金山駅店」の忘年会。120分飲み放題込み5,000円は、料理3,850円に飲み放題2,200円を足すより1,050円安い。ラストオーダー90分、個室は最大20名、貸切は50名から。予約前の確認点を整理。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/33/69/P037623369/P037623369.jpg" alt="四川伝統火鍋 蜀漢 ショクカン 金山駅店" width="320" height="240" loading="eager" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 四川伝統火鍋 蜀漢 ショクカン 金山駅店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-11-16-meieki-ibushigin-bonenkai-nomihoudai-150.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-11-16-meieki-ibushigin-bonenkai-nomihoudai-150.html" data-category="topic">
     <div class="entry-date">2026-11-16</div>
     <div class="entry-body">
       <h2>名駅の居酒屋『炉端焼き 燻銀 名駅西口店』忘年会は11月なら同じ5,000円で飲み放題150分</h2>
       <p>名駅西口の居酒屋、炉端焼き 燻銀 名駅西口店は、大トロにしんと南部鉄器の鯛めしが入る5,000円・8品のコースを、11月30日までの予約は飲み放題150分、12月は120分で出している。忘年会の幹事向けに、時期による差・予約の締切・席数を整理する。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/77/13/P045697713/P045697713_480.jpg" alt="炉端焼き 燻銀 名駅西口店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 炉端焼き 燻銀 名駅西口店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-11-15-sakae-sakana-no-hachibe-bonenkai-enkai.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-11-15-sakae-sakana-no-hachibe-bonenkai-enkai.html" data-category="topic">
     <div class="entry-date">2026-11-15</div>
     <div class="entry-body">
       <h2>栄の忘年会・宴会に海鮮居酒屋『サカナのハチベエ 栄3丁目店』、飲み放題4,500円から</h2>
       <p>忘年会の予約が動き出す11月中旬。栄駅徒歩5分の海鮮居酒屋サカナのハチベエ 栄3丁目店は、120分飲み放題付きのコースが4,500円から6,000円。前日17時の締切と当日15時からのキャンセル料、42席・最大26人の席から、幹事の予約の組み方を整理する。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/12/79/P040351279/P040351279.jpg" alt="サカナのハチベエ 栄3丁目店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: サカナのハチベエ 栄3丁目店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-11-14-yabacho-yakitori-goryo-sakae-date-solo.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-11-14-yabacho-yakitori-goryo-sakae-date-solo.html" data-category="topic">
     <div class="entry-date">2026-11-14</div>
     <div class="entry-body">
       <h2>焼鳥ごりょう 栄（矢場町）でデートと一人飲み、コース3本の差は〆の土鍋</h2>
       <p>2026年11月10日、矢場町駅から徒歩2分に開いた焼鳥ごりょう 栄。三河赤鳥を店内でさばく22席の焼鳥の店で、14席がカウンター。5,500円から7,700円のコース3本の違いと、20時を境に変わる予約の形から、デートと一人飲みでの使い方を整理する。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/73/89/P051867389/P051867389.jpg" alt="焼鳥ごりょう 栄" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 焼鳥ごりょう 栄（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-11-13-meieki-endoji-paris-festival-kaisen-en-solo.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-11-13-meieki-endoji-paris-festival-kaisen-en-solo.html" data-category="topic">
     <div class="entry-date">2026-11-13</div>
     <div class="entry-body">
       <h2>名駅・円頓寺「秋のパリ祭」の後に海鮮食堂 enで一人飲み（11/14・15）</h2>
       <p>2026年11月14日・15日の11時〜18時、名駅の北の円頓寺商店街で「秋のパリ祭」。入場無料、MOFのビストロ屋台も出る。屋台が閉まった後に座る先として、カウンター6席の海鮮食堂 enと、土日12時から開くやきとりゴーの使い分けを整理する。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/93/91/P048519391/P048519391.jpg" alt="海鮮食堂 en" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 海鮮食堂 en（ホットペッパーグルメ）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-11-12-meieki-yashiori-kaiseki-settai-anniversary.html" data-category="topic">
@@ -200,13 +213,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-11-sakae-teppanya-daikichi-10-seats-late-night.html" data-category="guide">
+  <a class="journal-entry has-thumb" href="2026-11-11-sakae-teppanya-daikichi-10-seats-late-night.html" data-category="guide">
     <div class="entry-date">2026-11-11</div>
     <div class="entry-body">
       <h2>栄の地下「鉄板屋大吉」10席で朝5時まで、一人飲み・二軒目の少席店が回る理由</h2>
       <p>栄・エトワールさかえ地下の「鉄板屋大吉」はカウンター10席で17時〜翌5時。10月の飲食業倒産98件、最低賃金1,195円の今、少ない席で回る理由を席数×営業時間と人件費から読み、一人飲み・二軒目での使い方を整理する。</p>
       <span class="entry-theme">業界の裏側</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/30/43/P037723043/P037723043.jpg" alt="鉄板屋大吉" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 鉄板屋大吉（ホットペッパーグルメ）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-11-10-higashibetsuin-chashumen-susuru-solo-lunch.html" data-category="topic">
@@ -218,58 +232,64 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-09-sakae-mitsukoshi-sushi-no-midori-alain-ducasse.html" data-category="compare">
+  <a class="journal-entry has-thumb" href="2026-11-09-sakae-mitsukoshi-sushi-no-midori-alain-ducasse.html" data-category="compare">
     <div class="entry-date">2026-11-09</div>
     <div class="entry-body">
       <h2>栄三越の寿司「すしの美登利」とアラン・デュカス・ショコラ、新店2軒を予約と時間で使い分け</h2>
       <p>名古屋栄三越9階に10月31日開店した「すしの美登利」と、11月16日に地下1階へ開く「アラン・デュカス・ショコラ・パリ」。名駅の行列店が栄では予約を受け、9階は夜9時まで通しで開く。席数・価格・営業時間から一人の昼と手土産の使い分けを読む。</p>
       <span class="entry-theme">週次話題店</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/185183/17/185183-17-e7bafd7609e2dbaf6e9b5e18dd5c14a3-2523x2700.jpg" alt="すしの美登利 名古屋栄三越店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社名古屋三越（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html" data-category="topic">
     <div class="entry-date">2026-11-08</div>
     <div class="entry-body">
       <h2>栄・白川公園『圧釜うどん もちり』一人ランチに、大盛り無料とぶっかけ1,100円から</h2>
       <p>2026年11月10日、栄三丁目の白川公園近くに開店する「圧釜うどん もちり 栄店」。圧力釜で茹でて氷水で締める麺、普通盛りと大盛りが同額の値付け、28席・11時〜21時の通し営業を、一人ランチの使い方として整理する。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/100887/67/100887-67-cabacad8a12421411c9d7125b146d6c8-2500x1668.jpg" alt="圧釜うどん もちり 栄店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社エフリード（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-11-07-ozone-daikinboshi-hakata-kushiyaki-solo-bonenkai.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-11-07-ozone-daikinboshi-hakata-kushiyaki-solo-bonenkai.html" data-category="topic">
     <div class="entry-date">2026-11-07</div>
     <div class="entry-body">
       <h2>大曽根の焼き鳥『大金星』一人飲みと忘年会、串275円と12月の2時間制</h2>
       <p>大曽根駅5番出口から徒歩1分に2026年11月6日開店した博多串焼きと九州料理の「大金星」。串1本275円からの一人飲みの頼み方、名物3品を4人で分けた額、12月からの2時間制と年末のサービス料10%を、22席の店の使い方として整理する。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/81/87/P051668187/P051668187.jpg" alt="大金星 大曽根駅本店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 大金星 大曽根駅本店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-11-06-hisaya-dam-sake-festa-manmarumura.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-11-06-hisaya-dam-sake-festa-manmarumura.html" data-category="topic">
     <div class="entry-date">2026-11-06</div>
     <div class="entry-body">
       <h2>久屋大通ダムSAKEフェスタ、栄の発酵喫茶まんまる村も出店（11/7・8）</h2>
       <p>11月7日・8日、久屋大通公園テレビトーヒロバで「ダムSAKEフェスタ」。愛知・岐阜13蔵のダム熟成酒を1〜3年で飲み比べ。前売2,500円・酒札10枚の相場、約15℃の監査廊で寝かせる仕組み、栄の発酵喫茶とお食事処 まんまる村のおつまみ出店を読む。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/18/13/P044401813/P044401813.jpg" alt="発酵喫茶とお食事処 まんまる村" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 発酵喫茶とお食事処 まんまる村（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-11-05-sakae-teiban-tune-aozakana-izakaya.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-11-05-sakae-teiban-tune-aozakana-izakaya.html" data-category="topic">
     <div class="entry-date">2026-11-05</div>
     <div class="entry-body">
       <h2>栄の青魚居酒屋『定番チューン。』一人飲みにアジフライ790円と〆さば1貫500円</h2>
       <p>栄3丁目に2026年10月31日開店の「青魚と居酒屋料理 定番チューン。」。アジフライ2キレ790円、〆さば海苔巻き1貫500円を一人飲みでどう頼むか、コース6,800円と飲み放題1,800円の差、16人までの宴会の条件を整理する。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/29/46/P051692946/P051692946.jpg" alt="定番チューン" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 定番チューン（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-11-04-meieki-luca-bar-contract-farm-vegetables.html" data-category="guide">
+  <a class="journal-entry has-thumb" href="2026-11-04-meieki-luca-bar-contract-farm-vegetables.html" data-category="guide">
     <div class="entry-date">2026-11-04</div>
     <div class="entry-body">
       <h2>名駅 Lucaバルの農家直送バーニャカウダ、契約農家の開示で野菜の鮮度を読む</h2>
       <p>契約農家から直送と書く店の野菜は本当に新鮮か。名駅「Lucaバル るかばる」、塩釜口「ブラッスリー クー」、八事「オーガニック食堂 Engi」の仕入先の開示を比べ、長雨で野菜が高い2026年11月の読み方と、予約の電話で聞くことを整理する。</p>
       <span class="entry-theme">業界の裏側</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/90/80/P026759080/P026759080.jpg" alt="Lucaバル るかばる" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: Lucaバル るかばる（ホットペッパーグルメ）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-11-03-kakuozan-amelie-french-date-course.html" data-category="topic">
@@ -281,13 +301,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-11-02-meieki-takashimaya-kamakura-beniya-butter-no-itoko.html" data-category="compare">
+  <a class="journal-entry has-thumb" href="2026-11-02-meieki-takashimaya-kamakura-beniya-butter-no-itoko.html" data-category="compare">
     <div class="entry-date">2026-11-02</div>
     <div class="entry-body">
       <h2>名駅『鎌倉紅谷』クルミッ子が常設に、バターのいとこも 手土産は予算で</h2>
       <p>JR名古屋タカシマヤ地下1階に2026年10月30日、東海地区初の「鎌倉紅谷」「バターのいとこ」が開店。クルミッ子5個入891円、抹茶あんバター1,080円、花桔梗と一朶の栗大福378円、シーキューブまで4店の価格と限定の期限を整理する。</p>
       <span class="entry-theme">週次話題店</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/47031/512/47031-512-96528769755b629d3231eabbde7dd03f-1081x719.jpg" alt="鎌倉紅谷 ジェイアール名古屋タカシマヤ店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 ジェイアール東海高島屋（プレスリリースより）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-11-01-meito-nishiyama-pizzeria-belo-solo-lunch.html" data-category="topic">
@@ -299,40 +320,44 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-31-yabacho-gotoni-sushi-kushikatsu.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-31-yabacho-gotoni-sushi-kushikatsu.html" data-category="topic">
     <div class="entry-date">2026-10-31</div>
     <div class="entry-body">
       <h2>栄・矢場町『鮨食人 五と二』一人飲みと宴会に、1貫142円からの寿司と串カツ</h2>
       <p>2026年10月30日、矢場町駅徒歩約3分に開店した「鮨食人 五と二 矢場町」。赤酢シャリの寿司は1貫142円から、串カツは1本109円から、飲み放題は4,000円からのコースだけ。一人飲みと15人までの宴会での使い方を、品書きと席から読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/183692/6/183692-6-ef9d5b12ec35dba6140e5c1b2d5ae56c-1999x1333.jpg" alt="鮨食人 五と二 矢場町" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社ぐっとくるダイニング（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-30-hisaya-taichung-yeshi-osu-sarikaka.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-30-hisaya-taichung-yeshi-osu-sarikaka.html" data-category="topic">
     <div class="entry-date">2026-10-30</div>
     <div class="entry-body">
       <h2>台中夜市2026（久屋大通）を食べ歩き 大須の台湾屋台 SARIKAKAも出店</h2>
       <p>久屋大通公園で10/31〜11/3に開く「台湾・台中夜市2026」。大須の台湾屋台 SARIKAKAは17・18番ブースでルーロー飯やジーパイ。入場無料・12〜21時で、平日は11/2(月)だけ。食べ歩きの日と時間の選び方。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/98/24/P039149824/P039149824_480.jpg" alt="台湾屋台 SARIKAKA" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 台湾屋台 SARIKAKA（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-29-sakae-chitaka-tonkatsu-donabe-solo.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-29-sakae-chitaka-tonkatsu-donabe-solo.html" data-category="topic">
     <div class="entry-date">2026-10-29</div>
     <div class="entry-body">
       <h2>栄・セントラルパーク『CHITAKA』一人飲みと昼1,280円の御膳、とんかつ知多家の新店</h2>
       <p>栄・セントラルパーク地下街に2026年10月29日に開いた『土鍋ごはん×とんかつ CHITAKA』。とんかつ知多家の新ブランドで、40席のうちカウンター14席・QR注文。昼1,280円の御膳と夜2,380円の土鍋ごはんの御膳の差、15〜19時のドリンク半額、一人ランチと一人飲みの使い方を整理する。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/23738/50/23738-50-f7c1b4cb7aee646c6f61348514eba43f-1147x764.jpg" alt="土鍋ごはん×とんかつ CHITAKA" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 チタカ・インターナショナル・フーズ（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-28-meieki-soramame-sofa-seat-bill.html" data-category="guide">
+  <a class="journal-entry has-thumb" href="2026-10-28-meieki-soramame-sofa-seat-bill.html" data-category="guide">
     <div class="entry-date">2026-10-28</div>
     <div class="entry-body">
       <h2>名駅の居酒屋『そら豆』ソファ席、デート・女子会で会計が上がる理由</h2>
       <p>名駅の居酒屋『そら豆 名古屋』はソファ円卓の席指定を受けず、個室はコース予約に限って相談に乗る。米コーネル大の1,413会計の研究では、壁際の長いソファ席は滞在が最も長く、1分あたりの支出は最も低かった。会計を上げているのは席ではなく時間。デート・女子会の予約前に。</p>
       <span class="entry-theme">業界の裏側</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/89/89/P038368989/P038368989.jpg" alt="そら豆 名古屋" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: そら豆 名古屋（ホットペッパーグルメ）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-10-27-nonami-ramen-arch-nagoya-cochin-kosupa.html" data-category="topic">
@@ -344,76 +369,84 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html" data-category="compare">
+  <a class="journal-entry has-thumb" href="2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html" data-category="compare">
     <div class="entry-date">2026-10-26</div>
     <div class="entry-body">
       <h2>丸の内のフレンチ『BISTRO DIA』ほか3店、デート・ランチ・二次会に</h2>
       <p>名古屋・丸の内3丁目の同じ建物に、10月26日「BISTRO DIA」「SALON de M」、11月2日「Restaurant Live the DIA」が開く。ランチのデリプレート1,980円、17時30分からのビストロ、21時からのサロン、10席のコース。時間帯で替わる3店をシーン別に読む。</p>
       <span class="entry-theme">週次話題店</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/61259/55/61259-55-275c141f2b511d456bfd2166102102fb-1600x1067.jpg" alt="BISTRO DIA" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 北浜キャピタルパートナーズ（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-25-motoyama-laughs-bistro-counter-solo-date.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-25-motoyama-laughs-bistro-counter-solo-date.html" data-category="topic">
     <div class="entry-date">2026-10-25</div>
     <div class="entry-body">
       <h2>本山・猫洞通『Laughs ラフス』一人飲みとデートに、カウンター8席と600円台の小皿</h2>
       <p>本山・猫洞通に10月19日開店の西洋小料理とワイン「Laughs（ラフス）」。12席・コースなしのアラカルトで、小皿600〜880円、肉料理2,640〜4,300円。一人飲みとデートでの予算の組み方、予約と混む時間を読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/74/69/P051417469/P051417469.jpg" alt="Laughs ラフス" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: Laughs ラフス（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-24-sakae-conrad-house-of-mon-rooftop-bar.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-24-sakae-conrad-house-of-mon-rooftop-bar.html" data-category="topic">
     <div class="entry-date">2026-10-24</div>
     <div class="entry-body">
       <h2>栄・コンラッド名古屋『ハウス・オブ・モン』デートと一人飲みのバー</h2>
       <p>栄・コンラッド名古屋40階のルーフトップバー「ハウス・オブ・モン（HOUSE OF MON）」。宿泊者以外は予約できず来店順、110席、月火定休。生ビール1,500円からの表示は税・サービス料込み。デートと一人飲みでの使い方を読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/179859/5/179859-5-e416ed7936dbfa33ce24ea559fd1d32f-3900x2194.jpg" alt="ハウス・オブ・モン (HOUSE OF MON)" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 コンラッド名古屋（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-23-hisaya-halloween-snowpeak-cafe-lantern.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-23-hisaya-halloween-snowpeak-cafe-lantern.html" data-category="topic">
     <div class="entry-date">2026-10-23</div>
     <div class="entry-body">
       <h2>栄・久屋大通のハロウィン、スノーピークカフェでデート前に食べてランタンの抽選へ（10/24）</h2>
       <p>10月24日（土）、久屋大通公園の「Hisaya Halloween 2026」。スカイランタン（18時・先着400名）は抽選会の参加賞から選ぶ方式で、抽選1回の目安は対象店で税込2,500円。スノーピークカフェの価格と料理L.O.19時から、先に食べる組み方を整理する。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/00/86/P048510086/P048510086.jpg" alt="スノーピークカフェ 久屋大通公園店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: スノーピークカフェ 久屋大通公園店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-22-nagono-new-poppy-kissa-night-hours.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-22-nagono-new-poppy-kissa-night-hours.html" data-category="topic">
     <div class="entry-date">2026-10-22</div>
     <div class="entry-body">
       <h2>名古屋・那古野の喫茶ニューポピー、金・土は22時まで。モーニングも夜の一杯も使える純喫茶</h2>
       <p>四間道の近く、那古野の喫茶ニューポピー。コーヒーで炊いたライスのカレー、鉄板ナポリタン、34席の使い分けと、金・土は22時まで開く営業時間の読み方を、2026年10月時点の掲載情報から整理する。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/94/36/P038299436/P038299436_480.jpg" alt="喫茶ニューポピー" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 喫茶ニューポピー（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-21-fushimi-kuchikou-last-order-timing.html" data-category="guide">
+  <a class="journal-entry has-thumb" href="2026-10-21-fushimi-kuchikou-last-order-timing.html" data-category="guide">
     <div class="entry-date">2026-10-21</div>
     <div class="entry-body">
       <h2>伏見・錦の居酒家 くちこうで読む、ラストオーダー30分前に入っていい店の見分け方</h2>
       <p>ラストオーダー30分前の入店は断られやすい？ 伏見・錦の居酒屋「鮮魚とお晩菜 居酒家 くちこう」の料理L.O.・ドリンクL.O.・閉店の時刻差を例に、二軒目で入っていい店の見分け方と、席に着く前の聞き方を整理する。</p>
       <span class="entry-theme">業界の裏側</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/59/71/P049885971/P049885971.jpg" alt="鮮魚とお晩菜　居酒家　くちこう" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 鮮魚とお晩菜　居酒家　くちこう（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-20-otoshi-refuse-sakae-cowcow.html" data-category="guide">
+  <a class="journal-entry has-thumb" href="2026-10-20-otoshi-refuse-sakae-cowcow.html" data-category="guide">
     <div class="entry-date">2026-10-20</div>
     <div class="entry-body">
       <h2>居酒屋のお通しは断れるのか——栄の新店330円で読む、価格帯と席に着く前の説明の境目</h2>
       <p>居酒屋のお通しは断れるのか。民法の契約成立の考え方と、栄の新店「炭火酒場 cowcow」のお通し330円を例に、価格帯の読み方と席に着く前に確かめる説明・表示のポイントを整理する。</p>
       <span class="entry-theme">業界の裏側</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/62/48/P051456248/P051456248.jpg" alt="炭火酒場　COWCOW" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 炭火酒場　COWCOW（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-19-sakae-sumibi-sakaba-cowcow.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-19-sakae-sumibi-sakaba-cowcow.html" data-category="topic">
     <div class="entry-date">2026-10-19</div>
     <div class="entry-body">
       <h2>栄・矢場町『炭火酒場COWCOW』一人飲みと二軒目に、26席・深夜1時までを読む</h2>
       <p>2026年10月13日、栄3丁目に開店した「炭火酒場COWCOW」。矢場町駅から徒歩5分、26席・半個室で15時〜翌1時営業。お通し330円・1ドリンク制、黒毛和牛タルタル1,380円、貸切は最大35名。一人飲み・二軒目の使い方と姉妹店VIVANとの違いを価格と席から読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/62/48/P051456248/P051456248.jpg" alt="炭火酒場　COWCOW" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 炭火酒場　COWCOW（ホットペッパーグルメ）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html" data-category="topic">
@@ -425,40 +458,44 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-17-sakae-rokurokudou-settai-enkai-wine-cellar.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-17-sakae-rokurokudou-settai-enkai-wine-cellar.html" data-category="topic">
     <div class="entry-date">2026-10-17</div>
     <div class="entry-body">
       <h2>栄『お台所 六六堂』接待・宴会に、150席と元金庫室のワインセラーを読む</h2>
       <p>2026年10月8日、栄駅8番出口から徒歩約1分に開店した「お台所 六六堂」。全3フロア150席でも宴会は最大40名、コースは飲み放題100分付きで6,000円・8,000円・10,000円。元証券会社の金庫室のワインセラーとあわせ、接待・宴会・デートの使い分けを価格帯と席から読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/46/11/P051454611/P051454611.jpg" alt="お台所 六六堂" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: お台所 六六堂（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-16-sakae-nagoya-matsuri-lachic-maruha-yabaton-torikai.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-16-sakae-nagoya-matsuri-lachic-maruha-yabaton-torikai.html" data-category="topic">
     <div class="entry-date">2026-10-16</div>
     <div class="entry-body">
       <h2>栄の名古屋まつりで食べ歩き、まるは食堂・矢場とん・鳥開総本家はブースか向かいのラシックか</h2>
       <p>2026年10月17日・18日の名古屋まつり（栄・久屋大通公園）は行列を見送り。エディオン久屋広場にまるは食堂×yoake・矢場とん・鳥開総本家のブースが並び、3つとも向かいのラシック7・8階に店があります。席数・営業時間・看板の値段で使い分けを読みます。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/61/56/P046356156/P046356156.jpg" alt="まるは食堂 ラシック店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: まるは食堂 ラシック店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-15-ikeshita-qq-quinto-quinte-kakuuchi-pairing.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-15-ikeshita-qq-quinto-quinte-kakuuchi-pairing.html" data-category="topic">
     <div class="entry-date">2026-10-15</div>
     <div class="entry-body">
       <h2>池下のイタリアン「QQ（クイント・クインテ）」でデート、棚のワインと抜栓料20%</h2>
       <p>名古屋・池下に9月15日開店した食材店×イタリアン「QQ（Quinto.Quinte／クイント・クインテ）」。棚のワインに抜栓料20%（最低2,000円）を足して奥で開ける角打ちペアリング、ランチ4,800円・ディナー7,500円のコース、木曜夜の休みと予約まで、デートでの使い方を読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/192235/4/192235-4-322a1da338c807c51c16f6fd47e9c090-1600x800.jpg" alt="QQ（クイント・クインテ）" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社BGS（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-14-sakae-yakiniku-niji-tsurami-bui.html" data-category="guide">
+  <a class="journal-entry has-thumb" href="2026-10-14-sakae-yakiniku-niji-tsurami-bui.html" data-category="guide">
     <div class="entry-date">2026-10-14</div>
     <div class="entry-body">
       <h2>知多牛焼肉と馬肉 虹（栄）で一人飲み、ツラミ1,078円の部位の話</h2>
       <p>栄4丁目の焼肉店「知多牛焼肉と馬肉 虹」は、知多牛のツラミ・ロース・カルビ・ミスジと馬肉焼肉を同じ880円に並べる。飲食業の倒産が年度上半期で最多になった2026年10月、値上げの代わりに品書きで使える手を部位の仕組みから読む。</p>
       <span class="entry-theme">業界の裏側</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/08/85/P048410885/P048410885.jpg" alt="知多牛焼肉と馬肉 虹" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 知多牛焼肉と馬肉 虹（ホットペッパーグルメ）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-10-13-fushimi-himonoya-kanbee-teishoku.html" data-category="topic">
@@ -470,22 +507,24 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-12-nakagawa-machinaka-shokudo-omusubi.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-12-nakagawa-machinaka-shokudo-omusubi.html" data-category="topic">
     <div class="entry-date">2026-10-12</div>
     <div class="entry-body">
       <h2>中川区「なかがわ 街仲食堂」開店、シニアが握るおむすび550円と3時間営業を読む</h2>
       <p>名古屋市中川区吉津に10月10日開店の「なかがわ 街仲食堂 by ジーバーFOOD」。地域のシニア19人が注文後に握るおむすびの1個セット550円・2個セット880円の頼み方、11時〜14時の3時間営業と待ち、売上を分け合う組合方式を読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/138955/30/138955-30-2df91f7fa8b8c153b9a50042f2a38130-639x427.png" alt="なかがわ 街仲食堂 by ジーバーFOOD" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社ジーバー（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-11-hoshigaoka-afros-bbq-enkai.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-11-hoshigaoka-afros-bbq-enkai.html" data-category="topic">
     <div class="entry-date">2026-10-11</div>
     <div class="entry-body">
       <h2>星ヶ丘「Afro&#39;s BBQ」アメリカンBBQで宴会、飲み放題3,500円とバックリブ2,849円を読む</h2>
       <p>星ヶ丘駅徒歩1分のアメリカンBBQ「Afro&#39;s BBQ（アフロズバーベキュー）」。BBQ日本一決定戦2026で準優勝。バックリブ2,849円と120分飲み放題付きコース3,500円・4,500円の使い分け、34席の席配置、宴会30名と一人飲みの向き不向きを読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/24/05/P050412405/P050412405.jpg" alt="Afro s BBQ アフロズバーベキュー" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: Afro s BBQ アフロズバーベキュー（ホットペッパーグルメ）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html" data-category="topic">
@@ -497,40 +536,44 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-09-nagoyajo-kinshachi-yokocho-autumn-menu.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-09-nagoyajo-kinshachi-yokocho-autumn-menu.html" data-category="topic">
     <div class="entry-date">2026-10-09</div>
     <div class="entry-body">
       <h2>名古屋城・金シャチ横丁の秋限定21品を食べ歩き、寿司コース8,800円までの値付けを読む</h2>
       <p>名古屋城・金シャチ横丁の秋限定メニュー21品（9月19日〜11月29日）。山本屋総本家のキノコ煮込うどん1,925円、saienの和栗モンブラン1,958円、金鯱寿司の秋コース8,800円。入城料1,000円の10月、3連休と名古屋まつりの混み方を読む。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/64/36/P043876436/P043876436.jpg" alt="山本屋総本家 金シャチ横丁店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 山本屋総本家 金シャチ横丁店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-08-sakae-mitsukoshi-miyakishimen-ihyoe.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-08-sakae-mitsukoshi-miyakishimen-ihyoe.html" data-category="topic">
     <div class="entry-date">2026-10-08</div>
     <div class="entry-body">
       <h2>栄三越9階に「宮きしめん伊兵衛 栄店」10月31日開店｜会席3,300円と味噌煮込1,800円を読む</h2>
       <p>名古屋栄三越9階に10月31日、熱田発祥の宮きしめんが営むきしめん会席の業態「宮きしめん伊兵衛 栄店」が開店。限定の菫会席3,300円と海老天入り親子みそ煮込きしめん1,800円の差、平日の中休み、接待の昼と一人の昼での使い分けを読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/185183/17/185183-17-117957b3f4da0afeb8c46ce558a1ca7d-3900x3561.jpg" alt="宮きしめん伊兵衛 栄店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社名古屋三越（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-07-meieki-izakaya-hiyaoroshi-onitaiji.html" data-category="guide">
+  <a class="journal-entry has-thumb" href="2026-10-07-meieki-izakaya-hiyaoroshi-onitaiji.html" data-category="guide">
     <div class="entry-date">2026-10-07</div>
     <div class="entry-body">
       <h2>名駅の居酒屋で一人飲み、ひやおろしを頼む前に</h2>
       <p>10月3・4日、久屋大通公園の「秋酒祭」に愛知の蔵元25社が並んだ。いま居酒屋の冷蔵庫にある秋の酒は新酒ではなく、夏を越した「ひやおろし」。蔵ごとに出荷時期が違い、数量限定で予約だけで売り切れる銘柄もある。名駅の日本酒居酒屋おにたいじを手がかりに、秋の酒が店に届くまでと一杯の値段を読む。</p>
       <span class="entry-theme">業界の裏側</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/70/46/P039957046/P039957046.jpg" alt="酒と肴と男と女 日本酒天国 おにたいじ 名古屋駅店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 酒と肴と男と女 日本酒天国 おにたいじ 名古屋駅店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-06-sakae-hilton-inplace33-autumn-buffet.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-06-sakae-hilton-inplace33-autumn-buffet.html" data-category="topic">
     <div class="entry-date">2026-10-06</div>
     <div class="entry-body">
       <h2>栄・伏見のホテルビュッフェで女子会｜ヒルトン名古屋の秋、平日昼5,800円と夜6,000円</h2>
       <p>ヒルトン名古屋「インプレイス3-3」で10月6日から始まった秋のビュッフェ「東海道五十三次を巡る美食の旅」。平日は昼5,800円・夜6,000円で差は200円だが、夜は90分制、土日の夜は3部制。女子会で長く話すならいつ行くかを、時間と値段から読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/34342/147/34342-147-66b96bf4187ee1f42e27911eae4003ad-1755x1171.jpg" alt="インプレイス3-3" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 名古屋ヒルトン株式会社（プレスリリースより）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-10-05-atsuta-sapporo-miso-tokura-arahata.html" data-category="compare">
@@ -542,58 +585,64 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-10-04-sakae-brianza-nagoya-haera-lunch.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-04-sakae-brianza-nagoya-haera-lunch.html" data-category="topic">
     <div class="entry-date">2026-10-04</div>
     <div class="entry-body">
       <h2>栄のイタリアン「BRIANZA NAGOYA HAERA」は昼が本番｜平日3,800円と昼夜同額コース</h2>
       <p>栄・HAERA4階のモダンイタリアン「BRIANZA NAGOYA HAERA（ブリアンツァ ナゴヤ）」。5,500円・8,800円・12,000円のコースは昼も夜も同じ値段で、平日昼だけ3,800円の5品がある。ランチL.O.13時30分の読み方、個室8名・10名の接待、窓際のデートまで整理する。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/00/86/P050400086/P050400086.jpg" alt="BRIANZA NAGOYA ブリアンツァナゴヤ" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: BRIANZA NAGOYA ブリアンツァナゴヤ（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-03-fushimi-jardin-pierre-herme-afternoon-tea.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-03-fushimi-jardin-pierre-herme-afternoon-tea.html" data-category="topic">
     <div class="entry-date">2026-10-03</div>
     <div class="entry-body">
       <h2>錦・伏見のホテルカフェ「ラウンジ ジャルダン」ピエール・エルメ第二幕、実質7,820円を女子会で読む</h2>
       <p>名古屋観光ホテル1階のラウンジ ジャルダンで10月1日に始まったピエール・エルメ・パリとのコラボアフタヌーンティー第二幕。6,800円〜（税込・サ別）は実質7,820円、夕方のハイティーは9,200円。105分制・50席の回し方から女子会とデートの使い分けを読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/99/90/P048499990/P048499990_480.jpg" alt="ラウンジ ジャルダン 名古屋観光ホテル" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: ラウンジ ジャルダン 名古屋観光ホテル（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-02-meieki-shanghai-crab-rinka-ouchou-price.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-02-meieki-shanghai-crab-rinka-ouchou-price.html" data-category="topic">
     <div class="entry-date">2026-10-02</div>
     <div class="entry-body">
       <h2>名駅の上海蟹、10月解禁——マリオット梨杏の美食会35,000円と伏見・王朝の中華コース16,000円、接待の相場を読む</h2>
       <p>10月は上海蟹の季節。名古屋マリオットアソシアホテル18階「梨杏」が10月24日・25日限定の美食会35,000円を発表、伏見のヒルトン名古屋「王朝」は10月6日から上海蟹と黒毛和牛のコース16,000円。同じ蟹で2倍の差がつく理由を仕入れ・席・予約から読む。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/76395/280/76395-280-073826d43b35f65e7d183c64896023f2-1500x1001.jpg" alt="中国料理 梨杏 名古屋マリオットアソシアホテル" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社JR東海ホテルズ（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-10-01-sakae-yabamisen-matsuzakaya-solo.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-10-01-sakae-yabamisen-matsuzakaya-solo.html" data-category="topic">
     <div class="entry-date">2026-10-01</div>
     <div class="entry-body">
       <h2>栄・矢場町に「矢場味仙 松坂屋名古屋店」今日開店、台湾ラーメン38席を一人飲みで読む</h2>
       <p>2026年10月1日、元祖台湾ラーメンの矢場味仙が松坂屋名古屋店北館地下1階に百貨店初出店。38席・平日中抜き・L.O.21時30分という数字から、価格帯の読み方、オペの裏側、一人飲みに向く理由を読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/25003/3954/25003-3954-09b909d2b879ecd814f093d231baa0dc-2510x1670.jpg" alt="矢場味仙 松坂屋名古屋店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社大丸松坂屋百貨店（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-30-nishiki-yakitori-yaoyorozu-haccp-5years.html" data-category="guide">
+  <a class="journal-entry has-thumb" href="2026-09-30-nishiki-yakitori-yaoyorozu-haccp-5years.html" data-category="guide">
     <div class="entry-date">2026-09-30</div>
     <div class="entry-body">
       <h2>錦の焼き鳥「八百万」で接待、HACCP義務化5年で残る店の条件</h2>
       <p>HACCP完全義務化から5年。厚労省が9月24日時点で公表した夏の細菌性食中毒44施設のうち、衛生管理記録が「あり」は7施設だけだった。名古屋市の認定26施設に街場の居酒屋がゼロの理由と、接待の店選びで見る点を、錦・名古屋観光ホテル直営「やきとり 八百万」を手がかりに読む。</p>
       <span class="entry-theme">業界の裏側</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/41/43/P049514143/P049514143.jpg" alt="やきとり 八百万/名古屋観光ホテル" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: やきとり 八百万/名古屋観光ホテル（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-29-sakae-tsukemen-tou-counter12.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-29-sakae-tsukemen-tou-counter12.html" data-category="topic">
     <div class="entry-date">2026-09-29</div>
     <div class="entry-body">
       <h2>栄の深夜ラーメン新店「燈 tou」つけ麺1100円と12席を読む</h2>
       <p>2026年10月6日、栄3丁目に開くつけ麺専門店「燈 tou」。濃厚つけ麺1,100円〜A5和牛2,600円、カウンター12席で深夜26時半まで無休。追いチーズリゾット300円の値付けと冷・温の二本立てから、客単価と季節の読み方を解く。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/100887/66/100887-66-d136f3834c4409da50bafc36c1b60af0-3900x2377.jpg" alt="燈 tou" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社エフリード（プレスリリースより）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-09-28-arahata-tonkatsu-nakayoshi-lunch1200.html" data-category="topic">
@@ -605,31 +654,34 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-27-marunouchi-masuhan-matcha-price.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-27-marunouchi-masuhan-matcha-price.html" data-category="topic">
     <div class="entry-date">2026-09-27</div>
     <div class="entry-body">
       <h2>丸の内の喫茶「升半茶店」——抹茶2.6倍でもスイーツ2200円の理由</h2>
       <p>抹茶の原料てん茶は2026年産で前年比2.6倍の1kg8,562円。その年に丸の内の升半茶店 本店は抹茶スイーツ5種のプレートを2,200円で出している。2023年は1,980円。原料高をどこで受け止めているのかを読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/26/70/P042472670/P042472670_480.jpg" alt="丸の内の喫茶「升半茶店」——抹茶2.6倍でもスイーツ2200円の理由" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 升半茶店 本店（ホットペッパーグルメ掲載の店舗写真） / HotPepper</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-26-sakae-chanko-kokonoe-bonenkai.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-26-sakae-chanko-kokonoe-bonenkai.html" data-category="topic">
     <div class="entry-date">2026-09-26</div>
     <div class="entry-body">
       <h2>栄の忘年会に「ちゃんこ九重」10月16日開店、横綱コース1万円の読み方</h2>
       <p>2026年9月25日発表、栄・錦に「ちゃんこ九重」が10月16日開店。横綱コース10,000円・大関コース8,000円・鍋単品3,000円という値付けと、貸会議室の会社が同じ建物に鍋屋を置いた設計を読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/24137/561/24137-561-e2509f9f2b6d7d9a37bbb6b41c641d6d-3900x2600.jpg" alt="ちゃんこ九重" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社TKP（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-25-sakae-unafuji-autumn-course.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-25-sakae-unafuji-autumn-course.html" data-category="topic">
     <div class="entry-date">2026-09-25</div>
     <div class="entry-body">
       <h2>栄・炭焼うな富士の秋コース8800円——接待向きのひつまぶし店が本店ではコースを出さない理由</h2>
       <p>炭焼うな富士が9月26日から秋の季節限定コース（8,800円／11,000円）を開始。ただし本店・名古屋駅太閤口店・神楽坂店では出さない。栄HAERA店の23時までという営業時間と、行列店の回転を読む。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/123811/34/123811-34-9c2f5a4fa457a8a293576d827233973c-2048x1365.jpg" alt="炭焼 うな富士 栄HAERA店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社かぶらやグループ（プレスリリースより）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-09-24-kurumamichi-pizzeria-mimi-counter12.html" data-category="topic">
@@ -641,103 +693,114 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-23-meieki-izakaya-morning-minimum-wage.html" data-category="guide">
+  <a class="journal-entry has-thumb" href="2026-09-23-meieki-izakaya-morning-minimum-wage.html" data-category="guide">
     <div class="entry-date">2026-09-23</div>
     <div class="entry-body">
       <h2>名駅の居酒屋がモーニングを始めた理由——最低賃金1,195円の朝</h2>
       <p>10月1日、愛知県の最低賃金が1,195円へ。名古屋は喫茶代の支出が全国1位なのに、掲載4,768店で9時前に開く店は172店しかない。名駅の居酒屋「治兵衛」の朝定食1,980円と、9時〜14時30分で閉じる「おむすび処 糀太郎」から、朝営業の原価と人件費の構造を読む。</p>
       <span class="entry-theme">業界の裏側</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/36/87/P050843687/P050843687.jpg" alt="治兵衛 名古屋駅店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 治兵衛 名古屋駅店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-22-sakae-sawee-nakgopsae.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-22-sakae-sawee-nakgopsae.html" data-category="topic">
     <div class="entry-date">2026-09-22</div>
     <div class="entry-body">
       <h2>栄の韓国料理「サウィ食堂」ナッコプセ2180円を女子会で読み解く</h2>
       <p>栄・錦に東海初上陸したナッコプセ専門店「サウィ食堂 名古屋栄店」。看板の2,180円は2人前からの表示で、平均予算は3,000円。34席の通し営業という設計から、女子会に向き一人飲みに向かない理由を読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/24/91/P050362491/P050362491.jpg" alt="サウィ食堂 名古屋栄店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: サウィ食堂 名古屋栄店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-21-meieki-dote-daikoku-bel-butter-waffle.html" data-category="compare">
+  <a class="journal-entry has-thumb" href="2026-09-21-meieki-dote-daikoku-bel-butter-waffle.html" data-category="compare">
     <div class="entry-date">2026-09-21</div>
     <div class="entry-body">
       <h2>名駅の一人飲み、99円の居酒屋「どての大黒」とBEL BUTTER WAFFLE</h2>
       <p>2026年9月、名古屋駅は店より先に人の流れが変わった。15日に西口へ開いた立呑み「どての大黒」はどて串99円・2階は席料88円、25日には地下街サンロードに「BEL BUTTER WAFFLE」が名古屋初出店。席で稼がない新店2軒を読む。</p>
       <span class="entry-theme">週次話題店</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/7024/438/7024-438-287a90c4715477aa380595584d048ea9-1980x1320.jpg" alt="BEL BUTTER WAFFLE 名古屋サンロード店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社DAY TO LIFE（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-20-nishiki-maruhachi-fushimi-bettei-enkai.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-20-nishiki-maruhachi-fushimi-bettei-enkai.html" data-category="topic">
     <div class="entry-date">2026-09-20</div>
     <div class="entry-body">
       <h2>錦の名古屋めし食堂 丸八 伏見別邸、手羽先も味噌かつも一会計の宴会</h2>
       <p>2026年9月17日開業、名古屋観光ホテル1階の「名古屋めし食堂 丸八 伏見別邸」。矢場とん・矢場味仙・世界の山ちゃん・ひつまぶし備長を卓上QRで横断注文して一会計。130席・最大60名貸切を宴会幹事の目で読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/41/28/P051284128/P051284128.jpg" alt="名古屋めし食堂 丸八 伏見別邸" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 名古屋めし食堂 丸八 伏見別邸（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-19-kiyosu-yabaton-boochan-house.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-19-kiyosu-yabaton-boochan-house.html" data-category="topic">
     <div class="entry-date">2026-09-19</div>
     <div class="entry-body">
       <h2>矢場とん「ぶーちゃんハウス」が清須に開店、名古屋のとんかつ店が市内を選ばなかった理由を読む</h2>
       <p>みそかつの矢場とんが初のコンセプト店舗「ぶーちゃんハウス」を2026年9月18日、清須市の自社工場1階に開いた。わらじとんかつ定食1,800円は名古屋市内の矢場とんと同じ価格帯。一等地を選ばなかった設計を、滞在時間と客単価の組み立てから読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/153345/8/153345-8-11b466f3335e9d4dc34ad21c860bcb49-1416x450.png" alt="矢場とん ぶーちゃんハウス" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社矢場とん／店内イメージパース（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-18-sakae-akizake-fes-2026-coin-price.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-18-sakae-akizake-fes-2026-coin-price.html" data-category="topic">
     <div class="entry-date">2026-09-18</div>
     <div class="entry-body">
       <h2>栄・久屋大通に27蔵81銘柄「秋酒祭 愛知2026」、コイン制の相場を読む</h2>
       <p>2026年10月3日・4日、栄・久屋大通公園で愛知27酒蔵81銘柄が集まる「秋酒祭 愛知2026」開催。前売3,000円・当日3,600円のコイン制価格設計を読み、飲み足りない続きを楽しめる栄の居酒屋2軒を紹介する。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/79/32/P042517932/P042517932.jpg" alt="十八代 光蔵 みつくら 栄本店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 十八代 光蔵 みつくら 栄本店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-17-marunouchi-unashiromura-koshitsu-ryo.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-17-marunouchi-unashiromura-koshitsu-ryo.html" data-category="topic">
     <div class="entry-date">2026-09-17</div>
     <div class="entry-body">
       <h2>うなぎのしろむら丸の内店の個室利用料10% — 5連休に鰻を囲む前に</h2>
       <p>シラスウナギは豊漁、卸値は前年比24.8%安。それでも専門店のうな重は下がらない。9月19日からの11年ぶり5連休と敬老の日に向けて、丸の内駅徒歩2分「うなぎのしろむら 丸の内店」の平均予算4,500円/5,500円と個室利用料10%・15%の設計を読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/61/40/P046746140/P046746140.jpg" alt="うなぎのしろむら 丸の内店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: うなぎのしろむら 丸の内店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-16-sakae-hitorinomi-shinya-ryokin-kozo.html" data-category="guide">
+  <a class="journal-entry has-thumb" href="2026-09-16-sakae-hitorinomi-shinya-ryokin-kozo.html" data-category="guide">
     <div class="entry-date">2026-09-16</div>
     <div class="entry-body">
       <h2>栄の居酒屋で一人飲み、0時をまたぐ一杯が高くつく理由 — 深夜料金7%時代のwakamaru栄店</h2>
       <p>ココイチが2026年9月1日から深夜料金7%を導入。チェーンが「夜は高い」と言い始めた一方、名古屋の居酒屋のメニューに深夜料金の文字はない。深夜割増25%・最低賃金1,195円・風営法の0時の境界・消費税減税の外食除外を重ね、栄で翌4時まで開くwakamaru栄店の時間割から、0時をまたぐ一杯の値段を分解する。</p>
       <span class="entry-theme">業界の裏側</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614.jpg" alt="wakamaru ワカマル 栄店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: wakamaru ワカマル 栄店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-15-imaike-okute-yamamotoya-misonikomi-export.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-15-imaike-okute-yamamotoya-misonikomi-export.html" data-category="topic">
     <div class="entry-date">2026-09-15</div>
     <div class="entry-body">
       <h2>今池・大久手山本屋の味噌煮込みが海外の棚へ——輸出の設計を読む</h2>
       <p>名古屋めしの老舗・大久手山本屋が家庭用キットの海外展開を発表した。香港やソウルに実店舗を持つ店が、いま小売の棚を取りに行く意味を、46席の通し営業と1,200円のランチ単価から読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/82/27/P051268227/P051268227.jpg" alt="大久手山本屋" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 大久手山本屋（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-14-sakae-izakaya-new-openings-bonenkai.html" data-category="compare">
+  <a class="journal-entry has-thumb" href="2026-09-14-sakae-izakaya-new-openings-bonenkai.html" data-category="compare">
     <div class="entry-date">2026-09-14</div>
     <div class="entry-body">
       <h2>栄に居酒屋の大箱が2軒、同じ週に開いた — 忘年会の下見は9月がいい</h2>
       <p>9月7日に錦3丁目、9月10日に女子大小路。栄に徒歩圏で宴会向けの新店が2軒開いた。120席の掘りごたつ個室と24時間営業78席を、価格帯・席数・宴会収容・予約の取り方から比較する。</p>
       <span class="entry-theme">週次話題店</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/09/11/P051170911/P051170911.jpg" alt="天ぷらとおでん　海鮮　焼き鳥　個室　居酒屋　飲み放題　天串（TENGUSHI）錦店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 天ぷらとおでん　海鮮　焼き鳥　個室　居酒屋　飲み放題　天串（TENGUSHI）錦店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-13-kanayama-late-night-gyoza-group.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-13-kanayama-late-night-gyoza-group.html" data-category="topic">
     <div class="entry-date">2026-09-13</div>
     <div class="entry-body">
       <h2>アジア大会の夜は22時が勝負、金山で大人数が座れる餃子居酒屋</h2>
       <p>9月19日開幕のアジア競技大会。観戦帰りに大人数で座れる店は、実は22時の壁で絞られる。料理L.O.翌0時・94席・個室ありの金山駅前の餃子居酒屋を、価格帯・オペ・シーン適性から読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/01/43/P039270143/P039270143.jpg" alt="餃子のかっちゃん 金山駅前店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 餃子のかっちゃん 金山駅前店（ホットペッパーグルメ）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-09-12-sakae-sulbing-korean-bingsu.html" data-category="topic">
@@ -749,40 +812,44 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-11-sakae-mirai-tower-tsukimi-date-lastorder.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-11-sakae-mirai-tower-tsukimi-date-lastorder.html" data-category="topic">
     <div class="entry-date">2026-09-11</div>
     <div class="entry-body">
       <h2>栄のテレビ塔でお月見デート、21時閉館から逆算する夕食のラストオーダー</h2>
       <p>中部電力 MIRAI TOWERで9月14日から「天空のお月見」。十五夜の9月25日は金曜で展望台は21時閉館、飲食の提供はない。栄でお月見デートの夕食を、久屋大通公園周辺のラストオーダーから逆算する。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/02/47/P045440247/P045440247.jpg" alt="炭焼牛たん東山レイヤード久屋大通パーク店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 炭焼牛たん東山レイヤード久屋大通パーク店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-10-marunouchi-italian-sunday-closed-settai.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-10-marunouchi-italian-sunday-closed-settai.html" data-category="topic">
     <div class="entry-date">2026-09-10</div>
     <div class="entry-body">
       <h2>名古屋城前のイタリアンが日曜定休に。丸の内で接待を組む日の選び方</h2>
       <p>アジア大会の競技が今日9月10日、IGアリーナの男子バスケから始まる。城の北で人が動く月に、南の丸の内の一軒は日曜を閉めた。総席数70・ランチ4,000〜6,000円の店の営業日程変更を、接待とデートの曜日選びに落として読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/47/70/P046564770/P046564770.jpg" alt="THE KAWABUN NAGOYA ザ カワブン ナゴヤ" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: THE KAWABUN NAGOYA ザ カワブン ナゴヤ（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-09-meieki-izakaya-jikyu1500-enkai.html" data-category="guide">
+  <a class="journal-entry has-thumb" href="2026-09-09-meieki-izakaya-jikyu1500-enkai.html" data-category="guide">
     <div class="entry-date">2026-09-09</div>
     <div class="entry-body">
       <h2>名駅の居酒屋、時給1,500円でも人が集まらない — 宴会予約前の3点</h2>
       <p>10月1日、愛知の最低賃金が1,195円へ。求人票の「時給1,500円」は最低賃金の1.26倍にすぎなくなる。それでも人が集まらない理由はシフトの組み方にあり、その歪みは宴会の席を押さえる客の側からも読める。</p>
       <span class="entry-theme">業界の裏側</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/52/72/P049165272/P049165272.jpg" alt="トロ壱 名古屋駅前店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: トロ壱 名古屋駅前店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html" data-category="topic">
     <div class="entry-date">2026-09-08</div>
     <div class="entry-body">
       <h2>覚王山・池下に焼肉の新顔。全面禁煙44席が語る、接待に使えるかの判断軸</h2>
       <p>2026年9月2日、池下駅から徒歩2分に開いた焼肉店。44席・全面禁煙・木曜定休・ディナー専業という設計を、排煙設備と仕込みの都合から読み解き、花咲きタン2420円の価格帯の読み方と接待・デートでの使いどころまで具体的に示す。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/28/02/P051052802/P051052802.jpg" alt="焼肉酒房天禄　池下店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 焼肉酒房天禄　池下店（ホットペッパーグルメ）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-09-07-meieki-meichika-new-shops-weekly.html" data-category="compare">
@@ -794,76 +861,84 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-09-06-mizuho-asian-games-venue-yakiniku.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-06-mizuho-asian-games-venue-yakiniku.html" data-category="topic">
     <div class="entry-date">2026-09-06</div>
     <div class="entry-body">
       <h2>アジア大会の瑞穂、栄へ戻る前に会場徒歩5分の焼肉で宴会を組む</h2>
       <p>9月19日開幕のアジア大会。約3万5千人が集まるパロマ瑞穂スタジアムの徒歩10分圏に、掲載店は7軒しかない。16日間フルで夜に開く店はゼロ。価格帯・予約・オペを読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/76/24/P038277624/P038277624.jpg" alt="コーチン焼肉 べんがら亭 瑞穂店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: コーチン焼肉 べんがら亭 瑞穂店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-05-meieki-nagoyameshi-izakaya-enkai.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-05-meieki-nagoyameshi-izakaya-enkai.html" data-category="topic">
     <div class="entry-date">2026-09-05</div>
     <div class="entry-body">
       <h2>名駅の名古屋めし居酒屋と伏見の新フードホール、宴会の幹事が選ぶべきはどちらか</h2>
       <p>2026年9月中旬、名古屋観光ホテル1階に名古屋めし5ブランドが同居する「丸八 伏見別邸」が入る。集積型と一会計型の違いを、名駅の丸八を軸に読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/34/14/P035543414/P035543414.jpg" alt="名古屋めし食堂 丸八 名古屋ルーセントタワー" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 名古屋めし食堂 丸八 名古屋ルーセントタワー（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-04-meieki-shokudo-tomoru-sanma-price.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-04-meieki-shokudo-tomoru-sanma-price.html" data-category="topic">
     <div class="entry-date">2026-09-04</div>
     <div class="entry-body">
       <h2>名駅『食堂 灯ル』の秋刀魚定食2,178円は高いのか安いのか</h2>
       <p>大名古屋ビルヂングの秋グルメ企画で名駅『食堂 灯ル』が出す秋刀魚定食2,178円を、原価が振れやすい旬の魚を軸にした値付けとして読む。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/07/47/P049540747/P049540747_480.jpg" alt="食堂 灯ル" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 食堂 灯ル（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-03-meieki-meichika-sharin-tsukemen.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-03-meieki-meichika-sharin-tsukemen.html" data-category="topic">
     <div class="entry-date">2026-09-03</div>
     <div class="entry-body">
       <h2>名駅メイチカの舎鈴、20時に閉まる地下街で23時まで開くコスパ</h2>
       <p>9月4日に3年半ぶり復活する名駅の地下街メイチカに、東海エリア初出店のつけめん専門店「舎鈴」が入る。地下街が20時に閉まるなか、この店だけ23時まで。38席と価格の階段を読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/87198/98/87198-98-1171f032f0750465fc31d30d0e9c099a-1121x823.jpg" alt="舎鈴 メイチカ店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社松富士食品（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-02-sakae-counter-sushi-nakaoroshi.html" data-category="guide">
+  <a class="journal-entry has-thumb" href="2026-09-02-sakae-counter-sushi-nakaoroshi.html" data-category="guide">
     <div class="entry-date">2026-09-02</div>
     <div class="entry-body">
       <h2>栄のカウンター寿司で産地がバラバラな理由 — 名古屋の魚は仲卸で決まる</h2>
       <p>明石の真鯛、青森のイワシ、三重のアジ。栄のカウンター鮨が公開する「本日のおすすめ」の産地が揃わないのには、仕入れ構造上の理由がある。卸3社・仲卸52社という名古屋の仕入れ地図から、市場依存店とルート仕入れ店の見分け方を解説する。</p>
       <span class="entry-theme">業界の裏側</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/66/45/P049426645/P049426645.jpg" alt="寿司処 昴 栄店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 寿司処 昴 栄店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-09-01-nishiki-steakhouse-settai-price.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-09-01-nishiki-steakhouse-settai-price.html" data-category="topic">
     <div class="entry-date">2026-09-01</div>
     <div class="entry-body">
       <h2>錦のステーキハウスで接待、9,900円のランチと「サ別」の読み方</h2>
       <p>9月4日、名古屋観光ホテル1階にウルフギャング・ステーキハウスが東海エリア初出店する。表に出ている数字はランチコース9,900円、パーティメニュー17,600円から。ただし全て税込サ別で、予約サイトの予算目安とは開きがある。その差額と席の設計を読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/97639/132/97639-132-593bea23c7b0252fe69b70d98d3b85dc-1500x1001.jpg" alt="ウルフギャング・ステーキハウス 名古屋店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 エスパシオエンタープライズ株式会社（プレスリリースより）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-08-31-nagoya-roadside-newstores-price.html" data-category="compare">
+  <a class="journal-entry has-thumb" href="2026-08-31-nagoya-roadside-newstores-price.html" data-category="compare">
     <div class="entry-date">2026-08-31</div>
     <div class="entry-body">
       <h2>栄の味噌ラーメンが中川区へ、900円と1,300円を読む</h2>
       <p>2026年8月最終週、名古屋の新店3軒はいずれも駅前ではなく駐車場に面して開いた。同じ屋号で駅前1,000円未満・郊外1,300円という価格差がなぜ生まれるのかを、席数・営業時間・来店コストから読む週次ダイジェスト。</p>
       <span class="entry-theme">週次話題店</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/13/26/P038761326/P038761326.jpg" alt="みそ吟 鶴舞店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: みそ吟 鶴舞店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-08-30-nagoya-tebasaki-osaka.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-08-30-nagoya-tebasaki-osaka.html" data-category="topic">
     <div class="entry-date">2026-08-30</div>
     <div class="entry-body">
       <h2>栄の手羽先が大阪へ — 12席カウンターと22店舗、外に出る名古屋の鶏</h2>
       <p>手羽先むつみが9月1日に関西初出店、がブリチキン。は米国2号店と全国22店舗のフェア。同じ週に外へ出た名古屋の鶏2つを、席数と価格帯とオペから読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/48/91/P044424891/P044424891.jpg" alt="手羽先むつみ 本店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 手羽先むつみ 本店（ホットペッパーグルメ）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-08-29-fujigaoka-nama-donut-cospa.html" data-category="topic">
@@ -875,22 +950,24 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-28-meieki-autumn-sweets-weekday.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-08-28-meieki-autumn-sweets-weekday.html" data-category="topic">
     <div class="entry-date">2026-08-28</div>
     <div class="entry-body">
       <h2>名駅の秋スイーツ、9月解禁 — 平日のコスパが高い理由</h2>
       <p>名古屋・名駅の秋メニューは9月1日から11日に集中して解禁される。アフタヌーンティーもスイーツブッフェも秋のフレンチも、平日と土日祝で300〜500円違う。この差が値引きではない理由と、9月上旬の平日が狙い目になる仕組みを読み解く。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/87/88/P046108788/P046108788.jpg" alt="The Living Room with SKY BAR 三井ガーデンホテル名古屋プレミア18F" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: The Living Room with SKY BAR 三井ガーデンホテル名古屋プレミア18F（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-08-27-sakae-mitsukoshi-kihachi-cafe.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-08-27-sakae-mitsukoshi-kihachi-cafe.html" data-category="topic">
     <div class="entry-date">2026-08-27</div>
     <div class="entry-body">
       <h2>名鉄百貨店で消えたキハチ カフェが栄三越6階に、19時閉店・予約なしの設計を読む</h2>
       <p>2026年2月28日に名鉄百貨店本店が閉店し、キハチ カフェは東海から一度消えた。半年後の8月28日、名駅ではなく栄の百貨店6階で再出店する。フード1,750〜2,400円とスイーツ990円の二層、10時〜19時で夜を持たない営業、予約を受けない席の回し方を読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/185183/6/185183-6-0f24d046743684743bb2488f0b834173-3752x2698.jpg" alt="キハチ カフェ 名古屋三越" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社名古屋三越（プレスリリースより）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-08-26-marunouchi-friday-19ji-reservation.html" data-category="guide">
@@ -902,49 +979,54 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-25-misen-five-lineages-osu-solo.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-08-25-misen-five-lineages-osu-solo.html" data-category="topic">
     <div class="entry-date">2026-08-25</div>
     <div class="entry-body">
       <h2>同じ看板で経営が5つ、大須の矢場味仙で台湾ラーメンを一人飲みするなら知っておく話</h2>
       <p>名古屋で「味仙に行く」と言うとき、実は5つの別会社から1社を選んでいる。2026年8月24日に創業の地で復活した下坪店を入口に、矢場味仙という1社の価格帯・深夜1時までのオペ・一人飲み適性を分解する。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/92/90/P039239290/P039239290_480.jpg" alt="台湾料理 矢場味仙" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 台湾料理 矢場味仙（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-08-24-sakae-korean-buffet-price-split.html" data-category="compare">
+  <a class="journal-entry has-thumb" href="2026-08-24-sakae-korean-buffet-price-split.html" data-category="compare">
     <div class="entry-date">2026-08-24</div>
     <div class="entry-body">
       <h2>栄の韓国料理食べ放題2,500円と5,000円、差額を読む</h2>
       <p>8月24日に栄で開いた韓国料理食べ放題と、8月23日に神宮前で開いた特盛パスタ2号店。同じ週の新店2軒を、価格帯・席時間・回転設計から読み解く。</p>
       <span class="entry-theme">週次話題店</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/09/32/P051040932/P051040932.jpg" alt="ヤムヤムビュッフェ Yum Yum Buffet 栄女子大店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: ヤムヤムビュッフェ Yum Yum Buffet 栄女子大店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-08-23-meieki-kokokara-yakiniku.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-08-23-meieki-kokokara-yakiniku.html" data-category="topic">
     <div class="entry-date">2026-08-23</div>
     <div class="entry-body">
       <h2>名駅3丁目に名古屋初上陸の焼肉、30席が飲み放題を半額で出す理由を読む</h2>
       <p>2026年8月11日、東京・錦糸町発の「焼肉ここから」が名駅3丁目に名古屋初上陸。看板の6,578円ではなく、コース3,500円と半額固定の飲み放題1,100円という二層で価格帯を読む。30席・平日のみランチのオペとシーン適性も。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/37/41/P045973741/P045973741.jpg" alt="焼肉ここから 名古屋名駅店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 焼肉ここから 名古屋名駅店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-08-22-osu-malachuan-self-price.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-08-22-osu-malachuan-self-price.html" data-category="topic">
     <div class="entry-date">2026-08-22</div>
     <div class="entry-body">
       <h2>大須に名古屋初の麻辣串、串1本50円の中華を読む</h2>
       <p>大須3丁目に2026年8月1日オープンした麻辣串専門店。約50種の串が色ごとに50〜300円で、取った本数がそのまま会計になる。価格設計・15席で通し営業が回るオペ・どのシーンに効くかを読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/69/03/P049106903/P049106903.jpg" alt="炉鼎技 マーラータン 大須店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 炉鼎技 マーラータン 大須店（ホットペッパーグルメ）</span></span>
   </a>
 
-  <a class="journal-entry" href="2026-08-21-meieki-1bansen-rokurinsha.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-08-21-meieki-1bansen-rokurinsha.html" data-category="topic">
     <div class="entry-date">2026-08-21</div>
     <div class="entry-body">
       <h2>JR名古屋駅1番線に六厘舎が90日だけ — 名駅のつけめん1,080円＋入場券150円を読む</h2>
       <p>2026年9月1日から11月29日まで、JR名古屋駅1番線に東京のつけめん専門店が期間限定で入る。約60席・通し営業・改札内という条件を、価格帯と回転の設計として読む。</p>
       <span class="entry-theme">季節短信</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/108483/41/108483-41-1366b96b3d8c34e7a7a451f2e2786cbd-361x262.jpg" alt="六厘舎" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 名古屋ステーション開発株式会社（プレスリリースより）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-08-20-hirabari-doteni-counter.html" data-category="topic">
@@ -974,13 +1056,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-17-meieki-sanno-shinten-digest.html" data-category="compare">
+  <a class="journal-entry has-thumb" href="2026-08-17-meieki-sanno-shinten-digest.html" data-category="compare">
     <div class="entry-date">2026-08-17</div>
     <div class="entry-body">
       <h2>29席のラーメンと150席の食べ放題——名駅と山王の新店を読む</h2>
       <p>2026年8月17日に一風堂名駅3丁目店、18日にゆず庵名古屋山王店。29席と150席、通し営業と最終入店22時。公表されている数字だけで、今週名古屋に開いた新店がどこで採算を合わせているかを読み解く。</p>
       <span class="entry-theme">週次話題店</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://prcdn.freetls.fastly.net/release_image/44964/1495/44964-1495-267c9cff05381284bb15a53390df1755-2090x1232.jpg" alt="寿司・しゃぶしゃぶ ゆず庵 名古屋山王店" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 提供 株式会社物語コーポレーション（プレスリリースより）</span></span>
   </a>
 
   <a class="journal-entry" href="2026-08-16-sakae-magari-kakigori.html" data-category="topic">
@@ -1073,13 +1156,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-06-meieki-toribura-yakitori-90yen.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-08-06-meieki-toribura-yakitori-90yen.html" data-category="topic">
     <div class="entry-date">2026-08-06</div>
     <div class="entry-body">
       <h2>名駅・焼鳥90円の「鳥ぶら」名駅東口店、一人飲みでいくらになるか</h2>
       <p>焼鳥1本90円、生中190円。8月10日開店の鳥ぶら名駅東口店は数字だけ見ると激安だが、掲載価格帯は2,001〜3,000円。この差が示す業態の設計を、価格帯・オペ・シーン適性から読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/31/87/P047883187/P047883187.jpg" alt="名駅・焼鳥90円の「鳥ぶら」名駅東口店、一人飲みでいくらになるか" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 店舗公式写真 / HotPepper</span></span>
   </a>
 
   <a class="journal-entry" href="2026-08-05-otoshi-450yen-nagoya.html" data-category="guide">
@@ -1118,13 +1202,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-08-01-alma-de-churrasco-meieki.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-08-01-alma-de-churrasco-meieki.html" data-category="topic">
     <div class="entry-date">2026-08-01</div>
     <div class="entry-body">
       <h2>名駅で開いた和牛シュラスコ食べ放題を接待とデート視点で読む</h2>
       <p>2026年7月31日、名古屋駅前に開いた「アルマデシュラスコ名駅」。和牛を含む13種のシュラスコ食べ放題6,600円をどう読むか。約30席に絞った提供オペの意図と、デート・少人数の会に効く理由を解説する。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/74/23/P050737423/P050737423.jpg" alt="名駅で開いた和牛シュラスコ食べ放題を接待とデート視点で読む" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 店舗公式写真 / HotPepper</span></span>
   </a>
 
   <a class="journal-entry" href="2026-07-31-sakae-settai-sushi.html" data-category="topic">
@@ -1172,13 +1257,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-07-26-mirine-yankoppuchan-sakae.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-07-26-mirine-yankoppuchan-sakae.html" data-category="topic">
     <div class="entry-date">2026-07-26</div>
     <div class="entry-body">
       <h2>丑の日にうなぎを逃したら、栄・釜山式ホルモンという夏の正解</h2>
       <p>2026年の土用の丑の日は7月26日の一度きり、二の丑がない年。うなぎを逃した夏の受け皿として、栄の釜山式ホルモン「ミリネヤンコプチャン名古屋栄駅前店」を価格帯と予約の裏側から読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/76/07/P047767607/P047767607.jpg" alt="丑の日にうなぎを逃したら、栄・釜山式ホルモンという夏の正解" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 店舗公式写真 / HotPepper</span></span>
   </a>
 
   <a class="journal-entry" href="2026-07-23-ushinohi-shibafukuya.html" data-category="topic">
@@ -1190,13 +1276,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-07-22-unagi-kikukawa-oroshi.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-07-22-unagi-kikukawa-oroshi.html" data-category="topic">
     <div class="entry-date">2026-07-22</div>
     <div class="entry-body">
       <h2>うなぎが安い夏——名駅『四代目菊川』、卸問屋直営という丑の日の選び方</h2>
       <p>2026年の土用の丑の日は7月26日。豊漁で卸値が2割下がった珍しい年に、名駅グローバルゲートの鰻卸問屋直営店を、価格帯・予約・接待シーンまで読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/73/47/P047527347/P047527347.jpg" alt="うなぎが安い夏——名駅『四代目菊川』、卸問屋直営という丑の日の選び方" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 店舗公式写真 / HotPepper</span></span>
   </a>
 
   <a class="journal-entry" href="2026-07-18-kiwami-tachigui-sushi.html" data-category="topic">
@@ -1253,13 +1340,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-25-kisoji-kawaramachi-hokkaido-matsuri.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-06-25-kisoji-kawaramachi-hokkaido-matsuri.html" data-category="topic">
     <div class="entry-date">2026-06-25</div>
     <div class="entry-body">
       <h2>木曽路 瓦町店 — 『北海道祭り』3,850円の中身と会計の読み方</h2>
       <p>2026年6月24日から木曽路で『北海道祭り』が開催中。北海御膳3,850円と通常5,000〜7,000円台のコースはどう違うのか。送迎バスの予約制と新栄町駅徒歩20分の立地、接待・法事後の会食に強い理由を解説する。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/28/79/P029082879/P029082879.jpg" alt="木曽路 瓦町店 — 『北海道祭り』3,850円の中身と会計の読み方" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 店舗公式写真 / HotPepper</span></span>
   </a>
 
   <a class="journal-entry" href="2026-06-24-ranchi-1000en-yoru-kyakutanka.html" data-category="guide">
@@ -1442,13 +1530,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-06-04-tebasaki-summit-yotteba-meieki.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-06-04-tebasaki-summit-yotteba-meieki.html" data-category="topic">
     <div class="entry-date">2026-06-04</div>
     <div class="entry-body">
       <h2>手羽先サミット開幕の週末、名駅で手羽を一杯 ―『酔っ手羽 名駅3丁目店』</h2>
       <p>名古屋発祥の手羽先の祭典『手羽先サミット2026』が6月5〜7日に久屋大通公園で開幕。祭りのあとも通える名駅の手羽先専門店『酔っ手羽 名駅3丁目店』を、価格帯の読み方・オペの裏側・シーン適性から読む。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/84/96/P047138496/P047138496.jpg" alt="手羽先サミット開幕の週末、名駅で手羽を一杯 ―『酔っ手羽 名駅3丁目店』" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 店舗公式写真 / HotPepper</span></span>
   </a>
 
   <a class="journal-entry" href="2026-06-03-nagoya-cochin-honmono-guide.html" data-category="guide">
@@ -1541,13 +1630,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-24-yanagibashi-beer-garden-insider.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-05-24-yanagibashi-beer-garden-insider.html" data-category="topic">
     <div class="entry-date">2026-05-24</div>
     <div class="entry-body">
       <h2>初夏のビアガーデンは柳橋市場直結</h2>
       <p>4月22日にリニューアル開幕した柳橋中央市場ビアガーデン。コース4,990円という価格帯、市場直結の仕入れ、屋上の席配置、接待には向かない一方でデート・一人飲みのシーン適性まで読み解く一軒。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/76/86/P049727686/P049727686.jpg" alt="初夏のビアガーデンは柳橋市場直結" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 店舗公式写真 / HotPepper</span></span>
   </a>
 
   <a class="journal-entry" href="2026-05-23-yakisoba-stand-rafu-tsuruzato.html" data-category="topic">
@@ -1658,13 +1748,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
   </a>
 
-  <a class="journal-entry" href="2026-05-10-mikan-sakae-nishiki-fushimi.html" data-category="topic">
+  <a class="journal-entry has-thumb" href="2026-05-10-mikan-sakae-nishiki-fushimi.html" data-category="topic">
     <div class="entry-date">2026-05-10</div>
     <div class="entry-body">
       <h2>5000円台のカウンターに『お晩菜』が並ぶ意味 — 栄『みかん』を読み解く</h2>
       <p>栄・錦のビル2階、5000円台のカウンターに大鉢のお晩菜が並ぶ居酒屋『みかん』。なぜこの価格帯で食べログ4.9を維持できているのか、価格帯・オペ・シーン適性の3軸で読み解く。</p>
       <span class="entry-theme">今日の1軒</span>
     </div>
+    <span class="entry-thumb"><img class="entry-img" src="https://imgfp.hotp.jp/IMGH/92/40/P047849240/P047849240.jpg" alt="5000円台のカウンターに『お晩菜』が並ぶ意味 — 栄『みかん』を読み解く" width="320" height="240" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'"><span class="entry-credit">写真: 店舗公式写真 / HotPepper</span></span>
   </a>
 
   <a class="journal-entry" href="2026-05-08-post-gw-friday-nagoya-strategy.html" data-category="topic">
@@ -1857,6 +1948,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
     <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
     <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+    <p class="nb-footer-credit">Powered by <a href="https://webservice.recruit.co.jp/" target="_blank" rel="noopener noreferrer">ホットペッパーグルメ Webサービス</a> 【画像提供：ホットペッパー グルメ】</p>
   </div>
 </footer>
 <!-- NB-CHROME:FOOTER:END -->
