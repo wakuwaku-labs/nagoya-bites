@@ -1,4 +1,4 @@
-status: in_progress
+status: done
 
 # 記事と X 投稿を親しみやすくし「おすすめ◯選」を足す（Ondine #2224・2026-11-19）
 
