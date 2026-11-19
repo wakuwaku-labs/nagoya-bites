@@ -34,12 +34,13 @@ test('categoryOf: category が無い行は theme から、未知の theme でも
   assert.strictEqual(categoryOf(null), 'topic');
 });
 
-test('30日分の題材配分が、話題4・ガイド2・比較1の目安（1週あたり）に収まる', () => {
+test('30日分の題材配分が、話題3・ガイド1・比較3（おすすめ◯選）の目安（1週あたり）に収まる', () => {
+  // 2026-11-19 本人の依頼で月・水・土を「おすすめ◯選」に（ADR 0080）。目安は data/journal_queue.json の categories
   const r = simulateDistribution('2026-11-18', 30);
   const w = (k) => r.counts[k] / 30 * 7;
-  assert.ok(Math.abs(w('topic') - 4) <= 0.6, `topic ${w('topic')}`);
-  assert.ok(Math.abs(w('guide') - 2) <= 0.6, `guide ${w('guide')}`);
-  assert.ok(Math.abs(w('compare') - 1) <= 0.6, `compare ${w('compare')}`);
+  assert.ok(Math.abs(w('topic') - 3) <= 0.6, `topic ${w('topic')}`);
+  assert.ok(Math.abs(w('guide') - 1) <= 0.6, `guide ${w('guide')}`);
+  assert.ok(Math.abs(w('compare') - 3) <= 0.6, `compare ${w('compare')}`);
   // 忘年会の長い季節の上書き期間でも、ガイド・比較の日は季節短信に塗りつぶされない
   assert.ok(r.rows.some((x) => x.category === 'guide' && x.source !== 'seasonal_override'));
 });

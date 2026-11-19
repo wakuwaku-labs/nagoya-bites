@@ -152,4 +152,48 @@ function judgementWarnings(input, std = loadStandard()) {
   return w;
 }
 
-module.exports = { STANDARD_PATH, loadStandard, checklistItems, normalizeChecklist, statusBandText, buildStatusBand, unknownCount, buildConclusion, buildChecklist, buildFit, buildCorrections, photoKindLabel, judgementWarnings, monthDayJa };
+/** 親しみやすい書き方の節（voice）。無ければ空の既定 */
+function voice(std = loadStandard()) {
+  return std.voice || { rules: [], jargon: [], readability: {} };
+}
+
+/**
+ * 本文テキストの読みやすさを測る純関数（本人 2026-11-19 の依頼・docs/decisions/0080）。
+ * 文の区切りは「。！？」と改行。料金の数字は「◯円」「◯%/％」「◯割」の数。
+ * 返り値: { chars, sentences, avgSentenceChars, longSentenceShare（40字超の文の割合）, moneyCount, moneyPer1000Chars, jargonHits:[{word,count}] }
+ */
+function measureReadability(text, std = loadStandard(), longChars) {
+  const t = String(text || '').replace(/[ \t\u3000]+/g, '');
+  const limit = longChars || (voice(std).readability || {}).longSentenceChars || 60;
+  const sents = t.split(/[。！？!?\n]+/).map((x) => x.trim()).filter(Boolean);
+  const chars = sents.reduce((a, x) => a + x.length, 0);
+  const money = (t.match(/\d[\d,.]*\s*(?:円|%|％|割)/g) || []).length;
+  const jargonHits = [];
+  (voice(std).jargon || []).forEach((j) => {
+    const re = new RegExp(String(j.word).replace(/[.*+?^${}()|[\]\\\/]/g, '\\$&'), 'g');
+    const n = (t.match(re) || []).length;
+    if (n) jargonHits.push({ word: j.word, count: n, plain: j.plain });
+  });
+  return {
+    chars,
+    sentences: sents.length,
+    avgSentenceChars: sents.length ? +(chars / sents.length).toFixed(1) : 0,
+    longSentenceShare: sents.length ? +(sents.filter((x) => x.length > limit).length / sents.length).toFixed(3) : 0,
+    moneyCount: money,
+    moneyPer1000Chars: chars ? +(money * 1000 / chars).toFixed(2) : 0,
+    jargonHits
+  };
+}
+
+/** 警告の文（素人向けの日本語）。閾値は voice.readability。止めない */
+function readabilityWarnings(text, std = loadStandard()) {
+  const r = measureReadability(text, std);
+  const th = voice(std).readability || {};
+  const w = [];
+  if (th.avgSentenceChars && r.avgSentenceChars > th.avgSentenceChars) w.push(`1文の平均が${r.avgSentenceChars}字で、目安の${th.avgSentenceChars}字を${(r.avgSentenceChars - th.avgSentenceChars).toFixed(1)}字超えています（文を短く区切ると読みやすくなります）`);
+  if (th.moneyPer1000Chars && r.moneyPer1000Chars > th.moneyPer1000Chars) w.push(`料金・％の数字が1000字あたり${r.moneyPer1000Chars}個で、目安の${th.moneyPer1000Chars}個を超えています（値段は「1人いくらくらい」を1店に1つまでにして、先に「どんな店か」を書く）`);
+  if (r.jargonHits.length) w.push(`業界の言葉があります: ${r.jargonHits.map((j) => `${j.word}×${j.count}→「${j.plain}」`).join('、')}`);
+  return { measure: r, warnings: w };
+}
+
+module.exports = { voice, measureReadability, readabilityWarnings, STANDARD_PATH, loadStandard, checklistItems, normalizeChecklist, statusBandText, buildStatusBand, unknownCount, buildConclusion, buildChecklist, buildFit, buildCorrections, photoKindLabel, judgementWarnings, monthDayJa };

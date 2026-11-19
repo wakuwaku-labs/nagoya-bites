@@ -82,7 +82,7 @@ function readFreshIn(dir, name, { schema, maxAgeDays = 8, now = new Date() } = {
   return { ok: true, data };
 }
 
-const KINDS = new Set(['number', 'mechanism', 'checklist']);
+const KINDS = new Set(['picks', 'number', 'mechanism', 'checklist']);
 const FIRST_LINES = new Set(['question', 'number', 'assertion']);
 const LENGTHS = new Set(['short', 'mid', 'long']);
 

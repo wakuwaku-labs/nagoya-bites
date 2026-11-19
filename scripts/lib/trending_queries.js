@@ -88,7 +88,10 @@ const QUERY_TEMPLATES = {
     '名古屋 新店 {month}月 {year}',
     '名古屋 話題 飲食店 {month}月',
     '名古屋 行列 {date_filter}',
-    'dressing OR macaroni 名古屋 特集 {year}'
+    'dressing OR macaroni 名古屋 特集 {year}',
+    // おすすめ◯選（2026-11-19・ADR 0080）: エリア×シーンで集める材料
+    '名古屋 {area} {genre} おすすめ {month}月 {year}',
+    '名古屋 {area} {genre} 人気 {date_filter}'
   ],
   industry_insider: [
     '名古屋 飲食 業界 {genre}',
