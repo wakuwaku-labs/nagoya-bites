@@ -50,7 +50,7 @@ function buildFilterBar(entries) {
   </div>`;
 }
 
-function buildList(entries) {
+function buildList(entries, journalDir) {
   if (!entries || entries.length === 0) {
     return `<div class="empty-state">
     <p>最初のジャーナル記事を準備中です。</p>
@@ -58,15 +58,88 @@ function buildList(entries) {
   </div>`;
   }
   const sorted = entries.slice().sort((a, b) => b.date.localeCompare(a.date));
-  return buildFilterBar(sorted) + '\n' + sorted.map(e => `
-  <a class="journal-entry" href="${esc(e.slug)}.html" data-category="${categoryOf(e)}">
+  const thumbOpts = { excluded: loadListExcluded(), used: new Set() };
+  return buildFilterBar(sorted) + '\n' + sorted.map((e, i) => {
+    const t = listThumbOf(e.slug, journalDir, thumbOpts);
+    // 最初の数本だけすぐ読む（最初の画面）。残りは画面に近づいてから読む
+    const loading = i < 3 ? 'eager' : 'lazy';
+    const thumb = t ? `
+    <span class="entry-thumb"><img class="entry-img" src="${esc(t.src)}" alt="${esc(t.alt)}" width="320" height="240" loading="${loading}" decoding="async" onerror="var r=this.closest('.journal-entry');if(r)r.classList.remove('has-thumb');this.parentNode.remove()"><span class="entry-credit">${esc(t.credit)}</span></span>` : '';
+    return `
+  <a class="journal-entry${t ? ' has-thumb' : ''}" href="${esc(e.slug)}.html" data-category="${categoryOf(e)}">
     <div class="entry-date">${esc(e.date)}</div>
     <div class="entry-body">
       <h2>${esc(e.title)}</h2>
       <p>${esc(e.description || '')}</p>
       <span class="entry-theme">${esc(themeLabel(e.theme))}</span>
-    </div>
-  </a>`).join('\n');
+    </div>${thumb}
+  </a>`;
+  }).join('\n');
+}
+
+// ── ジャーナル一覧（journal/index.html）の各記事の写真（判断の記録 0079）─────────────────
+// 新しく写真を選ばない。その記事が自分のページに載せている画像だけを、次の順に使う。
+//   1. 記事の顔の写真（readHeroPhoto）。ホットペッパー公式写真かプレスリリース写真で、店名と出所の証跡があるもの
+//   2. 本文の写真（figure.art-body-img）。同じく店名・出所の証跡があるホットペッパー／プレスリリースの写真
+//   3. 証跡の属性が付く前の古い記事の顔で、ホットペッパー公式写真の URL と読める出所があるもの
+// どれも無い記事は写真なしの行のまま（図で埋めない・他店の写真を借りない。CLAUDE.md の取り繕わない）。
+// Places の写真は URL が失効するので使わない（CLAUDE.md の優先4の注意）。
+const LIST_PHOTO_SOURCES = ['hotpepper', 'press'];
+
+// 一覧の出所の文字は短くそろえる（スマホで写真より長くならないように）。店名は画像の alt に入れる。
+// ホットペッパー公式写真は「写真: ホットペッパーグルメ」、プレスリリース写真は記事の出所（発行企業名とリリース）を文字で（CLAUDE.md 写真ソース優先3 c）
+function listCredit(source, credit) {
+  return source === 'hotpepper' ? '写真: ホットペッパーグルメ' : plainCredit(credit);
+}
+
+// その記事が自分のページに載せている写真の候補（上の 1〜3 の順）
+function listThumbCandidates(slug, journalDir) {
+  const out = [];
+  const hero = readHeroPhoto(slug, journalDir);
+  if (hero && LIST_PHOTO_SOURCES.includes(hero.source)) {
+    out.push({ src: hero.src, alt: hero.store, credit: listCredit(hero.source, hero.credit) });
+  }
+  let html;
+  try { html = fs.readFileSync(path.join(journalDir || path.join(ROOT, 'journal'), `${slug}.html`), 'utf8'); } catch (_) { return out; }
+  for (const f of html.matchAll(/<figure class="art-body-img"([^>]*)>([\s\S]*?)<\/figure>/g)) {
+    const source = (f[1].match(/data-photo-source="([^"]*)"/) || [])[1] || '';
+    const store = decodeEntities((f[1].match(/data-photo-store="([^"]*)"/) || [])[1] || '').trim();
+    if (!LIST_PHOTO_SOURCES.includes(source) || !store) continue;
+    const src = (f[2].match(/<img\b[^>]*?\bsrc="(https:\/\/[^"\s<>']+)"/) || [])[1];
+    const cap = f[2].match(/<figcaption class="art-img-credit">([\s\S]*?)<\/figcaption>/);
+    const credit = cap && readCredit(cap[1]);
+    if (src && credit) out.push({ src: decodeEntities(src), alt: store, credit: listCredit(source, credit) });
+  }
+  if (!hero) {
+    const fig = html.match(/<figure class="art-hero-img"([^>]*)>([\s\S]*?)<\/figure>/);
+    if (fig) {
+      const src = decodeEntities((fig[2].match(/<img\b[^>]*?\bsrc="([^"\s<>']+)"/) || [])[1] || '');
+      const alt = decodeEntities((fig[2].match(/<img\b[^>]*?\balt="([^"]*)"/) || [])[1] || '');
+      const cap = fig[2].match(/<figcaption class="art-img-credit">([\s\S]*?)<\/figcaption>/);
+      if (/^https:\/\/imgfp\.hotp\.jp\//.test(src) && cap && readCredit(cap[1])) out.push({ src, alt, credit: listCredit('hotpepper') });
+    }
+  }
+  return out;
+}
+
+// 候補のうち、目で見て外した写真（data/top_hero_excluded.json の写真の番号。販促バナー・ロゴや文字が主役）と、
+// 一覧の新しい行ですでに使った写真（同じ写真を並べない）を除いた最初の1枚。無ければ null（文字だけの行）
+// 一覧は記事自身の顔を出す場所なので、特集の顔に使っている写真（トップでは外す）は外さない。目で見て外した写真だけ
+function loadListExcluded() {
+  return loadTopHeroExcluded(undefined, path.join(ROOT, 'data', '__no_feature_faces__.json'));
+}
+
+function listThumbOf(slug, journalDir, opts) {
+  const o = opts || {};
+  const excluded = o.excluded || loadListExcluded();
+  for (const c of listThumbCandidates(slug, journalDir)) {
+    const key = photoNumber(c.src) || c.src;
+    if (excluded.photos.has(key)) continue;
+    if (o.used && o.used.has(key)) continue;
+    if (o.used) o.used.add(key);
+    return c;
+  }
+  return null;
 }
 
 function buildFeed(entries) {
@@ -405,4 +478,4 @@ if (require.main === module) main();
 
 // build.js から呼ぶための export — トップ Daily Journal セクションの
 // 同期忘れを防ぐため、build.js 末尾でも自動実行される。
-module.exports = { buildFilterBar, buildList, buildFeed, main, readHeroPhoto, readCredit, renderLatestCard, updateRootLatestSection, latestPerCategory, renderTopArticles, pickTopHero, renderTopHero, loadTopHeroExcluded, bigPhotoSrc, topHeroCandidateSources };
+module.exports = { buildFilterBar, buildList, listThumbOf, buildFeed, main, readHeroPhoto, readCredit, renderLatestCard, updateRootLatestSection, latestPerCategory, renderTopArticles, pickTopHero, renderTopHero, loadTopHeroExcluded, bigPhotoSrc, topHeroCandidateSources };

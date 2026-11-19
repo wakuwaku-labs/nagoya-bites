@@ -248,6 +248,46 @@ test('updateRootLatestSection: 記事が 0 件なら空に。目印が無い ind
   });
 });
 
+test('listThumbOf / buildList: 一覧の写真は記事自身の写真だけ。顔→本文の写真→古い顔の順、無ければ文字だけ（判断の記録 0079）', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'list-thumb-'));
+  const page = (body) => `<html><body>${body}</body></html>`;
+  fs.writeFileSync(path.join(dir, 'a.html'), page(FIG.hotpepper));
+  fs.writeFileSync(path.join(dir, 'b.html'), page(FIG.press));
+  fs.writeFileSync(path.join(dir, 'c.html'), page(FIG.places));
+  fs.writeFileSync(path.join(dir, 'd.html'), page(`<figure class="art-hero-img"><img src="/assets/journal-figures/d.svg" alt="図"><figcaption class="art-img-credit">図: 記事固有のイメージ図</figcaption></figure>
+<figure class="art-body-img" data-photo-source="hotpepper" data-photo-store="本文の店"><img src="https://imgfp.hotp.jp/IMGH/00/00/P000000001/P000000001.jpg" alt="x"><figcaption class="art-img-credit">写真: <a href="https://www.hotpepper.jp">店舗公式写真</a> <span class="art-img-kind">（種類: 店の提供写真）</span></figcaption></figure>`));
+  fs.writeFileSync(path.join(dir, 'e.html'), page(`<figure class="art-hero-img"><img src="https://imgfp.hotp.jp/IMGH/00/00/P000000002/P000000002.jpg" alt="古い記事"><figcaption class="art-img-credit">写真: <a href="https://www.hotpepper.jp">店舗公式写真</a></figcaption></figure>`));
+  fs.writeFileSync(path.join(dir, 'f.html'), page(`<figure class="art-hero-img"><img src="/assets/journal-figures/f.svg" alt="図"><figcaption class="art-img-credit">図: 記事固有のイメージ図</figcaption></figure>`));
+  const a = BJI.listThumbOf('a', dir);
+  assert.strictEqual(a.credit, '写真: ホットペッパーグルメ');
+  assert.strictEqual(a.alt, '山本屋総本家 金シャチ横丁店');
+  assert.ok(BJI.listThumbOf('b', dir).credit.includes('プレスリリース'));
+  assert.strictEqual(BJI.listThumbOf('c', dir), null, 'Places の写真は使わない（URL が失効する）');
+  assert.strictEqual(BJI.listThumbOf('d', dir).alt, '本文の店', '顔が図なら本文の写真');
+  assert.strictEqual(BJI.listThumbOf('e', dir).alt, '古い記事');
+  assert.strictEqual(BJI.listThumbOf('f', dir), null, '図だけの記事は文字だけ（図で埋めない）');
+  assert.strictEqual(BJI.listThumbOf('nofile', dir), null);
+  const html = BJI.buildList(['a', 'f', 'b', 'c'].map((slug, i) => ({ slug, date: `2026-11-0${4 - i}`, title: slug, theme: 'today_one' })), dir);
+  assert.strictEqual((html.match(/class="journal-entry has-thumb"/g) || []).length, 2);
+  assert.strictEqual((html.match(/class="journal-entry"/g) || []).length, 2);
+  assert.strictEqual((html.match(/loading="eager"/g) || []).length, 2, '最初の3本（a・f・b）のうち写真のある a と b だけ eager');
+  assert.ok(!/<a [^>]*>[^]*?<a /.test(html.split('</a>')[1] || ''), 'リンクの中にリンクを入れない');
+});
+
+test('listThumbOf: 目で見て外した写真と、一覧ですでに使った写真は飛ばして次の候補へ。無ければ文字だけ', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'list-thumb-ex-'));
+  const body = (n) => `<figure class="art-body-img" data-photo-source="hotpepper" data-photo-store="本文${n}"><img src="https://imgfp.hotp.jp/IMGH/00/00/P00000000${n}/P00000000${n}.jpg" alt="x"><figcaption class="art-img-credit">写真: <a href="https://www.hotpepper.jp">店舗公式写真</a></figcaption></figure>`;
+  fs.writeFileSync(path.join(dir, 'x.html'), FIG.hotpepper + body(5));
+  fs.writeFileSync(path.join(dir, 'y.html'), FIG.hotpepper);
+  const excluded = { photos: new Set(['P043876436']), slugs: new Set() };
+  assert.strictEqual(BJI.listThumbOf('x', dir, { excluded }).alt, '本文5', '外した顔の写真は飛ばして本文の写真');
+  assert.strictEqual(BJI.listThumbOf('y', dir, { excluded }), null, '候補が尽きたら文字だけ');
+  const used = new Set();
+  const none = { photos: new Set(), slugs: new Set() };
+  assert.strictEqual(BJI.listThumbOf('y', dir, { excluded: none, used }).alt, '山本屋総本家 金シャチ横丁店');
+  assert.strictEqual(BJI.listThumbOf('x', dir, { excluded: none, used }).alt, '本文5', '同じ写真は2回使わない');
+});
+
 test('buildList / buildFeed は今までどおり動く（呼び出し元の build.js が使う公開関数）', () => {
   assert.strictEqual(typeof BJI.buildList, 'function');
   assert.strictEqual(typeof BJI.buildFeed, 'function');

@@ -1,6 +1,6 @@
 {
-  "_comment": "トップの1画面目の大きな写真・小さな行の写真にしない写真（目で見て外したもの）。写真の番号（P000000000）か記事の slug で照合する。scripts/build_journal_index.js が読む。新しい記事の写真を目で見て、店のロゴ・文字・看板・販促が主役ならここに足す（取り繕わない・機械では判定しない）。",
-  "reviewedAt": "2026-11-17",
+  "_comment": "トップの1画面目の大きな写真・小さな行の写真、ジャーナル一覧（journal/index.html）の各行の写真にしない写真（目で見て外したもの）。写真の番号（P000000000）か記事の slug で照合する。scripts/build_journal_index.js が読む。新しい記事の写真を目で見て、店のロゴ・文字・看板・販促が主役ならここに足す（取り繕わない・機械では判定しない）。",
+  "reviewedAt": "2026-11-19",
   "excluded": [
     {
       "photo": "P037623369",
@@ -21,6 +21,76 @@
       "photo": "P039149824",
       "slug": "2026-10-30-hisaya-taichung-yeshi-osu-sarikaka",
       "reason": "看板の文字が主役の外観"
+    },
+    {
+      "photo": "P047883187",
+      "slug": "2026-08-06-meieki-toribura-yakitori-90yen",
+      "reason": "「やきとり90円 生中190円」の文字が全面の販促バナー（ジャーナル一覧の検査 2026-11-19）"
+    },
+    {
+      "photo": "P049540747",
+      "slug": "2026-09-04-meieki-shokudo-tomoru-sanma-price",
+      "reason": "「3/16 OPEN」の告知画像（ジャーナル一覧の検査 2026-11-19）"
+    },
+    {
+      "photo": "P050412405",
+      "slug": "2026-10-11-hoshigaoka-afros-bbq-enkai",
+      "reason": "白地に店のロゴだけ（ジャーナル一覧の検査 2026-11-19）"
+    },
+    {
+      "photo": "P039239290",
+      "slug": "2026-08-25-misen-five-lineages-osu-solo",
+      "reason": "看板の大きな文字が主役（ジャーナル一覧の検査 2026-11-19）"
+    },
+    {
+      "photo": "P049165272",
+      "slug": "2026-09-09-meieki-izakaya-jikyu1500-enkai",
+      "reason": "店のロゴが写真の中心（ジャーナル一覧の検査 2026-11-19）"
+    },
+    {
+      "photo": "P038368989",
+      "slug": "2026-10-28-meieki-soramame-sofa-seat-bill",
+      "reason": "店のロゴが写真の中心（ジャーナル一覧の検査 2026-11-19）"
+    },
+    {
+      "photo": "P050843687",
+      "slug": "2026-09-23-meieki-izakaya-morning-minimum-wage",
+      "reason": "店のロゴが写真の中心（ジャーナル一覧の検査 2026-11-19）"
+    },
+    {
+      "photo": "P048519391",
+      "slug": "2026-11-13-meieki-endoji-paris-festival-kaisen-en-solo",
+      "reason": "店のロゴが写真の中心（ジャーナル一覧の検査 2026-11-19）"
+    },
+    {
+      "photo": "P047138496",
+      "slug": "2026-06-04-tebasaki-summit-yotteba-meieki",
+      "reason": "店のロゴが写真の中心（ジャーナル一覧の検査 2026-11-19）"
+    },
+    {
+      "photo": "P047849240",
+      "slug": "2026-05-10-mikan-sakae-nishiki-fushimi",
+      "reason": "店のロゴが写真の中心（ジャーナル一覧の検査 2026-11-19）"
+    },
+    {
+      "photo": "P042517932",
+      "slug": "2026-09-18-sakae-akizake-fes-2026-coin-price",
+      "reason": "文字の入った販促の帯が大きい（ジャーナル一覧の検査 2026-11-19）"
+    },
+    {
+      "photo": "P039957046",
+      "slug": "2026-10-07-meieki-izakaya-hiyaoroshi-onitaiji",
+      "reason": "看板の文字が主役（ジャーナル一覧の検査 2026-11-19）"
+    },
+    {
+      "photo": "P051170911",
+      "slug": "2026-09-14-sakae-izakaya-new-openings-bonenkai",
+      "reason": "「全席完全個室」の文字が大きい販促画像（ジャーナル一覧の検査 2026-11-19）"
+    },
+    {
+      "photo": "P051456248",
+      "slug": "2026-10-20-otoshi-refuse-sakae-cowcow",
+      "reason": "店のロゴの文字が大きい（2026-10-19 の記事と同じ写真）（ジャーナル一覧の検査 2026-11-19）"
     }
   ]
 }
