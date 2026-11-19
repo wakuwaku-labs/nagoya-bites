@@ -54623,7 +54623,7 @@
     "storeName": "バナナジュース専門店 バナナパニック 名駅店",
     "kind": "tabelog",
     "area": "名古屋（名古屋駅/西区/中村区）",
-    "checkedAt": "2026-11-11T00:35:22.969Z"
+    "checkedAt": "2026-11-19T00:04:57.296Z"
   },
   "3ca76e315e168b6bf513845cf62a88ef": {
     "ok": false,
@@ -54743,7 +54743,7 @@
     "storeName": "REVO2 レボツー",
     "kind": "tabelog",
     "area": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-    "checkedAt": "2026-11-11T00:35:27.635Z"
+    "checkedAt": "2026-11-19T00:05:01.543Z"
   },
   "e4003bb7c0c0d93c56c2b70786367cc1": {
     "ok": false,
@@ -70748,7 +70748,7 @@
     "storeName": "南翔饅頭店",
     "kind": "tabelog",
     "area": "名古屋（名古屋駅/西区/中村区）",
-    "checkedAt": "2026-11-11T00:35:16.872Z"
+    "checkedAt": "2026-11-19T00:04:52.879Z"
   },
   "f0a286665690fa6bdea9022b4ee74193": {
     "ok": true,
@@ -126606,7 +126606,7 @@
     "storeName": "レミニセンス（Reminiscence）",
     "kind": "tabelog",
     "area": "名古屋市東区",
-    "checkedAt": "2026-11-02T00:49:42.184Z"
+    "checkedAt": "2026-11-19T00:04:48.694Z"
   },
   "a7af14cf2c5cc3488fce0dc79342b598": {
     "ok": false,
@@ -127379,5 +127379,71 @@
     "kind": "hotpepper",
     "area": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
     "checkedAt": "2026-11-17T04:49:42.600Z"
+  },
+  "c40e8d96de617d9fc16a0906947c40d9": {
+    "ok": false,
+    "reason": "fetch-error",
+    "error": "HTTP 403",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23085326/",
+    "storeName": "炭火焼 鰻籠 鶏籠",
+    "kind": "tabelog",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-19T00:04:42.631Z"
+  },
+  "5d2d82764f4bed18cbf6531cec879731": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "Espoir エスポア 栄錦店",
+    "shopState": null,
+    "closed": false,
+    "storeName": "Espoir エスポア 栄錦店",
+    "title": "Espoir エスポア 栄錦店(栄/居酒屋)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ001245416/",
+    "kind": "hotpepper",
+    "area": "栄(ミナミ)/矢場町/大須/上前津",
+    "checkedAt": "2026-11-19T00:05:07.866Z"
+  },
+  "c4fb631b63c77a3ce23a50c1ec1872de": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "炭火焼　鰻籠",
+    "shopState": null,
+    "closed": false,
+    "storeName": "炭火焼　鰻籠",
+    "title": "炭火焼　鰻籠(名古屋駅/居酒屋) | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ003603009/",
+    "kind": "hotpepper",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-19T00:05:13.776Z"
+  },
+  "cb70c26e6903862f892c6dec11028a80": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "炭火焼 鰻籠 鶏籠",
+    "shopState": null,
+    "closed": false,
+    "storeName": "炭火焼 鰻籠 鶏籠",
+    "title": "炭火焼 鰻籠 鶏籠(名古屋駅/居酒屋)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004493228/",
+    "kind": "hotpepper",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-19T00:05:20.079Z"
+  },
+  "eadc5852069c8c0a9ce5c963bfe1f948": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "Shisha Salon SENSE",
+    "shopState": null,
+    "closed": false,
+    "storeName": "Shisha Salon SENSE",
+    "title": "Shisha Salon SENSE(栄/バー・カクテル)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004660533/",
+    "kind": "hotpepper",
+    "area": "栄(ミナミ)/矢場町/大須/上前津",
+    "checkedAt": "2026-11-19T00:05:26.597Z"
   }
 }
