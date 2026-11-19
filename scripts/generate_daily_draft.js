@@ -16,7 +16,7 @@
  *   {
  *     "date": "2026-04-21",
  *     "slug": "2026-04-21-some-slug",
- *     "theme": "today_one | industry_insider | weekly_digest | seasonal | flexible",
+ *     "theme": "today_one | industry_insider | weekly_digest(おすすめ◯選) | seasonal | flexible",
  *     "title": "記事タイトル",
  *     "title_html": "タイトル<em>強調</em>可",
  *     "description": "120字程度",
@@ -759,8 +759,8 @@ function resolveOgImage(input) {
 function renderHtml(input) {
   let html = fs.readFileSync(HTML_TEMPLATE, 'utf8');
   const themeLabel = ({
-    today_one: '今日の1軒', industry_insider: '業界の裏側',
-    weekly_digest: '週次話題店', seasonal: '季節短信', flexible: '今日の1軒'
+    today_one: '今日の1軒', industry_insider: '店選びのコツ',
+    weekly_digest: 'おすすめまとめ', seasonal: '季節短信', flexible: '今日の1軒'
   })[input.theme] || '';
   const replacements = {
     '{{GA_SNIPPET}}': gaSnippet(), // SEO-138: GA4 の正本は scripts/lib/ga_snippet.js
