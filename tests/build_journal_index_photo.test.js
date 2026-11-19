@@ -70,6 +70,16 @@ test('readCredit: 客の投稿写真・プレスリリース・店舗公式写�
   assert.ok(BJI.readCredit(inner('hotpepper')).includes('店舗公式写真'));
 });
 
+test('readCredit: 生成側が足す「（種類: …）」の span は文字だけ残して読む（2026-11-18 からの記事が写真なし扱いになった不具合）', () => {
+  const out = BJI.readCredit('写真: <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">店舗公式写真</a> / <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">HotPepper</a> <span class="art-img-kind">（種類: 店の提供写真）</span>');
+  assert.ok(out, 'null にしない');
+  assert.ok(out.includes('（種類: 店の提供写真）'));
+  assert.ok(!out.includes('<span'), 'span は持ち込まない');
+  // 別の class の span・中にタグがある span は今までどおり使わない
+  assert.strictEqual(BJI.readCredit('写真: <span class="x">店</span>'), null);
+  assert.strictEqual(BJI.readCredit('写真: <span class="art-img-kind"><b>x</b></span>'), null);
+});
+
 test('readCredit: 記号は戻してから 1 回だけ逃がす（&amp; が二重にならない・&lt; は文字のまま）', () => {
   const out = BJI.readCredit('写真: <a href="https://example.com/?a=1&amp;b=2">A&amp;B &lt;店&gt;</a>');
   assert.strictEqual(out, '写真: <a href="https://example.com/?a=1&amp;b=2" target="_blank" rel="noopener">A&amp;B &lt;店&gt;</a>');
