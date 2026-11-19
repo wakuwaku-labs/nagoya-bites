@@ -1,0 +1,489 @@
+{
+  "date": "2026-11-19",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名古屋の居酒屋、忘年会の年末料金はいつから？海乃鶏 名古屋駅前店など6店",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 91,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 4件 (時期,繁忙,予約,価格帯) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 142字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名古屋駅」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "91点（自動公開ライン 100点）。主な不足: topicality -17 / writability -2",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅の居酒屋『勝男 名駅西口応援団』忘年会、3,000円コースと12月20日からのサービス料",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 90,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 4件 (時期,繁忙,予約,価格帯) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 123字 +4",
+          "title 46字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "90点（自動公開ライン 100点）。主な不足: topicality -17 / writability -3",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "名駅の居酒屋『海乃鶏 名古屋駅前店』忘年会は11月と12月でコースの時間と料金が変わる",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 86,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (時期,予約,価格帯) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 121字 +4",
+          "title 43字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "86点（自動公開ライン 100点）。主な不足: topicality -17 / uniqueness -5 / writability -2",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "栄の居酒屋『兎二角 とにかく 栄駅店』忘年会、年末料金の記載が500円と1000円で分かれる",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (時期,予約,価格帯) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 124字 +4",
+          "title 46字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -17 / uniqueness -5 / writability -3",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "金山の居酒屋『アカリバ 金山』忘年会、12月4日からの年末料金とコース料金の読み方",
+      "verdict": "HOLD",
+      "total": 81,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 15,
+        "brand_fit": 10,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "金山",
+          "feature": "stores/area/kanayama/index.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (時期,繁忙,予約) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "Strategic Skip 該当 1件 (割引) → -5",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 121字 +4",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「金山」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": {
+    "topic": "イベント",
+    "week": "2026-W47",
+    "slot": 3,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "91点（自動公開ライン 100点）。主な不足: topicality -17 / writability -2",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "名古屋の居酒屋、忘年会の年末料金はいつから？海乃鶏 名古屋駅前店など6店",
+      "lead_draft": "12月の忘年会は、コース料金のほかに年末料金がかかる店がある。このサイトに載る居酒屋1,910店のうち、開始日つきの記載があった45店を並べると、予約が集まる12月18・19日に上乗せ中の店は5店、26日は29店だった。海乃鶏 名古屋駅前店など6店の掲載ページで、額と対象を確かめた。",
+      "angle": "予約が集まる繁忙の時期ごとに、年末料金の開始日と上乗せの価格帯（1人500円・会計10%）を比べ、幹事が予約前に確かめる点を示す",
+      "main_store": {
+        "name": "海乃鶏 名古屋駅前店",
+        "id": "J003942920",
+        "area": "名古屋駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ワタミ株式会社 プレスリリース（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001971.000009215.html",
+          "date": "2026-11-17"
+        },
+        {
+          "label": "海乃鶏 名古屋駅前店（ホットペッパーグルメ）",
+          "url": "https://www.hotpepper.jp/strJ003942920/",
+          "date": "2026-09-30"
+        },
+        {
+          "label": "十八番舟 名古屋駅前店（ホットペッパーグルメ）",
+          "url": "https://www.hotpepper.jp/strJ001209417/",
+          "date": "2026-11-13"
+        },
+        {
+          "label": "勝男 名駅西口応援団（ホットペッパーグルメ）",
+          "url": "https://www.hotpepper.jp/strJ003850868/",
+          "date": "2026-11-10"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "名駅の居酒屋『海乃鶏 名古屋駅前店』忘年会は11月と12月でコースの時間と料金が変わる",
+      "lead_draft": "名駅の海乃鶏 名古屋駅前店は、同じ名前のコースを11月と12月で別に出している。鶏コースは11月が2.5時間飲み放題で4,000円、12月は2時間で4,500円。年末料金1人500円の記載もあり、予約の時期でどう変わるかを幹事向けに整理する。",
+      "angle": "予約の時期で変わるコースの価格帯と飲み放題の時間を比べる",
+      "main_store": {
+        "name": "海乃鶏 名古屋駅前店",
+        "id": "J003942920",
+        "area": "名古屋駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "海乃鶏 名古屋駅前店（ホットペッパーグルメ）",
+          "url": "https://www.hotpepper.jp/strJ003942920/",
+          "date": "2026-09-30"
+        },
+        {
+          "label": "海乃鶏 名古屋駅前店 コース（ホットペッパーグルメ）",
+          "url": "https://www.hotpepper.jp/strJ003942920/course/",
+          "date": "2026-11-19"
+        },
+        {
+          "label": "ワタミ株式会社 プレスリリース（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001971.000009215.html",
+          "date": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "金山の居酒屋『アカリバ 金山』忘年会、12月4日からの年末料金とコース料金の読み方",
+      "lead_draft": "金山駅北口の個室居酒屋、アカリバ 金山は12月4日から1月11日まで、席のみの予約は会計の10%、コースは1人500円を上乗せすると掲載している。58席の店で忘年会を組むとき、割引後の料金にどう足されるのかなど、予約前に確かめる点を整理する。",
+      "angle": "12月の繁忙の時期に始まる上乗せを、席のみ予約とコース予約で比べる",
+      "main_store": {
+        "name": "アカリバ 金山",
+        "id": "J004470692",
+        "area": "金山",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "アカリバ 金山（ホットペッパーグルメ）",
+          "url": "https://www.hotpepper.jp/strJ004470692/",
+          "date": "2026-10-13"
+        },
+        {
+          "label": "アカリバ 金山 コース（ホットペッパーグルメ）",
+          "url": "https://www.hotpepper.jp/strJ004470692/course/",
+          "date": "2026-11-19"
+        },
+        {
+          "label": "ワタミ株式会社 プレスリリース（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001971.000009215.html",
+          "date": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "栄の居酒屋『兎二角 とにかく 栄駅店』忘年会、年末料金の記載が500円と1000円で分かれる",
+      "lead_draft": "栄の個室居酒屋、兎二角 とにかく 栄駅店は12月25日から1月11日まで年末料金がかかる。ただ、コースの上乗せは店舗ページでは1人1,000円、コースのページでは1人500円と書かれている。100席の店で忘年会を予約する前に確かめたい点を整理する。",
+      "angle": "予約ページの間で食い違う年末料金を示し、時期と価格帯の確かめ方を書く",
+      "main_store": {
+        "name": "兎二角 とにかく 栄駅店",
+        "id": "J004067788",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "兎二角 栄駅店（ホットペッパーグルメ）",
+          "url": "https://www.hotpepper.jp/strJ004067788/",
+          "date": "2026-10-21"
+        },
+        {
+          "label": "兎二角 栄駅店 コース（ホットペッパーグルメ）",
+          "url": "https://www.hotpepper.jp/strJ004067788/course/",
+          "date": "2026-11-19"
+        },
+        {
+          "label": "ワタミ株式会社 プレスリリース（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001971.000009215.html",
+          "date": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "名駅の居酒屋『勝男 名駅西口応援団』忘年会、3,000円コースと12月20日からのサービス料",
+      "lead_draft": "名古屋駅太閤通口から徒歩約4分の勝男 名駅西口応援団は、120分飲み放題付き3,000円のコースを出す一方、12月20日から1月5日までサービス料10%を掲載している。160席の店で忘年会を組むなら、ピークの翌日から変わる条件を確かめておきたい。",
+      "angle": "繁忙の時期の前後で変わるサービス料と予約の組み方を価格帯で読む",
+      "main_store": {
+        "name": "大分からあげと鉄板焼 勝男 名駅西口応援団",
+        "id": "J003850868",
+        "area": "名古屋駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "勝男 名駅西口応援団（ホットペッパーグルメ）",
+          "url": "https://www.hotpepper.jp/strJ003850868/",
+          "date": "2026-11-10"
+        },
+        {
+          "label": "勝男 名駅西口応援団 コース（ホットペッパーグルメ）",
+          "url": "https://www.hotpepper.jp/strJ003850868/course/",
+          "date": "2026-11-19"
+        },
+        {
+          "label": "ワタミ株式会社 プレスリリース（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001971.000009215.html",
+          "date": "2026-11-17"
+        }
+      ]
+    }
+  ]
+}
