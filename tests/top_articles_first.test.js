@@ -73,25 +73,23 @@ test('updateRootLatestSection: 目印の間だけを書き換え、冪等。目�
   assert.ok(!fs.readFileSync(legacy, 'utf8').includes('TOP_ARTICLES'));
 });
 
-test('下の「ジャーナル」の最新3件は、最初の画面の「新しい記事」に出した記事を除く。目印の無いページは従来どおり', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'top-dedupe-'));
+test('下の「ジャーナル」は、上の「新しい記事」と重なっても日付の新しい順の3件を出す（判断の記録 0079）', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'top-latest-'));
   const withMark = path.join(dir, 'a.html');
   const noMark = path.join(dir, 'b.html');
   fs.writeFileSync(withMark, '<!-- TOP_ARTICLES_START -->\n<!-- TOP_ARTICLES_END -->\n<!-- LATEST_JOURNAL_START --><!-- LATEST_JOURNAL_END -->');
   fs.writeFileSync(noMark, '<!-- LATEST_JOURNAL_START --><!-- LATEST_JOURNAL_END -->');
   const entries = [
-    E('2026-11-17', 'seasonal', 't1'), E('2026-11-16', 'seasonal', 't2'), E('2026-11-15', 'seasonal', 't3'),
-    E('2026-11-14', 'seasonal', 't4'), E('2026-11-11', 'industry_insider', 'g1'),
+    E('2026-11-15', 'seasonal', 't3'), E('2026-11-17', 'seasonal', 't1'), E('2026-11-16', 'industry_insider', 'g1'),
+    E('2026-11-14', 'seasonal', 't4'),
   ];
-  BJI.updateRootLatestSection(entries, dir, withMark);
-  const a = fs.readFileSync(withMark, 'utf8');
-  const lower = a.slice(a.indexOf('<!-- LATEST_JOURNAL_START -->'));
-  assert.ok(!lower.includes('2026-11-17-x-seasonal'), '上に出した最新の話題記事は下に出さない');
-  assert.ok(!lower.includes('2026-11-11-x-industry_insider'), '上に出した店選びガイドは下に出さない');
-  assert.strictEqual((lower.match(/class="latest-journal-card/g) || []).length, 3);
-  assert.ok(lower.includes('2026-11-16-x-seasonal') && lower.includes('2026-11-14-x-seasonal'));
-  BJI.updateRootLatestSection(entries, dir, noMark);
-  assert.ok(fs.readFileSync(noMark, 'utf8').includes('2026-11-17-x-seasonal'), '目印の無いページは従来どおり最新3件');
+  for (const f of [withMark, noMark]) {
+    BJI.updateRootLatestSection(entries, dir, f);
+    const a = fs.readFileSync(f, 'utf8');
+    const lower = a.slice(a.indexOf('<!-- LATEST_JOURNAL_START -->'));
+    const dates = (lower.match(/class="ljc-date">([^<]+)</g) || []).map((x) => x.replace(/.*>/, '').replace('<', ''));
+    assert.deepStrictEqual(dates, ['2026-11-17', '2026-11-16', '2026-11-15'], f);
+  }
 });
 
 test('実際の index.html: 3分類の行が入り、検索中は約束と記事を畳み、文字はトークンで 13px 以上', () => {

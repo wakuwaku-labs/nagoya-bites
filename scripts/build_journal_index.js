@@ -151,7 +151,9 @@ function decodeEntities(s) {
 
 // キャプションの中身を「テキストと https のリンクだけ」に作り直す。ほかのタグが混じっていたら null
 function readCredit(inner) {
-  const TOKEN = /<a\s+[^>]*?href="(https?:\/\/[^"\s]+)"[^>]*>([^<]*)<\/a>|([^<]+)/g;
+  // 3つ目: 生成側（generate_daily_draft.js・S3）が出所の後ろに足す「（種類: 店の提供写真）」の span。中の文字だけを残す
+  //   （2026-11-18 から全記事に付き、これを読めずに新しい記事が「写真なし」扱いになり、トップの写真・カードから外れていた）
+  const TOKEN = /<a\s+[^>]*?href="(https?:\/\/[^"\s]+)"[^>]*>([^<]*)<\/a>|<span class="art-img-kind">([^<]*)<\/span>|([^<]+)/g;
   const html = String(inner || '');
   let consumed = 0;
   const out = [];
@@ -159,7 +161,8 @@ function readCredit(inner) {
     if (m.index !== consumed) return null;
     consumed = m.index + m[0].length;
     if (m[1]) out.push(`<a href="${esc(decodeEntities(m[1]))}" target="_blank" rel="noopener">${esc(decodeEntities(m[2]))}</a>`);
-    else out.push(esc(decodeEntities(m[3])));
+    else if (m[3] !== undefined) out.push(esc(decodeEntities(m[3])));
+    else out.push(esc(decodeEntities(m[4])));
   }
   if (consumed !== html.length) return null;
   const credit = out.join('').replace(/\s+/g, ' ').trim();
@@ -347,8 +350,9 @@ function updateRootLatestSection(entries, journalDir, rootIndexPath, excludedOve
     return false; // index.html にセクション未設置ならスキップ
   }
   // 最初の画面の「新しい記事」（TOP_ARTICLES 区画）に出した記事は、この段の最新3件から除く（同じ記事が上下に並ばない・S6-1）
-  const shownAbove = /<!-- TOP_ARTICLES_START -->/.test(src) ? new Set(latestPerCategory(entries).map(x => x.entry.slug)) : new Set();
-  const latest3 = (entries || []).filter(e => !shownAbove.has(e.slug)).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
+  // 「ジャーナル」の欄は、上の「新しい記事」と重なっても日付の新しい順の3本をそのまま出す（判断の記録 0079）。
+  // 上に出した記事を除くと、欄の先頭が2日前の記事になり「ジャーナルが更新されていない」と読まれた（本人 2026-11-17・11-19）
+  const latest3 = (entries || []).slice().sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
   const inner = latest3.length === 0 ? '' : latest3.map(e => renderLatestCard(e, readHeroPhoto(e.slug, journalDir))).join('\n');
   let out = src.replace(
     /<!-- LATEST_JOURNAL_START -->[\s\S]*?<!-- LATEST_JOURNAL_END -->/,
