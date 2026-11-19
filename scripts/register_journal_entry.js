@@ -35,8 +35,8 @@ const PUBLISHED_PATH = path.join(ROOT, 'data', 'journal_published.json');
 function themeFromEyebrow(eyebrow) {
   const e = String(eyebrow || '');
   if (e.includes('今日の1軒')) return 'today_one';
-  if (e.includes('業界の裏側') || e.includes('業界人コラム')) return 'industry_insider';
-  if (e.includes('週次')) return 'weekly_digest';
+  if (e.includes('業界の裏側') || e.includes('業界人コラム') || e.includes('店選びのコツ')) return 'industry_insider';
+  if (e.includes('週次') || e.includes('おすすめ') || e.includes('まとめ')) return 'weekly_digest';
   if (e.includes('季節') || e.includes('短信')) return 'seasonal';
   return 'flexible';
 }

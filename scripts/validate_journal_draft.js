@@ -162,9 +162,10 @@ function checkJournal(htmlPath, mdPath) {
   const eyebrow = (html.match(/class="art-eyebrow">([^<]+)</) || [, ''])[1];
   if (/今日の1軒/.test(eyebrow)) {
     const keywords = [
-      /価格帯|客単価|コース|アラカルト/,
-      /オペ|回転|予約|席配置|繁忙|時間帯/,
-      /接待|デート|一人飲み|シーン/
+      // 親しみやすい書き方に合わせた3観点（本人 2026-11-19 の依頼・docs/decisions/0080）: ①どんな店か ②行く前に知っておくこと ③どんな時に合うか
+      /看板|名物|料理|メニュー|雰囲気|店内|カウンター|個室/,
+      /円|予算|予約|席|営業|定休/,
+      /デート|ひとり|一人|家族|友人|接待|ランチ|記念日|女子会|仕事帰り|向く|合う/
     ];
     const missing = keywords.filter(re => !re.test(html));
     pass(10, missing.length === 0, missing.length ? `独自性3観点のキーワード不足 (${missing.length}/3観点)` : 'OK');
@@ -420,6 +421,21 @@ function checkJournal(htmlPath, mdPath) {
       ? `title の前${front.chars}字 OK（${[front.area, front.store || front.genre, front.scene].filter(Boolean).join(' / ')}）`
       : `⚠️ WARNING: title の前${front.chars}字「${front.front}」に${front.missing.join('・')}がありません。検索結果では後ろが切れるため、前${front.chars}字に置いてください（店名は検索される表記で・agents/editor.md・SEO-137）`
   });
+
+  // 19. 読みやすさ（WARNING のみ・FAIL にしない・本人 2026-11-19 の依頼・docs/decisions/0080）
+  //     素人が「どんな店か」を思い浮かべられる書き方か。文の長さ・料金の数字の多さ・業界の言葉を警告するだけ。公開は止めない
+  try {
+    const bodyText = artBody.replace(/<(script|style)[\s\S]*?<\/\1>/g, '').replace(/<\/(p|li|h\d|div|tr)>/g, '\n').replace(/<[^>]+>/g, '');
+    const rd = require('./lib/editorial_standard').readabilityWarnings(decode(bodyText));
+    results.push({
+      id: '19_readability_warn', ok: true, warn: rd.warnings.length > 0,
+      msg: rd.warnings.length
+        ? `⚠️ WARNING: 読みやすさ — ${rd.warnings.join(' / ')}（編集基準 voice・公開は止めません）`
+        : `読みやすさ OK（1文の平均${rd.measure.avgSentenceChars}字・料金の数字は1000字あたり${rd.measure.moneyPer1000Chars}個）`
+    });
+  } catch (e) {
+    results.push({ id: '19_readability_warn', ok: true, warn: false, msg: `読みやすさの測定をスキップ: ${e.message}` });
+  }
 
   return results;
 }

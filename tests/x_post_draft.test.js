@@ -66,6 +66,19 @@ test('保存した文面: 数字が引用に無い・引用が記事に無い・
   assert.ok(X.checkDraft(notArray, { entry, policy, articleText: ARTICLE_TEXT }).some((f) => f.startsWith('draft_evidence_count')));
 });
 
+test('保存した文面: picks（おすすめ◯選）は、◯選の数字が引用にあれば通り、無ければ落ちる', () => {
+  const art = ARTICLE_TEXT + ' 名駅のランチ、おすすめ5選。';
+  const picks = {
+    ...GOOD, type: 'picks',
+    body: '名駅のランチ、おすすめ5選\n・◯◯（名駅）: 名物の定食が人気\n・◯◯（名駅）: 一人でも入りやすい席',
+    replies: ['◯◯（名駅）は、窓際の席でゆっくり食べられる。'],
+    evidence: ['名駅のランチ、おすすめ5選'],
+  };
+  assert.deepStrictEqual(X.checkDraft(picks, { entry, policy, articleText: art }), []);
+  const noEv = { ...picks, evidence: ['3,000円のボトルなら5,000円になる'] };
+  assert.ok(X.checkDraft(noEv, { entry, policy, articleText: art }).some((f) => f.startsWith('draft_numbers_not_in_evidence')));
+});
+
 test('保存した文面: 記事違い・知らない型・URL・ハッシュタグ・長すぎる本文・空は落ちる', () => {
   const c = (d) => X.checkDraft({ ...GOOD, ...d }, { entry, policy, articleText: ARTICLE_TEXT });
   assert.ok(c({ slug: 'other' }).includes('draft_slug_mismatch'));
