@@ -260,3 +260,50 @@ jobs:
                 }
               }
             }
+
+      # ===== トラック3: ローカル main にだけあったコミットの退避（Ondine #2338）=====
+      # run_journal_local.sh は、対話の会話が ~/nagoya-bites の main にローカル合流・直接コミットした
+      # 「origin に無いコミット」を backup/main-<日時> へ退避して記事を続ける（HOLD にしない）。
+      # 退避した修正は本番に出ていないので、出し直しが要ることを Issue（＝メール）で届ける。
+      # 退避1回につき1件。出し直すか不要と判断したら人が閉じる（自動では閉じない）。
+      - name: ローカルの未送信コミットを退避していたら Issue を起票
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let alert = { entries: [] };
+            try { alert = JSON.parse(fs.readFileSync('data/journal_stash_alert.json', 'utf8')); } catch (_) {}
+            const since = Date.now() - 3 * 24 * 3600 * 1000;
+            const recent = (alert.entries || []).filter((e) =>
+              e.action === 'quarantined_local_commits' && e.backup_branch && Date.parse(e.detected_at) >= since);
+            if (!recent.length) { core.info('退避の記録なし。'); return; }
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const label = 'journal-quarantine';
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'all', labels: label, per_page: 50,
+            });
+            for (const e of recent) {
+              if (issues.some((i) => i.title.includes(e.backup_branch))) continue;
+              const lines = [];
+              lines.push(`日次ジャーナルの実行（${e.detected_at}）で、Mac の \`~/nagoya-bites\` の main にだけあった（origin に無い）コミットを見つけました。`);
+              lines.push('そのままだと取り込みが衝突して記事が止まる（または PR を通らずに本番へ出る）ため、退避して記事を続けました。');
+              lines.push('');
+              lines.push(`## 退避したコミット（ブランチ \`${e.backup_branch}\`・Mac の中だけ）`);
+              for (const c of e.commits || []) lines.push(`- ${c}`);
+              if (e.dropped_own_commits) lines.push(`- （ジャーナル自身のコミット ${e.dropped_own_commits} 件も積み直せずに同じブランチへ残っています）`);
+              lines.push('');
+              lines.push('## 対処');
+              lines.push('これらは本番に出ていません。要るものは PR で出し直してください（main へ直接コミット・ローカル合流はしない）。');
+              lines.push('```bash');
+              lines.push(`git -C ~/nagoya-bites log --oneline origin/main..${e.backup_branch}`);
+              lines.push('```');
+              lines.push('出し直したか、不要と判断したらこの Issue を閉じてください（自動では閉じません）。');
+              const { data: created } = await github.rest.issues.create({
+                owner, repo, labels: [label],
+                title: `📦 日次ジャーナルが未送信のローカルコミットを退避（${e.backup_branch}）`,
+                body: lines.join('\n'),
+              });
+              core.warning(`退避の Issue #${created.number} を起票しました（${e.backup_branch}）`);
+            }

@@ -25,6 +25,18 @@
 
 set -uo pipefail
 
+# 実行中のこのファイルを取り込み（pull・退避で main を付け替える）が書き換えると、bash は同じ位置から
+# 新しい中身を読み続けて壊れる。写しを作ってから実行し直し、写しはすぐ消す（開いたままなので読める・Ondine #2338）。
+if [ -z "${JOURNAL_RUN_FROM_COPY:-}" ]; then
+  _self_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  if _copy="$(mktemp "${TMPDIR:-/tmp}/run_journal_local.XXXXXX")" && cp "${BASH_SOURCE[0]}" "$_copy"; then
+    JOURNAL_RUN_FROM_COPY=1 JOURNAL_SCRIPT_DIR="$_self_dir" exec bash "$_copy" "$@"
+  fi
+else
+  rm -f "${BASH_SOURCE[0]}"
+fi
+JOURNAL_SCRIPT_DIR="${JOURNAL_SCRIPT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
+
 # 2026-10-29（統合計画 0-d）: 全許可（--dangerously-skip-permissions）をやめ、日次ジャーナルに要る道具だけを許可する。
 # push は含めない（commit/push はこのラッパーが行う）。許可外の道具は無人実行では拒否される。
 CLAUDE_ALLOWED_TOOLS="Read,Write,Edit,Glob,Grep,WebSearch,WebFetch,Bash(node:*),Bash(mv:*),Bash(mkdir:*),Bash(ls:*),Bash(cat:*),Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git add:*),Bash(git commit:*)"
@@ -76,7 +88,7 @@ log() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" | tee -a "$LOG"; }
 
 # origin/main の取り込み（rebase → 衝突したら畳んで merge）の唯一の実装。ISSUE-187。
 # shellcheck source=lib/journal_git_sync.sh
-. "$(dirname "${BASH_SOURCE[0]}")/lib/journal_git_sync.sh"
+. "${JOURNAL_SCRIPT_DIR}/lib/journal_git_sync.sh"
 
 # ---- 電源状態の把握（2026-08-18 の教訓）----
 # 08-05/07/08/09/13/16/18 と "Connection closed mid-response" による欠番が繰り返し発生していた。
@@ -439,6 +451,37 @@ if [ ${#JOURNAL_DEBRIS[@]} -gt 0 ]; then
   git stash push -u -m "$DEBRIS_MSG" -- "${JOURNAL_DEBRIS[@]}" >>"$LOG" 2>&1 \
     && log "退避完了。復元: git stash pop stash@{0}（pop はしません）。" \
     || log "⚠️ stash 退避に失敗しましたが続行します（pull 側の --autostash に委ねます）。"
+fi
+
+# 対話の会話が main にローカルで合流・直接コミットしたものが残っていると、取り込みが衝突して
+# HOLD になる（10-12・10-15・11-20 に同じ型で3回）。取り込めても PR を通らずに本番へ出てしまう。
+# よそのコミットは backup/main-<日時> へ退避して main を origin/main に合わせ、記事は止めない（Ondine #2338）。
+# 退避したことは data/journal_stash_alert.json に書き、記事と一緒に push → journal-watchdog.yml が Issue にする。
+if journal_quarantine_foreign_commits; then
+  if [ -n "$JOURNAL_QUARANTINE_BRANCH" ]; then
+    printf '%s' "$JOURNAL_QUARANTINE_FOREIGN" | sed 's/^/   /' | tee -a "$LOG"
+    node -e '
+      const fs = require("fs");
+      const [branch, foreign, dropped] = process.argv.slice(1);
+      let existing = {_note:"ジャーナル起動時に他ルーチンの未コミット差分が検出された記録（SEO-104）",entries:[]};
+      try { existing = JSON.parse(fs.readFileSync("data/journal_stash_alert.json","utf8")); } catch(_){}
+      existing.entries.unshift({
+        detected_at: new Date(Date.now()+9*3600000).toISOString().replace("Z","+09:00"),
+        action: "quarantined_local_commits",
+        backup_branch: branch,
+        commits: foreign.split("\n").filter(Boolean),
+        dropped_own_commits: Number(dropped) || 0,
+        message: "~/nagoya-bites の main にだけあった（origin に無い）コミットを退避して記事を続行。必要なものは PR で出し直す。",
+      });
+      if (existing.entries.length > 30) existing.entries = existing.entries.slice(0, 30);
+      fs.mkdirSync("data", { recursive: true });
+      fs.writeFileSync("data/journal_stash_alert.json", JSON.stringify(existing, null, 2) + "\n");
+    ' "$JOURNAL_QUARANTINE_BRANCH" "$JOURNAL_QUARANTINE_FOREIGN" "$JOURNAL_QUARANTINE_DROPPED" 2>>"$LOG" \
+      || log "⚠️ journal_stash_alert.json の書き込みに失敗（続行）"
+    notify "未送信のコミットを退避" "main にだけあったコミットを ${JOURNAL_QUARANTINE_BRANCH} に移して記事を続けます"
+  fi
+else
+  log "⚠️ よそのコミットの退避に失敗。従来どおり取り込みを試みます。"
 fi
 
 if ! journal_sync_origin_main; then

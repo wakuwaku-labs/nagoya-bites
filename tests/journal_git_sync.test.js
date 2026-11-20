@@ -100,3 +100,115 @@ test('本当に衝突するときは失敗を返し、rebase / merge の進行�
   assert.strictEqual(git(L, 'ls-files', '--unmerged'), '');
   assert.strictEqual(fs.readFileSync(path.join(L, 'base.txt'), 'utf8'), 'local edit\n');
 });
+
+// ---- Ondine #2338: ローカル main にだけある「よその」コミットを退避して記事を止めない ----
+function runQuarantine(cwd) {
+  const logFile = path.join(cwd, '..', 'q.log');
+  const script = `LOG='${logFile}'; log() { echo "$*" >>"$LOG"; }; . '${LIB}'; git fetch -q origin main;
+journal_quarantine_foreign_commits; rc=$?
+echo "rc=$rc"; echo "branch=$JOURNAL_QUARANTINE_BRANCH"; echo "dropped=$JOURNAL_QUARANTINE_DROPPED"
+printf '%s' "$JOURNAL_QUARANTINE_FOREIGN" | sed 's/^/foreign=/'`;
+  const r = spawnSync('bash', ['-c', script], { cwd, env: ENV, encoding: 'utf8' });
+  const out = r.stdout;
+  const get = (k) => (out.match(new RegExp(`^${k}=(.*)$`, 'm')) || [])[1];
+  return {
+    rc: Number(get('rc')), branch: get('branch') || '', dropped: Number(get('dropped')),
+    foreign: [...out.matchAll(/^foreign=(.*)$/gm)].map((m) => m[1]),
+    log: fs.existsSync(logFile) ? fs.readFileSync(logFile, 'utf8') : '',
+  };
+}
+function commitAs(cwd, msg, email) {
+  git(cwd, 'add', '-A');
+  const r = spawnSync('git', ['commit', '-q', '-m', msg], {
+    cwd, encoding: 'utf8', env: { ...ENV, GIT_AUTHOR_EMAIL: email, GIT_AUTHOR_NAME: 'NAGOYA BITES Daily' },
+  });
+  assert.strictEqual(r.status, 0, r.stderr);
+}
+
+test('11/20 の型: ブランチのローカル合流と直接コミットは退避し、main は origin/main に合い、取り込みも通る', () => {
+  const { L, O } = setup();
+  // よその会話: 作業ブランチを main へローカル合流 + main へ直接コミット（どちらも origin に無い）
+  git(L, 'checkout', '-q', '-b', 'fix/x');
+  write(L, 'base.txt', 'branch edit\n'); commit(L, 'fix: branch');
+  git(L, 'checkout', '-q', 'main');
+  git(L, 'merge', '-q', '--no-ff', '--no-edit', 'fix/x');
+  write(L, 'store.json', 'local fix\n'); commit(L, 'fix: direct on main');
+  // ジャーナル自身の状態記録（作者 daily）
+  fs.mkdirSync(path.join(L, 'data'), { recursive: true });
+  write(L, 'data/journal_health.json', '{"status":"hold"}\n');
+  commitAs(L, 'chore(journal): 状態を記録', 'daily@nagoya-bites');
+  const before = git(L, 'rev-parse', 'HEAD');
+  // origin 側は同じファイルを別に直している（ローカルのままだと取り込みが衝突する）
+  write(O, 'base.txt', 'remote edit\n'); commit(O, 'remote edit');
+  git(O, 'push', '-q', 'origin', 'main');
+
+  const q = runQuarantine(L);
+  assert.strictEqual(q.rc, 0, q.log);
+  assert.match(q.branch, /^backup\/main-\d{8}-\d{6}$/);
+  // 退避先は元の main の先端そのもの（何も失わない）
+  assert.strictEqual(git(L, 'rev-parse', q.branch), before);
+  // よその3つ（ブランチのコミット・合流・直接コミット）を数え、ジャーナル自身のものは数えない
+  assert.strictEqual(q.foreign.length, 3, q.foreign.join('\n'));
+  assert.ok(q.foreign.every((l) => !/状態を記録/.test(l)));
+  // main は origin/main + ジャーナル自身のコミット1つ
+  assert.strictEqual(git(L, 'branch', '--show-current'), 'main');
+  assert.strictEqual(git(L, 'rev-list', '--count', 'origin/main..main'), '1');
+  assert.strictEqual(git(L, 'log', '-1', '--format=%s'), 'chore(journal): 状態を記録');
+  assert.strictEqual(fs.readFileSync(path.join(L, 'base.txt'), 'utf8'), 'remote edit\n');
+  assert.ok(!fs.existsSync(path.join(L, 'store.json')));
+  assert.deepStrictEqual(inProgress(L), []);
+  // 続く取り込み・push が通る（HOLD にならない）
+  assert.strictEqual(runSync(L).status, 0);
+  git(L, 'push', '-q', 'origin', 'main');
+});
+
+test('ジャーナル自身のコミットだけなら何もしない（前日の push 失敗分は従来どおり送る）', () => {
+  const { L, O } = setup();
+  fs.mkdirSync(path.join(L, 'journal'), { recursive: true });
+  write(L, 'journal/2026-11-21-a.html', '<p>a</p>\n'); commit(L, 'journal: 2026-11-21（Claude が生成中にコミット）');
+  fs.mkdirSync(path.join(L, 'data'), { recursive: true });
+  write(L, 'data/journal_health.json', '{}\n'); commitAs(L, 'chore(journal): 状態', 'daily@nagoya-bites');
+  write(O, 'theirs.txt', 't\n'); commit(O, 'remote only');
+  git(O, 'push', '-q', 'origin', 'main');
+  const head = git(L, 'rev-parse', 'HEAD');
+  const q = runQuarantine(L);
+  assert.strictEqual(q.rc, 0);
+  assert.strictEqual(q.branch, '');
+  assert.strictEqual(git(L, 'rev-parse', 'HEAD'), head);
+  assert.strictEqual(git(L, 'branch', '--list', 'backup/*'), '');
+});
+
+test('origin/main を取り込んだだけの merge はよそのコミットに数えない', () => {
+  const { L, O } = setup();
+  fs.mkdirSync(path.join(L, 'journal'), { recursive: true });
+  write(L, 'journal/x.html', 'x\n'); commit(L, 'journal: x');
+  write(O, 'theirs.txt', 't\n'); commit(O, 'remote only');
+  git(O, 'push', '-q', 'origin', 'main');
+  git(L, 'pull', '-q', '--no-rebase', '--no-edit', 'origin', 'main');
+  const q = runQuarantine(L);
+  assert.strictEqual(q.rc, 0);
+  assert.strictEqual(q.branch, '');
+});
+
+test('index.html だけを触った作者 daily 以外のコミットはよそとして退避する（PR を通らずに本番へ出さない）', () => {
+  const { L } = setup();
+  write(L, 'index.html', '<p>design session</p>\n'); commit(L, 'design: top');
+  const q = runQuarantine(L);
+  assert.strictEqual(q.rc, 0);
+  assert.notStrictEqual(q.branch, '');
+  assert.strictEqual(git(L, 'rev-list', '--count', 'origin/main..main'), '0');
+});
+
+test('作業ツリーの差分で main を付け替えられないときは何も変えずに失敗を返す', () => {
+  const { L, O } = setup();
+  write(L, 'base.txt', 'local commit\n'); commit(L, 'foreign');
+  write(O, 'base.txt', 'remote\n'); commit(O, 'remote');
+  git(O, 'push', '-q', 'origin', 'main');
+  write(L, 'base.txt', 'uncommitted\n');
+  const head = git(L, 'rev-parse', 'HEAD');
+  const q = runQuarantine(L);
+  assert.strictEqual(q.rc, 1);
+  assert.strictEqual(git(L, 'rev-parse', 'HEAD'), head);
+  assert.strictEqual(git(L, 'branch', '--list', 'backup/*'), '');
+  assert.strictEqual(fs.readFileSync(path.join(L, 'base.txt'), 'utf8'), 'uncommitted\n');
+});
