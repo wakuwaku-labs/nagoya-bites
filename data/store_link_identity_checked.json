@@ -2832,7 +2832,10 @@
     "title": "The ANCESTOR nagoya （アンセスター） - 名古屋/バー | 食べログ",
     "kind": "tabelog",
     "area": "名古屋（名古屋駅/西区/中村区）",
-    "checkedAt": "2026-09-20T13:04:32.507Z"
+    "checkedAt": "2026-09-20T13:04:32.507Z",
+    "lastAttemptAt": "2026-11-20T08:07:55.116Z",
+    "lastAttemptReason": "fetch-error",
+    "lastAttemptError": "HTTP 403"
   },
   "9d7c717b3ff3b0c3af337046d39c25e6": {
     "ok": true,
@@ -2875,7 +2878,10 @@
     "title": "めしや ばさらびのご予約 - 丸の内/居酒屋 | 食べログ",
     "kind": "tabelog",
     "area": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-    "checkedAt": "2026-09-20T13:04:39.421Z"
+    "checkedAt": "2026-09-20T13:04:39.421Z",
+    "lastAttemptAt": "2026-11-20T08:08:00.407Z",
+    "lastAttemptReason": "fetch-error",
+    "lastAttemptError": "HTTP 403"
   },
   "bcc7ccf699877119d7c580dfe1f638af": {
     "ok": false,
@@ -2903,7 +2909,10 @@
     "title": "Bar Gentle - 新栄町/バー | 食べログ",
     "kind": "tabelog",
     "area": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-    "checkedAt": "2026-09-20T13:04:43.827Z"
+    "checkedAt": "2026-09-20T13:04:43.827Z",
+    "lastAttemptAt": "2026-11-20T08:08:04.957Z",
+    "lastAttemptReason": "fetch-error",
+    "lastAttemptError": "HTTP 403"
   },
   "75a2c87f7743e0db3cb28416a2aa4116": {
     "ok": true,
@@ -2931,7 +2940,10 @@
     "title": "魚 炉端 日本酒 Sakura - 国際センター/居酒屋 | 食べログ",
     "kind": "tabelog",
     "area": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-    "checkedAt": "2026-09-20T13:04:48.691Z"
+    "checkedAt": "2026-09-20T13:04:48.691Z",
+    "lastAttemptAt": "2026-11-20T08:08:09.401Z",
+    "lastAttemptReason": "fetch-error",
+    "lastAttemptError": "HTTP 403"
   },
   "203ff8ca5e607512b22c3b909963f8fa": {
     "ok": false,
@@ -2959,7 +2971,10 @@
     "title": "toro restaurant （トロ レストラン）のご予約 - 新栄町/フレンチ | 食べログ",
     "kind": "tabelog",
     "area": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-    "checkedAt": "2026-09-20T13:04:53.144Z"
+    "checkedAt": "2026-09-20T13:04:53.144Z",
+    "lastAttemptAt": "2026-11-20T08:08:14.801Z",
+    "lastAttemptReason": "fetch-error",
+    "lastAttemptError": "HTTP 403"
   },
   "2bde9b8e9af2fe0d0f6e05a4d7fb4355": {
     "ok": true,
@@ -127610,5 +127625,61 @@
     "kind": "hotpepper",
     "area": "名古屋（名古屋駅/西区/中村区）",
     "checkedAt": "2026-11-19T13:24:03.677Z"
+  },
+  "0d355ea338b1aa94f1b562cd42cdb546": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "じゅわっち名駅",
+    "shopState": null,
+    "closed": false,
+    "storeName": "じゅわっち名駅",
+    "title": "じゅわっち名駅(名古屋駅/居酒屋)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004422311/",
+    "kind": "hotpepper",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-20T08:08:19.968Z"
+  },
+  "bd7a4483ac2788d5902cd845af93af3c": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "居酒屋都",
+    "shopState": null,
+    "closed": false,
+    "storeName": "居酒屋都",
+    "title": "居酒屋都(名古屋駅/居酒屋)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004723355/",
+    "kind": "hotpepper",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-20T08:08:25.950Z"
+  },
+  "244a2a9273e653613c184d32655c66c2": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "ベトコンラーメン新京 菊井店",
+    "shopState": null,
+    "closed": false,
+    "storeName": "ベトコンラーメン新京 菊井店",
+    "title": "ベトコンラーメン新京 菊井店(名古屋駅/ラーメン)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004613167/",
+    "kind": "hotpepper",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-20T08:08:32.086Z"
+  },
+  "2cadb7089a226df4f919eaf96bde7e1d": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "韓炉 HANRO 名古屋栄店",
+    "shopState": null,
+    "closed": false,
+    "storeName": "韓炉 HANRO 名古屋栄店",
+    "title": "韓炉 HANRO 名古屋栄店(栄/韓国料理)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004699066/",
+    "kind": "hotpepper",
+    "area": "栄(ミナミ)/矢場町/大須/上前津",
+    "checkedAt": "2026-11-20T08:08:38.761Z"
   }
 }

@@ -1,8 +1,8 @@
 {
   "_note": "ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない",
-  "mergedCount": 69,
-  "absorbedCount": 72,
-  "skippedCount": 17,
+  "mergedCount": 68,
+  "absorbedCount": 71,
+  "skippedCount": 18,
   "merged": [
     {
       "reasons": [
@@ -522,50 +522,6 @@
     },
     {
       "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "居酒屋 権兵衛 名駅店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J003649512",
-        "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
-        "slug": "J003649512"
-      },
-      "absorbed": [
-        {
-          "店名": "権兵衛 名駅南店",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J004403777",
-          "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
-          "slug": "J004403777"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
-        "name_exact"
-      ],
-      "kept": {
-        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J004026742",
-        "placeId": "ChIJW42pcAB3A2AR89zDL1dQ4Dk",
-        "slug": "J004026742"
-      },
-      "absorbed": [
-        {
-          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J004026737",
-          "placeId": "ChIJW42pcAB3A2AR89zDL1dQ4Dk",
-          "slug": "J004026737"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
         "placeid_match"
       ],
       "kept": {
@@ -604,6 +560,50 @@
         "name_exact"
       ],
       "kept": {
+        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004026742",
+        "placeId": "ChIJW42pcAB3A2AR89zDL1dQ4Dk",
+        "slug": "J004026742"
+      },
+      "absorbed": [
+        {
+          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J004026737",
+          "placeId": "ChIJW42pcAB3A2AR89zDL1dQ4Dk",
+          "slug": "J004026737"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "居酒屋 権兵衛 名駅店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J003649512",
+        "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
+        "slug": "J003649512"
+      },
+      "absorbed": [
+        {
+          "店名": "権兵衛 名駅南店",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J004403777",
+          "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
+          "slug": "J004403777"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
         "店名": "トロ壱 名古屋駅前店",
         "エリア": "名古屋（名古屋駅/西区/中村区）",
         "ホットペッパーID": "J004470757",
@@ -624,14 +624,9 @@
         "おすすめポイント",
         "キュレーター",
         "トレンド情報源",
-        "今日の話題",
-        "今日の話題媒体数",
-        "今日の話題順位",
-        "今日の話題鮮度",
         "価格帯目安",
         "編集部推薦",
         "話題スコア",
-        "話題ハイライト",
         "話題フラグ",
         "追加日",
         "選定理由"
@@ -732,31 +727,6 @@
     },
     {
       "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "鳥正",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J003624313",
-        "placeId": "ChIJ1VXM9_t3A2ARmd1PEvRCRaw",
-        "slug": "J003624313"
-      },
-      "absorbed": [
-        {
-          "店名": "鳥正 名古屋",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J001286820",
-          "placeId": "ChIJ1VXM9_t3A2ARmd1PEvRCRaw",
-          "slug": "J001286820"
-        }
-      ],
-      "filledFields": [
-        "お子様連れ",
-        "キャッチ"
-      ]
-    },
-    {
-      "reasons": [
         "name_exact"
       ],
       "kept": {
@@ -813,6 +783,31 @@
     },
     {
       "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "鳥正",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J003624313",
+        "placeId": "ChIJ1VXM9_t3A2ARmd1PEvRCRaw",
+        "slug": "J003624313"
+      },
+      "absorbed": [
+        {
+          "店名": "鳥正 名古屋",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J001286820",
+          "placeId": "ChIJ1VXM9_t3A2ARmd1PEvRCRaw",
+          "slug": "J001286820"
+        }
+      ],
+      "filledFields": [
+        "お子様連れ",
+        "キャッチ"
+      ]
+    },
+    {
+      "reasons": [
         "placeid_match"
       ],
       "kept": {
@@ -852,40 +847,6 @@
         "placeid_match"
       ],
       "kept": {
-        "店名": "水炊き 吟醸もつ鍋 由乃 ゆの 錦本店",
-        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-        "ホットペッパーID": "J001161668",
-        "placeId": "ChIJy6nhCdVwA2ARBWqaSQeO-ow",
-        "slug": "J001161668"
-      },
-      "absorbed": [
-        {
-          "店名": "水炊き 吟醸もつ鍋 由乃",
-          "エリア": "名古屋市中区栄",
-          "ホットペッパーID": "",
-          "placeId": "ChIJy6nhCdVwA2ARBWqaSQeO-ow",
-          "slug": "store-e6b0b4e7828ae381"
-        }
-      ],
-      "filledFields": [
-        "おすすめシーン",
-        "おすすめポイント",
-        "キュレーター",
-        "トレンド情報源",
-        "価格帯目安",
-        "編集部推薦",
-        "話題スコア",
-        "話題フラグ",
-        "追加日",
-        "選定理由",
-        "食べログURL"
-      ]
-    },
-    {
-      "reasons": [
-        "placeid_match"
-      ],
-      "kept": {
         "店名": "勝手口河内屋",
         "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
         "ホットペッパーID": "J004698880",
@@ -912,6 +873,40 @@
         "話題スコア",
         "話題フラグ",
         "追加日",
+        "食べログURL"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "水炊き 吟醸もつ鍋 由乃 ゆの 錦本店",
+        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+        "ホットペッパーID": "J001161668",
+        "placeId": "ChIJy6nhCdVwA2ARBWqaSQeO-ow",
+        "slug": "J001161668"
+      },
+      "absorbed": [
+        {
+          "店名": "水炊き 吟醸もつ鍋 由乃",
+          "エリア": "名古屋市中区栄",
+          "ホットペッパーID": "",
+          "placeId": "ChIJy6nhCdVwA2ARBWqaSQeO-ow",
+          "slug": "store-e6b0b4e7828ae381"
+        }
+      ],
+      "filledFields": [
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "価格帯目安",
+        "編集部推薦",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由",
         "食べログURL"
       ]
     },
@@ -1008,6 +1003,30 @@
     },
     {
       "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "ジガー バー シルクロード",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J004493224",
+        "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
+        "slug": "J004493224"
+      },
+      "absorbed": [
+        {
+          "店名": "ジガー バー シルクロード",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J000015124",
+          "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
+          "slug": "J000015124"
+        }
+      ],
+      "filledFields": [
+        "Instagram"
+      ]
+    },
+    {
+      "reasons": [
         "owner_confirmed"
       ],
       "kept": {
@@ -1030,31 +1049,6 @@
     },
     {
       "reasons": [
-        "name_exact"
-      ],
-      "kept": {
-        "店名": "韓炉 HANRO 名古屋栄店",
-        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J004591229",
-        "placeId": "",
-        "slug": "J004591229"
-      },
-      "absorbed": [
-        {
-          "店名": "韓炉 HANRO 名古屋栄店",
-          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J004699066",
-          "placeId": "",
-          "slug": "J004699066"
-        }
-      ],
-      "filledFields": [
-        "その他設備",
-        "サブジャンル"
-      ]
-    },
-    {
-      "reasons": [
         "owner_confirmed"
       ],
       "kept": {
@@ -1074,30 +1068,6 @@
         }
       ],
       "filledFields": []
-    },
-    {
-      "reasons": [
-        "name_exact"
-      ],
-      "kept": {
-        "店名": "ジガー バー シルクロード",
-        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J004493224",
-        "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
-        "slug": "J004493224"
-      },
-      "absorbed": [
-        {
-          "店名": "ジガー バー シルクロード",
-          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J000015124",
-          "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
-          "slug": "J000015124"
-        }
-      ],
-      "filledFields": [
-        "Instagram"
-      ]
     },
     {
       "reasons": [
@@ -1137,30 +1107,6 @@
     },
     {
       "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "レストラン ロワール フレンチ 名古屋東急ホテル 栄",
-        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J003916519",
-        "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
-        "slug": "J003916519"
-      },
-      "absorbed": [
-        {
-          "店名": "レストラン ロワール 鉄板焼",
-          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J003916520",
-          "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
-          "slug": "J003916520"
-        }
-      ],
-      "filledFields": [
-        "Instagram"
-      ]
-    },
-    {
-      "reasons": [
         "name_exact"
       ],
       "kept": {
@@ -1195,6 +1141,30 @@
         "経度",
         "緯度",
         "駐車場"
+      ]
+    },
+    {
+      "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "レストラン ロワール フレンチ 名古屋東急ホテル 栄",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J003916519",
+        "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
+        "slug": "J003916519"
+      },
+      "absorbed": [
+        {
+          "店名": "レストラン ロワール 鉄板焼",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J003916520",
+          "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
+          "slug": "J003916520"
+        }
+      ],
+      "filledFields": [
+        "Instagram"
       ]
     },
     {
@@ -1830,31 +1800,24 @@
         "placeid_match"
       ],
       "kept": {
-        "店名": "LA VAGABONDE",
-        "エリア": "名古屋市中区千代田",
+        "店名": "LA VAGABONDE (ラ・ヴァガボンド)",
+        "エリア": "名古屋市中区",
         "ホットペッパーID": "",
         "placeId": "ChIJx9ZMB7lwA2ARumYZugELHJU",
         "slug": "la-vagabonde"
       },
       "absorbed": [
         {
-          "店名": "LA VAGABONDE (ラ・ヴァガボンド)",
-          "エリア": "名古屋市中区",
+          "店名": "LA VAGABONDE",
+          "エリア": "名古屋市中区千代田",
           "ホットペッパーID": "",
           "placeId": "ChIJx9ZMB7lwA2ARumYZugELHJU",
           "slug": "la-vagabonde"
         }
       ],
       "filledFields": [
-        "Instagram",
-        "editorReason",
-        "visitStatus",
-        "おすすめポイント",
-        "トレンド情報源",
-        "話題スコア",
-        "話題フラグ",
-        "追加日",
-        "選定理由"
+        "おすすめシーン",
+        "食べログ評価"
       ]
     },
     {
@@ -1911,7 +1874,7 @@
         "placeid_match"
       ],
       "kept": {
-        "店名": "名古屋コーチン鶏料理 清水",
+        "店名": "名古屋コーチン鶏料理 清水 名古屋店",
         "エリア": "名古屋市中村区",
         "ホットペッパーID": "",
         "placeId": "ChIJ7-5vrzh3A2ARPOFFoNC-dpI",
@@ -1919,7 +1882,7 @@
       },
       "absorbed": [
         {
-          "店名": "名古屋コーチン鶏料理 清水 名古屋店",
+          "店名": "名古屋コーチン鶏料理 清水",
           "エリア": "名古屋市中村区",
           "ホットペッパーID": "",
           "placeId": "ChIJ7-5vrzh3A2ARPOFFoNC-dpI",
@@ -1927,13 +1890,9 @@
         }
       ],
       "filledFields": [
-        "Instagram",
         "おすすめシーン",
-        "おすすめポイント",
         "トレンド情報源",
-        "価格帯目安",
-        "追加日",
-        "選定理由"
+        "話題スコア"
       ]
     }
   ],
@@ -1958,6 +1917,18 @@
       "hpIds": [
         "J004470629",
         "J004724266"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "居酒屋 都 みやこ",
+        "居酒屋都"
+      ],
+      "hpIds": [
+        "J003736136",
+        "J004723355"
       ],
       "reason": "placeid_match",
       "blocker": "hp_distinct"

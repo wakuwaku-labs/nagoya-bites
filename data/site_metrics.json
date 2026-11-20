@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-20T01:41:06.606Z",
+  "generatedAt": "2026-11-20T07:49:42.449Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 7778,
-    "pageViews": 9267,
-    "sessions": 8180,
-    "avgSessionDuration": 55.6,
+    "activeUsers": 7829,
+    "pageViews": 9329,
+    "sessions": 8267,
+    "avgSessionDuration": 55.2,
     "bounceRate": 0.678,
     "pagesPerSession": 1.13
   },
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2934,
-      "direct": 4962,
+      "organic": 2970,
+      "direct": 4989,
       "social": 55,
-      "ai_assistant": 244,
+      "ai_assistant": 246,
       "referral": 55,
       "paid": 0,
       "other": 4
     },
     "pct": {
-      "organic": 35.5,
-      "direct": 60.1,
+      "organic": 35.7,
+      "direct": 60,
       "social": 0.7,
       "ai_assistant": 3,
       "referral": 0.7,
@@ -39,22 +39,22 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 4933
+      "sessions": 4959
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1348
+      "sessions": 1358
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 954
+      "sessions": 970
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 597
+      "sessions": 607
     },
     {
       "source": "chatgpt.com",
@@ -64,7 +64,7 @@
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 76
+      "sessions": 78
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -87,14 +87,14 @@
       "sessions": 21
     },
     {
-      "source": "history",
+      "source": "(not set)",
       "medium": "(not set)",
       "sessions": 9
     },
     {
-      "source": "(not set)",
+      "source": "history",
       "medium": "(not set)",
-      "sessions": 8
+      "sessions": 9
     },
     {
       "source": "ecosia.org",
@@ -215,8 +215,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 448,
-      "sessions": 416
+      "pageViews": 449,
+      "sessions": 417
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -230,18 +230,18 @@
     },
     {
       "path": "/features/nagoya-unaju.html",
-      "pageViews": 95,
-      "sessions": 92
+      "pageViews": 97,
+      "sessions": 94
     },
     {
       "path": "/features/nagoya-miso-nikomi-udon.html",
-      "pageViews": 86,
-      "sessions": 93
+      "pageViews": 89,
+      "sessions": 96
     }
   ],
   "cta": {
-    "outboundClicks": 423,
-    "ctaClickRate": 5.2,
+    "outboundClicks": 424,
+    "ctaClickRate": 5.1,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -249,7 +249,7 @@
       },
       {
         "domain": "www.google.com",
-        "clicks": 132
+        "clicks": 133
       },
       {
         "domain": "prtimes.jp",
@@ -298,7 +298,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 282,
+      "organic": 283,
       "direct": 55,
       "social": 13,
       "ai_assistant": 63,
@@ -306,7 +306,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.6,
+    "ctaClickRate_organic": 9.5,
     "ctaClickRate_direct": 1.1,
     "ctaClickRate_social": 23.6,
     "byPage": [
@@ -320,7 +320,7 @@
       },
       {
         "path": "/stores/J004090251.html",
-        "clicks": 22
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -445,7 +445,7 @@
       {
         "path": "/stores/J004090251.html",
         "domain": "www.google.com",
-        "clicks": 22
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -1173,7 +1173,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 7778,
+    "value": 7829,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
