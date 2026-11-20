@@ -28,3 +28,6 @@ status: done
 
 ## 関連ファイル
 - docs/decisions/0080-friendly-voice-and-picks.md
+
+## 追記 2026-11-21
+- 本人の返事（Ondine 経由）:「この調子でOK」。書き方の方針はこのまま。初回の◯選の確認は #2225（11-21 13:00 の relay）に任せる
