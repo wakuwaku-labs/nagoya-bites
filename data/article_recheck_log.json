@@ -110,23 +110,74 @@
    },
    "findings": [],
    "next_due": "2027-02-16"
+  },
+  "journal/2026-06-07-susuru-toripaitan-marunouchi.html": {
+   "last_checked": "2026-11-20",
+   "last_checked_at": "2026-11-20T02:14:54.541Z",
+   "outcome": "ok",
+   "reason": "pre_open",
+   "basis": "machine",
+   "facts": 12,
+   "verified": 3,
+   "unverifiable": 9,
+   "mismatch": 0,
+   "sources": {
+    "ok": 2,
+    "total": 3
+   },
+   "findings": [],
+   "next_due": "2027-02-17"
+  },
+  "journal/2026-07-26-mirine-yankoppuchan-sakae.html": {
+   "last_checked": "2026-11-20",
+   "last_checked_at": "2026-11-20T02:14:54.541Z",
+   "outcome": "ok",
+   "reason": "pre_open",
+   "basis": "machine",
+   "facts": 11,
+   "verified": 9,
+   "unverifiable": 2,
+   "mismatch": 0,
+   "sources": {
+    "ok": 3,
+    "total": 4
+   },
+   "findings": [],
+   "next_due": "2027-02-17"
+  },
+  "journal/2026-10-08-sakae-mitsukoshi-miyakishimen-ihyoe.html": {
+   "last_checked": "2026-11-20",
+   "last_checked_at": "2026-11-20T02:14:54.541Z",
+   "outcome": "ok",
+   "reason": "pre_open",
+   "basis": "machine",
+   "facts": 26,
+   "verified": 26,
+   "unverifiable": 0,
+   "mismatch": 0,
+   "sources": {
+    "ok": 5,
+    "total": 5
+   },
+   "findings": [],
+   "next_due": "2026-12-20"
   }
  },
  "summary": {
-  "overdue": 197,
-  "overdue_ledger": 0,
+  "overdue": 196,
+  "overdue_ledger": 1,
   "oldest_overdue_ledger_days": 0,
-  "overdue_legacy": 197,
-  "oldest_overdue_legacy_days": 199,
-  "due_total": 200,
+  "overdue_legacy": 195,
+  "oldest_overdue_legacy_days": 200,
+  "due_total": 199,
   "no_base_date": 3,
   "pending_findings": 0
  },
  "last_run": {
-  "date": "2026-11-19",
-  "at": "2026-11-19T02:30:05.980Z",
+  "date": "2026-11-20",
+  "at": "2026-11-20T02:14:54.541Z",
   "mode": "record",
-  "due": 200,
+  "due": 199,
   "processed": 3,
   "alerts": 0,
   "applied": 0
