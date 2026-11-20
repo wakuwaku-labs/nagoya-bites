@@ -25,3 +25,6 @@
 
 ## 戻し方
 - `scripts/run_journal_local.sh` の `journal_quarantine_foreign_commits` を呼ぶ段を消す（関数は残してよい）。
+
+## あわせて
+- `run_journal_local.sh` は自分の写しを一時ファイルに作って実行し直す。取り込み・退避で main を付け替えると実行中のファイル自身が書き換わり、bash が途中から新しい中身を読んで壊れるため（退避するよそのコミットがこのファイルを触っていると起きる）。

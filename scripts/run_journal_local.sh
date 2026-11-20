@@ -25,6 +25,18 @@
 
 set -uo pipefail
 
+# 実行中のこのファイルを取り込み（pull・退避で main を付け替える）が書き換えると、bash は同じ位置から
+# 新しい中身を読み続けて壊れる。写しを作ってから実行し直し、写しはすぐ消す（開いたままなので読める・Ondine #2338）。
+if [ -z "${JOURNAL_RUN_FROM_COPY:-}" ]; then
+  _self_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  if _copy="$(mktemp "${TMPDIR:-/tmp}/run_journal_local.XXXXXX")" && cp "${BASH_SOURCE[0]}" "$_copy"; then
+    JOURNAL_RUN_FROM_COPY=1 JOURNAL_SCRIPT_DIR="$_self_dir" exec bash "$_copy" "$@"
+  fi
+else
+  rm -f "${BASH_SOURCE[0]}"
+fi
+JOURNAL_SCRIPT_DIR="${JOURNAL_SCRIPT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
+
 # 2026-10-29（統合計画 0-d）: 全許可（--dangerously-skip-permissions）をやめ、日次ジャーナルに要る道具だけを許可する。
 # push は含めない（commit/push はこのラッパーが行う）。許可外の道具は無人実行では拒否される。
 CLAUDE_ALLOWED_TOOLS="Read,Write,Edit,Glob,Grep,WebSearch,WebFetch,Bash(node:*),Bash(mv:*),Bash(mkdir:*),Bash(ls:*),Bash(cat:*),Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git add:*),Bash(git commit:*)"
@@ -76,7 +88,7 @@ log() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" | tee -a "$LOG"; }
 
 # origin/main の取り込み（rebase → 衝突したら畳んで merge）の唯一の実装。ISSUE-187。
 # shellcheck source=lib/journal_git_sync.sh
-. "$(dirname "${BASH_SOURCE[0]}")/lib/journal_git_sync.sh"
+. "${JOURNAL_SCRIPT_DIR}/lib/journal_git_sync.sh"
 
 # ---- 電源状態の把握（2026-08-18 の教訓）----
 # 08-05/07/08/09/13/16/18 と "Connection closed mid-response" による欠番が繰り返し発生していた。
