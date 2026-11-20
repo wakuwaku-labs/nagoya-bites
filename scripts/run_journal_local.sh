@@ -441,6 +441,37 @@ if [ ${#JOURNAL_DEBRIS[@]} -gt 0 ]; then
     || log "⚠️ stash 退避に失敗しましたが続行します（pull 側の --autostash に委ねます）。"
 fi
 
+# 対話の会話が main にローカルで合流・直接コミットしたものが残っていると、取り込みが衝突して
+# HOLD になる（10-12・10-15・11-20 に同じ型で3回）。取り込めても PR を通らずに本番へ出てしまう。
+# よそのコミットは backup/main-<日時> へ退避して main を origin/main に合わせ、記事は止めない（Ondine #2338）。
+# 退避したことは data/journal_stash_alert.json に書き、記事と一緒に push → journal-watchdog.yml が Issue にする。
+if journal_quarantine_foreign_commits; then
+  if [ -n "$JOURNAL_QUARANTINE_BRANCH" ]; then
+    printf '%s' "$JOURNAL_QUARANTINE_FOREIGN" | sed 's/^/   /' | tee -a "$LOG"
+    node -e '
+      const fs = require("fs");
+      const [branch, foreign, dropped] = process.argv.slice(1);
+      let existing = {_note:"ジャーナル起動時に他ルーチンの未コミット差分が検出された記録（SEO-104）",entries:[]};
+      try { existing = JSON.parse(fs.readFileSync("data/journal_stash_alert.json","utf8")); } catch(_){}
+      existing.entries.unshift({
+        detected_at: new Date(Date.now()+9*3600000).toISOString().replace("Z","+09:00"),
+        action: "quarantined_local_commits",
+        backup_branch: branch,
+        commits: foreign.split("\n").filter(Boolean),
+        dropped_own_commits: Number(dropped) || 0,
+        message: "~/nagoya-bites の main にだけあった（origin に無い）コミットを退避して記事を続行。必要なものは PR で出し直す。",
+      });
+      if (existing.entries.length > 30) existing.entries = existing.entries.slice(0, 30);
+      fs.mkdirSync("data", { recursive: true });
+      fs.writeFileSync("data/journal_stash_alert.json", JSON.stringify(existing, null, 2) + "\n");
+    ' "$JOURNAL_QUARANTINE_BRANCH" "$JOURNAL_QUARANTINE_FOREIGN" "$JOURNAL_QUARANTINE_DROPPED" 2>>"$LOG" \
+      || log "⚠️ journal_stash_alert.json の書き込みに失敗（続行）"
+    notify "未送信のコミットを退避" "main にだけあったコミットを ${JOURNAL_QUARANTINE_BRANCH} に移して記事を続けます"
+  fi
+else
+  log "⚠️ よそのコミットの退避に失敗。従来どおり取り込みを試みます。"
+fi
+
 if ! journal_sync_origin_main; then
   log "origin/main の取り込みに失敗。状態:"
   git status -sb | tee -a "$LOG"
