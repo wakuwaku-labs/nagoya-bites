@@ -39,13 +39,40 @@ const CHECK = argv.includes('--check');
 // wsrv.nl が確実に扱える上限。極端に重い原寸は変換タイムアウトの恐れがあるため昇格しない。
 const MAX_MASTER_BYTES = 12 * 1024 * 1024;
 
+// index.html のうち、記事の写真を出す区画（scripts/build_journal_index.js が書く）。店の写真の昇格はここに及ぼさない。
+// 記事の顔の写真は記事側の規則（_480 を土台に、測った幅で srcset を組む）で決まっており、一括置換すると
+// トップの大きな写真が「同じ URL の 480w/1280w」という壊れた srcset になっていた（2026-11-20・Ondine #2232 の試験で発覚）
+const PROTECTED_BLOCKS = ['TOP_HERO', 'TOP_ARTICLES', 'LATEST_JOURNAL'];
+
+/** index.html の店の写真 URL を置き換える。PROTECTED_BLOCKS の区画の中は触らない。戻り値 { html, hits } */
+function replaceInIndexHtml(html, map) {
+  const parts = [];
+  const re = new RegExp(`<!-- (${PROTECTED_BLOCKS.join('|')})_START -->[\\s\\S]*?<!-- \\1_END -->`, 'g');
+  let last = 0;
+  let m;
+  while ((m = re.exec(html))) {
+    parts.push({ text: html.slice(last, m.index), edit: true });
+    parts.push({ text: m[0], edit: false });
+    last = m.index + m[0].length;
+  }
+  parts.push({ text: html.slice(last), edit: true });
+  const hitSet = new Set();
+  for (const part of parts) {
+    if (!part.edit) continue;
+    for (const [o, n] of map) {
+      if (part.text.includes(o)) { part.text = part.text.split(o).join(n); hitSet.add(o); }
+    }
+  }
+  return { html: parts.map((x) => x.text).join(''), hits: hitSet.size };
+}
+
 /** URL に埋め込まれた現在の幅（_480.jpg → 480）。サフィックスなしは null。 */
 function currentWidth(url) {
   const m = (url || '').match(/_(\d+)\.jpg$/);
   return m ? parseInt(m[1], 10) : null;
 }
 
-(async () => {
+if (require.main === module) (async () => {
   const stores = JSON.parse(fs.readFileSync(STORES, 'utf8'));
 
   const cache = loadCache();
@@ -115,10 +142,10 @@ function currentWidth(url) {
   const map = new Map();
   for (const g of gains) map.set(g.oldUrl, g.newUrl);
   const htmlPath = path.join(ROOT, 'index.html');
-  let html = fs.readFileSync(htmlPath, 'utf8');
-  let hits = 0;
-  for (const [o, n] of map) if (html.includes(o)) { html = html.split(o).join(n); hits++; }
+  const { html, hits } = replaceInIndexHtml(fs.readFileSync(htmlPath, 'utf8'), map);
   if (hits) { fs.writeFileSync(htmlPath, html, 'utf8'); }
   console.log(`-> index.html のインラインURL ${hits} 件を更新しました`);
   console.log('   次の手順: node gen-store-pages.js で stores/*.html を再生成してください');
 })();
+
+module.exports = { PROTECTED_BLOCKS, replaceInIndexHtml, currentWidth };
