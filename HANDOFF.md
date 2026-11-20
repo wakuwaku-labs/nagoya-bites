@@ -1,33 +1,33 @@
-status: done
+status: in_progress
 
-# 記事と X 投稿を親しみやすくし「おすすめ◯選」を足す（Ondine #2224・2026-11-19）
+# 11/20 のジャーナル・X・note が出なかった件の後始末と再発防止（Ondine #2337・#2338・2026-11-21）
 
 ## 目的
-本人:「値段やそれに付随することが堅苦しく読むのに抵抗がある。名古屋のランチおすすめ5選のように店の特徴を短く。素人でも分かり興味を持てる文章に」。
+本人「11/20の記事が表示されてない」「Xとnoteもない」。11/21 以降の記事・X・note が毎日きちんと出る状態に戻す。
 
 ## 完了条件
-- 書き方の決まりを `data/editorial_standard.json` の voice に置き、journal-today・editor.md・x-post-prompt.md が同じ決まりを指す
-- ◯選の型（記事・X の picks）と曜日ローテ（月水土）
-- 読みやすさの警告（止めない）・validator 項目10 の3観点の置き換え
-- npm test 通過 → main 合流
+- 11/21 の記事が https://nagoya-bites.com/ の「ジャーナル」欄の先頭に出る。X と note にも 11/21 の投稿がある（#2337）
+- ローカルの main に未 push のコミットが溜まっても、日次ジャーナルが止まらない（#2338）
 
 ## できていること
-- journal-today.md Step 4 / editor.md / journal_queue.json（ローテ）/ 表示名（おすすめまとめ・店選びのコツ）/ ADR 0080
-- 並行: X 側（x-post-prompt.md・x_post.js 等）と基準・validator・採点（editorial_standard.*・validate_journal_draft.js・score_journal_candidates.js）を作業役2つに依頼中
+- 原因: ~/nagoya-bites の main に、origin に無いコミットが4つ残っていた（fix/top-journal-latest のローカル合流 850b31087f・#2146 の修正 d010694362 ほか）。そのため 11/20 09:00 の取り込みが衝突して HOLD になり、記事・X・note がすべて出なかった
+- 2026-11-21 02:20: 元のコミットを backup/main-2026-11-20（ローカル）に退避し、main を origin/main に合わせた。HOLD-2026-11-20.md は .resolved.md に改名した
+- #2146 の修正（data/manual_stores.json の「カテゴリE」）は PR #784 で出し直し、合流済み
+- これより前の同じ会話: トップの「ジャーナル」欄（#777）と、記事一覧の写真（#779）は本番に反映して確認済み
 
 ## 次にやること
-- PR #778 合流済み（b46dae6e1）。build.yml の完了を見て #2224 を report/done
-- 2026-11-21 13:00 に #2225（初回の◯選の確認）を relay 予約済み
+1. 11/21 13:00 JST に #2337 が relay される（予約済み）。ジャーナル欄・X（x-post.yml）・note（~/nagoya-bites/.local-logs/journal-2026-11-21.log の post_note）を確かめ、report して done にする
+2. #2338: scripts/run_journal_local.sh の取り込み部分を直す。origin に無いローカルコミットは backup ブランチへ退避し、main を origin/main に合わせて続行する。退避したことは notify で知らせる。テストを足す
+3. 11/20 の記事は作らない（実行の仕組みに日付の指定が無い。空いた日を後から埋めない）
 
 ## 試したが駄目だったこと
-- 同じ worktree の別セッション（bluegill-d9・一覧の写真 0079）の変更が autopilot の自動コミット a0568c4af9 に混ざった → main へは origin/main から切った別ブランチ（scratchpad の wt-voice）で自分の分だけ出した
+- run_journal_local.sh に日付の指定は無い（TODAY_JST が固定）。過去の日の記事は作れない
 
 ## 守るルール・判断メモ
-- 基本方針の原文は書き換えない（本人の確認が要る）。過去記事は書き直さない（0069 決定4）
-- ◯選は番号・順位を付けない。読みやすさは警告だけ
+- force push・reset は使わない。main を戻すときは backup ブランチを作ってから `git checkout -B main origin/main` で行う（記憶 journal-main-checkout-diverged-by-design-session）
+- この worktree（bluegill）は別の会話（bluegill-35・#2224）も使っている。自分の変更は origin/main から切った別の worktree で出す
 
 ## 関連ファイル
-- docs/decisions/0080-friendly-voice-and-picks.md
-
-## 追記 2026-11-21
-- 本人の返事（Ondine 経由）:「この調子でOK」。書き方の方針はこのまま。初回の◯選の確認は #2225（11-21 13:00 の relay）に任せる
+- ~/nagoya-bites/.local-logs/HOLD-2026-11-20.resolved.md・journal-2026-11-20.log
+- scripts/run_journal_local.sh（取り込みと HOLD の処理）
+- 判断 docs/decisions/0079-top-journal-section-shows-latest.md
