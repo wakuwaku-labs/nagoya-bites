@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-20T07:49:36.017Z",
+  "generatedAt": "2026-11-20T17:21:34.058Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -8,15 +8,15 @@
   },
   "totals": {
     "exits": {
-      "hotpepper": 170,
+      "hotpepper": 171,
       "tabelog": 19,
       "tel": 8,
       "other": 0,
-      "total": 197
+      "total": 198
     },
     "reports": {
       "yes": 1,
-      "no": 2
+      "no": 1
     }
   },
   "unattributedExits": 0,
@@ -24,11 +24,11 @@
     "start": "2026-11-01",
     "totals": {
       "exits": {
-        "hotpepper": 124,
+        "hotpepper": 128,
         "tabelog": 16,
         "tel": 8,
         "other": 0,
-        "total": 148
+        "total": 152
       },
       "reports": {
         "yes": 1,
@@ -182,24 +182,6 @@
       }
     },
     {
-      "store_name": "旬彩倶楽部 鱗",
-      "exits": {
-        "hotpepper": 4,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 4
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 2,
-        "reportsYes": 0
-      }
-    },
-    {
       "store_name": "食堂　灯ル",
       "exits": {
         "hotpepper": 3,
@@ -218,6 +200,24 @@
       }
     },
     {
+      "store_name": "THE FOYER CAFE ザ ホワイエ カフェ しらかわホール",
+      "exits": {
+        "hotpepper": 3,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 3
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 3,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "鰻 ひつまぶし 金鯱うなぎ 伏見店",
       "exits": {
         "hotpepper": 3,
@@ -232,6 +232,24 @@
       },
       "thisMonth": {
         "exits": 3,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "旬彩倶楽部 鱗",
+      "exits": {
+        "hotpepper": 3,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 3
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 2,
         "reportsYes": 0
       }
     },
@@ -546,24 +564,6 @@
       "exits": {
         "hotpepper": 1,
         "tabelog": 1,
-        "tel": 0,
-        "other": 0,
-        "total": 2
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 1,
-        "reportsYes": 0
-      }
-    },
-    {
-      "store_name": "全室水槽個室 柳橋 AONO（アオノ）名古屋駅店",
-      "exits": {
-        "hotpepper": 2,
-        "tabelog": 0,
         "tel": 0,
         "other": 0,
         "total": 2
@@ -1712,7 +1712,7 @@
       }
     },
     {
-      "store_name": "鯛めし 八十八商店 ラシック",
+      "store_name": "全室水槽個室 柳橋 AONO（アオノ）名古屋駅店",
       "exits": {
         "hotpepper": 1,
         "tabelog": 0,
@@ -1722,10 +1722,10 @@
       },
       "reports": {
         "yes": 0,
-        "no": 1
+        "no": 0
       },
       "thisMonth": {
-        "exits": 0,
+        "exits": 1,
         "reportsYes": 0
       }
     },
@@ -1816,6 +1816,24 @@
       },
       "thisMonth": {
         "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "炭火焼き鳥 けんしろう 栄本店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
         "reportsYes": 0
       }
     },
@@ -2349,19 +2367,19 @@
     "geoSearch": "現在地: トップの「現在地」ボタンを押した回数と結果（granted・denied・unsupported・error）。位置・エリア名は送っていない"
   },
   "actions": {
-    "reserve": 189,
+    "reserve": 190,
     "reserveBySite": {
-      "hotpepper": 170,
+      "hotpepper": 171,
       "tabelog": 19,
       "other": 0
     },
     "tel": 8,
-    "map": 139
+    "map": 142
   },
   "map": {
-    "total": 139,
+    "total": 142,
     "unattributed": 0,
-    "stores": 63,
+    "stores": 65,
     "top": [
       {
         "store_name": "うな祥",
@@ -2405,15 +2423,15 @@
       }
     ],
     "byLocation": {
-      "store_page": 73,
-      "journal_store_card": 53,
+      "store_page": 75,
+      "journal_store_card": 54,
       "store_page_bar": 11,
       "modal_sticky": 2
     },
     "byLinkKind": {
-      "search": 71,
-      "place_id": 59,
-      "(not set)": 9
+      "search": 72,
+      "place_id": 60,
+      "(not set)": 10
     }
   },
   "callLookup": {
