@@ -1,18 +1,18 @@
 {
  "_README": "S7-1 信頼の指標（scripts/trust_metrics.js が毎日作る。週のレポート GAS が読む）。設定は data/trust_metrics_policy.json。history は7日ごとの記録（悪化の見張りが前の週と比べるのに使う）。",
- "date": "2026-11-20",
- "generated_at": "2026-11-20T02:36:46.257Z",
+ "date": "2026-11-21",
+ "generated_at": "2026-11-21T02:50:26.634Z",
  "policy_version": 1,
  "indicators": {
   "evidence_rate": {
-   "value": 0.7008,
-   "numerator": 185,
-   "denominator": 264,
-   "measured_articles": 11,
+   "value": 0.7603,
+   "numerator": 276,
+   "denominator": 363,
+   "measured_articles": 14,
    "public_articles": 268,
-   "article_mean": 0.5791,
+   "article_mean": 0.6527,
    "mismatch_facts": 1,
-   "facts_per_article": 24,
+   "facts_per_article": 25.9,
    "note": "台帳のある記事だけ。台帳の無い記事は数えていない（measured_articles が数えた本数）"
   },
   "unconfirmed_disclosure_rate": {
@@ -24,16 +24,16 @@
    "recent": {
     "days": 30,
     "numerator": 2,
-    "denominator": 30,
-    "value": 0.0667
+    "denominator": 29,
+    "value": 0.069
    },
    "note": "「確認できなかったこと」の札または見出しがある記事。全項目を確認できた記事も「なし」になる（計画 1-7 の数え方のまま）"
   },
   "misinformation_rate": {
    "value": 0,
    "numerator": 0,
-   "denominator": 90,
-   "measured_articles": 90,
+   "denominator": 89,
+   "measured_articles": 89,
    "public_articles": 188,
    "window_days": 90,
    "events_in_window": 0,
@@ -67,8 +67,8 @@
   "articles": 268,
   "total": 8241,
   "per_article_avg": 30.8,
-  "ledger_facts": 264,
-  "ledger_articles": 11,
+  "ledger_facts": 363,
+  "ledger_articles": 14,
   "note": "数字・日付・価格を含む文の数（記事の本文から機械で取り出す。台帳の事実の文とは別の数え方で、記事ごとの増減を見る）"
  },
  "reader_voice": {
@@ -80,21 +80,21 @@
  },
  "recheck": {
   "last_run": {
-   "date": "2026-11-20",
-   "at": "2026-11-20T02:14:54.541Z",
+   "date": "2026-11-21",
+   "at": "2026-11-21T02:08:38.371Z",
    "mode": "record",
-   "due": 199,
+   "due": 197,
    "processed": 3,
-   "alerts": 0,
+   "alerts": 2,
    "applied": 0
   },
   "summary": {
-   "overdue": 196,
+   "overdue": 194,
    "overdue_ledger": 1,
-   "oldest_overdue_ledger_days": 0,
-   "overdue_legacy": 195,
-   "oldest_overdue_legacy_days": 200,
-   "due_total": 199,
+   "oldest_overdue_ledger_days": 1,
+   "overdue_legacy": 193,
+   "oldest_overdue_legacy_days": 201,
+   "due_total": 197,
    "no_base_date": 3,
    "pending_findings": 0
   }
