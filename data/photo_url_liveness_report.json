@@ -1,12 +1,12 @@
 {
   "version": 1,
   "lastRun": "2026-11-21",
-  "lastRunAt": "2026-11-21T06:56:56.755Z",
+  "lastRunAt": "2026-11-21T12:34:36.859Z",
   "checked": 4878,
   "summary": {
-    "ok": 4878,
+    "ok": 4876,
     "dead": 0,
-    "unknown": 0,
+    "unknown": 2,
     "byHost": {
       "places": {
         "ok": 188,
@@ -14,12 +14,23 @@
         "unknown": 0
       },
       "hotpepper": {
-        "ok": 4690,
+        "ok": 4688,
         "dead": 0,
-        "unknown": 0
+        "unknown": 2
       }
     }
   },
   "dead": [],
-  "unknownSample": []
+  "unknownSample": [
+    {
+      "店名": "世界の山ちゃん 長者町店",
+      "url": "https://imgfp.hotp.jp/IMGH/54/50/P051895450/P051895450_480.jpg",
+      "error": "timeout"
+    },
+    {
+      "店名": "ハンバーグジョー",
+      "url": "https://imgfp.hotp.jp/IMGH/94/73/P038099473/P038099473_480.jpg",
+      "error": "timeout"
+    }
+  ]
 }
