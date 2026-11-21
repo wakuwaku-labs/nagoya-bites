@@ -1,33 +1,33 @@
 {
-  "generatedAt": "2026-11-21T14:25:44.052Z",
+  "generatedAt": "2026-11-21T19:17:35.296Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 7955,
-    "pageViews": 9537,
-    "sessions": 8427,
-    "avgSessionDuration": 56.3,
-    "bounceRate": 0.675,
+    "activeUsers": 7931,
+    "pageViews": 9469,
+    "sessions": 8391,
+    "avgSessionDuration": 55.6,
+    "bounceRate": 0.678,
     "pagesPerSession": 1.13
   },
   "dailyReference": {
-    "date": "2026-11-19",
-    "sessions": 221,
-    "bounceRate": 0.584,
-    "pageViews": 262
+    "date": "2026-11-20",
+    "sessions": 210,
+    "bounceRate": 0.519,
+    "pageViews": 248
   },
   "channels": {
     "sessions": {
-      "organic": 3060,
-      "direct": 5056,
+      "organic": 2995,
+      "direct": 5078,
       "social": 62,
-      "ai_assistant": 251,
-      "referral": 57,
+      "ai_assistant": 250,
+      "referral": 58,
       "paid": 0,
       "other": 1
     },
     "pct": {
-      "organic": 36.1,
-      "direct": 59.6,
+      "organic": 35.5,
+      "direct": 60.1,
       "social": 0.7,
       "ai_assistant": 3,
       "referral": 0.7,
@@ -39,27 +39,27 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 5025
+      "sessions": 5048
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1429
+      "sessions": 1406
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 963
+      "sessions": 938
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 631
+      "sessions": 616
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 160
+      "sessions": 159
     },
     {
       "source": "openai",
@@ -72,14 +72,14 @@
       "sessions": 31
     },
     {
-      "source": "duckduckgo",
-      "medium": "organic",
-      "sessions": 29
-    },
-    {
       "source": "note",
       "medium": "social",
       "sessions": 28
+    },
+    {
+      "source": "duckduckgo",
+      "medium": "organic",
+      "sessions": 27
     },
     {
       "source": "x",
@@ -97,24 +97,24 @@
       "sessions": 9
     },
     {
-      "source": "trend_today",
-      "medium": "(not set)",
-      "sessions": 9
-    },
-    {
       "source": "ecosia.org",
       "medium": "organic",
       "sessions": 8
     },
     {
-      "source": "cn.bing.com",
-      "medium": "referral",
-      "sessions": 7
+      "source": "trend_today",
+      "medium": "(not set)",
+      "sessions": 8
     },
     {
       "source": "websearch.rakuten.co.jp",
       "medium": "referral",
-      "sessions": 5
+      "sessions": 7
+    },
+    {
+      "source": "cn.bing.com",
+      "medium": "referral",
+      "sessions": 6
     },
     {
       "source": "l.instagram.com",
@@ -172,6 +172,11 @@
       "sessions": 2
     },
     {
+      "source": "search.portal.auone.jp",
+      "medium": "referral",
+      "sessions": 2
+    },
+    {
       "source": "instagram.com",
       "medium": "referral",
       "sessions": 1
@@ -187,17 +192,7 @@
       "sessions": 1
     },
     {
-      "source": "portal.uqmobile.jp",
-      "medium": "referral",
-      "sessions": 1
-    },
-    {
       "source": "search.fenrir-inc.com",
-      "medium": "referral",
-      "sessions": 1
-    },
-    {
-      "source": "search.portal.auone.jp",
       "medium": "referral",
       "sessions": 1
     },
@@ -230,8 +225,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 478,
-      "sessions": 446
+      "pageViews": 461,
+      "sessions": 432
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -244,23 +239,23 @@
       "sessions": 156
     },
     {
+      "path": "/features/nagoya-miso-nikomi-udon.html",
+      "pageViews": 106,
+      "sessions": 115
+    },
+    {
       "path": "/features/nagoya-unaju.html",
       "pageViews": 104,
       "sessions": 101
-    },
-    {
-      "path": "/features/nagoya-miso-nikomi-udon.html",
-      "pageViews": 102,
-      "sessions": 110
     }
   ],
   "cta": {
-    "outboundClicks": 440,
+    "outboundClicks": 435,
     "ctaClickRate": 5.2,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 174
+        "clicks": 168
       },
       {
         "domain": "www.google.com",
@@ -272,11 +267,11 @@
       },
       {
         "domain": "tabelog.com",
-        "clicks": 34
+        "clicks": 36
       },
       {
         "domain": "www.instagram.com",
-        "clicks": 24
+        "clicks": 23
       },
       {
         "domain": "maps.google.com",
@@ -313,7 +308,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 301,
+      "organic": 296,
       "direct": 49,
       "social": 16,
       "ai_assistant": 64,
@@ -321,7 +316,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.8,
+    "ctaClickRate_organic": 9.9,
     "ctaClickRate_direct": 1,
     "ctaClickRate_social": 25.8,
     "byPage": [
@@ -335,7 +330,7 @@
       },
       {
         "path": "/stores/J004090251.html",
-        "clicks": 24
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -390,7 +385,7 @@
         "clicks": 4
       },
       {
-        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
+        "path": "/journal/2026-11-03-kakuozan-amelie-french-date-course.html",
         "clicks": 4
       },
       {
@@ -418,7 +413,7 @@
         "clicks": 3
       },
       {
-        "path": "/journal/2026-11-03-kakuozan-amelie-french-date-course.html",
+        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
         "clicks": 3
       },
       {
@@ -453,12 +448,12 @@
         "clicks": 49
       },
       {
-        "path": "/stores/J004090251.html",
+        "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
         "domain": "www.google.com",
-        "clicks": 24
+        "clicks": 23
       },
       {
-        "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
+        "path": "/stores/J004090251.html",
         "domain": "www.google.com",
         "clicks": 23
       },
@@ -683,11 +678,6 @@
         "clicks": 2
       },
       {
-        "path": "/stores/J003672535.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 2
-      },
-      {
         "path": "/stores/J003737470.html",
         "domain": "www.hotpepper.jp",
         "clicks": 2
@@ -720,6 +710,11 @@
       {
         "path": "/stores/J004723974.html",
         "domain": "www.hotpepper.jp",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/kimitote.html",
+        "domain": "tabelog.com",
         "clicks": 2
       },
       {
@@ -793,11 +788,6 @@
         "clicks": 1
       },
       {
-        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
-        "domain": "www.instagram.com",
-        "clicks": 1
-      },
-      {
         "path": "/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
         "domain": "maps.google.com",
         "clicks": 1
@@ -820,6 +810,11 @@
       {
         "path": "/journal/2026-11-03-kakuozan-amelie-french-date-course.html",
         "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-11-03-kakuozan-amelie-french-date-course.html",
+        "domain": "www.google.com",
         "clicks": 1
       },
       {
@@ -1038,10 +1033,6 @@
         "clicks": 2
       },
       {
-        "path": "/stores/J003672535.html",
-        "clicks": 2
-      },
-      {
         "path": "/stores/J003737470.html",
         "clicks": 2
       },
@@ -1059,6 +1050,10 @@
       },
       {
         "path": "/stores/J004723974.html",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/kimitote.html",
         "clicks": 2
       },
       {
@@ -1169,30 +1164,30 @@
     "reservationClicks": 129,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
-      "ctaEvents": 64,
-      "reservationOutbound": 64,
-      "naiveSum": 128,
-      "deduped": 65,
-      "overlap": 63,
+      "ctaEvents": 73,
+      "reservationOutbound": 73,
+      "naiveSum": 146,
+      "deduped": 74,
+      "overlap": 72,
       "bySite": [
         {
           "site": "hotpepper.jp",
-          "cta": 59,
-          "outbound": 58,
-          "deduped": 59
+          "cta": 66,
+          "outbound": 65,
+          "deduped": 66
         },
         {
           "site": "tabelog.com",
-          "cta": 5,
-          "outbound": 6,
-          "deduped": 6
+          "cta": 7,
+          "outbound": 8,
+          "deduped": 8
         }
       ]
     }
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 7955,
+    "value": 7931,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
