@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-21T12:25:14.661Z",
+  "generatedAt": "2026-11-21T14:25:44.052Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 7931,
-    "pageViews": 9501,
-    "sessions": 8383,
-    "avgSessionDuration": 56.1,
+    "activeUsers": 7955,
+    "pageViews": 9537,
+    "sessions": 8427,
+    "avgSessionDuration": 56.3,
     "bounceRate": 0.675,
     "pagesPerSession": 1.13
   },
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 3038,
-      "direct": 5047,
+      "organic": 3060,
+      "direct": 5056,
       "social": 62,
       "ai_assistant": 251,
       "referral": 57,
@@ -26,8 +26,8 @@
       "other": 1
     },
     "pct": {
-      "organic": 35.9,
-      "direct": 59.7,
+      "organic": 36.1,
+      "direct": 59.6,
       "social": 0.7,
       "ai_assistant": 3,
       "referral": 0.7,
@@ -39,22 +39,22 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 5017
+      "sessions": 5025
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1413
+      "sessions": 1429
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 961
+      "sessions": 963
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 627
+      "sessions": 631
     },
     {
       "source": "chatgpt.com",
@@ -87,6 +87,11 @@
       "sessions": 19
     },
     {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 9
+    },
+    {
       "source": "history",
       "medium": "(not set)",
       "sessions": 9
@@ -95,11 +100,6 @@
       "source": "trend_today",
       "medium": "(not set)",
       "sessions": 9
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 8
     },
     {
       "source": "ecosia.org",
@@ -230,8 +230,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 473,
-      "sessions": 441
+      "pageViews": 478,
+      "sessions": 446
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -250,8 +250,8 @@
     },
     {
       "path": "/features/nagoya-miso-nikomi-udon.html",
-      "pageViews": 93,
-      "sessions": 100
+      "pageViews": 102,
+      "sessions": 110
     }
   ],
   "cta": {
@@ -321,7 +321,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.9,
+    "ctaClickRate_organic": 9.8,
     "ctaClickRate_direct": 1,
     "ctaClickRate_social": 25.8,
     "byPage": [
@@ -1192,7 +1192,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 7931,
+    "value": 7955,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
