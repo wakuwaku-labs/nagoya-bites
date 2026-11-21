@@ -1,0 +1,155 @@
+{
+  "ok": true,
+  "files_scanned": 6095,
+  "breakdown": {
+    "root": 6,
+    "features": 71,
+    "journal": 198,
+    "stores": 5037,
+    "hubs": 783
+  },
+  "violations": [],
+  "motion": {
+    "enforce": true,
+    "enforceScopes": [
+      "assets/css/nb.css",
+      "index.html"
+    ],
+    "total": 14,
+    "byRule": {
+      "transition-all": 3,
+      "motion-duration": 9,
+      "motion-infinite": 0,
+      "motion-layout-prop": 1,
+      "smooth-scroll-js": 1
+    },
+    "byFile": {
+      "about.html": {
+        "motion-duration": 3
+      },
+      "faq.html": {
+        "motion-layout-prop": 1,
+        "motion-duration": 1
+      },
+      "contact.html": {
+        "motion-duration": 4
+      },
+      "features/index.html": {
+        "motion-duration": 1
+      },
+      "features/nagoya-korean.html": {
+        "transition-all": 1
+      },
+      "features/nagoya-seafood.html": {
+        "transition-all": 1
+      },
+      "features/nagoya-settai-concierge.html": {
+        "smooth-scroll-js": 1
+      },
+      "stores/index.html": {
+        "transition-all": 1
+      }
+    },
+    "violations": [
+      {
+        "rule": "motion-duration",
+        "file": "about.html",
+        "line": 55,
+        "selector": ".eyebrow",
+        "excerpt": "animation:up .8s .2s forwards"
+      },
+      {
+        "rule": "motion-duration",
+        "file": "about.html",
+        "line": 56,
+        "selector": ".hero h1",
+        "excerpt": "animation:up .9s .35s forwards"
+      },
+      {
+        "rule": "motion-duration",
+        "file": "about.html",
+        "line": 59,
+        "selector": ".hero-sub",
+        "excerpt": "animation:up .9s .5s forwards"
+      },
+      {
+        "rule": "motion-layout-prop",
+        "file": "faq.html",
+        "line": 105,
+        "selector": ".faq-a",
+        "excerpt": "transition:max-height .35s ease,padding .35s ease"
+      },
+      {
+        "rule": "motion-duration",
+        "file": "faq.html",
+        "line": 105,
+        "selector": ".faq-a",
+        "excerpt": "transition:max-height .35s ease,padding .35s ease"
+      },
+      {
+        "rule": "motion-duration",
+        "file": "contact.html",
+        "line": 53,
+        "selector": ".eyebrow",
+        "excerpt": "animation:up .8s .1s forwards"
+      },
+      {
+        "rule": "motion-duration",
+        "file": "contact.html",
+        "line": 54,
+        "selector": ".page-title",
+        "excerpt": "animation:up .9s .2s forwards"
+      },
+      {
+        "rule": "motion-duration",
+        "file": "contact.html",
+        "line": 56,
+        "selector": ".page-desc",
+        "excerpt": "animation:up .9s .3s forwards"
+      },
+      {
+        "rule": "motion-duration",
+        "file": "contact.html",
+        "line": 57,
+        "selector": ".contact-form",
+        "excerpt": "animation:up .9s .4s forwards"
+      },
+      {
+        "rule": "motion-duration",
+        "file": "features/index.html",
+        "line": 122,
+        "selector": ".card-img",
+        "excerpt": "transition:transform .4s"
+      },
+      {
+        "rule": "transition-all",
+        "file": "features/nagoya-korean.html",
+        "line": 95,
+        "selector": ".cta-link",
+        "excerpt": "transition:all .2s"
+      },
+      {
+        "rule": "transition-all",
+        "file": "features/nagoya-seafood.html",
+        "line": 95,
+        "selector": ".cta-link",
+        "excerpt": "transition:all .2s"
+      },
+      {
+        "rule": "smooth-scroll-js",
+        "file": "features/nagoya-settai-concierge.html",
+        "line": 459,
+        "selector": "",
+        "excerpt": "if (sec) sec.scrollIntoView({behavior:'smooth', block:'start'});"
+      },
+      {
+        "rule": "transition-all",
+        "file": "stores/index.html",
+        "line": 77,
+        "selector": ".feature-link",
+        "excerpt": "transition:all .2s"
+      }
+    ],
+    "violationsTruncated": 0
+  }
+}
