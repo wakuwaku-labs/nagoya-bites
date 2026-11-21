@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-21T00:17:27.348Z",
+  "generatedAt": "2026-11-21T06:48:02.757Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 7848,
-    "pageViews": 9384,
-    "sessions": 8340,
-    "avgSessionDuration": 55,
-    "bounceRate": 0.68,
+    "activeUsers": 7877,
+    "pageViews": 9430,
+    "sessions": 8320,
+    "avgSessionDuration": 56.2,
+    "bounceRate": 0.677,
     "pagesPerSession": 1.13
   },
   "dailyReference": {
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 2976,
-      "direct": 5028,
+      "organic": 2996,
+      "direct": 5030,
       "social": 62,
-      "ai_assistant": 248,
+      "ai_assistant": 250,
       "referral": 56,
       "paid": 0,
-      "other": 2
+      "other": 1
     },
     "pct": {
-      "organic": 35.5,
-      "direct": 60.1,
+      "organic": 35.7,
+      "direct": 59.9,
       "social": 0.7,
       "ai_assistant": 3,
       "referral": 0.7,
@@ -39,22 +39,22 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 4996
+      "sessions": 5004
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1381
+      "sessions": 1390
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 946
+      "sessions": 952
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 615
+      "sessions": 620
     },
     {
       "source": "chatgpt.com",
@@ -87,23 +87,18 @@
       "sessions": 19
     },
     {
-      "source": "(not set)",
+      "source": "history",
       "medium": "(not set)",
-      "sessions": 11
+      "sessions": 9
     },
     {
-      "source": "history",
+      "source": "trend_today",
       "medium": "(not set)",
       "sessions": 9
     },
     {
       "source": "ecosia.org",
       "medium": "organic",
-      "sessions": 8
-    },
-    {
-      "source": "trend_today",
-      "medium": "(not set)",
       "sessions": 8
     },
     {
@@ -115,6 +110,11 @@
       "source": "l.instagram.com",
       "medium": "referral",
       "sessions": 5
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 4
     },
     {
       "source": "openai",
@@ -167,7 +167,7 @@
       "sessions": 2
     },
     {
-      "source": "trend_today",
+      "source": "openai",
       "medium": "",
       "sessions": 2
     },
@@ -207,6 +207,11 @@
       "sessions": 1
     },
     {
+      "source": "trend_today",
+      "medium": "",
+      "sessions": 1
+    },
+    {
       "source": "tw.search.yahoo.com",
       "medium": "referral",
       "sessions": 1
@@ -225,13 +230,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 459,
-      "sessions": 428
+      "pageViews": 463,
+      "sessions": 432
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 252,
-      "sessions": 237
+      "pageViews": 253,
+      "sessions": 238
     },
     {
       "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -240,26 +245,26 @@
     },
     {
       "path": "/features/nagoya-unaju.html",
-      "pageViews": 102,
-      "sessions": 99
+      "pageViews": 104,
+      "sessions": 101
     },
     {
       "path": "/features/nagoya-miso-nikomi-udon.html",
-      "pageViews": 88,
-      "sessions": 95
+      "pageViews": 89,
+      "sessions": 96
     }
   ],
   "cta": {
-    "outboundClicks": 428,
-    "ctaClickRate": 5.1,
+    "outboundClicks": 431,
+    "ctaClickRate": 5.2,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 164
+        "clicks": 166
       },
       {
         "domain": "www.google.com",
-        "clicks": 135
+        "clicks": 136
       },
       {
         "domain": "prtimes.jp",
@@ -308,7 +313,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 291,
+      "organic": 294,
       "direct": 48,
       "social": 16,
       "ai_assistant": 63,
@@ -361,6 +366,10 @@
         "clicks": 6
       },
       {
+        "path": "/features/nagoya-solo-dining.html",
+        "clicks": 5
+      },
+      {
         "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
         "clicks": 5
       },
@@ -374,10 +383,6 @@
       },
       {
         "path": "/",
-        "clicks": 4
-      },
-      {
-        "path": "/features/nagoya-solo-dining.html",
         "clicks": 4
       },
       {
@@ -429,15 +434,15 @@
         "clicks": 3
       },
       {
+        "path": "/stores/J001233710.html",
+        "clicks": 3
+      },
+      {
         "path": "/stores/J001279923.html",
         "clicks": 3
       },
       {
         "path": "/stores/J003648049.html",
-        "clicks": 3
-      },
-      {
-        "path": "/stores/J003671888.html",
         "clicks": 3
       }
     ],
@@ -495,7 +500,7 @@
       {
         "path": "/features/nagoya-solo-dining.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 4
+        "clicks": 5
       },
       {
         "path": "/journal/2026-11-10-higashibetsuin-chashumen-susuru-solo-lunch.html",
@@ -962,7 +967,7 @@
       },
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 4
+        "clicks": 5
       },
       {
         "path": "/stores/J004026266.html",
@@ -1161,7 +1166,7 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 125,
+    "reservationClicks": 126,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 64,
@@ -1187,7 +1192,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 7848,
+    "value": 7877,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
