@@ -161,25 +161,120 @@
    },
    "findings": [],
    "next_due": "2026-12-20"
+  },
+  "journal/2026-11-09-sakae-mitsukoshi-sushi-no-midori-alain-ducasse.html": {
+   "last_checked": "2026-11-21",
+   "last_checked_at": "2026-11-21T02:08:38.371Z",
+   "outcome": "ok",
+   "reason": "pre_open",
+   "basis": "machine",
+   "facts": 37,
+   "verified": 36,
+   "unverifiable": 1,
+   "mismatch": 0,
+   "sources": {
+    "ok": 7,
+    "total": 8
+   },
+   "findings": [],
+   "next_due": "2026-12-21"
+  },
+  "journal/2026-11-02-meieki-takashimaya-kamakura-beniya-butter-no-itoko.html": {
+   "last_checked": "2026-11-21",
+   "last_checked_at": "2026-11-21T02:08:38.371Z",
+   "outcome": "findings",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 34,
+   "verified": 27,
+   "unverifiable": 7,
+   "mismatch": 0,
+   "sources": {
+    "ok": 9,
+    "total": 9
+   },
+   "findings": [
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-11-08）を過ぎた記述: 開店記念セットは 2,916円で各日50セット、11月8日まで 。",
+     "claim": "開店記念セットは 2,916円で各日50セット、11月8日まで 。",
+     "reported_at": "2026-11-21"
+    },
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-11-05）を過ぎた記述: 栗大福は1個378円で、 各日100個、11月5日まで の限定品だ。",
+     "claim": "栗大福は1個378円で、 各日100個、11月5日まで の限定品だ。",
+     "reported_at": "2026-11-21"
+    },
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-11-08）を過ぎた記述: 開店記念セット2,916円は各日50セット・11月8日まで。",
+     "claim": "開店記念セット2,916円は各日50セット・11月8日まで。",
+     "reported_at": "2026-11-21"
+    },
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-11-05）を過ぎた記述: 生はなどら320円から、栗大福378円（各日100個・11月5日まで）、羽二重ロール3,240円。",
+     "claim": "生はなどら320円から、栗大福378円（各日100個・11月5日まで）、羽二重ロール3,240円。",
+     "reported_at": "2026-11-21"
+    }
+   ],
+   "next_due": "2026-12-05"
+  },
+  "journal/2026-10-30-hisaya-taichung-yeshi-osu-sarikaka.html": {
+   "last_checked": "2026-11-21",
+   "last_checked_at": "2026-11-21T02:08:38.371Z",
+   "outcome": "findings",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 28,
+   "verified": 28,
+   "unverifiable": 0,
+   "mismatch": 0,
+   "sources": {
+    "ok": 5,
+    "total": 6
+   },
+   "findings": [
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-11-03）を過ぎた記述: 10月31日から11月3日まで、久屋大通公園のエディオン久屋広場で「台湾・台中夜市2026」が開かれる。",
+     "claim": "10月31日から11月3日まで、久屋大通公園のエディオン久屋広場で「台湾・台中夜市2026」が開かれる。",
+     "reported_at": "2026-11-21"
+    },
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-11-03）を過ぎた記述: 名古屋市の発表では、「台湾・台中夜市2026」は 10月31日（土）〜11月3日（火・祝）の12:00〜21:00 。",
+     "claim": "名古屋市の発表では、「台湾・台中夜市2026」は 10月31日（土）〜11月3日（火・祝）の12:00〜21:00 。",
+     "reported_at": "2026-11-21"
+    }
+   ],
+   "next_due": "2026-12-05"
   }
  },
  "summary": {
-  "overdue": 196,
+  "overdue": 194,
   "overdue_ledger": 1,
-  "oldest_overdue_ledger_days": 0,
-  "overdue_legacy": 195,
-  "oldest_overdue_legacy_days": 200,
-  "due_total": 199,
+  "oldest_overdue_ledger_days": 1,
+  "overdue_legacy": 193,
+  "oldest_overdue_legacy_days": 201,
+  "due_total": 197,
   "no_base_date": 3,
   "pending_findings": 0
  },
  "last_run": {
-  "date": "2026-11-20",
-  "at": "2026-11-20T02:14:54.541Z",
+  "date": "2026-11-21",
+  "at": "2026-11-21T02:08:38.371Z",
   "mode": "record",
-  "due": 199,
+  "due": 197,
   "processed": 3,
-  "alerts": 0,
+  "alerts": 2,
   "applied": 0
  },
  "_README": "公開後の鮮度の見直し（S5-5）の記録。scripts/recheck_due_articles.js が毎日の夜間の検査で更新する。articles は記事のパスごとの直近の結果（次の見直す日・照合の件数・見つけた変更）。根拠確認率（trust_metrics）はここの facts/verified も読む。"
