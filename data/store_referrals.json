@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-21T19:17:27.789Z",
+  "generatedAt": "2026-11-21T22:48:47.678Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -2428,16 +2428,16 @@
       "other": 0
     },
     "tel": 8,
-    "map": 144
+    "map": 145
   },
   "map": {
-    "total": 144,
+    "total": 145,
     "unattributed": 0,
     "stores": 67,
     "top": [
       {
         "store_name": "うな祥",
-        "count": 23
+        "count": 24
       },
       {
         "store_name": "圧釜うどん もちり 栄店",
@@ -2477,14 +2477,14 @@
       }
     ],
     "byLocation": {
-      "store_page": 76,
+      "store_page": 77,
       "journal_store_card": 55,
       "store_page_bar": 11,
       "modal_sticky": 2
     },
     "byLinkKind": {
       "search": 74,
-      "place_id": 60,
+      "place_id": 61,
       "(not set)": 10
     }
   },
