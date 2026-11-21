@@ -1,0 +1,321 @@
+{
+  "about": "代表画面の基準値（割合は num/den。den は代表画面の数か、読んだ CSS 規則の数）。数えるだけで合否には使わない（Ondine #2412・docs/ui-map.md）",
+  "sources": [
+    "scripts/audit_design_system.js --check（全体を1回。代表画面の行だけ拾う）",
+    "scripts/audit_ui_extra.js (auditHtml / auditCss / parseCss)"
+  ],
+  "pages": [
+    {
+      "key": "top",
+      "label": "トップ（店の検索・絞り込み・店のモーダル）",
+      "path": "index.html"
+    },
+    {
+      "key": "store",
+      "label": "店ページ（E1）",
+      "path": "stores/J000015064.html"
+    },
+    {
+      "key": "journal",
+      "label": "ジャーナルの記事（E2）",
+      "path": "journal/2026-04-21-yabamisen-nagoya-insider.html"
+    },
+    {
+      "key": "feature",
+      "label": "特集の記事",
+      "path": "features/banquet.html"
+    },
+    {
+      "key": "features-index",
+      "label": "特集一覧",
+      "path": "features/index.html"
+    },
+    {
+      "key": "journal-index",
+      "label": "ジャーナル一覧",
+      "path": "journal/index.html"
+    }
+  ],
+  "sharedCss": "assets/css/nb.css",
+  "ratios": {
+    "design_pagesWithViolation": {
+      "num": 0,
+      "den": 6,
+      "ratio": 0
+    },
+    "design_pagesWithMotionCount": {
+      "num": 1,
+      "den": 6,
+      "ratio": 0.1667
+    },
+    "extra_pagesWithAny": {
+      "num": 6,
+      "den": 6,
+      "ratio": 1
+    },
+    "extra_perCssRule": {
+      "num": 16,
+      "den": 1222,
+      "ratio": 0.0131
+    },
+    "extra_byRule": {
+      "low-contrast": {
+        "pagesWithViolation": {
+          "num": 2,
+          "den": 6,
+          "ratio": 0.3333
+        },
+        "perCssRule": {
+          "num": 2,
+          "den": 1222,
+          "ratio": 0.0016
+        }
+      },
+      "tap-target-24": {
+        "pagesWithViolation": {
+          "num": 1,
+          "den": 6,
+          "ratio": 0.1667
+        },
+        "perCssRule": {
+          "num": 1,
+          "den": 1222,
+          "ratio": 0.0008
+        }
+      },
+      "tap-target-44": {
+        "pagesWithViolation": {
+          "num": 1,
+          "den": 6,
+          "ratio": 0.1667
+        },
+        "perCssRule": {
+          "num": 1,
+          "den": 1222,
+          "ratio": 0.0008
+        }
+      },
+      "input-font-16": {
+        "pagesWithViolation": {
+          "num": 1,
+          "den": 6,
+          "ratio": 0.1667
+        },
+        "perCssRule": {
+          "num": 2,
+          "den": 1222,
+          "ratio": 0.0016
+        }
+      },
+      "vh-100": {
+        "pagesWithViolation": {
+          "num": 2,
+          "den": 6,
+          "ratio": 0.3333
+        },
+        "perCssRule": {
+          "num": 2,
+          "den": 1222,
+          "ratio": 0.0016
+        }
+      },
+      "safe-area-bottom": {
+        "pagesWithViolation": {
+          "num": 1,
+          "den": 6,
+          "ratio": 0.1667
+        },
+        "perCssRule": {
+          "num": 2,
+          "den": 1222,
+          "ratio": 0.0016
+        }
+      },
+      "safe-area-no-viewport-fit": {
+        "pagesWithViolation": {
+          "num": 6,
+          "den": 6,
+          "ratio": 1
+        },
+        "perCssRule": {
+          "num": 6,
+          "den": 1222,
+          "ratio": 0.0049
+        }
+      },
+      "viewport-zoom-locked": {
+        "pagesWithViolation": {
+          "num": 0,
+          "den": 6,
+          "ratio": 0
+        },
+        "perCssRule": {
+          "num": 0,
+          "den": 1222,
+          "ratio": 0
+        }
+      }
+    },
+    "sharedCss_perCssRule": {
+      "num": 3,
+      "den": 296,
+      "ratio": 0.0101
+    }
+  },
+  "detail": {
+    "perPage": [
+      {
+        "key": "top",
+        "label": "トップ（店の検索・絞り込み・店のモーダル）",
+        "path": "index.html",
+        "cssRules": 990,
+        "extra": {
+          "total": 9,
+          "byRule": {
+            "low-contrast": 1,
+            "tap-target-24": 1,
+            "tap-target-44": 1,
+            "input-font-16": 2,
+            "vh-100": 1,
+            "safe-area-bottom": 2,
+            "safe-area-no-viewport-fit": 1,
+            "viewport-zoom-locked": 0
+          }
+        },
+        "design": {
+          "violations": 0,
+          "motion": 0
+        }
+      },
+      {
+        "key": "store",
+        "label": "店ページ（E1）",
+        "path": "stores/J000015064.html",
+        "cssRules": 97,
+        "extra": {
+          "total": 2,
+          "byRule": {
+            "low-contrast": 0,
+            "tap-target-24": 0,
+            "tap-target-44": 0,
+            "input-font-16": 0,
+            "vh-100": 1,
+            "safe-area-bottom": 0,
+            "safe-area-no-viewport-fit": 1,
+            "viewport-zoom-locked": 0
+          }
+        },
+        "design": {
+          "violations": 0,
+          "motion": 0
+        }
+      },
+      {
+        "key": "journal",
+        "label": "ジャーナルの記事（E2）",
+        "path": "journal/2026-04-21-yabamisen-nagoya-insider.html",
+        "cssRules": 14,
+        "extra": {
+          "total": 2,
+          "byRule": {
+            "low-contrast": 1,
+            "tap-target-24": 0,
+            "tap-target-44": 0,
+            "input-font-16": 0,
+            "vh-100": 0,
+            "safe-area-bottom": 0,
+            "safe-area-no-viewport-fit": 1,
+            "viewport-zoom-locked": 0
+          }
+        },
+        "design": {
+          "violations": 0,
+          "motion": 0
+        }
+      },
+      {
+        "key": "feature",
+        "label": "特集の記事",
+        "path": "features/banquet.html",
+        "cssRules": 46,
+        "extra": {
+          "total": 1,
+          "byRule": {
+            "low-contrast": 0,
+            "tap-target-24": 0,
+            "tap-target-44": 0,
+            "input-font-16": 0,
+            "vh-100": 0,
+            "safe-area-bottom": 0,
+            "safe-area-no-viewport-fit": 1,
+            "viewport-zoom-locked": 0
+          }
+        },
+        "design": {
+          "violations": 0,
+          "motion": 0
+        }
+      },
+      {
+        "key": "features-index",
+        "label": "特集一覧",
+        "path": "features/index.html",
+        "cssRules": 40,
+        "extra": {
+          "total": 1,
+          "byRule": {
+            "low-contrast": 0,
+            "tap-target-24": 0,
+            "tap-target-44": 0,
+            "input-font-16": 0,
+            "vh-100": 0,
+            "safe-area-bottom": 0,
+            "safe-area-no-viewport-fit": 1,
+            "viewport-zoom-locked": 0
+          }
+        },
+        "design": {
+          "violations": 0,
+          "motion": 1
+        }
+      },
+      {
+        "key": "journal-index",
+        "label": "ジャーナル一覧",
+        "path": "journal/index.html",
+        "cssRules": 35,
+        "extra": {
+          "total": 1,
+          "byRule": {
+            "low-contrast": 0,
+            "tap-target-24": 0,
+            "tap-target-44": 0,
+            "input-font-16": 0,
+            "vh-100": 0,
+            "safe-area-bottom": 0,
+            "safe-area-no-viewport-fit": 1,
+            "viewport-zoom-locked": 0
+          }
+        },
+        "design": {
+          "violations": 0,
+          "motion": 0
+        }
+      }
+    ],
+    "sharedCss": {
+      "cssRules": 296,
+      "total": 3,
+      "byRule": {
+        "low-contrast": 0,
+        "tap-target-24": 1,
+        "tap-target-44": 1,
+        "input-font-16": 0,
+        "vh-100": 1,
+        "safe-area-bottom": 0,
+        "safe-area-no-viewport-fit": 0,
+        "viewport-zoom-locked": 0
+      }
+    }
+  }
+}
