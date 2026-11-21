@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "files_scanned": 4,
+  "breakdown": {
+    "root": 1,
+    "features": 1,
+    "journal": 1,
+    "stores": 1,
+    "hubs": 0
+  },
+  "violations": [],
+  "motion": {
+    "enforce": true,
+    "enforceScopes": [
+      "assets/css/nb.css",
+      "index.html"
+    ],
+    "total": 0,
+    "byRule": {
+      "transition-all": 0,
+      "motion-duration": 0,
+      "motion-infinite": 0,
+      "motion-layout-prop": 0,
+      "smooth-scroll-js": 0
+    },
+    "byFile": {},
+    "violations": [],
+    "violationsTruncated": 0
+  }
+}
