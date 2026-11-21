@@ -1,6 +1,8 @@
 {
   "_doc": "店と Google の店舗情報の紐付けの状態（確認済み・要確認・不一致）ごとに、どの機能を出すかの唯一の情報源（MEO-003/MEO-004・計画書 docs/meo-plan-2026-10.md の 6.1 節・判断の記録 0046）。判定器は scripts/lib/place_binding.js の1本。閾値・帯・スイッチの変更はこのファイルで行い、スクリプトは触らない。不一致の紐付けは、どの機能にも使わない。要確認の紐付けは、allowReviewBands に挙げた帯だけ使う（帯は店名の一致率: sim-0・sim-lt-0.3・sim-0.3-0.6・sim-ge-0.6・branch-conflict）。show=false にすると、その機能を全店で出さない（戻すときは true に戻して次のビルドを待つ）。",
   "decidedAt": "2026-10-15",
+  "confirmedAlertThreshold": 50,
+  "_confirmedAlertThreshold_doc": "確認済みの紐付け数が前回計測より この値以上減ったとき、audit_places_binding.js --states --check が exit 1 で警報を出す（MEO-005 受け入れ条件5・2026-11-21）。50 は日ごとの揺れ（±3〜5件）の約10倍のマージン。閾値変更はこのファイルだけで行いスクリプトは触らない。実績値は data/places_binding_counts.json に記録される。",
   "features": {
     "phone": {
       "_doc": "電話のボタン（scripts/lib/phone_link.js の「電話確認」の欄）。オーナーの判断 2=A（2026-10-15）で、一致率 0.3 未満の帯と不一致を先に止めた。帯ごとの標本（2026-10-15・帯ごとに 30 組・data/places_binding_reviewed.json の sample=A2-2026-10-15）で、別の店は 一致率 0.3 未満 3/30・0.3〜0.6 1/30・0.6 以上 2/30・支店名の食い違い 1/30 だった。判断 3 の基準（別の店が 1 割以上の帯は出さない）で、今の許す帯のままにする。",

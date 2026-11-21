@@ -1,0 +1,5 @@
+{
+  "_doc": "audit_places_binding.js --states が実行のたびに更新する確認済み紐付け数の記録（MEO-005 受け入れ条件5）。前回値との差が place_binding_policy.json の confirmedAlertThreshold を超えると --check が exit 1 を返す。",
+  "lastConfirmedCount": 3204,
+  "updatedAt": "2026-11-21"
+}

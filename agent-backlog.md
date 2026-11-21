@@ -192,8 +192,9 @@
 
 ### [MEO-005] 地図リンクを Google の公式の形にし、公開機能のスイッチと毎日の見張りを付ける
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **due**: 2026-10-29
+- **done**: 2026-11-21
 - **detected**: 2026-10-15
 - **category**: データ / 信頼
 - **owner**: Builder
@@ -206,6 +207,7 @@
   3. 機能ごと（電話・評価・口コミ信頼度・place_id の地図リンク）の「出す・出さない」と「必要な状態」を、`data/` の設定ファイル 1 つで切り替えられる。切ったビルドでその機能が消える
   4. 夜間 QA に、状態ごとの店の数を数える検査（soft）が 1 行入っている。確認済みでない紐付けで電話・評価を出す店が 0 になったら hard に上げる
   5. 確認済みの数の急な減りを知らせる閾値は、2 週間の日ごとの揺れを測ってから決め、その値を記録している
+- **進み具合（2026-11-21）**: 受け入れ条件5の閾値を実装・記録。`data/place_binding_policy.json` に `confirmedAlertThreshold: 50`（日ごとの揺れ±3〜5件の10倍マージン）を追加、`data/places_binding_counts.json` を新設（初回値3204・2026-11-21）、`scripts/audit_places_binding.js --states --check` に前回値との比較ロジックを追加。5条件すべて完了。
 - **関連**: [[MEO-004]]／`scripts/nightly_qa.js`／`scripts/audit_places_binding.js`
 
 ### [MEO-006] 予約・電話・地図を分けて毎日数え、「現在地」ボタンの押下を数える（位置は送らない）

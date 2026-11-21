@@ -320,9 +320,26 @@ function main() {
   if (argv.includes('--states')) {
     const r = states(stores, places);
     const bad = Object.values(r.violations).reduce((a, v) => a + v.length, 0);
+
+    const COUNTS_PATH = path.join(ROOT, 'data', 'places_binding_counts.json');
+    const POLICY_PATH = path.join(ROOT, 'data', 'place_binding_policy.json');
+    const policyRaw = fs.existsSync(POLICY_PATH) ? readJson(POLICY_PATH) : {};
+    const confirmedThreshold = typeof policyRaw.confirmedAlertThreshold === 'number'
+      ? policyRaw.confirmedAlertThreshold : 50;
+    const currentConfirmed = r.byState['confirmed'] || 0;
+    let confirmedDropAlert = null;
+    if (fs.existsSync(COUNTS_PATH)) {
+      const prev = readJson(COUNTS_PATH);
+      const prevCount = typeof prev.lastConfirmedCount === 'number' ? prev.lastConfirmedCount : null;
+      if (prevCount !== null && prevCount - currentConfirmed > confirmedThreshold) {
+        confirmedDropAlert = { prev: prevCount, current: currentConfirmed,
+          drop: prevCount - currentConfirmed, threshold: confirmedThreshold };
+      }
+    }
+
     if (argv.includes('--json')) {
-      console.log(JSON.stringify(r, null, 2));
-      if (argv.includes('--check') && bad > 0) process.exit(1);
+      console.log(JSON.stringify({ ...r, confirmedDropAlert }, null, 2));
+      if (argv.includes('--check') && (bad > 0 || confirmedDropAlert)) process.exit(1);
       return;
     }
     const keys = Object.keys(r.byState).sort();
@@ -341,8 +358,16 @@ function main() {
     for (const f of ['phone', 'rating', 'trust', 'map']) {
       for (const v of r.violations[f].slice(0, 5)) console.log(`  ${f}: ${v.name}（${v.key}）状態=${v.state} 理由=${v.reason}`);
     }
-    if (argv.includes('--check') && bad > 0) {
-      console.error(`設定が許していない状態で出している店が ${bad} 件あります（build.js の関門か欄の書き出しを確かめる）`);
+    console.log(`確認済みの紐付け: ${currentConfirmed} 件（閾値: ${confirmedThreshold} 件減で警報）`);
+    // 確認済みカウントを更新（比較用の前回値として保存）
+    const existingDoc = fs.existsSync(COUNTS_PATH) ? (readJson(COUNTS_PATH)._doc || '') : '';
+    fs.writeFileSync(COUNTS_PATH, JSON.stringify(
+      { _doc: existingDoc, lastConfirmedCount: currentConfirmed, updatedAt: new Date().toISOString().slice(0, 10) }, null, 2) + '\n', 'utf8');
+    if (confirmedDropAlert) {
+      console.error(`[警告] 確認済みの店が前回より ${confirmedDropAlert.drop} 件減りました（前回: ${confirmedDropAlert.prev} → 今回: ${confirmedDropAlert.current}・閾値: ${confirmedDropAlert.threshold}）`);
+    }
+    if (argv.includes('--check') && (bad > 0 || confirmedDropAlert)) {
+      if (bad > 0) console.error(`設定が許していない状態で出している店が ${bad} 件あります（build.js の関門か欄の書き出しを確かめる）`);
       process.exit(1);
     }
     return;
