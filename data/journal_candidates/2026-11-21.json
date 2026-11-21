@@ -1,0 +1,482 @@
+{
+  "date": "2026-11-21",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅で鍋のおすすめ5選、もつ鍋・火鍋・すき焼きを忘年会やひとりで",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 96,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "すき焼き",
+          "feature": "features/nagoya-sukiyaki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 7件 (エリア,予約,シーン,雰囲気,看板,おすすめ,使い分け) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 127字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「すき焼き」+2"
+        ]
+      },
+      "gate_note": "96点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4",
+      "plan_topic_bonus": 2,
+      "plan_topic_note": "週の予定の題材「デート」に一致 +2（並べ替えのみ・採点と判定は不変）"
+    },
+    {
+      "id": "c4",
+      "title_draft": "名駅で火鍋とすき焼き、辛い鍋と甘い鍋の使い分け",
+      "verdict": "HOLD",
+      "total": 66,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 6,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "すき焼き",
+          "feature": "features/nagoya-sukiyaki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 1件 (比較) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 36字（短すぎ）→ +0",
+          "title 23字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「すき焼き」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "名駅の忘年会に鍋の店4選、個室と席料を先に確かめる",
+      "verdict": "HOLD",
+      "total": 61,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 53字 +2",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「個室」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "名駅でひとりもつ鍋、1人前から頼める店",
+      "verdict": "HOLD",
+      "total": 59,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 6,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 31字（短すぎ）→ +0",
+          "title 19字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "国際センター駅近くの鍋2店、もつ鍋と水炊き",
+      "verdict": "HOLD",
+      "total": 56,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 6,
+        "novelty": 5,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 30字（短すぎ）→ +0",
+          "title 21字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「名駅」+1",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": {
+    "topic": "デート",
+    "week": "2026-W47",
+    "slot": 5,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "96点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "weekly_digest",
+      "title_draft": "名駅で鍋のおすすめ5選、もつ鍋・火鍋・すき焼きを忘年会やひとりで",
+      "lead_draft": "風が冷たくなってきた名古屋駅のまわりで、鍋を出す店を5つ集めました。駅から歩いて10分以内で、もつ鍋・火鍋・すき焼き・水炊きと味の違う店を選んでいます。ひとりで寄れる店、個室がある店、たばこが吸える店など、行く前に分かれ目になることも1つずつ書きました。",
+      "angle": "名駅エリア×鍋のおすすめ5選。もつ鍋・火鍋・すき焼き・水炊きの看板と雰囲気、ひとり・忘年会・デートなどどのシーンに合うかの使い分けを店ごとに短く。予約・席・喫煙の注意点を1つずつ",
+      "main_store": {
+        "name": "博多もつ鍋 おおやま JRゲートタワー店",
+        "id": "J001277051",
+        "area": "名駅",
+        "genre": "鍋"
+      },
+      "sources": [
+        {
+          "label": "ウェザーニュース「今日は北日本で立冬らしい寒さ　西日本も風が冷たい」",
+          "url": "https://weathernews.jp/news/202611/070121/",
+          "date": "2026-11-07"
+        },
+        {
+          "label": "もつ鍋 おおやま 公式サイト（JRゲートタワー店）",
+          "url": "https://www.motu-ooyama.com/shop/nagoya_jrgt/",
+          "date": "2026-11-21"
+        },
+        {
+          "label": "小肥羊 名古屋駅前店 LINE公式アカウント",
+          "url": "https://page.line.me/efz9397k",
+          "date": "2026-11-21"
+        },
+        {
+          "label": "ホットペッパー 博多もつ鍋 おおやま JRゲートタワー店",
+          "url": "https://www.hotpepper.jp/strJ001277051/",
+          "date": "2026-11-21"
+        },
+        {
+          "label": "ホットペッパー 牛もつ鍋と野菜巻串 奥だや 名駅店",
+          "url": "https://www.hotpepper.jp/strJ001160393/",
+          "date": "2026-11-21"
+        },
+        {
+          "label": "ホットペッパー 和牛鍋牛スタイル",
+          "url": "https://www.hotpepper.jp/strJ004726000/",
+          "date": "2026-11-21"
+        },
+        {
+          "label": "ホットペッパー 鍋や 湯気ト煙",
+          "url": "https://www.hotpepper.jp/strJ004633160/",
+          "date": "2026-11-21"
+        },
+        {
+          "label": "ホットペッパー 火鍋 小肥羊 名古屋駅前店",
+          "url": "https://www.hotpepper.jp/strJ001185726/",
+          "date": "2026-11-21"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c2",
+      "theme": "weekly_digest",
+      "title_draft": "名駅の忘年会に鍋の店4選、個室と席料を先に確かめる",
+      "lead_draft": "名古屋駅のまわりで忘年会に使える鍋の店を4つ。個室の有無と、夜の席料がかかるかどうかを店ごとに並べました。",
+      "angle": "名駅×忘年会×鍋。個室・席料・コースの有無で4店を紹介",
+      "main_store": {
+        "name": "牛もつ鍋と野菜巻串 奥だや 名駅店",
+        "id": "J001160393",
+        "area": "名駅",
+        "genre": "鍋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 奥だや 名駅店",
+          "url": "https://www.hotpepper.jp/strJ001160393/",
+          "date": "2026-11-21"
+        },
+        {
+          "label": "ホットペッパー 火鍋 小肥羊 名古屋駅前店",
+          "url": "https://www.hotpepper.jp/strJ001185726/",
+          "date": "2026-11-21"
+        },
+        {
+          "label": "ホットペッパー 博多もつ鍋 おおやま JRゲートタワー店",
+          "url": "https://www.hotpepper.jp/strJ001277051/",
+          "date": "2026-11-21"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c3",
+      "theme": "weekly_digest",
+      "title_draft": "名駅でひとりもつ鍋、1人前から頼める店",
+      "lead_draft": "名古屋駅直結のビルで、もつ鍋を1人前から頼める店を紹介します。",
+      "angle": "名駅×一人飲み×もつ鍋。1人前から頼めるかを確かめる",
+      "main_store": {
+        "name": "博多もつ鍋 おおやま JRゲートタワー店",
+        "id": "J001277051",
+        "area": "名駅",
+        "genre": "鍋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 博多もつ鍋 おおやま JRゲートタワー店",
+          "url": "https://www.hotpepper.jp/strJ001277051/",
+          "date": "2026-11-21"
+        },
+        {
+          "label": "ウェザーニュース",
+          "url": "https://weathernews.jp/news/202611/070121/",
+          "date": "2026-11-07"
+        },
+        {
+          "label": "ホットペッパー 奥だや 名駅店",
+          "url": "https://www.hotpepper.jp/strJ001160393/",
+          "date": "2026-11-21"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c4",
+      "theme": "weekly_digest",
+      "title_draft": "名駅で火鍋とすき焼き、辛い鍋と甘い鍋の使い分け",
+      "lead_draft": "名古屋駅のまわりで、四川の火鍋と和牛のすき焼きを出す店を2つ紹介します。",
+      "angle": "名駅×火鍋とすき焼きの2店比較",
+      "main_store": {
+        "name": "火鍋 小肥羊 しゃおふぇいやん 名古屋駅前店",
+        "id": "J001185726",
+        "area": "名駅",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 火鍋 小肥羊 名古屋駅前店",
+          "url": "https://www.hotpepper.jp/strJ001185726/",
+          "date": "2026-11-21"
+        },
+        {
+          "label": "ホットペッパー 和牛鍋牛スタイル",
+          "url": "https://www.hotpepper.jp/strJ004726000/",
+          "date": "2026-11-21"
+        },
+        {
+          "label": "ウェザーニュース",
+          "url": "https://weathernews.jp/news/202611/070121/",
+          "date": "2026-11-07"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c5",
+      "theme": "weekly_digest",
+      "title_draft": "国際センター駅近くの鍋2店、もつ鍋と水炊き",
+      "lead_draft": "名駅の西、国際センター駅のそばで鍋を出す店を2つ紹介します。",
+      "angle": "国際センター駅×鍋2店",
+      "main_store": {
+        "name": "鍋や 湯気ト煙",
+        "id": "J004633160",
+        "area": "名駅",
+        "genre": "鍋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 鍋や 湯気ト煙",
+          "url": "https://www.hotpepper.jp/strJ004633160/",
+          "date": "2026-11-21"
+        },
+        {
+          "label": "ホットペッパー 奥だや 名駅店",
+          "url": "https://www.hotpepper.jp/strJ001160393/",
+          "date": "2026-11-21"
+        },
+        {
+          "label": "ウェザーニュース",
+          "url": "https://weathernews.jp/news/202611/070121/",
+          "date": "2026-11-07"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}
