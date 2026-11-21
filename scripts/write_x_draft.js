@@ -93,10 +93,26 @@ function loadPlan(date, policy, now = new Date()) {
   return p.ok ? { plan: p.plan } : { plan: null, reason: p.reason };
 }
 
+/** 題名が「おすすめ◯選」「5選」の記事か（docs/decisions/0080 の◯選の柱）。 */
+function isPicksTitle(title) {
+  return /[0-9０-９一二三四五六七八九十]+選/.test(String(title || ''));
+}
+
+/**
+ * ◯選の記事の日は、週の型の割り当て（nb_kind）より picks を優先する（ADR 0080 決定4。2026-11-21 に
+ * 「名駅で鍋のおすすめ5選」が割り当ての number で投稿され、◯選の形にならなかった）。
+ * 割り当ての記録は残し、followed=false＋kind_overridden で「指定に従わなかった日」と分かるようにする。
+ */
+function applyPicksOverride(plan, title) {
+  if (!plan || !plan.nb_kind || plan.nb_kind === 'picks' || !isPicksTitle(title)) return plan;
+  return { ...plan, nb_kind: null, kind_overridden: { requested: plan.nb_kind, reason: 'picks_article' } };
+}
+
 /** 文面づくりの指示に足す節（指定が1つも無ければ空）。 */
 function planSection(plan, title) {
   if (!plan) return [];
   const lines = [];
+  if (plan.kind_overridden) lines.push('- この記事は「おすすめ◯選」の記事なので、型は `picks` で書く（今週の型の割り当てより優先）。');
   // 題材は、記事の題名が予定の題材に明確に一致するときだけ。無理に話題を変えない
   if (plan.topic && title && PT.matchesTopic({ title_draft: title }, plan.topic)) lines.push(`- 今週の予定の題材は「${plan.topic}」。この記事はその題材に当たるので、読む人がその場面で使える点を前に出してよい（記事にない事実は足さない）。`);
   if (plan.nb_kind) lines.push(`- 型は \`${plan.nb_kind}\` で書く。記事の事実がどうしてもその型に合わないときだけ、いちばん合う別の型にしてよい。`);
@@ -111,8 +127,8 @@ function planRecord(plan, type) {
   return {
     week: plan.week, slot: plan.slot, role: plan.role, experiment_id: plan.experiment_id, cell_id: plan.cell_id,
     topic: plan.topic ?? null, url_variant: plan.url_variant ?? null,
-    requested: { nb_kind: plan.nb_kind, first_line: plan.first_line, length: plan.length },
-    ...(plan.nb_kind ? { followed: type === plan.nb_kind } : {}),
+    requested: { nb_kind: plan.kind_overridden ? plan.kind_overridden.requested : plan.nb_kind, first_line: plan.first_line, length: plan.length },
+    ...(plan.kind_overridden ? { followed: false, kind_overridden: plan.kind_overridden.reason } : plan.nb_kind ? { followed: type === plan.nb_kind } : {}),
   };
 }
 
@@ -326,6 +342,7 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
     plan = null;
     planReason = 'topic_experiment';
   }
+  plan = applyPicksOverride(plan, entry.title);
   if (plan) out.plan = plan; else if (planReason !== 'off') out.plan_skipped = planReason;
 
   const attempts = Math.max(1, Number(cfg.attempts) || 1);
@@ -429,4 +446,4 @@ async function main() {
 
 if (require.main === module) main();
 
-module.exports = { loadTopicExperiment, topicExperimentSection, firstLineFollowed, seriesFor, seriesSection, loadPlan, planSection, planRecord, run, parseArgs, parseReply, articleMaterial, buildPrompt, checkAll, summary, callClaude };
+module.exports = { isPicksTitle, applyPicksOverride, loadTopicExperiment, topicExperimentSection, firstLineFollowed, seriesFor, seriesSection, loadPlan, planSection, planRecord, run, parseArgs, parseReply, articleMaterial, buildPrompt, checkAll, summary, callClaude };

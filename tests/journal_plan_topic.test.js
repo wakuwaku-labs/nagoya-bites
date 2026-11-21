@@ -106,3 +106,19 @@ test('loadPlanTopic: オフ・無い・古い・別の週は topic なし。使�
     assert.strictEqual(P.loadPlanTopic('2026-10-15', on, new Date('2026-12-01T00:00:00Z')).reason, 'stale');
   } finally { if (old === undefined) delete process.env.SNS_ANALYZER_X_DIR; else process.env.SNS_ANALYZER_X_DIR = old; }
 });
+
+test('◯選の記事は週の型の割り当てより picks を優先し、従わなかった日として記録する（ADR 0080）', () => {
+  const W = require('../scripts/write_x_draft');
+  assert.ok(W.isPicksTitle('名駅で鍋のおすすめ5選、もつ鍋・火鍋'));
+  assert.ok(!W.isPicksTitle('栄の居酒屋の昼飲み'));
+  const plan = { week: '2026-W47', slot: 5, role: 'explore', experiment_id: 'e', cell_id: 'nb_kind=number', nb_kind: 'number', first_line: null, length: null };
+  const o = W.applyPicksOverride(plan, '名駅で鍋のおすすめ5選');
+  assert.strictEqual(o.nb_kind, null);
+  assert.ok(W.planSection(o, '名駅で鍋のおすすめ5選').join('\n').includes('`picks`'));
+  const rec = W.planRecord(o, 'picks');
+  assert.strictEqual(rec.requested.nb_kind, 'number');
+  assert.strictEqual(rec.followed, false);
+  assert.strictEqual(rec.kind_overridden, 'picks_article');
+  assert.strictEqual(W.applyPicksOverride(plan, '栄の居酒屋の昼飲み'), plan);
+  assert.strictEqual(W.applyPicksOverride({ ...plan, nb_kind: 'picks' }, '鍋のおすすめ5選').nb_kind, 'picks');
+});

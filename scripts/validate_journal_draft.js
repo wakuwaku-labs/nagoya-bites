@@ -425,7 +425,8 @@ function checkJournal(htmlPath, mdPath) {
   // 19. 読みやすさ（WARNING のみ・FAIL にしない・本人 2026-11-19 の依頼・docs/decisions/0080）
   //     素人が「どんな店か」を思い浮かべられる書き方か。文の長さ・料金の数字の多さ・業界の言葉を警告するだけ。公開は止めない
   try {
-    const bodyText = artBody.replace(/<(script|style)[\s\S]*?<\/\1>/g, '').replace(/<\/(p|li|h\d|div|tr)>/g, '\n').replace(/<[^>]+>/g, '');
+    // 「来店前に確かめたいこと」の欄（nb-check）は定型の項目名で、書き手の文ではないので測らない
+    const bodyText = artBody.replace(/<(script|style)[\s\S]*?<\/\1>/g, '').replace(/<details class="nb-jbox nb-check"[\s\S]*?<\/details>/g, '').replace(/<\/(p|li|h\d|div|tr)>/g, '\n').replace(/<[^>]+>/g, '');
     const rd = require('./lib/editorial_standard').readabilityWarnings(decode(bodyText));
     results.push({
       id: '19_readability_warn', ok: true, warn: rd.warnings.length > 0,

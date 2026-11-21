@@ -21,3 +21,9 @@ test('readabilityWarnings: 親しみやすい文は警告なし・料金だら�
   assert.strictEqual(readabilityWarnings('窯で焼くピザが名物の小さな店です。カウンターがあり、ひとりでも入りやすい雰囲気です。').warnings.length, 0);
   assert.ok(readabilityWarnings('前日は50%。当日は100%。深夜は10%。ランチは900円。夜は3000円。').warnings.length > 0);
 });
+
+test('measureReadability: 言い換えの後に括弧で添えた業界語は数えない（2026-11-21 の誤検知）', () => {
+  const r = measureReadability('16時からは、席に座るだけでかかるお金（席料）が1人ずつかかります。席に着くと出る小鉢(お通し)があります。');
+  assert.deepStrictEqual(r.jargonHits, []);
+  assert.deepStrictEqual(measureReadability('席料は500円です。').jargonHits.map((j) => j.word), ['席料']);
+});

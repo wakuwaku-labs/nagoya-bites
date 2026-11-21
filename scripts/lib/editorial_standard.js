@@ -169,9 +169,13 @@ function measureReadability(text, std = loadStandard(), longChars) {
   const chars = sents.reduce((a, x) => a + x.length, 0);
   const money = (t.match(/\d[\d,.]*\s*(?:円|%|％|割)/g) || []).length;
   const jargonHits = [];
-  (voice(std).jargon || []).forEach((j) => {
-    const re = new RegExp(String(j.word).replace(/[.*+?^${}()|[\]\\\/]/g, '\\$&'), 'g');
-    const n = (t.match(re) || []).length;
+  const esc = (w) => String(w).replace(/[.*+?^${}()|[\]\\\/]/g, '\\$&');
+  // 言い換えた後に括弧で添えた語（例「席に座るだけでかかるお金（席料）」）は、決まりどおりの書き方なので数えない
+  const jargon = voice(std).jargon || [];
+  const tj = jargon.reduce((acc, j) => acc.replace(new RegExp(`[（(]${esc(j.word)}[）)]`, 'g'), ''), t);
+  jargon.forEach((j) => {
+    const re = new RegExp(esc(j.word), 'g');
+    const n = (tj.match(re) || []).length;
     if (n) jargonHits.push({ word: j.word, count: n, plain: j.plain });
   });
   return {

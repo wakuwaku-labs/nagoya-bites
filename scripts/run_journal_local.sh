@@ -892,6 +892,14 @@ log "X 用の画像カードを作成（make_x_image_card.js）"
 run_with_timeout 120 node scripts/make_x_image_card.js --date "$TODAY_JST" \
   || log "⚠️ make_x_image_card.js 失敗（非ブロッキング・X は画像なしで投稿）"
 
+# ---- 5k. 写真の提供表示と記事台帳をラッパーが必ず足す（2026-11-21 の build.yml 失敗の再発防止）----
+# 本文写真（ホットペッパー）は足す段がフッターの生成より後なので、「画像提供」の表示が漏れることがある。
+# 確認台帳（data/article_review_ledger.json）は書き手の Claude が足す手順だったが、足さない日に npm test が落ちた。
+# どちらもべき等・通信なし。失敗しても公開は止めない（取りこぼしは CI の npm test が拾う）。
+log "写真の提供表示と記事台帳を反映（add_hp_credit.js・build_article_review_ledger.js）"
+node scripts/add_hp_credit.js >>"$LOG" 2>&1 || log "⚠️ add_hp_credit.js 失敗（非ブロッキング）"
+node scripts/build_article_review_ledger.js >>"$LOG" 2>&1 || log "⚠️ build_article_review_ledger.js 失敗（非ブロッキング）"
+
 # ---- 6. ラッパーが commit & push を確実に実行 ----
 # claude (journal-today.md Step 10) は「ユーザー承認後のみ push」と定義されているため
 # ヘッドレスでは承認者が居らず未 push 終了になる。それを補うため、ここで強制 commit/push する。
@@ -928,6 +936,7 @@ TRACKED_UPDATES=(
   data/pending_stores.json
   data/editorial_column_backlog.json
   data/journal_stash_alert.json
+  data/article_review_ledger.json
   "$PLACES_LOCAL_USAGE_FILE"
   index.html
   journal/feed.xml
