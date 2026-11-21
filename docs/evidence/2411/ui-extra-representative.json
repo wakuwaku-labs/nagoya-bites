@@ -1,0 +1,143 @@
+{
+  "files_scanned": 5,
+  "total": 17,
+  "byRule": {
+    "low-contrast": 2,
+    "tap-target-24": 2,
+    "tap-target-44": 2,
+    "input-font-16": 2,
+    "vh-100": 3,
+    "safe-area-bottom": 2,
+    "safe-area-no-viewport-fit": 4,
+    "viewport-zoom-locked": 0
+  },
+  "byFile": {
+    "index.html": 9,
+    "assets/css/nb.css": 3,
+    "journal/2026-04-21-yabamisen-nagoya-insider.html": 2,
+    "stores/J000015064.html": 2,
+    "features/banquet.html": 1
+  },
+  "violations": [
+    {
+      "file": "assets/css/nb.css",
+      "rule": "vh-100",
+      "line": 184,
+      "selector": "#main-nav",
+      "detail": "height:100vh"
+    },
+    {
+      "file": "assets/css/nb.css",
+      "rule": "tap-target-24",
+      "line": 263,
+      "selector": "nav a[aria-current=\"page\"]::after",
+      "detail": "高さ 1px"
+    },
+    {
+      "file": "assets/css/nb.css",
+      "rule": "tap-target-44",
+      "line": 263,
+      "selector": "nav a[aria-current=\"page\"]::after",
+      "detail": "高さ 1px"
+    },
+    {
+      "file": "index.html",
+      "rule": "input-font-16",
+      "line": 336,
+      "selector": ".search-wrap input",
+      "detail": "font-size 14px"
+    },
+    {
+      "file": "index.html",
+      "rule": "input-font-16",
+      "line": 361,
+      "selector": ".sticky-search input",
+      "detail": "font-size 13.12px"
+    },
+    {
+      "file": "index.html",
+      "rule": "safe-area-bottom",
+      "line": 405,
+      "selector": ".filter-sheet-wrap",
+      "detail": "bottom:0"
+    },
+    {
+      "file": "index.html",
+      "rule": "low-contrast",
+      "line": 806,
+      "selector": ".modal-cta-call",
+      "detail": "4.23:1（var(--green-dim)!important on var(--surface)）"
+    },
+    {
+      "file": "index.html",
+      "rule": "safe-area-bottom",
+      "line": 988,
+      "selector": ".mobile-cta-bar",
+      "detail": "bottom:0"
+    },
+    {
+      "file": "index.html",
+      "rule": "vh-100",
+      "line": 1043,
+      "selector": "#pwa-banner-ios",
+      "detail": "max-height:calc(100vh - 2rem)"
+    },
+    {
+      "file": "index.html",
+      "rule": "tap-target-24",
+      "line": 1201,
+      "selector": ".card-cta a.card-cta-map svg",
+      "detail": "高さ 18px"
+    },
+    {
+      "file": "index.html",
+      "rule": "tap-target-44",
+      "line": 1201,
+      "selector": ".card-cta a.card-cta-map svg",
+      "detail": "高さ 18px"
+    },
+    {
+      "file": "index.html",
+      "rule": "safe-area-no-viewport-fit",
+      "line": 250,
+      "selector": "meta viewport",
+      "detail": "width=device-width, initial-scale=1.0"
+    },
+    {
+      "file": "features/banquet.html",
+      "rule": "safe-area-no-viewport-fit",
+      "line": 11,
+      "selector": "meta viewport",
+      "detail": "width=device-width, initial-scale=1.0"
+    },
+    {
+      "file": "journal/2026-04-21-yabamisen-nagoya-insider.html",
+      "rule": "low-contrast",
+      "line": 59,
+      "selector": ".store-link-map",
+      "detail": "3.56:1（#fff!important on #4285F4）"
+    },
+    {
+      "file": "journal/2026-04-21-yabamisen-nagoya-insider.html",
+      "rule": "safe-area-no-viewport-fit",
+      "line": 11,
+      "selector": "meta viewport",
+      "detail": "width=device-width, initial-scale=1.0"
+    },
+    {
+      "file": "stores/J000015064.html",
+      "rule": "vh-100",
+      "line": 84,
+      "selector": "body",
+      "detail": "min-height:100vh"
+    },
+    {
+      "file": "stores/J000015064.html",
+      "rule": "safe-area-no-viewport-fit",
+      "line": 11,
+      "selector": "meta viewport",
+      "detail": "width=device-width, initial-scale=1.0"
+    }
+  ],
+  "violations_truncated": 0
+}
