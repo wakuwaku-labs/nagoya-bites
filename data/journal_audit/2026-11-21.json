@@ -1,0 +1,244 @@
+{
+  "date": "2026-11-21",
+  "slug": "2026-11-21-meieki-nabe-motsunabe-hinabe-5",
+  "recorded_at": "2026-11-21T05:13:28.681Z",
+  "mode": "shadow",
+  "enforced": false,
+  "note": "記録だけ。公開は止めていない",
+  "lane_if_enforced": "hold",
+  "published": true,
+  "published_by_lane": "existing_gate",
+  "reasons": [
+    {
+      "type": "review:other",
+      "detail": "煙が苦手な人や、子ども連れには向きません。 ／ 抜粋では子ども連れ可なのに、記事は子ども連れに向かないと書いている"
+    },
+    {
+      "type": "review:other",
+      "detail": "来店前に確かめたいこと お通し・席料 確認できなかった : 記載なし。 ／ 席料はホットペッパーに記載があるのに「記載なし」としている"
+    },
+    {
+      "type": "review:other",
+      "detail": "席の時間制 確認できなかった : 記載なし。 ／ おおやまの公式ページに2時間制の記載があるのに「記載なし」としている"
+    },
+    {
+      "type": "review:other",
+      "detail": "予約・キャンセル 確認できなかった : 記載なし。 ／ 湯気ト煙のキャンセル規定が載っているのに「記載なし」としている"
+    },
+    {
+      "type": "review:other",
+      "detail": "支払い方法 確認できなかった : 記載なし。 ／ 支払い方法の記載があるのに「記載なし」としている"
+    },
+    {
+      "type": "review:other",
+      "detail": "喫煙 確認できなかった : 記載なし。 ／ 喫煙の扱いは記載があり、記事本文でも書いているのに「記載なし」としている"
+    }
+  ],
+  "checks": {
+    "validator": "pass",
+    "claims": {
+      "ledger_by": "writer",
+      "summary": {
+        "claims": 39,
+        "verified": 39,
+        "unverifiable": 0,
+        "mismatch": 0,
+        "stale": 0,
+        "not_applicable": 0,
+        "paired": 5,
+        "hedge_dropped": 0,
+        "issues": 0,
+        "core_issues": 0
+      },
+      "fetch": {
+        "sources": 9,
+        "ok": 9,
+        "failed": []
+      }
+    },
+    "independent_review": {
+      "ok": true,
+      "reason": null,
+      "model": null,
+      "prompt_version": "review-2026-11-17",
+      "findings": 6,
+      "verified_findings": 6
+    }
+  },
+  "score": "96点 PASS_WITH_NOTE（自動公開ライン100点）。不足は話題性 -10（SNSの言及URLなし・独立ドメイン4件）・一次報道 -4。土曜のおすすめ◯選。名駅の鍋5店は data/stores.json の営業中から選び、11月21日にホットペッパーと公式（おおやま公式サイト・小肥羊LINE公式）で確認。候補だった『ここや 名駅西口本店』(J000729599)はホットペッパーに2026年10月10日閉店の案内があり除外（data は OPERATIONAL のまま・要データ修正）。おおやまのもつ鍋の値段はホットペッパー2,178円・公式2,508円で食い違い、本文には予算帯だけ書いた。本文写真2枚（小肥羊・牛スタイル）は自動で入ったホットペッパー写真で、目視の確認はしていない",
+  "sources": [
+    {
+      "url": "https://weathernews.jp/news/202611/070121/",
+      "label": "ウェザーニュース「今日は北日本で立冬らしい寒さ 西日本も風が冷たい」",
+      "type": "公式・その他",
+      "date": "2026-11-07",
+      "fetched_at": "2026-11-21T05:12:45.648Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 2323,
+        "sha256": "d8afec30ad9e3ea16f7a64b0409ec164213a40d1886ea69e8d583bd357192e8b"
+      }
+    },
+    {
+      "url": "https://www.motu-ooyama.com/shop/nagoya_jrgt/",
+      "label": "もつ鍋 おおやま 公式サイト（JRゲートタワー店）",
+      "type": "公式・その他",
+      "date": "2026-11-21",
+      "fetched_at": "2026-11-21T05:12:46.217Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 11638,
+        "sha256": "888be6982398310aa0ce1e82e80795265be80397da0a7030ee7d2970dd06fd86"
+      }
+    },
+    {
+      "url": "https://page.line.me/efz9397k",
+      "label": "小肥羊 名古屋駅前店 LINE公式アカウント",
+      "type": "公式・その他",
+      "date": "2026-11-21",
+      "fetched_at": "2026-11-21T05:12:46.783Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 542,
+        "sha256": "7651294cac84d1e017e1fa30474c2b082ecfaa23a6cbb3a37e512924085ddc2e"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001277051/",
+      "label": "ホットペッパー 博多もつ鍋 おおやま JRゲートタワー店",
+      "type": "掲載サイト",
+      "date": "2026-11-21",
+      "fetched_at": "2026-11-21T05:12:47.337Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 6804,
+        "sha256": "239ad2547385509edc506648a532e8536e7c420c4979db19b4965577fb6ab46c"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001185726/",
+      "label": "ホットペッパー 火鍋 小肥羊 名古屋駅前店",
+      "type": "掲載サイト",
+      "date": "2026-11-21",
+      "fetched_at": "2026-11-21T05:12:47.857Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 8622,
+        "sha256": "fcf47c7c7e7202bf0e82efff4b33bf8a1c61c18192dbc7c5e26e4183d4c621d8"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ004726000/",
+      "label": "ホットペッパー 和牛鍋牛スタイル",
+      "type": "掲載サイト",
+      "date": "2026-11-21",
+      "fetched_at": "2026-11-21T05:12:48.298Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 3640,
+        "sha256": "a4968db004d1d6cca58b002256c74b689dc6123c800c9b2fc468f4e40e60c9d3"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001160393/",
+      "label": "ホットペッパー 牛もつ鍋と野菜巻串 奥だや 名駅店",
+      "type": "掲載サイト",
+      "date": "2026-11-21",
+      "fetched_at": "2026-11-21T05:12:49.806Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 7827,
+        "sha256": "c10d024944cf31bb73dabbc1df2b95e3d38237a4675369d3855b86da0f02ea81"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ004633160/",
+      "label": "ホットペッパー 鍋や 湯気ト煙",
+      "type": "掲載サイト",
+      "date": "2026-11-21",
+      "fetched_at": "2026-11-21T05:12:50.565Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 6434,
+        "sha256": "9726f977af86f936cb3b047c19f44e44f791b5eb6beb3911fbc221eea2405b36"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ000729599/",
+      "label": "ホットペッパー 博多もつ鍋専門店 ここや 名駅西口本店（閉店の案内）",
+      "type": "掲載サイト",
+      "date": "2026-11-21",
+      "fetched_at": "2026-11-21T05:12:50.928Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 6480,
+        "sha256": "0d3c7eba74b9059295e8baa0a858582b8a7834d45abba929bd4e2d0bf25cb96f"
+      }
+    }
+  ],
+  "findings": [
+    {
+      "sentence": "煙が苦手な人や、子ども連れには向きません。",
+      "kind": "other",
+      "quote": "お子様連れ お子様連れOK",
+      "reason": "抜粋では子ども連れ可なのに、記事は子ども連れに向かないと書いている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "来店前に確かめたいこと お通し・席料 確認できなかった : 記載なし。",
+      "kind": "other",
+      "quote": "16:00~お席料として、お一人様330円(税込)を頂戴しております。",
+      "reason": "席料はホットペッパーに記載があるのに「記載なし」としている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "席の時間制 確認できなかった : 記載なし。",
+      "kind": "other",
+      "quote": "※お席2時間制を頂いております。",
+      "reason": "おおやまの公式ページに2時間制の記載があるのに「記載なし」としている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "予約・キャンセル 確認できなかった : 記載なし。",
+      "kind": "other",
+      "quote": "キャンセル規定 【コース予約の場合】ご来店前日0時以降から、コース料金の50%(1名あたり)が発生します。",
+      "reason": "湯気ト煙のキャンセル規定が載っているのに「記載なし」としている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "支払い方法 確認できなかった : 記載なし。",
+      "kind": "other",
+      "quote": "クレジットカード 利用可 :VISA、マスター、アメックス、DINERS、JCB、Discover、銀聯",
+      "reason": "支払い方法の記載があるのに「記載なし」としている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "喫煙 確認できなかった : 記載なし。",
+      "kind": "other",
+      "quote": "たばこ 禁煙・喫煙 全席喫煙可 喫煙専用室 なし",
+      "reason": "喫煙の扱いは記載があり、記事本文でも書いているのに「記載なし」としている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    }
+  ]
+}

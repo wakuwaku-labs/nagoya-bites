@@ -1,0 +1,114 @@
+{
+  "date": "2026-11-21",
+  "slug": "2026-11-21-meieki-nabe-motsunabe-hinabe-5",
+  "recorded_at": "2026-11-21T05:12:57.033Z",
+  "model": null,
+  "model_note": "指定なし（実行環境の既定のモデル）",
+  "prompt_version": "review-2026-11-17",
+  "prompt_sha256": "e9ba1d1567ca9430",
+  "excerpts": [
+    {
+      "id": "E1",
+      "url": "https://weathernews.jp/news/202611/070121/",
+      "lines": 7
+    },
+    {
+      "id": "E2",
+      "url": "https://www.motu-ooyama.com/shop/nagoya_jrgt/",
+      "lines": 14
+    },
+    {
+      "id": "E3",
+      "url": "https://page.line.me/efz9397k",
+      "lines": 1
+    },
+    {
+      "id": "E4",
+      "url": "https://www.hotpepper.jp/strJ001277051/",
+      "lines": 13
+    },
+    {
+      "id": "E5",
+      "url": "https://www.hotpepper.jp/strJ001185726/",
+      "lines": 14
+    },
+    {
+      "id": "E6",
+      "url": "https://www.hotpepper.jp/strJ004726000/",
+      "lines": 11
+    },
+    {
+      "id": "E7",
+      "url": "https://www.hotpepper.jp/strJ001160393/",
+      "lines": 13
+    },
+    {
+      "id": "E8",
+      "url": "https://www.hotpepper.jp/strJ004633160/",
+      "lines": 12
+    },
+    {
+      "id": "E9",
+      "url": "https://www.hotpepper.jp/strJ000729599/",
+      "lines": 10
+    }
+  ],
+  "ok": true,
+  "elapsed_sec": 27,
+  "findings": [
+    {
+      "sentence": "煙が苦手な人や、子ども連れには向きません。",
+      "kind": "other",
+      "quote": "お子様連れ お子様連れOK",
+      "reason": "抜粋では子ども連れ可なのに、記事は子ども連れに向かないと書いている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "来店前に確かめたいこと お通し・席料 確認できなかった : 記載なし。",
+      "kind": "other",
+      "quote": "16:00~お席料として、お一人様330円(税込)を頂戴しております。",
+      "reason": "席料はホットペッパーに記載があるのに「記載なし」としている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "席の時間制 確認できなかった : 記載なし。",
+      "kind": "other",
+      "quote": "※お席2時間制を頂いております。",
+      "reason": "おおやまの公式ページに2時間制の記載があるのに「記載なし」としている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "予約・キャンセル 確認できなかった : 記載なし。",
+      "kind": "other",
+      "quote": "キャンセル規定 【コース予約の場合】ご来店前日0時以降から、コース料金の50%(1名あたり)が発生します。",
+      "reason": "湯気ト煙のキャンセル規定が載っているのに「記載なし」としている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "支払い方法 確認できなかった : 記載なし。",
+      "kind": "other",
+      "quote": "クレジットカード 利用可 :VISA、マスター、アメックス、DINERS、JCB、Discover、銀聯",
+      "reason": "支払い方法の記載があるのに「記載なし」としている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "喫煙 確認できなかった : 記載なし。",
+      "kind": "other",
+      "quote": "たばこ 禁煙・喫煙 全席喫煙可 喫煙専用室 なし",
+      "reason": "喫煙の扱いは記載があり、記事本文でも書いているのに「記載なし」としている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    }
+  ]
+}
