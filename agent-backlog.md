@@ -2062,9 +2062,10 @@
 
 ### [SEO-141] 11-30 に忘年会面の継続か撤退かを判定する
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **due**: 2026-11-30
+- **resolved**: 2026-11-22
 - **category**: SEO / コンテンツ
 - **owner**: Marketer
 - **source**: `docs/decisions/0007-seo-north-star-metrics.md` 決めたこと6。親は [[SEO-116]]
@@ -2073,6 +2074,10 @@
 - **acceptance**:
   1. 11-30 の `gsc_metrics.json` の `queries[]` で「忘年会」「宴会」を含む検索の表示を合計する
   2. 50 以上なら継続、50 未満なら [[SEO-127]] の追加作業をやめる。結果を ADR 0007 に追記する
+- **verification** (2026-11-22早期判定):
+  - `gsc_metrics.json`（2026-10-24〜2026-11-20, 生成 2026-11-21）のqueries[] 300件で「忘年会」「宴会」を含む検索 = 0件・表示 0回
+  - 0 < 50 → 撤退判定。[[SEO-127]] の追加作業停止
+  - ADR 0007 決めたこと6 に判定結果を追記済み
 
 ### [SEO-142] Organization の構造化データに公式アカウントの sameAs を足す
 
@@ -9137,6 +9142,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-11-14 | DataKeeper(routine) | ISSUE-186 done化 — 5店の30日再検証完了。夜桜OSU（J001223732）を閉店確定（HP 404＋Google CLOSED_PERMANENTLY・名前・住所一致）し `data/closed_stores.json` に追記。残4店（肉のよいち・あま野なごみ・TARASHI・LAVA 29）は決められないのまま（住所照合不可または情報源不足）。`data/store_liveness_reviews.json` に再確認記録5件追加。PR #739 | ✅ 本コミット |
 | 2026-11-12 | Orchestrator(routine) | SEO-140 done化 — 11-15チェックポイント記録。北極星6項目中4項目クリア（発見型クリック225/ハブ数93本/PV5155/インデックス確定）。SEO-130 noindex 127候補は今回見送り（12-15再判断）。 | ✅ 本コミット |
 | 2026-11-12 | Orchestrator(routine) | SEO-123 done化 — 子課題SEO-124/125/126全done確認。11-15判定結果を `docs/kpi-weekly.md` に記録（インデックス対象175本・noindex 498本・sitemap 282エントリ）。北極星: ハブ数93（前31）・発見型クリック225（前122）・生成AI 247（前103）・Bing 918（前483）。 | ✅ 本コミット |
+| 2026-11-22 | Orchestrator(routine) | SEO-141 早期判定・done化 — gsc_metrics.json（2026-10-24〜2026-11-20, 生成2026-11-21）のqueries[] 300件で「忘年会」「宴会」含む検索 = 0件・表示0回（< 50）。撤退判定。[[SEO-127]] 追加作業停止。ADR 0007 決めたこと6 に判定結果追記。 | ✅ 本コミット |
 | 2026-11-08 | DataKeeper(routine) | ISSUE-172 done化 — 決められない6店を再確認。Harbor（熱田）・レインボー 栄店 2店を閉店と確認し `data/closed_stores.json`（110件）に追記。残4店（博多もつ鍋屋HANARE・金鯱うなぎ伏見・喰えるBAR shin・かき氷うと）は決められないのまま（Google が OPERATIONAL または別店名）。`data/store_liveness_reviews.json` に再確認記録6件追加。次回 build.js 実行で2店が自動除外される。 | ✅ 本コミット |
 | 2026-11-02 | Builder(/solve-next) | SEO-126 実装・デプロイ — 688条件ページ中498本をnoindex,follow（i軒数不足265本・ii重複≥80%233本・iii公開60日+GSC表示0は0本）。174本インデックス対象。sitemap.xml 282エントリに削減。policy.json に noindex 閾値追加、manifest に indexable フィールド付与。PR #714 | ✅ commit 6da81b81 |
 | 2026-10-29 | Orchestrator(routine) | SNS-004 done化 — `data/x_post_policy.json` mode=live（2026-10-15切替）、`data/x_post_log.json` に2026-10-14〜10-28の15件連続投稿を確認。7日連続acceptance超過・全acceptance達成。 | ✅ 本コミット |
