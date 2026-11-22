@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-22T00:18:06.844Z",
+  "generatedAt": "2026-11-22T19:14:39.131Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -8,11 +8,11 @@
   },
   "totals": {
     "exits": {
-      "hotpepper": 177,
+      "hotpepper": 175,
       "tabelog": 21,
-      "tel": 8,
+      "tel": 9,
       "other": 0,
-      "total": 206
+      "total": 205
     },
     "reports": {
       "yes": 1,
@@ -24,11 +24,11 @@
     "start": "2026-11-01",
     "totals": {
       "exits": {
-        "hotpepper": 140,
+        "hotpepper": 142,
         "tabelog": 18,
-        "tel": 8,
+        "tel": 9,
         "other": 0,
-        "total": 166
+        "total": 169
       },
       "reports": {
         "yes": 1,
@@ -40,18 +40,18 @@
     {
       "store_name": "うなぎのしろむら 泉本店",
       "exits": {
-        "hotpepper": 9,
+        "hotpepper": 10,
         "tabelog": 0,
         "tel": 0,
         "other": 0,
-        "total": 9
+        "total": 10
       },
       "reports": {
         "yes": 0,
         "no": 0
       },
       "thisMonth": {
-        "exits": 6,
+        "exits": 7,
         "reportsYes": 0
       }
     },
@@ -848,24 +848,6 @@
       }
     },
     {
-      "store_name": "R.Seed cafe アールシードカフェ",
-      "exits": {
-        "hotpepper": 1,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 1
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 0,
-        "reportsYes": 0
-      }
-    },
-    {
       "store_name": "THE ROOM ザルーム 名古屋 栄 伏見",
       "exits": {
         "hotpepper": 1,
@@ -916,24 +898,6 @@
       },
       "thisMonth": {
         "exits": 1,
-        "reportsYes": 0
-      }
-    },
-    {
-      "store_name": "アルマデシュラスコ名駅 Alma de churrasco Meieki",
-      "exits": {
-        "hotpepper": 1,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 1
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1244,6 +1208,24 @@
       }
     },
     {
+      "store_name": "まるみホルモン 今池店",
+      "exits": {
+        "hotpepper": 0,
+        "tabelog": 0,
+        "tel": 1,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "めしや 梵 SOYOGI 名古屋本店",
       "exits": {
         "hotpepper": 1,
@@ -1366,24 +1348,6 @@
       },
       "thisMonth": {
         "exits": 1,
-        "reportsYes": 0
-      }
-    },
-    {
-      "store_name": "季旬 栄店",
-      "exits": {
-        "hotpepper": 1,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 1
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -1892,6 +1856,24 @@
       }
     },
     {
+      "store_name": "炭火焼き鳥と鶏白湯おでん 尊 みこと 栄駅店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
       "store_name": "炭火焼肉 スギモト 名古屋うまいもん通り広小路口店",
       "exits": {
         "hotpepper": 1,
@@ -2050,24 +2032,6 @@
       },
       "thisMonth": {
         "exits": 1,
-        "reportsYes": 0
-      }
-    },
-    {
-      "store_name": "豚しゃぶとおとうふ 豆家 genge 本店",
-      "exits": {
-        "hotpepper": 1,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 1
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -2421,27 +2385,27 @@
     "geoSearch": "現在地: トップの「現在地」ボタンを押した回数と結果（granted・denied・unsupported・error）。位置・エリア名は送っていない"
   },
   "actions": {
-    "reserve": 198,
+    "reserve": 196,
     "reserveBySite": {
-      "hotpepper": 177,
+      "hotpepper": 175,
       "tabelog": 21,
       "other": 0
     },
-    "tel": 8,
-    "map": 145
+    "tel": 9,
+    "map": 141
   },
   "map": {
-    "total": 145,
+    "total": 141,
     "unattributed": 0,
-    "stores": 67,
+    "stores": 66,
     "top": [
-      {
-        "store_name": "うな祥",
-        "count": 24
-      },
       {
         "store_name": "圧釜うどん もちり 栄店",
         "count": 23
+      },
+      {
+        "store_name": "うな祥",
+        "count": 21
       },
       {
         "store_name": "完全個室居酒屋 海鮮と炉端焼き 三河屋 名古屋駅前店",
@@ -2477,21 +2441,21 @@
       }
     ],
     "byLocation": {
-      "store_page": 77,
+      "store_page": 73,
       "journal_store_card": 55,
       "store_page_bar": 11,
       "modal_sticky": 2
     },
     "byLinkKind": {
-      "search": 74,
-      "place_id": 61,
+      "search": 73,
+      "place_id": 58,
       "(not set)": 10
     }
   },
   "callLookup": {
-    "total": 7,
+    "total": 8,
     "byResult": {
-      "ok": 6,
+      "ok": 7,
       "no_number": 1
     }
   },
