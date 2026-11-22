@@ -25,8 +25,10 @@ test('原文がリポジトリにあり、agents/editor.md から参照されて
 test('写しは SNS分析ツールの正本と同じ（正本がある端末だけ）', (t) => {
   const src = path.join(os.homedir(), 'orca/projects/SNS分析ツール/config/brand-policy');
   if (!fs.existsSync(src)) return t.skip('SNS分析ツールが無い端末（CI）');
-  assert.strictEqual(read(BP.ORIGINAL_REL), fs.readFileSync(path.join(src, 'nagoya_bites.md'), 'utf8'));
-  assert.strictEqual(read(BP.POLICY_REL), fs.readFileSync(path.join(src, 'nagoya_bites.json'), 'utf8'));
+  // 正本が更新されて写しが古いとここで落ちる（2026-11-17 に2回）。直し方は下のコマンド（Ondine #2093）
+  const HINT = '正本と写しが違います。直すには: node scripts/sync_brand_policy.js';
+  assert.strictEqual(read(BP.ORIGINAL_REL), fs.readFileSync(path.join(src, 'nagoya_bites.md'), 'utf8'), HINT);
+  assert.strictEqual(read(BP.POLICY_REL), fs.readFileSync(path.join(src, 'nagoya_bites.json'), 'utf8'), HINT);
 });
 
 test('避ける言い回しの3種類（行った・順位・煽り）をすべて見分けられる', () => {
