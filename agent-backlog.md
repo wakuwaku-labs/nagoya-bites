@@ -5107,13 +5107,9 @@
 ### [ISSUE-112] build.ymlの「Commit & push if changed」が、近接して起動した2つのCI実行間で本物のコンテンツ競合を起こすと5回リトライしても回復できない
 
 - **priority**: P1（当初P2・2回目発生の実害確認により引き上げ） → **status**: done
-- **resolved**: 2026-08-23
-- **priority**: P1（当初P2・2回目発生の実害確認により引き上げ） → **status**: in_progress
+- **resolved**: 2026-08-24
+- **resolved_by**: Orchestrator（夜間自律処理）／確認: 2026-11-22（concurrencyグループ実在確認・daily-trending5.yml L17・build.yml L14）
 - **detected**: 2026-08-23（オーナー就寝中の自律処理。本セッション自身が短時間に連続push→CI連続起動を招き実際に発生させて発覚）
-- **resolved**: 2026-08-26
-- **detected**: 2026-08-23（オーナー就寝中の自律処理。本セッション自身が短時間に連続push→CI連続起動を招き実際に発生させて発覚）
-- **resolved**: 2026-08-25
-- **resolved_by**: 252bc860
 - **category**: CI / インフラ
 - **owner**: Builder
 - **source**: `gh run view 32594601324` — "chore(notion): 同期ハッシュ更新（ISSUE-111追記分）" コミットの Build & Deploy が `Commit & push if changed` ステップで失敗（14分53秒）
@@ -9137,6 +9133,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
 | 2026-11-22 | Orchestrator(routine) | MEO-001 done化 — 子課題MEO-002〜006全done確認。受け入れ条件検証: ①古い欄0（別の店に電話がかかりうる店=0）②store_referrals.json に reserve/tel/map 別欄あり・missingDimensions=[]・2026-11-21生成。サイト本体変更なし。 | ✅ 本コミット |
+| 2026-11-22 | Orchestrator(routine) | ISSUE-112 done化 — concurrencyグループ（build-deploy）が daily-trending5.yml L17・build.yml L14 に実在することを確認（2026-08-24 実装済み）。status 更新のみ。 | ✅ 本コミット |
 | 2026-11-14 | DataKeeper(routine) | ISSUE-186 done化 — 5店の30日再検証完了。夜桜OSU（J001223732）を閉店確定（HP 404＋Google CLOSED_PERMANENTLY・名前・住所一致）し `data/closed_stores.json` に追記。残4店（肉のよいち・あま野なごみ・TARASHI・LAVA 29）は決められないのまま（住所照合不可または情報源不足）。`data/store_liveness_reviews.json` に再確認記録5件追加。PR #739 | ✅ 本コミット |
 | 2026-11-12 | Orchestrator(routine) | SEO-140 done化 — 11-15チェックポイント記録。北極星6項目中4項目クリア（発見型クリック225/ハブ数93本/PV5155/インデックス確定）。SEO-130 noindex 127候補は今回見送り（12-15再判断）。 | ✅ 本コミット |
 | 2026-11-12 | Orchestrator(routine) | SEO-123 done化 — 子課題SEO-124/125/126全done確認。11-15判定結果を `docs/kpi-weekly.md` に記録（インデックス対象175本・noindex 498本・sitemap 282エントリ）。北極星: ハブ数93（前31）・発見型クリック225（前122）・生成AI 247（前103）・Bing 918（前483）。 | ✅ 本コミット |
