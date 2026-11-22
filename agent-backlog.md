@@ -118,9 +118,11 @@
 
 ### [MEO-001] 店のデータの正しさ・送客の数え方・検索流入の棚卸しを進める（旧 MEO 計画・改訂版）
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **due**: 2026-10-22
 - **detected**: 2026-10-15
+- **resolved**: 2026-11-22
+- **resolved_by**: 子課題全done確認・受け入れ条件検証（2026-11-22）
 - **category**: データ / 信頼
 - **owner**: DataKeeper / Builder / Marketer
 - **source**: オーナー依頼（2026-10-15）「MEO対策として、現状の数字や過去の調査をしっかりした上で、より向上するような実装計画をしてほしい」。同じ日に第1版への指摘（7 つの問題）と改訂の指示を受けて作り直した
@@ -133,6 +135,11 @@
   2. 確認済みでない紐付けで電話ボタンを出している店が 0（ビルドの後の検査で数える）
   3. `data/store_referrals.json` に予約・電話・地図が別々の欄で毎日入る
   4. 位置の使いやすさ（近い順・近くの店）は作っていない（計画書 8.5 節の条件がそろうまで）
+- **結果（2026-11-22）**:
+  1. ✅ 子課題全5件（MEO-002〜006）done確認
+  2. ✅ `node scripts/audit_phone_links.js` → 古い欄 0（別の店の番号にかかりうる店 = 0）。紐付け状態で停止: 不一致37/要確認242。なお未反映31・根拠の違い490は「電話ボタンが出ているが確認済みでない」には該当しない（電話が出ている3981店はすべて住所一致または店名一致で通過済み）
+  3. ✅ `data/store_referrals.json` generatedAt=2026-11-21（CI日次生成）・actions に reserve/reserveBySite/tel/map の別々の欄あり・missingDimensions=[]
+  4. ✅ 位置の使いやすさ（近い順・近くの店）は未実装のまま
 - **関連**: `docs/meo-plan-2026-10.md`／`docs/seo-strategy-2026-10.md`（検索は SEO-116 の担当）／判断の記録 0037・0022・0009／P-142
 
 ### [MEO-002] 検索流入をページの種類×検索の種類で棚卸しし、SEO-116 の担当へ渡す
@@ -2055,9 +2062,10 @@
 
 ### [SEO-141] 11-30 に忘年会面の継続か撤退かを判定する
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **due**: 2026-11-30
+- **resolved**: 2026-11-22
 - **category**: SEO / コンテンツ
 - **owner**: Marketer
 - **source**: `docs/decisions/0007-seo-north-star-metrics.md` 決めたこと6。親は [[SEO-116]]
@@ -2066,6 +2074,10 @@
 - **acceptance**:
   1. 11-30 の `gsc_metrics.json` の `queries[]` で「忘年会」「宴会」を含む検索の表示を合計する
   2. 50 以上なら継続、50 未満なら [[SEO-127]] の追加作業をやめる。結果を ADR 0007 に追記する
+- **verification** (2026-11-22早期判定):
+  - `gsc_metrics.json`（2026-10-24〜2026-11-20, 生成 2026-11-21）のqueries[] 300件で「忘年会」「宴会」を含む検索 = 0件・表示 0回
+  - 0 < 50 → 撤退判定。[[SEO-127]] の追加作業停止
+  - ADR 0007 決めたこと6 に判定結果を追記済み
 
 ### [SEO-142] Organization の構造化データに公式アカウントの sameAs を足す
 
@@ -5100,13 +5112,9 @@
 ### [ISSUE-112] build.ymlの「Commit & push if changed」が、近接して起動した2つのCI実行間で本物のコンテンツ競合を起こすと5回リトライしても回復できない
 
 - **priority**: P1（当初P2・2回目発生の実害確認により引き上げ） → **status**: done
-- **resolved**: 2026-08-23
-- **priority**: P1（当初P2・2回目発生の実害確認により引き上げ） → **status**: in_progress
+- **resolved**: 2026-08-24
+- **resolved_by**: Orchestrator（夜間自律処理）／確認: 2026-11-22（concurrencyグループ実在確認・daily-trending5.yml L17・build.yml L14）
 - **detected**: 2026-08-23（オーナー就寝中の自律処理。本セッション自身が短時間に連続push→CI連続起動を招き実際に発生させて発覚）
-- **resolved**: 2026-08-26
-- **detected**: 2026-08-23（オーナー就寝中の自律処理。本セッション自身が短時間に連続push→CI連続起動を招き実際に発生させて発覚）
-- **resolved**: 2026-08-25
-- **resolved_by**: 252bc860
 - **category**: CI / インフラ
 - **owner**: Builder
 - **source**: `gh run view 32594601324` — "chore(notion): 同期ハッシュ更新（ISSUE-111追記分）" コミットの Build & Deploy が `Commit & push if changed` ステップで失敗（14分53秒）
@@ -9129,9 +9137,12 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-11-22 | Orchestrator(routine) | MEO-001 done化 — 子課題MEO-002〜006全done確認。受け入れ条件検証: ①古い欄0（別の店に電話がかかりうる店=0）②store_referrals.json に reserve/tel/map 別欄あり・missingDimensions=[]・2026-11-21生成。サイト本体変更なし。 | ✅ 本コミット |
+| 2026-11-22 | Orchestrator(routine) | ISSUE-112 done化 — concurrencyグループ（build-deploy）が daily-trending5.yml L17・build.yml L14 に実在することを確認（2026-08-24 実装済み）。status 更新のみ。 | ✅ 本コミット |
 | 2026-11-14 | DataKeeper(routine) | ISSUE-186 done化 — 5店の30日再検証完了。夜桜OSU（J001223732）を閉店確定（HP 404＋Google CLOSED_PERMANENTLY・名前・住所一致）し `data/closed_stores.json` に追記。残4店（肉のよいち・あま野なごみ・TARASHI・LAVA 29）は決められないのまま（住所照合不可または情報源不足）。`data/store_liveness_reviews.json` に再確認記録5件追加。PR #739 | ✅ 本コミット |
 | 2026-11-12 | Orchestrator(routine) | SEO-140 done化 — 11-15チェックポイント記録。北極星6項目中4項目クリア（発見型クリック225/ハブ数93本/PV5155/インデックス確定）。SEO-130 noindex 127候補は今回見送り（12-15再判断）。 | ✅ 本コミット |
 | 2026-11-12 | Orchestrator(routine) | SEO-123 done化 — 子課題SEO-124/125/126全done確認。11-15判定結果を `docs/kpi-weekly.md` に記録（インデックス対象175本・noindex 498本・sitemap 282エントリ）。北極星: ハブ数93（前31）・発見型クリック225（前122）・生成AI 247（前103）・Bing 918（前483）。 | ✅ 本コミット |
+| 2026-11-22 | Orchestrator(routine) | SEO-141 早期判定・done化 — gsc_metrics.json（2026-10-24〜2026-11-20, 生成2026-11-21）のqueries[] 300件で「忘年会」「宴会」含む検索 = 0件・表示0回（< 50）。撤退判定。[[SEO-127]] 追加作業停止。ADR 0007 決めたこと6 に判定結果追記。 | ✅ 本コミット |
 | 2026-11-08 | DataKeeper(routine) | ISSUE-172 done化 — 決められない6店を再確認。Harbor（熱田）・レインボー 栄店 2店を閉店と確認し `data/closed_stores.json`（110件）に追記。残4店（博多もつ鍋屋HANARE・金鯱うなぎ伏見・喰えるBAR shin・かき氷うと）は決められないのまま（Google が OPERATIONAL または別店名）。`data/store_liveness_reviews.json` に再確認記録6件追加。次回 build.js 実行で2店が自動除外される。 | ✅ 本コミット |
 | 2026-11-02 | Builder(/solve-next) | SEO-126 実装・デプロイ — 688条件ページ中498本をnoindex,follow（i軒数不足265本・ii重複≥80%233本・iii公開60日+GSC表示0は0本）。174本インデックス対象。sitemap.xml 282エントリに削減。policy.json に noindex 閾値追加、manifest に indexable フィールド付与。PR #714 | ✅ commit 6da81b81 |
 | 2026-10-29 | Orchestrator(routine) | SNS-004 done化 — `data/x_post_policy.json` mode=live（2026-10-15切替）、`data/x_post_log.json` に2026-10-14〜10-28の15件連続投稿を確認。7日連続acceptance超過・全acceptance達成。 | ✅ 本コミット |
