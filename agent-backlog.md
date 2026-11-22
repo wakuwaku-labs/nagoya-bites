@@ -118,9 +118,11 @@
 
 ### [MEO-001] 店のデータの正しさ・送客の数え方・検索流入の棚卸しを進める（旧 MEO 計画・改訂版）
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **due**: 2026-10-22
 - **detected**: 2026-10-15
+- **resolved**: 2026-11-22
+- **resolved_by**: 子課題全done確認・受け入れ条件検証（2026-11-22）
 - **category**: データ / 信頼
 - **owner**: DataKeeper / Builder / Marketer
 - **source**: オーナー依頼（2026-10-15）「MEO対策として、現状の数字や過去の調査をしっかりした上で、より向上するような実装計画をしてほしい」。同じ日に第1版への指摘（7 つの問題）と改訂の指示を受けて作り直した
@@ -133,6 +135,11 @@
   2. 確認済みでない紐付けで電話ボタンを出している店が 0（ビルドの後の検査で数える）
   3. `data/store_referrals.json` に予約・電話・地図が別々の欄で毎日入る
   4. 位置の使いやすさ（近い順・近くの店）は作っていない（計画書 8.5 節の条件がそろうまで）
+- **結果（2026-11-22）**:
+  1. ✅ 子課題全5件（MEO-002〜006）done確認
+  2. ✅ `node scripts/audit_phone_links.js` → 古い欄 0（別の店の番号にかかりうる店 = 0）。紐付け状態で停止: 不一致37/要確認242。なお未反映31・根拠の違い490は「電話ボタンが出ているが確認済みでない」には該当しない（電話が出ている3981店はすべて住所一致または店名一致で通過済み）
+  3. ✅ `data/store_referrals.json` generatedAt=2026-11-21（CI日次生成）・actions に reserve/reserveBySite/tel/map の別々の欄あり・missingDimensions=[]
+  4. ✅ 位置の使いやすさ（近い順・近くの店）は未実装のまま
 - **関連**: `docs/meo-plan-2026-10.md`／`docs/seo-strategy-2026-10.md`（検索は SEO-116 の担当）／判断の記録 0037・0022・0009／P-142
 
 ### [MEO-002] 検索流入をページの種類×検索の種類で棚卸しし、SEO-116 の担当へ渡す
@@ -9129,6 +9136,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-11-22 | Orchestrator(routine) | MEO-001 done化 — 子課題MEO-002〜006全done確認。受け入れ条件検証: ①古い欄0（別の店に電話がかかりうる店=0）②store_referrals.json に reserve/tel/map 別欄あり・missingDimensions=[]・2026-11-21生成。サイト本体変更なし。 | ✅ 本コミット |
 | 2026-11-14 | DataKeeper(routine) | ISSUE-186 done化 — 5店の30日再検証完了。夜桜OSU（J001223732）を閉店確定（HP 404＋Google CLOSED_PERMANENTLY・名前・住所一致）し `data/closed_stores.json` に追記。残4店（肉のよいち・あま野なごみ・TARASHI・LAVA 29）は決められないのまま（住所照合不可または情報源不足）。`data/store_liveness_reviews.json` に再確認記録5件追加。PR #739 | ✅ 本コミット |
 | 2026-11-12 | Orchestrator(routine) | SEO-140 done化 — 11-15チェックポイント記録。北極星6項目中4項目クリア（発見型クリック225/ハブ数93本/PV5155/インデックス確定）。SEO-130 noindex 127候補は今回見送り（12-15再判断）。 | ✅ 本コミット |
 | 2026-11-12 | Orchestrator(routine) | SEO-123 done化 — 子課題SEO-124/125/126全done確認。11-15判定結果を `docs/kpi-weekly.md` に記録（インデックス対象175本・noindex 498本・sitemap 282エントリ）。北極星: ハブ数93（前31）・発見型クリック225（前122）・生成AI 247（前103）・Bing 918（前483）。 | ✅ 本コミット |
