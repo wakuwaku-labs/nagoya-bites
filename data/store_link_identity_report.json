@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-21T22:58:12.060Z",
+  "generatedAt": "2026-11-22T00:31:27.130Z",
   "run": {
     "tabelog": {
       "attempted": 5,
@@ -9,9 +9,9 @@
   },
   "health": {
     "tabelog": {
-      "links": 2673,
+      "links": 2674,
       "neverChecked": 0,
-      "unfetched": 204,
+      "unfetched": 205,
       "lastFetchedAt": "2026-09-20T15:34:53.838Z"
     },
     "hotpepper": {
@@ -1850,6 +1850,16 @@
       "検出タイトル": null,
       "エラー": "HTTP 403",
       "検証日": "2026-11-13T00:40:18.807Z"
+    },
+    {
+      "店名": "すしの美登利 名古屋栄三越店",
+      "エリア": "名古屋市中区",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230103/23096000/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-11-22T00:30:59.002Z"
     },
     {
       "店名": "喫茶リヨン",
