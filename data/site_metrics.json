@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-23T10:09:53.420Z",
+  "generatedAt": "2026-11-23T10:30:26.434Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 8132,
-    "pageViews": 9709,
-    "sessions": 8556,
-    "avgSessionDuration": 56.5,
+    "activeUsers": 8135,
+    "pageViews": 9714,
+    "sessions": 8562,
+    "avgSessionDuration": 56.6,
     "bounceRate": 0.678,
     "pagesPerSession": 1.13
   },
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 3075,
-      "direct": 5195,
+      "organic": 3079,
+      "direct": 5198,
       "social": 62,
       "ai_assistant": 250,
       "referral": 61,
@@ -39,12 +39,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 5167
+      "sessions": 5170
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1458
+      "sessions": 1461
     },
     {
       "source": "bing",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 642
+      "sessions": 643
     },
     {
       "source": "chatgpt.com",
@@ -245,7 +245,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 434,
+    "outboundClicks": 435,
     "ctaClickRate": 5.1,
     "byDomain": [
       {
@@ -285,11 +285,11 @@
         "clicks": 2
       },
       {
-        "domain": "fuuei.asano-office.com",
-        "clicks": 1
+        "domain": "jouhou.nagoya",
+        "clicks": 2
       },
       {
-        "domain": "jouhou.nagoya",
+        "domain": "fuuei.asano-office.com",
         "clicks": 1
       },
       {
@@ -303,7 +303,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 297,
+      "organic": 298,
       "direct": 48,
       "social": 16,
       "ai_assistant": 62,
@@ -778,6 +778,11 @@
         "clicks": 1
       },
       {
+        "path": "/journal/2026-08-31-nagoya-roadside-newstores-price.html",
+        "domain": "jouhou.nagoya",
+        "clicks": 1
+      },
+      {
         "path": "/journal/2026-09-20-nishiki-maruhachi-fushimi-bettei-enkai.html",
         "domain": "nagoyamaruhachi.jproject-shop.jp",
         "clicks": 1
@@ -930,11 +935,6 @@
       {
         "path": "/stores/J001127221.html",
         "domain": "www.google.com",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001127221.html",
-        "domain": "www.instagram.com",
         "clicks": 1
       }
     ],
@@ -1178,7 +1178,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 8132,
+    "value": 8135,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
