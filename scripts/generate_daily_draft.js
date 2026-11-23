@@ -724,6 +724,29 @@ function buildNotebookLmSlidesMd(slides) {
  * 失敗しても記事生成は止めない（ヘッドレス実行で成果物を失わないため）。
  * 未変換は scripts/normalize_og_images.js --check / render_og_figures.js --check が拾う。
  */
+/** og:image（ホットペッパーの写真のとき）を、記事の店のいちばん大きい写真に替える（ADR 0083）。失敗しても記事は作る。 */
+function pickWidestOgPhoto(input) {
+  try {
+    const HP = require('./lib/hotpepper_photo');
+    const { pickOgPhoto } = require('./lib/og_photo_pick');
+    const { measure } = require('./measure_hotpepper_photo_sizes');
+    const sizes = { ...HP.loadSizes() };
+    const before = Object.keys(sizes).length;
+    const r = pickOgPhoto(input, { sizes, measure, findRecord: JP.findStoreRecord });
+    if (Object.keys(sizes).length > before) {
+      const doc = JSON.parse(fs.readFileSync(HP.SIZES_FILE, 'utf8'));
+      doc.sizes = Object.fromEntries(Object.keys(sizes).sort().map((k) => [k, sizes[k]]));
+      fs.writeFileSync(HP.SIZES_FILE, JSON.stringify(doc, null, 1) + '\n');
+    }
+    if (r && r.changed) {
+      console.log(`  🖼  リンク画像を大きい写真に（${r.from === 'store' ? '記事の別の店' : '同じ写真の大きい版'}・${r.w}px）`);
+      input.og_image = r.url;
+    }
+  } catch (e) {
+    console.warn(`  ⚠️  リンク画像の大きさを選べませんでした（そのまま）: ${e.message}`);
+  }
+}
+
 function resolveOgImage(input) {
   let og = input.og_image || '';
   if (!og) return;
@@ -996,6 +1019,9 @@ async function main() {
   // Places の消費を共有台帳へ積む（店舗写真パイプライン側の自制がこの消費を見られるように）
   const skuUsed = JP.flushSkuUsage();
   if (skuUsed) console.log(`  📒 Places 消費: Details ${skuUsed.details} / Photo ${skuUsed.photo}（data/photo_pipeline_health.json）`);
+
+  // リンク画像は記事の店のいちばん大きい写真にする（ADR 0083・X のカードでぼやけないように）
+  pickWidestOgPhoto(input);
 
   // og:image を SNS が描画できる形（絶対URL・ラスタ画像）に確定させる（ISSUE-095）
   // 帰属チェックの「後」に置くこと。先に置くと、記事に載せてはいけない画像の
