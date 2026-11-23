@@ -11,6 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 const siteChrome = require('./lib/site_chrome');
+const { renderWhy, insertWhy, checkWhy, loadWhyData } = require('./lib/why_section');
 const { gaSnippet } = require('./lib/ga_snippet');
 const { applyByline } = require('./lib/feature_byline');
 
@@ -348,7 +349,11 @@ ${siteChrome.chromeScript()}
 // 生成
 for (const f of features) {
   // 公開日・更新日・書き手は JSON-LD から部品で出す（SEO-145・scripts/lib/feature_byline.js）
-  const html = applyByline(renderHTML(f), { selfFile: `${f.slug}.html` });
+  let html = applyByline(renderHTML(f), { selfFile: `${f.slug}.html` });
+  // 「なぜこのエリア・この切り口なのか」の節（必須。本文は data/why_sections.json の features に features/<slug>.html で足す）
+  const whyEntry = loadWhyData().features[`features/${f.slug}.html`];
+  if (whyEntry) html = insertWhy(html, renderWhy(whyEntry, 'feature'), 'feature') || html;
+  if (!checkWhy(html).ok) console.warn(`WARN: ${f.slug}: 「なぜ…なのか」の節が無い。data/why_sections.json に追加する（scripts/audit_why_sections.js が新規ページを FAIL にする）`);
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const out = path.join(OUT_DIR, `${f.slug}.html`);
   fs.writeFileSync(out, html);
