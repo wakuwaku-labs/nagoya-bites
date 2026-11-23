@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T13:52:31.819Z",
+  "generatedAt": "2026-11-23T19:12:42.802Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -8,11 +8,11 @@
   },
   "totals": {
     "exits": {
-      "hotpepper": 177,
-      "tabelog": 21,
+      "hotpepper": 175,
+      "tabelog": 19,
       "tel": 9,
       "other": 0,
-      "total": 207
+      "total": 203
     },
     "reports": {
       "yes": 1,
@@ -1802,24 +1802,6 @@
       }
     },
     {
-      "store_name": "台北館",
-      "exits": {
-        "hotpepper": 0,
-        "tabelog": 1,
-        "tel": 0,
-        "other": 0,
-        "total": 1
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 0,
-        "reportsYes": 0
-      }
-    },
-    {
       "store_name": "大衆割烹 八べゑ",
       "exits": {
         "hotpepper": 1,
@@ -1960,24 +1942,6 @@
       },
       "thisMonth": {
         "exits": 1,
-        "reportsYes": 0
-      }
-    },
-    {
-      "store_name": "中国海鮮料理 彩華",
-      "exits": {
-        "hotpepper": 0,
-        "tabelog": 1,
-        "tel": 0,
-        "other": 0,
-        "total": 1
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 0,
         "reportsYes": 0
       }
     },
@@ -2216,24 +2180,6 @@
       }
     },
     {
-      "store_name": "名古屋きんしゃち 名古屋駅前店",
-      "exits": {
-        "hotpepper": 1,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 1
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 0,
-        "reportsYes": 0
-      }
-    },
-    {
       "store_name": "炉端焼き アナタと博多 名古屋駅前店",
       "exits": {
         "hotpepper": 1,
@@ -2378,24 +2324,6 @@
       }
     },
     {
-      "store_name": "餃子のかっちゃん 栄錦店",
-      "exits": {
-        "hotpepper": 1,
-        "tabelog": 0,
-        "tel": 0,
-        "other": 0,
-        "total": 1
-      },
-      "reports": {
-        "yes": 0,
-        "no": 0
-      },
-      "thisMonth": {
-        "exits": 0,
-        "reportsYes": 0
-      }
-    },
-    {
       "store_name": "餃子のネオ大衆酒場ニューカムラ 栄プリンセス大通り店",
       "exits": {
         "hotpepper": 1,
@@ -2421,10 +2349,10 @@
     "geoSearch": "現在地: トップの「現在地」ボタンを押した回数と結果（granted・denied・unsupported・error）。位置・エリア名は送っていない"
   },
   "actions": {
-    "reserve": 198,
+    "reserve": 194,
     "reserveBySite": {
-      "hotpepper": 177,
-      "tabelog": 21,
+      "hotpepper": 175,
+      "tabelog": 19,
       "other": 0
     },
     "tel": 9,
