@@ -1,0 +1,485 @@
+{
+  "date": "2026-11-22",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄でデートの席選び、カウンター・ソファ・個室の違い｜みかん・Sinzanなど4店",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 15,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 7日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 3件 (構造,慣習,相場) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 129字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "過去に掲載歴のある店（90日超） → 2"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「個室」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -10 / uniqueness -5 / recency -3",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "栄の焼鳥『炭火焼鳥しげ 栄本店』、デートはカウンターかすだれの半個室か",
+      "verdict": "HOLD",
+      "total": 74,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        },
+        {
+          "kw": "焼き鳥",
+          "feature": "features/nagoya-yakitori.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 7日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 105字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「個室」+4",
+          "タイトルにジャンル語「焼鳥」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "錦の個室で豚しゃぶデート『豚しゃぶ一力 錦店』4人用個室2室",
+      "verdict": "HOLD",
+      "total": 72,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 7日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 89字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「錦」+4",
+          "タイトルにシーン語「個室」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄でデート、カーテンで仕切るカップル席『DiningBar Sinzan』を予約する前に",
+      "verdict": "HOLD",
+      "total": 70,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 7日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 113字 +4",
+          "title 44字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「デート」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "名古屋のクリスマスデート、外食は13.5%という調査から席の予約を考える",
+      "verdict": "HOLD",
+      "total": 66,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 7日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 116字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初出コラム (COL-SEAT-007) → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「デート」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": null,
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -10 / uniqueness -5 / recency -3",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "industry_insider",
+      "title_draft": "栄でデートの席選び、カウンター・ソファ・個室の違い｜みかん・Sinzanなど4店",
+      "lead_draft": "栄でデートの店を選ぶとき、料理と同じくらい「どの席に座るか」で過ごし方が変わります。おばんざいが並ぶカウンター、カーテンで仕切るソファのカップル席、すだれの半個室、4人用の個室。栄の4店の席を例に、二人の距離に合う席と、予約のときに伝えることをまとめました。",
+      "angle": "カウンター・ソファ（カップル席）・半個室・個室の席の構造ごとに二人の距離がどう変わるかを、栄の実在4店の掲載情報で並べる。カップル席は店へ連絡、カウンターは予約必須といった店ごとの予約の慣習と、予算の相場も1店1つずつ添える",
+      "main_store": {
+        "name": "お晩菜と炭火焼き みかん 栄・錦・伏見店",
+        "id": "J004050204",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "column_id": "COL-SEAT-007",
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ お晩菜と炭火焼き みかん 栄・錦・伏見店",
+          "url": "https://www.hotpepper.jp/strJ004050204/",
+          "date": "2026-10-10"
+        },
+        {
+          "label": "ホットペッパーグルメ DiningBar Sinzan 栄",
+          "url": "https://www.hotpepper.jp/strJ001050486/",
+          "date": "2026-11-15"
+        },
+        {
+          "label": "ホットペッパーグルメ 炭火焼鳥しげ 栄本店",
+          "url": "https://www.hotpepper.jp/strJ000015250/",
+          "date": "2026-11-13"
+        },
+        {
+          "label": "ホットペッパーグルメ 個室居酒屋 豚しゃぶ一力 錦店",
+          "url": "https://www.hotpepper.jp/strJ001126882/",
+          "date": "2025-05-07"
+        },
+        {
+          "label": "ファミリーマート ニュースリリース（クリスマスに関する意識調査）",
+          "url": "https://www.family.co.jp/company/news_releases/2026/20261105_01.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "汐塾ニュース（共同通信PRワイヤー）ファミマのクリスマス意識調査",
+          "url": "https://kyodonewsprwire.jp/corp/shioj/11988",
+          "date": "2026-11-15"
+        },
+        {
+          "label": "グルメWatch ひらまつ クリスマスの予約受付開始",
+          "url": "https://gourmet.watch.impress.co.jp/docs/news/2146627.html",
+          "date": "2026-10-09"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c2",
+      "theme": "industry_insider",
+      "title_draft": "名古屋のクリスマスデート、外食は13.5%という調査から席の予約を考える",
+      "lead_draft": "ファミリーマートの調査では、クリスマスにレストランなどで食事をしたい人は13.5%でした。外で食べる人が少ないぶん、選ぶ店と席が大事になります。名古屋でデートの席を予約するとき、カウンターかソファか個室かをどう決めるかを整理します。",
+      "angle": "クリスマス調査の数字を入口に、デートの席の種類の選び方を一般論で書く（店の例なし）",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": ""
+      },
+      "column_id": "COL-SEAT-007",
+      "sources": [
+        {
+          "label": "汐塾ニュース ファミマのクリスマス意識調査",
+          "url": "https://kyodonewsprwire.jp/corp/shioj/11988",
+          "date": "2026-11-15"
+        },
+        {
+          "label": "グルメWatch ひらまつ クリスマスの予約受付開始",
+          "url": "https://gourmet.watch.impress.co.jp/docs/news/2146627.html",
+          "date": "2026-10-09"
+        },
+        {
+          "label": "ホットペッパーグルメ DiningBar Sinzan 栄",
+          "url": "https://www.hotpepper.jp/strJ001050486/",
+          "date": "2026-11-15"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c3",
+      "theme": "industry_insider",
+      "title_draft": "栄でデート、カーテンで仕切るカップル席『DiningBar Sinzan』を予約する前に",
+      "lead_draft": "栄の東急ホテル裏にある『DiningBar Sinzan』には、カーテンで仕切るソファの個室が4室あります。カップル席を使いたいときは店に連絡が必要で、店内はたばこが吸えます。デートで使う前に知っておきたいことをまとめました。",
+      "angle": "カップル席のある1店に絞り、予約の伝え方と喫煙の注意を書く",
+      "main_store": {
+        "name": "DiningBar Sinzan 栄",
+        "id": "J001050486",
+        "area": "栄",
+        "genre": "ダイニングバー・バル"
+      },
+      "column_id": "COL-SEAT-007",
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ DiningBar Sinzan 栄",
+          "url": "https://www.hotpepper.jp/strJ001050486/",
+          "date": "2026-11-15"
+        },
+        {
+          "label": "汐塾ニュース ファミマのクリスマス意識調査",
+          "url": "https://kyodonewsprwire.jp/corp/shioj/11988",
+          "date": "2026-11-15"
+        },
+        {
+          "label": "グルメWatch ひらまつ クリスマスの予約受付開始",
+          "url": "https://gourmet.watch.impress.co.jp/docs/news/2146627.html",
+          "date": "2026-10-09"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c4",
+      "theme": "industry_insider",
+      "title_draft": "栄の焼鳥『炭火焼鳥しげ 栄本店』、デートはカウンターかすだれの半個室か",
+      "lead_draft": "栄の地下にある『炭火焼鳥しげ 栄本店』は、カウンター12席とテーブル36席の焼鳥店です。テーブルはすだれを下ろすと半個室になります。初めてのデートと付き合いの長い二人、どちらの席が合うかを掲載情報から考えます。",
+      "angle": "1店の中で席を選び分ける話",
+      "main_store": {
+        "name": "炭火焼鳥しげ 栄本店",
+        "id": "J000015250",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "column_id": "COL-SEAT-007",
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 炭火焼鳥しげ 栄本店",
+          "url": "https://www.hotpepper.jp/strJ000015250/",
+          "date": "2026-11-13"
+        },
+        {
+          "label": "汐塾ニュース ファミマのクリスマス意識調査",
+          "url": "https://kyodonewsprwire.jp/corp/shioj/11988",
+          "date": "2026-11-15"
+        },
+        {
+          "label": "グルメWatch ひらまつ クリスマスの予約受付開始",
+          "url": "https://gourmet.watch.impress.co.jp/docs/news/2146627.html",
+          "date": "2026-10-09"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c5",
+      "theme": "industry_insider",
+      "title_draft": "錦の個室で豚しゃぶデート『豚しゃぶ一力 錦店』4人用個室2室",
+      "lead_draft": "錦の『個室居酒屋 豚しゃぶ一力 錦店』には4人用の個室が2室あります。二人で周りを気にせず鍋を囲めますが、たばこが吸える店です。デートで個室を選ぶときに確かめたいことを書きます。",
+      "angle": "個室のある1店でデートの個室の選び方を書く",
+      "main_store": {
+        "name": "個室居酒屋 豚しゃぶ一力 錦店",
+        "id": "J001126882",
+        "area": "栄",
+        "genre": "和食"
+      },
+      "column_id": "COL-SEAT-007",
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 個室居酒屋 豚しゃぶ一力 錦店",
+          "url": "https://www.hotpepper.jp/strJ001126882/",
+          "date": "2025-05-07"
+        },
+        {
+          "label": "汐塾ニュース ファミマのクリスマス意識調査",
+          "url": "https://kyodonewsprwire.jp/corp/shioj/11988",
+          "date": "2026-11-15"
+        },
+        {
+          "label": "グルメWatch ひらまつ クリスマスの予約受付開始",
+          "url": "https://gourmet.watch.impress.co.jp/docs/news/2146627.html",
+          "date": "2026-10-09"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}
