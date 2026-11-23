@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-23T12:11:40.990Z",
+  "generatedAt": "2026-11-23T12:25:15.014Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 8155,
-    "pageViews": 9735,
+    "activeUsers": 8156,
+    "pageViews": 9738,
     "sessions": 8572,
     "avgSessionDuration": 56.7,
     "bounceRate": 0.678,
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 3096,
-      "direct": 5203,
+      "organic": 3097,
+      "direct": 5209,
       "social": 62,
       "ai_assistant": 250,
       "referral": 61,
@@ -39,7 +39,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 5175
+      "sessions": 5180
     },
     {
       "source": "google",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 644
+      "sessions": 645
     },
     {
       "source": "chatgpt.com",
@@ -107,6 +107,11 @@
       "sessions": 8
     },
     {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 6
+    },
+    {
       "source": "cn.bing.com",
       "medium": "referral",
       "sessions": 6
@@ -115,11 +120,6 @@
       "source": "openai",
       "medium": "(not set)",
       "sessions": 6
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 5
     },
     {
       "source": "l.instagram.com",
@@ -1178,7 +1178,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 8155,
+    "value": 8156,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
