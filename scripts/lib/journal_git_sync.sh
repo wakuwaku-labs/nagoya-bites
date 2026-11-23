@@ -112,7 +112,7 @@ journal_quarantine_foreign_commits() {
   while git show-ref --verify --quiet "refs/heads/$branch"; do branch="${branch%-r*}-r$n"; n=$((n+1)); done
   git branch "$branch" HEAD >>"$LOG" 2>&1 || { log "退避用ブランチ ${branch} を作れませんでした"; return 1; }
 
-  for c in "${foreign[@]}"; do
+  for c in ${foreign[@]+"${foreign[@]}"}; do
     JOURNAL_QUARANTINE_FOREIGN+="$(git log -1 --format='%h %s' "$c")"$'\n'
   done
 
@@ -124,7 +124,9 @@ journal_quarantine_foreign_commits() {
   fi
   JOURNAL_QUARANTINE_BRANCH="$branch"
 
-  for c in "${own[@]}"; do
+  # macOS の /bin/bash 3.2 は set -u のとき空の配列を "${own[@]}" で展開すると unbound variable で落ちる。
+  # 2026-11-22 はジャーナル自身のコミットが0件（よそのコミットだけ）で、ここで落ちて記事が出なかった。空でも落ちない書き方にする
+  for c in ${own[@]+"${own[@]}"}; do
     if ! git cherry-pick --empty=drop "$c" >>"$LOG" 2>&1; then
       git cherry-pick --abort >>"$LOG" 2>&1 || true
       JOURNAL_QUARANTINE_DROPPED=$((JOURNAL_QUARANTINE_DROPPED+1))
