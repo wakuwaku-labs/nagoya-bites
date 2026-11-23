@@ -199,3 +199,18 @@ test('post_note.js は読み込んだだけでは投稿を始めない（直接�
   const src = require('fs').readFileSync(require('path').join(__dirname, '../scripts/post_note.js'), 'utf8');
   assert.match(src, /if \(require\.main === module\) \(async \(\) => \{/);
 });
+
+test('店の写真カードは body.storePhotosPerStore 枚まで、同じ公式アカウントの投稿だけ', () => {
+  const root = require('fs').mkdtempSync(require('path').join(require('os').tmpdir(), 'nb-cards-'));
+  require('fs').mkdirSync(require('path').join(root, 'data'));
+  const w = (f, o) => require('fs').writeFileSync(require('path').join(root, 'data', f), JSON.stringify(o));
+  w('instagram_resolved.json', { S1: { instagram: 'https://www.instagram.com/shop_a/' } });
+  w('instagram_posts.json', { S1: { postUrl: 'https://www.instagram.com/shop_a/p/AAA/', extraPosts: [
+    { postUrl: 'https://www.instagram.com/other_shop/p/XXX/' },
+    { postUrl: 'https://www.instagram.com/shop_a/p/BBB/' },
+    { postUrl: 'https://www.instagram.com/shop_a/p/CCC/' },
+  ] } });
+  assert.deepEqual(N.storePhotoCards('S1', root, {}, 1).map((c) => c.url), ['https://www.instagram.com/shop_a/p/AAA/']);
+  assert.deepEqual(N.storePhotoCards('S1', root, {}, 2).map((c) => c.url), ['https://www.instagram.com/shop_a/p/AAA/', 'https://www.instagram.com/shop_a/p/BBB/']);
+  assert.deepEqual(N.storePhotoCards('NONE', root, {}, 2), []);
+});

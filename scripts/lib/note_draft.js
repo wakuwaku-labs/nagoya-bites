@@ -192,6 +192,19 @@ function storePhotoCard(storeId, root = ROOT, cache = {}) {
   return url && handle && handle.toLowerCase() === official.toLowerCase() ? { url, handle, kind: 'post' } : null;
 }
 
+/** 店の写真カードを max 枚まで（1枚目は storePhotoCard。2枚目以降は同じ公式アカウントの extraPosts＝料理の判定を通った投稿だけ） */
+function storePhotoCards(storeId, root = ROOT, cache = {}, max = 1) {
+  const first = storePhotoCard(storeId, root, cache);
+  if (!first) return [];
+  const out = [first];
+  for (const e of ((cache.posts || {})[storeId] || {}).extraPosts || []) {
+    if (out.length >= max) break;
+    const h = igHandle(e && e.postUrl);
+    if (h && h.toLowerCase() === first.handle.toLowerCase() && !out.some((c) => c.url === e.postUrl)) out.push({ url: e.postUrl, handle: h, kind: 'post' });
+  }
+  return out;
+}
+
 function buildNoteDraft(entry, html, policy, stores = storesOf(entry)) {
   const a = parseArticle(html);
   const byStore = policy.body.mode === 'stores';
@@ -216,9 +229,9 @@ function buildNoteDraft(entry, html, policy, stores = storesOf(entry)) {
     // 店ごとの形（note 向け）: 店の節は「どんな店か（最初の段落）」と「行く前のひとこと」だけ。営業時間・予算などの細かい数字は元記事へ
     if (byStore && s.storeId) paras = [s.paras[0], s.paras.find((p, i) => i > 0 && /^\*\*行く前/.test(p))].filter(Boolean);
     out.push(`## ${s.heading}`, '');
-    const card = photosOn ? storePhotoCard(s.storeId, policy._root || ROOT, cache) : null;
-    // 写真は見出しの直後に置く（読む前に店の様子が分かる）
-    if (card) out.push(...cardLine(card));
+    // 写真は見出しの直後に置く（読む前に店の様子が分かる）。1店に何枚まで載せるかは body.storePhotosPerStore（既定1）
+    const shots = photosOn ? storePhotoCards(s.storeId, policy._root || ROOT, cache, Math.max(1, Number(policy.body.storePhotosPerStore) || 1)) : [];
+    for (const c of shots) out.push(...cardLine(c));
     out.push(...paras.flatMap((p) => [p.replace(/（店舗ページ）$/, ''), '']));
   }
   if (a.points.length) out.push(`## ${a.pointsTitle || '知っておきたいポイント'}`, '', ...a.points.map((p) => `- ${p}`), '');
@@ -258,4 +271,4 @@ function validateNoteDraft(draft, { policy, articleText, root = ROOT }) {
   return f;
 }
 
-module.exports = { loadPolicy, parseArticle, articlePhoto, buildNoteDraft, validateNoteDraft, utmUrl, tagsFor, storesOf, storePhotoCard, areaPhoto, htmlToText, CARD_LINE, PHOTO_LINE, dropPhotoCredit };
+module.exports = { loadPolicy, parseArticle, articlePhoto, buildNoteDraft, validateNoteDraft, utmUrl, tagsFor, storesOf, storePhotoCard, storePhotoCards, areaPhoto, htmlToText, CARD_LINE, PHOTO_LINE, dropPhotoCredit };
