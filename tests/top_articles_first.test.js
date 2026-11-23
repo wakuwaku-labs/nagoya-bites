@@ -95,7 +95,8 @@ test('下の「ジャーナル」は、上の「新しい記事」と重なっ�
 test('実際の index.html: 3分類の行が入り、検索中は約束と記事を畳み、文字はトークンで 13px 以上', () => {
   const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const region = (html.match(/<!-- TOP_ARTICLES_START -->([\s\S]*?)<!-- TOP_ARTICLES_END -->/) || [])[1] || '';
-  const rows = region.match(/class="ta-item"/g) || [];
+  // 写真つきの行は class="ta-item ta-has-photo" になるので、ta-item で始まる class を数える
+  const rows = region.match(/class="ta-item(?: [^"]*)?"/g) || [];
   assert.ok(rows.length >= 1 && rows.length <= 3, `行は1〜3: ${rows.length}`);
   const cats = [...region.matchAll(/data-category="(\w+)"/g)].map((m) => m[1]);
   assert.strictEqual(new Set(cats).size, cats.length, '分類は重ならない');

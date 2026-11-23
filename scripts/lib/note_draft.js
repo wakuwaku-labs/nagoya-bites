@@ -56,7 +56,9 @@ function parseArticle(html) {
   let m;
   while ((m = re.exec(bodyHtml))) {
     const paras = [...m[2].matchAll(/<p>([\s\S]*?)<\/p>/g)].map((x) => inline(x[1])).filter(Boolean);
-    sections.push({ heading: inline(m[1]), paras });
+    // 店の節は本文に「店舗ページ」へのリンク（../stores/<店舗ID>.html）を持つ。note の店の写真カードを選ぶのに使う
+    const storeId = (/stores\/(J\d+)\.html/.exec(m[2]) || [])[1] || null;
+    sections.push({ heading: inline(m[1]), paras, storeId });
   }
   const boxes = [...html.matchAll(/<div class="insider-box[^"]*">[\s\S]*?<\/ul>/g)];
   const box = boxes.length ? boxes[0][0] : '';
@@ -100,6 +102,30 @@ function articlePhoto(html, policy) {
   return null;
 }
 
+/**
+ * 店の実物写真が無い日の見出し画像: 記事の街（題名の地名 → 店のエリア）の実写真。Wikimedia Commons の自由ライセンス
+ * （CC0・パブリックドメイン・CC BY・CC BY-SA）の写真だけを data/note_area_photos.json に載せている（2026-11-23）。
+ * 同じ街が続いても毎日同じ写真にならないよう、候補を日付で回す。該当の街が無ければ名古屋の街並み（default）。
+ * クレジット（撮影者・ライセンス・元のページ）は本文の最後に書く。ライセンス上、題を重ねたことも書く。
+ */
+function areaPhoto(entry, policy, stores = [], root = ROOT) {
+  let list;
+  try { list = JSON.parse(fs.readFileSync(path.join(root, 'data/note_area_photos.json'), 'utf8')).areas || {}; } catch { return null; }
+  const t = policy.tags || {};
+  const title = String(entry.title || '');
+  const words = (t.areaWords || []).filter((w) => (list[w] || []).length);
+  const byTitle = words.map((w) => ({ w, at: title.indexOf(w) })).filter((x) => x.at >= 0).sort((a, b) => a.at - b.at || b.w.length - a.w.length)[0];
+  const byStore = [...words].sort((a, b) => b.length - a.length).find((w) => stores.some((s) => String(s['エリア'] || '').includes(w)));
+  const usable = (k) => (list[k] || []).filter((c) => c && /^https:\/\/(upload|thumb)\.wikimedia\.org\//.test(c.thumb1600 || c.url || '') && c.author && c.license && c.page);
+  let key = (byTitle && byTitle.w) || byStore || 'default';
+  if (!usable(key).length) key = 'default';
+  const cands = usable(key);
+  if (!cands.length) return null;
+  const day = Math.floor(Date.parse(`${entry.date || '2026-01-01'}T00:00:00Z`) / 86400000) || 0;
+  const c = cands[day % cands.length];
+  return { kind: 'area', source: 'commons', area: key, src: c.thumb1600 || c.url, credit: `${key}の街の写真 — ${String(c.author).replace(/[:：]/g, ' ').replace(/https?\S*/g, '').trim()} / ${c.license}（Wikimedia Commons・題の文字を重ねています）`, creditUrl: c.page, store: '' };
+}
+
 function utmUrl(entry, policy) {
   const u = new URL(`${String(policy.siteBase).replace(/\/+$/, '')}/journal/${entry.slug}.html`);
   u.searchParams.set('utm_source', policy.utm.source);
@@ -139,26 +165,73 @@ function tagsFor(entry, policy, stores = []) {
   return picked.slice(0, t.max);
 }
 
+/** 本文の途中に置く店の写真カードの行（post_note.js がこの URL を note のカードにし、残りの文字を写真の出どころとしてカードの下に書く） */
+const PHOTO_LINE = /^\[写真\]\s+(https:\/\/\S+)\s*(.*)$/;
+
+const igHandle = (u) => (/instagram\.com\/([A-Za-z0-9._]+)\/(?:p|reel)\//.exec(String(u || '')) || [])[1] || null;
+
+/**
+ * 店の公式 Instagram の投稿 URL（note に貼ると、店が自分で載せた写真つきのカードになる。写真の複製ではなくリンク）。
+ * 使うのは「店の公式アカウント（instagram_resolved.json の instagram）」と「投稿 URL のアカウント」が一致するものだけ。
+ * 別の支店・別の店のアカウントと確かめた組（rejectedInstagram）や、公式が空の店には付けない＝取り違えた写真を出さない。
+ */
+function storePhotoCard(storeId, root = ROOT, cache = {}) {
+  if (!storeId) return null;
+  try {
+    cache.posts = cache.posts || JSON.parse(fs.readFileSync(path.join(root, 'data/instagram_posts.json'), 'utf8'));
+    cache.resolved = cache.resolved || JSON.parse(fs.readFileSync(path.join(root, 'data/instagram_resolved.json'), 'utf8'));
+  } catch { return null; }
+  const post = cache.posts[storeId];
+  const r = cache.resolved[storeId] || {};
+  if (r.failed) return null;
+  const official = igHandle(String(r.instagram || '').replace(/\/?$/, '/p/x/'));
+  if (!official) return null;
+  const url = post && post.postUrl;
+  const handle = igHandle(url);
+  // 投稿をまだ選べていない店には付けない（アカウントのページは note で「Instagram」のロゴだけのカードになる・2026-11-23 実測）
+  return url && handle && handle.toLowerCase() === official.toLowerCase() ? { url, handle, kind: 'post' } : null;
+}
+
 function buildNoteDraft(entry, html, policy, stores = storesOf(entry)) {
   const a = parseArticle(html);
-  const take = policy.body.mode === 'full' ? a.sections.length : policy.body.sections;
+  const byStore = policy.body.mode === 'stores';
+  const take = policy.body.mode === 'full' || byStore ? a.sections.length : policy.body.sections;
   const shown = a.sections.slice(0, take);
   const url = utmUrl(entry, policy);
   const out = [];
   if (a.band) out.push(a.band, '');
   if (a.lead) out.push(a.lead, '');
+  const cache = {};
+  let cards = 0;
+  const photosOn = byStore && policy.body.storePhotos !== false;
+  const cardLine = (c) => { cards++; return [`[写真] ${c.url} 写真: 店の公式Instagram（@${c.handle}）`, '']; };
+  // 1軒を深く読む記事（節に店の欄が無い）は、導入の後に記事の店のカードを置く（2軒まで）
+  if (photosOn && !shown.some((s) => s.storeId)) {
+    for (const id of (entry.store_ids || []).slice(0, 2)) { const c = storePhotoCard(id, policy._root || ROOT, cache); if (c) out.push(...cardLine(c)); }
+  }
   for (const s of shown) {
-    out.push(`## ${s.heading}`, '', ...s.paras.flatMap((p) => [p, '']));
+    let paras = s.paras;
+    // 店の欄が無い節は、最初の2段落まで（全文を2か所に載せない・0054）
+    if (byStore && !s.storeId) paras = s.paras.slice(0, 2);
+    // 店ごとの形（note 向け）: 店の節は「どんな店か（最初の段落）」と「行く前のひとこと」だけ。営業時間・予算などの細かい数字は元記事へ
+    if (byStore && s.storeId) paras = [s.paras[0], s.paras.find((p, i) => i > 0 && /^\*\*行く前/.test(p))].filter(Boolean);
+    out.push(`## ${s.heading}`, '');
+    const card = photosOn ? storePhotoCard(s.storeId, policy._root || ROOT, cache) : null;
+    // 写真は見出しの直後に置く（読む前に店の様子が分かる）
+    if (card) out.push(...cardLine(card));
+    out.push(...paras.flatMap((p) => [p.replace(/（店舗ページ）$/, ''), '']));
   }
   if (a.points.length) out.push(`## ${a.pointsTitle || '知っておきたいポイント'}`, '', ...a.points.map((p) => `- ${p}`), '');
-  if (shown.length < a.sections.length) {
+  if (byStore && shown.some((s) => s.storeId)) out.push('営業時間・予算・地図・予約の窓口は、元記事の店ごとの欄にまとめています。', '');
+  else if (shown.length < a.sections.length) {
     out.push(`この先は元記事で読めます。`, '');
   }
+  if (policy.closing) out.push(policy.closing, '');
   // 見出し画像に記事の写真を使うときは、記事と同じクレジット（発行元・リリースの URL）を本文にも書く（URL は行の最後。リンクカードにしない）
-  const photo = policy.eyecatch === false ? null : articlePhoto(html, policy);
+  const photo = policy.eyecatch === false ? null : (articlePhoto(html, policy) || (policy.eyecatchAreaPhoto !== false ? areaPhoto(entry, policy, stores, policy._root || ROOT) : null));
   if (photo) out.push(`${PHOTO_CREDIT}${photo.credit} ${photo.creditUrl}`, '');
   out.push(policy.footer, '', `元記事: ${url}`);
-  return { title: a.title, body: out.join('\n').replace(/\n{3,}/g, '\n\n'), tags: tagsFor(entry, policy, stores), url, photo };
+  return { title: a.title, body: out.join('\n').replace(/\n{3,}/g, '\n\n'), tags: tagsFor(entry, policy, stores), url, photo, cards };
 }
 
 /** 落ちた理由の配列（空なら通過）。 */
@@ -174,7 +247,10 @@ function validateNoteDraft(draft, { policy, articleText, root = ROOT }) {
   // 名古屋バイツの基本方針の避ける言い回し（記事の面: Google 評価の表示は対象外・順位の語は記事の検査が警告で見る。docs/decisions/0068）
   const brand = brandViolations(all, { surface: 'article', root });
   if (brand.length) f.push('brand:' + brand.join('/'));
-  const body = normalizeDigits(all.replace(/https?:\/\/\S+/g, ' '));
+  // 写真カードの行（URL とアカウント名）と、決まり文句（policy.closing・footer）は記事の数字の照合から外す
+  const fixed = [policy.closing, policy.footer].filter(Boolean);
+  const checked = all.split('\n').filter((l) => !PHOTO_LINE.test(l.trim()) && !l.startsWith(PHOTO_CREDIT) && !fixed.includes(l.trim())).join('\n');
+  const body = normalizeDigits(checked.replace(/https?:\/\/\S+/g, ' '));
   const art = normalizeDigits(articleText);
   const missing = [...new Set(body.match(/\d+(?:\.\d+)?/g) || [])]
     .filter((n) => !new RegExp(`(^|[^\\d.])${n.replace('.', '\\.')}($|[^\\d])`).test(art));
@@ -182,4 +258,4 @@ function validateNoteDraft(draft, { policy, articleText, root = ROOT }) {
   return f;
 }
 
-module.exports = { loadPolicy, parseArticle, articlePhoto, buildNoteDraft, validateNoteDraft, utmUrl, tagsFor, storesOf, htmlToText, CARD_LINE, dropPhotoCredit };
+module.exports = { loadPolicy, parseArticle, articlePhoto, buildNoteDraft, validateNoteDraft, utmUrl, tagsFor, storesOf, storePhotoCard, areaPhoto, htmlToText, CARD_LINE, PHOTO_LINE, dropPhotoCredit };

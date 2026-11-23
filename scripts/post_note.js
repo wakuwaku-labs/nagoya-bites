@@ -38,37 +38,102 @@ const errorClass = (msg) => (/アカウントが違います|未ログイン|not
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const inline = (t) => esc(t).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 
-/** 本文（Markdown 風）を、note のエディタが見出し・箇条書きとして受け取れる HTML へ。「元記事: URL」の URL は別に返す（カードにするため）。 */
+/**
+ * 本文（Markdown 風）を、note のエディタが見出し・箇条書きとして受け取れる HTML の塊へ。
+ * 「[写真] URL 出どころ」の行（店の公式 Instagram）は本文の途中のカードにするので、そこで塊を区切る。
+ * 「元記事: URL」の URL は最後のカードとして別に返す。
+ * 返り値: { parts: [{ html, photo: { url, caption } | null }], cardUrl }（photo は、その html の後ろに置くカード）
+ */
 function bodyToHtml(body) {
-  const html = []; let list = false, cardUrl = null;
+  const parts = []; let html = []; let list = false, cardUrl = null;
   const close = () => { if (list) { html.push('</ul>'); list = false; } };
   for (const raw of body.split('\n')) {
     const l = raw.trim(); if (!l) continue;
     let m;
+    if ((m = N.PHOTO_LINE.exec(l))) { close(); parts.push({ html: html.join(''), photo: { url: m[1], caption: m[2] } }); html = []; continue; }
     if ((m = N.CARD_LINE.exec(l))) { close(); html.push(`<p>${inline(m[1])}</p>`); cardUrl = m[2]; continue; }
     if ((m = /^##\s+(.*)$/.exec(l))) { close(); html.push(`<h2>${inline(m[1])}</h2>`); continue; }
     if ((m = /^[-・]\s+(.*)$/.exec(l))) { if (!list) { html.push('<ul>'); list = true; } html.push(`<li>${inline(m[1].replace(/\[([^\]]+)\]\([^)]+\)/g, '$1'))}</li>`); continue; }
     close(); html.push(`<p>${inline(l.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1'))}</p>`);
   }
   close();
-  return { html: html.join(''), cardUrl };
+  parts.push({ html: html.join(''), photo: null });
+  return { parts: parts.filter((p) => p.html || p.photo), html: parts.map((p) => p.html).join(''), cardUrl };
+}
+
+/** 見出し・箇条書きは、HTML を貼り付ける形でエディタに渡すと正しく変換される（キー入力だと「##」が記号のまま残る） */
+const pasteHtml = (page, h) => page.evaluate((x) => {
+  const el = document.querySelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]');
+  el.focus();
+  const dt = new DataTransfer(); dt.setData('text/html', x); dt.setData('text/plain', '');
+  el.dispatchEvent(new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true }));
+}, h);
+
+const figureCount = (page) => page.evaluate(() => document.querySelectorAll('.ProseMirror figure[embedded-service]').length);
+
+/**
+ * URL だけの行で Enter すると、note が写真つきのカードにする（Instagram・元記事）。カードにならなかったとき
+ * （投稿が消された・非公開になった）は、URL の行を消して false を返す（文字だけの URL を本文に残さない）。
+ */
+async function typeCard(page, url) {
+  const before = await figureCount(page);
+  await page.keyboard.type(url, { delay: 2 });
+  await page.keyboard.press('Enter');
+  for (let i = 0; i < 10 && (await figureCount(page)) <= before; i++) await sleep(800);
+  if ((await figureCount(page)) > before) return true;
+  // 空の行 → URL の行の末尾へ戻り、行ごと消す
+  await page.keyboard.press('Backspace');
+  await page.evaluate((u) => {
+    const p = [...document.querySelectorAll('.ProseMirror p')].filter((x) => x.innerText.trim() === u).pop();
+    if (!p) return;
+    const r = document.createRange(); r.selectNodeContents(p);
+    const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+  }, url);
+  await page.keyboard.press('Backspace');
+  return false;
+}
+
+/**
+ * カードの中身を先に確かめる（note の編集画面が使う埋め込みの API を、ログイン中の画面から呼ぶ）。
+ * 消された・非公開の投稿や、アカウントのページは「Instagram」という題とロゴだけのカードになる（2026-11-23 実測）ので、
+ * 写真（背景画像）があって題が「Instagram」だけではないものだけ通す。確かめられないときは通さない（ロゴだけのカードを出さない）。
+ */
+async function cardHasPhoto(page, url) {
+  return page.evaluate(async (u) => {
+    try {
+      const key = (/notes\/(n[0-9a-f]+)/.exec(location.href) || [])[1] || '';
+      const q = new URLSearchParams({ url: u, service: 'external-article', embeddable_key: key, embeddable_type: 'Note' });
+      const r = await fetch(`https://note.com/api/v2/embed_by_external_api?${q}`, { credentials: 'include' });
+      const h = ((await r.json()).data || {}).html_for_embed || '';
+      const title = ((/external-article-widget-title">([\s\S]*?)<\/strong>/.exec(h) || [])[1] || '').trim();
+      return /external-article-widget-image[^>]*background-image:\s*url\(/.test(h) && !!title && title !== 'Instagram';
+    } catch { return false; }
+  }, url);
 }
 
 async function writeBody(page, draft) {
-  const { html, cardUrl } = bodyToHtml(draft.body);
-  // 見出し・箇条書きは、HTML を貼り付ける形でエディタに渡すと正しく変換される（キー入力だと「##」が記号のまま残る）
-  await page.evaluate((h) => {
-    const el = document.querySelector('.ProseMirror[contenteditable="true"], [role="textbox"][contenteditable="true"]');
-    el.focus();
-    const dt = new DataTransfer(); dt.setData('text/html', h); dt.setData('text/plain', el.innerText);
-    el.dispatchEvent(new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true }));
-  }, html);
-  await sleep(1500);
-  // 元記事の URL は URL だけの行で Enter すると、写真つきのリンクカードになる
+  const { parts, cardUrl } = bodyToHtml(draft.body);
+  let photos = 0, missed = 0, caption = '';
   // 貼り付けの直後は、カーソルが貼った内容の最後にある（クリックし直すと途中に戻るので、しない）
+  // カードの下の出どころの行は、次の塊の頭に足して1回で貼る（別々に貼ると、次の見出しが出どころの段落に混ざる・2026-11-23 実測）
+  for (const p of parts) {
+    const h = caption + (p.html || '');
+    caption = '';
+    if (h) { await pasteHtml(page, h); await sleep(1200); }
+    if (!p.photo) continue;
+    if (!(await cardHasPhoto(page, p.photo.url))) { missed++; continue; }
+    await page.keyboard.press('Enter');
+    if (await typeCard(page, p.photo.url)) {
+      photos++;
+      if (p.photo.caption) caption = `<p>${inline(p.photo.caption)}</p>`;
+    } else missed++;
+  }
+  if (caption) { await pasteHtml(page, caption); await sleep(600); }
+  // 元記事の URL は URL だけの行で Enter すると、写真つきのリンクカードになる
   await page.keyboard.press('Enter');
   if (cardUrl) { await page.keyboard.type(cardUrl, { delay: 2 }); await page.keyboard.press('Enter'); await sleep(3000); }
   await sleep(1500);
+  console.log(`note: 本文の店の写真カード ${photos} 枚${missed ? `（カードにならず外した URL ${missed} 件）` : ''}`);
 }
 
 /** 題の上に付いている見出し画像の位置（無ければ null）。本文中の画像と取り違えないよう、画面上部の幅の広い画像だけを見る */
@@ -96,6 +161,7 @@ async function removeEyecatch(page) {
 /** 見出し画像の素材: 記事に載せた店の実物写真（規約で上げてよいものだけ。PR TIMES の写真には題と日付を重ねる・ADR 0065）。無い日・取れない日は題と日付だけの図（docs/decisions/0056） */
 async function eyecatchFile(page, draft, date) {
   if (draft.photo) {
+    if (draft.photo.kind === 'area') console.log(`note: 見出し画像の写真は記事の地区（${draft.photo.area || '名古屋'}）の街の写真です（自由ライセンス・ADR 0070）`);
     let raw = null;
     try {
       raw = E.downloadPhoto(draft.photo, date);
@@ -133,8 +199,9 @@ async function setEyecatch(page, draft, date, enabled = true, prepared = null) {
       if (!b) return null; const r = b.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 };
     });
     if (box) await page.mouse.click(box.x, box.y);
-    await sleep(3500);
-    const has = !!(await eyecatchBox(page));
+    // 写真の見出し画像（1280×670 の PNG）は送信に数秒〜十数秒かかるので、入るまで最大30秒待つ（2026-11-23 は 3.5 秒では間に合わなかった）
+    let has = false;
+    for (let i = 0; i < 30 && !has; i++) { await sleep(1000); has = !!(await eyecatchBox(page)); }
     console.log('note: 見出し画像 ' + (has ? 'を入れました' : 'は入ったか確認できません'));
     return has ? got.kind : null;
   } catch (e) { console.error('note: 見出し画像は入れられませんでした（本文だけで続けます）: ' + e.message); return null; }
@@ -229,7 +296,8 @@ async function updatePublished(page, key, draft, date) {
   await page.waitForFunction(() => !/\/publish\//.test(location.href) || /シェアしてみましょう|記事が公開されました/.test(document.body.innerText), { timeout: 30000 });
 }
 
-(async () => {
+// 読み込んだだけでは動かさない（2026-11-23 に読み込みの確認のつもりで require して、確認用の下書きが公開された）
+if (require.main === module) (async () => {
   const a = process.argv.slice(2);
   const arg = (k) => (a.includes(k) ? a[a.indexOf(k) + 1] : null);
   const date = arg('--date');

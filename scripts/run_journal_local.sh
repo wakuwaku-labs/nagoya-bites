@@ -52,6 +52,11 @@ export PATH="/Users/katagirijakutou/.local/bin:/opt/homebrew/bin:/usr/local/bin:
 # サブスク認証を使うため API キーは絶対にエクスポートしない
 unset ANTHROPIC_API_KEY
 export DISABLE_AUTOUPDATER=1
+# 生成中の claude に Session Autopilot の自動コミット（autopilot/work-* ブランチを切ってコミット）と
+# 最終チェックをさせない。2026-11-23 の 11-20 分のバックフィルで、記事一式が無関係な題のコミットとして
+# autopilot ブランチに入り HEAD の検査で止まった（ISSUE-185 と同じ事故・コミットは人が行う設計）。
+export AUTOPILOT_GIT=off
+export AUTOPILOT_FINAL_REVIEW=off
 # SNS分析ツールの next.json・note-next.json と note の数字の置き場（docs/decisions/0059）。
 # launchd から動くと iCloud Drive を読めない（Operation not permitted）ので、SNS分析ツールが写しを置く普通のフォルダを使う。
 export SNS_ANALYZER_X_DIR="$HOME/.config/sns-analyzer-x/nagoya_bites"

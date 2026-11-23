@@ -31,6 +31,14 @@ mkdir -p "$LOG_DIR"
 export PATH="/Users/katagirijakutou/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH:-}"
 unset ANTHROPIC_API_KEY   # サブスク認証を使う（通常運用と同じ）
 export DISABLE_AUTOUPDATER=1
+# 生成中の claude に Session Autopilot の自動コミット（autopilot/work-* ブランチを切ってコミット）と
+# 最終チェックをさせない。2026-11-23 の 11-20 分のバックフィルで、記事一式が無関係な題のコミットとして
+# autopilot ブランチに入り HEAD の検査で止まった（ISSUE-185 と同じ事故・コミットは人が行う設計）。
+export AUTOPILOT_GIT=off
+export AUTOPILOT_FINAL_REVIEW=off
+# Google Places の写真（CLAUDE.md の写真の優先順）を使えるよう、通常運用と同じ鍵の置き場を読む
+JOURNAL_ENV="${JOURNAL_ENV:-$HOME/.config/nagoya-bites/journal.env}"
+if [ -f "$JOURNAL_ENV" ]; then set -a; . "$JOURNAL_ENV"; set +a; fi
 
 TARGET="${1:-}"
 if ! echo "$TARGET" | grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}$'; then

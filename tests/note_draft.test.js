@@ -3,7 +3,8 @@ const test = require('node:test');
 const assert = require('node:assert');
 const N = require('../scripts/lib/note_draft');
 
-const policy = N.loadPolicy();
+// 街の写真（data/note_area_photos.json）は専用の試験で見る。ほかの試験は店の写真だけの動きを見る
+const policy = { ...N.loadPolicy(), eyecatchAreaPhoto: false };
 const entry = { slug: '2026-10-21-x', title: '伏見の店で読む', date: '2026-10-21' };
 const html = `<h1 class="art-title">伏見の店で<em>読む</em></h1><p class="art-lead">導入文。</p>
 <div class="art-body"><p class="nb-site-intro">x</p>
@@ -11,7 +12,7 @@ const html = `<h1 class="art-title">伏見の店で<em>読む</em></h1><p class=
 <div class="insider-box"><ul><li>ポイント1</li></ul></div><div class="store-list"></div></article>`;
 
 test('excerpt: 最初の節とポイントだけ載せ、残りは元記事へ誘導する', () => {
-  const d = N.buildNoteDraft(entry, html, policy);
+  const d = N.buildNoteDraft(entry, html, { ...policy, body: { ...policy.body, mode: 'excerpt', sections: 1 } });
   assert.match(d.body, /## 節1/);
   assert.doesNotMatch(d.body, /節2/);
   assert.match(d.body, /この先は元記事で読めます/);
@@ -100,4 +101,101 @@ test('見出し写真: 写真を入れられなかった日は、本文からク
   assert.match(body, /元記事: https:\/\/nagoya-bites\.com/);
   assert.doesNotMatch(body, /\n{3,}/);
   assert.strictEqual(N.dropPhotoCredit(N.buildNoteDraft(entry, html, policy).body), N.buildNoteDraft(entry, html, policy).body);
+});
+
+// ── 店ごとの形（body.mode=stores・2026-11-23）────────────────────────────
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+
+function igRoot(posts, resolved) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-note-ig-'));
+  fs.mkdirSync(path.join(dir, 'data'));
+  fs.writeFileSync(path.join(dir, 'data/instagram_posts.json'), JSON.stringify(posts));
+  fs.writeFileSync(path.join(dir, 'data/instagram_resolved.json'), JSON.stringify(resolved));
+  return dir;
+}
+const storeHtml = `<h1 class="art-title">今池の店</h1><p class="art-lead">導入。</p><div class="art-body">
+<h2>店A（徒歩1分）</h2><p>店Aの説明。</p><p>営業は17時から。予算は3,000円。</p><p><strong>行く前のひとこと</strong>: 日曜休み。（<a href="../stores/J001.html">店舗ページ</a>）</p>
+<h2>店B（徒歩2分）</h2><p>店Bの説明。</p><p><strong>行く前のひとこと</strong>: 禁煙。（<a href="../stores/J002.html">店舗ページ</a>）</p>
+<h2>店C（徒歩3分）</h2><p>店Cの説明。</p><p><strong>行く前のひとこと</strong>: 現金のみ。（<a href="../stores/J003.html">店舗ページ</a>）</p>
+<h2>店D（徒歩4分）</h2><p>店Dの説明。</p><p><strong>行く前のひとこと</strong>: 予約がおすすめ。（<a href="../stores/J004.html">店舗ページ</a>）</p>
+<h2>選ぶときの目安</h2><p>まとめ。</p>
+<div class="store-list"></div></article>`;
+
+test('stores: 全部の店の節を、説明とひとことだけで載せ、公式 Instagram が一致する店に写真カードを置く', () => {
+  const root = igRoot({
+    J001: { postUrl: 'https://www.instagram.com/shop_a/p/AAA/' },
+    J002: { postUrl: 'https://www.instagram.com/other_shop/p/BBB/' }, // 公式と違うアカウントの投稿 → 付けない
+    J003: { postUrl: 'https://www.instagram.com/shop_c/p/CCC/' },
+  }, {
+    J001: { instagram: 'https://www.instagram.com/shop_a/' },
+    J002: { instagram: 'https://www.instagram.com/shop_b/' },
+    J003: { instagram: '', failed: true, rejectedInstagram: 'https://www.instagram.com/shop_c/' }, // 別の支店と確かめて外した
+  });
+  const p = { ...policy, _root: root, body: { ...policy.body, mode: 'stores', storePhotos: true }, closing: '毎朝出しています！' };
+  const d = N.buildNoteDraft({ slug: '2026-11-23-x', title: '今池の店', date: '2026-11-23' }, storeHtml, p);
+  for (const s of ['店A', '店B', '店C', '店D', '選ぶときの目安']) assert.match(d.body, new RegExp('## ' + s));
+  assert.doesNotMatch(d.body, /営業は17時から/); // 細かい数字の段落は元記事へ
+  assert.match(d.body, /\*\*行く前のひとこと\*\*: 日曜休み。\n/); // 「（店舗ページ）」は付けない
+  assert.match(d.body, /## 店A（徒歩1分）\n\n\[写真\] https:\/\/www\.instagram\.com\/shop_a\/p\/AAA\/ 写真: 店の公式Instagram（@shop_a）/);
+  assert.doesNotMatch(d.body, /other_shop|shop_b|shop_c/);
+  assert.strictEqual(d.cards, 1);
+  assert.match(d.body, /毎朝出しています！/);
+  assert.match(d.body, /元記事の店ごとの欄/);
+  // 写真の行と決まり文句は、記事の数字の照合に掛けない（アカウント名の数字で落ちない）
+  const withDigits = { ...d, body: d.body.replace('@shop_a', '@shop_a2025') };
+  assert.deepStrictEqual(N.validateNoteDraft(withDigits, { policy: p, articleText: N.htmlToText(storeHtml) }), []);
+});
+
+test('stores: storePhotos=false なら写真カードを置かない／Instagram の台帳が無くても止めない', () => {
+  const p = { ...policy, _root: fs.mkdtempSync(path.join(os.tmpdir(), 'nb-note-none-')), body: { ...policy.body, mode: 'stores' } };
+  const d = N.buildNoteDraft({ slug: 's', title: 't', date: '2026-11-23' }, storeHtml, p);
+  assert.strictEqual(d.cards, 0);
+  assert.match(d.body, /## 店D/);
+  const off = N.buildNoteDraft({ slug: 's', title: 't', date: '2026-11-23' }, storeHtml, { ...p, body: { ...p.body, storePhotos: false } });
+  assert.doesNotMatch(off.body, /\[写真\]/);
+});
+
+test('policy: 本番の設定は店ごとの形で、締めの一文は記事の言い方の検査を通る', () => {
+  assert.strictEqual(policy.body.mode, 'stores');
+  assert.ok(policy.closing && policy.closing.includes('！'));
+});
+
+test('見出し画像: 店の実物写真が無い日は、記事の街の自由ライセンスの写真（無ければ default）。日付で回し、クレジットは数字の照合に掛けない', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-note-area-'));
+  fs.mkdirSync(path.join(root, 'data'));
+  const c = (n) => ({ thumb1600: `https://upload.wikimedia.org/x/${n}.jpg`, author: 'User:Foo 2019', license: 'CC BY-SA 4.0', page: `https://commons.wikimedia.org/wiki/File:${n}.jpg` });
+  fs.writeFileSync(path.join(root, 'data/note_area_photos.json'), JSON.stringify({ areas: { 今池: [c('i1'), c('i2')], default: [c('d1')], 栄: [{ ...c('bad'), thumb1600: 'https://example.com/x.jpg' }] } }));
+  const p = { ...policy, eyecatchAreaPhoto: true, _root: root, body: { ...policy.body, mode: 'stores' } };
+  const a = N.areaPhoto({ title: '今池で一人飲み', date: '2026-11-23' }, p, [], root);
+  const b = N.areaPhoto({ title: '今池で一人飲み', date: '2026-11-24' }, p, [], root);
+  assert.strictEqual(a.area, '今池');
+  assert.notStrictEqual(a.src, b.src); // 日付で回る
+  assert.match(a.credit, /Foo/); assert.doesNotMatch(a.credit, /User:/); // 「:」はリンクカードの行と取り違えるので外す
+  assert.strictEqual(N.areaPhoto({ title: '名古屋の鍋', date: '2026-11-23' }, p, [], root).area, 'default');
+  assert.strictEqual(N.areaPhoto({ title: '名古屋の鍋', date: '2026-11-23' }, p, [{ エリア: '今池・千種' }], root).area, '今池'); // 店のエリア
+  assert.strictEqual(N.areaPhoto({ title: '栄の店', date: '2026-11-23' }, p, [], root).area, 'default'); // Commons 以外の URL は使わない
+  const d = N.buildNoteDraft({ slug: 's', title: '今池の店', date: '2026-11-23' }, storeHtml, p);
+  assert.strictEqual(d.photo.kind, 'area');
+  assert.match(d.body, /^見出し画像: 今池の街の写真 — .*CC BY-SA 4\.0.*題の文字を重ねています.* https:\/\/commons/m);
+  assert.doesNotMatch(d.body.split('\n').find((l) => l.startsWith('見出し画像:')), N.CARD_LINE); // 末尾のカードにならない
+  assert.deepStrictEqual(N.validateNoteDraft(d, { policy: p, articleText: N.htmlToText(storeHtml) }), []);
+  // 台帳が無ければ見出し画像は今までどおり題だけの図（止めない）
+  assert.strictEqual(N.areaPhoto({ title: '今池', date: '2026-11-23' }, p, [], fs.mkdtempSync(path.join(os.tmpdir(), 'nb-x-'))), null);
+});
+
+test('stores: 店の欄が無い1軒の記事は、導入の後に店のカードを置き、節は2段落までにする', () => {
+  const root = igRoot({ J009: { postUrl: 'https://www.instagram.com/shop_z/p/ZZZ/' } }, { J009: { instagram: 'https://www.instagram.com/shop_z/' } });
+  const one = `<h1 class="art-title">1軒</h1><p class="art-lead">導入。</p><div class="art-body"><h2>節1</h2><p>一。</p><p>二。</p><p>三。</p><h2>節2</h2><p>四。</p></div></article>`;
+  const d = N.buildNoteDraft({ slug: 's', title: '1軒', date: '2026-11-23', store_ids: ['J009'] }, one, { ...policy, _root: root, body: { ...policy.body, mode: 'stores' } });
+  assert.match(d.body, /導入。\n\n\[写真\] https:\/\/www\.instagram\.com\/shop_z\/p\/ZZZ\//);
+  assert.doesNotMatch(d.body, /三。/);
+  assert.match(d.body, /四。/);
+  assert.strictEqual(d.cards, 1);
+});
+
+test('post_note.js は読み込んだだけでは投稿を始めない（直接実行したときだけ動く）', () => {
+  const src = require('fs').readFileSync(require('path').join(__dirname, '../scripts/post_note.js'), 'utf8');
+  assert.match(src, /if \(require\.main === module\) \(async \(\) => \{/);
 });
