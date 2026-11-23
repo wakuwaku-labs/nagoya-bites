@@ -210,6 +210,30 @@ function compactForQuote(s) {
 }
 
 /**
+ * 「なぜ◯◯なのか」（2026-11-23 本人「なぜ今池というエリアにこだわって選んだか？がないので説得力がない、読みたいと思えない」）。
+ * 記事に「なぜ◯◯なのか」の節がある日は、本文の1行目（フック）の直後に why（1〜2文）を必須にする。
+ * why は節の本文から取った事実だけ: 引用（evidence）の1つが節の見出しのすぐ後ろ（WHY_WINDOW 字以内）に無ければ落とす。
+ * ◯選の記事なのに節が無い日は補えないので落とす（ジャーナルの検査 項目20 と同じ。定型の投稿に戻る）。
+ */
+const WHY_RE = /なぜ([^\s。、]{1,20}?)なのか/;
+const WHY_WINDOW = 450; // 節は2〜3段落（実際の記事で240〜340字）。平文にすると次の見出しが見えないので字数で区切る
+function whyIssues(draft, entry, articleText, body, ev) {
+  const art = compactForQuote(articleText);
+  const m = WHY_RE.exec(art);
+  if (!m) return /[0-9一二三四五六七八九十]+選/.test(String((entry && entry.title) || '')) ? ['draft_why_section_missing_in_article'] : [];
+  const f = [];
+  const why = typeof draft.why === 'string' ? draft.why.trim() : '';
+  if (!why) return ['draft_why_missing'];
+  if (weightedLength(why) > 130) f.push(`draft_why_too_long:${weightedLength(why)}`);
+  if ((why.match(/[。！？]/g) || []).length > 2) f.push('draft_why_too_many_sentences');
+  const rest = body.split('\n').slice(1).join('');
+  if (!compactForQuote(rest).startsWith(compactForQuote(why))) f.push('draft_why_not_after_first_line');
+  const win = art.slice(m.index, m.index + m[0].length + WHY_WINDOW);
+  if (!ev.some((e) => win.includes(compactForQuote(e)))) f.push('draft_why_evidence_not_in_section');
+  return f;
+}
+
+/**
  * 保存した文面の検査。返り値は落ちた理由の配列（空なら通過）。
  * 本文の数字は「記事のどこかにある」では足りず、すべて引用（evidence）の中になければならない。
  * 引用は記事の原文そのまま（空白と全角・半角の違いだけ許す）。数字を別の品に付け替える誤りを防ぐ。
@@ -242,6 +266,7 @@ function checkDraft(draft, { entry, policy, articleText }) {
     const missing = numbersMissingFromArticle(body, ev.join(' \n '));
     if (missing.length) f.push(`draft_numbers_not_in_evidence:${missing.join(',')}`);
   }
+  f.push(...whyIssues(draft, entry, articleText, body, ev));
   // 返信（続き）。本文と同じく、数字はすべて引用の中になければならない
   if (draft.replies !== undefined) {
     const replies = Array.isArray(draft.replies) ? draft.replies : null;

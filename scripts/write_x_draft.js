@@ -401,6 +401,7 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
       type: reply.type,
       body: typeof reply.body === 'string' ? reply.body.trim() : reply.body,
       evidence: reply.evidence,
+      ...(reply.why !== undefined ? { why: typeof reply.why === 'string' ? reply.why.trim() : reply.why } : {}),
       ...(reply.replies !== undefined && !noThread ? { replies: Array.isArray(reply.replies) ? reply.replies.map((x) => (typeof x === 'string' ? x.trim() : x)) : reply.replies } : {}),
       generated_at: now.toISOString(),
       generator: `claude --print（${PROMPT_REL}）`,
@@ -439,7 +440,7 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
       }
       return { ...out, result: args.dryRun ? 'dry_run_ok' : 'written' };
     }
-    previous = { reason: failures.join(' / '), raw: JSON.stringify({ type: reply.type, body: reply.body, replies: reply.replies, evidence: reply.evidence }) };
+    previous = { reason: failures.join(' / '), raw: JSON.stringify({ type: reply.type, body: reply.body, replies: reply.replies, evidence: reply.evidence, why: reply.why }) };
   }
   return { ...out, result: 'rejected', reason: out.attempts[out.attempts.length - 1].reason };
 }

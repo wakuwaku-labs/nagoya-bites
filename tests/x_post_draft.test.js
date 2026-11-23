@@ -81,6 +81,31 @@ test('保存した文面: picks（おすすめ◯選）は、◯選の数字が�
   assert.ok(X.checkDraft(noEv, { entry, policy, articleText: art }).some((f) => f.startsWith('draft_numbers_not_in_evidence')));
 });
 
+test('保存した文面: 「なぜ◯◯なのか」の節がある記事は、本文の1行目の直後に節から取った why が要る（節が無い◯選は落ちる）', () => {
+  const sec = '<h2>なぜ今池なのか</h2><p>今池は、昔ながらの大衆酒場が駅のそばに集まる飲み屋の街です。ひとり飲みに合う小さな店が多い街です。</p>';
+  const art = X.htmlToText(`<article><h1>今池のおすすめ5選</h1><p>今池でひとり飲みのおすすめ5選。</p>${sec}<h2>店A</h2><p>${'店の説明。'.repeat(120)}1本185円からのやきとん。</p></article>`);
+  const e2 = { ...entry, title: '今池でひとり飲み、おすすめ5選' };
+  const why = '今池は、小さな店が駅のそばに集まる飲み屋の街。\nひとり飲みに合う店が多い。';
+  const ok = {
+    ...GOOD, type: 'picks',
+    body: `【今池】ひとり飲みのおすすめ5選\n${why}\n・「店A」：やきとん`,
+    why, evidence: ['今池でひとり飲みのおすすめ5選', '昔ながらの大衆酒場が駅のそばに集まる飲み屋の街です'],
+  };
+  const chk = (d, a = art, en = e2) => X.checkDraft(d, { entry: en, policy, articleText: a });
+  assert.deepStrictEqual(chk(ok), []);
+  assert.ok(chk({ ...ok, why: undefined }).includes('draft_why_missing'));
+  // フックの直後に無い
+  assert.ok(chk({ ...ok, body: `【今池】ひとり飲みのおすすめ5選\n・「店A」：やきとん\n${why}` }).includes('draft_why_not_after_first_line'));
+  // 引用が節の外（節に無い事実だけで why を書いた）
+  assert.ok(chk({ ...ok, evidence: ['今池でひとり飲みのおすすめ5選', '1本185円からのやきとん'] }).includes('draft_why_evidence_not_in_section'));
+  // 長すぎる・3文以上
+  assert.ok(chk({ ...ok, why: why + '。あ。い。' }).some((x) => x.startsWith('draft_why_too_')));
+  // 節が無い記事: ◯選の題名なら落ちる、それ以外は why 不要で通る
+  const noSec = X.htmlToText('<article><h1>今池のおすすめ5選</h1><p>今池でひとり飲みのおすすめ5選。</p></article>');
+  assert.ok(chk({ ...GOOD, type: 'picks', body: '【今池】5選\n・店A', evidence: ['今池でひとり飲みのおすすめ5選'] }, noSec).includes('draft_why_section_missing_in_article'));
+  assert.ok(!X.checkDraft(GOOD, { entry, policy, articleText: ARTICLE_TEXT }).some((x) => x.startsWith('draft_why')));
+});
+
 test('保存した文面: 記事違い・知らない型・URL・ハッシュタグ・長すぎる本文・空は落ちる', () => {
   const c = (d) => X.checkDraft({ ...GOOD, ...d }, { entry, policy, articleText: ARTICLE_TEXT });
   assert.ok(c({ slug: 'other' }).includes('draft_slug_mismatch'));
