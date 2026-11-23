@@ -1,4 +1,5 @@
 'use strict';
+const { renderWhy, loadWhyData } = require('./lib/why_section');
 /**
  * scripts/gen_area_genre_pages.js
  *
@@ -408,9 +409,13 @@ function renderRootPage(rootResult, policy) {
     </a>`).join('\n');
   const genreList = genrePages.map(p => `      <li><a href="${p.area.slug}/${p.genre.slug}.html">${esc(p.area.label)}の${esc(p.genre.label)}（${p.stores.length}軒）</a></li>`).join('\n');
 
+  const whyData = loadWhyData();
+  const whyRoot = renderWhy(whyData.areas._root, 'hub', { areas: areaPages.length, hubMin: policy.hubMinStores });
+  if (!whyRoot) console.warn('WARN: data/why_sections.json に _root の「なぜ」の節が無い（audit_why_sections.js が FAIL にする）');
   const body = `  <p class="art-eyebrow">店舗データベース — エリア×ジャンルで探す</p>
   <h1 class="art-title">名古屋の飲食店を、<em>エリア×ジャンル</em>で絞り込む</h1>
   <div class="art-lead"><p>NAGOYA BITES 掲載店を、主要${areaPages.length}エリア×代表ジャンルの一覧に整理しました。各ページはGoogle評価・予算・営業時間などの実データだけで構成し、広告や掲載料による順位操作は一切行っていません。</p></div>
+  ${whyRoot}
   <h2 class="nb-section-head"><span>エリアから探す</span></h2>
   <div class="hub-grid">
 ${areaGrid}
@@ -472,9 +477,12 @@ function renderAreaPage(page, allPages, policy) {
     stations.length ? ['最寄り駅', stations.map(([st]) => st).join('・')] : null,
   ].filter(Boolean);
 
+  const whyArea = renderWhy(loadWhyData().areas[page.area.slug], 'hub', { n: page.stores.length, g1: genrePages[0] && genrePages[0].genre.label, g1n: genrePages[0] && genrePages[0].stores.length });
+  if (!whyArea) console.warn(`WARN: data/why_sections.json に ${page.area.slug} の「なぜ」の節が無い（audit_why_sections.js が FAIL にする）`);
   const body = `  <p class="art-eyebrow">店舗データベース — ${esc(page.area.label)}</p>
   <h1 class="art-title">${esc(page.area.label)}の<em>飲食店</em></h1>
   <div class="art-lead"><p>${esc(page.area.label)}に掲載中の飲食店${page.stores.length}軒をジャンル別に整理。並び順は各ジャンルページで最寄り駅からの徒歩分数の順に統一しています（評価・口コミ数には依りません）。編集部推薦や広告で順番は動かしていません。</p></div>
+  ${whyArea}
   <dl class="hub-stats">
 ${statCells.map(([k, v]) => `    <div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('\n')}
   </dl>

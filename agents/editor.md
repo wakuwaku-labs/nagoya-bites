@@ -235,6 +235,8 @@ SEO:
    - font-size のリテラル値を新規に書かない。トークン（`var(--fs-*)`）を使う（DSN-001）
    - SEO要素を全て含める
    - 作成後 `node scripts/audit_design_system.js --check` を通す
+   - **「なぜこのエリア・この切り口なのか」の節（必須・本人 2026-11-23「なぜ今池というエリアにこだわって選んだか？がないので説得力がない、読みたいと思えない」）**: 題に「◯選・◯店・◯軒・ガイド」がある特集と、エリアのハブ（`stores/area/各エリア/index.html`）には、店の紹介の前に `<h2>なぜ◯◯なのか</h2>` の節を置く。①その街がどんな街か（愛知県の観光サイト Aichi Now・名古屋市・観光協会など出所のある事実。出典はリンクで節の中に置く）②なぜこの切り口（シーン・ジャンル）にその街が合うか（このページに載せた店の事実・選定基準で裏づける）。「人気」「定番」だけの言い切りや、出所の無い他の街との比較は書かない。
+   - 本文は `data/why_sections.json` に足し、`node scripts/apply_why_sections.js` で差し込む（部品は `scripts/lib/why_section.js`）。検査は `node scripts/audit_why_sections.js --check`（既存の頁は警告、新しい頁は FAIL）。journal の同じ決まりは `.claude/commands/journal-today.md`（validator 項目20）
 
 5. features/index.html にカードを追加（写真カードのパターン）
 

@@ -330,6 +330,10 @@ jobs:
         run: node scripts/audit_feature_facts.js --check
         continue-on-error: true
 
+      - name: 特集・エリアページの「なぜこのエリア・この切り口なのか」の節を検査（既存は警告・新しい頁は FAIL。scripts/audit_why_sections.js）
+        run: node scripts/audit_why_sections.js --check
+        continue-on-error: true
+
       - name: 特集上部CTAの自動付与（SEO-042・全特集対象・冪等）
         # --all で全 features/*.html を対象にする（SEO-100: 旧来は上位特集のみだったが、
         # ItemList に URL のない特集 17本は HTML 本文の shop-name/stores リンクへフォールバック）。
