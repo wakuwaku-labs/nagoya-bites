@@ -167,7 +167,7 @@ async function eyecatchFile(page, draft, date) {
       raw = E.downloadPhoto(draft.photo, date);
       try {
         if (!E.overlayAllowed(draft.photo)) { console.log('note: 見出し画像は記事の写真（店の実物）だけを使います（PR TIMES 以外の写真には題を重ねない・ADR 0065）'); return { file: raw, kind: 'photo' }; }
-        const f = await E.makePhotoEyecatch(raw, draft.title, date, null, page.browser());
+        const f = await E.makePhotoEyecatch(raw, draft.title, date, null, page.browser(), { storeNames: draft.storeNames || [] }); // 店名・『』の途中で折らない
         if (f === raw) { console.log('note: 見出し画像は記事の写真（店の実物）だけを使います（縦長・小さい写真で、全面に敷くと切れる・ぼやけるため）'); return { file: raw, kind: 'photo' }; }
         fs.rmSync(raw, { force: true });
         console.log('note: 見出し画像は記事の写真（店の実物）に題と日付を重ねたものを使います'); return { file: f, kind: 'photo' };

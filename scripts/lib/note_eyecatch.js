@@ -66,9 +66,9 @@ function html(title, date) {
 const KEEP_TOGETHER = ['バターのいとこ', 'クルミッ子', '鎌倉紅谷'];
 
 /** 題を語（Intl.Segmenter・日本語）に分け、2字以上の語・KEEP_TOGETHER の語は途中で折れないようにする（「大盛り」「ランチ」「バターのいとこ」を割らない） */
-function titleHtml(title, breakAfter = -1) {
-  if (breakAfter > 0 && breakAfter < title.length) return titleHtml(title.slice(0, breakAfter)) + '<br>' + titleHtml(title.slice(breakAfter).replace(/^\s+/, ''));
-  const keep = KEEP_TOGETHER.slice().sort((a, b) => b.length - a.length);
+function titleHtml(title, breakAfter = -1, keepWords = KEEP_TOGETHER) {
+  if (breakAfter > 0 && breakAfter < title.length) return titleHtml(title.slice(0, breakAfter), -1, keepWords) + '<br>' + titleHtml(title.slice(breakAfter).replace(/^\s+/, ''), -1, keepWords);
+  const keep = [...new Set(keepWords)].filter(Boolean).sort((a, b) => b.length - a.length);
   const out = []; let rest = title;
   while (rest) {
     const hit = keep.map((k) => ({ k, i: rest.indexOf(k) })).filter((h) => h.i >= 0).sort((a, b) => a.i - b.i || b.k.length - a.k.length)[0];
@@ -127,7 +127,60 @@ function commaBreak(title) {
   return best;
 }
 
-function photoHtml(title, date, photoSrc, size, breakAfter = -1) {
+/**
+ * 題の中で行をまたいではいけない語（2026-11-23 design-qa 重大1・3「海／乃鶏」「さばと／青魚」）:
+ * KEEP_TOGETHER・『』「」で囲んだ部分（括弧ごと）・記事の店名（題に全体が出ていれば全体、無ければ空白で分けた2字以上の部分）。
+ */
+function keepPhrases(title, storeNames = []) {
+  const t = String(title || '');
+  const out = KEEP_TOGETHER.filter((k) => t.includes(k));
+  for (const m of t.matchAll(/『[^』]*』|「[^」]*」/g)) out.push(m[0]);
+  for (const name of storeNames) {
+    const n = String(name || '').trim();
+    if (!n) continue;
+    if (t.includes(n)) { out.push(n); continue; }
+    for (const part of n.split(/\s+/)) if ([...part].length >= 2 && t.includes(part)) out.push(part);
+  }
+  return [...new Set(out)];
+}
+
+/** 語の範囲 [始まり, 終わり)（題の中で見つかった全部） */
+function keepSpans(title, keeps) {
+  const spans = [];
+  for (const k of keeps) for (let i = title.indexOf(k); i >= 0; i = title.indexOf(k, i + 1)) spans.push([i, i + k.length]);
+  return spans;
+}
+
+/**
+ * 題を2行に分けるときの折り目の候補（真ん中に近い順）。「、」「？」「！」「｜」の後と、『「の前。
+ * 守る語の内側と、片方の行が題の3割に満たない位置は除く。
+ */
+function breakCandidates(title, keeps = []) {
+  const t = String(title || ''); const n = t.length; const mid = n / 2;
+  const spans = keepSpans(t, keeps);
+  const set = new Set();
+  for (let i = 0; i < n; i++) {
+    if ('、？！｜?!'.includes(t[i])) set.add(i + 1);
+    if ('『「'.includes(t[i])) set.add(i);
+  }
+  return [...set].filter((p) => p >= n * 0.3 && p <= n * 0.7 && !spans.some(([a, b]) => p > a && p < b))
+    .sort((a, b) => Math.abs(a - mid) - Math.abs(b - mid) || a - b);
+}
+
+/** 折り返した行（lines）が守る語の途中で切れていないか（純粋関数）。問題の説明の配列 */
+function findKeepBreaks(lines, title, keeps = []) {
+  const strip = (x) => String(x).replace(/\s+/g, '');
+  const t = strip(title);
+  const spans = keepSpans(t, keeps.map(strip).filter(Boolean));
+  const out = []; let pos = 0;
+  lines.slice(0, -1).forEach((line) => {
+    pos += [...strip(line)].length;
+    for (const [a, b] of spans) if (pos > a && pos < b) out.push(`語の途中で改行（${t.slice(a, pos)}|${t.slice(pos, b)}）`);
+  });
+  return [...new Set(out)];
+}
+
+function photoHtml(title, date, photoSrc, size, breakAfter = -1, keepWords = KEEP_TOGETHER) {
   return `<!doctype html><meta charset="utf-8"><style>
   html,body{margin:0}
   .c{width:1280px;height:670px;position:relative;overflow:hidden;background:#000}
@@ -136,7 +189,7 @@ function photoHtml(title, date, photoSrc, size, breakAfter = -1) {
   .k{position:absolute;left:56px;top:44px;font:600 28px "Hiragino Sans","Yu Gothic",sans-serif;letter-spacing:.18em;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.45)}
   h1{position:absolute;left:56px;right:56px;bottom:96px;margin:0;font:700 ${size}px/1.38 "Hiragino Mincho ProN","Yu Mincho",serif;color:#fff;letter-spacing:.02em;line-break:strict;word-break:auto-phrase;text-shadow:0 2px 10px rgba(0,0,0,.45)}
   .f{position:absolute;left:56px;bottom:42px;font:26px "Hiragino Sans","Yu Gothic",sans-serif;color:#eee;text-shadow:0 1px 6px rgba(0,0,0,.45)}
-  </style><div class="c"><img src="${photoSrc}"><div class="sh"></div><div class="k">NAGOYA BITES JOURNAL</div><h1>${titleHtml(title, breakAfter)}</h1><div class="f">${esc(date)} ／ 名古屋の飲食店ジャーナル</div></div>`;
+  </style><div class="c"><img src="${photoSrc}"><div class="sh"></div><div class="k">NAGOYA BITES JOURNAL</div><h1>${titleHtml(title, breakAfter, keepWords)}</h1><div class="f">${esc(date)} ／ 名古屋の飲食店ジャーナル</div></div>`;
 }
 
 /**
@@ -177,6 +230,7 @@ async function assertEyecatchClean(page, opts = {}) {
   }, {});
   const problems = inspectEyecatchBoxes(boxes);
   if (opts.title) problems.push(...findWordBreaks(boxes.lines, opts.title));
+  if (opts.title && opts.keep) problems.push(...findKeepBreaks(boxes.lines, opts.title, opts.keep));
   if (opts.maxLines && boxes.lines.length > opts.maxLines) problems.push(`題が${opts.maxLines}行に収まらない`);
   if (problems.length) throw new Error('見出し画像の検査に不合格: ' + problems.join(' / '));
 }
@@ -203,7 +257,7 @@ async function makeEyecatch(title, date, outPath, browser) {
  * 題が語の途中で折れる・2行に収まらない・はみ出す・ラベルや日付に重なるときは字を小さくして試し（48→44→40）、
  * それでも合格しなければ例外（呼び出し側は写真そのままに落とす）。
  */
-async function makePhotoEyecatch(photoPath, title, date, outPath, browser) {
+async function makePhotoEyecatch(photoPath, title, date, outPath, browser, opts = {}) {
   const out = outPath || path.join(os.tmpdir(), `nb-note-eyecatch-photo-${date}.png`);
   const mime = /\.png$/i.test(photoPath) ? 'image/png' : 'image/jpeg';
   const src = `data:${mime};base64,${fs.readFileSync(photoPath).toString('base64')}`;
@@ -218,12 +272,14 @@ async function makePhotoEyecatch(photoPath, title, date, outPath, browser) {
     const g = photoGeometry(dim.w, dim.h);
     if (g.photoOnly) { await page.close(); return photoPath; } // 縦長・小さすぎる写真の日は、重ねず写真だけ
     let lastErr = null;
-    const comma = commaBreak(title);
-    const tries = TITLE_SIZES.flatMap((size) => (comma > 0 ? [[size, comma], [size, -1]] : [[size, -1]])); // 同じ大きさで「、」の後で折る形を先に試す
+    const keep = keepPhrases(title, opts.storeNames || []);
+    const cands = breakCandidates(title, keep).slice(0, 3);
+    // 句の切れ目（「、」「？」の後・『の前）で折る形を、字を小さくしてでも先に試す。どれも合わなければ自然な折り返し（2026-11-23 design-qa 軽微6「個室の／違い」）
+    const tries = [...TITLE_SIZES.flatMap((size) => cands.map((b) => [size, b])), ...TITLE_SIZES.map((size) => [size, -1])];
     for (const [size, brk] of tries) {
-      await page.setContent(photoHtml(title, date, src, size, brk));
+      await page.setContent(photoHtml(title, date, src, size, brk, keep));
       await page.evaluate(() => document.fonts && document.fonts.ready);
-      try { await assertEyecatchClean(page, { title, maxLines: 2 }); lastErr = null; break; } catch (e) { lastErr = e; }
+      try { await assertEyecatchClean(page, { title, maxLines: 2, keep }); lastErr = null; break; } catch (e) { lastErr = e; }
     }
     if (lastErr) throw lastErr;
     await page.screenshot({ path: out, clip: { x: 0, y: 0, width: 1280, height: 670 } });
@@ -232,4 +288,4 @@ async function makePhotoEyecatch(photoPath, title, date, outPath, browser) {
   return out;
 }
 
-module.exports = { KEEP_TOGETHER, commaBreak, titleHtml, overlayAllowed, makePhotoEyecatch, photoHtml, photoGeometry, makeEyecatch, inspectEyecatchBoxes, html, downloadPhoto, photoUrl };
+module.exports = { KEEP_TOGETHER, keepPhrases, breakCandidates, findKeepBreaks, commaBreak, titleHtml, overlayAllowed, makePhotoEyecatch, photoHtml, photoGeometry, makeEyecatch, inspectEyecatchBoxes, html, downloadPhoto, photoUrl };
