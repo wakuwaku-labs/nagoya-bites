@@ -162,6 +162,7 @@ async function removeEyecatch(page) {
 async function eyecatchFile(page, draft, date) {
   if (draft.photo) {
     if (draft.photo.kind === 'area') console.log(`note: 見出し画像の写真は記事の地区（${draft.photo.area || '名古屋'}）の街の写真です（自由ライセンス・ADR 0070）`);
+    const what = draft.photo.kind === 'food' ? '料理の写真（イメージ）' : draft.photo.kind === 'area' ? '街の写真' : '記事の写真（店の実物）';
     let raw = null;
     try {
       raw = E.downloadPhoto(draft.photo, date);
@@ -170,9 +171,9 @@ async function eyecatchFile(page, draft, date) {
         const f = await E.makePhotoEyecatch(raw, draft.title, date, null, page.browser(), { storeNames: draft.storeNames || [] }); // 店名・『』の途中で折らない
         if (f === raw) { console.log('note: 見出し画像は記事の写真（店の実物）だけを使います（縦長・小さい写真で、全面に敷くと切れる・ぼやけるため）'); return { file: raw, kind: 'photo' }; }
         fs.rmSync(raw, { force: true });
-        console.log('note: 見出し画像は記事の写真（店の実物）に題と日付を重ねたものを使います'); return { file: f, kind: 'photo' };
+        console.log(`note: 見出し画像は${what}に題と日付を重ねたものを使います`); return { file: f, kind: 'photo' };
       } catch (e) { console.error('note: 題を重ねられなかったので、写真そのままにします: ' + e.message); }
-      console.log('note: 見出し画像は記事の写真（店の実物）を使います'); return { file: raw, kind: 'photo' };
+      console.log(`note: 見出し画像は${what}を使います`); return { file: raw, kind: 'photo' };
     } catch (e) { console.error('note: 記事の写真を取れなかったので、題だけの図にします: ' + e.message); }
   } else console.log('note: 記事に note へ上げてよい店の写真が無いので、見出し画像は題だけの図にします');
   return { file: await E.makeEyecatch(draft.title, date, null, page.browser()), kind: 'card' };
