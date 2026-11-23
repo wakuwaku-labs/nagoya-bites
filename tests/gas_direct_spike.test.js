@@ -230,7 +230,38 @@ test('急増の日は GA4 の全部の取得から、その日の直接アクセ
   });
   reqs.length = 0;
   g.fetchGA4Report('2026-11-10', '2026-11-10');
-  reqs.forEach((r) => assert.doesNotMatch(JSON.stringify(r.dimensionFilter), /notExpression/, '急増でない日は今までどおり'));
+  reqs.forEach((r) => assert.doesNotMatch(JSON.stringify(r.dimensionFilter), /"inListFilter":\{"values":\["2026/, '急増でない日は日付で直接アクセスを除かない'));
+});
+
+// 2026-11-23 本人「毎日LINEで送られてきている数字は合っている？急に増えたので」:
+// 11/17 以降、海外（シンガポール・中国）からの直接アクセスが1日 75〜120 回入り、急増の判定（中央値＋100回）を
+// すり抜けて LINE の訪問者・直帰率・滞在を膨らませていた。海外からの直接アクセスは全部の取得で常に除く
+test('海外からの直接アクセスは、急増でない日も GA4 の全部の取得から除く（日本からの直接アクセスは残す）', () => {
+  const reqs = [];
+  const g = loadGas((req) => { reqs.push(JSON.parse(JSON.stringify(req))); return {}; });
+  g.fetchGA4Report('2026-11-21', '2026-11-21');
+  assert.equal(reqs.length, 7);
+  reqs.forEach((r) => {
+    const s = JSON.stringify(r.dimensionFilter);
+    assert.match(s, /nagoya-bites\.com/);
+    // 除く条件 = NOT((direct) AND NOT(countryId=JP))
+    assert.match(s, /\{"notExpression":\{"andGroup":\{"expressions":\[\{"filter":\{"fieldName":"sessionSource","stringFilter":\{"matchType":"EXACT","value":"\(direct\)"\}\}\},\{"notExpression":\{"filter":\{"fieldName":"countryId","stringFilter":\{"matchType":"EXACT","value":"JP"\}\}\}\}\]\}\}\}/);
+  });
+});
+
+test('海外からの直接アクセスを除いた回数を本文で断る（10回未満の日は書かない）', () => {
+  const g = loadGas();
+  const base = () => { const d = data1111(); d.settled.date = '2026-11-21'; return d; };
+  const d1 = base(); d1.foreignDirect = 79;
+  const msg = g.formatDailyReport(d1, '2026-11-21');
+  assert.match(msg, /この日の海外からの「直接アクセス」79回は、機械的な訪問（ボットなど）とみて、すべての数字から除いています/);
+  const d2 = base(); d2.foreignDirect = 3;
+  assert.doesNotMatch(g.formatDailyReport(d2, '2026-11-21'), /海外からの/);
+  const d3 = base();  // 取得に失敗した日（undefined）も書かない
+  assert.doesNotMatch(g.formatDailyReport(d3, '2026-11-21'), /海外からの/);
+  const w = weekData(900, 0.3, 30); w.foreignDirect = 538;
+  const wmsg = g.formatWeeklyReport(w, weekData(880, 0.3, 30), '2026-11-15', '2026-11-21', null);
+  assert.match(wmsg, /この週の海外からの「直接アクセス」538回は.*（先週の数字も同じく除いています）/);
 });
 
 test('全部を除いた日は「すべて除いた」と書き、予約の率も出す', () => {
