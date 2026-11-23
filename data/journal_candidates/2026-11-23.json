@@ -1,0 +1,470 @@
+{
+  "date": "2026-11-23",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "今池で一人飲みできる居酒屋おすすめ5選、仕事帰りに駅から歩いて5分以内",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 89,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 9件 (エリア,予約,シーン,雰囲気,看板,初めて,気軽,おすすめ,使い分け) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 151字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「今池」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "89点（自動公開ライン 100点）。主な不足: topicality -17 / brand_fit -4",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "今池のせんべろ2店、青二才とサクランボを仕事帰りのひとり飲みで比べる",
+      "verdict": "HOLD",
+      "total": 79,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 3件 (比較,シーン,使い分け) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 137字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「今池」+4",
+          "シーン語がリードのみ「一人飲み」+1",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "今池で禁煙の店を探すなら、天ぷらスタンド KITSUNEの夜と昼",
+      "verdict": "HOLD",
+      "total": 79,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 3件 (予約,雰囲気,看板) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 144字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「今池」+4",
+          "シーン語がリードのみ「一人飲み」+1",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "今池の焼き鳥、やきとりつくつくのカウンターと個室",
+      "verdict": "HOLD",
+      "total": 70,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        },
+        {
+          "kw": "焼き鳥",
+          "feature": "features/nagoya-yakitori.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 1件 (使い分け) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 108字 +4",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「今池」+4",
+          "タイトルにシーン語「個室」+4",
+          "タイトルにジャンル語「焼き鳥」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "今池で夜遅くまで開いている居酒屋3選、終電を逃した日に",
+      "verdict": "HOLD",
+      "total": 66,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 1件 (シーン) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 118字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「今池」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": {
+    "topic": "イベント",
+    "week": "2026-W48",
+    "slot": 0,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "89点（自動公開ライン 100点）。主な不足: topicality -17 / brand_fit -4",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "weekly_digest",
+      "title_draft": "今池で一人飲みできる居酒屋おすすめ5選、仕事帰りに駅から歩いて5分以内",
+      "lead_draft": "名古屋は11月22日に最高気温が11.7℃と、今季いちばん寒い日になりました。仕事帰りに温かいものを少しつまんで帰りたい人に向けて、今池駅から歩いて5分以内で、ひとりでも入りやすいと店が書いている居酒屋を5つ集めました。たばこ・席・支払いなど、行く前に分かれ目になることも店ごとに1つずつ書いています。",
+      "angle": "今池エリア×ひとり飲みのおすすめ5選。やきとん・焼き鳥・天ぷら・鉄板・半立ち飲みと看板の違う店を、雰囲気とシーン（仕事帰り・二軒目）で使い分け。予約・席・喫煙・支払いの注意点を店ごとに1つ。初めてでも気軽に入れるかを店の掲載情報で確かめる",
+      "main_store": {
+        "name": "やきとん串焼き酒場 青二才 今池本店",
+        "id": "J004537019",
+        "area": "今池",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ウェザーニュース「三連休二日目も冬を感じる寒さ　明日は日本海側で幾分寒さ和らぐ」",
+          "url": "https://weathernews.jp/news/202611/220181/",
+          "date": "2026-11-22"
+        },
+        {
+          "label": "ホットペッパー やきとん串焼き酒場 青二才 今池本店",
+          "url": "https://www.hotpepper.jp/strJ004537019/",
+          "date": "2026-11-23"
+        },
+        {
+          "label": "ホットペッパー やきとりつくつく 今池店",
+          "url": "https://www.hotpepper.jp/strJ003582141/",
+          "date": "2026-11-23"
+        },
+        {
+          "label": "ホットペッパー 天ぷらスタンド KITSUNE キツネ 今池店",
+          "url": "https://www.hotpepper.jp/strJ003298620/",
+          "date": "2026-11-23"
+        },
+        {
+          "label": "ホットペッパー イマイケ5丁目給酔所 半立ち飲み サクランボ",
+          "url": "https://www.hotpepper.jp/strJ003648705/",
+          "date": "2026-11-23"
+        },
+        {
+          "label": "ホットペッパー 今池酒場 鉄板えて吉",
+          "url": "https://www.hotpepper.jp/strJ004509143/",
+          "date": "2026-11-23"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c2",
+      "theme": "weekly_digest",
+      "title_draft": "今池のせんべろ2店、青二才とサクランボを仕事帰りのひとり飲みで比べる",
+      "lead_draft": "今池駅のそばには、決まった額で飲み物とつまみが付く「せんべろセット」を出す店があります。昼から開く青二才 今池本店と、夜6時からの半立ち飲みサクランボ。どちらもひとりで寄りやすい店ですが、開く時間や支払い方法、席の形がかなり違います。行く前に知っておきたい違いを並べました。",
+      "angle": "今池のせんべろ2店の比較。開く時間・席の形・支払いの違いで使い分け、ひとり飲みのシーンに合うか",
+      "main_store": {
+        "name": "やきとん串焼き酒場 青二才 今池本店",
+        "id": "J004537019",
+        "area": "今池",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー やきとん串焼き酒場 青二才 今池本店",
+          "url": "https://www.hotpepper.jp/strJ004537019/",
+          "date": "2026-11-23"
+        },
+        {
+          "label": "ホットペッパー イマイケ5丁目給酔所 半立ち飲み サクランボ",
+          "url": "https://www.hotpepper.jp/strJ003648705/",
+          "date": "2026-11-23"
+        },
+        {
+          "label": "ウェザーニュース「三連休二日目も冬を感じる寒さ」",
+          "url": "https://weathernews.jp/news/202611/220181/",
+          "date": "2026-11-22"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c3",
+      "theme": "weekly_digest",
+      "title_draft": "今池で禁煙の店を探すなら、天ぷらスタンド KITSUNEの夜と昼",
+      "lead_draft": "今池の居酒屋は、ホットペッパーで全席喫煙可と出ている店が多いエリアです。たばこの煙が苦手な人向けに、全席禁煙の天ぷらスタンド KITSUNE 今池店を紹介します。カウンターは2席だけなので、ひとりで行く日は先に電話で聞くのが確実です。クリスマスの2日間は夜が休みなので気を付けてください。",
+      "angle": "今池で禁煙の店。天ぷらの看板と雰囲気、カウンター席が少ない点と予約",
+      "main_store": {
+        "name": "天ぷらスタンド KITSUNE キツネ 今池店",
+        "id": "J003298620",
+        "area": "今池",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 天ぷらスタンド KITSUNE キツネ 今池店",
+          "url": "https://www.hotpepper.jp/strJ003298620/",
+          "date": "2026-11-23"
+        },
+        {
+          "label": "ウェザーニュース「三連休二日目も冬を感じる寒さ」",
+          "url": "https://weathernews.jp/news/202611/220181/",
+          "date": "2026-11-22"
+        },
+        {
+          "label": "ホットペッパー やきとりつくつく 今池店",
+          "url": "https://www.hotpepper.jp/strJ003582141/",
+          "date": "2026-11-23"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c4",
+      "theme": "weekly_digest",
+      "title_draft": "今池で夜遅くまで開いている居酒屋3選、終電を逃した日に",
+      "lead_draft": "今池駅のまわりには、日付が変わっても開いている居酒屋がいくつかあります。朝3時までの青二才 今池本店、2時までの鉄板えて吉、1時までのサクランボ。終電を逃した日や二軒目に使える店を、閉まる時間とラストオーダーの時間をそろえて並べました。",
+      "angle": "今池×深夜の3店。閉店時間とラストオーダー、二軒目のシーン",
+      "main_store": {
+        "name": "今池酒場 鉄板えて吉",
+        "id": "J004509143",
+        "area": "今池",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 今池酒場 鉄板えて吉",
+          "url": "https://www.hotpepper.jp/strJ004509143/",
+          "date": "2026-11-23"
+        },
+        {
+          "label": "ホットペッパー やきとん串焼き酒場 青二才 今池本店",
+          "url": "https://www.hotpepper.jp/strJ004537019/",
+          "date": "2026-11-23"
+        },
+        {
+          "label": "ホットペッパー イマイケ5丁目給酔所 半立ち飲み サクランボ",
+          "url": "https://www.hotpepper.jp/strJ003648705/",
+          "date": "2026-11-23"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c5",
+      "theme": "weekly_digest",
+      "title_draft": "今池の焼き鳥、やきとりつくつくのカウンターと個室",
+      "lead_draft": "今池駅9番出口から歩いて2分のやきとりつくつく 今池店は、カウンターと個室のどちらもある焼き鳥の店です。ひとりならカウンター、集まりなら個室と使い分けられます。個室は予約が必要で、たばこはフロアごとに分かれています。",
+      "angle": "今池の焼き鳥1店。カウンターと個室の使い分け",
+      "main_store": {
+        "name": "やきとりつくつく 今池店",
+        "id": "J003582141",
+        "area": "今池",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー やきとりつくつく 今池店",
+          "url": "https://www.hotpepper.jp/strJ003582141/",
+          "date": "2026-11-23"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}
