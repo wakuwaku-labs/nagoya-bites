@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-23T13:14:01.487Z",
+  "generatedAt": "2026-11-23T13:40:43.161Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 8163,
-    "pageViews": 9747,
-    "sessions": 8580,
-    "avgSessionDuration": 56.8,
-    "bounceRate": 0.678,
+    "activeUsers": 8165,
+    "pageViews": 9754,
+    "sessions": 8585,
+    "avgSessionDuration": 56.9,
+    "bounceRate": 0.677,
     "pagesPerSession": 1.14
   },
   "dailyReference": {
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 3099,
-      "direct": 5210,
+      "organic": 3105,
+      "direct": 5211,
       "social": 63,
       "ai_assistant": 250,
       "referral": 61,
@@ -44,12 +44,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1474
+      "sessions": 1479
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 942
+      "sessions": 943
     },
     {
       "source": "yahoo",
@@ -102,14 +102,14 @@
       "sessions": 8
     },
     {
-      "source": "websearch.rakuten.co.jp",
-      "medium": "referral",
+      "source": "(not set)",
+      "medium": "(not set)",
       "sessions": 8
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 7
+      "source": "websearch.rakuten.co.jp",
+      "medium": "referral",
+      "sessions": 8
     },
     {
       "source": "cn.bing.com",
@@ -220,13 +220,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 473,
-      "sessions": 445
+      "pageViews": 474,
+      "sessions": 446
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 255,
-      "sessions": 240
+      "pageViews": 256,
+      "sessions": 241
     },
     {
       "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -235,8 +235,8 @@
     },
     {
       "path": "/features/nagoya-miso-nikomi-udon.html",
-      "pageViews": 117,
-      "sessions": 128
+      "pageViews": 118,
+      "sessions": 129
     },
     {
       "path": "/features/nagoya-unaju.html",
@@ -245,12 +245,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 435,
+    "outboundClicks": 436,
     "ctaClickRate": 5.1,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 166
+        "clicks": 167
       },
       {
         "domain": "www.google.com",
@@ -303,7 +303,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 298,
+      "organic": 299,
       "direct": 48,
       "social": 16,
       "ai_assistant": 62,
@@ -888,6 +888,11 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J000748924.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J000759628.html",
         "domain": "www.google.com",
         "clicks": 1
@@ -929,11 +934,6 @@
       },
       {
         "path": "/stores/J000994079.html",
-        "domain": "www.google.com",
-        "clicks": 1
-      },
-      {
-        "path": "/stores/J001127221.html",
         "domain": "www.google.com",
         "clicks": 1
       }
@@ -1136,6 +1136,10 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J000748924.html",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J000767707.html",
         "clicks": 1
       },
@@ -1152,7 +1156,7 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 130,
+    "reservationClicks": 131,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 69,
@@ -1178,7 +1182,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 8163,
+    "value": 8165,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
