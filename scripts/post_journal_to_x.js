@@ -39,7 +39,7 @@ function todayJst(now = new Date()) {
 }
 
 function parseArgs(argv) {
-  const a = { date: null, dryRun: false, forceLive: false, skipLiveCheck: false, json: false, extraLong: false };
+  const a = { date: null, dryRun: false, forceLive: false, skipLiveCheck: false, json: false, extraLong: false, cardTag: '' };
   for (let i = 0; i < argv.length; i++) {
     const k = argv[i];
     if (k === '--date') a.date = argv[++i];
@@ -50,9 +50,13 @@ function parseArgs(argv) {
     // 手動の追加の長いポスト（ADR 0082・2026-11-23 本人「今本番投稿をしたい」）。data/x_post_drafts/<date>-long.json を
     // 長いポストだけで1回送る。その日の投稿が済んでいても送り、断られてもスレッドには戻さない
     else if (k === '--extra-long') a.extraLong = true;
+    // リンクカードの写真を X に読み直させる目印（ADR 0084・2026-11-23 本人「A」）。URL に v=<目印> を足す。
+    // X はリンクごとに最初に読んだ写真を覚えるので、記事の写真を直した後に出し直すときだけ使う
+    else if (k === '--card-tag') a.cardTag = argv[++i];
     else throw new Error(`知らない引数: ${k}`);
   }
   if (a.date && !/^\d{4}-\d{2}-\d{2}$/.test(a.date)) throw new Error('--date は YYYY-MM-DD');
+  if (a.cardTag && !/^[a-z0-9-]{1,16}$/.test(a.cardTag)) throw new Error('--card-tag は英小文字・数字・- で16文字まで');
   return a;
 }
 
@@ -237,7 +241,8 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   if (mode === 'off') return { ...out, result: 'off', exitCode: 0 };
   if (mode === 'live' && args.skipLiveCheck) throw new Error('--skip-live-check は live では使えません');
 
-  const entry = findEntry(date, root);
+  const found = findEntry(date, root);
+  const entry = found && args.cardTag ? { ...found, cardTag: args.cardTag } : found;
   if (!entry) {
     // ジャーナルが休みの日は送らない（代わりの投稿を作らない）。心拍も書かない（休みの警報は journal-watchdog の役目）
     return { ...out, result: 'no_journal', exitCode: 0 };

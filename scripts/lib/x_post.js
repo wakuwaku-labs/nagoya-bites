@@ -70,6 +70,7 @@ function utmUrl(entry, policy, content) {
   u.searchParams.set('utm_medium', policy.utm.medium);
   u.searchParams.set('utm_campaign', entry.slug);
   if (content) u.searchParams.set('utm_content', content);
+  if (entry.cardTag) u.searchParams.set('v', entry.cardTag); // リンクカードの写真の読み直し（--card-tag）
   return u.toString();
 }
 

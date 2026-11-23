@@ -40,6 +40,10 @@ on:
         type: boolean
         required: false
         default: false
+      card_tag:
+        description: 'リンクカードの写真を X に読み直させる目印（英小文字・数字。URL に v=目印 を足す・記事の写真を直した後の出し直し用・ADR 0084）'
+        required: false
+        default: ''
       extra_long:
         description: '追加の長いポストを1回だけ送る（data/x_post_drafts/<date>-long.json・その日の投稿が済んでいても送り、断られてもスレッドに戻さない・ADR 0082）'
         type: boolean
@@ -87,11 +91,13 @@ jobs:
           INPUT_DATE: ${{ github.event.inputs.date }}
           INPUT_FORCE_LIVE: ${{ github.event.inputs.force_live }}
           INPUT_EXTRA_LONG: ${{ github.event.inputs.extra_long }}
+          INPUT_CARD_TAG: ${{ github.event.inputs.card_tag }}
         run: |
           ARGS=""
           if [ -n "$INPUT_DATE" ]; then ARGS="$ARGS --date $INPUT_DATE"; fi
           if [ "$INPUT_FORCE_LIVE" = "true" ]; then ARGS="$ARGS --force-live"; fi
           if [ "$INPUT_EXTRA_LONG" = "true" ]; then ARGS="$ARGS --extra-long"; fi
+          if [ -n "$INPUT_CARD_TAG" ]; then ARGS="$ARGS --card-tag $INPUT_CARD_TAG"; fi
           set +e
           node scripts/post_journal_to_x.js $ARGS
           echo "exit=$?" >> "$GITHUB_OUTPUT"
