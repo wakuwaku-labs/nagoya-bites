@@ -1,7 +1,7 @@
 {
  "_README": "既存記事の棚卸し台帳（段階5・S5-1・ADR 0069）。scripts/build_article_review_ledger.js が作る。並べ替えの材料で、公開の条件には使わない。gsc は data/gsc_metrics.json の直近28日。確認日は本文に書かれた「◯月◯日確認」の最新（特集の「更新日」は機械の一括更新で進むので使わない）。",
  "generatedFrom": {
-  "gscGeneratedAt": "2026-11-23T10:30:32.445Z",
+  "gscGeneratedAt": "2026-11-23T10:55:47.975Z",
   "gscRange": {
    "startDate": "2026-10-26",
    "endDate": "2026-11-22"
@@ -923,7 +923,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 3,
+   "inboundArticleLinks": 2,
    "inboundHubLinks": 2,
    "storeLinks": 2,
    "priority": 18.8
@@ -1536,7 +1536,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 12,
+   "inboundArticleLinks": 11,
    "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 9.6
@@ -2234,7 +2234,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 6,
+   "inboundArticleLinks": 3,
    "inboundHubLinks": 4,
    "storeLinks": 4,
    "priority": 5
@@ -2846,7 +2846,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 4,
+   "inboundArticleLinks": 3,
    "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 5
@@ -2936,7 +2936,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 2,
+   "inboundArticleLinks": 1,
    "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 5
@@ -4699,7 +4699,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 3,
+   "inboundArticleLinks": 2,
    "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 2
@@ -4840,8 +4840,8 @@
    "searchPosition": null,
    "problems": [],
    "lastFactCheckedDate": "2026-11-23",
-   "inboundArticleLinks": 118,
-   "inboundHubLinks": 0,
+   "inboundArticleLinks": 128,
+   "inboundHubLinks": 4,
    "storeLinks": 4,
    "priority": 0
   },

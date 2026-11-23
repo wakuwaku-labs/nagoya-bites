@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-11-23T10:30:26.434Z",
+  "generatedAt": "2026-11-23T10:55:42.598Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 8135,
-    "pageViews": 9714,
+    "activeUsers": 8142,
+    "pageViews": 9720,
     "sessions": 8562,
-    "avgSessionDuration": 56.6,
+    "avgSessionDuration": 56.7,
     "bounceRate": 0.678,
-    "pagesPerSession": 1.13
+    "pagesPerSession": 1.14
   },
   "dailyReference": {
     "date": "2026-11-21",
@@ -17,7 +17,7 @@
   },
   "channels": {
     "sessions": {
-      "organic": 3079,
+      "organic": 3085,
       "direct": 5198,
       "social": 62,
       "ai_assistant": 250,
@@ -44,17 +44,17 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1461
+      "sessions": 1465
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 937
+      "sessions": 938
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 643
+      "sessions": 644
     },
     {
       "source": "chatgpt.com",
@@ -230,8 +230,8 @@
     },
     {
       "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
-      "pageViews": 168,
-      "sessions": 159
+      "pageViews": 169,
+      "sessions": 160
     },
     {
       "path": "/features/nagoya-miso-nikomi-udon.html",
@@ -1178,7 +1178,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 8135,
+    "value": 8142,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
