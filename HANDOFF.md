@@ -26,6 +26,7 @@ status: in_progress
 ## 進捗（11-23 夜）
 - 既存の scripts/backfill_journal.sh を env -i ＋ journal.env 読み込みで実行（11/20 実行中 → 次に 11/22）。ログ ~/nagoya-bites/.local-logs/backfill-<日付>.log。commit/push は自分で行う。
 - 11/20 は公開済み（77824615bb・伏見あおい）。Autopilot が autopilot/work-20261123-192552 に自動コミットして止まった → main に移し、両スクリプトに AUTOPILOT_GIT=off を追加。11/20 の X 文面 data/x_post_drafts/2026-11-20.json は作成済み・未コミット（11/22 生成中は main にコミットしない＝HEAD 検査で止まる）。
+- ③ 済（11-23 夜）: 11/20・11/22 とも本番200・X（tweet 2124818122054189291 / 2124818771311579636）・note（n698c9a274010 / n474a9dd324ca）に投稿。欠番0・#782 CLOSED。残りは build.yml の成功確認だけ。
 - 11/22 も公開済み（707f1f1c56・栄のデートの席4店）。X 文面2本もコミット済み。残り: 本番200確認 → x-post.yml を date 指定で2回 → post_note.js --date 2回 → journal-watchdog で #782 を閉じる。
 - （旧）11/22 実行後: add_hp_credit.js・build_article_review_ledger.js・write_x_draft・コミット → x-post を日付指定で2回・post_note.js --date 2回。
 - X は push 起点だと今日の日付しか見ない → 公開後 `gh workflow run x-post.yml -f date=<日付>`。
