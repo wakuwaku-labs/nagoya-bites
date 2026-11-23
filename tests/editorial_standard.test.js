@@ -163,3 +163,15 @@ test('記事の部品のスタイルが nb.css にあり、文字は13px未満�
   const block = css.slice(css.indexOf('.nb-status-band{'), css.indexOf('.art-img-kind'));
   assert.ok(!/fs-2xs/.test(block));
 });
+
+test('確認できた行の値に混ざった未確認の部分だけを外す（出典の括弧は残す・括弧の中の／では分けない・#2576）', () => {
+  assert.strictEqual(ES.stripUnconfirmedText('十八番舟はお通し480円。ほかの5店は確かめた欄に記載が見つからなかった（各店のホットペッパーグルメ・11月19日確認）'), '十八番舟はお通し480円（各店のホットペッパーグルメ・11月19日確認）');
+  assert.strictEqual(ES.stripUnconfirmedText('吟 600円（税別／コース時はなし）／和蔵 484円／サケキタルは記載なし（各店・11月18日確認）'), '吟 600円（税別／コース時はなし）／和蔵 484円（各店・11月18日確認）');
+  assert.strictEqual(ES.stripUnconfirmedText('和蔵 当日と人数の減少で発生（額の記載なし）（各店・11月18日確認）'), '和蔵 当日と人数の減少で発生（各店・11月18日確認）');
+  assert.strictEqual(ES.stripUnconfirmedText('記載が見つからなかった（公式・11月16日確認）'), '');
+  assert.strictEqual(ES.stripUnconfirmedText('現金のみ'), '現金のみ');
+  // 生成でも同じ: 値が未確認の言い回しだけなら、confirmed でも行を出さない
+  const html = ES.buildChecklist({ conclusion: { fit: 'x' }, checklist: [{ item: '喫煙', status: 'confirmed', value: '記載なし', source: '公式', checked: '2026-11-16' }, { item: '支払い方法', status: 'confirmed', value: '現金のみ。カードは記載なし', source: '公式', checked: '2026-11-16' }] });
+  assert.doesNotMatch(html, /喫煙|記載なし/);
+  assert.match(html, /支払い方法<\/span>: 現金のみ（公式・11月16日確認）/);
+});

@@ -27,3 +27,11 @@ test('公開済みの記事: 知らない行がある箱は触らない（取り
   const odd = OLD_CONC.replace('<li>向かない人: 煙が苦手な人</li>', '<li>別の行</li>');
   assert.strictEqual(restyle(odd), odd);
 });
+
+test('残った行の値に混ざった未確認の部分も外し、2回目は変わらない（#2576）', () => {
+  const { restyle } = require('../scripts/restyle_point_boxes');
+  const before = '<details class="nb-jbox nb-check" open><summary>来店前に確かめたいこと</summary><ul><li><span class="nb-check-name">お通し・席料</span>: 十八番舟はお通し480円。ほかの5店は記載が見つからなかった（各店・11月19日確認）</li><li><span class="nb-check-name">喫煙</span>: 記載なし（各店・11月19日確認）</li></ul></details>';
+  const after = restyle(before);
+  assert.strictEqual(after, '<details class="nb-jbox nb-check" open><summary>来店前に確かめたいこと</summary><ul><li><span class="nb-check-name">お通し・席料</span>: 十八番舟はお通し480円（各店・11月19日確認）</li></ul></details>');
+  assert.strictEqual(restyle(after), after);
+});
