@@ -104,11 +104,12 @@ test('本当に衝突するときは失敗を返し、rebase / merge の進行�
 // ---- Ondine #2338: ローカル main にだけある「よその」コミットを退避して記事を止めない ----
 function runQuarantine(cwd) {
   const logFile = path.join(cwd, '..', 'q.log');
-  const script = `LOG='${logFile}'; log() { echo "$*" >>"$LOG"; }; . '${LIB}'; git fetch -q origin main;
+  // 本番（run_journal_local.sh）と同じ set -u で、macOS の /bin/bash 3.2 で動かす（2026-11-22 は空の配列の展開で落ちた）
+  const script = `set -u; LOG='${logFile}'; log() { echo "$*" >>"$LOG"; }; . '${LIB}'; git fetch -q origin main;
 journal_quarantine_foreign_commits; rc=$?
 echo "rc=$rc"; echo "branch=$JOURNAL_QUARANTINE_BRANCH"; echo "dropped=$JOURNAL_QUARANTINE_DROPPED"
 printf '%s' "$JOURNAL_QUARANTINE_FOREIGN" | sed 's/^/foreign=/'`;
-  const r = spawnSync('bash', ['-c', script], { cwd, env: ENV, encoding: 'utf8' });
+  const r = spawnSync(fs.existsSync('/bin/bash') ? '/bin/bash' : 'bash', ['-c', script], { cwd, env: ENV, encoding: 'utf8' });
   const out = r.stdout;
   const get = (k) => (out.match(new RegExp(`^${k}=(.*)$`, 'm')) || [])[1];
   return {
@@ -160,6 +161,24 @@ test('11/20 の型: ブランチのローカル合流と直接コミットは退
   // 続く取り込み・push が通る（HOLD にならない）
   assert.strictEqual(runSync(L).status, 0);
   git(L, 'push', '-q', 'origin', 'main');
+});
+
+test('11/22 の型: よそのコミットだけ（ジャーナル自身のコミットが0件）でも set -u で落ちずに退避する', () => {
+  const { L, O } = setup();
+  write(L, 'store.json', 'local fix\n'); commit(L, 'fix: direct on main');
+  write(L, 'base.txt', 'local edit 2\n'); commit(L, 'fix: another direct');
+  const before = git(L, 'rev-parse', 'HEAD');
+  write(O, 'base.txt', 'remote edit\n'); commit(O, 'remote edit');
+  git(O, 'push', '-q', 'origin', 'main');
+
+  const q = runQuarantine(L);
+  assert.strictEqual(q.rc, 0, q.log);
+  assert.match(q.branch, /^backup\/main-\d{8}-\d{6}$/);
+  assert.strictEqual(git(L, 'rev-parse', q.branch), before);
+  assert.strictEqual(q.foreign.length, 2, q.foreign.join('\n'));
+  assert.strictEqual(git(L, 'rev-list', '--count', 'origin/main..main'), '0');
+  assert.match(q.log, /ジャーナル自身のコミット 0 件/);
+  assert.deepStrictEqual(inProgress(L), []);
 });
 
 test('ジャーナル自身のコミットだけなら何もしない（前日の push 失敗分は従来どおり送る）', () => {
