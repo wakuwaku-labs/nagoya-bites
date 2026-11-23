@@ -161,6 +161,7 @@ async function removeEyecatch(page) {
 /** 見出し画像の素材: 記事に載せた店の実物写真（規約で上げてよいものだけ。PR TIMES の写真には題と日付を重ねる・ADR 0065）。無い日・取れない日は題と日付だけの図（docs/decisions/0056） */
 async function eyecatchFile(page, draft, date) {
   if (draft.photo) {
+    if (draft.photo.kind === 'area') console.log(`note: 見出し画像の写真は記事の地区（${draft.photo.area || '名古屋'}）の街の写真です（自由ライセンス・ADR 0070）`);
     let raw = null;
     try {
       raw = E.downloadPhoto(draft.photo, date);
@@ -198,8 +199,9 @@ async function setEyecatch(page, draft, date, enabled = true, prepared = null) {
       if (!b) return null; const r = b.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 };
     });
     if (box) await page.mouse.click(box.x, box.y);
-    await sleep(3500);
-    const has = !!(await eyecatchBox(page));
+    // 写真の見出し画像（1280×670 の PNG）は送信に数秒〜十数秒かかるので、入るまで最大30秒待つ（2026-11-23 は 3.5 秒では間に合わなかった）
+    let has = false;
+    for (let i = 0; i < 30 && !has; i++) { await sleep(1000); has = !!(await eyecatchBox(page)); }
     console.log('note: 見出し画像 ' + (has ? 'を入れました' : 'は入ったか確認できません'));
     return has ? got.kind : null;
   } catch (e) { console.error('note: 見出し画像は入れられませんでした（本文だけで続けます）: ' + e.message); return null; }
