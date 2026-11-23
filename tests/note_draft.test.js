@@ -3,7 +3,8 @@ const test = require('node:test');
 const assert = require('node:assert');
 const N = require('../scripts/lib/note_draft');
 
-const policy = N.loadPolicy();
+// 街の写真（data/note_area_photos.json）は専用の試験で見る。ほかの試験は店の写真だけの動きを見る
+const policy = { ...N.loadPolicy(), eyecatchAreaPhoto: false };
 const entry = { slug: '2026-10-21-x', title: '伏見の店で読む', date: '2026-10-21' };
 const html = `<h1 class="art-title">伏見の店で<em>読む</em></h1><p class="art-lead">導入文。</p>
 <div class="art-body"><p class="nb-site-intro">x</p>
@@ -166,7 +167,7 @@ test('見出し画像: 店の実物写真が無い日は、記事の街の自由
   fs.mkdirSync(path.join(root, 'data'));
   const c = (n) => ({ thumb1600: `https://upload.wikimedia.org/x/${n}.jpg`, author: 'User:Foo 2019', license: 'CC BY-SA 4.0', page: `https://commons.wikimedia.org/wiki/File:${n}.jpg` });
   fs.writeFileSync(path.join(root, 'data/note_area_photos.json'), JSON.stringify({ areas: { 今池: [c('i1'), c('i2')], default: [c('d1')], 栄: [{ ...c('bad'), thumb1600: 'https://example.com/x.jpg' }] } }));
-  const p = { ...policy, _root: root, body: { ...policy.body, mode: 'stores' } };
+  const p = { ...policy, eyecatchAreaPhoto: true, _root: root, body: { ...policy.body, mode: 'stores' } };
   const a = N.areaPhoto({ title: '今池で一人飲み', date: '2026-11-23' }, p, [], root);
   const b = N.areaPhoto({ title: '今池で一人飲み', date: '2026-11-24' }, p, [], root);
   assert.strictEqual(a.area, '今池');
