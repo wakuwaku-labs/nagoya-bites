@@ -569,6 +569,12 @@ test('投稿: 追加の長いポスト（--extra-long）は、その日が投稿
   f = fakeFetch(root);
   assert.strictEqual((await postRun({ extraLong: true }, { root, env: ENV, fetchImpl: f, now: NOW })).result, 'already_posted');
   assert.strictEqual(f.sent.length, 0);
+  // 文面を作り直した出し直しは送る（2026-11-23 本人「新しい形で今日の分を出し直して」）
+  const REDO = { ...EXTRA, body: '【池下】イタリアンの「QQ」\n\n棚のワインを、奥の席で開けられる店。' };
+  fs.writeFileSync(path.join(root, `data/x_post_drafts/${entry.date}-long.json`), JSON.stringify(REDO));
+  f = fakeFetch(root);
+  assert.strictEqual((await postRun({ extraLong: true }, { root, env: ENV, fetchImpl: f, now: NOW })).result, 'posted');
+  assert.strictEqual(f.sent.length, 1);
 });
 
 // ── 箇条書きの見出し（2026-11-23 本人「どこが店舗名か、羅列している情報がどんな情報か分からない」）──

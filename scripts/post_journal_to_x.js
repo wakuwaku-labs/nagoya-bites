@@ -245,9 +245,9 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   out.slug = entry.slug;
 
   const log = X.readLog(root);
-  if (args.extraLong) {
-    if ((log.posts || []).some((p) => p.slug === entry.slug && p.extra_long && p.status === 'posted')) return { ...out, result: 'already_posted', exitCode: 0 };
-  } else if (X.alreadyPosted(log, entry.slug)) return { ...out, result: 'already_posted', exitCode: 0 };
+  // 追加の長いポストは、同じ文面を送り済みのときだけ止める（文面を作り直した出し直しは送る・2026-11-23 本人「新しい形で今日の分を出し直して」）。
+  // 文面の比較は下で長いポストの文面を作ってから行う
+  if (!args.extraLong && X.alreadyPosted(log, entry.slug)) return { ...out, result: 'already_posted', exitCode: 0 };
 
   const articlePath = path.join(root, 'journal', `${entry.slug}.html`);
   if (!fs.existsSync(articlePath)) {
@@ -285,6 +285,10 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   if (args.extraLong && !X.longPostText(built, policy)) {
     if (mode === 'live') record(root, { date, entry, result: 'blocked', reason: 'extra_long_not_available', text: built.text, status: 'blocked', extraLong: true });
     return { ...out, result: 'blocked', reason: 'extra_long_not_available', exitCode: 1 };
+  }
+  if (args.extraLong) {
+    const longText = X.longPostText(built, policy);
+    if ((log.posts || []).some((p) => p.slug === entry.slug && p.extra_long && p.status === 'posted' && p.text === longText)) return { ...out, result: 'already_posted', exitCode: 0 };
   }
   out.text = built.text;
   out.weighted = built.weighted;
