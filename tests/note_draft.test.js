@@ -194,3 +194,8 @@ test('stores: 店の欄が無い1軒の記事は、導入の後に店のカー�
   assert.match(d.body, /四。/);
   assert.strictEqual(d.cards, 1);
 });
+
+test('post_note.js は読み込んだだけでは投稿を始めない（直接実行したときだけ動く）', () => {
+  const src = require('fs').readFileSync(require('path').join(__dirname, '../scripts/post_note.js'), 'utf8');
+  assert.match(src, /if \(require\.main === module\) \(async \(\) => \{/);
+});

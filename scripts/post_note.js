@@ -296,7 +296,8 @@ async function updatePublished(page, key, draft, date) {
   await page.waitForFunction(() => !/\/publish\//.test(location.href) || /シェアしてみましょう|記事が公開されました/.test(document.body.innerText), { timeout: 30000 });
 }
 
-(async () => {
+// 読み込んだだけでは動かさない（2026-11-23 に読み込みの確認のつもりで require して、確認用の下書きが公開された）
+if (require.main === module) (async () => {
   const a = process.argv.slice(2);
   const arg = (k) => (a.includes(k) ? a[a.indexOf(k) + 1] : null);
   const date = arg('--date');
