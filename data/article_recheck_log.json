@@ -322,25 +322,92 @@
     }
    ],
    "next_due": "2026-12-06"
+  },
+  "journal/2026-07-17-nagoya-kakigori-shime.html": {
+   "last_checked": "2026-11-23",
+   "last_checked_at": "2026-11-23T01:34:21.372Z",
+   "outcome": "findings",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 9,
+   "verified": 7,
+   "unverifiable": 2,
+   "mismatch": 0,
+   "sources": {
+    "ok": 3,
+    "total": 4
+   },
+   "findings": [
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-07-26）を過ぎた記述: 尾張名古屋の食楽堂「蓬左（ほうさ）」は7月1日から7月26日までの期間限定で、濃厚抹茶のマスカルポーネ、和紅茶スパイス、",
+     "claim": "尾張名古屋の食楽堂「蓬左（ほうさ）」は7月1日から7月26日までの期間限定で、濃厚抹茶のマスカルポーネ、和紅茶スパイス、完熟いちご×抹茶プリンの3種を出す。",
+     "reported_at": "2026-11-23"
+    }
+   ],
+   "next_due": "2026-12-07"
+  },
+  "journal/2026-04-24-gw-nagoya-reservation-now.html": {
+   "last_checked": "2026-11-23",
+   "last_checked_at": "2026-11-23T01:34:21.372Z",
+   "outcome": "no_sources",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 7,
+   "verified": 0,
+   "unverifiable": 7,
+   "mismatch": 0,
+   "sources": {
+    "ok": 0,
+    "total": 0
+   },
+   "findings": [],
+   "next_due": "2026-12-07"
+  },
+  "journal/2026-06-25-kisoji-kawaramachi-hokkaido-matsuri.html": {
+   "last_checked": "2026-11-23",
+   "last_checked_at": "2026-11-23T01:34:21.372Z",
+   "outcome": "findings",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 16,
+   "verified": 13,
+   "unverifiable": 3,
+   "mismatch": 0,
+   "sources": {
+    "ok": 4,
+    "total": 5
+   },
+   "findings": [
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-08-07）を過ぎた記述: 2026年6月24日から8月7日まで、全国の木曽路で『北海道祭り』が開催されている。",
+     "claim": "2026年6月24日から8月7日まで、全国の木曽路で『北海道祭り』が開催されている。",
+     "reported_at": "2026-11-23"
+    }
+   ],
+   "next_due": "2026-12-07"
   }
  },
  "summary": {
-  "overdue": 192,
+  "overdue": 190,
   "overdue_ledger": 1,
-  "oldest_overdue_ledger_days": 2,
-  "overdue_legacy": 191,
-  "oldest_overdue_legacy_days": 199,
-  "due_total": 195,
+  "oldest_overdue_ledger_days": 3,
+  "overdue_legacy": 189,
+  "oldest_overdue_legacy_days": 200,
+  "due_total": 193,
   "no_base_date": 3,
   "pending_findings": 0
  },
  "last_run": {
-  "date": "2026-11-22",
-  "at": "2026-11-22T01:10:22.663Z",
+  "date": "2026-11-23",
+  "at": "2026-11-23T01:34:21.372Z",
   "mode": "record",
-  "due": 195,
+  "due": 193,
   "processed": 3,
-  "alerts": 1,
+  "alerts": 2,
   "applied": 0
  },
  "_README": "公開後の鮮度の見直し（S5-5）の記録。scripts/recheck_due_articles.js が毎日の夜間の検査で更新する。articles は記事のパスごとの直近の結果（次の見直す日・照合の件数・見つけた変更）。根拠確認率（trust_metrics）はここの facts/verified も読む。"
