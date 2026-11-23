@@ -1,0 +1,181 @@
+{
+  "date": "2026-11-23",
+  "slug": "2026-11-23-imaike-solo-izakaya-5",
+  "recorded_at": "2026-11-23T00:19:58.403Z",
+  "mode": "shadow",
+  "enforced": false,
+  "note": "記録だけ。公開は止めていない",
+  "lane_if_enforced": "hold",
+  "published": true,
+  "published_by_lane": "existing_gate",
+  "reasons": [
+    {
+      "type": "review:number_mismatch",
+      "detail": "名物は鹿児島の「さつま知覧鶏」のもも炎焼き（100gで650円）と、野菜を巻いた串（1本154円から）です。 ／ 抜粋のメニュー欄ではもも炎焼き100gが税込715円で、記事の650円と合わない"
+    },
+    {
+      "type": "review:number_mismatch",
+      "detail": "名古屋の柳橋市場から届く魚の盛り合わせが750円、名物の「ソーキ入り焼きそば」が780円です。 ／ 抜粋の刺身盛り合わせの価格は750円ではなく、750円は別の品の価格に見える"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "営業時間などは2026年11月時点のホットペッパーの掲載（11月23日に確認）をもとにしています。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "来店前に確かめたいこと お通し・席料 確認できなかった : 記載なし（ホットペッパー各店ページ・11月23日確認）。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "サービス料・深夜料金 確認できなかった : 記載なし（ホットペッパー各店ページ・11月23日確認）。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "席の時間制 確認できなかった : 記載なし（ホットペッパー各店ページ・11月23日確認）。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "コース必須・最少人数 確認できなかった : 記載なし（ホットペッパー各店ページ・11月23日確認）。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "つくつくの個室は予約必須（ホットペッパー各店ページ・11月23日確認）。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "青二才・サクランボ・えて吉は全席喫煙可（ホットペッパー各店ページ・11月23日確認）。"
+    }
+  ],
+  "checks": {
+    "validator": "pass",
+    "claims": {
+      "ledger_by": "writer",
+      "summary": {
+        "claims": 57,
+        "verified": 47,
+        "unverifiable": 9,
+        "mismatch": 0,
+        "stale": 0,
+        "not_applicable": 1,
+        "paired": 3,
+        "hedge_dropped": 0,
+        "issues": 0,
+        "core_issues": 0
+      },
+      "fetch": {
+        "sources": 6,
+        "ok": 6,
+        "failed": []
+      }
+    },
+    "independent_review": {
+      "ok": true,
+      "reason": null,
+      "model": null,
+      "prompt_version": "review-2026-11-17",
+      "findings": 2,
+      "verified_findings": 2
+    }
+  },
+  "score": "89点 PASS_WITH_NOTE（自動公開ライン100点）。不足は話題性 -17（SNSの言及URLなし・独立ドメイン2件）・一次報道 -4。月曜のおすすめ◯選。今池駅から徒歩5分以内の居酒屋5店を data/stores.json の営業中から選び、11月23日にホットペッパーで確認。今池屋台・おばんざい食堂 円満はホットペッパーの情報が古い（2014〜2021年更新）ため除外。今池の11月の新店・話題と公式Instagramの個別投稿は検索で見つからず。本文写真2枚（KITSUNE・サクランボ）とヒーロー（青二才）は自動で入ったホットペッパー写真で、目視の確認はしていない",
+  "sources": [
+    {
+      "url": "https://weathernews.jp/news/202611/220181/",
+      "label": "ウェザーニュース「三連休二日目も冬を感じる寒さ 明日は日本海側で幾分寒さ和らぐ」",
+      "type": "公式・その他",
+      "date": "2026-11-22",
+      "fetched_at": "2026-11-23T00:19:07.912Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 2538,
+        "sha256": "a36c0a3bd4e38ae50afea81bf0078d8be48989a2ca15f9e216fb04876273ab6b"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ004537019/",
+      "label": "ホットペッパー やきとん串焼き酒場 青二才 今池本店",
+      "type": "掲載サイト",
+      "date": "2026-11-23",
+      "fetched_at": "2026-11-23T00:19:08.270Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 9014,
+        "sha256": "0d7008c2accc2a010cb81ae38db3ae3afe7cc30db8f51cd8ee5730a4876755a1"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ003298620/",
+      "label": "ホットペッパー 天ぷらスタンド KITSUNE キツネ 今池店",
+      "type": "掲載サイト",
+      "date": "2026-11-23",
+      "fetched_at": "2026-11-23T00:19:08.534Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 8983,
+        "sha256": "1e9b2732306690a7809f1947acbca5dc19321a0e01c8b3710e21e1b42726a4b1"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ003648705/",
+      "label": "ホットペッパー イマイケ5丁目給酔所 半立ち飲み サクランボ",
+      "type": "掲載サイト",
+      "date": "2026-11-23",
+      "fetched_at": "2026-11-23T00:19:08.707Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 4201,
+        "sha256": "d59d6019804134d15d170be8d8754bac8967a87d9d2f5d3867b02124f9305d2c"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ003582141/",
+      "label": "ホットペッパー やきとりつくつく 今池店",
+      "type": "掲載サイト",
+      "date": "2026-11-23",
+      "fetched_at": "2026-11-23T00:19:08.997Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 7747,
+        "sha256": "84574e03f369142bbf8f4a852d7d4b44e63f17ebf927691caebe4f3765c45a8b"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ004509143/",
+      "label": "ホットペッパー 今池酒場 鉄板えて吉",
+      "type": "掲載サイト",
+      "date": "2026-11-23",
+      "fetched_at": "2026-11-23T00:19:09.181Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 6991,
+        "sha256": "3e034075b285ac83a2676217b5466a6f9972ab7928c9a2d6cb9d49eb1c16e815"
+      }
+    }
+  ],
+  "findings": [
+    {
+      "sentence": "名物は鹿児島の「さつま知覧鶏」のもも炎焼き（100gで650円）と、野菜を巻いた串（1本154円から）です。",
+      "kind": "number_mismatch",
+      "quote": "ちらん鶏もも炎焼き 100g 715円(税込)",
+      "reason": "抜粋のメニュー欄ではもも炎焼き100gが税込715円で、記事の650円と合わない",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "名古屋の柳橋市場から届く魚の盛り合わせが750円、名物の「ソーキ入り焼きそば」が780円です。",
+      "kind": "number_mismatch",
+      "quote": "お刺身盛り合わせ 伝説の魚屋 中水の魚 780円(税込)",
+      "reason": "抜粋の刺身盛り合わせの価格は750円ではなく、750円は別の品の価格に見える",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "date": "2026-11-23",
+  "slug": "2026-11-23-imaike-solo-izakaya-5",
+  "recorded_at": "2026-11-23T00:19:17.866Z",
+  "model": null,
+  "model_note": "指定なし（実行環境の既定のモデル）",
+  "prompt_version": "review-2026-11-17",
+  "prompt_sha256": "1a70573bf272507c",
+  "excerpts": [
+    {
+      "id": "E1",
+      "url": "https://weathernews.jp/news/202611/220181/",
+      "lines": 8
+    },
+    {
+      "id": "E2",
+      "url": "https://www.hotpepper.jp/strJ004537019/",
+      "lines": 7
+    },
+    {
+      "id": "E3",
+      "url": "https://www.hotpepper.jp/strJ003298620/",
+      "lines": 9
+    },
+    {
+      "id": "E4",
+      "url": "https://www.hotpepper.jp/strJ003648705/",
+      "lines": 12
+    },
+    {
+      "id": "E5",
+      "url": "https://www.hotpepper.jp/strJ003582141/",
+      "lines": 13
+    },
+    {
+      "id": "E6",
+      "url": "https://www.hotpepper.jp/strJ004509143/",
+      "lines": 13
+    }
+  ],
+  "ok": true,
+  "elapsed_sec": 31,
+  "findings": [
+    {
+      "sentence": "名物は鹿児島の「さつま知覧鶏」のもも炎焼き（100gで650円）と、野菜を巻いた串（1本154円から）です。",
+      "kind": "number_mismatch",
+      "quote": "ちらん鶏もも炎焼き 100g 715円(税込)",
+      "reason": "抜粋のメニュー欄ではもも炎焼き100gが税込715円で、記事の650円と合わない",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "名古屋の柳橋市場から届く魚の盛り合わせが750円、名物の「ソーキ入り焼きそば」が780円です。",
+      "kind": "number_mismatch",
+      "quote": "お刺身盛り合わせ 伝説の魚屋 中水の魚 780円(税込)",
+      "reason": "抜粋の刺身盛り合わせの価格は750円ではなく、750円は別の品の価格に見える",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    }
+  ]
+}

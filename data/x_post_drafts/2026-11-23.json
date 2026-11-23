@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "date": "2026-11-23",
+  "slug": "2026-11-23-imaike-solo-izakaya-5",
+  "type": "picks",
+  "body": "今池でひとり飲み、やきとんや天ぷらの居酒屋おすすめ5選\n・青二才: 地下1階のやきとん、全席喫煙可\n・KITSUNE: 名物はとり天、全席禁煙\n・サクランボ: 10席の半立ち飲み\n・つくつく: カウンターの焼き鳥\n・えて吉: 鉄板と魚、夜中2時まで",
+  "evidence": [
+    "今池で一人飲みできる居酒屋 おすすめ5選",
+    "豚の串焼き「やきとん」の店で、ビルの地下1階にあります。",
+    "名物は国産の鶏の胸肉を使った「とり天」で、8種盛りは1,480円です。",
+    "10席の半立ち飲み。夜6時から夜中1時まで。",
+    "焼き鳥。カウンターはひとりから。たばこはフロアで分煙。",
+    "焼くところが見えるカウンターを、店は「特等席」と書いています。",
+    "鉄板料理と魚の居酒屋です。",
+    "夜6時から夜中の2時まで開いていて、遅い時間の二軒目にも使えます。",
+    "全席禁煙はKITSUNEのみ（店外に灰皿）。つくつくはフロアごとの分煙。青二才・サクランボ・えて吉は全席喫煙可"
+  ],
+  "generated_at": "2026-11-23T00:20:00.339Z",
+  "generator": "claude --print（docs/x-post-prompt.md）",
+  "plan": {
+    "week": "2026-W48",
+    "slot": 0,
+    "role": "exploit",
+    "experiment_id": "plan-exploit-2026-W48",
+    "cell_id": "nb_kind=number|first_line=number|length=long",
+    "topic": "イベント",
+    "url_variant": null,
+    "requested": {
+      "nb_kind": "number",
+      "first_line": "number",
+      "length": "long"
+    },
+    "followed": false,
+    "kind_overridden": "picks_article"
+  },
+  "topic_experiment": {
+    "experiment_id": "x-nb-thread-vs-single",
+    "topic": "名古屋ジャーナルの紹介",
+    "format": {
+      "media": "none",
+      "thread": false,
+      "url": true,
+      "first_line": "number"
+    },
+    "followed": true
+  }
+}
