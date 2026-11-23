@@ -342,8 +342,8 @@ trending_stores の buzz_score>=90 は today_one に差し替え。
 基準の正本は `data/editorial_standard.json`（読み込みは `scripts/lib/editorial_standard.js`）。このセクションは要約で、数・項目名・言い換えの規則は正本を読む（二重に書かない）。入力 JSON に次を足すと、記事に6つの部品が出る（無い項目は警告だけ・公開は止まらない）。
 
 - `status`: `{ checked: 確認日, visited: false, pre_open: 開店前か }` → 冒頭の1行の帯（「◯月◯日確認・編集部は未訪問・公開情報をもとにAIが作成」）。訪問していない店を訪問したように書かない
-- `conclusion`: `{ fit: 向く人, check_first: 来店前にいちばん確かめたい点 }` → 「先に結論」（従来の要点欄 `insider_points` を置き換える。記事内の「よくある質問」も同じく、推測が断定に変わりやすいので書かず、下の確かめたいことに入れる）
-- `checklist`: 定型7項目（お通し・席料／サービス料・深夜料金／席の時間制／コース必須・最少人数／予約・キャンセル／支払い方法／喫煙）を `{ item, status: confirmed|unconfirmed, value, source, checked }` で。確かめられなかった項目は空欄にせず `unconfirmed` と確認先・確認日を書く（「記載なし」と出る）
+- `conclusion`: `{ fit: 向く人, check_first: 来店前にいちばん確かめたい点 }` → 「ここがポイント」（旧「先に結論」・従来の要点欄 `insider_points` を置き換える。記事内の「よくある質問」も同じく、推測が断定に変わりやすいので書かず、下の確かめたいことに入れる）
+- `checklist`: 定型7項目（お通し・席料／サービス料・深夜料金／席の時間制／コース必須・最少人数／予約・キャンセル／支払い方法／喫煙）を `{ item, status: confirmed|unconfirmed, value, source, checked }` で。確かめられなかった項目も `unconfirmed` と確認先・確認日を書く（検査と事実台帳に使う）。読者の画面には確認できた項目だけが出る（2026-11-23 本人の依頼・docs/decisions/0083）。confirmed の `value` に「記載なし」「見つからなかった」を混ぜない（その部分は自動で外れる）
 - `fit_for` / `not_fit_for`: 向く人・向かない人（各2〜3行）。注意点は「条件 → 誰に合わないか」で書き、出所の無い注意点は書かない
 - `sources`: 確認日つき。情報源の優先順は 店の公式 → ホットペッパー → 地図の事業者情報 → 第三者の報道。口コミ・個人の SNS 投稿は事実の根拠にせず転載しない
 - `hero_image_kind`: `store_provided | press_release | rendering`（写真の種類を出所の表示に添える。プレスリリース・ホットペッパーは自動）

@@ -13,7 +13,7 @@
     "verified_status": "照合できた"
   },
   "unconfirmed": {
-    "_doc": "未確認の明示率: 「確認できなかったこと」を読者に見える形で書いている記事の割合。記事の構造（札のクラスか見出しの語）だけで数え、本文の意味は読まない。",
+    "_doc": "未確認の明示率: 「確認できなかったこと」を読者に見える形で書いている記事の割合。記事の構造（札のクラスか見出しの語）だけで数え、本文の意味は読まない。2026-11-23 から記事は確認できなかった項目を読者に出さない（本人の依頼・Ondine #2576・docs/decisions/0083）ので、この率は下がっていくのが正しい。悪化の見張り（alert.worsen_points）からは外し、数えるだけ続ける。",
     "markers": ["nb-check-state", "確認できなかったこと"]
   },
   "original_analysis": {
@@ -29,7 +29,6 @@
     "compare_min_days": 6,
     "worsen_points": {
       "evidence_rate": 5,
-      "unconfirmed_disclosure_rate": 5,
       "freshness_rate": 10,
       "analysis_rate": 10
     },
