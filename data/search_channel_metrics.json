@@ -1,16 +1,16 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-11-23T12:25:20.222Z",
+  "generatedAt": "2026-11-23T12:37:21.393Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 8679,
+  "total_sessions": 8680,
   "engines": [
     {
       "key": "direct",
       "label": "直接/不明",
       "sessions": 5186,
-      "pct": 59.8,
+      "pct": 59.7,
       "sources": [
         {
           "source": "(direct)",
@@ -187,7 +187,7 @@
     {
       "key": "social",
       "label": "SNS",
-      "sessions": 62,
+      "sessions": 63,
       "pct": 0.7,
       "sources": [
         {
@@ -198,7 +198,7 @@
         {
           "source": "x",
           "medium": "social",
-          "sessions": 19
+          "sessions": 20
         },
         {
           "source": "l.instagram.com",
@@ -290,10 +290,10 @@
     "from": "2026-11-22",
     "to": "2026-11-23",
     "delta": {
-      "direct": 33,
+      "direct": 39,
       "google": 30,
       "bing": 14,
-      "yahoo": 12,
+      "yahoo": 13,
       "ai_assistant": 0,
       "other": 0,
       "social": 0,
