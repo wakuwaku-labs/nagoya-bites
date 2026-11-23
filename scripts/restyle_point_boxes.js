@@ -7,12 +7,13 @@
  *   ①確認できない場合は表示しない ②印・文字の大きさ・色で分かりやすく ③「先に結論」ではなく「ここがポイント（印）」
  * 新しく作る記事は scripts/lib/editorial_standard.js が今の形で書く。この道具は、それより前に公開した記事を同じ形にそろえる。
  *   - 「先に結論」の箱 → pointBoxHtml（生成と同じ関数）で作り直す。「分からなかった点は◯点で…」の文は外す。
- *   - 「来店前に確かめたいこと」 → 「確認できなかった」の札のある行を外す。行が残らなければ欄ごと外す。
+ *   - 「来店前に確かめたいこと」 → 「確認できなかった」の札のある行を外す。残った行の値に混ざった「記載なし」などの部分も外す
+ *     （stripUnconfirmedText・生成と同じ関数）。行が残らなければ欄ごと外す。
  * 使い方: node scripts/restyle_point_boxes.js [--check]（--check は直す記事があれば終了コード 1・書き換えない）
  */
 const fs = require('fs');
 const path = require('path');
-const { pointBoxHtml } = require('./lib/editorial_standard');
+const { pointBoxHtml, stripUnconfirmedText } = require('./lib/editorial_standard');
 
 const ROOT = path.join(__dirname, '..');
 const DIR = path.join(ROOT, 'journal');
@@ -41,12 +42,25 @@ function restyleConclusion(html) {
   return box ? html.replace(m[0], box) : html;
 }
 
-/** 「来店前に確かめたいこと」から確認できなかった行を外す。行が残らなければ欄ごと外す */
+function esc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+/** 確認できた行の値から、確認できなかった部分を外す。外して何も残らなければ null（行ごと外す）。形が違う行はそのまま */
+function stripRow(li) {
+  const m = /^<li><span class="nb-check-name">([\s\S]*?)<\/span>: ([^<]*)<\/li>$/.exec(li);
+  if (!m) return li;
+  const text = stripUnconfirmedText(decode(m[2]));
+  if (!text) return null;
+  return `<li><span class="nb-check-name">${m[1]}</span>: ${esc(text)}</li>`;
+}
+
+/** 「来店前に確かめたいこと」から確認できなかった行と、行の中の確認できなかった部分を外す。行が残らなければ欄ごと外す */
 function restyleChecklist(html) {
   return html.replace(/<details class="nb-jbox nb-check" open><summary>来店前に確かめたいこと<\/summary><ul>([\s\S]*?)<\/ul><\/details>/, (all, ul) => {
     const lis = [...ul.matchAll(/<li>[\s\S]*?<\/li>/g)].map((x) => x[0]);
-    const kept = lis.filter((li) => !li.includes('class="nb-check-state"'));
-    if (kept.length === lis.length) return all;
+    const kept = lis.filter((li) => !li.includes('class="nb-check-state"')).map(stripRow).filter(Boolean);
+    if (kept.length === lis.length && kept.every((li, i) => li === lis[i])) return all;
     if (!kept.length) return '';
     return `<details class="nb-jbox nb-check" open><summary>来店前に確かめたいこと</summary><ul>${kept.join('')}</ul></details>`;
   });

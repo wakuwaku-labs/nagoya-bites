@@ -115,13 +115,54 @@ function rowText(r, std) {
  * それまでは「確認できなかった」の札つきで出していた）。確認できた行が1つも無ければ欄ごと出さない。
  * 未確認の行は書き手の入力と事実台帳には残る（検査・見直しに使う）。読者の画面にだけ出さない。
  */
+/** 確認できなかったことを表す言い回し（確認できた行の値の中に混ざった部分も外す） */
+const UNCONFIRMED_RE = /記載なし|記載が(?:無|な)|見つからな|見つからず|確認できな|確認できず|分からな|わからな|不明|未確認/;
+
+/** 括弧の外の区切り（「。」か「／」）で分ける。括弧の中の「／」では分けない */
+function splitTop(text, sep) {
+  const out = [];
+  let depth = 0;
+  let cur = '';
+  for (const ch of String(text)) {
+    if ('（(「『【'.includes(ch)) depth++;
+    else if ('）)」』】'.includes(ch)) depth = Math.max(0, depth - 1);
+    if (depth === 0 && ch === sep) { out.push(sep === '。' ? cur + ch : cur); cur = ''; } else cur += ch;
+  }
+  if (cur) out.push(cur);
+  return out;
+}
+
+/**
+ * 確認できた行の値から「確認できなかった」部分を外す（純関数・Ondine #2576 の続き）。
+ * 文を「。」、文の中を「／」で分け、確認できなかった言い回しを含む部分を落とす。末尾の出典「（…確認）」は残った部分の後ろに戻す。
+ * 何も残らなければ空文字（その行は出さない）。
+ * 例: 「十八番舟はお通し480円。ほかの5店は記載が見つからなかった（各店のホットペッパー・11月19日確認）」→「十八番舟はお通し480円（各店のホットペッパー・11月19日確認）」
+ */
+function stripUnconfirmedText(text) {
+  let s = String(text || '').trim();
+  let tail = '';
+  const tm = /(（[^（）]*確認[^（）]*）)[。.]?$/.exec(s);
+  if (tm) { tail = tm[1]; s = s.slice(0, tm.index); }
+  // 括弧の中だけが未確認なら括弧だけ外す（例「和蔵 当日と人数の減少で発生（額の記載なし）」→「和蔵 当日と人数の減少で発生」）
+  s = s.replace(/（[^（）]*）/g, (p) => (UNCONFIRMED_RE.test(p) ? '' : p));
+  const body = splitTop(s, '。').map((sent) => {
+    const end = /。$/.test(sent) ? '。' : '';
+    const parts = splitTop(sent.replace(/。$/, ''), '／').filter((x) => x.trim() && !UNCONFIRMED_RE.test(x));
+    return parts.length ? parts.join('／') + end : '';
+  }).join('').trim();
+  if (!body) return '';
+  return tail ? body.replace(/[。.]$/, '') + tail : body;
+}
+
 function buildChecklist(input, std = loadStandard()) {
   const has = input && ((Array.isArray(input.checklist) && input.checklist.length) || input.conclusion);
   if (!has) return '';
   const { rows, extras } = normalizeChecklist(input.checklist, std);
-  const shown = rows.concat(extras).filter((r) => r.status === 'confirmed');
+  // 確認できた行だけ。値の中に混ざった「記載なし」などの部分も外し、何も残らない行は出さない
+  const shown = rows.concat(extras).filter((r) => r.status === 'confirmed')
+    .map((r) => ({ label: r.label, text: stripUnconfirmedText(rowText(r, std)) })).filter((r) => r.text);
   if (!shown.length) return '';
-  const li = (r) => `<li><span class="nb-check-name">${esc(r.label)}</span>: ${esc(rowText(r, std))}</li>`;
+  const li = (r) => `<li><span class="nb-check-name">${esc(r.label)}</span>: ${esc(r.text)}</li>`;
   return `<details class="nb-jbox nb-check" open><summary>来店前に確かめたいこと</summary><ul>${shown.map(li).join('')}</ul></details>`;
 }
 
@@ -212,4 +253,4 @@ function readabilityWarnings(text, std = loadStandard()) {
   return { measure: r, warnings: w };
 }
 
-module.exports = { voice, measureReadability, readabilityWarnings, STANDARD_PATH, loadStandard, checklistItems, normalizeChecklist, statusBandText, buildStatusBand, unknownCount, buildConclusion, pointBoxHtml, POINT_TITLE, buildChecklist, buildFit, buildCorrections, photoKindLabel, judgementWarnings, monthDayJa };
+module.exports = { voice, measureReadability, readabilityWarnings, STANDARD_PATH, loadStandard, checklistItems, normalizeChecklist, statusBandText, buildStatusBand, unknownCount, buildConclusion, pointBoxHtml, POINT_TITLE, buildChecklist, stripUnconfirmedText, buildFit, buildCorrections, photoKindLabel, judgementWarnings, monthDayJa };
