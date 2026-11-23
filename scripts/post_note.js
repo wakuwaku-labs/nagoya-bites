@@ -162,7 +162,8 @@ async function removeEyecatch(page) {
 async function eyecatchFile(page, draft, date) {
   if (draft.photo) {
     if (draft.photo.kind === 'area') console.log(`note: 見出し画像の写真は記事の地区（${draft.photo.area || '名古屋'}）の街の写真です（自由ライセンス・ADR 0070）`);
-    const what = draft.photo.kind === 'food' ? '料理の写真（イメージ）' : draft.photo.kind === 'area' ? '街の写真' : '記事の写真（店の実物）';
+    // draft.photo は note の下書き（data/note_drafts/*.md）から読むと URL の文字列だけになる。Wikimedia Commons なら料理か街のイメージ写真
+    const what = /wikimedia\.org\//.test(typeof draft.photo === 'string' ? draft.photo : draft.photo.src || '') ? '料理か街の写真（Wikimedia Commons のイメージ）' : '記事の写真（店の実物）';
     let raw = null;
     try {
       raw = E.downloadPhoto(draft.photo, date);
