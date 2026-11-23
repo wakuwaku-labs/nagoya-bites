@@ -543,3 +543,30 @@ test('書き手: 長いポストの日は続きの件数と小見出しの指示
   const p3 = W.buildPrompt({ root: fixture({ pol: threadPolicy }), entry, material: '記事', previous: null, plan: null, topicExp: null });
   assert.ok(!p3.includes('## 今日は長いポストで出す'));
 });
+
+test('投稿: 追加の長いポスト（--extra-long）は、その日が投稿済みでも <date>-long.json を長いポストだけで1回送る。断られたらスレッドに戻さない', async () => {
+  const root = fixture({ draft: GOOD, pol: longPolicy });
+  let f = fakeFetch(root);
+  assert.strictEqual((await postRun({}, { root, env: ENV, fetchImpl: f, now: NOW })).result, 'posted');
+  // 本文がその日の投稿と同じだと30日の重複の検査で止まるので、別の本文にする
+  const EXTRA = { ...FIVE, body: '【池下】イタリアンの「QQ」で、ワインを選ぶ\n\n棚のワインを、奥の席で開けられる。' };
+  fs.writeFileSync(path.join(root, `data/x_post_drafts/${entry.date}-long.json`), JSON.stringify(EXTRA));
+  // 断られたら失敗のまま（スレッドで送らない）
+  f = fakeFetch(root);
+  f.rejectLong = 400;
+  let r = await postRun({ extraLong: true }, { root, env: ENV, fetchImpl: f, now: NOW });
+  assert.strictEqual(r.result, 'failed', JSON.stringify(r.rejected || r.reason));
+  assert.strictEqual(f.sent.length, 1);
+  // 通れば1回だけ送り、台帳に extra_long を付ける。2回目は送らない
+  f = fakeFetch(root);
+  r = await postRun({ extraLong: true }, { root, env: ENV, fetchImpl: f, now: NOW });
+  assert.strictEqual(r.result, 'posted');
+  assert.strictEqual(f.sent.length, 1);
+  assert.ok(f.sent[0].includes(FIVE.replies[4]));
+  const rows = JSON.parse(fs.readFileSync(path.join(root, 'data/x_post_log.json'), 'utf8')).posts.filter((p) => p.status === 'posted');
+  assert.strictEqual(rows.length, 2);
+  assert.strictEqual(rows[1].extra_long, true);
+  f = fakeFetch(root);
+  assert.strictEqual((await postRun({ extraLong: true }, { root, env: ENV, fetchImpl: f, now: NOW })).result, 'already_posted');
+  assert.strictEqual(f.sent.length, 0);
+});
