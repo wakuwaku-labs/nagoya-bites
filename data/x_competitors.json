@@ -1,19 +1,181 @@
 {
   "schema": "x-competitor/1",
   "project": "nagoya_bites",
-  "updated_at": "2026-11-16T10:44:06.669Z",
+  "updated_at": "2026-11-23T02:14:29.750Z",
   "cost": {
     "month": "2026-11",
-    "usd": 1.02,
+    "usd": 1.205,
     "cap_usd": 1.5
   },
   "accounts": [
     {
       "handle": "gourmet_nagoya",
       "user_id": "784939726209810432",
-      "followers": 151895,
-      "fetched_at": "2026-11-16T01:34:30.074Z",
+      "followers": 151966,
+      "fetched_at": "2026-11-23T02:14:29.750Z",
       "posts": [
+        {
+          "id": "2124478992862654886",
+          "created_at": "2026-11-22T12:23:57.000Z",
+          "metrics": {
+            "impressions": 10697,
+            "likes": 20,
+            "reposts": 0,
+            "replies": 0,
+            "quotes": 0,
+            "bookmarks": 6
+          },
+          "features": {
+            "media": "image",
+            "has_url": false,
+            "chars": 116,
+            "first_line": "other",
+            "hashtags": [],
+            "topic": "ランチ",
+            "topic_tags": [
+              "ランチ",
+              "新店・限定"
+            ]
+          }
+        },
+        {
+          "id": "2124472810060025955",
+          "created_at": "2026-11-22T11:59:23.000Z",
+          "metrics": {
+            "impressions": 26404,
+            "likes": 214,
+            "reposts": 20,
+            "replies": 1,
+            "quotes": 2,
+            "bookmarks": 41
+          },
+          "features": {
+            "media": "image",
+            "has_url": false,
+            "chars": 130,
+            "first_line": "other",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "洋食・イタリアン・フレンチ",
+              "新店・限定"
+            ]
+          }
+        },
+        {
+          "id": "2124450796507120036",
+          "created_at": "2026-11-22T10:31:54.000Z",
+          "metrics": {
+            "impressions": 24929,
+            "likes": 255,
+            "reposts": 20,
+            "replies": 0,
+            "quotes": 2,
+            "bookmarks": 17
+          },
+          "features": {
+            "media": "image",
+            "has_url": true,
+            "chars": 135,
+            "first_line": "number",
+            "hashtags": [],
+            "topic": "ランチ",
+            "topic_tags": [
+              "ランチ"
+            ]
+          }
+        },
+        {
+          "id": "2124437225161253212",
+          "created_at": "2026-11-22T09:37:59.000Z",
+          "metrics": {
+            "impressions": 32634,
+            "likes": 221,
+            "reposts": 105,
+            "replies": 0,
+            "quotes": 12,
+            "bookmarks": 8
+          },
+          "features": {
+            "media": "none",
+            "has_url": true,
+            "chars": 75,
+            "first_line": "number",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": []
+          }
+        },
+        {
+          "id": "2124403518606118930",
+          "created_at": "2026-11-22T07:24:03.000Z",
+          "metrics": {
+            "impressions": 22280,
+            "likes": 82,
+            "reposts": 17,
+            "replies": 0,
+            "quotes": 1,
+            "bookmarks": 5
+          },
+          "features": {
+            "media": "image",
+            "has_url": false,
+            "chars": 53,
+            "first_line": "number",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "営業時間・混雑"
+            ]
+          }
+        },
+        {
+          "id": "2124126287422013762",
+          "created_at": "2026-11-21T13:02:25.000Z",
+          "metrics": {
+            "impressions": 16461,
+            "likes": 46,
+            "reposts": 6,
+            "replies": 0,
+            "quotes": 0,
+            "bookmarks": 12
+          },
+          "features": {
+            "media": "image",
+            "has_url": false,
+            "chars": 124,
+            "first_line": "number",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "スイーツ・手土産"
+            ]
+          }
+        },
+        {
+          "id": "2124126044173324548",
+          "created_at": "2026-11-21T13:01:27.000Z",
+          "metrics": {
+            "impressions": 156647,
+            "likes": 2432,
+            "reposts": 345,
+            "replies": 2,
+            "quotes": 107,
+            "bookmarks": 784
+          },
+          "features": {
+            "media": "image",
+            "has_url": false,
+            "chars": 114,
+            "first_line": "other",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "スイーツ・手土産",
+              "新店・限定"
+            ]
+          }
+        },
         {
           "id": "2121952185303060646",
           "created_at": "2026-11-15T13:03:19.000Z",
@@ -572,9 +734,145 @@
     {
       "handle": "nagoya_foods",
       "user_id": "1352796331828334592",
-      "followers": 55793,
-      "fetched_at": "2026-11-16T01:34:30.074Z",
+      "followers": 55771,
+      "fetched_at": "2026-11-23T02:14:29.750Z",
       "posts": [
+        {
+          "id": "2124138313955303486",
+          "created_at": "2026-11-21T13:50:13.000Z",
+          "metrics": {
+            "impressions": 14100,
+            "likes": 330,
+            "reposts": 30,
+            "replies": 0,
+            "quotes": 1,
+            "bookmarks": 29
+          },
+          "features": {
+            "media": "video",
+            "has_url": false,
+            "chars": 61,
+            "first_line": "other",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "名古屋めし"
+            ]
+          }
+        },
+        {
+          "id": "2124131251418530124",
+          "created_at": "2026-11-21T13:22:09.000Z",
+          "metrics": {
+            "impressions": 4144,
+            "likes": 19,
+            "reposts": 1,
+            "replies": 0,
+            "quotes": 0,
+            "bookmarks": 0
+          },
+          "features": {
+            "media": "none",
+            "has_url": true,
+            "chars": 103,
+            "first_line": "other",
+            "hashtags": [],
+            "topic": "お酒",
+            "topic_tags": [
+              "お酒・居酒屋"
+            ]
+          }
+        },
+        {
+          "id": "2123786630389756003",
+          "created_at": "2026-11-20T14:32:45.000Z",
+          "metrics": {
+            "impressions": 122395,
+            "likes": 1635,
+            "reposts": 224,
+            "replies": 0,
+            "quotes": 60,
+            "bookmarks": 336
+          },
+          "features": {
+            "media": "video",
+            "has_url": false,
+            "chars": 62,
+            "first_line": "number",
+            "hashtags": [],
+            "topic": "お酒",
+            "topic_tags": [
+              "お酒・居酒屋"
+            ]
+          }
+        },
+        {
+          "id": "2123699902572302480",
+          "created_at": "2026-11-20T08:48:07.000Z",
+          "metrics": {
+            "impressions": 7681,
+            "likes": 135,
+            "reposts": 6,
+            "replies": 0,
+            "quotes": 0,
+            "bookmarks": 2
+          },
+          "features": {
+            "media": "image",
+            "has_url": false,
+            "chars": 48,
+            "first_line": "number",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "イベント・季節"
+            ]
+          }
+        },
+        {
+          "id": "2123036927989518562",
+          "created_at": "2026-11-18T12:53:42.000Z",
+          "metrics": {
+            "impressions": 17632,
+            "likes": 257,
+            "reposts": 23,
+            "replies": 6,
+            "quotes": 1,
+            "bookmarks": 11
+          },
+          "features": {
+            "media": "image",
+            "has_url": false,
+            "chars": 58,
+            "first_line": "question",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": []
+          }
+        },
+        {
+          "id": "2122829587612893404",
+          "created_at": "2026-11-17T23:09:48.000Z",
+          "metrics": {
+            "impressions": 26033,
+            "likes": 335,
+            "reposts": 5,
+            "replies": 2,
+            "quotes": 3,
+            "bookmarks": 50
+          },
+          "features": {
+            "media": "image",
+            "has_url": false,
+            "chars": 43,
+            "first_line": "number",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "洋食・イタリアン・フレンチ"
+            ]
+          }
+        },
         {
           "id": "2122135142206787845",
           "created_at": "2026-11-16T01:10:19.000Z",
@@ -896,9 +1194,167 @@
     {
       "handle": "gourmetemperor",
       "user_id": "3102638640",
-      "followers": 35438,
-      "fetched_at": "2026-11-16T01:34:30.074Z",
+      "followers": 35441,
+      "fetched_at": "2026-11-23T02:14:29.750Z",
       "posts": [
+        {
+          "id": "2124631229463232571",
+          "created_at": "2026-11-22T22:28:53.000Z",
+          "metrics": {
+            "impressions": 1853,
+            "likes": 14,
+            "reposts": 4,
+            "replies": 0,
+            "quotes": 0,
+            "bookmarks": 1
+          },
+          "features": {
+            "media": "none",
+            "has_url": true,
+            "chars": 178,
+            "first_line": "other",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "麺（ラーメン・うどん等）",
+              "肉・焼肉"
+            ]
+          }
+        },
+        {
+          "id": "2124431497302270002",
+          "created_at": "2026-11-22T09:15:13.000Z",
+          "metrics": {
+            "impressions": 1133,
+            "likes": 2,
+            "reposts": 0,
+            "replies": 0,
+            "quotes": 0,
+            "bookmarks": 1
+          },
+          "features": {
+            "media": "none",
+            "has_url": true,
+            "chars": 43,
+            "first_line": "assertion",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "新店・限定"
+            ]
+          }
+        },
+        {
+          "id": "2124431267605487693",
+          "created_at": "2026-11-22T09:14:18.000Z",
+          "metrics": {
+            "impressions": 11981,
+            "likes": 451,
+            "reposts": 48,
+            "replies": 2,
+            "quotes": 2,
+            "bookmarks": 24
+          },
+          "features": {
+            "media": "image",
+            "has_url": false,
+            "chars": 66,
+            "first_line": "assertion",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "肉・焼肉"
+            ]
+          }
+        },
+        {
+          "id": "2124059864842547267",
+          "created_at": "2026-11-21T08:38:29.000Z",
+          "metrics": {
+            "impressions": 3047,
+            "likes": 6,
+            "reposts": 1,
+            "replies": 0,
+            "quotes": 1,
+            "bookmarks": 2
+          },
+          "features": {
+            "media": "none",
+            "has_url": true,
+            "chars": 40,
+            "first_line": "other",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": []
+          }
+        },
+        {
+          "id": "2124059590342086744",
+          "created_at": "2026-11-21T08:37:24.000Z",
+          "metrics": {
+            "impressions": 52847,
+            "likes": 620,
+            "reposts": 59,
+            "replies": 12,
+            "quotes": 19,
+            "bookmarks": 70
+          },
+          "features": {
+            "media": "image",
+            "has_url": false,
+            "chars": 72,
+            "first_line": "other",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "値段・お得"
+            ]
+          }
+        },
+        {
+          "id": "2123696170669396127",
+          "created_at": "2026-11-20T08:33:18.000Z",
+          "metrics": {
+            "impressions": 1385,
+            "likes": 3,
+            "reposts": 0,
+            "replies": 0,
+            "quotes": 0,
+            "bookmarks": 1
+          },
+          "features": {
+            "media": "none",
+            "has_url": true,
+            "chars": 38,
+            "first_line": "assertion",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "新店・限定"
+            ]
+          }
+        },
+        {
+          "id": "2123695970345169187",
+          "created_at": "2026-11-20T08:32:30.000Z",
+          "metrics": {
+            "impressions": 17571,
+            "likes": 308,
+            "reposts": 27,
+            "replies": 3,
+            "quotes": 2,
+            "bookmarks": 27
+          },
+          "features": {
+            "media": "image",
+            "has_url": false,
+            "chars": 49,
+            "first_line": "assertion",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": []
+          }
+        },
         {
           "id": "2121944144830685450",
           "created_at": "2026-11-15T12:31:22.000Z",
@@ -1320,9 +1776,177 @@
     {
       "handle": "nagoya1016",
       "user_id": "1348552077216137217",
-      "followers": 34617,
-      "fetched_at": "2026-11-16T01:34:30.074Z",
+      "followers": 34672,
+      "fetched_at": "2026-11-23T02:14:29.750Z",
       "posts": [
+        {
+          "id": "2124380953044975727",
+          "created_at": "2026-11-22T05:54:22.000Z",
+          "metrics": {
+            "impressions": 39827,
+            "likes": 527,
+            "reposts": 79,
+            "replies": 1,
+            "quotes": 14,
+            "bookmarks": 128
+          },
+          "features": {
+            "media": "video",
+            "has_url": false,
+            "chars": 64,
+            "first_line": "other",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "肉・焼肉"
+            ]
+          }
+        },
+        {
+          "id": "2123959015604637998",
+          "created_at": "2026-11-21T01:57:45.000Z",
+          "metrics": {
+            "impressions": 3809,
+            "likes": 23,
+            "reposts": 3,
+            "replies": 0,
+            "quotes": 1,
+            "bookmarks": 4
+          },
+          "features": {
+            "media": "video",
+            "has_url": false,
+            "chars": 138,
+            "first_line": "other",
+            "hashtags": [],
+            "topic": "喫茶・カフェ",
+            "topic_tags": [
+              "カフェ・喫茶",
+              "値段・お得",
+              "営業時間・混雑"
+            ]
+          }
+        },
+        {
+          "id": "2123661034439549301",
+          "created_at": "2026-11-20T06:13:40.000Z",
+          "metrics": {
+            "impressions": 6618,
+            "likes": 37,
+            "reposts": 6,
+            "replies": 0,
+            "quotes": 1,
+            "bookmarks": 7
+          },
+          "features": {
+            "media": "image",
+            "has_url": false,
+            "chars": 111,
+            "first_line": "other",
+            "hashtags": [],
+            "topic": "お酒",
+            "topic_tags": [
+              "お酒・居酒屋",
+              "値段・お得"
+            ]
+          }
+        },
+        {
+          "id": "2123567074954092846",
+          "created_at": "2026-11-20T00:00:19.000Z",
+          "metrics": {
+            "impressions": 3878,
+            "likes": 35,
+            "reposts": 6,
+            "replies": 0,
+            "quotes": 1,
+            "bookmarks": 4
+          },
+          "features": {
+            "media": "video",
+            "has_url": false,
+            "chars": 116,
+            "first_line": "other",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "値段・お得"
+            ]
+          }
+        },
+        {
+          "id": "2123364113615298660",
+          "created_at": "2026-11-19T10:33:49.000Z",
+          "metrics": {
+            "impressions": 22369,
+            "likes": 235,
+            "reposts": 25,
+            "replies": 0,
+            "quotes": 8,
+            "bookmarks": 84
+          },
+          "features": {
+            "media": "image",
+            "has_url": false,
+            "chars": 115,
+            "first_line": "number",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "麺（ラーメン・うどん等）",
+              "新店・限定",
+              "値段・お得"
+            ]
+          }
+        },
+        {
+          "id": "2123363484687827275",
+          "created_at": "2026-11-19T10:31:19.000Z",
+          "metrics": {
+            "impressions": 4208,
+            "likes": 24,
+            "reposts": 3,
+            "replies": 0,
+            "quotes": 1,
+            "bookmarks": 1
+          },
+          "features": {
+            "media": "image",
+            "has_url": false,
+            "chars": 74,
+            "first_line": "number",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "新店・限定"
+            ]
+          }
+        },
+        {
+          "id": "2122681479176355995",
+          "created_at": "2026-11-17T13:21:16.000Z",
+          "metrics": {
+            "impressions": 81084,
+            "likes": 1427,
+            "reposts": 210,
+            "replies": 0,
+            "quotes": 61,
+            "bookmarks": 465
+          },
+          "features": {
+            "media": "image",
+            "has_url": false,
+            "chars": 156,
+            "first_line": "number",
+            "hashtags": [],
+            "topic": "その他",
+            "topic_tags": [
+              "スイーツ・手土産",
+              "新店・限定",
+              "値段・お得"
+            ]
+          }
+        },
         {
           "id": "2121171019922919789",
           "created_at": "2026-11-13T09:19:15.000Z",
@@ -1820,8 +2444,8 @@
     {
       "handle": "nagoyafood",
       "user_id": "711104856350527488",
-      "followers": 29298,
-      "fetched_at": "2026-11-16T01:34:30.074Z",
+      "followers": 29257,
+      "fetched_at": "2026-11-23T02:14:29.750Z",
       "posts": [
         {
           "id": "2118178059056472483",
@@ -2050,7 +2674,7 @@
     }
   ],
   "last_run": {
-    "at": "2026-11-16T10:44:06.669Z",
+    "at": "2026-11-23T02:14:29.750Z",
     "result": "ok",
     "reason": null
   }
