@@ -228,6 +228,25 @@ button.link-btn{font:inherit;cursor:pointer;}
   <div class="point-box"><p>国際センター直結、地下街ユニモール経由で悪天候も集客。</p></div>
   
 
+  <div class="ig-photos">
+    <h2>公式Instagramの実際の写真</h2>
+    <div class="ig-carousel">
+      <div class="ig-carousel-track">
+        <div class="ig-embed-box" data-ig-src="https://www.instagram.com/p/CPPO-obAphL/embed/"><a href="https://www.instagram.com/okudaya_meieki/p/CPPO-obAphL/" target="_blank" rel="noopener noreferrer">牛もつ鍋と野菜巻串 奥だや 名駅店 の公式Instagram投稿を見る</a></div>
+        <div class="ig-embed-box" data-ig-src="https://www.instagram.com/p/CMTZVmDgQqE/embed/"><a href="https://www.instagram.com/okudaya_meieki/p/CMTZVmDgQqE/" target="_blank" rel="noopener noreferrer">牛もつ鍋と野菜巻串 奥だや 名駅店 の公式Instagram投稿を見る</a></div>
+        <div class="ig-embed-box" data-ig-src="https://www.instagram.com/p/CMQ0FGhAQBH/embed/"><a href="https://www.instagram.com/okudaya_meieki/p/CMQ0FGhAQBH/" target="_blank" rel="noopener noreferrer">牛もつ鍋と野菜巻串 奥だや 名駅店 の公式Instagram投稿を見る</a></div>
+        <div class="ig-embed-box" data-ig-src="https://www.instagram.com/p/CMONlCTADVA/embed/"><a href="https://www.instagram.com/okudaya_meieki/p/CMONlCTADVA/" target="_blank" rel="noopener noreferrer">牛もつ鍋と野菜巻串 奥だや 名駅店 の公式Instagram投稿を見る</a></div>
+      </div>
+      <button type="button" class="ig-carousel-nav ig-carousel-prev" aria-label="前の写真">‹</button>
+      <button type="button" class="ig-carousel-nav ig-carousel-next" aria-label="次の写真">›</button>
+      <div class="ig-carousel-dots">
+        <span class="ig-carousel-dot active"></span>
+        <span class="ig-carousel-dot"></span>
+        <span class="ig-carousel-dot"></span>
+        <span class="ig-carousel-dot"></span>
+      </div>
+    </div>
+  </div>
   <div class="info-grid">
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 名駅（名古屋駅）</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市中村区名駅５-10-7 花車ビル 1F</span></div>
@@ -418,6 +437,66 @@ document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=
 document.addEventListener('touchstart',function(){},{passive:true});
 </script>
 <!-- NB-CHROME:SCRIPT:END -->
+<script>
+(function(){
+  var wrap=document.querySelector('.ig-photos');
+  if(!wrap)return;
+  var loaded=false;
+  function load(){
+    if(loaded)return;loaded=true;
+    var boxes=wrap.querySelectorAll('.ig-embed-box[data-ig-src]');
+    for(var i=0;i<boxes.length;i++){
+      (function(box){
+        if(box.querySelector('iframe'))return;
+        var src=box.getAttribute('data-ig-src');
+        box.innerHTML='<iframe src="'+src+'" width="100%" height="560" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen="true" style="border-radius:12px;display:block;"></iframe>';
+      })(boxes[i]);
+    }
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){load();io.disconnect();}});},{rootMargin:'600px'});
+    io.observe(wrap);
+  }else{load();}
+
+  // スワイプ式カルーセル（1画面1枚・矢印/ドット操作対応・オーナー要望 2026-09-16）
+  var carousel=wrap.querySelector('.ig-carousel');
+  if(!carousel)return;
+  var track=carousel.querySelector('.ig-carousel-track');
+  var slides=track?track.children:[];
+  var prevBtn=carousel.querySelector('.ig-carousel-prev');
+  var nextBtn=carousel.querySelector('.ig-carousel-next');
+  var dots=carousel.querySelectorAll('.ig-carousel-dot');
+  if(!track||slides.length<2)return;
+  // 動きを減らす設定なら即時にスクロールする（動きの計画 F2・判断の記録 0049）
+  function nbScrollBehavior(){try{return window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';}catch(e){return 'smooth';}}
+  function goTo(i){
+    i=Math.max(0,Math.min(slides.length-1,i));
+    track.scrollTo({left:slides[i].offsetLeft,behavior:nbScrollBehavior()});
+  }
+  function currentIndex(){
+    var best=0,bestDist=Infinity;
+    for(var i=0;i<slides.length;i++){
+      var d=Math.abs(slides[i].offsetLeft-track.scrollLeft);
+      if(d<bestDist){bestDist=d;best=i;}
+    }
+    return best;
+  }
+  function updateDots(){
+    var idx=currentIndex();
+    for(var i=0;i<dots.length;i++)dots[i].classList.toggle('active',i===idx);
+  }
+  if(prevBtn)prevBtn.addEventListener('click',function(){goTo(currentIndex()-1);});
+  if(nextBtn)nextBtn.addEventListener('click',function(){goTo(currentIndex()+1);});
+  for(var d=0;d<dots.length;d++){
+    (function(idx){dots[idx].addEventListener('click',function(){goTo(idx);});})(d);
+  }
+  var scrollTimer=null;
+  track.addEventListener('scroll',function(){
+    if(scrollTimer)clearTimeout(scrollTimer);
+    scrollTimer=setTimeout(updateDots,80);
+  });
+})();
+</script>
 <script>var NB_CALL_MAPS_KEY='AIzaSyBKD3MCHPdIPxHt-hZlh8EIv_8zMYDbgos';</script>
 <script class="nb-call-js">(function nbCallMain() {
   var TAP_LIMIT = 20;               // この端末で、1日に番号を確かめられる回数
