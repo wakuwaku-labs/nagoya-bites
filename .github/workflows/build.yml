@@ -626,9 +626,19 @@ jobs:
           # 失敗させ続けるバグがあった。修正: rebase 失敗時に data/ スナップショット競合
           # （gsc_metrics.json 等・毎回再生成される時系列データ）なら theirs（今回生成分）で
           # 自動解消し、data/ 以外の競合や解消不能な場合は rebase を abort してから再試行する。
+          # 2026-11-23: 月曜の台帳の作り直しは、このビルドを始めた時点の記事で作る。途中で日次ジャーナルが push されると、
+          # 下の「data/ の競合は今回生成分」で古い台帳が勝ち、新しい記事が台帳から消えて次のビルドの npm test が落ちた。
+          # 取り込んだ後の main で作り直してから push する（通信なし・べき等）。月曜以外は台帳に触らない
+          refresh_ledger() {
+            [ "$(TZ=Asia/Tokyo date +%u)" = "1" ] || return 0
+            node scripts/build_article_review_ledger.js >/dev/null 2>&1 || { echo "::warning::台帳の作り直しに失敗（そのまま push）"; return 0; }
+            git add data/article_review_ledger.json
+            git diff --cached --quiet || git commit -q -m "chore: 取り込み後の main で記事台帳を作り直す [skip actions]"
+          }
           PUSHED=0
           for i in 1 2 3 4 5; do
             if git pull --rebase --autostash origin main; then
+              refresh_ledger
               if git push; then PUSHED=1; break; fi
             else
               # rebase 失敗 — data/ 配下スナップショット競合のみ theirs（今回生成分）で解消
@@ -640,6 +650,7 @@ jobs:
                 printf '%s\n' "$DATA_CONFLICTS" | xargs git checkout --theirs --
                 printf '%s\n' "$DATA_CONFLICTS" | xargs git add
                 if GIT_EDITOR=true git rebase --continue; then
+                  refresh_ledger
                   if git push; then PUSHED=1; break; fi
                 else
                   git rebase --abort 2>/dev/null || true

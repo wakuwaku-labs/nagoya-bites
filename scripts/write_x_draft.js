@@ -231,12 +231,29 @@ function firstLineFollowed(body, firstLine) {
   return true;
 }
 
+/** 長いポストの日の指示（data/x_post_policy.json の longPost。スレッドなしの実験の日は付けない）。 */
+function longPostSection(policy, topicExp) {
+  const lp = (policy && policy.longPost) || {};
+  if (lp.enabled !== true || (topicExp && topicExp.format && topicExp.format.thread === false)) return [];
+  const n = X.maxDraftReplies(policy);
+  return [
+    '',
+    '## 今日は長いポストで出す',
+    `本文（body）と続き（replies）を、空行で区切って1つの長いポストにまとめて出す（X プレミアム）。続きは最大${n}件まで書いてよい（記事に足せる事実が無ければ少なくてよい。水増しをしない）。`,
+    '- タイムラインで見えるのは本文（body）だけで、続きは「さらに表示」を押した人が読む。本文に、いちばん伝えたいことと「続きを読みたくなる」中身を入れる。',
+    '- 続きは1件を1つのまとまりにし、1行目を【】の小見出しにする（例「【どんな店か】」「【こんな時に合う】」「【行く前に】」「【予算の目安】」）。小見出しは毎回同じにせず、記事に合わせて変える。',
+    '- 長いポストが使えない日は、本文と続きの最初の3件をスレッドで送る。大事な続きほど前に置く。',
+    '- 見やすさの決まり・事実の決まり・続き1件の長さの上限は変わらない。',
+  ];
+}
+
 function buildPrompt({ root, entry, material, previous, plan, topicExp }) {
   const parts = [
     promptBody(root),
     ...planSection(plan, entry.title),
     ...topicExperimentSection(topicExp),
     ...seriesSection(entry.date, X.loadPolicy(root)),
+    ...longPostSection(X.loadPolicy(root), topicExp),
     '',
     '## 使わない言い方',
     wordingList(root).map((w) => `- ${w}`).join('\n'),

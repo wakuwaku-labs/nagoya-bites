@@ -244,7 +244,7 @@ function checkDraft(draft, { entry, policy, articleText }) {
   // 返信（続き）。本文と同じく、数字はすべて引用の中になければならない
   if (draft.replies !== undefined) {
     const replies = Array.isArray(draft.replies) ? draft.replies : null;
-    const maxReplies = cfg.maxReplies ?? 3;
+    const maxReplies = maxDraftReplies(policy);
     if (!replies || replies.length > maxReplies) f.push(`draft_replies_count:${replies ? replies.length : 'not_array'}`);
     else {
       replies.forEach((r, i) => {
@@ -293,6 +293,26 @@ function draftLayoutIssues(draft, policy) {
   return out;
 }
 
+/** 保存した文面の続きの上限。長いポストの日（longPost.enabled）は maxSections まで書かせる。 */
+function maxDraftReplies(policy) {
+  const base = ((policy && policy.draft) || {}).maxReplies ?? 3;
+  const lp = (policy && policy.longPost) || {};
+  return lp.enabled === true ? Math.max(base, Number(lp.maxSections) || base) : base;
+}
+
+/**
+ * 長いポスト（X プレミアム）の文面。本文と続きを空行で区切って1つにし、URL・ハッシュタグ・写真のクレジットは後ろのまま。
+ * 使わない日は null: longPost が無効・保存した文面でない・続きが無い・上限（longPost.maxWeighted）を超える。
+ */
+function longPostText(built, policy) {
+  const lp = (policy && policy.longPost) || {};
+  if (lp.enabled !== true || !built || built.mode !== 'draft' || !built.body) return null;
+  const replies = Array.isArray(built.replies) ? built.replies : [];
+  if (!replies.length || !String(built.text || '').startsWith(built.body)) return null;
+  const text = [built.body, ...replies].join('\n\n') + built.text.slice(built.body.length);
+  return weightedLength(text) <= (Number(lp.maxWeighted) || 3000) ? text : null;
+}
+
 /** 返信の文面（保存した文面の replies。空白だけのものは除く）。 */
 function draftReplies(draft) {
   return (Array.isArray(draft && draft.replies) ? draft.replies : [])
@@ -323,10 +343,11 @@ function validateReplies(replies, { policy, articleText, root = ROOT }) {
 /** 保存した文面＋URL（utm_content=型）＋ハッシュタグ。 */
 function buildDraftPost(draft, entry, policy) {
   const url = utmUrl(entry, policy, draft.type);
-  const r = withLink(String(draft.body || '').trim(), url, hashtagsFor(entry, policy), policy.maxWeightedLength || 280);
+  const body = String(draft.body || '').trim();
+  const r = withLink(body, url, hashtagsFor(entry, policy), policy.maxWeightedLength || 280);
   if (!r) return { ok: false, mode: 'draft', reason: 'too_long' };
   const replies = draftReplies(draft);
-  return { ok: true, mode: 'draft', type: draft.type, url, ...r, ...(replies.length ? { replies } : {}) };
+  return { ok: true, mode: 'draft', type: draft.type, url, body, ...r, ...(replies.length ? { replies } : {}) };
 }
 
 /**
@@ -518,7 +539,7 @@ const HUMAN_ACTION_ERRORS = new Set(['auth', 'forbidden', 'payment']);
 module.exports = {
   ROOT, LOG_REL, HEALTH_REL, HUMAN_ACTION_ERRORS,
   weightedLength, loadPolicy, articleUrl, utmUrl, areaHashtag, hashtagsFor, planWait, rewriteTitle, buildTemplatePost,
-  DRAFT_DIR, draftPath, loadDraft, checkDraft, layoutIssues, draftLayoutIssues, draftReplies, validateReplies, buildDraftPost, insiderPoints, buildPointPosts, postCandidates,
+  DRAFT_DIR, draftPath, loadDraft, checkDraft, maxDraftReplies, longPostText, layoutIssues, draftLayoutIssues, draftReplies, validateReplies, buildDraftPost, insiderPoints, buildPointPosts, postCandidates,
   urlVariantFor, stripUrl, htmlToText, normalizeDigits, numbersMissingFromArticle, wordingViolations, validatePost,
   readLog, writeJson, alreadyPosted, recentTexts, oauthHeader, classifyError, pct,
 };
