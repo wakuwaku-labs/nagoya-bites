@@ -272,6 +272,7 @@ function checkDraft(draft, { entry, policy, articleText }) {
  * 返り値は直してほしい点の配列（空なら通過）。落としはせず、書き手が書き直させるのに使う（write_x_draft.js）。
  *   layout_long_line:<行番号>   1行が X の数え方で maxLineWeighted（既定 64＝全角32字）を超える
  *   layout_two_sentences:<行番号> 1行に「。」で終わる文が2つ以上ある（1文ごとに改行していない）
+ *   layout_bullet_no_label:<行番号> 「・」の箇条書きが3行以上あるのに、その行の頭に「予算：」のような見出しが無い
  */
 function layoutIssues(text, { maxLineWeighted = 64 } = {}) {
   const issues = [];
@@ -281,8 +282,18 @@ function layoutIssues(text, { maxLineWeighted = 64 } = {}) {
     if (weightedLength(line) > maxLineWeighted) issues.push(`layout_long_line:${i + 1}`);
     if (/[。！？!?][^。！？!?」）)\s]/.test(line)) issues.push(`layout_two_sentences:${i + 1}`);
   });
+  // 箇条書きが3行以上あるまとまりは、各行の頭に「予算：」のような見出しを付ける（2026-11-23 本人
+  // 「羅列している情報がどんな情報かわからない」）。2行までは短いので見出しなしでよい
+  const lines = String(text || '').split('\n').map((x) => x.trim());
+  const bullets = lines.map((l, i) => ({ l, i })).filter((x) => x.l.startsWith('・'));
+  if (bullets.length >= 3) {
+    for (const { l, i } of bullets) if (!BULLET_LABEL_RE.test(l)) issues.push(`layout_bullet_no_label:${i + 1}`);
+  }
   return issues;
 }
+
+/** 見出しつきの箇条書き「・予算：1人2,000円ほど」。見出しは全角1〜6字（記号・数字なし）か「店名」＋全角の「：」 */
+const BULLET_LABEL_RE = /^・(?:「[^」]{1,24}」|[^\s：:0-9０-９「」（）()【】・]{1,6})：\S/;
 
 /** 本文と返信の見やすさの検査をまとめる（返信は reply<番号>_ を頭に付ける）。 */
 function draftLayoutIssues(draft, policy) {

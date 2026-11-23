@@ -18,6 +18,7 @@
  *   node scripts/write_x_draft.js [--date YYYY-MM-DD] [--claude-bin PATH] [--dry-run] [--force] [--json]
  *     --dry-run  検査まで行い、ファイルは書かない
  *     --force    その日の文面が既にあっても書き直す
+ *     --long     手動の追加の長いポスト用の文面を data/x_post_drafts/<date>-long.json に書く（題材の実験は使わない）
  */
 const fs = require('fs');
 const path = require('path');
@@ -31,13 +32,16 @@ const BP = require('./lib/brand_policy');
 const PROMPT_REL = 'docs/x-post-prompt.md';
 
 function parseArgs(argv) {
-  const a = { date: null, claudeBin: process.env.CLAUDE_BIN || 'claude', dryRun: false, force: false, json: false };
+  const a = { date: null, claudeBin: process.env.CLAUDE_BIN || 'claude', dryRun: false, force: false, json: false, long: false };
   for (let i = 0; i < argv.length; i++) {
     const k = argv[i];
     if (k === '--date') a.date = argv[++i];
     else if (k === '--claude-bin') a.claudeBin = argv[++i];
     else if (k === '--dry-run') a.dryRun = true;
     else if (k === '--force') a.force = true;
+    // 手動の追加の長いポスト用（post_journal_to_x.js --extra-long が読む <date>-long.json に書く）。
+    // その日の題材の実験（スレッドなし等）は使わず、長いポストの節を必ず付ける
+    else if (k === '--long') a.long = true;
     else if (k === '--json') a.json = true;
     else throw new Error(`知らない引数: ${k}`);
   }
@@ -242,6 +246,14 @@ function longPostSection(policy, topicExp) {
     `本文（body）と続き（replies）を、空行で区切って1つの長いポストにまとめて出す（X プレミアム）。続きは最大${n}件まで書いてよい（記事に足せる事実が無ければ少なくてよい。水増しをしない）。`,
     '- タイムラインで見えるのは本文（body）だけで、続きは「さらに表示」を押した人が読む。本文に、いちばん伝えたいことと「続きを読みたくなる」中身を入れる。',
     '- 続きは1件を1つのまとまりにし、1行目を【】の小見出しにする（例「【どんな店か】」「【こんな時に合う】」「【行く前に】」「【予算の目安】」）。小見出しは毎回同じにせず、記事に合わせて変える。',
+    '- 記事が複数の店を紹介している日は、続き1件を1店にし、下の「店ごとの続きの形」で書く（店名が一目で分かり、並べた情報が何の情報か分かるように。2026-11-23 本人「どこが店舗名か、羅列している情報がどんな情報か分からない」）。',
+    '  - 1行目は【店名】（記事の店名を短く。例「【青二才 今池本店】」）。「こんな時に合う」は小見出しにせず、3行目に書く。',
+    '  - 2行目: どんな店かを1行（料理・業態・名物）。',
+    '  - 3行目: 「こんな時に：」で始めて、合う使い方を1行（記事にあるものだけ）。',
+    '  - 4行目から: 「・見出し：中身」の箇条書き。見出しは「場所」「営業」「休み」「予算」「席」「たばこ」「支払い」「名物」「予約」から記事にあるものを選ぶ（同じ店で同じ見出しを2回使わない）。',
+    '  - 注意点は「※」で始まる最後の1行にしてよい。',
+    '  - 本文（body）には、店名を「・「店名」：ひとこと」の形で並べ、タイムラインだけで何店のどんな店かが分かるようにする。',
+    '  - 例（型だけ。事実は記事にあるものだけで埋める）: 「【◯◯ ◯◯店】\\n豚の串焼き「やきとん」の居酒屋\\nこんな時に：安く短く飲みたい日\\n・場所：◯◯駅から徒歩◯分\\n・営業：◯時〜◯時（年中無休）\\n・予算：1人◯◯円ほど\\n・たばこ：全席で吸える\\n※席料あり」',
     '- 長いポストが使えない日は、本文と続きの最初の3件をスレッドで送る。大事な続きほど前に置く。',
     '- 見やすさの決まり・事実の決まり・続き1件の長さの上限は変わらない。',
   ];
@@ -342,7 +354,7 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
   const entry = findEntry(date, root);
   if (!entry) return { ...out, result: 'no_journal' };
   out.slug = entry.slug;
-  const file = X.draftPath(date, root);
+  const file = X.draftPath(args.long ? `${date}-long` : date, root);
   if (fs.existsSync(file) && !args.force) return { ...out, result: 'exists' };
 
   const articlePath = path.join(root, 'journal', `${entry.slug}.html`);
@@ -352,7 +364,7 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
   const material = articleMaterial(html);
 
   let { plan, reason: planReason } = loadPlan(date, policy, now);
-  const { exp: topicExp, reason: topicReason } = loadTopicExperiment(date, policy, entry, root, now);
+  const { exp: topicExp, reason: topicReason } = args.long ? { exp: null, reason: 'long' } : loadTopicExperiment(date, policy, entry, root, now);
   if (topicExp) out.topic_experiment = topicExp; else if (topicReason !== 'off') out.topic_experiment_skipped = topicReason;
   // 型の割り当ての1行目と実験の1行目が食い違うときは、実験を優先して型の割り当ては使わない
   if (plan && topicExp && plan.first_line && topicExp.format.first_line && plan.first_line !== topicExp.format.first_line) {
@@ -413,7 +425,7 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
     const layout = failures.length ? [] : X.draftLayoutIssues(draft, policy);
     if (layout.length && i < attempts) {
       out.attempts[out.attempts.length - 1].reason = `layout:${layout.join(',')}`;
-      previous = { reason: `見やすさの決まりを守っていない（${layout.join(', ')}）。layout_long_line は1行が長すぎる行、layout_two_sentences は1行に2つの文がある行（行番号は1から）。1文ごとに改行し、1行は全角25字前後（長くても32字）に収め、並べる事実は「・」の箇条書きにする。事実と数字は変えない`, raw: JSON.stringify({ type: reply.type, body: reply.body, replies: reply.replies, evidence: reply.evidence }) };
+      previous = { reason: `見やすさの決まりを守っていない（${layout.join(', ')}）。layout_long_line は1行が長すぎる行、layout_two_sentences は1行に2つの文がある行、layout_bullet_no_label は「・」が3行以上並ぶのに頭に「予算：」「営業：」のような見出しが無い行（行番号は1から）。1文ごとに改行し、1行は全角25字前後（長くても32字）に収め、並べる事実は「・」の箇条書きにする。事実と数字は変えない`, raw: JSON.stringify({ type: reply.type, body: reply.body, replies: reply.replies, evidence: reply.evidence }) };
       continue;
     }
     if (layout.length) draft.layout_issues = layout;

@@ -570,3 +570,19 @@ test('投稿: 追加の長いポスト（--extra-long）は、その日が投稿
   assert.strictEqual((await postRun({ extraLong: true }, { root, env: ENV, fetchImpl: f, now: NOW })).result, 'already_posted');
   assert.strictEqual(f.sent.length, 0);
 });
+
+// ── 箇条書きの見出し（2026-11-23 本人「どこが店舗名か、羅列している情報がどんな情報か分からない」）──
+test('見やすさ: 箇条書きが3行以上なら各行に「予算：」のような見出しが要る（2行までは不要）', () => {
+  const labeled = '【青二才 今池本店】\n豚の串焼き「やきとん」の居酒屋\nこんな時に：安く短く飲みたい日\n・場所：今池駅から徒歩1分\n・営業：昼2時〜夜中3時（年中無休）\n・予算：1人1,000〜2,500円ほど\n・たばこ：全席で吸える\n※席料あり';
+  assert.deepStrictEqual(X.layoutIssues(labeled), []);
+  const bare = '【安く短く飲むなら】\n「青二才 今池本店」（今池駅から徒歩1分）\n・豚の串焼き「やきとん」の店\n・昼の2時から夜中の3時まで、年中無休\n・予算：1人1,000〜2,500円ほど';
+  assert.deepStrictEqual(X.layoutIssues(bare), ['layout_bullet_no_label:3', 'layout_bullet_no_label:4']);
+  // 見出しに数字・かっこは入れない（「・1人：」は見出しとみなさない）
+  assert.deepStrictEqual(X.layoutIssues('・1人：2,000円\n・営業：夜\n・席：10席'), ['layout_bullet_no_label:1']);
+  // 2行までは見出しなしでよい（既存の短い返信）
+  assert.deepStrictEqual(X.layoutIssues('池下の「QQ」の営業\n・ランチは12〜14時の2時間\n・ディナーは月・木が休み'), []);
+});
+
+test('見やすさ: 本文の「・「店名」：ひとこと」は見出しつきとみなす', () => {
+  assert.deepStrictEqual(X.layoutIssues('・「青二才 今池本店」：やきとん\n・「KITSUNE」：とり天\n・「サクランボ」：半立ち飲み'), []);
+});
