@@ -30,6 +30,7 @@
  *   node scripts/select_ig_posts.js --limit 100      # 100店だけ
  *   node scripts/select_ig_posts.js --only-rejected  # 現行の投稿が基準を通らない店だけ（既定）
  *   node scripts/select_ig_posts.js --all            # 全店を対象に選び直す
+ *   node scripts/select_ig_posts.js --from-lookup <SNS分析ツールの data/ig_store_lookup/日付.json>  # 公式 API で取った一覧から選ぶ
  */
 
 const fs   = require('fs');
@@ -66,7 +67,27 @@ function handleOf(igUrl) {
  * 公開プロフィールから最近の投稿（shortcode + 本文）を取る。
  * 取れないアカウントも多い（アカウント種別によりサーバ側が 400 を返す）。
  */
+// --from-lookup <file>: SNS分析ツールの ig-store-lookup（Instagram 公式の Business Discovery）が保存した投稿一覧を使う。
+// 公開エンドポイントが止められていても選び直せる（2026-11-23 は公開エンドポイントが全アカウントで空を返した）。
+let LOOKUP = null;
+function lookupPosts(handle) {
+  const i = argv.indexOf('--from-lookup');
+  if (i < 0 || !argv[i + 1]) return undefined;
+  if (!LOOKUP) {
+    LOOKUP = {};
+    for (const r of (JSON.parse(fs.readFileSync(argv[i + 1], 'utf8')).results || [])) if (r.ok) LOOKUP[String(r.handle).toLowerCase()] = r.media || [];
+  }
+  const list = LOOKUP[String(handle).toLowerCase()];
+  if (!list) return null;
+  return list.map((m) => ({
+    shortcode: shortcodeOf(m.permalink), caption: m.caption || '', isVideo: m.mediaType === 'VIDEO', alt: '',
+    takenAt: Math.floor(Date.parse(m.timestamp || 0) / 1000) || 0,
+  })).filter((p) => p.shortcode);
+}
+
 function fetchRecentPosts(handle) {
+  const fromLookup = lookupPosts(handle);
+  if (fromLookup !== undefined) return fromLookup;
   let raw;
   try {
     raw = execFileSync('curl', [
