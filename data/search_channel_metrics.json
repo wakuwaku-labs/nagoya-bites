@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-11-23T10:55:48.091Z",
+  "generatedAt": "2026-11-23T11:21:44.525Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 8656,
+  "total_sessions": 8658,
   "engines": [
     {
       "key": "direct",
@@ -27,26 +27,26 @@
     {
       "key": "google",
       "label": "Google",
-      "sessions": 1465,
+      "sessions": 1466,
       "pct": 16.9,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 1465
+          "sessions": 1466
         }
       ]
     },
     {
       "key": "bing",
       "label": "Bing",
-      "sessions": 944,
+      "sessions": 945,
       "pct": 10.9,
       "sources": [
         {
           "source": "bing",
           "medium": "organic",
-          "sessions": 938
+          "sessions": 939
         },
         {
           "source": "cn.bing.com",
@@ -252,18 +252,18 @@
     }
   ],
   "search_only": {
-    "total": 3339,
+    "total": 3341,
     "share": [
       {
         "key": "google",
         "label": "Google",
-        "sessions": 1465,
+        "sessions": 1466,
         "pct_of_search": 43.9
       },
       {
         "key": "bing",
         "label": "Bing",
-        "sessions": 944,
+        "sessions": 945,
         "pct_of_search": 28.3
       },
       {
@@ -291,9 +291,9 @@
     "to": "2026-11-23",
     "delta": {
       "direct": 28,
-      "google": 18,
-      "bing": 10,
-      "yahoo": 11,
+      "google": 22,
+      "bing": 11,
+      "yahoo": 12,
       "ai_assistant": 0,
       "other": 0,
       "social": 0,
@@ -303,7 +303,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 1465 セッションのみ。Bing(944) + 生成AI(250) の 1194 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 1466 セッションのみ。Bing(945) + 生成AI(250) の 1195 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],

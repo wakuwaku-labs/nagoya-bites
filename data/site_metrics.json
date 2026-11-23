@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-23T10:55:42.598Z",
+  "generatedAt": "2026-11-23T11:21:39.874Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 8142,
-    "pageViews": 9720,
+    "activeUsers": 8143,
+    "pageViews": 9722,
     "sessions": 8562,
-    "avgSessionDuration": 56.7,
+    "avgSessionDuration": 56.8,
     "bounceRate": 0.678,
     "pagesPerSession": 1.14
   },
@@ -17,7 +17,7 @@
   },
   "channels": {
     "sessions": {
-      "organic": 3085,
+      "organic": 3087,
       "direct": 5198,
       "social": 62,
       "ai_assistant": 250,
@@ -26,8 +26,8 @@
       "other": 0
     },
     "pct": {
-      "organic": 35.6,
-      "direct": 60.1,
+      "organic": 35.7,
+      "direct": 60,
       "social": 0.7,
       "ai_assistant": 2.9,
       "referral": 0.7,
@@ -44,12 +44,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1465
+      "sessions": 1466
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 938
+      "sessions": 939
     },
     {
       "source": "yahoo",
@@ -240,8 +240,8 @@
     },
     {
       "path": "/features/nagoya-unaju.html",
-      "pageViews": 107,
-      "sessions": 104
+      "pageViews": 108,
+      "sessions": 105
     }
   ],
   "cta": {
@@ -1178,7 +1178,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 8142,
+    "value": 8143,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
