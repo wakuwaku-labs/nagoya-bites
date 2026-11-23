@@ -39,7 +39,7 @@ function todayJst(now = new Date()) {
 }
 
 function parseArgs(argv) {
-  const a = { date: null, dryRun: false, forceLive: false, skipLiveCheck: false, json: false };
+  const a = { date: null, dryRun: false, forceLive: false, skipLiveCheck: false, json: false, extraLong: false };
   for (let i = 0; i < argv.length; i++) {
     const k = argv[i];
     if (k === '--date') a.date = argv[++i];
@@ -47,6 +47,9 @@ function parseArgs(argv) {
     else if (k === '--force-live') a.forceLive = true;
     else if (k === '--skip-live-check') a.skipLiveCheck = true;
     else if (k === '--json') a.json = true;
+    // 手動の追加の長いポスト（ADR 0082・2026-11-23 本人「今本番投稿をしたい」）。data/x_post_drafts/<date>-long.json を
+    // 長いポストだけで1回送る。その日の投稿が済んでいても送り、断られてもスレッドには戻さない
+    else if (k === '--extra-long') a.extraLong = true;
     else throw new Error(`知らない引数: ${k}`);
   }
   if (a.date && !/^\d{4}-\d{2}-\d{2}$/.test(a.date)) throw new Error('--date は YYYY-MM-DD');
@@ -181,7 +184,7 @@ function topicExpOf(built) {
 }
 
 /** 結果を台帳・心拍に書く（live のときだけ呼ぶ）。 */
-function record(root, { date, entry, result, reason, text, textMode, draftReason, tweetId, errorClass, status, thread, experiment, plan, media, topicExp, longPost }) {
+function record(root, { date, entry, result, reason, text, textMode, draftReason, tweetId, errorClass, status, thread, experiment, plan, media, topicExp, longPost, extraLong }) {
   const now = new Date().toISOString();
   if (status) {
     const log = X.readLog(root);
@@ -196,6 +199,7 @@ function record(root, { date, entry, result, reason, text, textMode, draftReason
       ...(reason ? { reason } : {}),
       ...(thread ? { thread } : {}),
       ...(longPost ? { long_post: longPost } : {}),
+      ...(extraLong ? { extra_long: true } : {}),
       ...(experiment ? { experiment: experiment.experiment, url_variant: experiment.url_variant } : {}),
       ...(media ? { media: media.variant, media_reason: media.reason, ...(media.id ? { media_id: media.id } : {}) } : {}),
       ...(topicExp && topicExp.experiment_id ? { topic_experiment: topicExp.experiment_id, ...(experiment ? {} : { experiment: topicExp.experiment_id }) } : {}),
@@ -241,7 +245,9 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   out.slug = entry.slug;
 
   const log = X.readLog(root);
-  if (X.alreadyPosted(log, entry.slug)) return { ...out, result: 'already_posted', exitCode: 0 };
+  if (args.extraLong) {
+    if ((log.posts || []).some((p) => p.slug === entry.slug && p.extra_long && p.status === 'posted')) return { ...out, result: 'already_posted', exitCode: 0 };
+  } else if (X.alreadyPosted(log, entry.slug)) return { ...out, result: 'already_posted', exitCode: 0 };
 
   const articlePath = path.join(root, 'journal', `${entry.slug}.html`);
   if (!fs.existsSync(articlePath)) {
@@ -260,7 +266,8 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   const variant = X.urlVariantFor(date, policy);
   if (variant) out.experiment = variant;
   const noUrl = !!variant && variant.url_variant === 'no_url';
-  for (const c0 of X.postCandidates({ entry, policy, date, html: articleHtml, root })) {
+  for (const c0 of X.postCandidates({ entry, policy, date: args.extraLong ? `${date}-long` : date, html: articleHtml, root })) {
+    if (args.extraLong && c0.mode !== 'draft') continue; // 追加の長いポストは保存した文面だけ
     const c = noUrl && c0.text ? { ...c0, text: X.stripUrl(c0.text), weighted: X.weightedLength(X.stripUrl(c0.text)) } : c0;
     const failures = c.failures || X.validatePost(c.text, { entry, policy, articleText, root, recentTexts: recent, allowNoUrl: noUrl });
     if (!failures.length) { built = c; break; }
@@ -274,6 +281,10 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
     const last = rejected[rejected.length - 1] || { reason: 'no_candidate' };
     if (mode === 'live') record(root, { date, entry, result: 'blocked', reason: last.reason, text: last.text, status: 'blocked' });
     return { ...out, result: 'blocked', reason: last.reason, ...(last.text ? { text: last.text } : {}), exitCode: 1 };
+  }
+  if (args.extraLong && !X.longPostText(built, policy)) {
+    if (mode === 'live') record(root, { date, entry, result: 'blocked', reason: 'extra_long_not_available', text: built.text, status: 'blocked', extraLong: true });
+    return { ...out, result: 'blocked', reason: 'extra_long_not_available', exitCode: 1 };
   }
   out.text = built.text;
   out.weighted = built.weighted;
@@ -365,12 +376,17 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
       out.text = longText;
       out.longPost = longPost;
       delete out.replies; // 続きは本文の中に入れた
-      record(root, { date, entry, result: 'posted', text: longText, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, tweetId: lid, status: 'posted', longPost });
+      record(root, { date, entry, result: 'posted', text: longText, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, tweetId: lid, status: 'posted', longPost, extraLong: args.extraLong });
       return { ...out, result: 'posted', tweetId: lid, tweetUrl: `https://x.com/i/web/status/${lid}`, exitCode: 0 };
     }
     const ld = typeof lr.body === 'string' ? lr.body.slice(0, 200) : JSON.stringify(lr.body).slice(0, 200);
     longPost = { tried: true, ok: false, reason: `http_${lr.status}: ${ld}`.slice(0, 300) };
     out.longPost = longPost;
+    if (args.extraLong) {
+      const errorClass = X.classifyError(lr.status, lr.body);
+      record(root, { date, entry, result: 'failed', reason: longPost.reason, errorClass, text: longText, textMode: built.mode, draftReason, media, status: 'failed', longPost, extraLong: true });
+      return { ...out, result: 'failed', reason: longPost.reason, errorClass, exitCode: 1 };
+    }
     if (X.classifyError(lr.status, lr.body) === 'duplicate') {
       record(root, { date, entry, result: 'duplicate', reason: longPost.reason, errorClass: 'duplicate', text: longText, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, status: 'duplicate', longPost });
       return { ...out, result: 'duplicate', reason: longPost.reason, errorClass: 'duplicate', exitCode: 0 };

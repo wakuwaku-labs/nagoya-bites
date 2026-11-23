@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-11-23T10:30:26.434Z",
+  "generatedAt": "2026-11-23T12:00:08.692Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 8135,
-    "pageViews": 9714,
-    "sessions": 8562,
-    "avgSessionDuration": 56.6,
+    "activeUsers": 8150,
+    "pageViews": 9732,
+    "sessions": 8567,
+    "avgSessionDuration": 56.8,
     "bounceRate": 0.678,
-    "pagesPerSession": 1.13
+    "pagesPerSession": 1.14
   },
   "dailyReference": {
     "date": "2026-11-21",
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 3079,
-      "direct": 5198,
+      "organic": 3094,
+      "direct": 5201,
       "social": 62,
       "ai_assistant": 250,
       "referral": 61,
@@ -26,8 +26,8 @@
       "other": 0
     },
     "pct": {
-      "organic": 35.6,
-      "direct": 60.1,
+      "organic": 35.7,
+      "direct": 60,
       "social": 0.7,
       "ai_assistant": 2.9,
       "referral": 0.7,
@@ -39,22 +39,22 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 5170
+      "sessions": 5173
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1461
+      "sessions": 1472
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 937
+      "sessions": 940
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 643
+      "sessions": 644
     },
     {
       "source": "chatgpt.com",
@@ -230,8 +230,8 @@
     },
     {
       "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
-      "pageViews": 168,
-      "sessions": 159
+      "pageViews": 169,
+      "sessions": 160
     },
     {
       "path": "/features/nagoya-miso-nikomi-udon.html",
@@ -240,8 +240,8 @@
     },
     {
       "path": "/features/nagoya-unaju.html",
-      "pageViews": 107,
-      "sessions": 104
+      "pageViews": 108,
+      "sessions": 105
     }
   ],
   "cta": {
@@ -311,7 +311,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.7,
+    "ctaClickRate_organic": 9.6,
     "ctaClickRate_direct": 0.9,
     "ctaClickRate_social": 25.8,
     "byPage": [
@@ -1178,7 +1178,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 8135,
+    "value": 8150,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,

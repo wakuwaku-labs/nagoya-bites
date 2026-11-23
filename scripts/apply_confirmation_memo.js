@@ -4,7 +4,9 @@
  * scripts/apply_confirmation_memo.js — 検索流入のある特集6本に「確認メモ」の区画を足す（基本方針 S5-2・ADR 0069）
  *
  * 各特集の掲載店を data/stores.json（ホットペッパーID で照合）の項目と1店ずつ突き合わせ、
- * 「確認できたこと／未確認」を確認日つきで出す。データに無い項目は「未確認」と書く（推測で埋めない）。
+ * 「確認できたこと」を確認日つきで出す。データに無い項目は出さない（推測で埋めない）。
+ * 2026-11-23 本人の依頼「確認できない場合は、表示しないで欲しい」（Ondine #2576）で、「未確認」の行と、
+ * 掲載データに見つからない店・確認できた項目が1つも無い店の欄を出さないようにした（番号は記事の店の順のまま）。
  * 題・URL・冒頭・店カードには触れず、最後の店カードの後ろにある次の見出しの直前へ、独立した区画
  * （<details class="nb-confirm-memo" data-nb-confirm-memo>）を1つだけ足す。2回当てても結果は同じ（冪等）。
  *
@@ -111,19 +113,18 @@ function buildBlock(html, byId) {
   const items = ids.map((id, i) => {
     const s = byId.get(id);
     const num = String(i + 1).padStart(2, '0');
-    if (!s) return `<div class="nb-confirm-store"><p class="nb-confirm-name">${num}　（掲載データに見つかりません）</p><ul class="nb-confirm-list"><li class="nb-confirm-un"><span class="nb-confirm-k">未確認</span>この店の掲載データ</li></ul></div>`;
+    if (!s) return '';
     const all = rowsFor(s);
     const rows = all.filter(([, v]) => v !== UNCONFIRMED).map(([k, v]) => `<li><span class="nb-confirm-k">${esc(k)}</span>${esc(v)}</li>`).join('');
-    const un = all.filter(([, v]) => v === UNCONFIRMED).map(([k]) => k);
     const d = has(s['条件取得日']) ? s['条件取得日'] : UNCONFIRMED;
     const dateLi = d === UNCONFIRMED ? '' : `<li><span class="nb-confirm-k">確認日</span>${esc(d)}</li>`;
-    const unLi = un.length || d === UNCONFIRMED ? `<li class="nb-confirm-un"><span class="nb-confirm-k">未確認</span>${esc(un.concat(d === UNCONFIRMED ? ['確認日'] : []).join('・'))}</li>` : '';
-    return `<div class="nb-confirm-store"><p class="nb-confirm-name">${num}　${esc(s['店名'])}</p><ul class="nb-confirm-list">${rows}${dateLi}${unLi}</ul></div>`;
-  }).join('\n');
+    if (!rows) return '';
+    return `<div class="nb-confirm-store"><p class="nb-confirm-name">${num}　${esc(s['店名'])}</p><ul class="nb-confirm-list">${rows}${dateLi}</ul></div>`;
+  }).filter(Boolean).join('\n');
   return `${START}
 <details class="nb-confirm-memo" data-nb-confirm-memo>
-<summary>確認メモ — 掲載店ごとの「確認できたこと」と「未確認のこと」</summary>
-<p class="nb-confirm-lead">確認先は、ホットペッパーグルメの掲載情報（取得日 ${esc(latest)} 時点）と Google の店舗情報です。AIが掲載データと突き合わせた記録で、店に問い合わせたものではありません。載っていない項目は「未確認」と書き、推測では埋めていません。お通し・席料・喫煙・予約は変わることがあるので、行く前に店へ確かめてください。</p>
+<summary>確認メモ — 掲載店ごとの「確認できたこと」</summary>
+<p class="nb-confirm-lead">確認先は、ホットペッパーグルメの掲載情報${latest === UNCONFIRMED ? '' : `（取得日 ${esc(latest)} 時点）`}と Google の店舗情報です。AIが掲載データと突き合わせた記録で、店に問い合わせたものではありません。確認できた項目だけを載せ、推測では埋めていません。お通し・席料・喫煙・予約は変わることがあるので、行く前に店へ確かめてください。</p>
 ${items}
 <p class="nb-note nb-confirm-foot">毎月の掲載店の入れ替えのあと、確認メモを作り直すまでは、入れ替わった店の分が載っていないことがあります。</p>
 <style>
@@ -135,7 +136,6 @@ ${items}
 .nb-confirm-memo .nb-confirm-list{list-style:none;padding:0;margin:0;font-size:var(--fs-xs);line-height:1.8;color:var(--muted);}
 .nb-confirm-list li{display:flex;gap:.6em;}
 .nb-confirm-k{flex:0 0 6.8em;white-space:nowrap;color:var(--dim);}
-.nb-confirm-un{color:var(--dim);}
 </style>
 </details>
 ${END}`;

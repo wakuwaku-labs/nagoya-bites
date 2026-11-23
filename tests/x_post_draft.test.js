@@ -543,3 +543,46 @@ test('書き手: 長いポストの日は続きの件数と小見出しの指示
   const p3 = W.buildPrompt({ root: fixture({ pol: threadPolicy }), entry, material: '記事', previous: null, plan: null, topicExp: null });
   assert.ok(!p3.includes('## 今日は長いポストで出す'));
 });
+
+test('投稿: 追加の長いポスト（--extra-long）は、その日が投稿済みでも <date>-long.json を長いポストだけで1回送る。断られたらスレッドに戻さない', async () => {
+  const root = fixture({ draft: GOOD, pol: longPolicy });
+  let f = fakeFetch(root);
+  assert.strictEqual((await postRun({}, { root, env: ENV, fetchImpl: f, now: NOW })).result, 'posted');
+  // 本文がその日の投稿と同じだと30日の重複の検査で止まるので、別の本文にする
+  const EXTRA = { ...FIVE, body: '【池下】イタリアンの「QQ」で、ワインを選ぶ\n\n棚のワインを、奥の席で開けられる。' };
+  fs.writeFileSync(path.join(root, `data/x_post_drafts/${entry.date}-long.json`), JSON.stringify(EXTRA));
+  // 断られたら失敗のまま（スレッドで送らない）
+  f = fakeFetch(root);
+  f.rejectLong = 400;
+  let r = await postRun({ extraLong: true }, { root, env: ENV, fetchImpl: f, now: NOW });
+  assert.strictEqual(r.result, 'failed', JSON.stringify(r.rejected || r.reason));
+  assert.strictEqual(f.sent.length, 1);
+  // 通れば1回だけ送り、台帳に extra_long を付ける。2回目は送らない
+  f = fakeFetch(root);
+  r = await postRun({ extraLong: true }, { root, env: ENV, fetchImpl: f, now: NOW });
+  assert.strictEqual(r.result, 'posted');
+  assert.strictEqual(f.sent.length, 1);
+  assert.ok(f.sent[0].includes(FIVE.replies[4]));
+  const rows = JSON.parse(fs.readFileSync(path.join(root, 'data/x_post_log.json'), 'utf8')).posts.filter((p) => p.status === 'posted');
+  assert.strictEqual(rows.length, 2);
+  assert.strictEqual(rows[1].extra_long, true);
+  f = fakeFetch(root);
+  assert.strictEqual((await postRun({ extraLong: true }, { root, env: ENV, fetchImpl: f, now: NOW })).result, 'already_posted');
+  assert.strictEqual(f.sent.length, 0);
+});
+
+// ── 箇条書きの見出し（2026-11-23 本人「どこが店舗名か、羅列している情報がどんな情報か分からない」）──
+test('見やすさ: 箇条書きが3行以上なら各行に「予算：」のような見出しが要る（2行までは不要）', () => {
+  const labeled = '【青二才 今池本店】\n豚の串焼き「やきとん」の居酒屋\nこんな時に：安く短く飲みたい日\n・場所：今池駅から徒歩1分\n・営業：昼2時〜夜中3時（年中無休）\n・予算：1人1,000〜2,500円ほど\n・たばこ：全席で吸える\n※席料あり';
+  assert.deepStrictEqual(X.layoutIssues(labeled), []);
+  const bare = '【安く短く飲むなら】\n「青二才 今池本店」（今池駅から徒歩1分）\n・豚の串焼き「やきとん」の店\n・昼の2時から夜中の3時まで、年中無休\n・予算：1人1,000〜2,500円ほど';
+  assert.deepStrictEqual(X.layoutIssues(bare), ['layout_bullet_no_label:3', 'layout_bullet_no_label:4']);
+  // 見出しに数字・かっこは入れない（「・1人：」は見出しとみなさない）
+  assert.deepStrictEqual(X.layoutIssues('・1人：2,000円\n・営業：夜\n・席：10席'), ['layout_bullet_no_label:1']);
+  // 2行までは見出しなしでよい（既存の短い返信）
+  assert.deepStrictEqual(X.layoutIssues('池下の「QQ」の営業\n・ランチは12〜14時の2時間\n・ディナーは月・木が休み'), []);
+});
+
+test('見やすさ: 本文の「・「店名」：ひとこと」は見出しつきとみなす', () => {
+  assert.deepStrictEqual(X.layoutIssues('・「青二才 今池本店」：やきとん\n・「KITSUNE」：とり天\n・「サクランボ」：半立ち飲み'), []);
+});

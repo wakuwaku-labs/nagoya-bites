@@ -75,22 +75,31 @@ function unknownCount(input, std = loadStandard()) {
 function liList(arr) { return (arr || []).map((s) => String(s || '').trim()).filter(Boolean).map((s) => `<li>${esc(s)}</li>`).join(''); }
 
 /**
- * 「先に結論」（3行）。class に insider-box を残す: X（x_post.js）・note（note_draft.js）が箇条書きを引用元にしているため。
- * 向く人・向かない人・来店前にいちばん確かめたい点（分からなかった点の数つき）を1つの箱にまとめる（箱を増やさない）。
- * 向く人は conclusion.fit、無ければ fit_for をつなぐ。向かない人は not_fit_for。分からなかった点の数は checklist から数える。
+ * 「ここがポイント」（3行・2026-11-23 本人の依頼で「先に結論」から改名・Ondine #2576）。
+ * class に insider-box を残す: X（x_post.js）・note（note_draft.js）が箇条書きを引用元にしているため。
+ * 向く人・向かない人・来店前に確かめたい点を1つの箱にまとめる（箱を増やさない）。向く人は conclusion.fit、無ければ fit_for をつなぐ。
+ * 印（★・◎・✕・！）と色は nb.css の ::before で付け、HTML の文字には入れない（X・note に記号が混ざらない）。
+ * 確認できなかった点の数は書かない（本人の依頼「確認できない場合は、表示しないで欲しい」）。
  * 向く人も確かめたい点も無ければ空（古い入力は従来の「知っておきたいポイント」のまま）。
  */
+const POINT_TITLE = 'ここがポイント';
+const POINT_KINDS = { fit: '向く人', not: '向かない人', check: '来店前に確かめたい点' };
+
+/** 「ここがポイント」の箱。parts は { fit, not, check }（エスケープ前の文字）。どれも無ければ空 */
+function pointBoxHtml(parts) {
+  const items = ['fit', 'not', 'check'].map((k) => [k, String((parts && parts[k]) || '').trim()]).filter(([, t]) => t);
+  if (!items.length) return '';
+  const lis = items.map(([k, t]) => `<li class="nb-point nb-point-${k}"><span class="nb-point-label">${POINT_KINDS[k]}</span><span class="nb-point-sep">: </span>${esc(t)}</li>`).join('');
+  return `<div class="insider-box nb-jbox nb-jconclusion"><p class="insider-title">${POINT_TITLE}</p><ul>${lis}</ul></div>`;
+}
+
 function buildConclusion(input, std = loadStandard()) {
   const c = (input && input.conclusion) || {};
   const fit = String(c.fit || '').trim() || (input && input.fit_for || []).map((x) => String(x || '').trim()).filter(Boolean).join('／');
   if (!fit && !c.check_first) return '';
   const not = ((input && input.not_fit_for) || []).map((x) => String(x || '').trim()).filter(Boolean).join('／');
-  const unknown = unknownCount(input, std);
-  const lines = [];
-  if (fit) lines.push(`向く人: ${fit}`);
-  if (not) lines.push(`向かない人: ${not}`);
-  if (c.check_first) lines.push(`来店前にいちばん確かめたい点: ${String(c.check_first).trim().replace(/[。.]$/, '')}。分からなかった点は${unknown}点で、項目ごとに下の一覧に書いています。`);
-  return `<div class="insider-box nb-jbox nb-jconclusion"><p class="insider-title">先に結論</p><ul>${liList(lines)}</ul></div>`;
+  const check = c.check_first ? `${String(c.check_first).trim().replace(/[。.]$/, '')}。` : '';
+  return pointBoxHtml({ fit, not, check });
 }
 
 function rowText(r, std) {
@@ -100,17 +109,61 @@ function rowText(r, std) {
   return `${std.unconfirmed.notFoundText}${tail ? `（${tail}）` : ''}。予約時に店へ確認を`;
 }
 
-/** 「来店前に確かめたいこと」。定型7項目を1項目1行。確認できた／確認できなかったは言葉で書く（色だけで区別しない） */
+/**
+ * 「来店前に確かめたいこと」。定型7項目のうち、確認できた行だけを1項目1行で出す。
+ * 確認できなかった行は出さない（2026-11-23 本人の依頼「確認できない場合は、表示しないで欲しい」・Ondine #2576。
+ * それまでは「確認できなかった」の札つきで出していた）。確認できた行が1つも無ければ欄ごと出さない。
+ * 未確認の行は書き手の入力と事実台帳には残る（検査・見直しに使う）。読者の画面にだけ出さない。
+ */
+/** 確認できなかったことを表す言い回し（確認できた行の値の中に混ざった部分も外す） */
+const UNCONFIRMED_RE = /記載なし|記載が(?:無|な)|見つからな|見つからず|確認できな|確認できず|分からな|わからな|不明|未確認/;
+
+/** 括弧の外の区切り（「。」か「／」）で分ける。括弧の中の「／」では分けない */
+function splitTop(text, sep) {
+  const out = [];
+  let depth = 0;
+  let cur = '';
+  for (const ch of String(text)) {
+    if ('（(「『【'.includes(ch)) depth++;
+    else if ('）)」』】'.includes(ch)) depth = Math.max(0, depth - 1);
+    if (depth === 0 && ch === sep) { out.push(sep === '。' ? cur + ch : cur); cur = ''; } else cur += ch;
+  }
+  if (cur) out.push(cur);
+  return out;
+}
+
+/**
+ * 確認できた行の値から「確認できなかった」部分を外す（純関数・Ondine #2576 の続き）。
+ * 文を「。」、文の中を「／」で分け、確認できなかった言い回しを含む部分を落とす。末尾の出典「（…確認）」は残った部分の後ろに戻す。
+ * 何も残らなければ空文字（その行は出さない）。
+ * 例: 「十八番舟はお通し480円。ほかの5店は記載が見つからなかった（各店のホットペッパー・11月19日確認）」→「十八番舟はお通し480円（各店のホットペッパー・11月19日確認）」
+ */
+function stripUnconfirmedText(text) {
+  let s = String(text || '').trim();
+  let tail = '';
+  const tm = /(（[^（）]*確認[^（）]*）)[。.]?$/.exec(s);
+  if (tm) { tail = tm[1]; s = s.slice(0, tm.index); }
+  // 括弧の中だけが未確認なら括弧だけ外す（例「和蔵 当日と人数の減少で発生（額の記載なし）」→「和蔵 当日と人数の減少で発生」）
+  s = s.replace(/（[^（）]*）/g, (p) => (UNCONFIRMED_RE.test(p) ? '' : p));
+  const body = splitTop(s, '。').map((sent) => {
+    const end = /。$/.test(sent) ? '。' : '';
+    const parts = splitTop(sent.replace(/。$/, ''), '／').filter((x) => x.trim() && !UNCONFIRMED_RE.test(x));
+    return parts.length ? parts.join('／') + end : '';
+  }).join('').trim();
+  if (!body) return '';
+  return tail ? body.replace(/[。.]$/, '') + tail : body;
+}
+
 function buildChecklist(input, std = loadStandard()) {
   const has = input && ((Array.isArray(input.checklist) && input.checklist.length) || input.conclusion);
   if (!has) return '';
   const { rows, extras } = normalizeChecklist(input.checklist, std);
-  const li = (r) => {
-    // 札は確認できなかった行だけ（全行に付けると目立たない）。確認できた行は項目名と値だけ
-    const flag = r.status === 'confirmed' ? '' : ' <span class="nb-check-state">確認できなかった</span>';
-    return `<li><span class="nb-check-name">${esc(r.label)}</span>${flag}: ${esc(rowText(r, std))}</li>`;
-  };
-  return `<details class="nb-jbox nb-check" open><summary>来店前に確かめたいこと</summary><ul>${rows.concat(extras).map(li).join('')}</ul></details>`;
+  // 確認できた行だけ。値の中に混ざった「記載なし」などの部分も外し、何も残らない行は出さない
+  const shown = rows.concat(extras).filter((r) => r.status === 'confirmed')
+    .map((r) => ({ label: r.label, text: stripUnconfirmedText(rowText(r, std)) })).filter((r) => r.text);
+  if (!shown.length) return '';
+  const li = (r) => `<li><span class="nb-check-name">${esc(r.label)}</span>: ${esc(r.text)}</li>`;
+  return `<details class="nb-jbox nb-check" open><summary>来店前に確かめたいこと</summary><ul>${shown.map(li).join('')}</ul></details>`;
 }
 
 /** 「向く人・向かない人」。両方空なら出さない */
@@ -142,7 +195,7 @@ function photoKindLabel(input) {
 function judgementWarnings(input, std = loadStandard()) {
   const w = [];
   if (!input) return w;
-  if (!(input.conclusion && (input.conclusion.fit || input.conclusion.check_first))) w.push('「先に結論」（conclusion.fit / check_first）がありません');
+  if (!(input.conclusion && (input.conclusion.fit || input.conclusion.check_first))) w.push('「ここがポイント」（conclusion.fit / check_first）がありません');
   const { rows } = normalizeChecklist(input.checklist, std);
   rows.filter((r) => r.status === 'missing').forEach((r) => w.push(`「来店前に確かめたいこと」の「${r.label}」が未記入です（確認できなければ status:unconfirmed と確認先・確認日を書く）`));
   rows.filter((r) => r.status !== 'missing').forEach((r) => { if (!r.source || !monthDayJa(r.checked)) w.push(`「${r.label}」に確認先または確認日がありません`); });
@@ -200,4 +253,4 @@ function readabilityWarnings(text, std = loadStandard()) {
   return { measure: r, warnings: w };
 }
 
-module.exports = { voice, measureReadability, readabilityWarnings, STANDARD_PATH, loadStandard, checklistItems, normalizeChecklist, statusBandText, buildStatusBand, unknownCount, buildConclusion, buildChecklist, buildFit, buildCorrections, photoKindLabel, judgementWarnings, monthDayJa };
+module.exports = { voice, measureReadability, readabilityWarnings, STANDARD_PATH, loadStandard, checklistItems, normalizeChecklist, statusBandText, buildStatusBand, unknownCount, buildConclusion, pointBoxHtml, POINT_TITLE, buildChecklist, stripUnconfirmedText, buildFit, buildCorrections, photoKindLabel, judgementWarnings, monthDayJa };

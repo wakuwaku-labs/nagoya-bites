@@ -40,6 +40,11 @@ on:
         type: boolean
         required: false
         default: false
+      extra_long:
+        description: '追加の長いポストを1回だけ送る（data/x_post_drafts/<date>-long.json・その日の投稿が済んでいても送り、断られてもスレッドに戻さない・ADR 0082）'
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -81,10 +86,12 @@ jobs:
           X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
           INPUT_DATE: ${{ github.event.inputs.date }}
           INPUT_FORCE_LIVE: ${{ github.event.inputs.force_live }}
+          INPUT_EXTRA_LONG: ${{ github.event.inputs.extra_long }}
         run: |
           ARGS=""
           if [ -n "$INPUT_DATE" ]; then ARGS="$ARGS --date $INPUT_DATE"; fi
           if [ "$INPUT_FORCE_LIVE" = "true" ]; then ARGS="$ARGS --force-live"; fi
+          if [ "$INPUT_EXTRA_LONG" = "true" ]; then ARGS="$ARGS --extra-long"; fi
           set +e
           node scripts/post_journal_to_x.js $ARGS
           echo "exit=$?" >> "$GITHUB_OUTPUT"
