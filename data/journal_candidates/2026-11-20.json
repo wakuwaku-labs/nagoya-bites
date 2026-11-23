@@ -1,0 +1,452 @@
+{
+  "date": "2026-11-20",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "伏見・錦の忘年会に鯖が看板の居酒屋『産直さばと青魚 伏見あおい』、冬コースと個室",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 95,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 6件 (時期,予約,価格帯,雰囲気,看板,名物) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 136字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「錦」+4",
+          "タイトルにシーン語「個室」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "95点（自動公開ライン 100点）。主な不足: topicality -10 / recency -3 / writability -2",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "伏見の忘年会に九州・沖縄料理『イッパチ 伏見栄店』、駅1分の宴会席",
+      "verdict": "HOLD",
+      "total": 54,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 15日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 122字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "伏見『産直さばと青魚 伏見あおい』少人数の忘年会、2名からの冬コースと掘りごたつ席",
+      "verdict": "HOLD",
+      "total": 53,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 8,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 15日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (予約) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 116字 +4",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「忘年会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "栄・錦の忘年会に『ネオ炉端 道南農林水産部』、北海道の炉端と100名以上の宴会",
+      "verdict": "HOLD",
+      "total": 52,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 15日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 105字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "伏見の忘年会に海鮮居酒屋『さかなやま 本場 伏見店』、駅1分で予算に合わせたコース",
+      "verdict": "HOLD",
+      "total": 39,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 0,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 15日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）",
+          "匿名運営違反検出（固有名+役職）→ -15"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 107字 +4",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": null,
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "95点（自動公開ライン 100点）。主な不足: topicality -10 / recency -3 / writability -2",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "伏見・錦の忘年会に鯖が看板の居酒屋『産直さばと青魚 伏見あおい』、冬コースと個室",
+      "lead_draft": "伏見駅から歩いて2分の『産直さばと青魚 伏見あおい』は、鯖をはじめ青魚を専門に出す居酒屋です。12月1日から冬のコースに切り替わり、料理は1人5,700円から。2名から頼めて、個室もあります。忘年会を任された人が予約の前に知っておきたい点を、店の掲載情報からまとめました。",
+      "angle": "鯖が看板・名物の青魚専門店を、忘年会の時期に予約する人向けに、冬コースの価格帯・個室と掘りごたつ席の雰囲気・席の時間150分・年末の休業日を整理する",
+      "main_store": {
+        "name": "産直さばと青魚 伏見あおい",
+        "id": "J001226017",
+        "area": "伏見",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "Job総研『2026年 忘年会意識調査』（パーソルキャリア・PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000291.000013597.html",
+          "date": "2026-11-16"
+        },
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "ホットペッパー 産直さばと青魚 伏見あおい コース一覧",
+          "url": "https://www.hotpepper.jp/strJ001226017/course/",
+          "date": "2026-10-16"
+        },
+        {
+          "label": "ホットペッパー 産直さばと青魚 伏見あおい 店舗情報",
+          "url": "https://www.hotpepper.jp/strJ001226017/",
+          "date": "2025-12-20"
+        },
+        {
+          "label": "食べログ 産直さばと青魚 伏見あおい",
+          "url": "https://tabelog.com/aichi/A2301/A230102/23072428/"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "伏見『産直さばと青魚 伏見あおい』少人数の忘年会、2名からの冬コースと掘りごたつ席",
+      "lead_draft": "伏見駅近くの青魚専門の居酒屋『産直さばと青魚 伏見あおい』は、12月の冬コースを2名から受け付けています。4名の掘りごたつ席や6名の個室もあり、部署の小さな忘年会に向く店です。予算の目安と予約の締切を、店の掲載情報からまとめました。",
+      "angle": "2〜6人の少人数の忘年会に絞り、2名から頼めるコース・掘りごたつ席と個室の人数・予約の締切（前日17時）を整理する",
+      "main_store": {
+        "name": "産直さばと青魚 伏見あおい",
+        "id": "J001226017",
+        "area": "伏見",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "ホットペッパー 産直さばと青魚 伏見あおい コース一覧",
+          "url": "https://www.hotpepper.jp/strJ001226017/course/",
+          "date": "2026-10-16"
+        },
+        {
+          "label": "ホットペッパー 産直さばと青魚 伏見あおい 店舗情報",
+          "url": "https://www.hotpepper.jp/strJ001226017/",
+          "date": "2025-12-20"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "伏見の忘年会に九州・沖縄料理『イッパチ 伏見栄店』、駅1分の宴会席",
+      "lead_draft": "伏見駅10番出口から1分の『九州 沖縄料理 イッパチ 伏見栄店』は、九州と沖縄の料理を出す居酒屋です。70〜80名の宴会に対応しており、大人数の忘年会の候補になります。コースの予算と席の条件をホットペッパーの掲載情報から確かめる予定の候補です。",
+      "angle": "大人数の忘年会向けに、宴会の席数と駅からの近さ、コースの予算を整理する",
+      "main_store": {
+        "name": "九州　沖縄料理　イッパチ　伏見栄店",
+        "id": "J004558935",
+        "area": "伏見",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "ホットペッパー 九州 沖縄料理 イッパチ 伏見栄店",
+          "url": "https://www.hotpepper.jp/strJ004558935/"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "伏見の忘年会に海鮮居酒屋『さかなやま 本場 伏見店』、駅1分で予算に合わせたコース",
+      "lead_draft": "伏見駅6番出口からすぐの『さかなやま 本場 伏見店』は、海鮮が中心の居酒屋です。予算に合わせたコースの相談ができると掲載されており、50〜60名の宴会にも対応します。忘年会で魚料理を出したい幹事さん向けの候補です。",
+      "angle": "予算相談ができる海鮮居酒屋として、宴会の人数とコースの組み方を整理する",
+      "main_store": {
+        "name": "さかなやま 本場 伏見店",
+        "id": "J001176955",
+        "area": "伏見",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "ホットペッパー さかなやま 本場 伏見店",
+          "url": "https://www.hotpepper.jp/strJ001176955/"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "栄・錦の忘年会に『ネオ炉端 道南農林水産部』、北海道の炉端と100名以上の宴会",
+      "lead_draft": "栄駅と伏見駅の間にある『ネオ炉端 道南農林水産部』は、北海道の食材を炉端で焼く居酒屋です。100名以上の宴会に対応しており、会社全体の忘年会の候補になります。お通しの有無やコースの予算を確かめる予定の候補です。",
+      "angle": "100名以上の大きな忘年会向けに、宴会の席数とお通し・コース予算を整理する",
+      "main_store": {
+        "name": "毎日!北海道物産展 ネオ炉端 道南農林水産部 栄店",
+        "id": "J001041733",
+        "area": "栄",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "ホットペッパー ネオ炉端 道南農林水産部",
+          "url": "https://www.hotpepper.jp/strJ001041733/"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}
