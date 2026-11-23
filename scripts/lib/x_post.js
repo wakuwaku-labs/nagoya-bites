@@ -266,6 +266,33 @@ function checkDraft(draft, { entry, policy, articleText }) {
   return f;
 }
 
+/**
+ * 見やすさの検査（2026-11-23 本人「X が見にくい。もっと改行・「・」・かっこを使って見やすく」）。
+ * 返り値は直してほしい点の配列（空なら通過）。落としはせず、書き手が書き直させるのに使う（write_x_draft.js）。
+ *   layout_long_line:<行番号>   1行が X の数え方で maxLineWeighted（既定 64＝全角32字）を超える
+ *   layout_two_sentences:<行番号> 1行に「。」で終わる文が2つ以上ある（1文ごとに改行していない）
+ */
+function layoutIssues(text, { maxLineWeighted = 64 } = {}) {
+  const issues = [];
+  String(text || '').split('\n').forEach((raw, i) => {
+    const line = raw.trim();
+    if (!line) return;
+    if (weightedLength(line) > maxLineWeighted) issues.push(`layout_long_line:${i + 1}`);
+    if (/[。！？!?][^。！？!?」）)\s]/.test(line)) issues.push(`layout_two_sentences:${i + 1}`);
+  });
+  return issues;
+}
+
+/** 本文と返信の見やすさの検査をまとめる（返信は reply<番号>_ を頭に付ける）。 */
+function draftLayoutIssues(draft, policy) {
+  const max = ((policy && policy.draft) || {}).maxLineWeighted || 64;
+  const out = layoutIssues(draft && draft.body, { maxLineWeighted: max });
+  (Array.isArray(draft && draft.replies) ? draft.replies : []).forEach((r, i) => {
+    for (const x of layoutIssues(r, { maxLineWeighted: max })) out.push(`reply${i}_${x}`);
+  });
+  return out;
+}
+
 /** 返信の文面（保存した文面の replies。空白だけのものは除く）。 */
 function draftReplies(draft) {
   return (Array.isArray(draft && draft.replies) ? draft.replies : [])
@@ -491,7 +518,7 @@ const HUMAN_ACTION_ERRORS = new Set(['auth', 'forbidden', 'payment']);
 module.exports = {
   ROOT, LOG_REL, HEALTH_REL, HUMAN_ACTION_ERRORS,
   weightedLength, loadPolicy, articleUrl, utmUrl, areaHashtag, hashtagsFor, planWait, rewriteTitle, buildTemplatePost,
-  DRAFT_DIR, draftPath, loadDraft, checkDraft, draftReplies, validateReplies, buildDraftPost, insiderPoints, buildPointPosts, postCandidates,
+  DRAFT_DIR, draftPath, loadDraft, checkDraft, layoutIssues, draftLayoutIssues, draftReplies, validateReplies, buildDraftPost, insiderPoints, buildPointPosts, postCandidates,
   urlVariantFor, stripUrl, htmlToText, normalizeDigits, numbersMissingFromArticle, wordingViolations, validatePost,
   readLog, writeJson, alreadyPosted, recentTexts, oauthHeader, classifyError, pct,
 };

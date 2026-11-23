@@ -391,6 +391,15 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
       previous = { reason: `題材の実験の指定（1行目: ${topicExp.format.first_line}）を守っていない。${FIRST_LINE_JA[topicExp.format.first_line]}`, raw: JSON.stringify({ type: reply.type, body: reply.body, replies: reply.replies, evidence: reply.evidence }) };
       continue;
     }
+    // 見やすさ（改行・1行の長さ）が守れていなければ、最後の回でなければ書き直させる。
+    // 最後の回は通った案を使い、直せなかった点を layout_issues に残す（定型に戻すより読みやすいため）
+    const layout = failures.length ? [] : X.draftLayoutIssues(draft, policy);
+    if (layout.length && i < attempts) {
+      out.attempts[out.attempts.length - 1].reason = `layout:${layout.join(',')}`;
+      previous = { reason: `見やすさの決まりを守っていない（${layout.join(', ')}）。layout_long_line は1行が長すぎる行、layout_two_sentences は1行に2つの文がある行（行番号は1から）。1文ごとに改行し、1行は全角25字前後（長くても32字）に収め、並べる事実は「・」の箇条書きにする。事実と数字は変えない`, raw: JSON.stringify({ type: reply.type, body: reply.body, replies: reply.replies, evidence: reply.evidence }) };
+      continue;
+    }
+    if (layout.length) draft.layout_issues = layout;
     if (!failures.length) {
       out.draft = draft;
       out.post = X.buildDraftPost(draft, entry, policy).text;

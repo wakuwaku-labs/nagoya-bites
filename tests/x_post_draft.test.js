@@ -40,7 +40,7 @@ const ARTICLE_TEXT = X.htmlToText(ARTICLE);
 
 const GOOD = {
   version: 1, date: entry.date, slug: entry.slug, type: 'number',
-  body: '池下のQQは、棚のワインを奥の席で開けられる。\n抜栓料は20%・最低2,000円で、3,000円のボトルなら5,000円になる。飲み残しは持ち帰れる。',
+  body: '【池下】イタリアンの「QQ」\n\n棚のワインを、奥の席で開けられる。\n・抜栓料は20%（最低2,000円）\n・3,000円のボトルなら5,000円\n※飲み残しは持ち帰れる',
   evidence: ['抜栓料（ボトル価格の20%・最低2,000円）を足して奥で開ける', '3,000円のボトルなら5,000円になる'],
 };
 
@@ -359,8 +359,8 @@ test('見張り役: 送った投稿が3回続けて保存した文面を使っ�
 const WITH_REPLIES = {
   ...GOOD,
   replies: [
-    '池下のQQは、ランチが12〜14時の2時間。ディナーは月・木が休みで、祝日は営業。',
-    '池下のQQの抜栓料は最低2,000円なので、1万円までのボトルは一律で2,000円が乗る。',
+    '池下の「QQ」の営業\n・ランチは12〜14時の2時間\n・ディナーは月・木が休み（祝日は営業）',
+    '池下の「QQ」の抜栓料は最低2,000円。\n1万円までのボトルは、一律で2,000円が乗る。',
   ],
   evidence: [...GOOD.evidence, 'ランチは12〜14時の2時間で、ディナーは月・木が休み（祝日は営業）', '1万円までのボトルは一律で2,000円が乗る'],
 };
@@ -436,4 +436,37 @@ test('書き手: 返信つきの JSON を保存し、返信の検査に落ちた
   assert.ok(r.attempts[0].reason.includes('draft_reply_numbers_not_in_evidence'));
   const saved = JSON.parse(fs.readFileSync(path.join(root, `data/x_post_drafts/${entry.date}.json`), 'utf8'));
   assert.deepStrictEqual(saved.replies, WITH_REPLIES.replies);
+});
+
+// ── 見やすさ（2026-11-23 本人「X が見にくい。もっと改行・「・」・かっこを使って見やすく」）──────
+test('見やすさ: 1行が長すぎる行・1行に2つの文がある行を見つけ、改行と箇条書きで整えた文面は通す', () => {
+  assert.deepStrictEqual(X.layoutIssues(GOOD.body), []);
+  assert.deepStrictEqual(X.draftLayoutIssues(WITH_REPLIES, policy), []);
+  const packed = '予算5,000円で金山の忘年会なら。蜀漢では、飲み放題込みの5,000円（15品）が、料理だけの3,850円に飲み放題を足した6,050円より1,050円安い。';
+  assert.deepStrictEqual(X.layoutIssues(packed), ['layout_long_line:1', 'layout_two_sentences:1']);
+  // 「」）の前の句点・文末の句点・？で終わる行は1文
+  assert.deepStrictEqual(X.layoutIssues('看板は「もつ鍋みそ味」。\nひとりで行ける？\n予算は1人2,000円ほど。'), []);
+  assert.deepStrictEqual(X.layoutIssues('名駅の店。カウンターが中心。'), ['layout_two_sentences:1']);
+  // 返信は reply<番号>_ を付けて返す
+  assert.deepStrictEqual(X.draftLayoutIssues({ body: GOOD.body, replies: ['短い。', packed] }, policy), ['reply1_layout_long_line:1', 'reply1_layout_two_sentences:1']);
+});
+
+test('書き手: 見やすさが守れていなければ理由を添えて書き直させ、最後の回は通った案を使って直せなかった点を残す', async () => {
+  const packed = { ...GOOD, body: '池下のQQは、棚のワインを奥の席で開けられる。抜栓料は20%・最低2,000円で、3,000円のボトルなら5,000円になる。' };
+  let root = fixture();
+  let call = fakeClaude([reply(packed), reply(GOOD)]);
+  let r = await W.run({ date: entry.date, claudeBin: 'claude' }, { root, now: NOW, call });
+  assert.strictEqual(r.result, 'written');
+  assert.strictEqual(r.attempts.length, 2);
+  assert.match(r.attempts[0].reason, /^layout:layout_long_line:1,layout_two_sentences:1$/);
+  assert.ok(call.prompts[1].includes('見やすさの決まりを守っていない'));
+  assert.strictEqual(r.draft.layout_issues, undefined);
+  assert.ok(call.prompts[0].includes('### 見やすさの決まり'), '指示書に見やすさの決まりがある');
+
+  root = fixture();
+  call = fakeClaude([reply(packed)]);
+  r = await W.run({ date: entry.date, claudeBin: 'claude' }, { root, now: NOW, call });
+  assert.strictEqual(r.result, 'written', '見やすさだけなら定型に戻さない');
+  const saved = JSON.parse(fs.readFileSync(path.join(root, `data/x_post_drafts/${entry.date}.json`), 'utf8'));
+  assert.deepStrictEqual(saved.layout_issues, ['layout_long_line:1', 'layout_two_sentences:1']);
 });
