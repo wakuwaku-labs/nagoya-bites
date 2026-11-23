@@ -141,6 +141,8 @@ function buildDailyReport() {
   if (!data) data = fetchGA4Report(reportDate, reportDate);
   data.settled = settled;
   data = excludeDirectSpike(data, spike);
+  try { data.foreignDirect = fetchForeignDirectSessions(reportDate, reportDate); }
+  catch (e) { Logger.log('海外からの直接アクセスの回数の取得に失敗（断り書きなしで出す）: ' + e.message); }
   return { reportDate: reportDate, report: formatDailyReport(data, reportDate) };
 }
 
@@ -195,6 +197,8 @@ function sendWeeklyReport() {
   };
   const data = fetchWeek(startDate, endDate, spikeNow);
   const prevData = fetchWeek(prevStart, prevEnd, spikePrev);
+  try { data.foreignDirect = fetchForeignDirectSessions(startDate, endDate); }
+  catch (e) { Logger.log('海外からの直接アクセスの回数の取得に失敗（週次・断り書きなしで出す）: ' + e.message); }
   let referrals = null;
   try { referrals = fetchStoreReferrals(startDate, endDate); } catch (e) { Logger.log('店舗別送客の取得に失敗: ' + e.message); }
   // 信頼の指標（S7-1）。GitHub の data/trust_metrics.json を読む。取れなくてもレポート自体は止めない
@@ -260,12 +264,44 @@ function formatTrustMetrics(m, today) {
 
 // ─── GA4 Data API ───
 // 本番ドメインのみ集計（localhost / プレビュー環境を除外）
-const HOST_FILTER = {
+const SITE_HOST_FILTER = {
   filter: {
     fieldName: 'hostName',
     stringFilter: { matchType: 'EXACT', value: 'nagoya-bites.com' },
   },
 };
+// 海外（日本以外・国が不明を含む）からの「直接アクセス」。機械的な訪問（ボットなど）とみて、全部の数字から常に除く（2026-11-23・ADR 0066 追記）。
+// 2026-11-11 から続く直接アクセスの増加は、11/16〜22 の 1,515 回のうち 1,260 回がシンガポール・71 回が中国で、
+// パソコン・平均滞在 1 秒未満・直帰率 99%。11/17 以降は 1 日 75〜120 回に下がり、急増の判定（直前14日の中央値＋100回以上）を
+// すり抜けて、LINE の訪問者数・直帰率・滞在を膨らませていた。日本からの直接アクセスは 1 日 10 回前後で、こちらは残す。
+const FOREIGN_DIRECT_FILTER = {
+  andGroup: {
+    expressions: [
+      { filter: { fieldName: 'sessionSource', stringFilter: { matchType: 'EXACT', value: '(direct)' } } },
+      { notExpression: { filter: { fieldName: 'countryId', stringFilter: { matchType: 'EXACT', value: 'JP' } } } },
+    ],
+  },
+};
+const HOST_FILTER = {
+  andGroup: { expressions: [SITE_HOST_FILTER, { notExpression: FOREIGN_DIRECT_FILTER }] },
+};
+const FOREIGN_DIRECT_NOTE_MIN = 10;  // 除いた回数がこれ以上の日・週だけ本文で断る（数回の日に毎回書かない）
+
+// 期間中の「海外からの直接アクセス」の訪問回数（本文で断るため。除くのは HOST_FILTER が行う）
+function fetchForeignDirectSessions(startDate, endDate) {
+  const res = AnalyticsData.Properties.runReport({
+    dateRanges: [{ startDate: startDate, endDate: endDate }],
+    metrics: [{ name: 'sessions' }],
+    dimensionFilter: { andGroup: { expressions: [SITE_HOST_FILTER, FOREIGN_DIRECT_FILTER] } },
+  }, 'properties/' + GA4_PROPERTY_ID);
+  const r = res && res.rows && res.rows[0] && res.rows[0].metricValues;
+  return r ? (parseInt(r[0].value) || 0) : 0;
+}
+
+function foreignDirectNote(sessions, isWeekly) {
+  return (isWeekly ? 'この週' : 'この日') + 'の海外からの「直接アクセス」' + sessions +
+    '回は、機械的な訪問（ボットなど）とみて、すべての数字から除いています。';
+}
 
 // 予約行動として数えるリンク先（SEO-089・ISSUE-152）。正本は scripts/lib/reservation_exits.js の
 // RESERVATION_DOMAINS。GAS は require できないので複製し、tests/reservation_exits.test.js が同じ中身かを検査する。
@@ -1415,6 +1451,7 @@ function formatDailyReport(data, date) {
   msg += '━━━━━━━━━━━━━━━\n';
   msg += '🏁 一言: ' + overallVerdict(data, a) + (a.directSpike ? '（直接アクセスの急増を除いた判定）' : '') + '\n\n';
   if (a.directSpike) msg += '⚠️ ' + directSpikeNote(a.directSpike) + '\n\n';
+  if (data.foreignDirect >= FOREIGN_DIRECT_NOTE_MIN) msg += 'ℹ️ ' + foreignDirectNote(data.foreignDirect, false) + '\n\n';
 
   msg += '【サイトの人気度】\n';
   msg += '👥 訪問した人: ' + t.users + '人\n';
@@ -1546,6 +1583,7 @@ function formatWeeklyReport(data, prevData, startDate, endDate, referrals, trust
   msg += '🏁 一言: ' + overallVerdict(data, a) + (a.directSpike ? '（直接アクセスの急増を除いた判定）' : '') + '\n\n';
   if (a.directSpike) msg += '⚠️ ' + directSpikeNote(a.directSpike) + '\n\n';
   if (prevData.directSpike) msg += '※先週も ' + prevData.directSpike.dates.join('・') + ' の直接アクセスの急増を除いて比べています\n\n';
+  if (data.foreignDirect >= FOREIGN_DIRECT_NOTE_MIN) msg += 'ℹ️ ' + foreignDirectNote(data.foreignDirect, true) + '（先週の数字も同じく除いています）\n\n';
 
   msg += '【今週 vs 先週】\n';
   if ((a.directSpike && !a.directSpike.allExcluded) || (prevData.directSpike && !prevData.directSpike.allExcluded)) msg += '　※訪問回数・閲覧数・平均滞在・すぐ帰った率は直接アクセスの急増を除いた値（訪問者は除けません）\n';
