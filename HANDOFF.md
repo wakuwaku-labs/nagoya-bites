@@ -23,6 +23,10 @@ status: in_progress
 ## 試したが駄目だったこと
 - なし
 
+## 進捗（11-23 夜）
+- 既存の scripts/backfill_journal.sh を env -i ＋ journal.env 読み込みで実行（11/20 実行中 → 次に 11/22）。ログ ~/nagoya-bites/.local-logs/backfill-<日付>.log。commit/push は自分で行う。
+- X は push 起点だと今日の日付しか見ない → 公開後 `gh workflow run x-post.yml -f date=<日付>`。
+
 ## 守るルール・判断メモ
 - 記事は CLAUDE.md の写真・実在検証・表現の決まり（業界人表現禁止）を守る。基準に届かない日は出さない（0069 決定6）→ 届かなければ本人に理由を報告。
 - 対話シェルから claude を呼ぶときは env -i（メモリ journal-manual-run-needs-clean-env）。
