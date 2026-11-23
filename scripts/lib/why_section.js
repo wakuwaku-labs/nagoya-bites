@@ -73,7 +73,7 @@ function appliesTo(relPath, html) {
   return null;
 }
 
-/** html に節を入れる（既にあれば置き換え＝冪等）。hub は art-lead の直後、feature は art-body の直後。 */
+/** html に節を入れる（既にあれば置き換え＝冪等）。hub は art-lead の直後、feature は本文の最初の見出しの直前。 */
 function insertWhy(html, block, kind) {
   const old = /<section class="nb-why"[\s\S]*?<\/section>/;
   if (old.test(html)) return html.replace(old, () => block);
@@ -82,17 +82,20 @@ function insertWhy(html, block, kind) {
     if (!m) return null;
     return html.slice(0, m.index + m[1].length) + '\n  ' + block + html.slice(m.index + m[1].length);
   }
+  // feature は、冒頭（題の下の要約・「ここがポイント」・選び方のメモ）を動かさないよう、本文の最初の見出しの直前に置く
+  // （冒頭＝題から最初の見出しまで。検索流入のある頁は冒頭を変えない・docs/plans/media-policy-2026-11）
   const k = '<div class="art-body">';
   const i = html.indexOf(k);
-  if (i >= 0) return html.slice(0, i + k.length) + '\n    ' + block + html.slice(i + k.length);
-  // art-body の無い型の特集は、最初の章見出しの前に置く
-  let j = html.indexOf('<h2 class="section-label">');
-  // それも無い型（ガイド型の特集）は、本文（<main>）の中の最初の見出しの前に置く。題・冒頭の文は動かさない
+  let j = i >= 0 ? html.indexOf('<h2', i) : -1;
+  if (j < 0) j = html.indexOf('<h2 class="section-label">');
+  // それも無い型（ガイド型の特集）は、本文（<main>）の中の最初の見出しの前
   if (j < 0) {
     const mi = html.indexOf('<main');
     j = mi >= 0 ? html.indexOf('<h2', mi) : -1;
   }
   if (j < 0) return null;
+  const ls = html.lastIndexOf('\n', j) + 1;
+  if (/^[ \t]*$/.test(html.slice(ls, j))) return html.slice(0, j) + block + '\n\n' + html.slice(ls);
   return html.slice(0, j) + block + '\n\n' + html.slice(j);
 }
 
