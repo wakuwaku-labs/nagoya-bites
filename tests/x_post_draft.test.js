@@ -585,4 +585,5 @@ test('見やすさ: 箇条書きが3行以上なら各行に「予算：」の�
 
 test('見やすさ: 本文の「・「店名」：ひとこと」は見出しつきとみなす', () => {
   assert.deepStrictEqual(X.layoutIssues('・「青二才 今池本店」：やきとん\n・「KITSUNE」：とり天\n・「サクランボ」：半立ち飲み'), []);
+  assert.deepStrictEqual(X.layoutIssues('・「青二才」（今池）：やきとん\n・「KITSUNE」（今池）：とり天\n・「つくつく」（今池）：焼き鳥'), []);
 });
