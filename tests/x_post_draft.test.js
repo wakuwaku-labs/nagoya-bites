@@ -15,6 +15,8 @@ process.env.SNS_ANALYZER_X_DIR = fs.mkdtempSync(path.join(os.tmpdir(), 'xdraft-n
 const REAL_ROOT = path.resolve(__dirname, '..');
 const realPolicy = X.loadPolicy(REAL_ROOT);
 const policy = { ...realPolicy, draft: { ...realPolicy.draft, generate: true, useInPost: true }, template: { points: true } };
+// スレッド（本文＋返信）で送る日の設定（長いポストを使わない）
+const threadPolicy = { ...policy, longPost: { enabled: false } };
 const entry = { slug: '2026-10-15-ikeshita-test', date: '2026-10-15', title: '池下のイタリアン「QQ」でデート、棚のワインと抜栓料20%', published_at: '2026-10-15T09:00:00+09:00' };
 
 const ARTICLE = `<html><head><meta property="og:image" content="https://img.example/a.jpg"></head><body>
@@ -153,6 +155,7 @@ function fakeFetch(root) {
       const b = JSON.parse(opts.body);
       sent.push(b.text);
       (fn.bodies = fn.bodies || []).push(b);
+      if (fn.rejectLong && X.weightedLength(b.text) > 280) return { status: fn.rejectLong, text: async () => JSON.stringify(fn.rejectBody || { detail: 'Your Tweet text is too long.' }), headers: new Map() };
       if (fn.failAt !== undefined && sent.length - 1 === fn.failAt) return { status: 403, text: async () => JSON.stringify({ title: 'Forbidden' }), headers: new Map() };
       return { status: 201, text: async () => JSON.stringify({ data: { id: String(900 + sent.length) } }), headers: new Map() };
     }
@@ -366,7 +369,7 @@ const WITH_REPLIES = {
 };
 
 test('返信: 数字がすべて引用にあり、長さ・URL・ハッシュタグが守られていれば通る。省いても通る', () => {
-  const c = (d) => X.checkDraft({ ...WITH_REPLIES, ...d }, { entry, policy, articleText: ARTICLE_TEXT });
+  const c = (d) => X.checkDraft({ ...WITH_REPLIES, ...d }, { entry, policy: threadPolicy, articleText: ARTICLE_TEXT });
   assert.deepStrictEqual(c({}), []);
   assert.deepStrictEqual(c({ replies: [] }), []);
   assert.deepStrictEqual(X.checkDraft(GOOD, { entry, policy, articleText: ARTICLE_TEXT }), [], '返信の無い文面（今までの形）も通る');
@@ -387,7 +390,7 @@ test('返信: 使わない言い方・記事に無い数字は送る前の検査
 });
 
 test('投稿: 本文に続けて返信を前の投稿にぶら下げ、台帳に残す', async () => {
-  const root = fixture({ draft: WITH_REPLIES });
+  const root = fixture({ draft: WITH_REPLIES, pol: threadPolicy });
   const f = fakeFetch(root);
   const r = await postRun({}, { root, env: ENV, fetchImpl: f, now: NOW });
   assert.strictEqual(r.result, 'posted');
@@ -402,7 +405,7 @@ test('投稿: 本文に続けて返信を前の投稿にぶら下げ、台帳に
 });
 
 test('投稿: 返信の途中で失敗しても本文は posted のまま（二重に送らない）。失敗は台帳と心拍に残る', async () => {
-  const root = fixture({ draft: WITH_REPLIES });
+  const root = fixture({ draft: WITH_REPLIES, pol: threadPolicy });
   const f = fakeFetch(root);
   f.failAt = 2;
   const r = await postRun({}, { root, env: ENV, fetchImpl: f, now: NOW });
@@ -469,4 +472,74 @@ test('書き手: 見やすさが守れていなければ理由を添えて書き
   assert.strictEqual(r.result, 'written', '見やすさだけなら定型に戻さない');
   const saved = JSON.parse(fs.readFileSync(path.join(root, `data/x_post_drafts/${entry.date}.json`), 'utf8'));
   assert.deepStrictEqual(saved.layout_issues, ['layout_long_line:1', 'layout_two_sentences:1']);
+});
+
+// ── 長いポスト（2026-11-23 本人「もっと長く・1つのスレッドに」→ X プレミアムのベーシック）────────────
+const longPolicy = { ...policy, longPost: { enabled: true, maxSections: 5, maxWeighted: 3000 } };
+const FIVE = {
+  ...WITH_REPLIES,
+  replies: [...WITH_REPLIES.replies, '【行く前に】\n池下の「QQ」は、ディナーが月・木の休み。', '【こんな時に】\n池下でワインを選ぶデートに。', '【席】\n池下の「QQ」は、食材店の奥にある。'],
+};
+
+test('長いポスト: 本文と続きを空行で区切って1つにし、URL とハッシュタグは最後。続きの上限は maxSections', () => {
+  const b = X.buildDraftPost(WITH_REPLIES, entry, longPolicy);
+  const t = X.longPostText(b, longPolicy);
+  assert.ok(t.startsWith(`${WITH_REPLIES.body}\n\n${WITH_REPLIES.replies[0]}\n\n${WITH_REPLIES.replies[1]}\n\nhttps://nagoya-bites.com/journal/`));
+  assert.strictEqual(X.longPostText(b, threadPolicy), null, '無効なら使わない');
+  assert.strictEqual(X.longPostText(X.buildDraftPost(GOOD, entry, longPolicy), longPolicy), null, '続きが無ければ使わない');
+  assert.strictEqual(X.longPostText(b, { longPost: { enabled: true, maxWeighted: 300 } }), null, '上限を超えたら使わない');
+  const c = (d, pol) => X.checkDraft({ ...FIVE, ...d }, { entry, policy: pol, articleText: ARTICLE_TEXT });
+  assert.deepStrictEqual(c({}, longPolicy), []);
+  assert.ok(c({ replies: [...FIVE.replies, '池下'] }, longPolicy).includes('draft_replies_count:6'));
+  assert.ok(c({}, threadPolicy).includes('draft_replies_count:5'), 'スレッドの日は3件まで');
+});
+
+test('投稿: 長いポストが通れば1回だけ送り、返信はぶら下げない。台帳に long_post を残す', async () => {
+  const root = fixture({ draft: FIVE, pol: longPolicy });
+  const f = fakeFetch(root);
+  const r = await postRun({}, { root, env: ENV, fetchImpl: f, now: NOW });
+  assert.strictEqual(r.result, 'posted');
+  assert.strictEqual(f.sent.length, 1);
+  assert.ok(f.sent[0].includes(FIVE.replies[4]) && f.sent[0].includes('https://nagoya-bites.com/'));
+  assert.strictEqual(r.replies, undefined);
+  const row = JSON.parse(fs.readFileSync(path.join(root, 'data/x_post_log.json'), 'utf8')).posts[0];
+  assert.deepStrictEqual({ ok: row.long_post.ok, sections: row.long_post.sections, head: row.long_post.head }, { ok: true, sections: 5, head: FIVE.body });
+  assert.strictEqual(row.text, f.sent[0]);
+  assert.strictEqual(row.thread, undefined);
+});
+
+test('投稿: 長いポストが断られたら（未契約など）本文＋返信3件のスレッドで送り直し、理由を台帳に残す', async () => {
+  const root = fixture({ draft: FIVE, pol: longPolicy });
+  const f = fakeFetch(root);
+  f.rejectLong = 400;
+  const r = await postRun({}, { root, env: ENV, fetchImpl: f, now: NOW });
+  assert.strictEqual(r.result, 'posted');
+  assert.strictEqual(f.sent.length, 5, '長文1回＋本文＋返信3件');
+  assert.ok(X.weightedLength(f.sent[1]) <= 280);
+  assert.strictEqual(r.repliesPosted, 3);
+  const row = JSON.parse(fs.readFileSync(path.join(root, 'data/x_post_log.json'), 'utf8')).posts[0];
+  assert.strictEqual(row.long_post.ok, false);
+  assert.ok(row.long_post.reason.startsWith('http_400') && row.long_post.reason.includes('too long'));
+  assert.strictEqual(row.thread.replies.length, 3);
+  assert.ok(require('../scripts/post_journal_to_x').summaryMarkdown(r).includes('断られたのでスレッドで送り直した'));
+});
+
+test('投稿: 長いポストが重複で断られたら（前の回で届いていた）スレッドで送り直さない', async () => {
+  const root = fixture({ draft: FIVE, pol: longPolicy });
+  const f = fakeFetch(root);
+  f.rejectLong = 403;
+  f.rejectBody = { detail: 'You are not allowed to create a Tweet with duplicate content.' };
+  const r = await postRun({}, { root, env: ENV, fetchImpl: f, now: NOW });
+  assert.strictEqual(r.result, 'duplicate');
+  assert.strictEqual(f.sent.length, 1);
+});
+
+test('書き手: 長いポストの日は続きの件数と小見出しの指示を足す。スレッドなしの実験の日は足さない', () => {
+  const root = fixture({ pol: longPolicy });
+  const p = W.buildPrompt({ root, entry, material: '記事', previous: null, plan: null, topicExp: null });
+  assert.ok(p.includes('## 今日は長いポストで出す') && p.includes('最大5件'));
+  const p2 = W.buildPrompt({ root, entry, material: '記事', previous: null, plan: null, topicExp: { format: { thread: false } } });
+  assert.ok(!p2.includes('## 今日は長いポストで出す'));
+  const p3 = W.buildPrompt({ root: fixture({ pol: threadPolicy }), entry, material: '記事', previous: null, plan: null, topicExp: null });
+  assert.ok(!p3.includes('## 今日は長いポストで出す'));
 });

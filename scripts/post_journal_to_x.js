@@ -181,7 +181,7 @@ function topicExpOf(built) {
 }
 
 /** 結果を台帳・心拍に書く（live のときだけ呼ぶ）。 */
-function record(root, { date, entry, result, reason, text, textMode, draftReason, tweetId, errorClass, status, thread, experiment, plan, media, topicExp }) {
+function record(root, { date, entry, result, reason, text, textMode, draftReason, tweetId, errorClass, status, thread, experiment, plan, media, topicExp, longPost }) {
   const now = new Date().toISOString();
   if (status) {
     const log = X.readLog(root);
@@ -195,6 +195,7 @@ function record(root, { date, entry, result, reason, text, textMode, draftReason
       ...(errorClass ? { error_class: errorClass } : {}),
       ...(reason ? { reason } : {}),
       ...(thread ? { thread } : {}),
+      ...(longPost ? { long_post: longPost } : {}),
       ...(experiment ? { experiment: experiment.experiment, url_variant: experiment.url_variant } : {}),
       ...(media ? { media: media.variant, media_reason: media.reason, ...(media.id ? { media_id: media.id } : {}) } : {}),
       ...(topicExp && topicExp.experiment_id ? { topic_experiment: topicExp.experiment_id, ...(experiment ? {} : { experiment: topicExp.experiment_id }) } : {}),
@@ -343,12 +344,50 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   // 写真つきが断られて写真なしで送り直すときは、クレジットの行も外す
   const textWithoutPhoto = baseText;
 
+  // 長いポスト（X プレミアム・data/x_post_policy.json の longPost）。本文と続きを1つにまとめて先に送る。
+  // 断られたら（未契約・API が長文を受け付けない等）下の今までどおりのスレッドで送り直す。重複の拒否は届いている印なので送り直さない
+  let longPost = null;
+  const longText = X.longPostText(built, policy);
+  if (longText) {
+    let lr;
+    try {
+      lr = await sendTweet(longText, cred, fetchImpl, null, media.id);
+    } catch (e) {
+      // 届いたか分からないので、スレッドで送り直さず失敗にする（次の起動でやり直す）
+      const reason = `network:${e.message || e}`;
+      record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: longText, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, status: 'failed', longPost: { tried: true, ok: false, reason } });
+      return { ...out, result: 'failed', reason, errorClass: 'server', longPost: { tried: true, ok: false, reason }, exitCode: 1 };
+    }
+    const lid = lr.body && lr.body.data && lr.body.data.id;
+    if ((lr.status === 201 || lr.status === 200) && lid) {
+      // head = タイムラインで「さらに表示」の前に見える本文（SNS分析ツールが先頭の文字数・1行目を数えるのに使う）
+      longPost = { tried: true, ok: true, sections: built.replies.length, weighted: X.weightedLength(longText), head: built.body };
+      out.text = longText;
+      out.longPost = longPost;
+      delete out.replies; // 続きは本文の中に入れた
+      record(root, { date, entry, result: 'posted', text: longText, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, tweetId: lid, status: 'posted', longPost });
+      return { ...out, result: 'posted', tweetId: lid, tweetUrl: `https://x.com/i/web/status/${lid}`, exitCode: 0 };
+    }
+    const ld = typeof lr.body === 'string' ? lr.body.slice(0, 200) : JSON.stringify(lr.body).slice(0, 200);
+    longPost = { tried: true, ok: false, reason: `http_${lr.status}: ${ld}`.slice(0, 300) };
+    out.longPost = longPost;
+    if (X.classifyError(lr.status, lr.body) === 'duplicate') {
+      record(root, { date, entry, result: 'duplicate', reason: longPost.reason, errorClass: 'duplicate', text: longText, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, status: 'duplicate', longPost });
+      return { ...out, result: 'duplicate', reason: longPost.reason, errorClass: 'duplicate', exitCode: 0 };
+    }
+  }
+  // スレッドで送るときの続きは draft.maxReplies 件まで（長いポストの日に多めに書かせた分は送らない）
+  if (built.replies && built.replies.length > ((policy.draft || {}).maxReplies ?? 3)) {
+    built = { ...built, replies: built.replies.slice(0, (policy.draft || {}).maxReplies ?? 3) };
+    out.replies = built.replies;
+  }
+
   let res;
   try {
     res = await sendTweet(built.text, cred, fetchImpl, null, media.id);
   } catch (e) {
     const reason = `network:${e.message || e}`;
-    record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, status: 'failed' });
+    record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, status: 'failed', longPost });
     return { ...out, result: 'failed', reason, errorClass: 'server', exitCode: 1 };
   }
   // 画像つきの投稿が受け付けられなかったら、画像なしでもう1回だけ送る（重複の拒否は届いている印なのでそのまま扱う）
@@ -359,7 +398,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
     if (textWithoutPhoto !== built.text) { built = { ...built, text: textWithoutPhoto }; out.text = textWithoutPhoto; }
     try { res = await sendTweet(built.text, cred, fetchImpl, null, null); } catch (e) {
       const reason = `network:${e.message || e}`;
-      record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, status: 'failed' });
+      record(root, { date, entry, result: 'failed', reason, errorClass: 'server', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, status: 'failed', longPost });
       return { ...out, result: 'failed', reason, errorClass: 'server', exitCode: 1 };
     }
   }
@@ -390,7 +429,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
         }
       }
     }
-    record(root, { date, entry, result: 'posted', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, tweetId: id, status: 'posted', thread });
+    record(root, { date, entry, result: 'posted', text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, tweetId: id, status: 'posted', thread, longPost });
     return { ...out, result: 'posted', tweetId: id, tweetUrl: `https://x.com/i/web/status/${id}`, ...(thread ? { repliesPosted: thread.replies.length, ...(thread.failed_reason ? { repliesFailed: thread.failed_reason } : {}) } : {}), exitCode: 0 };
   }
   const errorClass = X.classifyError(res.status, res.body);
@@ -398,10 +437,10 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   const reason = `http_${res.status}: ${detail}`;
   if (errorClass === 'duplicate') {
     // 同じ文面が既に X にある＝前の回で届いていた。もう送らない
-    record(root, { date, entry, result: 'duplicate', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, status: 'duplicate' });
+    record(root, { date, entry, result: 'duplicate', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, status: 'duplicate', longPost });
     return { ...out, result: 'duplicate', reason, errorClass, exitCode: 0 };
   }
-  record(root, { date, entry, result: 'failed', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, status: 'failed' });
+  record(root, { date, entry, result: 'failed', reason, errorClass, text: built.text, textMode: built.mode, experiment: out.experiment, plan: built.plan, topicExp: topicExpOf(built), draftReason, media, status: 'failed', longPost });
   return { ...out, result: 'failed', reason, errorClass, exitCode: 1 };
 }
 
@@ -424,6 +463,7 @@ function summaryMarkdown(r) {
   if (r.media) lines.push(`- 画像: ${r.media.variant === 'image' ? '画像カードを付ける' : r.media.variant === 'photo' ? `店の写真を付ける（${r.media.credit || ''}）` : '付けない（リンクカードで見せる）'}（${r.media.reason}）`);
   if (r.ogImage) lines.push(`- リンクカードの画像: ${r.ogImage.ok ? 'OK' : `出ない見込み（${r.ogImage.reason}）`}`);
   if (r.tweetUrl) lines.push(`- 投稿: ${r.tweetUrl}`);
+  if (r.longPost) lines.push(`- 長いポスト: ${r.longPost.ok ? `1つにまとめて送った（続き ${r.longPost.sections} 件）` : `断られたのでスレッドで送り直した（${r.longPost.reason}）`}`);
   if (r.replies) lines.push(`- 返信（続き）: ${r.repliesPosted != null ? `${r.repliesPosted} / ` : ''}${r.replies.length} 件${r.repliesFailed ? `（途中で止まった: ${r.repliesFailed}）` : ''}`);
   if (r.credentials) {
     const ja = { set: '登録済み', empty: '空（未登録）', bad_format: '形が違う（別の欄の値の疑い）', looks_access_token: 'Access Token の値が入っている疑い', duplicate: 'ほかの名前と同じ値' };
