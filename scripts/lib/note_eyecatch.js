@@ -28,7 +28,7 @@ function photoUrl(src) {
 
 /** 題と日付を重ねてよい写真か（ADR 0065）。PR TIMES の報道目的のリリース写真（配信元のホスト）だけ。それ以外は重ねず写真だけにする */
 // upload.wikimedia.org: 街の写真（CC0・パブリックドメイン・CC BY・CC BY-SA。どれも改変を許し、本文に『題を重ねた』と書く・2026-11-23）
-const OVERLAY_HOSTS = ['prcdn.freetls.fastly.net', 'prtimes.jp', 'upload.wikimedia.org'];
+const OVERLAY_HOSTS = ['prcdn.freetls.fastly.net', 'prtimes.jp', 'upload.wikimedia.org', 'thumb.wikimedia.org'];
 function overlayAllowed(src) {
   try { const h = new URL(src).hostname; return OVERLAY_HOSTS.some((d) => h === d || h.endsWith('.' + d)); } catch { return false; }
 }

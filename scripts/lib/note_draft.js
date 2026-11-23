@@ -116,7 +116,7 @@ function areaPhoto(entry, policy, stores = [], root = ROOT) {
   const words = (t.areaWords || []).filter((w) => (list[w] || []).length);
   const byTitle = words.map((w) => ({ w, at: title.indexOf(w) })).filter((x) => x.at >= 0).sort((a, b) => a.at - b.at || b.w.length - a.w.length)[0];
   const byStore = [...words].sort((a, b) => b.length - a.length).find((w) => stores.some((s) => String(s['エリア'] || '').includes(w)));
-  const usable = (k) => (list[k] || []).filter((c) => c && /^https:\/\/upload\.wikimedia\.org\//.test(c.thumb1600 || c.url || '') && c.author && c.license && c.page);
+  const usable = (k) => (list[k] || []).filter((c) => c && /^https:\/\/(upload|thumb)\.wikimedia\.org\//.test(c.thumb1600 || c.url || '') && c.author && c.license && c.page);
   let key = (byTitle && byTitle.w) || byStore || 'default';
   if (!usable(key).length) key = 'default';
   const cands = usable(key);
