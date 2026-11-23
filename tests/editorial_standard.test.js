@@ -36,16 +36,28 @@ test('状態の帯: 確認日・未訪問・AIが作成（決定5）。開店前
   assert.match(ES.statusBandText({ date: '2026-11-16' }), /未訪問/); // 既定は未訪問（訪問したと書かない）
 });
 
-test('チェックリスト: 定型7項目を順に出し、未記入・確認できなかった項目は空欄にせず言葉で書く', () => {
+test('チェックリスト: 確認できた行だけ出し、確認できなかった行・未記入の行は出さない（#2576）', () => {
   const html = ES.buildChecklist(INPUT);
-  assert.strictEqual((html.match(/<li>/g) || []).length, 7);
-  // 札は確認できなかった行だけ
+  assert.strictEqual((html.match(/<li>/g) || []).length, 1);
   assert.match(html, /お通し・席料<\/span>: お通し代 300円（ホットペッパー掲載・11月16日確認）/);
-  assert.match(html, /喫煙<\/span> <span class="nb-check-state">確認できなかった<\/span>: 記載なし（公式・ホットペッパー・11月16日確認）。予約時に店へ確認を/);
-  assert.match(html, /支払い方法<\/span> <span class="nb-check-state">確認できなかった<\/span>: 記載なし。予約時に店へ確認を/);
-  assert.strictEqual((html.match(/nb-check-state/g) || []).length, 6);
-  assert.ok(!html.includes('未記入'));
-  assert.strictEqual(ES.unknownCount(INPUT), 6);
+  assert.ok(!html.includes('確認できなかった') && !html.includes('nb-check-state') && !html.includes('記載なし'));
+  assert.ok(!html.includes('喫煙') && !html.includes('支払い方法'));
+  assert.strictEqual(ES.unknownCount(INPUT), 6); // 数えるのは検査用（画面には出さない）
+  // 確認できた行が1つも無ければ欄ごと出さない
+  assert.strictEqual(ES.buildChecklist({ ...INPUT, checklist: [{ item: '喫煙', status: 'unconfirmed' }] }), '');
+});
+
+test('ここがポイント: 印と色の札の型で出し、確認できなかった点の数は書かない（#2576）', () => {
+  const html = ES.buildConclusion(INPUT);
+  assert.match(html, /<p class="insider-title">ここがポイント<\/p>/);
+  assert.match(html, /<li class="nb-point nb-point-fit"><span class="nb-point-label">向く人<\/span><span class="nb-point-sep">: <\/span>少人数の宴会<\/li>/);
+  assert.match(html, /nb-point-not"><span class="nb-point-label">向かない人/);
+  assert.match(html, /nb-point-check"><span class="nb-point-label">来店前に確かめたい点<\/span><span class="nb-point-sep">: <\/span>飲み放題の最終注文。<\/li>/);
+  assert.ok(!html.includes('先に結論') && !html.includes('分からなかった点'));
+  // 印（★◎✕!）は CSS で付ける。HTML の文字に入れない（X・note の引用に混ざらない）
+  assert.ok(!/[★◎✕]/.test(html));
+  const css = fs.readFileSync(path.join(__dirname, '..', 'assets/css/nb.css'), 'utf8');
+  for (const sel of ['.nb-jconclusion .insider-title::before', '.nb-point-fit .nb-point-label::before', '.nb-point-not .nb-point-label::before', '.nb-point-check .nb-point-label::before', '.nb-point-sep{']) assert.ok(css.includes(sel), sel);
 });
 
 test('値の無い confirmed は確認できた扱いにしない', () => {
@@ -55,7 +67,7 @@ test('値の無い confirmed は確認できた扱いにしない', () => {
 
 test('警告: 無い項目は文で返す（止めない）。そろっていれば項目の欠けだけ', () => {
   const w = ES.judgementWarnings({ date: '2026-11-16' });
-  assert.ok(w.some((x) => /先に結論/.test(x)) && w.some((x) => /向く人/.test(x)) && w.some((x) => /出典/.test(x)));
+  assert.ok(w.some((x) => /ここがポイント/.test(x)) && w.some((x) => /向く人/.test(x)) && w.some((x) => /出典/.test(x)));
   assert.ok(ES.judgementWarnings(INPUT).some((x) => /支払い方法/.test(x)));
 });
 
@@ -71,11 +83,12 @@ test('訂正の履歴: 空でも data-correction-log の要素と空の ul を�
 test('記事: 6つの部品が出て、従来の要点欄は置き換わる。部品が無い入力は従来どおり', () => {
   const html = renderHtml(INPUT);
   assert.match(html, /<p class="nb-status-band" role="note">11月16日確認・編集部は未訪問・公開情報をもとにAIが作成<\/p>/);
-  assert.match(html, /class="insider-box nb-jbox nb-jconclusion"><p class="insider-title">先に結論/);
-  assert.match(html, /向く人: 少人数の宴会/);
-  assert.match(html, /向かない人: 煙が苦手な人/);
-  assert.match(html, /確かめたい点: 飲み放題の最終注文。分からなかった点は6点で、項目ごとに下の一覧に書いています。/);
-  // 帯は日付の行の直下、先に結論はリードの直後（1画面目に出す）
+  assert.match(html, /class="insider-box nb-jbox nb-jconclusion"><p class="insider-title">ここがポイント/);
+  assert.match(html, /向く人<\/span><span class="nb-point-sep">: <\/span>少人数の宴会/);
+  assert.match(html, /向かない人<\/span><span class="nb-point-sep">: <\/span>煙が苦手な人/);
+  assert.match(html, /来店前に確かめたい点<\/span><span class="nb-point-sep">: <\/span>飲み放題の最終注文。<\/li>/);
+  assert.ok(!html.includes('分からなかった点') && !html.includes('nb-check-state'));
+  // 帯は日付の行の直下、ここがポイントはリードの直後（1画面目に出す）
   assert.ok(html.indexOf('class="art-meta"') < html.indexOf('nb-status-band') && html.indexOf('nb-status-band') < html.indexOf('art-lead') && html.indexOf('art-lead') < html.indexOf('nb-jconclusion'));
   assert.match(html, /来店前に確かめたいこと/);
   assert.match(html, /data-correction-log hidden/);
@@ -87,10 +100,11 @@ test('記事: 6つの部品が出て、従来の要点欄は置き換わる。�
   assert.ok(!legacy.includes('NB-LEGACY-INSIDER'));
 });
 
-test('note: 本文に部品が混ざらず、先に結論と状態の帯が入る', () => {
+test('note: 本文に部品が混ざらず、ここがポイントと状態の帯が入る', () => {
   const html = renderHtml(INPUT);
   const a = parseArticle(html);
-  assert.strictEqual(a.pointsTitle, '先に結論');
+  assert.strictEqual(a.pointsTitle, 'ここがポイント');
+  assert.ok(a.points.includes('向く人: 少人数の宴会'));
   assert.ok(a.points.some((p) => /少人数の宴会/.test(p)));
   assert.strictEqual(a.sections.length, 1);
   assert.deepStrictEqual(a.sections[0].paras, ['本文の段落。']);
@@ -98,13 +112,14 @@ test('note: 本文に部品が混ざらず、先に結論と状態の帯が入�
   const policy = loadPolicy();
   const d = buildNoteDraft({ slug: INPUT.slug, title: 'テスト', store_ids: [] }, html, policy, []);
   assert.match(d.body, /^11月16日確認/);
-  assert.match(d.body, /## 先に結論/);
+  assert.match(d.body, /## ここがポイント/);
 });
 
-test('X: 先に結論の箇条書きが引用元になる', () => {
+test('X: ここがポイントの箇条書きが引用元になる（「向く人: …」の読める文字）', () => {
   const pts = X.insiderPoints(renderHtml(INPUT));
   assert.ok(pts.length >= 3);
   assert.ok(pts.some((p) => /飲み放題の最終注文/.test(p)));
+  assert.ok(pts.includes('向く人: 少人数の宴会'));
 });
 
 test('店選びガイド: 手計算の標本と集計が一致し、書き出しは「このサイトに載っている◯店のうち」', () => {

@@ -60,7 +60,7 @@ function parseArticle(html) {
   }
   const boxes = [...html.matchAll(/<div class="insider-box[^"]*">[\s\S]*?<\/ul>/g)];
   const box = boxes.length ? boxes[0][0] : '';
-  const points = [...box.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((x) => inline(x[1])).filter(Boolean);
+  const points = [...box.matchAll(/<li[^>]*>([\s\S]*?)<\/li>/g)].map((x) => inline(x[1])).filter(Boolean);
   const pointsTitle = (/<p class="insider-title">([\s\S]*?)<\/p>/.exec(box) || [])[1] || '知っておきたいポイント';
   // 状態の帯（確認日・未訪問・AI が作成）。note の冒頭にそのまま載せる（決定5）
   const band = inline((/<p class="nb-status-band"[^>]*>([\s\S]*?)<\/p>/.exec(html) || [])[1] || '');

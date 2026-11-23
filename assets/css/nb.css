@@ -388,7 +388,23 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .nb-jbox li{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);padding:var(--sp-2) 0;margin:0;border-top:1px solid var(--border);overflow-wrap:anywhere;}
 .nb-jbox li:first-child{border-top:0;padding-top:0;}
 .nb-jbox[hidden]{display:none;}
-.nb-jconclusion{margin-top:var(--sp-4);}
+.nb-jconclusion{margin-top:var(--sp-4);background:var(--card);border:2px solid var(--gold);border-left-width:6px;}
+/* 「ここがポイント」（2026-11-23 本人の依頼・Ondine #2576）: 印・色・大きさで目立たせる。
+   印は ::before で付け、HTML の文字には入れない（X・note の引用に記号が混ざらない）。札の色は文字の言葉と組（色だけで区別しない）。 */
+.nb-jconclusion .insider-title{display:flex;align-items:center;gap:var(--sp-2);font-size:var(--fs-xl);font-weight:700;color:var(--gold);margin:0 0 var(--sp-3);}
+.nb-jconclusion .insider-title::before{content:"\2605";display:inline-flex;align-items:center;justify-content:center;flex:none;width:1.6em;height:1.6em;border-radius:var(--r-pill);background:var(--gold);color:var(--card);font-size:var(--fs-md);line-height:1;}
+.nb-jconclusion li.nb-point{font-size:var(--fs-md);color:var(--text);padding:var(--sp-3) 0;}
+.nb-jconclusion li.nb-point:first-child{padding-top:0;}
+.nb-point-label{display:flex;align-items:center;gap:var(--sp-1);width:max-content;max-width:100%;font-size:var(--fs-sm);font-weight:700;line-height:var(--lh-ui);color:var(--card);border-radius:var(--r-pill);padding:var(--sp-1) var(--sp-3);margin:0 0 var(--sp-1);}
+.nb-point-fit .nb-point-label{background:var(--green);}
+.nb-point-fit .nb-point-label::before{content:"\25CE";}
+.nb-point-not .nb-point-label{background:var(--ember-deep);}
+.nb-point-not .nb-point-label::before{content:"\2715";}
+.nb-point-check .nb-point-label{background:var(--gold);}
+.nb-point-check .nb-point-label::before{content:"!";}
+.nb-point-sep{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+/* 来店前に確かめたいこと: 確認できた行だけ出す（#2576）。行の頭に確認済みの印 */
+.nb-check li::before{content:"\2713";color:var(--green);font-weight:700;margin-right:var(--sp-1);}
 .nb-check-name{font-weight:600;color:var(--text);}
 .nb-check-state{display:inline-block;font-size:var(--fs-xs);font-weight:600;background:var(--ink);color:var(--bg);border-radius:var(--r-sm);padding:0 var(--sp-2);margin:0 var(--sp-1);}
 .nb-fit{display:grid;grid-template-columns:1fr;gap:var(--sp-4);}
@@ -402,7 +418,9 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 
 /* ── 先に結論（特集の冒頭。scripts/apply_feature_conclusions.js が data/feature_conclusions.json から書く・SEO-122/134） ── */
 .nb-conclusion{background:var(--card);border:1px solid var(--card-border);border-left:3px solid var(--gold);border-radius:0 var(--r-md) var(--r-md) 0;padding:var(--sp-4) var(--sp-5);margin:0 0 var(--sp-5);}
-.nb-conclusion-title{font-family:var(--font-body);font-weight:700;font-size:var(--fs-md);line-height:var(--lh-heading);color:var(--ink);margin:0 0 var(--sp-2);}
+.nb-conclusion{border:2px solid var(--gold);border-left-width:6px;}
+.nb-conclusion .nb-conclusion-title{display:flex;align-items:center;gap:var(--sp-2);font-family:var(--font-body);font-weight:700;font-size:var(--fs-lg);line-height:var(--lh-heading);color:var(--gold);margin:0 0 var(--sp-3);word-break:keep-all;overflow-wrap:anywhere;}
+.nb-conclusion-title::before{content:"\2605";display:inline-flex;align-items:center;justify-content:center;flex:none;width:1.6em;height:1.6em;border-radius:var(--r-pill);background:var(--gold);color:var(--card);font-size:var(--fs-sm);line-height:1;}
 .nb-conclusion-list{list-style:none;padding:0;margin:0;}
 .nb-conclusion-list li{padding:var(--sp-3) 0;border-top:1px solid var(--border);line-height:var(--lh-ui);}
 .nb-conclusion-list li:first-child{border-top:0;padding-top:var(--sp-1);}
