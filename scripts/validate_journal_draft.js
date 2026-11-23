@@ -55,6 +55,26 @@ function closedStoreHits(names, stores) {
   return out;
 }
 
+/**
+ * 項目20（純粋関数）: 題が「◯選」の記事は、本文の最初の店の見出しより前に「なぜ◯◯なのか」の見出し（<h2>なぜ…）があり、
+ * その下に2文以上の段落があること。無ければ FAIL（読者に「なぜこの街・この切り口で選んだか」が伝わらない）。
+ */
+function checkWhySection(html) {
+  const id = '20_why_area';
+  const title = ((/<h1 class="art-title">([\s\S]*?)<\/h1>/.exec(html) || [])[1] || '').replace(/<[^>]+>/g, '');
+  if (!/\d+選/.test(title)) return { id, ok: true, msg: '「◯選」ではないのでスキップ' };
+  const body = html.slice(Math.max(0, html.indexOf('<div class="art-body">')));
+  const heads = [...body.matchAll(/<h2>([\s\S]*?)<\/h2>([\s\S]*?)(?=<h2>|<div class="store-list">|$)/g)];
+  const firstStore = heads.findIndex((m) => /stores\/J\d+\.html/.test(m[2]));
+  const why = heads.findIndex((m) => /^なぜ/.test(m[1].replace(/<[^>]+>/g, '').trim()));
+  if (why < 0) return { id, ok: false, msg: '「◯選」の記事に「なぜ◯◯なのか」の節（<h2>なぜ…</h2>）がない。店の紹介の前に、この街・この切り口を選んだ理由を出典つきの事実で2〜3文書く' };
+  if (firstStore >= 0 && why > firstStore) return { id, ok: false, msg: '「なぜ◯◯なのか」の節が店の紹介より後にある。店の紹介の前に置く' };
+  const text = [...heads[why][2].matchAll(/<p>([\s\S]*?)<\/p>/g)].map((m) => m[1].replace(/<[^>]+>/g, '')).join('');
+  const sentences = text.split('。').filter((x) => x.trim().length > 5).length;
+  if (sentences < 2) return { id, ok: false, msg: '「なぜ◯◯なのか」の節が短い（2文以上で、街の特徴と、この切り口に合う理由を書く）' };
+  return { id, ok: true, msg: `「${heads[why][1].replace(/<[^>]+>/g, '')}」の節あり（${sentences}文）` };
+}
+
 function checkJournal(htmlPath, mdPath) {
   const html = fs.readFileSync(htmlPath, 'utf8');
   const md = mdPath && fs.existsSync(mdPath) ? fs.readFileSync(mdPath, 'utf8') : '';
@@ -438,6 +458,9 @@ function checkJournal(htmlPath, mdPath) {
     results.push({ id: '19_readability_warn', ok: true, warn: false, msg: `読みやすさの測定をスキップ: ${e.message}` });
   }
 
+  // 20. おすすめ◯選は「なぜこのエリア（この切り口）なのか」の節を、店の紹介より前に置く（2026-11-23 本人「なぜ今池というエリアにこだわって選んだか？がないので説得力がない、読みたいと思えない」）
+  results.push(checkWhySection(html));
+
   return results;
 }
 
@@ -456,4 +479,4 @@ if (require.main === module) {
   process.exit(failed === 0 ? 0 : 1);
 }
 
-module.exports = { checkJournal };
+module.exports = { checkJournal, checkWhySection };
