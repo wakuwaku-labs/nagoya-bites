@@ -293,7 +293,7 @@ function layoutIssues(text, { maxLineWeighted = 64 } = {}) {
 }
 
 /** 見出しつきの箇条書き「・予算：1人2,000円ほど」。見出しは全角1〜6字（記号・数字なし）か「店名」＋全角の「：」 */
-const BULLET_LABEL_RE = /^・(?:「[^」]{1,24}」|[^\s：:0-9０-９「」（）()【】・]{1,6})：\S/;
+const BULLET_LABEL_RE = /^・(?:「[^」]{1,24}」(?:（[^）]{1,12}）)?|[^\s：:0-9０-９「」（）()【】・]{1,6})：\S/;
 
 /** 本文と返信の見やすさの検査をまとめる（返信は reply<番号>_ を頭に付ける）。 */
 function draftLayoutIssues(draft, policy) {
