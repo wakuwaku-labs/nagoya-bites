@@ -109,7 +109,7 @@ function renderBlock(cfg, picks, hubs, slug) {
     ? `\n  <p class="nb-conclusion-hubs"><span class="nb-conclusion-hubs-title">${esc(cfg.hubsTitle || 'エリアとジャンルで探す')}</span>${hubs.map(h => `<a href="../${h.path}">${esc(h.label)}</a>`).join('')}</p>`
     : '';
   return `${START}
-<section class="nb-conclusion" aria-label="先に結論">
+<section class="nb-conclusion" aria-label="ここがポイント">
   <p class="nb-conclusion-title">${esc(cfg.title)}</p>
   <ul class="nb-conclusion-list">
 ${items}

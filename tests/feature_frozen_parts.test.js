@@ -20,7 +20,7 @@ const FROZEN = {
     title: '名古屋 デートディナーおすすめ10選｜予算・エリア別【2026年版】｜NAGOYA BITES',
     canonical: 'https://nagoya-bites.com/features/date.html',
     h1: '名古屋 デートディナーおすすめ10選',
-    lead: '57bd93f69983eeaff96b1e250f12eb1ba069bbb7',
+    lead: '81b1b18a99d2b2513c72094ff0b2db7356cb34a3', // 2026-11-23 冒頭の見出しを「先に結論」→「ここがポイント」（本人の依頼・Ondine #2576）
   },
   'nagoya-tebasaki': {
     title: '名古屋の手羽先、風来坊と山ちゃんの違い｜8店【2026】｜NAGOYA BITES',
@@ -70,13 +70,14 @@ test('確認メモを足した6本で、題・URL・大見出し・冒頭が変�
   }
 });
 
-test('6本とも確認メモの区画が1つあり、店の項目に「未確認」を使って推測で埋めていない', () => {
+test('6本とも確認メモの区画が1つあり、確認できた項目だけを載せ、推測で埋めていない', () => {
   for (const slug of Object.keys(FROZEN)) {
     const html = page(slug);
     assert.strictEqual((html.match(/NB_CONFIRM_MEMO_START/g) || []).length, 1, slug);
     const memo = MEMO_RE.exec(html)[0];
     assert.ok(/data-nb-confirm-memo/.test(memo), slug);
-    assert.ok(/<li class="nb-confirm-un"><span class="nb-confirm-k">未確認<\/span>[^<]*予約・混雑/.test(memo), `${slug}: 予約可否はデータが無いので未確認のまま`);
+    // 確認できなかった項目は出さない（2026-11-23 本人の依頼・Ondine #2576）。予約可否はデータが無いので載らない
+    assert.ok(!/未確認|nb-confirm-un|予約・混雑/.test(memo), `${slug}: 未確認の項目を出していない`);
     assert.ok(/確認日/.test(memo), slug);
     // 区画は店カードの外・題の前（本文の最初の見出し）より後ろにあり、店カードの中に入っていない
     assert.ok(html.indexOf('NB_CONFIRM_MEMO_START') > html.indexOf('<h1'), slug);

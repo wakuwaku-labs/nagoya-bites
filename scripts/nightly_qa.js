@@ -158,7 +158,7 @@ checks.push({
 
 checks.push({
   id: 'feature-conclusions',
-  title: '特集の冒頭の「先に結論」がその日の掲載店と一致（SEO-122）',
+  title: '特集の冒頭の「ここがポイント」がその日の掲載店と一致（SEO-122）',
   hard: false,
   alwaysShow: true,
   trigger: '常時',
