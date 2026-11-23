@@ -86,7 +86,12 @@ function insertWhy(html, block, kind) {
   const i = html.indexOf(k);
   if (i >= 0) return html.slice(0, i + k.length) + '\n    ' + block + html.slice(i + k.length);
   // art-body の無い型の特集は、最初の章見出しの前に置く
-  const j = html.indexOf('<h2 class="section-label">');
+  let j = html.indexOf('<h2 class="section-label">');
+  // それも無い型（ガイド型の特集）は、本文（<main>）の中の最初の見出しの前に置く。題・冒頭の文は動かさない
+  if (j < 0) {
+    const mi = html.indexOf('<main');
+    j = mi >= 0 ? html.indexOf('<h2', mi) : -1;
+  }
   if (j < 0) return null;
   return html.slice(0, j) + block + '\n\n' + html.slice(j);
 }

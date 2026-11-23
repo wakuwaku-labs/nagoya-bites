@@ -33,6 +33,12 @@ test('差し込み: 冪等で、冒頭（art-lead）と題は変えない', () =
   assert.strictEqual(insertWhy(once, renderWhy(ok, 'hub'), 'hub'), once);
   const feat = '<div class="art-body">\n<h2 class="section-label">Top</h2>';
   assert.ok(insertWhy(feat, renderWhy(ok, 'feature'), 'feature').indexOf('nb-why') < feat.length + 400);
+  // ガイド型（art-body も section-label も無い）は <main> の中の最初の見出しの前。題と冒頭は動かさない
+  const guide = '<h1>手羽先ガイド</h1>\n<main id="main-content"><p class="lead">冒頭です。</p>\n<h2>基礎</h2></main>';
+  const g = insertWhy(guide, renderWhy(ok, 'feature'), 'feature');
+  assert.ok(g.indexOf('nb-why') > g.indexOf('冒頭です。') && g.indexOf('nb-why') < g.indexOf('<h2>基礎'));
+  assert.ok(g.startsWith('<h1>手羽先ガイド</h1>\n<main id="main-content"><p class="lead">冒頭です。</p>'));
+  assert.strictEqual(insertWhy('<h1>x</h1><p>見出しなし</p>', renderWhy(ok, 'feature'), 'feature'), null);
 });
 
 test('data/why_sections.json の本文は、出典付き・2文以上・出所の無い言い切りを含まない', () => {
