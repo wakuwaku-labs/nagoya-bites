@@ -15,7 +15,9 @@
     "modeHelp": "stores = 店ごとの形（2026-11-23〜・docs/decisions/0070）。全部の店の節を載せ、各店は『どんな店か（最初の段落）』と『行く前のひとこと』だけにして、営業時間・予算などの細かい数字は元記事へ。各店の見出しの直後に、店の公式 Instagram の投稿を写真つきのカードで置く（公式アカウントと一致する投稿だけ）/ excerpt = 導入文＋最初の見出しの節＋『知っておきたいポイント』だけ（0054。note では途中で切れて読まれにくかった）/ full = 全文",
     "sections": 1,
     "storePhotos": true,
-    "storePhotosHelp": "true のとき、店の節に店の公式 Instagram の写真カードを置く。カードは note のサーバーへの写真の複製ではなくリンク（Instagram の写真は Instagram から表示される）なので、ADR 0056 の『上げてよい写真』の対象外"
+    "storePhotosHelp": "true のとき、店の節に店の公式 Instagram の写真カードを置く。カードは note のサーバーへの写真の複製ではなくリンク（Instagram の写真は Instagram から表示される）なので、ADR 0056 の『上げてよい写真』の対象外",
+    "storePhotosPerStore": 2,
+    "storePhotosPerStoreHelp": "1店に載せる写真カードの上限。2枚目は同じ公式アカウントの、料理の判定（scripts/lib/ig_post_policy.js）を通った投稿だけ（2026-11-23 本人「もっと料理の写真を出して欲しい。実際の」）"
   },
   "closing": "NAGOYA BITES は毎朝、名古屋の店選びに使える記事を出しています！役に立ったら「スキ」を、明日の記事も読みたい方はフォローしていただけるとうれしいです！",
   "tags": {

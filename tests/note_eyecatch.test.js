@@ -170,3 +170,43 @@ test('見出し画像（写真の日）: 題が2行に収まらないときは�
   assert.ok(!fs.existsSync(path.join(dir, 'o.png')));
   fs.rmSync(dir, { recursive: true, force: true });
 });
+
+test('見出し画像: 店名・『』「」の中では折らず、「？」の後か『の前で折る（2026-11-23 design-qa 重大1・3「海／乃鶏」「さばと／青魚」、軽微6）', () => {
+  const t19 = '名古屋の居酒屋、忘年会の年末料金はいつから？海乃鶏 名古屋駅前店など6店';
+  const k19 = E.keepPhrases(t19, ['海乃鶏 名古屋駅前店', '居酒屋 海乃鶏 国際センター駅前店', '吟 名古屋駅店']);
+  assert.ok(k19.includes('海乃鶏 名古屋駅前店'));
+  assert.ok(k19.includes('海乃鶏')); // 支店名つきで題に出ない店は、空白で分けた部分
+  assert.ok(!k19.includes('吟')); // 1字の部分は守らない
+  assert.strictEqual(E.breakCandidates(t19, k19)[0], t19.indexOf('？') + 1);
+  const t20 = '伏見・錦の忘年会に鯖が看板の居酒屋『産直さばと青魚 伏見あおい』、冬コースと個室';
+  const k20 = E.keepPhrases(t20, ['産直さばと青魚 伏見あおい']);
+  assert.ok(k20.includes('『産直さばと青魚 伏見あおい』'));
+  assert.strictEqual(E.breakCandidates(t20, k20)[0], t20.indexOf('『'));
+  // 守る語の内側は候補にしない・片寄った位置（3割未満）も除く
+  assert.deepStrictEqual(E.breakCandidates('「A、B、C、D、E、F」の店', E.keepPhrases('「A、B、C、D、E、F」の店')), []);
+  assert.deepStrictEqual(E.breakCandidates('栄、名駅と金山の居酒屋おすすめ5選'), []);
+  const t22 = '栄でデートの席選び、カウンター・ソファ・個室の違い｜みかん・Sinzanなど4店';
+  assert.ok(E.breakCandidates(t22).includes(t22.indexOf('｜') + 1));
+  // 折り返しの検査: 守る語の途中で切れたら問題、切れ目が語の外なら合格
+  assert.deepStrictEqual(E.findKeepBreaks(['名古屋の居酒屋、忘年会の年末料金はいつから？海', '乃鶏 名古屋駅前店など6店'], t19, k19).length > 0, true);
+  assert.deepStrictEqual(E.findKeepBreaks(['名古屋の居酒屋、忘年会の年末料金はいつから？', '海乃鶏 名古屋駅前店など6店'], t19, k19), []);
+  assert.ok(E.findKeepBreaks(['伏見・錦の忘年会に鯖が看板の居酒屋『産直さばと', '青魚 伏見あおい』、冬コースと個室'], t20, k20)[0].includes('さばと|'));
+  // 守る語は折り返さない塊になる
+  assert.ok(E.titleHtml(t20, -1, k20).includes('<span style="white-space:nowrap">『産直さばと青魚 伏見あおい』</span>'));
+});
+
+test('見出し画像（写真の日）: 実際に描いても店名と『』の途中で折れない', { skip: NO_CHROME, timeout: 90000 }, async () => {
+  const os = require('os');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-eye-keep-'));
+  const src = path.join(dir, 'p.png');
+  // 1600x900 の無地の写真
+  const zlib = require('zlib');
+  const w = 1600, h = 900; const row = Buffer.alloc(1 + w * 3, 90); const raw = Buffer.concat(Array.from({ length: h }, () => { const r = Buffer.from(row); r[0] = 0; return r; }));
+  const chunk = (type, data) => { const b = Buffer.alloc(8 + data.length + 4); b.writeUInt32BE(data.length, 0); b.write(type, 4); data.copy(b, 8); const crc = require('zlib').crc32 ? zlib.crc32(Buffer.concat([Buffer.from(type), data])) : 0; b.writeUInt32BE(crc >>> 0, 8 + data.length); return b; };
+  const ihdr = Buffer.alloc(13); ihdr.writeUInt32BE(w, 0); ihdr.writeUInt32BE(h, 4); ihdr[8] = 8; ihdr[9] = 2;
+  fs.writeFileSync(src, Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), chunk('IHDR', ihdr), chunk('IDAT', zlib.deflateSync(raw)), chunk('IEND', Buffer.alloc(0))]));
+  for (const [t, stores] of [['名古屋の居酒屋、忘年会の年末料金はいつから？海乃鶏 名古屋駅前店など6店', ['海乃鶏 名古屋駅前店']], ['伏見・錦の忘年会に鯖が看板の居酒屋『産直さばと青魚 伏見あおい』、冬コースと個室', ['産直さばと青魚 伏見あおい']]]) {
+    const out = path.join(dir, 'o.png');
+    assert.strictEqual(await E.makePhotoEyecatch(src, t, '2026-11-19', out, null, { storeNames: stores }), out);
+  }
+});

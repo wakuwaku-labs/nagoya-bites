@@ -126,6 +126,93 @@ function areaPhoto(entry, policy, stores = [], root = ROOT) {
   return { kind: 'area', source: 'commons', area: key, src: c.thumb1600 || c.url, credit: `${key}の街の写真 — ${String(c.author).replace(/[:：]/g, ' ').replace(/https?\S*/g, '').trim()} / ${c.license}（Wikimedia Commons・題の文字を重ねています）`, creditUrl: c.page, store: '' };
 }
 
+/**
+ * 見出し画像の次の候補: 記事の料理ジャンルの「実際の料理の写真」（2026-11-23 本人「街の風景の写真しかない。もっと料理の写真を。実際の」）。
+ * Wikimedia Commons の CC0・パブリックドメイン・CC BY・CC BY-SA だけを data/note_food_photos.json に載せている（AI 生成・有料は使わない）。
+ * 店の実物ではないので、クレジットに「（イメージ）」と書く（読者が店の料理と取り違えない・docs/decisions/0070）。
+ * 照合は題名が先（出てくる順）、無ければ記事の店の『ジャンル』『タグ』の欄。具体的なジャンル（焼き鳥・鍋など）を、居酒屋・和食などの広いジャンルより先に見る。日付で候補を回す。
+ */
+const FOOD_RECENT_DAYS = 14; // 同じ料理の写真を記事の顔に使い回さない期間（2026-11-23 design-qa 重大2）
+
+function foodPhoto(entry, policy, stores = [], root = ROOT) {
+  if (policy.eyecatchFoodPhoto === false) return null;
+  let genres;
+  try { genres = JSON.parse(fs.readFileSync(path.join(root, 'data/note_food_photos.json'), 'utf8')).genres || {}; } catch { return null; }
+  const pick = foodPicker(genres);
+  const recent = recentFoodPhotos(entry, policy, root, pick);
+  const r = pick(entry, stores, recent);
+  if (!r) return null;
+  const { key, c } = r;
+  const label = genres[key].label || key;
+  return { kind: 'food', source: 'commons', genre: key, src: c.thumb1600 || c.url, credit: `${label}の写真（イメージ）— ${String(c.author).replace(/[:：]/g, ' ').replace(/https?\S*/g, '').trim()} / ${c.license}（Wikimedia Commons・題の文字を重ねています）`, creditUrl: c.page, store: '' };
+}
+
+const dayOf = (date) => Math.floor(Date.parse(`${date || '2026-01-01'}T00:00:00Z`) / 86400000) || 0;
+
+/**
+ * 料理の写真の選び方（純粋関数を返す）。pick(entry, stores, recent) → { key, c } か null。
+ * 照合は題名が先（出てくる順）、無ければ記事の店の『ジャンル』『タグ』。具体的なジャンル（焼き鳥・鍋など）を、居酒屋・和食などの広いジャンルより先に見る。
+ * recent = 直近 FOOD_RECENT_DAYS 日の記事が使った写真（page → 使った日の番号）。日付で回した位置から、まだ使っていない写真を探す。
+ * 当てはまるジャンルの写真をすべて使っていたら、いちばん前に使った写真（最初のジャンル）。
+ */
+function foodPicker(genres) {
+  const usable = (g) => ((genres[g] || {}).photos || []).filter((c) => c && /^https:\/\/(upload|thumb)\.wikimedia\.org\//.test(c.thumb1600 || c.url || '') && c.author && c.license && c.page);
+  const names = Object.keys(genres).filter((g) => usable(g).length && (genres[g].words || []).length);
+  const hit = (text, g) => genres[g].words.map((w) => ({ at: text.indexOf(w), len: w.length })).filter((m) => m.at >= 0).sort((a, b) => a.at - b.at || b.len - a.len)[0];
+  const byTitle = (list, title) => list.map((g) => ({ g, m: hit(title, g) })).filter((x) => x.m).sort((a, b) => a.m.at - b.m.at || b.m.len - a.m.len).map((x) => x.g);
+  const text = (s) => `${s['ジャンル'] || ''} ${s['タグ'] || ''}`;
+  const byStores = (list, stores) => list.map((g) => ({ g, n: stores.filter((s) => hit(text(s), g)).length })).filter((x) => x.n).sort((a, b) => b.n - a.n).map((x) => x.g);
+  const specific = names.filter((g) => !genres[g].generic);
+  const broad = names.filter((g) => genres[g].generic);
+  return (entry, stores = [], recent = new Map()) => {
+    const title = String(entry.title || '');
+    // 題の具体的なジャンル → 店の具体的なジャンル → 題の広いジャンル（居酒屋・和食など）→ 店の広いジャンル
+    const keys = [...new Set([...byTitle(specific, title).slice(0, 1), ...byStores(specific, stores).slice(0, 1), ...byTitle(broad, title).slice(0, 1), ...byStores(broad, stores).slice(0, 1)])];
+    if (!keys.length) return null;
+    const day = dayOf(entry.date);
+    const rotated = (key) => { const cands = usable(key); const i = day % cands.length; return [...cands.slice(i), ...cands.slice(0, i)]; };
+    for (const key of keys) { const c = rotated(key).find((x) => !recent.has(x.page)); if (c) return { key, c }; }
+    const c = rotated(keys[0]).sort((a, b) => recent.get(a.page) - recent.get(b.page))[0];
+    return { key: keys[0], c };
+  };
+}
+
+/**
+ * 直近 FOOD_RECENT_DAYS 日（この記事の日付より前）の記事が見出し画像に使った料理の写真（page → 日の番号）。
+ * data/journal_published.json の記事を古い順に同じ規則で選び直して求める（記録のファイルを持たない。過去の記事は書き換わらないので毎回同じ結果）。
+ * PR TIMES の店の実物写真がある記事（journal/<slug>.html）は料理の写真を使わないので数えない。台帳が読めなければ空（今までどおり日付で回すだけ）。
+ */
+function recentFoodPhotos(entry, policy, root, pick) {
+  const until = dayOf(entry.date);
+  const recent = new Map();
+  let entries;
+  try { entries = JSON.parse(fs.readFileSync(path.join(root, 'data/journal_published.json'), 'utf8')).entries || []; } catch { return recent; }
+  let allStores = [];
+  try { allStores = JSON.parse(fs.readFileSync(path.join(root, 'data/stores.json'), 'utf8')); } catch { /* 店が引けなくても題名で選ぶ */ }
+  const storesFor = (e) => { const ids = new Set(storeIdsOf(e)); return ids.size ? allStores.filter((s) => ids.has(s['店舗ID']) || ids.has(s['ホットペッパーID'])) : []; };
+  const past = entries.filter((e) => e && e.date && dayOf(e.date) < until).sort((a, b) => dayOf(a.date) - dayOf(b.date));
+  const used = []; // [page, day]
+  for (const e of past) {
+    const d = dayOf(e.date);
+    let html = '';
+    try { html = e.slug ? fs.readFileSync(path.join(root, 'journal', `${e.slug}.html`), 'utf8') : ''; } catch { /* 記事が無ければ写真なし扱い */ }
+    if (html && articlePhoto(html, policy)) continue;
+    const win = new Map(used.filter(([, ud]) => ud >= d - FOOD_RECENT_DAYS).map(([p, ud]) => [p, ud]));
+    const r = pick(e, storesFor(e), win);
+    if (r) used.push([r.c.page, d]);
+  }
+  for (const [p, ud] of used) if (ud >= until - FOOD_RECENT_DAYS) recent.set(p, Math.max(ud, recent.get(p) || 0));
+  return recent;
+}
+
+/** store_ids は配列のほか、"['J004537019', 'J003298620']" のような文字列で入っていることがある（journal_published.json）。店舗IDの配列にそろえる */
+function storeIdsOf(entry) {
+  const v = entry && entry.store_ids;
+  if (Array.isArray(v)) return v.map(String);
+  if (typeof v === 'string') return v.match(/J\d+/g) || [];
+  return [];
+}
+
 function utmUrl(entry, policy) {
   const u = new URL(`${String(policy.siteBase).replace(/\/+$/, '')}/journal/${entry.slug}.html`);
   u.searchParams.set('utm_source', policy.utm.source);
@@ -134,12 +221,12 @@ function utmUrl(entry, policy) {
   return u.toString();
 }
 
-/** 記事の店（store_ids）を data/stores.json から引く。無い・読めないときは空（タグが減るだけで止めない）。 */
+/** 記事の店（store_ids。ホットペッパーの店番号 J…）を data/stores.json から引く（『店舗ID』か『ホットペッパーID』のどちらかが一致する店）。無い・読めないときは空（タグが減るだけで止めない）。 */
 function storesOf(entry, root = ROOT) {
-  const ids = new Set(entry.store_ids || []);
+  const ids = new Set(storeIdsOf(entry));
   if (!ids.size) return [];
   try {
-    return JSON.parse(fs.readFileSync(path.join(root, 'data/stores.json'), 'utf8')).filter((s) => ids.has(s['店舗ID']));
+    return JSON.parse(fs.readFileSync(path.join(root, 'data/stores.json'), 'utf8')).filter((s) => ids.has(s['店舗ID']) || ids.has(s['ホットペッパーID']));
   } catch { return []; }
 }
 
@@ -192,6 +279,19 @@ function storePhotoCard(storeId, root = ROOT, cache = {}) {
   return url && handle && handle.toLowerCase() === official.toLowerCase() ? { url, handle, kind: 'post' } : null;
 }
 
+/** 店の写真カードを max 枚まで（1枚目は storePhotoCard。2枚目以降は同じ公式アカウントの extraPosts＝料理の判定を通った投稿だけ） */
+function storePhotoCards(storeId, root = ROOT, cache = {}, max = 1) {
+  const first = storePhotoCard(storeId, root, cache);
+  if (!first) return [];
+  const out = [first];
+  for (const e of ((cache.posts || {})[storeId] || {}).extraPosts || []) {
+    if (out.length >= max) break;
+    const h = igHandle(e && e.postUrl);
+    if (h && h.toLowerCase() === first.handle.toLowerCase() && !out.some((c) => c.url === e.postUrl)) out.push({ url: e.postUrl, handle: h, kind: 'post' });
+  }
+  return out;
+}
+
 function buildNoteDraft(entry, html, policy, stores = storesOf(entry)) {
   const a = parseArticle(html);
   const byStore = policy.body.mode === 'stores';
@@ -207,7 +307,7 @@ function buildNoteDraft(entry, html, policy, stores = storesOf(entry)) {
   const cardLine = (c) => { cards++; return [`[写真] ${c.url} 写真: 店の公式Instagram（@${c.handle}）`, '']; };
   // 1軒を深く読む記事（節に店の欄が無い）は、導入の後に記事の店のカードを置く（2軒まで）
   if (photosOn && !shown.some((s) => s.storeId)) {
-    for (const id of (entry.store_ids || []).slice(0, 2)) { const c = storePhotoCard(id, policy._root || ROOT, cache); if (c) out.push(...cardLine(c)); }
+    for (const id of storeIdsOf(entry).slice(0, 2)) { const c = storePhotoCard(id, policy._root || ROOT, cache); if (c) out.push(...cardLine(c)); }
   }
   for (const s of shown) {
     let paras = s.paras;
@@ -216,9 +316,9 @@ function buildNoteDraft(entry, html, policy, stores = storesOf(entry)) {
     // 店ごとの形（note 向け）: 店の節は「どんな店か（最初の段落）」と「行く前のひとこと」だけ。営業時間・予算などの細かい数字は元記事へ
     if (byStore && s.storeId) paras = [s.paras[0], s.paras.find((p, i) => i > 0 && /^\*\*行く前/.test(p))].filter(Boolean);
     out.push(`## ${s.heading}`, '');
-    const card = photosOn ? storePhotoCard(s.storeId, policy._root || ROOT, cache) : null;
-    // 写真は見出しの直後に置く（読む前に店の様子が分かる）
-    if (card) out.push(...cardLine(card));
+    // 写真は見出しの直後に置く（読む前に店の様子が分かる）。1店に何枚まで載せるかは body.storePhotosPerStore（既定1）
+    const shots = photosOn ? storePhotoCards(s.storeId, policy._root || ROOT, cache, Math.max(1, Number(policy.body.storePhotosPerStore) || 1)) : [];
+    for (const c of shots) out.push(...cardLine(c));
     out.push(...paras.flatMap((p) => [p.replace(/（店舗ページ）$/, ''), '']));
   }
   if (a.points.length) out.push(`## ${a.pointsTitle || '知っておきたいポイント'}`, '', ...a.points.map((p) => `- ${p}`), '');
@@ -228,10 +328,10 @@ function buildNoteDraft(entry, html, policy, stores = storesOf(entry)) {
   }
   if (policy.closing) out.push(policy.closing, '');
   // 見出し画像に記事の写真を使うときは、記事と同じクレジット（発行元・リリースの URL）を本文にも書く（URL は行の最後。リンクカードにしない）
-  const photo = policy.eyecatch === false ? null : (articlePhoto(html, policy) || (policy.eyecatchAreaPhoto !== false ? areaPhoto(entry, policy, stores, policy._root || ROOT) : null));
+  const photo = policy.eyecatch === false ? null : (articlePhoto(html, policy) || foodPhoto(entry, policy, stores, policy._root || ROOT) || (policy.eyecatchAreaPhoto !== false ? areaPhoto(entry, policy, stores, policy._root || ROOT) : null));
   if (photo) out.push(`${PHOTO_CREDIT}${photo.credit} ${photo.creditUrl}`, '');
   out.push(policy.footer, '', `元記事: ${url}`);
-  return { title: a.title, body: out.join('\n').replace(/\n{3,}/g, '\n\n'), tags: tagsFor(entry, policy, stores), url, photo, cards };
+  return { title: a.title, body: out.join('\n').replace(/\n{3,}/g, '\n\n'), tags: tagsFor(entry, policy, stores), url, photo, cards, storeNames: stores.map((s) => s['店名']).filter(Boolean) };
 }
 
 /** 落ちた理由の配列（空なら通過）。 */
@@ -258,4 +358,4 @@ function validateNoteDraft(draft, { policy, articleText, root = ROOT }) {
   return f;
 }
 
-module.exports = { loadPolicy, parseArticle, articlePhoto, buildNoteDraft, validateNoteDraft, utmUrl, tagsFor, storesOf, storePhotoCard, areaPhoto, htmlToText, CARD_LINE, PHOTO_LINE, dropPhotoCredit };
+module.exports = { loadPolicy, parseArticle, articlePhoto, buildNoteDraft, validateNoteDraft, utmUrl, tagsFor, storesOf, storePhotoCard, storePhotoCards, areaPhoto, foodPhoto, storeIdsOf, htmlToText, CARD_LINE, PHOTO_LINE, dropPhotoCredit };

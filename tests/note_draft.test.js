@@ -185,6 +185,68 @@ test('見出し画像: 店の実物写真が無い日は、記事の街の自由
   assert.strictEqual(N.areaPhoto({ title: '今池', date: '2026-11-23' }, p, [], fs.mkdtempSync(path.join(os.tmpdir(), 'nb-x-'))), null);
 });
 
+test('見出し画像: 料理の実写真（イメージ）を街の写真より先に使う。題名が先、無ければ店のジャンル。照合なしは街、eyecatchFoodPhoto=false なら使わない', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-note-food-'));
+  fs.mkdirSync(path.join(root, 'data'));
+  const c = (n) => ({ thumb1600: `https://upload.wikimedia.org/x/${n}.jpg`, author: 'User:Foo 2019', license: 'CC BY 4.0', page: `https://commons.wikimedia.org/wiki/File:${n}.jpg` });
+  const a = (n) => ({ thumb1600: `https://upload.wikimedia.org/a/${n}.jpg`, author: 'Bar', license: 'CC BY-SA 4.0', page: `https://commons.wikimedia.org/wiki/File:${n}.jpg` });
+  fs.writeFileSync(path.join(root, 'data/note_food_photos.json'), JSON.stringify({ genres: {
+    焼き鳥: { label: '焼き鳥', words: ['焼き鳥', 'やきとん'], photos: [c('y1'), c('y2')] },
+    鍋: { label: '鍋料理', words: ['鍋', '火鍋'], photos: [c('n1')] },
+    居酒屋: { label: '居酒屋の料理', words: ['居酒屋'], generic: true, photos: [c('i1')] },
+    刺身: { label: '刺身', words: ['刺身'], photos: [{ ...c('bad'), thumb1600: 'https://example.com/x.jpg' }] },
+  } }));
+  fs.writeFileSync(path.join(root, 'data/note_area_photos.json'), JSON.stringify({ areas: { 今池: [a('i1')], default: [a('d1')] } }));
+  fs.writeFileSync(path.join(root, 'data/stores.json'), JSON.stringify([{ 店舗ID: 'J001', ジャンル: 'やきとん', エリア: '今池' }, { 店舗ID: 'J002', ジャンル: '串焼き・やきとん', エリア: '今池' }]));
+  const p = { ...policy, eyecatchAreaPhoto: true, _root: root, body: { ...policy.body, mode: 'stores' } };
+  const f = (title, date = '2026-11-23', stores = []) => N.foodPhoto({ title, date }, p, stores, root);
+  // 題名に「鍋」「焼き鳥」→ その料理。出てくる順
+  assert.strictEqual(f('名駅で鍋のおすすめ5選').genre, '鍋');
+  assert.strictEqual(f('焼き鳥と鍋の店').genre, '焼き鳥');
+  // 具体的なジャンルは、広いジャンル（居酒屋）より先
+  assert.strictEqual(f('居酒屋で鍋').genre, '鍋');
+  // 題名に具体的なジャンルが無ければ店のジャンル（具体的 → 題名の広いジャンル）
+  assert.strictEqual(f('今池の居酒屋', '2026-11-23', N.storesOf({ store_ids: "['J001', 'J002']" }, root)).genre, '焼き鳥');
+  assert.strictEqual(f('今池の居酒屋').genre, '居酒屋');
+  // 日付で候補を回す
+  assert.notStrictEqual(f('焼き鳥の店', '2026-11-23').src, f('焼き鳥の店', '2026-11-24').src);
+  // クレジット: 店の料理ではなく「イメージ」と分かる。ライセンスと作者を書き、「:」は入れない
+  const r = f('名駅で鍋のおすすめ5選');
+  assert.match(r.credit, /鍋料理の写真（イメージ）— .*CC BY 4\.0.*Wikimedia Commons/);
+  assert.doesNotMatch(r.credit, /User:/);
+  assert.strictEqual(r.kind, 'food');
+  // 照合なし・Commons 以外の URL → null（街の写真に落ちる）
+  assert.strictEqual(f('栄でデート'), null);
+  assert.strictEqual(f('刺身の店'), null);
+  const html1 = storeHtml;
+  assert.strictEqual(N.buildNoteDraft({ slug: 's', title: '今池で焼き鳥', date: '2026-11-23' }, html1, p).photo.kind, 'food');
+  const d = N.buildNoteDraft({ slug: 's', title: '今池で焼き鳥', date: '2026-11-23' }, html1, p);
+  assert.match(d.body, /^見出し画像: 焼き鳥の写真（イメージ）— .*CC BY 4\.0.* https:\/\/commons/m);
+  assert.deepStrictEqual(N.validateNoteDraft(d, { policy: p, articleText: N.htmlToText(html1) }), []);
+  assert.strictEqual(N.buildNoteDraft({ slug: 's', title: '今池で一人飲み', date: '2026-11-23' }, html1, p).photo.kind, 'area');
+  // PR TIMES の店の実物写真が先
+  const pr = fig('hero', 'press', PR);
+  assert.strictEqual(N.buildNoteDraft({ slug: 's', title: '今池で焼き鳥', date: '2026-11-23' }, pr + html1, p).photo.kind, 'hero');
+  // 設定で止められる
+  assert.strictEqual(N.foodPhoto({ title: '焼き鳥', date: '2026-11-23' }, { ...p, eyecatchFoodPhoto: false }, [], root), null);
+  assert.strictEqual(N.buildNoteDraft({ slug: 's', title: '今池で焼き鳥', date: '2026-11-23' }, html1, { ...p, eyecatchFoodPhoto: false }).photo.kind, 'area');
+  // 台帳が無ければ今までどおり（止めない）
+  assert.strictEqual(N.foodPhoto({ title: '焼き鳥', date: '2026-11-23' }, p, [], fs.mkdtempSync(path.join(os.tmpdir(), 'nb-x-'))), null);
+});
+
+test('storesOf: store_ids が配列でも文字列（"[\'J001\', \'J002\']"）でも、店舗ID・ホットペッパーIDのどちらでも店を引ける', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-note-ids-'));
+  fs.mkdirSync(path.join(root, 'data'));
+  fs.writeFileSync(path.join(root, 'data/stores.json'), JSON.stringify([{ 店舗ID: 'J001' }, { 店舗ID: 'E9', ホットペッパーID: 'J002' }, { 店舗ID: 'J003' }]));
+  const ids = (e) => N.storesOf(e, root).map((s) => s['ホットペッパーID'] || s['店舗ID']);
+  assert.deepStrictEqual(ids({ store_ids: ['J001', 'J002'] }), ['J001', 'J002']);
+  assert.deepStrictEqual(ids({ store_ids: "['J001', 'J003']" }), ['J001', 'J003']);
+  assert.deepStrictEqual(ids({ store_ids: '' }), []);
+  assert.deepStrictEqual(ids({}), []);
+  assert.deepStrictEqual(N.storeIdsOf({ store_ids: "['J004537019', 'J003298620']" }), ['J004537019', 'J003298620']);
+  assert.deepStrictEqual(N.storeIdsOf({ store_ids: null }), []);
+});
+
 test('stores: 店の欄が無い1軒の記事は、導入の後に店のカードを置き、節は2段落までにする', () => {
   const root = igRoot({ J009: { postUrl: 'https://www.instagram.com/shop_z/p/ZZZ/' } }, { J009: { instagram: 'https://www.instagram.com/shop_z/' } });
   const one = `<h1 class="art-title">1軒</h1><p class="art-lead">導入。</p><div class="art-body"><h2>節1</h2><p>一。</p><p>二。</p><p>三。</p><h2>節2</h2><p>四。</p></div></article>`;
@@ -198,4 +260,66 @@ test('stores: 店の欄が無い1軒の記事は、導入の後に店のカー�
 test('post_note.js は読み込んだだけでは投稿を始めない（直接実行したときだけ動く）', () => {
   const src = require('fs').readFileSync(require('path').join(__dirname, '../scripts/post_note.js'), 'utf8');
   assert.match(src, /if \(require\.main === module\) \(async \(\) => \{/);
+});
+
+test('店の写真カードは body.storePhotosPerStore 枚まで、同じ公式アカウントの投稿だけ', () => {
+  const root = require('fs').mkdtempSync(require('path').join(require('os').tmpdir(), 'nb-cards-'));
+  require('fs').mkdirSync(require('path').join(root, 'data'));
+  const w = (f, o) => require('fs').writeFileSync(require('path').join(root, 'data', f), JSON.stringify(o));
+  w('instagram_resolved.json', { S1: { instagram: 'https://www.instagram.com/shop_a/' } });
+  w('instagram_posts.json', { S1: { postUrl: 'https://www.instagram.com/shop_a/p/AAA/', extraPosts: [
+    { postUrl: 'https://www.instagram.com/other_shop/p/XXX/' },
+    { postUrl: 'https://www.instagram.com/shop_a/p/BBB/' },
+    { postUrl: 'https://www.instagram.com/shop_a/p/CCC/' },
+  ] } });
+  assert.deepEqual(N.storePhotoCards('S1', root, {}, 1).map((c) => c.url), ['https://www.instagram.com/shop_a/p/AAA/']);
+  assert.deepEqual(N.storePhotoCards('S1', root, {}, 2).map((c) => c.url), ['https://www.instagram.com/shop_a/p/AAA/', 'https://www.instagram.com/shop_a/p/BBB/']);
+  assert.deepEqual(N.storePhotoCards('NONE', root, {}, 2), []);
+});
+
+test('見出し画像の料理の写真: 直近14日の記事が使った写真は使わない（2026-11-23 design-qa 重大2）。全部使っていたら、いちばん前に使った写真', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nb-note-food-recent-'));
+  fs.mkdirSync(path.join(root, 'data'));
+  const c = (n) => ({ thumb1600: `https://upload.wikimedia.org/x/${n}.jpg`, author: 'Foo', license: 'CC0', page: `https://commons.wikimedia.org/wiki/File:${n}.jpg` });
+  fs.writeFileSync(path.join(root, 'data/note_food_photos.json'), JSON.stringify({ genres: {
+    焼き鳥: { label: '焼き鳥', words: ['焼き鳥'], photos: [c('y1'), c('y2')] },
+    居酒屋: { label: '居酒屋の料理', words: ['居酒屋'], generic: true, photos: [c('i1'), c('i2'), c('i3')] },
+  } }));
+  const p = { ...policy, _root: root };
+  const days = (from, n, title) => Array.from({ length: n }, (_, i) => ({ slug: `s${from + i}`, title, date: `2026-11-${String(from + i).padStart(2, '0')}` }));
+  const write = (entries) => fs.writeFileSync(path.join(root, 'data/journal_published.json'), JSON.stringify({ entries }));
+  const pick = (title, date) => N.foodPhoto({ title, date }, p, [], root);
+  // 居酒屋の記事が3日続いた次の日（写真は3枚）→ 3枚とも使用済み。いちばん前に使った写真に戻る
+  write(days(1, 3, '栄の居酒屋'));
+  const used = days(1, 3, '栄の居酒屋').map((e) => pick(e.title, e.date).src);
+  assert.strictEqual(new Set(used).size, 3, '3日続けても毎日ちがう写真');
+  assert.strictEqual(pick('栄の居酒屋', '2026-11-04').src, used[0]);
+  // 2日続けて居酒屋 → 3日目は残りの1枚
+  write(days(1, 2, '栄の居酒屋'));
+  const two = days(1, 2, '栄の居酒屋').map((e) => pick(e.title, e.date).src);
+  const third = pick('栄の居酒屋', '2026-11-03').src;
+  assert.ok(!two.includes(third));
+  // 15日より前の使用は数えない（日付で回す元の写真に戻る）
+  write(days(1, 1, '栄の居酒屋'));
+  const first = pick('栄の居酒屋', '2026-11-01').src;
+  const late = N.foodPhoto({ title: '栄の居酒屋', date: '2026-11-17' }, p, [], root).src;
+  const lateNoHistory = (write([]), pick('栄の居酒屋', '2026-11-17').src);
+  assert.strictEqual(late, lateNoHistory);
+  assert.ok(first);
+  // 当てはまるジャンルの写真をすべて使い切ったら、次に当てはまるジャンル（焼き鳥の題で居酒屋の写真ではなく、焼き鳥の2枚を使い切った後に居酒屋）
+  write(days(1, 2, '栄の焼き鳥の居酒屋'));
+  const t = days(1, 2, '栄の焼き鳥の居酒屋').map((e) => pick(e.title, e.date));
+  assert.deepStrictEqual(t.map((x) => x.genre), ['焼き鳥', '焼き鳥']);
+  assert.strictEqual(pick('栄の焼き鳥の居酒屋', '2026-11-03').genre, '居酒屋');
+  // PR TIMES の写真がある記事は料理の写真を使わないので数えない
+  fs.mkdirSync(path.join(root, 'journal'));
+  write(days(1, 2, '栄の焼き鳥'));
+  fs.writeFileSync(path.join(root, 'journal/s1.html'), fig('hero', 'press', PR));
+  assert.ok(N.articlePhoto(fs.readFileSync(path.join(root, 'journal/s1.html'), 'utf8'), p));
+  // 11/1 は PR TIMES の写真なので、焼き鳥の写真は 11/2 の1枚だけが使用済み → 11/3 はもう1枚の焼き鳥（居酒屋に落ちない）
+  const d2 = pick('栄の焼き鳥', '2026-11-02').src;
+  assert.notStrictEqual(pick('栄の焼き鳥', '2026-11-03').src, d2);
+  assert.strictEqual(pick('栄の焼き鳥', '2026-11-03').genre, '焼き鳥');
+  // 下書きは記事の店名を持つ（見出し画像で店名の途中を折らないため）
+  assert.deepStrictEqual(N.buildNoteDraft({ slug: 's', title: '今池で焼き鳥', date: '2026-11-23' }, storeHtml, p, [{ 店名: '海乃鶏 名古屋駅前店' }, {}]).storeNames, ['海乃鶏 名古屋駅前店']);
 });

@@ -1,0 +1,1330 @@
+{
+ "_comment": "note の見出し画像に使う、名古屋でよく出る料理ジャンルの実写真（Wikimedia Commons の CC0・パブリックドメイン・CC BY・CC BY-SA だけ。AI 生成・有料素材は使わない）。店の実物ではないので、本文のクレジットに「（イメージ）」と書く。words は題名・店のジャンル欄に出る語、generic は広いジャンル（具体的なジャンルより後に見る）。scripts/lib/note_draft.js の foodPhoto が読む。2026-11-23 調査・目視で選別",
+ "genres": {
+  "焼き鳥": {
+   "label": "焼き鳥",
+   "words": [
+    "焼き鳥",
+    "焼鳥",
+    "やきとり",
+    "やきとん",
+    "串焼",
+    "串打ち",
+    "ねぎま"
+   ],
+   "photos": [
+    {
+     "file": "File:Yakitori - Tora.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Yakitori_-_Tora.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Yakitori_-_Tora.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Yakitori_-_Tora.jpg/1920px-Yakitori_-_Tora.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4624,
+     "height": 3472,
+     "author": "Francesc Fort",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:Yakitori set and others at Torihei-chan, Kamata East Exit (20230806200725).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Yakitori_set_and_others_at_Torihei-chan,_Kamata_East_Exit_(20230806200725).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/c/cd/Yakitori_set_and_others_at_Torihei-chan%2C_Kamata_East_Exit_%2820230806200725%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Yakitori_set_and_others_at_Torihei-chan%2C_Kamata_East_Exit_%2820230806200725%29.jpg/1920px-Yakitori_set_and_others_at_Torihei-chan%2C_Kamata_East_Exit_%2820230806200725%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 2688,
+     "author": "N509FZ",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:博多とりかわ塩（博多とりかわ大臣駅前串房・博多）20201121-P1130913.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:%E5%8D%9A%E5%A4%9A%E3%81%A8%E3%82%8A%E3%81%8B%E3%82%8F%E5%A1%A9%EF%BC%88%E5%8D%9A%E5%A4%9A%E3%81%A8%E3%82%8A%E3%81%8B%E3%82%8F%E5%A4%A7%E8%87%A3%E9%A7%85%E5%89%8D%E4%B8%B2%E6%88%BF%E3%83%BB%E5%8D%9A%E5%A4%9A%EF%BC%8920201121-P1130913.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/1/1b/%E5%8D%9A%E5%A4%9A%E3%81%A8%E3%82%8A%E3%81%8B%E3%82%8F%E5%A1%A9%EF%BC%88%E5%8D%9A%E5%A4%9A%E3%81%A8%E3%82%8A%E3%81%8B%E3%82%8F%E5%A4%A7%E8%87%A3%E9%A7%85%E5%89%8D%E4%B8%B2%E6%88%BF%E3%83%BB%E5%8D%9A%E5%A4%9A%EF%BC%8920201121-P1130913.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://upload.wikimedia.org/wikipedia/commons/1/1b/%E5%8D%9A%E5%A4%9A%E3%81%A8%E3%82%8A%E3%81%8B%E3%82%8F%E5%A1%A9%EF%BC%88%E5%8D%9A%E5%A4%9A%E3%81%A8%E3%82%8A%E3%81%8B%E3%82%8F%E5%A4%A7%E8%87%A3%E9%A7%85%E5%89%8D%E4%B8%B2%E6%88%BF%E3%83%BB%E5%8D%9A%E5%A4%9A%EF%BC%8920201121-P1130913.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+     "width": 1600,
+     "height": 1201,
+     "author": "くろふね",
+     "license": "CC BY 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+    },
+    {
+     "file": "File:Typical yakitori 001.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Typical_yakitori_001.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/0/0a/Typical_yakitori_001.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0a/Typical_yakitori_001.jpg/1920px-Typical_yakitori_001.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4288,
+     "height": 2848,
+     "author": "Ocdp",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    }
+   ]
+  },
+  "火鍋": {
+   "label": "火鍋",
+   "words": [
+    "火鍋",
+    "麻辣鍋",
+    "薬膳鍋"
+   ],
+   "photos": [
+    {
+     "file": "File:Chengdu double hotpot.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Chengdu_double_hotpot.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Chengdu_double_hotpot.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Chengdu_double_hotpot.jpg/1920px-Chengdu_double_hotpot.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "Jpatokal",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:3x3 hot pot in Chongqing (20180217161707).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:3x3_hot_pot_in_Chongqing_(20180217161707).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/c/c6/3x3_hot_pot_in_Chongqing_%2820180217161707%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/3x3_hot_pot_in_Chongqing_%2820180217161707%29.jpg/1920px-3x3_hot_pot_in_Chongqing_%2820180217161707%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4252,
+     "height": 2834,
+     "author": "N509FZ",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    }
+   ]
+  },
+  "鍋": {
+   "label": "鍋料理",
+   "words": [
+    "鍋",
+    "もつ鍋",
+    "すき焼",
+    "しゃぶしゃぶ",
+    "ちゃんこ",
+    "おでん"
+   ],
+   "photos": [
+    {
+     "file": "File:Motsunabe Aug 13 2021 Ikebukuro- two views.jpeg",
+     "page": "https://commons.wikimedia.org/wiki/File:Motsunabe_Aug_13_2021_Ikebukuro-_two_views.jpeg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/0/04/Motsunabe_Aug_13_2021_Ikebukuro-_two_views.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Motsunabe_Aug_13_2021_Ikebukuro-_two_views.jpeg/1920px-Motsunabe_Aug_13_2021_Ikebukuro-_two_views.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "Nesnad",
+     "license": "CC BY 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+    },
+    {
+     "file": "File:博多明太もつ鍋こく味噌（ガスト下総中山店）20251202-P1076221.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:%E5%8D%9A%E5%A4%9A%E6%98%8E%E5%A4%AA%E3%82%82%E3%81%A4%E9%8D%8B%E3%81%93%E3%81%8F%E5%91%B3%E5%99%8C%EF%BC%88%E3%82%AC%E3%82%B9%E3%83%88%E4%B8%8B%E7%B7%8F%E4%B8%AD%E5%B1%B1%E5%BA%97%EF%BC%8920251202-P1076221.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/d/dc/%E5%8D%9A%E5%A4%9A%E6%98%8E%E5%A4%AA%E3%82%82%E3%81%A4%E9%8D%8B%E3%81%93%E3%81%8F%E5%91%B3%E5%99%8C%EF%BC%88%E3%82%AC%E3%82%B9%E3%83%88%E4%B8%8B%E7%B7%8F%E4%B8%AD%E5%B1%B1%E5%BA%97%EF%BC%8920251202-P1076221.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://upload.wikimedia.org/wikipedia/commons/d/dc/%E5%8D%9A%E5%A4%9A%E6%98%8E%E5%A4%AA%E3%82%82%E3%81%A4%E9%8D%8B%E3%81%93%E3%81%8F%E5%91%B3%E5%99%8C%EF%BC%88%E3%82%AC%E3%82%B9%E3%83%88%E4%B8%8B%E7%B7%8F%E4%B8%AD%E5%B1%B1%E5%BA%97%EF%BC%8920251202-P1076221.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+     "width": 1600,
+     "height": 1200,
+     "author": "くろふね",
+     "license": "CC BY 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+    },
+    {
+     "file": "File:もつ鍋虎福堂IMG 20220115 03.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:%E3%82%82%E3%81%A4%E9%8D%8B%E8%99%8E%E7%A6%8F%E5%A0%82IMG_20220115_03.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/0/0d/%E3%82%82%E3%81%A4%E9%8D%8B%E8%99%8E%E7%A6%8F%E5%A0%82IMG_20220115_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0d/%E3%82%82%E3%81%A4%E9%8D%8B%E8%99%8E%E7%A6%8F%E5%A0%82IMG_20220115_03.jpg/1920px-%E3%82%82%E3%81%A4%E9%8D%8B%E8%99%8E%E7%A6%8F%E5%A0%82IMG_20220115_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3840,
+     "height": 2160,
+     "author": "経済特区",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:ホル鍋定食（静岡県静岡市清水区・おふくろ亭）20260320-P1081320.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:%E3%83%9B%E3%83%AB%E9%8D%8B%E5%AE%9A%E9%A3%9F%EF%BC%88%E9%9D%99%E5%B2%A1%E7%9C%8C%E9%9D%99%E5%B2%A1%E5%B8%82%E6%B8%85%E6%B0%B4%E5%8C%BA%E3%83%BB%E3%81%8A%E3%81%B5%E3%81%8F%E3%82%8D%E4%BA%AD%EF%BC%8920260320-P1081320.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/2/26/%E3%83%9B%E3%83%AB%E9%8D%8B%E5%AE%9A%E9%A3%9F%EF%BC%88%E9%9D%99%E5%B2%A1%E7%9C%8C%E9%9D%99%E5%B2%A1%E5%B8%82%E6%B8%85%E6%B0%B4%E5%8C%BA%E3%83%BB%E3%81%8A%E3%81%B5%E3%81%8F%E3%82%8D%E4%BA%AD%EF%BC%8920260320-P1081320.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://upload.wikimedia.org/wikipedia/commons/2/26/%E3%83%9B%E3%83%AB%E9%8D%8B%E5%AE%9A%E9%A3%9F%EF%BC%88%E9%9D%99%E5%B2%A1%E7%9C%8C%E9%9D%99%E5%B2%A1%E5%B8%82%E6%B8%85%E6%B0%B4%E5%8C%BA%E3%83%BB%E3%81%8A%E3%81%B5%E3%81%8F%E3%82%8D%E4%BA%AD%EF%BC%8920260320-P1081320.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+     "width": 1600,
+     "height": 1200,
+     "author": "くろふね",
+     "license": "CC BY 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+    }
+   ]
+  },
+  "天ぷら": {
+   "label": "天ぷら",
+   "words": [
+    "天ぷら",
+    "天婦羅",
+    "てんぷら",
+    "天丼",
+    "天麩羅"
+   ],
+   "photos": [
+    {
+     "file": "File:KISU no TEMPURA or Sillaginidae Sand Borer Tempura 2021.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:KISU_no_TEMPURA_or_Sillaginidae_Sand_Borer_Tempura_2021.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/a/af/KISU_no_TEMPURA_or_Sillaginidae_Sand_Borer_Tempura_2021.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://upload.wikimedia.org/wikipedia/commons/a/af/KISU_no_TEMPURA_or_Sillaginidae_Sand_Borer_Tempura_2021.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+     "width": 1611,
+     "height": 1164,
+     "author": "ウィキ太郎(WikiTaro)",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Prawn-tempura-box.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Prawn-tempura-box.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Prawn-tempura-box.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Prawn-tempura-box.jpg/1920px-Prawn-tempura-box.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 5480,
+     "height": 3652,
+     "author": "些細な日常",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:Tempurainjapan-ikebukuro-dec312007.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Tempurainjapan-ikebukuro-dec312007.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Tempurainjapan-ikebukuro-dec312007.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Tempurainjapan-ikebukuro-dec312007.jpg/1920px-Tempurainjapan-ikebukuro-dec312007.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3072,
+     "height": 1728,
+     "author": "Nesnad",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:つな八 盛り付け (25086067202).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:%E3%81%A4%E3%81%AA%E5%85%AB_%E7%9B%9B%E3%82%8A%E4%BB%98%E3%81%91_(25086067202).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/4/43/%E3%81%A4%E3%81%AA%E5%85%AB_%E7%9B%9B%E3%82%8A%E4%BB%98%E3%81%91_%2825086067202%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/%E3%81%A4%E3%81%AA%E5%85%AB_%E7%9B%9B%E3%82%8A%E4%BB%98%E3%81%91_%2825086067202%29.jpg/1920px-%E3%81%A4%E3%81%AA%E5%85%AB_%E7%9B%9B%E3%82%8A%E4%BB%98%E3%81%91_%2825086067202%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "kennejima",
+     "license": "CC BY 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    }
+   ]
+  },
+  "鯖": {
+   "label": "鯖料理",
+   "words": [
+    "鯖",
+    "さば",
+    "サバ",
+    "しめ鯖",
+    "青魚"
+   ],
+   "photos": [
+    {
+     "file": "File:Coal-grilled mackerel lunch at Shiroganeya (29406008015).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Coal-grilled_mackerel_lunch_at_Shiroganeya_(29406008015).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Coal-grilled_mackerel_lunch_at_Shiroganeya_%2829406008015%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Coal-grilled_mackerel_lunch_at_Shiroganeya_%2829406008015%29.jpg/1920px-Coal-grilled_mackerel_lunch_at_Shiroganeya_%2829406008015%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 5940,
+     "height": 3960,
+     "author": "Raita Futo from Tokyo, Japan",
+     "license": "CC BY 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+     "file": "File:Grilled mackerel sushi (4691657059).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Grilled_mackerel_sushi_(4691657059).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/1/18/Grilled_mackerel_sushi_%284691657059%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Grilled_mackerel_sushi_%284691657059%29.jpg/1920px-Grilled_mackerel_sushi_%284691657059%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3648,
+     "height": 2736,
+     "author": "pelican from Tokyo, Japan",
+     "license": "CC BY-SA 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+     "file": "File:Japanese raw whitebait and shimesaba 2014.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Japanese_raw_whitebait_and_shimesaba_2014.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Japanese_raw_whitebait_and_shimesaba_2014.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/Japanese_raw_whitebait_and_shimesaba_2014.jpg/1920px-Japanese_raw_whitebait_and_shimesaba_2014.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4146,
+     "height": 3311,
+     "author": "Kentin",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:Sabazushi.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Sabazushi.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/9/91/Sabazushi.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Sabazushi.jpg/1920px-Sabazushi.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 2560,
+     "height": 1920,
+     "author": "7'o'7",
+     "license": "CC BY-SA 3.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    }
+   ]
+  },
+  "刺身": {
+   "label": "刺身",
+   "words": [
+    "刺身",
+    "海鮮",
+    "鮮魚",
+    "青魚",
+    "お造り",
+    "魚介",
+    "さば",
+    "鯖"
+   ],
+   "photos": [
+    {
+     "file": "File:Deluxe sashimi platter 03.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Deluxe_sashimi_platter_03.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/d/da/Deluxe_sashimi_platter_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Deluxe_sashimi_platter_03.jpg/1920px-Deluxe_sashimi_platter_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "T.Tseng",
+     "license": "CC BY 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+     "file": "File:Sushi Sashimi Medium Platter - Yama-ya (2570349350).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Sushi_Sashimi_Medium_Platter_-_Yama-ya_(2570349350).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Sushi_Sashimi_Medium_Platter_-_Yama-ya_%282570349350%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Sushi_Sashimi_Medium_Platter_-_Yama-ya_%282570349350%29.jpg/1920px-Sushi_Sashimi_Medium_Platter_-_Yama-ya_%282570349350%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 2048,
+     "height": 1536,
+     "author": "Alpha from Melbourne, Australia",
+     "license": "CC BY-SA 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+     "file": "File:Salmon and Shrimp Lunch 20180630.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Salmon_and_Shrimp_Lunch_20180630.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Salmon_and_Shrimp_Lunch_20180630.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Salmon_and_Shrimp_Lunch_20180630.jpg/1920px-Salmon_and_Shrimp_Lunch_20180630.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "Hal 0005",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:刺身拼盤 (3253764826).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:%E5%88%BA%E8%BA%AB%E6%8B%BC%E7%9B%A4_(3253764826).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/%E5%88%BA%E8%BA%AB%E6%8B%BC%E7%9B%A4_%283253764826%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c3/%E5%88%BA%E8%BA%AB%E6%8B%BC%E7%9B%A4_%283253764826%29.jpg/1920px-%E5%88%BA%E8%BA%AB%E6%8B%BC%E7%9B%A4_%283253764826%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3888,
+     "height": 2592,
+     "author": "Dennis Wong from Hong Kong, Hong Kong",
+     "license": "CC BY 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    }
+   ]
+  },
+  "焼肉": {
+   "label": "焼肉",
+   "words": [
+    "焼肉",
+    "焼き肉",
+    "ホルモン",
+    "ステーキ",
+    "牛タン",
+    "和牛",
+    "肉寿司",
+    "ジンギスカン"
+   ],
+   "photos": [
+    {
+     "file": "File:Steak at yakiniku restaurant just outside Moon Beach.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Steak_at_yakiniku_restaurant_just_outside_Moon_Beach.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Steak_at_yakiniku_restaurant_just_outside_Moon_Beach.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Steak_at_yakiniku_restaurant_just_outside_Moon_Beach.jpg/1920px-Steak_at_yakiniku_restaurant_just_outside_Moon_Beach.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "Syced",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Beef meat at yakiniku restaurant just outside Moon Beach.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Beef_meat_at_yakiniku_restaurant_just_outside_Moon_Beach.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/e/e3/Beef_meat_at_yakiniku_restaurant_just_outside_Moon_Beach.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Beef_meat_at_yakiniku_restaurant_just_outside_Moon_Beach.jpg/1920px-Beef_meat_at_yakiniku_restaurant_just_outside_Moon_Beach.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "Syced",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Yakiniku restaurant in Shibuya -21769.jpeg",
+     "page": "https://commons.wikimedia.org/wiki/File:Yakiniku_restaurant_in_Shibuya_-21769.jpeg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/1/13/Yakiniku_restaurant_in_Shibuya_-21769.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/Yakiniku_restaurant_in_Shibuya_-21769.jpeg/1920px-Yakiniku_restaurant_in_Shibuya_-21769.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4080,
+     "height": 3072,
+     "author": "Syced",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Matsusaka Beef of Korean barbecue using charcoal fire.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Matsusaka_Beef_of_Korean_barbecue_using_charcoal_fire.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Matsusaka_Beef_of_Korean_barbecue_using_charcoal_fire.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Matsusaka_Beef_of_Korean_barbecue_using_charcoal_fire.jpg/1920px-Matsusaka_Beef_of_Korean_barbecue_using_charcoal_fire.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3648,
+     "height": 2736,
+     "author": "Akahito Yamabe",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    }
+   ]
+  },
+  "ラーメン": {
+   "label": "ラーメン",
+   "words": [
+    "ラーメン",
+    "らーめん",
+    "中華そば",
+    "つけ麺",
+    "まぜそば",
+    "担々麺"
+   ],
+   "photos": [
+    {
+     "file": "File:Soy Milk Ramen and Tonkotsu Miso Ramen by Goemon Ramen Bar.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Soy_Milk_Ramen_and_Tonkotsu_Miso_Ramen_by_Goemon_Ramen_Bar.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/5/56/Soy_Milk_Ramen_and_Tonkotsu_Miso_Ramen_by_Goemon_Ramen_Bar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Soy_Milk_Ramen_and_Tonkotsu_Miso_Ramen_by_Goemon_Ramen_Bar.jpg/1920px-Soy_Milk_Ramen_and_Tonkotsu_Miso_Ramen_by_Goemon_Ramen_Bar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "Andy Li",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Truffle ramen.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Truffle_ramen.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Truffle_ramen.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Truffle_ramen.jpg/1920px-Truffle_ramen.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "Misaochan2",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:Vegetable Miso Ramen - Shogun Ramen 2023-10-11.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Vegetable_Miso_Ramen_-_Shogun_Ramen_2023-10-11.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Vegetable_Miso_Ramen_-_Shogun_Ramen_2023-10-11.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Vegetable_Miso_Ramen_-_Shogun_Ramen_2023-10-11.jpg/1920px-Vegetable_Miso_Ramen_-_Shogun_Ramen_2023-10-11.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "Andy Li",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Veggie Miso Ramen and Tokyo Tonkotsu by Goemon Ramen Bar.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Veggie_Miso_Ramen_and_Tokyo_Tonkotsu_by_Goemon_Ramen_Bar.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/8/80/Veggie_Miso_Ramen_and_Tokyo_Tonkotsu_by_Goemon_Ramen_Bar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/80/Veggie_Miso_Ramen_and_Tokyo_Tonkotsu_by_Goemon_Ramen_Bar.jpg/1920px-Veggie_Miso_Ramen_and_Tokyo_Tonkotsu_by_Goemon_Ramen_Bar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "Andy Li",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    }
+   ]
+  },
+  "とんかつ・味噌カツ": {
+   "label": "とんかつ・味噌カツ",
+   "words": [
+    "味噌カツ",
+    "みそかつ",
+    "とんかつ",
+    "トンカツ",
+    "カツ丼",
+    "カツサンド",
+    "かつ丼"
+   ],
+   "photos": [
+    {
+     "file": "File:Tonkatsu of Kimukatsu.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Tonkatsu_of_Kimukatsu.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tonkatsu_of_Kimukatsu.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Tonkatsu_of_Kimukatsu.jpg/1920px-Tonkatsu_of_Kimukatsu.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4121,
+     "height": 2627,
+     "author": "Minseong Kim",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:Tonkatsu by ayustety in Tokyo.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Tonkatsu_by_ayustety_in_Tokyo.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/6/62/Tonkatsu_by_ayustety_in_Tokyo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Tonkatsu_by_ayustety_in_Tokyo.jpg/1920px-Tonkatsu_by_ayustety_in_Tokyo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 2272,
+     "height": 1704,
+     "author": "ayustety from Tokyo, Japan",
+     "license": "CC BY-SA 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+     "file": "File:三元豚(平田牧場)の豚カツ.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:%E4%B8%89%E5%85%83%E8%B1%9A(%E5%B9%B3%E7%94%B0%E7%89%A7%E5%A0%B4)%E3%81%AE%E8%B1%9A%E3%82%AB%E3%83%84.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/1/10/%E4%B8%89%E5%85%83%E8%B1%9A%28%E5%B9%B3%E7%94%B0%E7%89%A7%E5%A0%B4%29%E3%81%AE%E8%B1%9A%E3%82%AB%E3%83%84.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/%E4%B8%89%E5%85%83%E8%B1%9A%28%E5%B9%B3%E7%94%B0%E7%89%A7%E5%A0%B4%29%E3%81%AE%E8%B1%9A%E3%82%AB%E3%83%84.jpg/1920px-%E4%B8%89%E5%85%83%E8%B1%9A%28%E5%B9%B3%E7%94%B0%E7%89%A7%E5%A0%B4%29%E3%81%AE%E8%B1%9A%E3%82%AB%E3%83%84.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4080,
+     "height": 3072,
+     "author": "Syced",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Yamato Pork Cutlet by TonQ.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Yamato_Pork_Cutlet_by_TonQ.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Yamato_Pork_Cutlet_by_TonQ.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Yamato_Pork_Cutlet_by_TonQ.jpg/1920px-Yamato_Pork_Cutlet_by_TonQ.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4511,
+     "height": 3111,
+     "author": "Miyuki Meinaka",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    }
+   ]
+  },
+  "手羽先": {
+   "label": "手羽先",
+   "words": [
+    "手羽先",
+    "手羽"
+   ],
+   "photos": [
+    {
+     "file": "File:Bankrueed fried chicken wings.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Bankrueed_fried_chicken_wings.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/7/73/Bankrueed_fried_chicken_wings.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/Bankrueed_fried_chicken_wings.jpg/1920px-Bankrueed_fried_chicken_wings.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3648,
+     "height": 2736,
+     "author": "Vee Satayamas",
+     "license": "CC BY 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+    },
+    {
+     "file": "File:Fried Chicken Wings (54282490120).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Fried_Chicken_Wings_(54282490120).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Fried_Chicken_Wings_%2854282490120%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Fried_Chicken_Wings_%2854282490120%29.jpg/1920px-Fried_Chicken_Wings_%2854282490120%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3600,
+     "height": 2400,
+     "author": "Choo Yut Shing from Singapore, Singapore",
+     "license": "CC BY 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+     "file": "File:Fried Chicken Wing (53289919952).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Fried_Chicken_Wing_(53289919952).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Fried_Chicken_Wing_%2853289919952%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Fried_Chicken_Wing_%2853289919952%29.jpg/1920px-Fried_Chicken_Wing_%2853289919952%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3600,
+     "height": 2400,
+     "author": "Choo Yut Shing",
+     "license": "CC BY 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+     "file": "File:Fried Chicken Wings, Oct 2025.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Fried_Chicken_Wings,_Oct_2025.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Fried_Chicken_Wings%2C_Oct_2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Fried_Chicken_Wings%2C_Oct_2025.jpg/1920px-Fried_Chicken_Wings%2C_Oct_2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4080,
+     "height": 3072,
+     "author": "Ralff Nestor Nacor",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    }
+   ]
+  },
+  "うなぎ": {
+   "label": "うなぎ（ひつまぶし）",
+   "words": [
+    "うなぎ",
+    "鰻",
+    "ひつまぶし",
+    "うな重",
+    "うな丼"
+   ],
+   "photos": [
+    {
+     "file": "File:Hitsumabushi1.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Hitsumabushi1.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/c/cd/Hitsumabushi1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Hitsumabushi1.jpg/1920px-Hitsumabushi1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "Kanesue",
+     "license": "CC BY 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+     "file": "File:Hitsumabushi 1.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Hitsumabushi_1.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Hitsumabushi_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/Hitsumabushi_1.jpg/1920px-Hitsumabushi_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3648,
+     "height": 2736,
+     "author": "Bariston",
+     "license": "CC BY-SA 3.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+     "file": "File:Tokyo Chikuyotei Unadon01s2100.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Tokyo_Chikuyotei_Unadon01s2100.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Tokyo_Chikuyotei_Unadon01s2100.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e7/Tokyo_Chikuyotei_Unadon01s2100.jpg/1920px-Tokyo_Chikuyotei_Unadon01s2100.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 2100,
+     "height": 1400,
+     "author": "663highland",
+     "license": "CC BY 2.5",
+     "licenseUrl": "https://creativecommons.org/licenses/by/2.5"
+    },
+    {
+     "file": "File:日式蒲燒鰻魚飯 (DSC04153).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:%E6%97%A5%E5%BC%8F%E8%92%B2%E7%87%92%E9%B0%BB%E9%AD%9A%E9%A3%AF_(DSC04153).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/2/2c/%E6%97%A5%E5%BC%8F%E8%92%B2%E7%87%92%E9%B0%BB%E9%AD%9A%E9%A3%AF_%28DSC04153%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/%E6%97%A5%E5%BC%8F%E8%92%B2%E7%87%92%E9%B0%BB%E9%AD%9A%E9%A3%AF_%28DSC04153%29.jpg/1920px-%E6%97%A5%E5%BC%8F%E8%92%B2%E7%87%92%E9%B0%BB%E9%AD%9A%E9%A3%AF_%28DSC04153%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 6000,
+     "height": 4000,
+     "author": "Rick888chen",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    }
+   ]
+  },
+  "きしめん・うどん": {
+   "label": "きしめん・うどん",
+   "words": [
+    "きしめん",
+    "うどん",
+    "味噌煮込み"
+   ],
+   "photos": [
+    {
+     "file": "File:Niku Udon by CB.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Niku_Udon_by_CB.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/3/38/Niku_Udon_by_CB.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Niku_Udon_by_CB.jpg/1920px-Niku_Udon_by_CB.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 2592,
+     "height": 1944,
+     "author": "Corpse Reviver",
+     "license": "CC BY-SA 3.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+     "file": "File:Curry udon by yoppy.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Curry_udon_by_yoppy.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Curry_udon_by_yoppy.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Curry_udon_by_yoppy.jpg/1920px-Curry_udon_by_yoppy.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3264,
+     "height": 2176,
+     "author": "yoppy",
+     "license": "CC BY 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+     "file": "File:Shabu shabu udon in Tokyo.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Shabu_shabu_udon_in_Tokyo.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Shabu_shabu_udon_in_Tokyo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c3/Shabu_shabu_udon_in_Tokyo.jpg/1920px-Shabu_shabu_udon_in_Tokyo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4080,
+     "height": 3072,
+     "author": "Syced",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Mizusawa Udon, Mimasuya, Ikaho - Feb 16, 2010.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Mizusawa_Udon,_Mimasuya,_Ikaho_-_Feb_16,_2010.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Mizusawa_Udon%2C_Mimasuya%2C_Ikaho_-_Feb_16%2C_2010.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Mizusawa_Udon%2C_Mimasuya%2C_Ikaho_-_Feb_16%2C_2010.jpg/1920px-Mizusawa_Udon%2C_Mimasuya%2C_Ikaho_-_Feb_16%2C_2010.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 2048,
+     "height": 1536,
+     "author": "Dirty",
+     "license": "CC BY 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    }
+   ]
+  },
+  "寿司": {
+   "label": "寿司",
+   "words": [
+    "寿司",
+    "鮨",
+    "すし",
+    "握り"
+   ],
+   "photos": [
+    {
+     "file": "File:Shichifuku Nigiri Sushi at Tsukiji Tamasushi, Wing Takanawa (20230802203124).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Shichifuku_Nigiri_Sushi_at_Tsukiji_Tamasushi,_Wing_Takanawa_(20230802203124).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Shichifuku_Nigiri_Sushi_at_Tsukiji_Tamasushi%2C_Wing_Takanawa_%2820230802203124%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/Shichifuku_Nigiri_Sushi_at_Tsukiji_Tamasushi%2C_Wing_Takanawa_%2820230802203124%29.jpg/1920px-Shichifuku_Nigiri_Sushi_at_Tsukiji_Tamasushi%2C_Wing_Takanawa_%2820230802203124%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 2688,
+     "author": "N509FZ",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:Nigiri Sushi, Hosomaki - Uta Sushi Bar (5049056668).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Nigiri_Sushi,_Hosomaki_-_Uta_Sushi_Bar_(5049056668).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/6/60/Nigiri_Sushi%2C_Hosomaki_-_Uta_Sushi_Bar_%285049056668%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Nigiri_Sushi%2C_Hosomaki_-_Uta_Sushi_Bar_%285049056668%29.jpg/1920px-Nigiri_Sushi%2C_Hosomaki_-_Uta_Sushi_Bar_%285049056668%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 2048,
+     "height": 1371,
+     "author": "Alpha from Melbourne, Australia",
+     "license": "CC BY-SA 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+     "file": "File:Various sushi, beautiful October night at midnight.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Various_sushi,_beautiful_October_night_at_midnight.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Various_sushi%2C_beautiful_October_night_at_midnight.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/Various_sushi%2C_beautiful_October_night_at_midnight.jpg/1920px-Various_sushi%2C_beautiful_October_night_at_midnight.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 1936,
+     "height": 1296,
+     "author": "Yumi Kimura",
+     "license": "CC BY-SA 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+     "file": "File:Nigiri Sushi (26478725732).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Nigiri_Sushi_(26478725732).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Nigiri_Sushi_%2826478725732%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/Nigiri_Sushi_%2826478725732%29.jpg/1920px-Nigiri_Sushi_%2826478725732%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 5015,
+     "height": 3343,
+     "author": "Tim Reckmann from Hamm, Deutschland",
+     "license": "CC BY 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    }
+   ]
+  },
+  "餃子・中華": {
+   "label": "餃子",
+   "words": [
+    "餃子",
+    "ぎょうざ",
+    "ギョーザ",
+    "中華",
+    "点心",
+    "麻婆",
+    "小籠包"
+   ],
+   "photos": [
+    {
+     "file": "File:Gyoza no Antei - 3.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Gyoza_no_Antei_-_3.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Gyoza_no_Antei_-_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Gyoza_no_Antei_-_3.jpg/1920px-Gyoza_no_Antei_-_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "Enming Yan / 闫恩铭",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:Hamamatsu Gyōza 002.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Hamamatsu_Gy%C5%8Dza_002.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/c/cd/Hamamatsu_Gy%C5%8Dza_002.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Hamamatsu_Gy%C5%8Dza_002.jpg/1920px-Hamamatsu_Gy%C5%8Dza_002.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4288,
+     "height": 2848,
+     "author": "Ocdp",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Huge gyoza at Ginza Tenryu in Solamachi.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Huge_gyoza_at_Ginza_Tenryu_in_Solamachi.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Huge_gyoza_at_Ginza_Tenryu_in_Solamachi.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Huge_gyoza_at_Ginza_Tenryu_in_Solamachi.jpg/1920px-Huge_gyoza_at_Ginza_Tenryu_in_Solamachi.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4000,
+     "height": 3000,
+     "author": "Syced",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Gyoza japonais.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Gyoza_japonais.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Gyoza_japonais.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/Gyoza_japonais.jpg/1920px-Gyoza_japonais.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 2048,
+     "height": 1536,
+     "author": "Arnaud 25",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    }
+   ]
+  },
+  "カレー": {
+   "label": "カレー",
+   "words": [
+    "カレー",
+    "カリー",
+    "スパイス"
+   ],
+   "photos": [
+    {
+     "file": "File:Beef curry rice 003.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Beef_curry_rice_003.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Beef_curry_rice_003.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/Beef_curry_rice_003.jpg/1920px-Beef_curry_rice_003.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3797,
+     "height": 2848,
+     "author": "Ocdp",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Toshokan Curry of Japanese National Diet Library.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Toshokan_Curry_of_Japanese_National_Diet_Library.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/6/63/Toshokan_Curry_of_Japanese_National_Diet_Library.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Toshokan_Curry_of_Japanese_National_Diet_Library.jpg/1920px-Toshokan_Curry_of_Japanese_National_Diet_Library.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3721,
+     "height": 2164,
+     "author": "毒島みるく",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Jindai curry rice.JPG",
+     "page": "https://commons.wikimedia.org/wiki/File:Jindai_curry_rice.JPG",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Jindai_curry_rice.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Jindai_curry_rice.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+     "width": 1600,
+     "height": 1200,
+     "author": "Morigen",
+     "license": "Public domain",
+     "licenseUrl": ""
+    },
+    {
+     "file": "File:Pumpkin Curry Rice - Pompoko.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Pumpkin_Curry_Rice_-_Pompoko.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Pumpkin_Curry_Rice_-_Pompoko.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ad/Pumpkin_Curry_Rice_-_Pompoko.jpg/1920px-Pumpkin_Curry_Rice_-_Pompoko.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "Andy Li",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    }
+   ]
+  },
+  "パスタ・イタリアン": {
+   "label": "パスタ",
+   "words": [
+    "パスタ",
+    "イタリアン",
+    "スパゲッティ",
+    "トラットリア",
+    "オステリア",
+    "ビストロ"
+   ],
+   "photos": [
+    {
+     "file": "File:Chicken Parmigiana with angel hair pasta, Francesco's Italian Restaurant, Helen.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Chicken_Parmigiana_with_angel_hair_pasta,_Francesco%27s_Italian_Restaurant,_Helen.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Chicken_Parmigiana_with_angel_hair_pasta%2C_Francesco%27s_Italian_Restaurant%2C_Helen.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Chicken_Parmigiana_with_angel_hair_pasta%2C_Francesco%27s_Italian_Restaurant%2C_Helen.jpg/1920px-Chicken_Parmigiana_with_angel_hair_pasta%2C_Francesco%27s_Italian_Restaurant%2C_Helen.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 2048,
+     "height": 1536,
+     "author": "Michael Rivera",
+     "license": "CC BY 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+    },
+    {
+     "file": "File:Italian vegetable pasta in Guido ^ Angelina Restaurant - panoramio.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Italian_vegetable_pasta_in_Guido_%5E_Angelina_Restaurant_-_panoramio.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/0/06/Italian_vegetable_pasta_in_Guido_%5E_Angelina_Restaurant_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://upload.wikimedia.org/wikipedia/commons/0/06/Italian_vegetable_pasta_in_Guido_%5E_Angelina_Restaurant_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+     "width": 1632,
+     "height": 1224,
+     "author": "Jiaqian AirplaneFan",
+     "license": "CC BY 3.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+     "file": "File:Pasta Cxielo, Herford.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Pasta_Cxielo,_Herford.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/7/75/Pasta_Cxielo%2C_Herford.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Pasta_Cxielo%2C_Herford.jpg/1920px-Pasta_Cxielo%2C_Herford.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3511,
+     "height": 2633,
+     "author": "Gerda Arendt",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Simple pasta with creamy sauce.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Simple_pasta_with_creamy_sauce.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/0/06/Simple_pasta_with_creamy_sauce.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Simple_pasta_with_creamy_sauce.jpg/1920px-Simple_pasta_with_creamy_sauce.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4000,
+     "height": 3000,
+     "author": "Geoffreyrabbit",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    }
+   ]
+  },
+  "ピザ": {
+   "label": "ピザ",
+   "words": [
+    "ピザ",
+    "窯焼き"
+   ],
+   "photos": [
+    {
+     "file": "File:Margherita Originale.JPG",
+     "page": "https://commons.wikimedia.org/wiki/File:Margherita_Originale.JPG",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Margherita_Originale.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Margherita_Originale.JPG/1920px-Margherita_Originale.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 2048,
+     "height": 1536,
+     "author": "Mario56",
+     "license": "CC BY-SA 3.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+     "file": "File:Pizza Margherita ピザ・マルゲリータ.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Pizza_Margherita_%E3%83%94%E3%82%B6%E3%83%BB%E3%83%9E%E3%83%AB%E3%82%B2%E3%83%AA%E3%83%BC%E3%82%BF.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/0/08/Pizza_Margherita_%E3%83%94%E3%82%B6%E3%83%BB%E3%83%9E%E3%83%AB%E3%82%B2%E3%83%AA%E3%83%BC%E3%82%BF.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/Pizza_Margherita_%E3%83%94%E3%82%B6%E3%83%BB%E3%83%9E%E3%83%AB%E3%82%B2%E3%83%AA%E3%83%BC%E3%82%BF.jpg/1920px-Pizza_Margherita_%E3%83%94%E3%82%B6%E3%83%BB%E3%83%9E%E3%83%AB%E3%82%B2%E3%83%AA%E3%83%BC%E3%82%BF.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "ノボホショコロトソ",
+     "license": "CC BY 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+    },
+    {
+     "file": "File:Pizza Margherita in Naples 2015.JPG",
+     "page": "https://commons.wikimedia.org/wiki/File:Pizza_Margherita_in_Naples_2015.JPG",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Pizza_Margherita_in_Naples_2015.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/Pizza_Margherita_in_Naples_2015.JPG/1920px-Pizza_Margherita_in_Naples_2015.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4320,
+     "height": 3240,
+     "author": "Kos88",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:Margherita Pizza of The Point Pizza and Point.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Margherita_Pizza_of_The_Point_Pizza_and_Point.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Margherita_Pizza_of_The_Point_Pizza_and_Point.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Margherita_Pizza_of_The_Point_Pizza_and_Point.jpg/1920px-Margherita_Pizza_of_The_Point_Pizza_and_Point.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3712,
+     "height": 2784,
+     "author": "Peachyeung316",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    }
+   ]
+  },
+  "ハンバーガー": {
+   "label": "ハンバーガー",
+   "words": [
+    "ハンバーガー",
+    "バーガー"
+   ],
+   "photos": [
+    {
+     "file": "File:Hamburger and onion rings.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Hamburger_and_onion_rings.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Hamburger_and_onion_rings.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Hamburger_and_onion_rings.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+     "width": 1600,
+     "height": 995,
+     "author": "jeffreyw",
+     "license": "CC BY 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+     "file": "File:Hamburger (2).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Hamburger_(2).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/7/7f/Hamburger_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Hamburger_%282%29.jpg/1920px-Hamburger_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4288,
+     "height": 2848,
+     "author": "jeffreyw",
+     "license": "CC BY 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+     "file": "File:Homemade Argentine hamburger with fried potatoes.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Homemade_Argentine_hamburger_with_fried_potatoes.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Homemade_Argentine_hamburger_with_fried_potatoes.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c4/Homemade_Argentine_hamburger_with_fried_potatoes.jpg/1920px-Homemade_Argentine_hamburger_with_fried_potatoes.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3896,
+     "height": 2250,
+     "author": "Horacio Cambeiro",
+     "license": "CC BY-SA 3.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+     "file": "File:Hamburger 20220502 001.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Hamburger_20220502_001.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/5/53/Hamburger_20220502_001.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Hamburger_20220502_001.jpg/1920px-Hamburger_20220502_001.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3000,
+     "height": 2000,
+     "author": "Mobius6",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    }
+   ]
+  },
+  "スイーツ": {
+   "label": "ケーキ",
+   "words": [
+    "スイーツ",
+    "ケーキ",
+    "パフェ",
+    "デザート",
+    "洋菓子",
+    "パンケーキ",
+    "タルト"
+   ],
+   "photos": [
+    {
+     "file": "File:Piece of chocolate cake on a white plate decorated with chocolate sauce.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Piece_of_chocolate_cake_on_a_white_plate_decorated_with_chocolate_sauce.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Piece_of_chocolate_cake_on_a_white_plate_decorated_with_chocolate_sauce.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Piece_of_chocolate_cake_on_a_white_plate_decorated_with_chocolate_sauce.jpg/1920px-Piece_of_chocolate_cake_on_a_white_plate_decorated_with_chocolate_sauce.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 5536,
+     "height": 3766,
+     "author": "Daria YakovlevaMinor edits made by Subsidiary account",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Apple cake with vanilla ice cream 2.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Apple_cake_with_vanilla_ice_cream_2.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Apple_cake_with_vanilla_ice_cream_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a6/Apple_cake_with_vanilla_ice_cream_2.jpg/1920px-Apple_cake_with_vanilla_ice_cream_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4333,
+     "height": 2888,
+     "author": "W.carter",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:A slice of Delicious Cake.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:A_slice_of_Delicious_Cake.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/9/96/A_slice_of_Delicious_Cake.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://upload.wikimedia.org/wikipedia/commons/9/96/A_slice_of_Delicious_Cake.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+     "width": 1704,
+     "height": 1278,
+     "author": "Bim24",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:Slice of chocolate cloud cake at Tous les Jours.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Slice_of_chocolate_cloud_cake_at_Tous_les_Jours.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Slice_of_chocolate_cloud_cake_at_Tous_les_Jours.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Slice_of_chocolate_cloud_cake_at_Tous_les_Jours.jpg/1920px-Slice_of_chocolate_cloud_cake_at_Tous_les_Jours.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3264,
+     "height": 2448,
+     "author": "Ser Amantio di Nicolao",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    }
+   ]
+  },
+  "ビール・酒": {
+   "label": "ビール",
+   "words": [
+    "ビール",
+    "日本酒",
+    "ハイボール",
+    "クラフト",
+    "ワイン",
+    "ウイスキー",
+    "地酒",
+    "サワー"
+   ],
+   "photos": [
+    {
+     "file": "File:Patagonia Amber Lager y maní pelado salado.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Patagonia_Amber_Lager_y_man%C3%AD_pelado_salado.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/a/a3/Patagonia_Amber_Lager_y_man%C3%AD_pelado_salado.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a3/Patagonia_Amber_Lager_y_man%C3%AD_pelado_salado.jpg/1920px-Patagonia_Amber_Lager_y_man%C3%AD_pelado_salado.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4080,
+     "height": 3060,
+     "author": "Just a Man",
+     "license": "CC BY 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+    },
+    {
+     "file": "File:Brewery Klosterbräu in Bamberg, Barley beer (Braunbier) + German lager (Schwärzla).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Brewery_Klosterbr%C3%A4u_in_Bamberg,_Barley_beer_(Braunbier)_%2B_German_lager_(Schw%C3%A4rzla).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Brewery_Klosterbr%C3%A4u_in_Bamberg%2C_Barley_beer_%28Braunbier%29_%2B_German_lager_%28Schw%C3%A4rzla%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Brewery_Klosterbr%C3%A4u_in_Bamberg%2C_Barley_beer_%28Braunbier%29_%2B_German_lager_%28Schw%C3%A4rzla%29.jpg/1920px-Brewery_Klosterbr%C3%A4u_in_Bamberg%2C_Barley_beer_%28Braunbier%29_%2B_German_lager_%28Schw%C3%A4rzla%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3968,
+     "height": 2976,
+     "author": "Nemracc",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:Brewery Held Bräu, glasses of hell (pale lager) and Hefeweizen (wheat beer).jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Brewery_Held_Br%C3%A4u,_glasses_of_hell_(pale_lager)_and_Hefeweizen_(wheat_beer).jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/4/40/Brewery_Held_Br%C3%A4u%2C_glasses_of_hell_%28pale_lager%29_and_Hefeweizen_%28wheat_beer%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Brewery_Held_Br%C3%A4u%2C_glasses_of_hell_%28pale_lager%29_and_Hefeweizen_%28wheat_beer%29.jpg/1920px-Brewery_Held_Br%C3%A4u%2C_glasses_of_hell_%28pale_lager%29_and_Hefeweizen_%28wheat_beer%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3614,
+     "height": 2711,
+     "author": "Nemracc",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:A pint of Bitter.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:A_pint_of_Bitter.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/7/79/A_pint_of_Bitter.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/A_pint_of_Bitter.jpg/1920px-A_pint_of_Bitter.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 2048,
+     "height": 1536,
+     "author": "55belgianbeerfan",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    }
+   ]
+  },
+  "居酒屋": {
+   "label": "居酒屋の料理",
+   "words": [
+    "居酒屋",
+    "酒場",
+    "飲み",
+    "宴会",
+    "忘年会",
+    "新年会",
+    "歓迎会",
+    "つまみ",
+    "小皿",
+    "串"
+   ],
+   "generic": true,
+   "photos": [
+    {
+     "file": "File:Quality izakaya in Ebisu 7.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Quality_izakaya_in_Ebisu_7.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Quality_izakaya_in_Ebisu_7.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Quality_izakaya_in_Ebisu_7.jpg/1920px-Quality_izakaya_in_Ebisu_7.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4080,
+     "height": 3072,
+     "author": "Syced",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Quality izakaya in Ebisu 6.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Quality_izakaya_in_Ebisu_6.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Quality_izakaya_in_Ebisu_6.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/Quality_izakaya_in_Ebisu_6.jpg/1920px-Quality_izakaya_in_Ebisu_6.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4080,
+     "height": 3072,
+     "author": "Syced",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Izakaya Gama - April 2023 - Sarah Stierch 10.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Izakaya_Gama_-_April_2023_-_Sarah_Stierch_10.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Izakaya_Gama_-_April_2023_-_Sarah_Stierch_10.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Izakaya_Gama_-_April_2023_-_Sarah_Stierch_10.jpg/1920px-Izakaya_Gama_-_April_2023_-_Sarah_Stierch_10.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "Missvain",
+     "license": "CC BY 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+    },
+    {
+     "file": "File:August 2007, food at izakaya in Osaka.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:August_2007,_food_at_izakaya_in_Osaka.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/0/01/August_2007%2C_food_at_izakaya_in_Osaka.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/August_2007%2C_food_at_izakaya_in_Osaka.jpg/1920px-August_2007%2C_food_at_izakaya_in_Osaka.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3072,
+     "height": 2304,
+     "author": "Syced",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Quality izakaya in Ebisu 9.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Quality_izakaya_in_Ebisu_9.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Quality_izakaya_in_Ebisu_9.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5d/Quality_izakaya_in_Ebisu_9.jpg/1920px-Quality_izakaya_in_Ebisu_9.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4080,
+     "height": 3072,
+     "author": "Syced",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Izakaya Gama - April 2023 - Sarah Stierch 08.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Izakaya_Gama_-_April_2023_-_Sarah_Stierch_08.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Izakaya_Gama_-_April_2023_-_Sarah_Stierch_08.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Izakaya_Gama_-_April_2023_-_Sarah_Stierch_08.jpg/1920px-Izakaya_Gama_-_April_2023_-_Sarah_Stierch_08.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "Missvain",
+     "license": "CC BY 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+    },
+    {
+     "file": "File:Eihire - stingray meat - Japanese pub food - September 2014.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Eihire_-_stingray_meat_-_Japanese_pub_food_-_September_2014.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/7/71/Eihire_-_stingray_meat_-_Japanese_pub_food_-_September_2014.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Eihire_-_stingray_meat_-_Japanese_pub_food_-_September_2014.jpg/1920px-Eihire_-_stingray_meat_-_Japanese_pub_food_-_September_2014.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 2228,
+     "height": 1482,
+     "author": "nesnad",
+     "license": "CC BY 3.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+     "file": "File:Ika no shiokara by ayustety in Monzen-nakacho, Tokyo.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Ika_no_shiokara_by_ayustety_in_Monzen-nakacho,_Tokyo.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Ika_no_shiokara_by_ayustety_in_Monzen-nakacho%2C_Tokyo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e8/Ika_no_shiokara_by_ayustety_in_Monzen-nakacho%2C_Tokyo.jpg/1920px-Ika_no_shiokara_by_ayustety_in_Monzen-nakacho%2C_Tokyo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 2272,
+     "height": 1704,
+     "author": "ayustety from Japanese restaurant Uotei in Monzen-nakacho, Koto, Tokyo",
+     "license": "CC BY-SA 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    }
+   ]
+  },
+  "和食": {
+   "label": "和食",
+   "words": [
+    "和食",
+    "割烹",
+    "懐石",
+    "会席",
+    "定食",
+    "日本料理",
+    "小料理",
+    "京料理"
+   ],
+   "generic": true,
+   "photos": [
+    {
+     "file": "File:Breakfast at Tamahan Ryokan, Kyoto.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Breakfast_at_Tamahan_Ryokan,_Kyoto.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Breakfast_at_Tamahan_Ryokan%2C_Kyoto.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Breakfast_at_Tamahan_Ryokan%2C_Kyoto.jpg/1920px-Breakfast_at_Tamahan_Ryokan%2C_Kyoto.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3404,
+     "height": 2004,
+     "author": "MichaelMaggs",
+     "license": "CC BY-SA 3.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+     "file": "File:IMG-2023-12-2-kaisekifuuteishoku.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:IMG-2023-12-2-kaisekifuuteishoku.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/5/50/IMG-2023-12-2-kaisekifuuteishoku.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/IMG-2023-12-2-kaisekifuuteishoku.jpg/1920px-IMG-2023-12-2-kaisekifuuteishoku.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 2000,
+     "height": 1126,
+     "author": "Htheword",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+     "file": "File:Kaiseki 001.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Kaiseki_001.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Kaiseki_001.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Kaiseki_001.jpg/1920px-Kaiseki_001.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3648,
+     "height": 2736,
+     "author": "Yuya Tamai",
+     "license": "CC BY 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+     "file": "File:Kaiseki - Kyoto.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Kaiseki_-_Kyoto.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Kaiseki_-_Kyoto.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Kaiseki_-_Kyoto.jpg/1920px-Kaiseki_-_Kyoto.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 2592,
+     "height": 1936,
+     "author": "Donatingpictures",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    }
+   ]
+  },
+  "カフェ": {
+   "label": "コーヒー",
+   "words": [
+    "カフェ",
+    "喫茶",
+    "モーニング",
+    "コーヒー",
+    "珈琲"
+   ],
+   "generic": true,
+   "photos": [
+    {
+     "file": "File:Latte and dark coffee.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Latte_and_dark_coffee.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Latte_and_dark_coffee.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/Latte_and_dark_coffee.jpg/1920px-Latte_and_dark_coffee.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 3200,
+     "height": 2000,
+     "author": "Bex Walton",
+     "license": "CC BY 2.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+     "file": "File:Cup of coffee with latte art 2016.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Cup_of_coffee_with_latte_art_2016.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/7/76/Cup_of_coffee_with_latte_art_2016.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Cup_of_coffee_with_latte_art_2016.jpg/1920px-Cup_of_coffee_with_latte_art_2016.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4096,
+     "height": 2731,
+     "author": "Abdulrohmatt",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:Hearts in latte art, Kraków, Poland, 2023.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Hearts_in_latte_art,_Krak%C3%B3w,_Poland,_2023.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/4/45/Hearts_in_latte_art%2C_Krak%C3%B3w%2C_Poland%2C_2023.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Hearts_in_latte_art%2C_Krak%C3%B3w%2C_Poland%2C_2023.jpg/1920px-Hearts_in_latte_art%2C_Krak%C3%B3w%2C_Poland%2C_2023.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 4032,
+     "height": 3024,
+     "author": "Kgbo",
+     "license": "CC BY-SA 4.0",
+     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+     "file": "File:Decaf latte - Trading Post Coffee Roasters 2025-03-09.jpg",
+     "page": "https://commons.wikimedia.org/wiki/File:Decaf_latte_-_Trading_Post_Coffee_Roasters_2025-03-09.jpg",
+     "url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Decaf_latte_-_Trading_Post_Coffee_Roasters_2025-03-09.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+     "thumb1600": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Decaf_latte_-_Trading_Post_Coffee_Roasters_2025-03-09.jpg/1920px-Decaf_latte_-_Trading_Post_Coffee_Roasters_2025-03-09.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+     "width": 8160,
+     "height": 6144,
+     "author": "Andy Li",
+     "license": "CC0",
+     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    }
+   ]
+  }
+ }
+}
