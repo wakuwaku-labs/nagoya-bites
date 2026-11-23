@@ -188,7 +188,7 @@ function photoHtml(title, date, photoSrc, size, breakAfter = -1, keepWords = KEE
   .sh{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.42) 0,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 45%,rgba(0,0,0,.55) 65%,rgba(0,0,0,.8) 100%)}
   .k{position:absolute;left:56px;top:44px;font:600 28px "Hiragino Sans","Yu Gothic",sans-serif;letter-spacing:.18em;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.45)}
   h1{position:absolute;left:56px;right:56px;bottom:96px;margin:0;font:700 ${size}px/1.38 "Hiragino Mincho ProN","Yu Mincho",serif;color:#fff;letter-spacing:.02em;line-break:strict;word-break:auto-phrase;text-shadow:0 2px 10px rgba(0,0,0,.45)}
-  .f{position:absolute;left:56px;bottom:42px;font:26px "Hiragino Sans","Yu Gothic",sans-serif;color:#eee;text-shadow:0 1px 6px rgba(0,0,0,.45)}
+  .f{position:absolute;left:56px;bottom:42px;font:34px "Hiragino Sans","Yu Gothic",sans-serif;color:#eee;text-shadow:0 1px 6px rgba(0,0,0,.45)}
   </style><div class="c"><img src="${photoSrc}"><div class="sh"></div><div class="k">NAGOYA BITES JOURNAL</div><h1>${titleHtml(title, breakAfter, keepWords)}</h1><div class="f">${esc(date)} ／ 名古屋の飲食店ジャーナル</div></div>`;
 }
 
