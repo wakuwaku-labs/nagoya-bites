@@ -1,16 +1,16 @@
 {
  "_README": "既存記事の棚卸し台帳（段階5・S5-1・ADR 0069）。scripts/build_article_review_ledger.js が作る。並べ替えの材料で、公開の条件には使わない。gsc は data/gsc_metrics.json の直近28日。確認日は本文に書かれた「◯月◯日確認」の最新（特集の「更新日」は機械の一括更新で進むので使わない）。",
  "generatedFrom": {
-  "gscGeneratedAt": "2026-11-23T10:09:58.572Z",
+  "gscGeneratedAt": "2026-11-23T10:30:32.445Z",
   "gscRange": {
    "startDate": "2026-10-26",
    "endDate": "2026-11-22"
   }
  },
  "totals": {
-  "articles": 269,
+  "articles": 270,
   "features": 70,
-  "journal": 199,
+  "journal": 200,
   "byProblem": {
    "wording_selection": 64,
    "rating_no_count": 90,
@@ -106,7 +106,7 @@
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 2,
+   "inboundArticleLinks": 1,
    "inboundHubLinks": 0,
    "storeLinks": 0,
    "priority": 325
@@ -355,7 +355,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 6,
+   "inboundArticleLinks": 5,
    "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 83.2
@@ -460,7 +460,7 @@
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 7,
+   "inboundArticleLinks": 6,
    "inboundHubLinks": 0,
    "storeLinks": 0,
    "priority": 64.2
@@ -923,7 +923,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 4,
+   "inboundArticleLinks": 3,
    "inboundHubLinks": 2,
    "storeLinks": 2,
    "priority": 18.8
@@ -1047,7 +1047,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 75,
+   "inboundArticleLinks": 76,
    "inboundHubLinks": 1662,
    "storeLinks": 15,
    "priority": 12
@@ -1536,7 +1536,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 54,
+   "inboundArticleLinks": 12,
    "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 9.6
@@ -1632,7 +1632,7 @@
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 268,
+   "inboundArticleLinks": 269,
    "inboundHubLinks": 5940,
    "storeLinks": 0,
    "priority": 8
@@ -1650,7 +1650,7 @@
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 268,
+   "inboundArticleLinks": 269,
    "inboundHubLinks": 5908,
    "storeLinks": 0,
    "priority": 8
@@ -2088,7 +2088,7 @@
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 268,
+   "inboundArticleLinks": 269,
    "inboundHubLinks": 5946,
    "storeLinks": 0,
    "priority": 6
@@ -2522,7 +2522,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 6,
+   "inboundArticleLinks": 5,
    "inboundHubLinks": 4,
    "storeLinks": 4,
    "priority": 5
@@ -3008,7 +3008,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 2,
+   "inboundArticleLinks": 1,
    "inboundHubLinks": 2,
    "storeLinks": 2,
    "priority": 5
@@ -3615,7 +3615,7 @@
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 268,
+   "inboundArticleLinks": 269,
    "inboundHubLinks": 5908,
    "storeLinks": 0,
    "priority": 3
@@ -3813,7 +3813,7 @@
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 2,
+   "inboundArticleLinks": 1,
    "inboundHubLinks": 0,
    "storeLinks": 0,
    "priority": 3
@@ -3883,8 +3883,8 @@
     "rating_no_count"
    ],
    "lastFactCheckedDate": "2026-11-23",
-   "inboundArticleLinks": 128,
-   "inboundHubLinks": 0,
+   "inboundArticleLinks": 84,
+   "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 3
   },
@@ -3968,7 +3968,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 21,
+   "inboundArticleLinks": 22,
    "inboundHubLinks": 243,
    "storeLinks": 11,
    "priority": 2
@@ -4699,7 +4699,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 4,
+   "inboundArticleLinks": 3,
    "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 2
@@ -4733,7 +4733,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 51,
+   "inboundArticleLinks": 45,
    "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 2
@@ -4765,7 +4765,7 @@
    "searchPosition": 9.8,
    "problems": [],
    "lastFactCheckedDate": "2026-11-17",
-   "inboundArticleLinks": 34,
+   "inboundArticleLinks": 35,
    "inboundHubLinks": 695,
    "storeLinks": 10,
    "priority": 0
@@ -4780,7 +4780,7 @@
    "searchPosition": null,
    "problems": [],
    "lastFactCheckedDate": "2026-11-17",
-   "inboundArticleLinks": 3,
+   "inboundArticleLinks": 4,
    "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 0
@@ -4795,7 +4795,7 @@
    "searchPosition": null,
    "problems": [],
    "lastFactCheckedDate": "2026-11-18",
-   "inboundArticleLinks": 34,
+   "inboundArticleLinks": 31,
    "inboundHubLinks": 4,
    "storeLinks": 4,
    "priority": 0
@@ -4810,7 +4810,7 @@
    "searchPosition": null,
    "problems": [],
    "lastFactCheckedDate": "2026-11-19",
-   "inboundArticleLinks": 53,
+   "inboundArticleLinks": 41,
    "inboundHubLinks": 6,
    "storeLinks": 6,
    "priority": 0
@@ -4825,9 +4825,24 @@
    "searchPosition": null,
    "problems": [],
    "lastFactCheckedDate": "2026-11-21",
-   "inboundArticleLinks": 100,
+   "inboundArticleLinks": 99,
    "inboundHubLinks": 5,
    "storeLinks": 5,
+   "priority": 0
+  },
+  {
+   "path": "journal/2026-11-22-sakae-date-seat-counter-sofa-private-4.html",
+   "kind": "journal",
+   "title": "栄でデートの席選び、カウンター・ソファ・個室の違い｜みかん・Sinzanなど4店｜NAGOYA BITES Journal",
+   "date": "2026-11-22",
+   "searchClicks28d": 0,
+   "searchImpressions28d": 0,
+   "searchPosition": null,
+   "problems": [],
+   "lastFactCheckedDate": "2026-11-23",
+   "inboundArticleLinks": 118,
+   "inboundHubLinks": 0,
+   "storeLinks": 4,
    "priority": 0
   },
   {

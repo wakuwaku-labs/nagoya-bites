@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "date": "2026-11-22",
+  "slug": "2026-11-22-sakae-date-seat-counter-sofa-private-4",
+  "type": "picks",
+  "body": "【栄・錦・デート】おばんざいや焼鳥、席で選ぶ4店\n\n・「みかん」: おばんざいのカウンター\n・「炭火焼鳥しげ」: すだれの半個室\n・「Sinzan」: ソファのカップル席\n・「豚しゃぶ一力」: 4人用の個室\n※Sinzan・一力は全席喫煙可",
+  "evidence": [
+    "栄・錦の4店の席を例に、二人に合う席と、予約のときに伝えることをまとめました。",
+    "錦にある、おばんざいと炭火焼きの店です。店の紹介では 「おばんざいが並ぶカウンターは特等席」 とあり、並んだ料理を見て選べます。",
+    "テーブルは すだれを下ろすと半個室 になります。",
+    "カーテンで仕切られたソファーの個室が4室 あり、カップル席として使えます。",
+    "4人用の個室が2室 あり、店の紹介でも「接待やデート」に向くと書かれています。",
+    "たばこの煙が苦手な人には、4店のうち2店（Sinzan・一力）は合いません。ホットペッパーの掲載で全席喫煙可です"
+  ],
+  "generated_at": "2026-11-23T10:42:41.414Z",
+  "generator": "claude --print（docs/x-post-prompt.md）",
+  "topic_experiment": {
+    "experiment_id": "x-nb-thread-vs-single",
+    "topic": "名古屋ジャーナルの紹介",
+    "format": {
+      "media": "none",
+      "thread": false,
+      "url": true,
+      "first_line": "number"
+    },
+    "followed": true
+  }
+}
