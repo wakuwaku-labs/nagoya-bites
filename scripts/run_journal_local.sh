@@ -884,9 +884,9 @@ node scripts/normalize_og_images.js --only "$TODAY_JST" >>"$LOG" 2>&1 || log "�
 # 通った文面だけを data/x_post_drafts/<date>.json に保存する。下のコミットに同乗させるのは必須
 # （x-post.yml は journal_published.json の push で動くので、別に push すると先に定型の投稿が出る）。
 # 書けなくても公開は止めない（投稿は題名＋ポイントの定型に戻る）。打ち切りは write_x_draft.js の
-# draft.timeoutSec × attempts と、ここの run_with_timeout（360秒）の二重にする。
+# draft.timeoutSec × attempts と、ここの run_with_timeout（660秒＝300秒×2＋余裕・2026-11-24 に360から）の二重にする。
 log "X 用の文面を作成（write_x_draft.js）"
-run_with_timeout 360 caffeinate -s -i -d -u node scripts/write_x_draft.js --date "$TODAY_JST" --claude-bin "$CLAUDE_BIN" \
+run_with_timeout 660 caffeinate -s -i -d -u node scripts/write_x_draft.js --date "$TODAY_JST" --claude-bin "$CLAUDE_BIN" \
   || log "⚠️ write_x_draft.js 失敗（非ブロッキング・X は定型で投稿）"
 
 # ---- 5j. X 用の画像カード（自前の PNG・policy の imageCard）----

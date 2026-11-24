@@ -1,32 +1,26 @@
 status: done
-<!-- 2026-11-18: main に 0071 と後続段階の判断 0072〜0078 が入っており、Ondine #2048 も done。残りは 12-16 の題のクリック確認だけ -->
 
-
-# 基本方針の段階1: 読者を誤解させうる表示を直す（Ondine #2048・2026-11-17）
+# 11/24 の X を長いポストで出し直す（Ondine #2668）
 
 ## 目的
-計画 docs/plans/media-policy-2026-11/03 の S1-1〜S1-5（掲載歴・訪問済・言い切り・閉業・壊れた写真）を直し、main に合流して本番で確かめる。
+11/23 に決めた X の長いポスト（ADR 0082）が 11/24 の投稿に反映されなかったので、今日分を長いポストで出し直し、明日以降も反映されるようにする。
 
 ## 完了条件
-S1-1〜S1-5 の「⑪完了」を満たし、npm test が通り、main 合流後の本番で確かめた結果を report に残す。
+11/24 の長いポストが X に出て台帳に long_post.ok=true、定型の短い投稿は削除済み、翌日から時間切れで定型に戻らない。
 
 ## できていること
-- S1-1: 掲載歴・編集部訪問済・食べログ点数・内部の項目名・星の食い違い（検査 scripts/audit_feature_facts.js）・Unsplash 由来の顔写真7本を図に
-- S1-2: 桜ゼロ宣言等を「編集の約束」に言い換え（assertionWords の検査）
-- S1-3: 題・本文の「業界人」等を外した（上位2本の題も 11-17 に変更・記録 data/top_title_changes.json）
-- S1-4: 閉業・休業の注記（店舗ページ・特集カード）。記事の閉店検査は記録だけ（WARNING）
-- S1-5: 記事の Google 写真を外し、月次の見張り（article-photo-watchdog.yml）
-- 判断 docs/decisions/0071
+- 原因: 11/23 夜に返信5件を見出しつきで書く形にしてから、文面づくりの Claude の応答が約3分（実測 176〜196秒）になり、150秒の打ち切りで定型に戻った
+- 今日分: data/x_post_drafts/2026-11-24-long.json（#815）→ 長いポスト https://x.com/i/web/status/2125143037743333428（1435字・5店）→ 朝の短い投稿 2125058108787429775 を削除
+- 恒久策: data/x_post_policy.json の draft.timeoutSec 150→300、run_journal_local.sh の打ち切り 360→660 秒
 
 ## 次にやること
-- main 合流 → build.yml の完了を待ち、本番で stores の再生成後に audit_selection_wording を全数確認
-- 上位2本の題のクリックを 2026-12-16 以降に `node scripts/rewrite_selection_wording.js --report` で確認（半減なら --revert）
+- 11/25 朝の台帳で text_mode=draft・long_post.ok=true を確かめる（予約済み）
 
 ## 試したが駄目だったこと
-- features の復元に git checkout を使うと未コミットの修正も消える（コミットしてから戻す）
+- 54377cf222（時間切れで1回やり直す）だけでは、毎回3分かかるので2回とも切れる
 
 ## 守るルール・判断メモ
-- 本番の自動公開の条件は変えない（閉店検査は WARNING のまま）／削除は本人に一覧を見せてから（assets/features の古い jpg 14枚は参照を外しただけ）
+- 出し直しは 11/23 と同じ手順（--extra-long → x-delete.yml）
 
 ## 関連ファイル
-- docs/decisions/0071-stage1-misleading-display.md
+- docs/decisions/0082-x-long-post.md・scripts/write_x_draft.js・data/x_post_policy.json・scripts/run_journal_local.sh
