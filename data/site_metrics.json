@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-24T00:31:33.063Z",
+  "generatedAt": "2026-11-24T03:51:44.666Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 8171,
-    "pageViews": 9729,
-    "sessions": 8584,
-    "avgSessionDuration": 56.2,
-    "bounceRate": 0.682,
+    "activeUsers": 8204,
+    "pageViews": 9777,
+    "sessions": 8624,
+    "avgSessionDuration": 56,
+    "bounceRate": 0.683,
     "pagesPerSession": 1.13
   },
   "dailyReference": {
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 3055,
-      "direct": 5278,
+      "organic": 3058,
+      "direct": 5322,
       "social": 63,
       "ai_assistant": 245,
       "referral": 62,
@@ -26,8 +26,8 @@
       "other": 1
     },
     "pct": {
-      "organic": 35.1,
-      "direct": 60.6,
+      "organic": 34.9,
+      "direct": 60.8,
       "social": 0.7,
       "ai_assistant": 2.8,
       "referral": 0.7,
@@ -39,12 +39,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 5247
+      "sessions": 5291
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1451
+      "sessions": 1453
     },
     {
       "source": "bing",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 641
+      "sessions": 642
     },
     {
       "source": "chatgpt.com",
@@ -250,7 +250,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 431,
+    "outboundClicks": 432,
     "ctaClickRate": 5,
     "byDomain": [
       {
@@ -259,7 +259,7 @@
       },
       {
         "domain": "www.google.com",
-        "clicks": 134
+        "clicks": 135
       },
       {
         "domain": "prtimes.jp",
@@ -308,7 +308,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 294,
+      "organic": 295,
       "direct": 48,
       "social": 16,
       "ai_assistant": 62,
@@ -330,7 +330,7 @@
       },
       {
         "path": "/stores/J004090251.html",
-        "clicks": 22
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -455,7 +455,7 @@
       {
         "path": "/stores/J004090251.html",
         "domain": "www.google.com",
-        "clicks": 22
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -1183,7 +1183,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 8171,
+    "value": 8204,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,

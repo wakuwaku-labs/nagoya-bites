@@ -161,7 +161,7 @@
         "店名": "豆家のりのり 和食 栄",
         "エリア": "栄",
         "ホットペッパーID": "J000716958",
-        "placeId": "ChIJq3QfD-lwA2ARbf9J5QnmMsg",
+        "placeId": "",
         "slug": "J000716958"
       },
       "absorbed": [
@@ -173,7 +173,12 @@
           "slug": "J003323657"
         }
       ],
-      "filledFields": []
+      "filledFields": [
+        "Google評価",
+        "placeId",
+        "口コミ数",
+        "営業ステータス"
+      ]
     },
     {
       "reasons": [
@@ -1667,7 +1672,7 @@
         "店名": "すしの美登利 名古屋栄三越店",
         "エリア": "名古屋市中区",
         "ホットペッパーID": "",
-        "placeId": "",
+        "placeId": "ChIJfbcracBxA2AR0CwmS8fNbqo",
         "slug": "store-e38199e38197e381"
       },
       "absorbed": [
@@ -1680,13 +1685,9 @@
         }
       ],
       "filledFields": [
-        "Google評価",
-        "placeId",
         "データソース",
         "価格帯",
         "備考",
-        "口コミ数",
-        "営業ステータス",
         "営業状況",
         "情報源URL"
       ]

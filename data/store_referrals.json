@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T00:31:26.218Z",
+  "generatedAt": "2026-11-24T03:51:38.301Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -2356,20 +2356,20 @@
       "other": 0
     },
     "tel": 9,
-    "map": 142
+    "map": 143
   },
   "map": {
-    "total": 142,
+    "total": 143,
     "unattributed": 0,
     "stores": 66,
     "top": [
       {
-        "store_name": "圧釜うどん もちり 栄店",
+        "store_name": "うな祥",
         "count": 23
       },
       {
-        "store_name": "うな祥",
-        "count": 22
+        "store_name": "圧釜うどん もちり 栄店",
+        "count": 23
       },
       {
         "store_name": "完全個室居酒屋 海鮮と炉端焼き 三河屋 名古屋駅前店",
@@ -2405,14 +2405,14 @@
       }
     ],
     "byLocation": {
-      "store_page": 74,
+      "store_page": 75,
       "journal_store_card": 55,
       "store_page_bar": 11,
       "modal_sticky": 2
     },
     "byLinkKind": {
       "search": 73,
-      "place_id": 59,
+      "place_id": 60,
       "(not set)": 10
     }
   },
