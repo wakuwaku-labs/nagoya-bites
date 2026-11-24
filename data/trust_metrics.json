@@ -1,40 +1,40 @@
 {
  "_README": "S7-1 信頼の指標（scripts/trust_metrics.js が毎日作る。週のレポート GAS が読む）。設定は data/trust_metrics_policy.json。history は7日ごとの記録（悪化の見張りが前の週と比べるのに使う）。",
- "date": "2026-11-23",
- "generated_at": "2026-11-23T01:58:18.858Z",
+ "date": "2026-11-24",
+ "generated_at": "2026-11-24T05:31:13.009Z",
  "policy_version": 1,
  "indicators": {
   "evidence_rate": {
-   "value": 0.7631,
-   "numerator": 422,
-   "denominator": 553,
-   "measured_articles": 22,
-   "public_articles": 270,
-   "article_mean": 0.6534,
-   "mismatch_facts": 1,
-   "facts_per_article": 25.1,
+   "value": 0.7571,
+   "numerator": 536,
+   "denominator": 708,
+   "measured_articles": 26,
+   "public_articles": 273,
+   "article_mean": 0.6575,
+   "mismatch_facts": 2,
+   "facts_per_article": 27.2,
    "note": "台帳のある記事だけ。台帳の無い記事は数えていない（measured_articles が数えた本数）"
   },
   "unconfirmed_disclosure_rate": {
-   "value": 0.0148,
-   "numerator": 4,
-   "denominator": 270,
-   "measured_articles": 270,
-   "public_articles": 270,
+   "value": 0.0037,
+   "numerator": 1,
+   "denominator": 273,
+   "measured_articles": 273,
+   "public_articles": 273,
    "recent": {
     "days": 30,
-    "numerator": 4,
-    "denominator": 29,
-    "value": 0.1379
+    "numerator": 0,
+    "denominator": 31,
+    "value": 0
    },
    "note": "「確認できなかったこと」の札または見出しがある記事。全項目を確認できた記事も「なし」になる（計画 1-7 の数え方のまま）"
   },
   "misinformation_rate": {
    "value": 0,
    "numerator": 0,
-   "denominator": 89,
-   "measured_articles": 89,
-   "public_articles": 190,
+   "denominator": 91,
+   "measured_articles": 91,
+   "public_articles": 193,
    "window_days": 90,
    "events_in_window": 0,
    "note": "公開から90日以内のジャーナル記事のうち、訂正・取り下げの記録がある記事。events_in_window は直近90日に訂正・取り下げの記録がついた記事の本数（古い記事の見直しで見つけたものも入る）。特集は訂正の台帳が無く対象外"
@@ -44,31 +44,31 @@
    "numerator": 7,
    "denominator": 65,
    "measured_articles": 65,
-   "public_articles": 268,
+   "public_articles": 271,
    "window_days": 90,
    "no_confirm_date": 58,
    "note": "検索に出ている記事のうち、本文の確認日が90日以内の割合。確認日の無い記事は鮮度なしとして数える（棚卸し台帳 S5-1 と同じ読み方）"
   },
   "analysis_rate": {
-   "value": 0.4222,
+   "value": 0.4176,
    "numerator": 114,
-   "denominator": 270,
-   "measured_articles": 270,
-   "public_articles": 270,
+   "denominator": 273,
+   "measured_articles": 273,
+   "public_articles": 273,
    "breakdown": {
     "calculation": 4,
     "comparison": 101,
-    "general_rule": 22
+    "general_rule": 23
    },
    "note": "式・比較（表または比べる言い回し）・一般則の言い回しのどれかがある記事。機械が見つけられる形だけを数え、質は毎月10本の読み手の所見で見る"
   }
  },
  "fact_sentences": {
-  "articles": 270,
-  "total": 8342,
-  "per_article_avg": 30.9,
-  "ledger_facts": 553,
-  "ledger_articles": 22,
+  "articles": 273,
+  "total": 8604,
+  "per_article_avg": 31.5,
+  "ledger_facts": 708,
+  "ledger_articles": 26,
   "note": "数字・日付・価格を含む文の数（記事の本文から機械で取り出す。台帳の事実の文とは別の数え方で、記事ごとの増減を見る）"
  },
  "reader_voice": {
@@ -80,21 +80,21 @@
  },
  "recheck": {
   "last_run": {
-   "date": "2026-11-23",
-   "at": "2026-11-23T01:34:21.372Z",
+   "date": "2026-11-24",
+   "at": "2026-11-24T05:16:44.091Z",
    "mode": "record",
-   "due": 193,
+   "due": 191,
    "processed": 3,
-   "alerts": 2,
+   "alerts": 3,
    "applied": 0
   },
   "summary": {
-   "overdue": 190,
+   "overdue": 188,
    "overdue_ledger": 1,
-   "oldest_overdue_ledger_days": 3,
-   "overdue_legacy": 189,
-   "oldest_overdue_legacy_days": 200,
-   "due_total": 193,
+   "oldest_overdue_ledger_days": 4,
+   "overdue_legacy": 187,
+   "oldest_overdue_legacy_days": 201,
+   "due_total": 191,
    "no_base_date": 3,
    "pending_findings": 0
   }
@@ -110,6 +110,17 @@
    "analysis_rate": 0.4211,
    "fact_per_article_avg": 30.7,
    "evidence_measured": 0
+  },
+  {
+   "date": "2026-11-24",
+   "evidence_rate": 0.7571,
+   "unconfirmed_disclosure_rate": 0.0037,
+   "misinformation_rate": 0,
+   "misinformation_events": 0,
+   "freshness_rate": 0.1077,
+   "analysis_rate": 0.4176,
+   "fact_per_article_avg": 31.5,
+   "evidence_measured": 26
   }
  ]
 }
