@@ -1,16 +1,16 @@
 {
  "_README": "既存記事の棚卸し台帳（段階5・S5-1・ADR 0069）。scripts/build_article_review_ledger.js が作る。並べ替えの材料で、公開の条件には使わない。gsc は data/gsc_metrics.json の直近28日。確認日は本文に書かれた「◯月◯日確認」の最新（特集の「更新日」は機械の一括更新で進むので使わない）。",
  "generatedFrom": {
-  "gscGeneratedAt": "2026-11-23T13:52:42.386Z",
+  "gscGeneratedAt": "2026-11-23T19:12:55.884Z",
   "gscRange": {
    "startDate": "2026-10-26",
    "endDate": "2026-11-22"
   }
  },
  "totals": {
-  "articles": 270,
+  "articles": 271,
   "features": 70,
-  "journal": 200,
+  "journal": 201,
   "byProblem": {
    "wording_selection": 64,
    "rating_no_count": 90,
@@ -1236,7 +1236,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 32,
+   "inboundArticleLinks": 33,
    "inboundHubLinks": 141,
    "storeLinks": 10,
    "priority": 10
@@ -1632,7 +1632,7 @@
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 269,
+   "inboundArticleLinks": 270,
    "inboundHubLinks": 5940,
    "storeLinks": 0,
    "priority": 8
@@ -1650,7 +1650,7 @@
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 269,
+   "inboundArticleLinks": 270,
    "inboundHubLinks": 5908,
    "storeLinks": 0,
    "priority": 8
@@ -1725,7 +1725,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 33,
+   "inboundArticleLinks": 34,
    "inboundHubLinks": 2202,
    "storeLinks": 15,
    "priority": 7
@@ -2088,7 +2088,7 @@
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 269,
+   "inboundArticleLinks": 270,
    "inboundHubLinks": 5946,
    "storeLinks": 0,
    "priority": 6
@@ -3615,7 +3615,7 @@
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 269,
+   "inboundArticleLinks": 270,
    "inboundHubLinks": 5908,
    "storeLinks": 0,
    "priority": 3
@@ -3883,7 +3883,7 @@
     "rating_no_count"
    ],
    "lastFactCheckedDate": "2026-11-23",
-   "inboundArticleLinks": 84,
+   "inboundArticleLinks": 65,
    "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 3
@@ -4795,7 +4795,7 @@
    "searchPosition": null,
    "problems": [],
    "lastFactCheckedDate": "2026-11-18",
-   "inboundArticleLinks": 31,
+   "inboundArticleLinks": 29,
    "inboundHubLinks": 4,
    "storeLinks": 4,
    "priority": 0
@@ -4810,7 +4810,7 @@
    "searchPosition": null,
    "problems": [],
    "lastFactCheckedDate": "2026-11-19",
-   "inboundArticleLinks": 41,
+   "inboundArticleLinks": 35,
    "inboundHubLinks": 6,
    "storeLinks": 6,
    "priority": 0
@@ -4825,7 +4825,7 @@
    "searchPosition": null,
    "problems": [],
    "lastFactCheckedDate": "2026-11-21",
-   "inboundArticleLinks": 99,
+   "inboundArticleLinks": 50,
    "inboundHubLinks": 5,
    "storeLinks": 5,
    "priority": 0
@@ -4840,7 +4840,7 @@
    "searchPosition": null,
    "problems": [],
    "lastFactCheckedDate": "2026-11-23",
-   "inboundArticleLinks": 128,
+   "inboundArticleLinks": 127,
    "inboundHubLinks": 4,
    "storeLinks": 4,
    "priority": 0
@@ -4855,8 +4855,23 @@
    "searchPosition": null,
    "problems": [],
    "lastFactCheckedDate": "2026-11-23",
-   "inboundArticleLinks": 86,
+   "inboundArticleLinks": 85,
    "inboundHubLinks": 5,
+   "storeLinks": 5,
+   "priority": 0
+  },
+  {
+   "path": "journal/2026-11-24-kanayama-bonenkai-izakaya-5.html",
+   "kind": "journal",
+   "title": "金山で忘年会、飲み放題つきの居酒屋おすすめ5選 駅から歩いて5分以内｜NAGOYA BITES Journal",
+   "date": "2026-11-24",
+   "searchClicks28d": 0,
+   "searchImpressions28d": 0,
+   "searchPosition": null,
+   "problems": [],
+   "lastFactCheckedDate": "2026-11-24",
+   "inboundArticleLinks": 81,
+   "inboundHubLinks": 0,
    "storeLinks": 5,
    "priority": 0
   }

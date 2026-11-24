@@ -1,0 +1,86 @@
+{
+  "date": "2026-11-24",
+  "slug": "2026-11-24-kanayama-bonenkai-izakaya-5",
+  "recorded_at": "2026-11-24T00:26:53.082Z",
+  "model": null,
+  "model_note": "指定なし（実行環境の既定のモデル）",
+  "prompt_version": "review-2026-11-17",
+  "prompt_sha256": "3e0deeea8a595ad5",
+  "excerpts": [
+    {
+      "id": "E1",
+      "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+      "lines": 22
+    },
+    {
+      "id": "E2",
+      "url": "https://www.nagoya-info.jp/area/kanayama/",
+      "lines": 2
+    },
+    {
+      "id": "E3",
+      "url": "https://www.hotpepper.jp/strJ003389486/",
+      "lines": 12
+    },
+    {
+      "id": "E4",
+      "url": "https://www.hotpepper.jp/strJ004536740/",
+      "lines": 12
+    },
+    {
+      "id": "E5",
+      "url": "https://www.hotpepper.jp/strJ004026599/",
+      "lines": 17
+    },
+    {
+      "id": "E6",
+      "url": "https://www.hotpepper.jp/strJ001186933/",
+      "lines": 24
+    },
+    {
+      "id": "E7",
+      "url": "https://www.hotpepper.jp/strJ001211120/",
+      "lines": 12
+    }
+  ],
+  "ok": true,
+  "elapsed_sec": 21,
+  "findings": [
+    {
+      "sentence": "日曜から木曜なら、150分飲み放題つきで 4,500円 のコース（7品・3人から）があります。",
+      "kind": "number_mismatch",
+      "quote": "【少人数からの宴会にもご対応可】月~木限定のゆったり飲み放題付きコースは2名様~ご利用頂けますので、少人数からの宴会でもご利用頂けます。",
+      "reason": "抜粋は「月~木限定」「2名様~」。記事の「日曜から木曜」「3人から」と曜日・人数が合わない",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "日〜木は150分飲み放題つき4,500円のコース（3人から）。",
+      "kind": "number_mismatch",
+      "quote": "【少人数からの宴会にもご対応可】月~木限定のゆったり飲み放題付きコースは2名様~ご利用頂けますので、少人数からの宴会でもご利用頂けます。",
+      "reason": "抜粋は「月~木限定」「2名様~」。記事の「日〜木」「3人から」と合わない",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "豚の八丁味噌焼きと魚3種盛りのコースは、90分飲み放題つきで 4,500円 （8品）。",
+      "kind": "number_mismatch",
+      "quote": "7種以上の日替わり日本酒含む100分飲み放題付きコース♪",
+      "reason": "抜粋では飲み放題付きコースは100分。記事の90分と時間が合わない",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "90分飲み放題つき4,500円のコース。",
+      "kind": "number_mismatch",
+      "quote": "7種以上の日替わり日本酒含む100分飲み放題付きコース♪",
+      "reason": "抜粋では飲み放題付きコースは100分。記事の90分と時間が合わない",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    }
+  ]
+}

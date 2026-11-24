@@ -1,0 +1,484 @@
+{
+  "date": "2026-11-24",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "金山で忘年会、飲み放題つきの居酒屋おすすめ5選 駅から歩いて5分以内",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 93,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "金山",
+          "feature": "stores/area/kanayama/index.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 6件 (予約,シーン,雰囲気,看板,名物,使い分け) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 144字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「金山」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "93点（自動公開ライン 100点）。主な不足: topicality -13 / brand_fit -4",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "金山の炉端焼き『燻銀 金山店』で忘年会、5,500円150分飲み放題と古民家の個室",
+      "verdict": "HOLD",
+      "total": 74,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "金山",
+          "feature": "stores/area/kanayama/index.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (シーン) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 133字 +4",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「金山」+4",
+          "タイトルにシーン語「個室」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "金山の忘年会、全席禁煙で個室のある居酒屋はどこ？燻銀・福キタルなど",
+      "verdict": "HOLD",
+      "total": 69,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "金山",
+          "feature": "stores/area/kanayama/index.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 134字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「金山」+4",
+          "タイトルにシーン語「個室」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "金山で少人数の忘年会、日〜木なら4,500円で150分飲み放題『鮮魚to旬菜 幸 sachi』",
+      "verdict": "HOLD",
+      "total": 68,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "金山",
+          "feature": "stores/area/kanayama/index.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 143字 +4",
+          "title 47字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「金山」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "忘年会を開く会社は56.5％、名古屋の幹事が店を決める前に確かめたいこと",
+      "verdict": "HOLD",
+      "total": 66,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 136字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「金山」+1",
+          "タイトルにシーン語「忘年会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": {
+    "topic": "喫茶・カフェ",
+    "week": "2026-W48",
+    "slot": 1,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "93点（自動公開ライン 100点）。主な不足: topicality -13 / brand_fit -4",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "金山で忘年会、飲み放題つきの居酒屋おすすめ5選 駅から歩いて5分以内",
+      "lead_draft": "忘年会の予約が本格的に動き出す時期です。今回は金山駅から歩いて5分以内で、飲み放題つきの宴会コースがある居酒屋を5店集めました。炉端焼き、個室、釜炊きご飯、海鮮、八丁味噌焼きと、雰囲気の違う店を並べています。個室の有無やたばこ、年末の休みなど、幹事が予約の前に確かめたい点もまとめました。",
+      "angle": "金山駅（JR・名鉄・地下鉄が集まる駅）から歩いて5分以内で、飲み放題つきの宴会コースがある居酒屋5店を、忘年会のシーンで紹介。店ごとに看板・名物の料理と店の雰囲気、予約の前に確かめたい点（個室・たばこ・人数・年末の休み）を書き、人数や好みでの使い分けを最後にまとめる",
+      "main_store": {
+        "name": "炉端焼き 燻銀 金山店",
+        "id": "J001186933",
+        "area": "金山",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "名古屋コンシェルジュ 大須・金山エリア",
+          "url": "https://www.nagoya-info.jp/area/kanayama/",
+          "date": "2026-11-24"
+        },
+        {
+          "label": "ホットペッパー 炉端焼き 燻銀 金山店",
+          "url": "https://www.hotpepper.jp/strJ001186933/",
+          "date": "2026-11-24"
+        },
+        {
+          "label": "ホットペッパー 隠れ家個室居酒屋 福キタル。金山店",
+          "url": "https://www.hotpepper.jp/strJ004536740/",
+          "date": "2026-11-24"
+        },
+        {
+          "label": "ホットペッパー 大人の和酒場 よるごはん",
+          "url": "https://www.hotpepper.jp/strJ004026599/",
+          "date": "2026-11-24"
+        },
+        {
+          "label": "ホットペッパー 鮮魚to旬菜 幸 sachi",
+          "url": "https://www.hotpepper.jp/strJ003389486/",
+          "date": "2026-11-24"
+        },
+        {
+          "label": "ホットペッパー 創作和食 海鮮と日本酒 たきね",
+          "url": "https://www.hotpepper.jp/strJ001211120/",
+          "date": "2026-11-24"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "金山の忘年会、全席禁煙で個室のある居酒屋はどこ？燻銀・福キタルなど",
+      "lead_draft": "金山駅の近くで忘年会の店を探すとき、たばこの煙と個室の有無で迷う幹事は多いはずです。今回は駅から歩いて5分以内で、全席禁煙の居酒屋を中心に、個室の広さや貸切の条件、飲み放題の時間をまとめました。年末の休みも店ごとに違うので、予約の前に確かめたい点を一緒に書いています。",
+      "angle": "金山駅近くの全席禁煙の宴会向け居酒屋を、個室・貸切の条件で比べる（幹事向け）",
+      "main_store": {
+        "name": "隠れ家個室居酒屋 福キタル。金山店",
+        "id": "J004536740",
+        "area": "金山",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "ホットペッパー 隠れ家個室居酒屋 福キタル。金山店",
+          "url": "https://www.hotpepper.jp/strJ004536740/",
+          "date": "2026-11-24"
+        },
+        {
+          "label": "ホットペッパー 炉端焼き 燻銀 金山店",
+          "url": "https://www.hotpepper.jp/strJ001186933/",
+          "date": "2026-11-24"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "金山の炉端焼き『燻銀 金山店』で忘年会、5,500円150分飲み放題と古民家の個室",
+      "lead_draft": "金山駅4番出口から歩いて5分の炉端焼き『燻銀 金山店』は、梁の見える古民家風の店です。忘年会向けには、サバの原始焼きと南部鉄器で炊く鯛めしのコースが5,500円で、飲み放題は150分。全席禁煙で、30人から貸切ができます。年末は12月31日から1月2日まで休みです。",
+      "angle": "1店を深く紹介する今日の1軒型（忘年会シーン）",
+      "main_store": {
+        "name": "炉端焼き 燻銀 金山店",
+        "id": "J001186933",
+        "area": "金山",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "ホットペッパー 炉端焼き 燻銀 金山店",
+          "url": "https://www.hotpepper.jp/strJ001186933/",
+          "date": "2026-11-24"
+        },
+        {
+          "label": "名古屋コンシェルジュ 大須・金山エリア",
+          "url": "https://www.nagoya-info.jp/area/kanayama/",
+          "date": "2026-11-24"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "金山で少人数の忘年会、日〜木なら4,500円で150分飲み放題『鮮魚to旬菜 幸 sachi』",
+      "lead_draft": "金山駅北口から歩いて2分ほどの『鮮魚to旬菜 幸 sachi』は、刺身8種盛りが名物の魚の居酒屋です。忘年会には、日曜から木曜限定で150分飲み放題つき4,500円のコース（3人から）があります。全席禁煙ですが個室はなく、1人360円のチャージがかかります。少人数の忘年会に合う店です。",
+      "angle": "平日限定の安いコースで少人数の忘年会（今日の1軒型）",
+      "main_store": {
+        "name": "鮮魚to旬菜 幸 sachi",
+        "id": "J003389486",
+        "area": "金山",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "ホットペッパー 鮮魚to旬菜 幸 sachi",
+          "url": "https://www.hotpepper.jp/strJ003389486/",
+          "date": "2026-11-24"
+        },
+        {
+          "label": "名古屋コンシェルジュ 大須・金山エリア",
+          "url": "https://www.nagoya-info.jp/area/kanayama/",
+          "date": "2026-11-24"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "忘年会を開く会社は56.5％、名古屋の幹事が店を決める前に確かめたいこと",
+      "lead_draft": "東京商工リサーチの調査では、2026年末から2027年初めに忘年会か新年会を開く会社は56.5％で、前の年より少し減りました。名古屋で幹事を任されたとき、店を決める前に確かめたいのは、たばこ、個室、飲み放題の時間、年末の休みの4つです。金山駅の近くの店を例に見ていきます。",
+      "angle": "調査の数字を入口にした幹事向けガイド",
+      "main_store": {
+        "name": "炉端焼き 燻銀 金山店",
+        "id": "J001186933",
+        "area": "金山",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "労務ドットコム 見直しが進められる忘・新年会",
+          "url": "https://roumu.com/?p=133585",
+          "date": "2026-11-09"
+        },
+        {
+          "label": "ホットペッパー 炉端焼き 燻銀 金山店",
+          "url": "https://www.hotpepper.jp/strJ001186933/",
+          "date": "2026-11-24"
+        }
+      ]
+    }
+  ]
+}

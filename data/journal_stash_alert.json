@@ -2,6 +2,24 @@
   "_note": "ジャーナル起動時に他ルーチンの未コミット差分が検出された記録（SEO-104）",
   "entries": [
     {
+      "detected_at": "2026-11-24T09:00:20.695+09:00",
+      "action": "quarantined_local_commits",
+      "backup_branch": "backup/main-20261124-090008",
+      "commits": [
+        "bb4ff75bc0 Ondine の repo 既定を Nagoya Bites にそろえる（#2642）"
+      ],
+      "dropped_own_commits": 0,
+      "message": "~/nagoya-bites の main にだけあった（origin に無い）コミットを退避して記事を続行。必要なものは PR で出し直す。"
+    },
+    {
+      "detected_at": "2026-11-24T09:00:08.020+09:00",
+      "files": [
+        ".agents/skills/source-command-solve-next/"
+      ],
+      "action": "skipped_stash",
+      "message": "ジャーナルは退避せず続行。`git stash pop` 等の手動操作は不要。他ルーチンが書いたとみられる差分。"
+    },
+    {
       "detected_at": "2026-11-21T13:50:43.759+09:00",
       "files": [
         ".agents/skills/source-command-solve-next/"
@@ -220,22 +238,6 @@
     },
     {
       "detected_at": "2026-10-24T09:00:08.024+09:00",
-      "files": [
-        ".agents/skills/source-command-solve-next/"
-      ],
-      "action": "skipped_stash",
-      "message": "ジャーナルは退避せず続行。`git stash pop` 等の手動操作は不要。他ルーチンが書いたとみられる差分。"
-    },
-    {
-      "detected_at": "2026-10-23T09:00:05.041+09:00",
-      "files": [
-        ".agents/skills/source-command-solve-next/"
-      ],
-      "action": "skipped_stash",
-      "message": "ジャーナルは退避せず続行。`git stash pop` 等の手動操作は不要。他ルーチンが書いたとみられる差分。"
-    },
-    {
-      "detected_at": "2026-10-22T09:00:09.274+09:00",
       "files": [
         ".agents/skills/source-command-solve-next/"
       ],

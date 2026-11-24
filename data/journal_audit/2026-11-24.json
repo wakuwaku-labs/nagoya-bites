@@ -1,0 +1,196 @@
+{
+  "date": "2026-11-24",
+  "slug": "2026-11-24-kanayama-bonenkai-izakaya-5",
+  "recorded_at": "2026-11-24T00:27:23.574Z",
+  "mode": "shadow",
+  "enforced": false,
+  "note": "記録だけ。公開は止めていない",
+  "lane_if_enforced": "hold",
+  "published": true,
+  "published_by_lane": "existing_gate",
+  "reasons": [
+    {
+      "type": "number_mismatch",
+      "detail": "出典の同じ項目と数字が違う（台帳の文と数字が違う: 台帳 8 ／ 記事 —）: サバの原始焼きと鯛めしのコースは150分飲み放題つき5,500円。"
+    },
+    {
+      "type": "review:number_mismatch",
+      "detail": "日曜から木曜なら、150分飲み放題つきで 4,500円 のコース（7品・3人から）があります。 ／ 抜粋は「月~木限定」「2名様~」。記事の「日曜から木曜」「3人から」と曜日・人数が合わない"
+    },
+    {
+      "type": "review:number_mismatch",
+      "detail": "日〜木は150分飲み放題つき4,500円のコース（3人から）。 ／ 抜粋は「月~木限定」「2名様~」。記事の「日〜木」「3人から」と合わない"
+    },
+    {
+      "type": "review:number_mismatch",
+      "detail": "豚の八丁味噌焼きと魚3種盛りのコースは、90分飲み放題つきで 4,500円 （8品）。 ／ 抜粋では飲み放題付きコースは100分。記事の90分と時間が合わない"
+    },
+    {
+      "type": "review:number_mismatch",
+      "detail": "90分飲み放題つき4,500円のコース。 ／ 抜粋では飲み放題付きコースは100分。記事の90分と時間が合わない"
+    }
+  ],
+  "checks": {
+    "validator": "pass",
+    "claims": {
+      "ledger_by": "writer",
+      "summary": {
+        "claims": 49,
+        "verified": 46,
+        "unverifiable": 2,
+        "mismatch": 1,
+        "stale": 0,
+        "not_applicable": 0,
+        "paired": 6,
+        "hedge_dropped": 0,
+        "issues": 1,
+        "core_issues": 1
+      },
+      "fetch": {
+        "sources": 7,
+        "ok": 7,
+        "failed": []
+      }
+    },
+    "independent_review": {
+      "ok": true,
+      "reason": null,
+      "model": null,
+      "prompt_version": "review-2026-11-17",
+      "findings": 4,
+      "verified_findings": 4
+    }
+  },
+  "score": "93点 PASS_WITH_NOTE（自動公開ライン100点）。不足は話題性 -13（SNSの言及URLなし・独立ドメイン3件）・一次報道 -4。火曜の季節短信（忘年会予約開幕・priority 95）を◯選の形で。金山駅から徒歩5分以内で飲み放題つき宴会コースのある居酒屋5店を data/stores.json の営業中から選び、11月24日にホットペッパーの店ページとコースページで確認。和咲日はホットペッパーの情報が古い（2020年更新・コースは2009年更新）ため除外。たきねのコース名は「11月」付きのため本文で12月の内容は予約時に確認と書いた。東京商工リサーチの調査（11/5公表）と名古屋コンシェルジュ（名古屋市観光情報）で数字・路線を確認。採点では c1 の angle を記事の中身どおりに具体化して再採点（78→93・数字や出典は足していない）。ヒーロー（幸 sachi）と本文写真2枚（福キタル・よるごはん）は自動で入ったホットペッパー写真で、目視の確認はしていない",
+  "sources": [
+    {
+      "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+      "label": "東京商工リサーチ「忘・新年会」開催は56.5％、大企業より中小企業が敬遠",
+      "type": "報道",
+      "date": "2026-11-05",
+      "fetched_at": "2026-11-24T00:26:43.203Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 5560,
+        "sha256": "62f99004dda76803e865f0041d7adbe0d1cbd905009a0e58f40b4b79d5388eb5"
+      }
+    },
+    {
+      "url": "https://www.nagoya-info.jp/area/kanayama/",
+      "label": "名古屋コンシェルジュ（名古屋市観光情報）大須・金山エリア",
+      "type": "公式・その他",
+      "date": "2026-11-24",
+      "fetched_at": "2026-11-24T00:26:43.420Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 5744,
+        "sha256": "06a1159c73259d8fa0211fd7a7b7660ad6e77c9843d6e763da26c62a2552765c"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ003389486/",
+      "label": "ホットペッパー 鮮魚to旬菜 幸 sachi",
+      "type": "掲載サイト",
+      "date": "2026-11-24",
+      "fetched_at": "2026-11-24T00:26:43.914Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 6647,
+        "sha256": "13ad95fd326b65b5539e681294ab0a316765f7b58674aa512cdd7b2087ddaa5c"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ004536740/",
+      "label": "ホットペッパー 福キタル 金山店",
+      "type": "掲載サイト",
+      "date": "2026-11-24",
+      "fetched_at": "2026-11-24T00:26:44.267Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 9665,
+        "sha256": "caed805b1b5cb9892a9f4ea30919acd44a6cd6059e40e53200fd06b4fbc7d7ad"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ004026599/",
+      "label": "ホットペッパー 大人の和酒場よるごはん",
+      "type": "掲載サイト",
+      "date": "2026-11-24",
+      "fetched_at": "2026-11-24T00:26:44.593Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 7712,
+        "sha256": "6c1ad261c4c8b9442f26b1e11d230f677145539e73788d430fd8a960a2b5417b"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001186933/",
+      "label": "ホットペッパー 炉端焼き 燻銀 金山店",
+      "type": "掲載サイト",
+      "date": "2026-11-24",
+      "fetched_at": "2026-11-24T00:26:44.869Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 8909,
+        "sha256": "2b85ab806d8315941b3a4ede18e19d7a87294e7132aae42c06aec809ac345dd3"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001211120/",
+      "label": "ホットペッパー 創作和食 海鮮と日本酒 たきね",
+      "type": "掲載サイト",
+      "date": "2026-11-24",
+      "fetched_at": "2026-11-24T00:26:45.098Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 7709,
+        "sha256": "f8c74cda3df4411175b21c76c42682500f8cad3533a893b06ca59a55cf27fd49"
+      }
+    }
+  ],
+  "findings": [
+    {
+      "sentence": "日曜から木曜なら、150分飲み放題つきで 4,500円 のコース（7品・3人から）があります。",
+      "kind": "number_mismatch",
+      "quote": "【少人数からの宴会にもご対応可】月~木限定のゆったり飲み放題付きコースは2名様~ご利用頂けますので、少人数からの宴会でもご利用頂けます。",
+      "reason": "抜粋は「月~木限定」「2名様~」。記事の「日曜から木曜」「3人から」と曜日・人数が合わない",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "日〜木は150分飲み放題つき4,500円のコース（3人から）。",
+      "kind": "number_mismatch",
+      "quote": "【少人数からの宴会にもご対応可】月~木限定のゆったり飲み放題付きコースは2名様~ご利用頂けますので、少人数からの宴会でもご利用頂けます。",
+      "reason": "抜粋は「月~木限定」「2名様~」。記事の「日〜木」「3人から」と合わない",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "豚の八丁味噌焼きと魚3種盛りのコースは、90分飲み放題つきで 4,500円 （8品）。",
+      "kind": "number_mismatch",
+      "quote": "7種以上の日替わり日本酒含む100分飲み放題付きコース♪",
+      "reason": "抜粋では飲み放題付きコースは100分。記事の90分と時間が合わない",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    },
+    {
+      "sentence": "90分飲み放題つき4,500円のコース。",
+      "kind": "number_mismatch",
+      "quote": "7種以上の日替わり日本酒含む100分飲み放題付きコース♪",
+      "reason": "抜粋では飲み放題付きコースは100分。記事の90分と時間が合わない",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    }
+  ]
+}
