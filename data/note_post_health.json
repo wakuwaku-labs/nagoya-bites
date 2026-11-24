@@ -1,12 +1,12 @@
 {
   "_comment": "日次ジャーナルの note 投稿の最後の結果（scripts/post_note.js が書き、run_journal_local.sh が push する）。見張り役は .github/workflows/note-post-watchdog.yml",
   "last_run": {
-    "error_class": null,
-    "reason": null,
-    "url": "https://note.com/nagoya_bites/n/n474a9dd324ca?app_launch=false",
-    "date": "2026-11-22",
-    "slug": "2026-11-22-sakae-date-seat-counter-sofa-private-4",
-    "result": "live",
-    "recorded_at": "2026-11-23T10:54:23.938Z"
+    "error_class": "login",
+    "reason": "投稿先のアカウントが違います（今: 未ログイン / 必要: NAGOYA BITES）。Google での入り直しも通りませんでした（blank | accounts.google.com/v3/signin/identifier）。node scripts/note_login.js --google を試し、だめなら node scripts/note_login.js --own で本人が NAGOYA BITES にログイン",
+    "url": null,
+    "date": "2026-11-24",
+    "slug": "2026-11-24-kanayama-bonenkai-izakaya-5",
+    "result": "failed",
+    "recorded_at": "2026-11-24T00:33:58.147Z"
   }
 }
