@@ -389,25 +389,118 @@
     }
    ],
    "next_due": "2026-12-07"
+  },
+  "journal/2026-08-14-obon-latter-half-marunouchi.html": {
+   "last_checked": "2026-11-24",
+   "last_checked_at": "2026-11-24T05:16:44.091Z",
+   "outcome": "findings",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 30,
+   "verified": 24,
+   "unverifiable": 6,
+   "mismatch": 0,
+   "sources": {
+    "ok": 5,
+    "total": 6
+   },
+   "findings": [
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-08-16）を過ぎた記述: 2026年のお盆は8月13日から16日まで。",
+     "claim": "2026年のお盆は8月13日から16日まで。",
+     "reported_at": "2026-11-24"
+    },
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-08-16）を過ぎた記述: 名古屋城夏まつりは8月16日までで、開園は20時30分、閉門は21時と公式に告知されている。",
+     "claim": "名古屋城夏まつりは8月16日までで、開園は20時30分、閉門は21時と公式に告知されている。",
+     "reported_at": "2026-11-24"
+    },
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-08-16）を過ぎた記述: 名古屋城の公式告知によれば、名古屋城夏まつりは2026年8月8日から16日までの開催で、開園は9時から20時30分、閉門",
+     "claim": "名古屋城の公式告知によれば、名古屋城夏まつりは2026年8月8日から16日までの開催で、開園は9時から20時30分、閉門は21時。",
+     "reported_at": "2026-11-24"
+    }
+   ],
+   "next_due": "2026-12-08"
+  },
+  "features/nagoya-sweets.html": {
+   "last_checked": "2026-11-24",
+   "last_checked_at": "2026-11-24T05:16:44.091Z",
+   "outcome": "no_sources",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 31,
+   "verified": 0,
+   "unverifiable": 31,
+   "mismatch": 0,
+   "sources": {
+    "ok": 0,
+    "total": 0
+   },
+   "findings": [],
+   "next_due": "2026-12-08"
+  },
+  "journal/2026-08-31-nagoya-roadside-newstores-price.html": {
+   "last_checked": "2026-11-24",
+   "last_checked_at": "2026-11-24T05:16:44.091Z",
+   "outcome": "findings",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 52,
+   "verified": 49,
+   "unverifiable": 3,
+   "mismatch": 0,
+   "sources": {
+    "ok": 8,
+    "total": 9
+   },
+   "findings": [
+    {
+     "type": "hedge_dropped",
+     "severity": "core",
+     "detail": "出典は予定・見込みの書き方なのに記事は言い切り: 3軒目のバーガーキング 清水屋藤が丘店は、食品スーパー清水屋の施設内に入る形で8月31日に開いた。",
+     "reported_at": "2026-11-24"
+    },
+    {
+     "type": "hedge_dropped",
+     "severity": "core",
+     "detail": "出典は予定・見込みの書き方なのに記事は言い切り: 2026年8月31日オープン。",
+     "reported_at": "2026-11-24"
+    },
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-09-01）を過ぎた記述: ただしJR名古屋タカシマヤで8月26日から9月1日まで開かれている「フランス展」も、9月1日までのトルコ菓子の限定出店も",
+     "claim": "ただしJR名古屋タカシマヤで8月26日から9月1日まで開かれている「フランス展」も、9月1日までのトルコ菓子の限定出店も、常設の店ではなく 1週間で撤収する催事 である。",
+     "reported_at": "2026-11-24"
+    }
+   ],
+   "next_due": "2026-12-08"
   }
  },
  "summary": {
-  "overdue": 190,
+  "overdue": 188,
   "overdue_ledger": 1,
-  "oldest_overdue_ledger_days": 3,
-  "overdue_legacy": 189,
-  "oldest_overdue_legacy_days": 200,
-  "due_total": 193,
+  "oldest_overdue_ledger_days": 4,
+  "overdue_legacy": 187,
+  "oldest_overdue_legacy_days": 201,
+  "due_total": 191,
   "no_base_date": 3,
   "pending_findings": 0
  },
  "last_run": {
-  "date": "2026-11-23",
-  "at": "2026-11-23T01:34:21.372Z",
+  "date": "2026-11-24",
+  "at": "2026-11-24T05:16:44.091Z",
   "mode": "record",
-  "due": 193,
+  "due": 191,
   "processed": 3,
-  "alerts": 2,
+  "alerts": 3,
   "applied": 0
  },
  "_README": "公開後の鮮度の見直し（S5-5）の記録。scripts/recheck_due_articles.js が毎日の夜間の検査で更新する。articles は記事のパスごとの直近の結果（次の見直す日・照合の件数・見つけた変更）。根拠確認率（trust_metrics）はここの facts/verified も読む。"
