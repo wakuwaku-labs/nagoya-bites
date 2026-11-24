@@ -55,8 +55,8 @@
     "maxReplies": 3,
     "maxReplyWeighted": 270,
     "attempts": 2,
-    "timeoutSec": 150,
-    "limitsHelp": "maxBodyWeighted = 本文（URL とハッシュタグを除く）の X の数え方の上限。URL(23)＋改行＋ハッシュタグ2個で約45 を足して 280 に収まる値。maxReplies / maxReplyWeighted = 本文の下にぶら下げる返信（続き）の最大数と、1件の X の数え方の上限（URL・ハッシュタグは付けないので 280 に近くてよい）。evidence = 本文と返信の数字の出どころとして記事の原文から写した引用（各 evidenceMinChars〜evidenceMaxChars 字・最大 evidenceMaxItems 個）。attempts = 検査に落ちたとき理由を返して書き直させる回数の上限。timeoutSec = Claude の1回の応答を待つ秒数"
+    "timeoutSec": 300,
+    "limitsHelp": "maxBodyWeighted = 本文（URL とハッシュタグを除く）の X の数え方の上限。URL(23)＋改行＋ハッシュタグ2個で約45 を足して 280 に収まる値。maxReplies / maxReplyWeighted = 本文の下にぶら下げる返信（続き）の最大数と、1件の X の数え方の上限（URL・ハッシュタグは付けないので 280 に近くてよい）。evidence = 本文と返信の数字の出どころとして記事の原文から写した引用（各 evidenceMinChars〜evidenceMaxChars 字・最大 evidenceMaxItems 個）。attempts = 検査に落ちたとき理由を返して書き直させる回数の上限。timeoutSec = Claude の1回の応答を待つ秒数（2026-11-24 に 150→300。11/23 夜に返信5件を見出しつきで書く形にしてから応答が約3分（実測176〜196秒）になり、150秒で毎回切れて定型に戻っていた・Ondine #2668。scripts/run_journal_local.sh の打ち切り660秒＝300×2＋余裕と合わせる）"
   },
   "template": {
     "points": true,
