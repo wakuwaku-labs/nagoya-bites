@@ -1,35 +1,35 @@
 {
-  "generatedAt": "2026-11-24T08:47:04.230Z",
+  "generatedAt": "2026-11-24T19:13:59.254Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 8300,
-    "pageViews": 9905,
-    "sessions": 8713,
-    "avgSessionDuration": 56.4,
-    "bounceRate": 0.682,
-    "pagesPerSession": 1.14
+    "activeUsers": 8350,
+    "pageViews": 9939,
+    "sessions": 8788,
+    "avgSessionDuration": 55.7,
+    "bounceRate": 0.684,
+    "pagesPerSession": 1.13
   },
   "dailyReference": {
-    "date": "2026-11-22",
-    "sessions": 232,
-    "bounceRate": 0.659,
-    "pageViews": 253
+    "date": "2026-11-23",
+    "sessions": 163,
+    "bounceRate": 0.528,
+    "pageViews": 197
   },
   "channels": {
     "sessions": {
-      "organic": 3092,
-      "direct": 5386,
+      "organic": 3112,
+      "direct": 5403,
       "social": 63,
-      "ai_assistant": 246,
+      "ai_assistant": 240,
       "referral": 62,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 34.9,
-      "direct": 60.9,
+      "organic": 35,
+      "direct": 60.8,
       "social": 0.7,
-      "ai_assistant": 2.8,
+      "ai_assistant": 2.7,
       "referral": 0.7,
       "paid": 0,
       "other": 0
@@ -39,32 +39,32 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 5359
+      "sessions": 5376
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1464
+      "sessions": 1453
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 943
+      "sessions": 969
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 647
+      "sessions": 653
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 156
+      "sessions": 152
     },
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 80
+      "sessions": 79
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -97,14 +97,14 @@
       "sessions": 9
     },
     {
-      "source": "ecosia.org",
-      "medium": "organic",
-      "sessions": 8
-    },
-    {
       "source": "websearch.rakuten.co.jp",
       "medium": "referral",
       "sessions": 8
+    },
+    {
+      "source": "ecosia.org",
+      "medium": "organic",
+      "sessions": 7
     },
     {
       "source": "cn.bing.com",
@@ -114,7 +114,7 @@
     {
       "source": "openai",
       "medium": "(not set)",
-      "sessions": 6
+      "sessions": 5
     },
     {
       "source": "l.instagram.com",
@@ -220,13 +220,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 468,
-      "sessions": 441
+      "pageViews": 465,
+      "sessions": 438
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 257,
-      "sessions": 242
+      "pageViews": 259,
+      "sessions": 244
     },
     {
       "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -235,17 +235,17 @@
     },
     {
       "path": "/features/nagoya-miso-nikomi-udon.html",
-      "pageViews": 124,
-      "sessions": 133
+      "pageViews": 126,
+      "sessions": 135
     },
     {
       "path": "/features/nagoya-unaju.html",
-      "pageViews": 110,
-      "sessions": 106
+      "pageViews": 112,
+      "sessions": 108
     }
   ],
   "cta": {
-    "outboundClicks": 436,
+    "outboundClicks": 439,
     "ctaClickRate": 5,
     "byDomain": [
       {
@@ -254,15 +254,15 @@
       },
       {
         "domain": "www.google.com",
-        "clicks": 135
+        "clicks": 136
       },
       {
         "domain": "prtimes.jp",
-        "clicks": 53
+        "clicks": 54
       },
       {
         "domain": "tabelog.com",
-        "clicks": 36
+        "clicks": 37
       },
       {
         "domain": "www.instagram.com",
@@ -303,7 +303,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 297,
+      "organic": 300,
       "direct": 48,
       "social": 16,
       "ai_assistant": 64,
@@ -317,7 +317,7 @@
     "byPage": [
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-        "clicks": 61
+        "clicks": 62
       },
       {
         "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -333,7 +333,7 @@
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 10
+        "clicks": 11
       },
       {
         "path": "/stores/J004661287.html",
@@ -440,7 +440,7 @@
       {
         "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
         "domain": "prtimes.jp",
-        "clicks": 49
+        "clicks": 50
       },
       {
         "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -458,14 +458,14 @@
         "clicks": 14
       },
       {
-        "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-        "domain": "www.google.com",
+        "path": "/features/nagoya-kaoawase-washoku.html",
+        "domain": "tabelog.com",
         "clicks": 11
       },
       {
-        "path": "/features/nagoya-kaoawase-washoku.html",
-        "domain": "tabelog.com",
-        "clicks": 10
+        "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
+        "domain": "www.google.com",
+        "clicks": 11
       },
       {
         "path": "/stores/J004661287.html",
@@ -684,11 +684,6 @@
       },
       {
         "path": "/stores/J003737470.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 2
-      },
-      {
-        "path": "/stores/J004402326.html",
         "domain": "www.hotpepper.jp",
         "clicks": 2
       },
@@ -936,6 +931,11 @@
         "path": "/stores/J000994079.html",
         "domain": "www.google.com",
         "clicks": 1
+      },
+      {
+        "path": "/stores/J001127221.html",
+        "domain": "www.google.com",
+        "clicks": 1
       }
     ],
     "reservationClicksByPage": [
@@ -945,7 +945,7 @@
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 10
+        "clicks": 11
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -1037,10 +1037,6 @@
       },
       {
         "path": "/stores/J003737470.html",
-        "clicks": 2
-      },
-      {
-        "path": "/stores/J004402326.html",
         "clicks": 2
       },
       {
@@ -1156,33 +1152,33 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 132,
+    "reservationClicks": 131,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
-      "ctaEvents": 66,
-      "reservationOutbound": 67,
-      "naiveSum": 133,
-      "deduped": 69,
-      "overlap": 64,
+      "ctaEvents": 46,
+      "reservationOutbound": 47,
+      "naiveSum": 93,
+      "deduped": 50,
+      "overlap": 43,
       "bySite": [
         {
           "site": "hotpepper.jp",
-          "cta": 60,
-          "outbound": 58,
-          "deduped": 60
+          "cta": 44,
+          "outbound": 41,
+          "deduped": 44
         },
         {
           "site": "tabelog.com",
-          "cta": 6,
-          "outbound": 9,
-          "deduped": 9
+          "cta": 2,
+          "outbound": 6,
+          "deduped": 6
         }
       ]
     }
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 8300,
+    "value": 8350,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
