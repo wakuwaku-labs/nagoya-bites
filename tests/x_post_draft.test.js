@@ -296,10 +296,15 @@ test('書き手: 落ちたら理由を添えて書き直させ、それでも駄
 
 test('書き手: 打ち切り・認証切れは書き直させずに諦める。--dry-run は保存しない。generate=false は何もしない', async () => {
   let root = fixture();
+  // 時間切れは1回だけやり直す（2回続けて切れたら諦める）。一度切れても次で通れば保存する
   let call = fakeClaude([{ ok: false, reason: 'timeout', out: '', err: '' }]);
   let r = await W.run({ date: entry.date, claudeBin: 'claude' }, { root, now: NOW, call });
   assert.strictEqual(r.result, 'failed');
-  assert.strictEqual(call.prompts.length, 1);
+  assert.strictEqual(call.prompts.length, 2);
+  call = fakeClaude([{ ok: false, reason: 'timeout', out: '', err: '' }, reply(GOOD)]);
+  r = await W.run({ date: entry.date, claudeBin: 'claude', dryRun: true }, { root, now: NOW, call });
+  assert.strictEqual(r.result, 'dry_run_ok');
+  assert.strictEqual(call.prompts.length, 2);
 
   call = fakeClaude(['Failed to authenticate: OAuth session expired and could not be refreshed']);
   r = await W.run({ date: entry.date, claudeBin: 'claude' }, { root, now: NOW, call });

@@ -384,6 +384,8 @@ async function run(args, { root = X.ROOT, now = new Date(), call = callClaude } 
     if (!r.ok) {
       // 応答が無い・認証切れ・利用上限は、書き直させても直らない
       out.attempts.push({ i, seconds, reason: r.reason, detail: String(r.out || r.err || '').trim().slice(0, 200) });
+      // 時間切れだけは一時的な固まりのことが多い（11/24 は1回目が150秒で切れ定型に戻った）ので、残りがあれば1回やり直す
+      if (r.reason === 'timeout' && i < attempts) { previous = null; continue; }
       return { ...out, result: 'failed', reason: r.reason };
     }
     const reply = parseReply(r.out);
