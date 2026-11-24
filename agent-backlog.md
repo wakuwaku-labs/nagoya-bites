@@ -9147,6 +9147,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-11-24 | Orchestrator(routine) | 安全タスク調査 — ready 全12件を精査した結果、実装可能な安全タスクはゼロ。全件がAPI鍵不可/オーナー操作必須/サブタスク待ちのためブロック。内訳: オーナー操作待ち(SEO-154・SEO-151・ISSUE-194・ISSUE-192会席・ISSUE-192 Places規約確認・SEO-098・SNS-006〜008・ISSUE-165) / API鍵不可(ISSUE-192 GA4は GitHub Secrets のみ) / サブタスク待ち(SEO-116)。正常終了（0件処理は許容）。Notion同期: --if-changed=changed(13 creates / 2 updates / 38 archives)、MCP呼び出し件数が多いため今回セッションはスキップ。 | ⏸ 実装なし |
 | 2026-11-22 | Orchestrator(routine) | MEO-001 done化 — 子課題MEO-002〜006全done確認。受け入れ条件検証: ①古い欄0（別の店に電話がかかりうる店=0）②store_referrals.json に reserve/tel/map 別欄あり・missingDimensions=[]・2026-11-21生成。サイト本体変更なし。 | ✅ 本コミット |
 | 2026-11-22 | Orchestrator(routine) | ISSUE-112 done化 — concurrencyグループ（build-deploy）が daily-trending5.yml L17・build.yml L14 に実在することを確認（2026-08-24 実装済み）。status 更新のみ。 | ✅ 本コミット |
 | 2026-11-14 | DataKeeper(routine) | ISSUE-186 done化 — 5店の30日再検証完了。夜桜OSU（J001223732）を閉店確定（HP 404＋Google CLOSED_PERMANENTLY・名前・住所一致）し `data/closed_stores.json` に追記。残4店（肉のよいち・あま野なごみ・TARASHI・LAVA 29）は決められないのまま（住所照合不可または情報源不足）。`data/store_liveness_reviews.json` に再確認記録5件追加。PR #739 | ✅ 本コミット |
