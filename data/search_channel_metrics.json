@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-11-24T08:35:47.636Z",
+  "generatedAt": "2026-11-24T08:47:08.992Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 8847,
+  "total_sessions": 8849,
   "engines": [
     {
       "key": "direct",
@@ -40,13 +40,13 @@
     {
       "key": "bing",
       "label": "Bing",
-      "sessions": 948,
+      "sessions": 949,
       "pct": 10.7,
       "sources": [
         {
           "source": "bing",
           "medium": "organic",
-          "sessions": 942
+          "sessions": 943
         },
         {
           "source": "cn.bing.com",
@@ -58,13 +58,13 @@
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 652,
+      "sessions": 653,
       "pct": 7.4,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 646
+          "sessions": 647
         },
         {
           "source": "hk.search.yahoo.com",
@@ -252,7 +252,7 @@
     }
   ],
   "search_only": {
-    "total": 3340,
+    "total": 3342,
     "share": [
       {
         "key": "google",
@@ -263,13 +263,13 @@
       {
         "key": "bing",
         "label": "Bing",
-        "sessions": 948,
+        "sessions": 949,
         "pct_of_search": 28.4
       },
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 652,
+        "sessions": 653,
         "pct_of_search": 19.5
       },
       {
@@ -292,7 +292,7 @@
     "delta": {
       "direct": 163,
       "google": 17,
-      "bing": 16,
+      "bing": 17,
       "yahoo": 9,
       "ai_assistant": 1,
       "other": 2,
@@ -303,7 +303,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 1464 セッションのみ。Bing(948) + 生成AI(246) の 1194 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 1464 セッションのみ。Bing(949) + 生成AI(246) の 1195 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
