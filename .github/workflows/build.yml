@@ -133,6 +133,13 @@ jobs:
         env:
           HOTPEPPER_API_KEY: ${{ secrets.HOTPEPPER_API_KEY }}
 
+      - name: ホットペッパーのクレジットをテストの前に反映する（再発防止・Ondine #1942）
+        # 当日に増えた特集・日次の記事はフッターがひな形のままで、後ろの反映ステップより前に走る
+        # npm test（tests/hp_credit.test.js「書き出された HTML」「--check」）が赤になり build が止まった
+        # （2026-11-13・11-14 の2回）。冪等・通信なしなので、テストの直前にも同じ反映を置く。
+        # 後ろの反映ステップは build 後に生成される分のために残す。
+        run: node scripts/add_hp_credit.js
+
       - name: 単体・回帰テスト（npm test / ISSUE-090 acceptance 5）
         # これまで npm test はどの workflow からも実行されておらず、テストは書かれているのに
         # 一度も自動実行されていなかった（ISSUE-089 の回帰6件を含む）。Actions は success のまま
