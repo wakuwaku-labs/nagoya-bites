@@ -482,23 +482,117 @@
     }
    ],
    "next_due": "2026-12-08"
+  },
+  "journal/2026-08-16-sakae-magari-kakigori.html": {
+   "last_checked": "2026-11-25",
+   "last_checked_at": "2026-11-25T04:07:26.374Z",
+   "outcome": "findings",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 23,
+   "verified": 18,
+   "unverifiable": 5,
+   "mismatch": 0,
+   "sources": {
+    "ok": 6,
+    "total": 7
+   },
+   "findings": [
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-08-31）を過ぎた記述: 栄3-9-2のGEMS栄8階では、愛媛県松山市生まれのかき氷専門店がもつ鍋店の昼間を借りて8月31日まで営業している。",
+     "claim": "栄3-9-2のGEMS栄8階では、愛媛県松山市生まれのかき氷専門店がもつ鍋店の昼間を借りて8月31日まで営業している。",
+     "reported_at": "2026-11-25"
+    },
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-09-30）を過ぎた記述: 一方、栄4-1-1の中日ビル24階にあるホテルのティーラウンジは、6月2日から9月30日まで紅茶氷と宇治抹茶氷を出してお",
+     "claim": "一方、栄4-1-1の中日ビル24階にあるホテルのティーラウンジは、6月2日から9月30日まで紅茶氷と宇治抹茶氷を出しており、こちらも2,200円（ほうじ茶付・税サービス料込）だ。",
+     "reported_at": "2026-11-25"
+    },
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-08-31）を過ぎた記述: 栄のもつ鍋店を借りた一軒は8月31日まで、awayuki と中日ビル24階のホテルは9月末まで。",
+     "claim": "栄のもつ鍋店を借りた一軒は8月31日まで、awayuki と中日ビル24階のホテルは9月末まで。",
+     "reported_at": "2026-11-25"
+    }
+   ],
+   "next_due": "2026-12-09"
+  },
+  "journal/2026-09-03-meieki-meichika-sharin-tsukemen.html": {
+   "last_checked": "2026-11-25",
+   "last_checked_at": "2026-11-25T04:07:26.374Z",
+   "outcome": "findings",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 39,
+   "verified": 33,
+   "unverifiable": 5,
+   "mismatch": 1,
+   "sources": {
+    "ok": 8,
+    "total": 8
+   },
+   "findings": [
+    {
+     "type": "number_light",
+     "severity": "light",
+     "detail": "出典の「つけめん」が 1,080円 → 940円",
+     "proposal": {
+      "slug": "2026-09-03-meieki-meichika-sharin-tsukemen",
+      "summary": "公開後の再確認で、出典の「つけめん」が940円に変わっていたため、1,080円から修正",
+      "find": "つけめん1,080円",
+      "replace": "つけめん940円",
+      "source_url": "https://prtimes.jp/main/html/rd/p/000000098.000087198.html"
+     },
+     "reported_at": "2026-11-25"
+    },
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-09-06）を過ぎた記述: なお9月4日から6日までは、麺類を注文した各日先着50名に味玉が付く。",
+     "claim": "なお9月4日から6日までは、麺類を注文した各日先着50名に味玉が付く。",
+     "reported_at": "2026-11-25"
+    }
+   ],
+   "next_due": "2026-12-09"
+  },
+  "journal/2026-06-15-yoroniku-nagoya-haera.html": {
+   "last_checked": "2026-11-25",
+   "last_checked_at": "2026-11-25T04:07:26.374Z",
+   "outcome": "ok",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 23,
+   "verified": 9,
+   "unverifiable": 14,
+   "mismatch": 0,
+   "sources": {
+    "ok": 2,
+    "total": 3
+   },
+   "findings": [],
+   "next_due": "2027-02-22"
   }
  },
  "summary": {
-  "overdue": 188,
-  "overdue_ledger": 1,
-  "oldest_overdue_ledger_days": 4,
-  "overdue_legacy": 187,
-  "oldest_overdue_legacy_days": 201,
-  "due_total": 191,
+  "overdue": 187,
+  "overdue_ledger": 2,
+  "oldest_overdue_ledger_days": 11,
+  "overdue_legacy": 185,
+  "oldest_overdue_legacy_days": 202,
+  "due_total": 190,
   "no_base_date": 3,
   "pending_findings": 0
  },
  "last_run": {
-  "date": "2026-11-24",
-  "at": "2026-11-24T05:16:44.091Z",
+  "date": "2026-11-25",
+  "at": "2026-11-25T04:07:26.374Z",
   "mode": "record",
-  "due": 191,
+  "due": 190,
   "processed": 3,
   "alerts": 3,
   "applied": 0
