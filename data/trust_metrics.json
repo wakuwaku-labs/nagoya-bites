@@ -1,26 +1,26 @@
 {
  "_README": "S7-1 信頼の指標（scripts/trust_metrics.js が毎日作る。週のレポート GAS が読む）。設定は data/trust_metrics_policy.json。history は7日ごとの記録（悪化の見張りが前の週と比べるのに使う）。",
- "date": "2026-11-24",
- "generated_at": "2026-11-24T05:31:13.009Z",
+ "date": "2026-11-25",
+ "generated_at": "2026-11-25T04:36:26.682Z",
  "policy_version": 1,
  "indicators": {
   "evidence_rate": {
-   "value": 0.7571,
-   "numerator": 536,
-   "denominator": 708,
-   "measured_articles": 26,
-   "public_articles": 273,
-   "article_mean": 0.6575,
-   "mismatch_facts": 2,
-   "facts_per_article": 27.2,
+   "value": 0.7618,
+   "numerator": 630,
+   "denominator": 827,
+   "measured_articles": 30,
+   "public_articles": 274,
+   "article_mean": 0.6705,
+   "mismatch_facts": 3,
+   "facts_per_article": 27.6,
    "note": "台帳のある記事だけ。台帳の無い記事は数えていない（measured_articles が数えた本数）"
   },
   "unconfirmed_disclosure_rate": {
-   "value": 0.0037,
+   "value": 0.0036,
    "numerator": 1,
-   "denominator": 273,
-   "measured_articles": 273,
-   "public_articles": 273,
+   "denominator": 274,
+   "measured_articles": 274,
+   "public_articles": 274,
    "recent": {
     "days": 30,
     "numerator": 0,
@@ -34,27 +34,27 @@
    "numerator": 0,
    "denominator": 91,
    "measured_articles": 91,
-   "public_articles": 193,
+   "public_articles": 194,
    "window_days": 90,
    "events_in_window": 0,
    "note": "公開から90日以内のジャーナル記事のうち、訂正・取り下げの記録がある記事。events_in_window は直近90日に訂正・取り下げの記録がついた記事の本数（古い記事の見直しで見つけたものも入る）。特集は訂正の台帳が無く対象外"
   },
   "freshness_rate": {
-   "value": 0.1077,
+   "value": 0.1045,
    "numerator": 7,
-   "denominator": 65,
-   "measured_articles": 65,
-   "public_articles": 271,
+   "denominator": 67,
+   "measured_articles": 67,
+   "public_articles": 272,
    "window_days": 90,
-   "no_confirm_date": 58,
+   "no_confirm_date": 60,
    "note": "検索に出ている記事のうち、本文の確認日が90日以内の割合。確認日の無い記事は鮮度なしとして数える（棚卸し台帳 S5-1 と同じ読み方）"
   },
   "analysis_rate": {
-   "value": 0.4176,
+   "value": 0.4161,
    "numerator": 114,
-   "denominator": 273,
-   "measured_articles": 273,
-   "public_articles": 273,
+   "denominator": 274,
+   "measured_articles": 274,
+   "public_articles": 274,
    "breakdown": {
     "calculation": 4,
     "comparison": 101,
@@ -64,11 +64,11 @@
   }
  },
  "fact_sentences": {
-  "articles": 273,
-  "total": 8604,
+  "articles": 274,
+  "total": 8642,
   "per_article_avg": 31.5,
-  "ledger_facts": 708,
-  "ledger_articles": 26,
+  "ledger_facts": 827,
+  "ledger_articles": 30,
   "note": "数字・日付・価格を含む文の数（記事の本文から機械で取り出す。台帳の事実の文とは別の数え方で、記事ごとの増減を見る）"
  },
  "reader_voice": {
@@ -80,21 +80,21 @@
  },
  "recheck": {
   "last_run": {
-   "date": "2026-11-24",
-   "at": "2026-11-24T05:16:44.091Z",
+   "date": "2026-11-25",
+   "at": "2026-11-25T04:07:26.374Z",
    "mode": "record",
-   "due": 191,
+   "due": 190,
    "processed": 3,
    "alerts": 3,
    "applied": 0
   },
   "summary": {
-   "overdue": 188,
-   "overdue_ledger": 1,
-   "oldest_overdue_ledger_days": 4,
-   "overdue_legacy": 187,
-   "oldest_overdue_legacy_days": 201,
-   "due_total": 191,
+   "overdue": 187,
+   "overdue_ledger": 2,
+   "oldest_overdue_ledger_days": 11,
+   "overdue_legacy": 185,
+   "oldest_overdue_legacy_days": 202,
+   "due_total": 190,
    "no_base_date": 3,
    "pending_findings": 0
   }
