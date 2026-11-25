@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-25T00:20:47.223Z",
+  "generatedAt": "2026-11-25T01:56:47.549Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 8370,
-    "pageViews": 9957,
-    "sessions": 8815,
+    "activeUsers": 8380,
+    "pageViews": 9967,
+    "sessions": 8827,
     "avgSessionDuration": 55.7,
     "bounceRate": 0.685,
     "pagesPerSession": 1.13
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 3118,
-      "direct": 5421,
+      "organic": 3121,
+      "direct": 5434,
       "social": 63,
       "ai_assistant": 240,
       "referral": 62,
@@ -39,17 +39,17 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 5393
+      "sessions": 5406
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1454
+      "sessions": 1456
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 970
+      "sessions": 971
     },
     {
       "source": "yahoo",
@@ -311,7 +311,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.7,
+    "ctaClickRate_organic": 9.6,
     "ctaClickRate_direct": 0.9,
     "ctaClickRate_social": 25.4,
     "byPage": [
@@ -1182,7 +1182,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 8370,
+    "value": 8380,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
