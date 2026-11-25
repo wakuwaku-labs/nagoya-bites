@@ -1,0 +1,453 @@
+{
+  "date": "2026-11-25",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "大須で世界の料理ランチ、おすすめ5選 ブラジル・ベトナム・韓国・沖縄・ケバブ",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 6件 (雰囲気,看板,名物,ランチ,初めて,使い分け) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 153字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -6 / brand_fit -4",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "大須で子ども連れランチ、おすすめ3選 鶏の丸焼き・ケバブ・韓国料理",
+      "verdict": "HOLD",
+      "total": 66,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "韓国料理",
+          "feature": "features/nagoya-korean.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 1件 (ランチ) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 82字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「韓国料理」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "大須でひとりランチ、カウンターのある世界の料理3選",
+      "verdict": "HOLD",
+      "total": 66,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 1件 (ランチ) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 48字 +2",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「カウンター」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "名古屋駅でクリスマスディナー、コースのある店おすすめ5選",
+      "verdict": "HOLD",
+      "total": 62,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 1件 (比較) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 47字 +2",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名古屋駅」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "栄ミナミ・大須のイルミネーションの帰りに寄れる夜の店3選",
+      "verdict": "HOLD",
+      "total": 61,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 69字 +2",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": {
+    "topic": "イベント",
+    "week": "2026-W48",
+    "slot": 2,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -6 / brand_fit -4",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "weekly_digest",
+      "title_draft": "大須で世界の料理ランチ、おすすめ5選 ブラジル・ベトナム・韓国・沖縄・ケバブ",
+      "lead_draft": "大須商店街には、国や地域の名前がつく料理の店がたくさんあります。今回は上前津駅・大須観音駅から歩ける範囲で、昼から開いている世界の料理の店を5店集めました。ブラジルの鶏の丸焼き、ベトナムのバインミー、韓国のチーズダッカルビ、沖縄そば、ケバブと、行く前に知っておきたい席の数や支払い方法も店ごとに書きました。",
+      "angle": "大須商店街の、昼から開いている世界の料理の店5店（ブラジル・ベトナム・韓国・沖縄・ケバブ）を、商店街歩きの合間のランチという場面で紹介。店ごとに看板・名物の料理と店の雰囲気・席の数、初めて行く前の注意（支払い方法・定休日）を書き、最後に人数や子ども連れでの使い分けをまとめる",
+      "main_store": {
+        "name": "大須名物 鶏の丸焼きのお店 OSSO BRASIL オッソブラジル",
+        "id": "J000868875",
+        "area": "大須",
+        "genre": "ブラジル料理"
+      },
+      "sources": [
+        {
+          "label": "Aichi Now 栄ミナミ・大須 ウインターイルミネーション",
+          "url": "https://aichinow.pref.aichi.jp/events/detail/1827/",
+          "date": "2026-11-13"
+        },
+        {
+          "label": "名古屋コンシェルジュ 大須・金山エリア",
+          "url": "https://www.nagoya-info.jp/area/kanayama/",
+          "date": "2026-11-25"
+        },
+        {
+          "label": "ホットペッパー OSSO BRASIL",
+          "url": "https://www.hotpepper.jp/strJ000868875/",
+          "date": "2026-11-25"
+        },
+        {
+          "label": "ホットペッパー Mega Kebab 大須1号店",
+          "url": "https://www.hotpepper.jp/strJ000912876/",
+          "date": "2026-11-25"
+        },
+        {
+          "label": "ホットペッパー オキナワカフェ",
+          "url": "https://www.hotpepper.jp/strJ000734626/",
+          "date": "2026-11-25"
+        },
+        {
+          "label": "ホットペッパー アオサンズ",
+          "url": "https://www.hotpepper.jp/strJ001279619/",
+          "date": "2026-11-25"
+        },
+        {
+          "label": "ホットペッパー コスフ KOSF 大須",
+          "url": "https://www.hotpepper.jp/strJ001022402/",
+          "date": "2026-11-25"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c2",
+      "theme": "weekly_digest",
+      "title_draft": "大須で子ども連れランチ、おすすめ3選 鶏の丸焼き・ケバブ・韓国料理",
+      "lead_draft": "週末に大須商店街を家族で歩くとき、子ども連れで入りやすい昼の店を3店集めました。ホットペッパーで「お子様連れ歓迎」とある店だけです。席の数や支払い方法も書きました。",
+      "angle": "大須商店街で子ども連れ歓迎と書かれた昼の店3店を、家族の週末ランチの場面で紹介",
+      "main_store": {
+        "name": "大須名物 鶏の丸焼きのお店 OSSO BRASIL オッソブラジル",
+        "id": "J000868875",
+        "area": "大須",
+        "genre": "ブラジル料理"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー OSSO BRASIL",
+          "url": "https://www.hotpepper.jp/strJ000868875/",
+          "date": "2026-11-25"
+        },
+        {
+          "label": "ホットペッパー Mega Kebab 大須1号店",
+          "url": "https://www.hotpepper.jp/strJ000912876/",
+          "date": "2026-11-25"
+        },
+        {
+          "label": "ホットペッパー コスフ KOSF 大須",
+          "url": "https://www.hotpepper.jp/strJ001022402/",
+          "date": "2026-11-25"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c3",
+      "theme": "weekly_digest",
+      "title_draft": "名古屋駅でクリスマスディナー、コースのある店おすすめ5選",
+      "lead_draft": "クリスマスの予約を考え始める時期です。名古屋駅の近くで、クリスマスのコースがある店を集めます。",
+      "angle": "名駅のクリスマスコースの比較。ただし2026年の名駅の具体的なコースは1件しか確認できていない",
+      "main_store": {
+        "name": "ストリングスホテル名古屋",
+        "id": "",
+        "area": "名駅",
+        "genre": "フレンチ"
+      },
+      "sources": [
+        {
+          "label": "Aichi Now クリスマスディナー特集",
+          "url": "https://aichinow.pref.aichi.jp/features/detail/242/",
+          "date": "2026-11-25"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c4",
+      "theme": "weekly_digest",
+      "title_draft": "大須でひとりランチ、カウンターのある世界の料理3選",
+      "lead_draft": "大須で、ひとりでも入りやすい小さな店を集めます。10席のベトナム料理店、16席の沖縄料理店など。",
+      "angle": "席数の少ない店をひとりランチの場面で紹介",
+      "main_store": {
+        "name": "アオサンズ",
+        "id": "J001279619",
+        "area": "大須",
+        "genre": "ベトナム料理"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー アオサンズ",
+          "url": "https://www.hotpepper.jp/strJ001279619/",
+          "date": "2026-11-25"
+        },
+        {
+          "label": "ホットペッパー オキナワカフェ",
+          "url": "https://www.hotpepper.jp/strJ000734626/",
+          "date": "2026-11-25"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c5",
+      "theme": "weekly_digest",
+      "title_draft": "栄ミナミ・大須のイルミネーションの帰りに寄れる夜の店3選",
+      "lead_draft": "11月13日から、栄ミナミと大須の通りで約30万球のイルミネーションが始まりました。見に行った帰りに寄れる、夜まで開いている店を集めます。",
+      "angle": "イルミネーション（17〜24時）の帰りの夜ごはん。夜まで開く店は韓国料理・沖縄料理の2店のみで数が足りない",
+      "main_store": {
+        "name": "コスフ KOSF 大須",
+        "id": "J001022402",
+        "area": "大須",
+        "genre": "韓国料理"
+      },
+      "sources": [
+        {
+          "label": "Aichi Now 栄ミナミ・大須 ウインターイルミネーション",
+          "url": "https://aichinow.pref.aichi.jp/events/detail/1827/",
+          "date": "2026-11-13"
+        },
+        {
+          "label": "ホットペッパー コスフ KOSF 大須",
+          "url": "https://www.hotpepper.jp/strJ001022402/",
+          "date": "2026-11-25"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}

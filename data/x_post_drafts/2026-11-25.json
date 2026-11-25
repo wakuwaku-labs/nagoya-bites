@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "date": "2026-11-25",
+  "slug": "2026-11-25-osu-world-food-lunch-5",
+  "type": "picks",
+  "body": "【大須】鶏の丸焼きやバインミー、ランチ5選\n\n5店とも上前津駅から歩いて6分以内。\n・「OSSO BRASIL」：鶏の丸焼きが名物\n・「コスフ KOSF」：チーズダッカルビ\n・「アオサンズ」：10席のバインミー\n※現金を持っていくと安心",
+  "evidence": [
+    "大須で世界の料理ランチ、おすすめ5選 ブラジル・ベトナム・韓国・沖縄・ケバブ",
+    "今回は、上前津駅から歩いて6分以内で、昼から開いている世界の料理の店を5店集めました。",
+    "今回の5店は、ブラジル・韓国・沖縄・ベトナムと、料理の出どころがばらばらです。",
+    "秘伝のタレに一晩漬けた鶏の丸焼きが名物のブラジル大衆食堂。60席・全席禁煙・お子様連れ歓迎。月曜定休。",
+    "チーズダッカルビ（1,958円）が看板の韓国料理店。50席・全席禁煙・席に着くと出る小鉢なし。ランチは平日のみ。",
+    "バインミーのベトナム料理店。10席・全席禁煙。支払いはPayPayか現金。お子様連れ不可・月曜休み。",
+    "支払い方法が店ごとに違います（Mega Kebabはカード・QRが使えない記載、アオサンズはPayPayのみ）。現金を少し持っていくと安心です。"
+  ],
+  "why": "5店とも上前津駅から歩いて6分以内。",
+  "generated_at": "2026-11-25T00:17:48.388Z",
+  "generator": "claude --print（docs/x-post-prompt.md）",
+  "plan": {
+    "week": "2026-W48",
+    "slot": 2,
+    "role": "exploit",
+    "experiment_id": "plan-exploit-2026-W48",
+    "cell_id": "nb_kind=number|first_line=number|length=long",
+    "topic": "イベント",
+    "url_variant": null,
+    "requested": {
+      "nb_kind": "number",
+      "first_line": "number",
+      "length": "long"
+    },
+    "followed": false,
+    "kind_overridden": "picks_article"
+  },
+  "topic_experiment": {
+    "experiment_id": "x-nb-thread-vs-single",
+    "topic": "名古屋ジャーナルの紹介",
+    "format": {
+      "media": "none",
+      "thread": false,
+      "url": true,
+      "first_line": "number"
+    },
+    "followed": true
+  }
+}

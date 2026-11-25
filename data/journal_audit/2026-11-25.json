@@ -1,0 +1,138 @@
+{
+  "date": "2026-11-25",
+  "slug": "2026-11-25-osu-world-food-lunch-5",
+  "recorded_at": "2026-11-25T00:17:46.247Z",
+  "mode": "shadow",
+  "enforced": false,
+  "note": "記録だけ。公開は止めていない",
+  "lane_if_enforced": "auto_publish",
+  "published": true,
+  "published_by_lane": "existing_gate",
+  "reasons": [],
+  "checks": {
+    "validator": "pass",
+    "claims": {
+      "ledger_by": "writer",
+      "summary": {
+        "claims": 36,
+        "verified": 36,
+        "unverifiable": 0,
+        "mismatch": 0,
+        "stale": 0,
+        "not_applicable": 0,
+        "paired": 6,
+        "hedge_dropped": 0,
+        "issues": 0,
+        "core_issues": 0
+      },
+      "fetch": {
+        "sources": 7,
+        "ok": 7,
+        "failed": []
+      }
+    },
+    "independent_review": {
+      "ok": true,
+      "reason": null,
+      "model": null,
+      "prompt_version": "review-2026-11-17",
+      "findings": 0,
+      "verified_findings": 0
+    }
+  },
+  "score": "85点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -6 / brand_fit -4（一次報道・話題の証跡URLなし。公式観光サイト2件とホットペッパー5店で裏取り）",
+  "sources": [
+    {
+      "url": "https://aichinow.pref.aichi.jp/events/detail/1827/",
+      "label": "Aichi Now（愛知県公式観光サイト）栄ミナミ・大須 ウインターイルミネーション",
+      "type": "公式・その他",
+      "date": "2026-11-13",
+      "fetched_at": "2026-11-25T00:17:16.268Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 3225,
+        "sha256": "801d1ecf8d91feb248ff2726971647ff0c5fc6f2066557bd2fecc65cf02706aa"
+      }
+    },
+    {
+      "url": "https://www.nagoya-info.jp/area/kanayama/",
+      "label": "名古屋コンシェルジュ（名古屋市観光情報）大須・金山エリア",
+      "type": "公式・その他",
+      "date": "2026-11-25",
+      "fetched_at": "2026-11-25T00:17:16.436Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 5786,
+        "sha256": "61a3742feaa001080607dd50c76da7649cc9f39329f0a9892c8328a7410ef19f"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ000868875/",
+      "label": "ホットペッパー 大須名物 鶏の丸焼きのお店 OSSO BRASIL オッソブラジル",
+      "type": "掲載サイト",
+      "date": "2026-11-25",
+      "fetched_at": "2026-11-25T00:17:16.676Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 6338,
+        "sha256": "ae8c614a527cff0217db9edd32448d02133b171a351d104cc3fa89ea4c63ae56"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001022402/",
+      "label": "ホットペッパー コスフ KOSF 大須",
+      "type": "掲載サイト",
+      "date": "2026-11-25",
+      "fetched_at": "2026-11-25T00:17:16.912Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 6415,
+        "sha256": "e8cf73055adc1e9cfe15af06dc42bd9da1188aa5134028038ea26334505fa113"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ000912876/",
+      "label": "ホットペッパー Mega Kebab 大須1号店",
+      "type": "掲載サイト",
+      "date": "2026-11-25",
+      "fetched_at": "2026-11-25T00:17:17.046Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 4106,
+        "sha256": "6d37db4fb4a81ff4d7c4b0f79ec9bd39e01872611ffbd062c12d512ff32e2a57"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ000734626/",
+      "label": "ホットペッパー オキナワカフェ",
+      "type": "掲載サイト",
+      "date": "2026-11-25",
+      "fetched_at": "2026-11-25T00:17:17.170Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 3832,
+        "sha256": "67773654f2791ba9e1e7c51b5fdff916963ba84a07c8c2b459de7488ab0eb06f"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001279619/",
+      "label": "ホットペッパー アオサンズ",
+      "type": "掲載サイト",
+      "date": "2026-11-25",
+      "fetched_at": "2026-11-25T00:17:17.320Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 3597,
+        "sha256": "95204b3fbc926b7eb9aa3be526932981d2f05a07dddf22d9b5327d26a92bd146"
+      }
+    }
+  ],
+  "findings": []
+}
