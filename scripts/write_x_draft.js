@@ -200,7 +200,9 @@ function loadTopicExperiment(date, policy, entry, root = X.ROOT, now = new Date(
     const skip = Array.isArray(cfg.skip) ? cfg.skip : [];
     const anyTopics = Array.isArray(cfg.anyTopics) ? cfg.anyTopics : [];
     const usable = (Array.isArray(r.data.candidates) ? r.data.candidates : []).filter((c) => c && typeof c.experiment_id === 'string'
-      && !skip.includes(c.experiment_id) && c.format && typeof c.format === 'object' && (c.format.media === 'none' || c.format.media == null));
+      && !skip.includes(c.experiment_id)
+      // 長いポストの日（本文＋続きを1つにまとめる）は「スレッドなし」の実験を使わない（11/25 は単発の実験の日に当たり、続きが無く長いポストにならなかった）
+      && !(policy && policy.longPost && policy.longPost.enabled === true && c.format && c.format.thread === false) && c.format && typeof c.format === 'object' && (c.format.media === 'none' || c.format.media == null));
     if (!usable.length) return { exp: null, reason: 'no_usable_candidate' };
     const pack = (c) => ({ experiment_id: c.experiment_id, topic: c.topic ?? null, format: c.format });
     const specific = usable.find((c) => !anyTopics.includes(c.topic) && PT.matchesTopic({ title_draft: entry.title }, c.topic));
