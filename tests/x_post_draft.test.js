@@ -176,6 +176,7 @@ function fixture({ draft = null, mode = 'live', article = ARTICLE, pol = policy 
 function fakeFetch(root) {
   const sent = [];
   const fn = async (url, opts = {}) => {
+    if (opts.method === 'DELETE') { (fn.deleted = fn.deleted || []).push(url); return { status: 200, text: async () => JSON.stringify({ data: { deleted: true } }), headers: new Map() }; } // 出し直しの前の削除（#2690）
     if (url.startsWith('https://api.x.com/2/tweets')) {
       const b = JSON.parse(opts.body);
       sent.push(b.text);
@@ -578,6 +579,8 @@ test('投稿: 追加の長いポスト（--extra-long）は、その日が投稿
   const root = fixture({ draft: GOOD, pol: longPolicy });
   let f = fakeFetch(root);
   assert.strictEqual((await postRun({}, { root, env: ENV, fetchImpl: f, now: NOW })).result, 'posted');
+  // 出し直しの前の削除は5桁以上の ID しか受け付けないので、台帳の ID を本物らしく直す
+  { const lp = path.join(root, 'data/x_post_log.json'); const lg = JSON.parse(fs.readFileSync(lp, 'utf8')); lg.posts.forEach((p) => { if (p.tweet_id && p.tweet_id.length < 5) p.tweet_id = '1000000' + p.tweet_id; }); fs.writeFileSync(lp, JSON.stringify(lg)); }
   // 本文がその日の投稿と同じだと30日の重複の検査で止まるので、別の本文にする
   const EXTRA = { ...FIVE, body: '【池下】イタリアンの「QQ」で、ワインを選ぶ\n\n棚のワインを、奥の席で開けられる。' };
   fs.writeFileSync(path.join(root, `data/x_post_drafts/${entry.date}-long.json`), JSON.stringify(EXTRA));
@@ -599,6 +602,8 @@ test('投稿: 追加の長いポスト（--extra-long）は、その日が投稿
   f = fakeFetch(root);
   assert.strictEqual((await postRun({ extraLong: true }, { root, env: ENV, fetchImpl: f, now: NOW })).result, 'already_posted');
   assert.strictEqual(f.sent.length, 0);
+  // 前の削除と同じく ID を本物らしく直す
+  { const lp = path.join(root, 'data/x_post_log.json'); const lg = JSON.parse(fs.readFileSync(lp, 'utf8')); lg.posts.forEach((p) => { if (p.tweet_id && p.tweet_id.length < 5) p.tweet_id = '1000000' + p.tweet_id; }); fs.writeFileSync(lp, JSON.stringify(lg)); }
   // 文面を作り直した出し直しは送る（2026-11-23 本人「新しい形で今日の分を出し直して」）
   const REDO = { ...EXTRA, body: '【池下】イタリアンの「QQ」\n\n棚のワインを、奥の席で開けられる店。' };
   fs.writeFileSync(path.join(root, `data/x_post_drafts/${entry.date}-long.json`), JSON.stringify(REDO));
