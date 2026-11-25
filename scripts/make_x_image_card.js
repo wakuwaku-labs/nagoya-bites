@@ -10,6 +10,7 @@ const fs = require('fs');
 const path = require('path');
 const X = require('./lib/x_post');
 const C = require('./lib/x_image_card');
+const F = require('./lib/x_food_card');
 const { findEntry, todayJst } = require('./post_journal_to_x');
 const { loadPlan } = require('./write_x_draft');
 
@@ -38,12 +39,31 @@ function run(args, { root = X.ROOT, now = new Date(), rasterizer } = {}) {
   return { date, slug: entry.slug, result: r.variant === 'image' ? 'card_made' : 'no_card', ...r };
 }
 
+/** 店の写真が無い日の料理イメージカード（scripts/lib/x_food_card.js）。画像カードを作らなかった日だけ。失敗しても止めない */
+async function runFood(args, { root = X.ROOT, now = new Date(), rasterizer, fetchImpl } = {}) {
+  const policy = X.loadPolicy(root);
+  const date = args.date || todayJst(now);
+  const entry = findEntry(date, root);
+  if (!entry) return { date, result: 'no_journal' };
+  const articlePath = path.join(root, 'journal', `${entry.slug}.html`);
+  if (!fs.existsSync(articlePath)) return { date, slug: entry.slug, result: 'article_html_missing' };
+  const r = await F.makeFoodCard({ date, entry, policy, html: fs.readFileSync(articlePath, 'utf8'), root, rasterizer, fetchImpl, force: args.force });
+  return { date, slug: entry.slug, ...r, result: r.result === 'food_card_made' ? 'card_made' : 'no_card' };
+}
+
+async function main() {
+  const args = parseArgs(process.argv.slice(2));
+  let r = run(args);
+  if (r.result === 'no_card') {
+    const f = await runFood(args);
+    if (f.result === 'card_made') r = f;
+  }
+  console.log(args_json() ? JSON.stringify(r, null, 2) : `X 画像カード ${r.date}: ${r.result}${r.reason ? `（${r.reason}）` : ''}${r.png ? ` ${r.png}` : ''}${r.error ? ` 失敗: ${r.error}` : ''}`);
+}
+
 if (require.main === module) {
-  try {
-    const r = run(parseArgs(process.argv.slice(2)));
-    console.log(args_json() ? JSON.stringify(r, null, 2) : `X 画像カード ${r.date}: ${r.result}${r.reason ? `（${r.reason}）` : ''}${r.png ? ` ${r.png}` : ''}${r.error ? ` 失敗: ${r.error}` : ''}`);
-  } catch (e) { console.error(e.stack || String(e)); }
+  main().catch((e) => console.error(e.stack || String(e)));
 }
 function args_json() { return process.argv.includes('--json'); }
 
-module.exports = { run, parseArgs };
+module.exports = { run, runFood, parseArgs };

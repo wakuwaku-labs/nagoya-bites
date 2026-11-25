@@ -299,16 +299,18 @@ function makeCard({ date, entry, policy, plan, html, root = ROOT, rasterizer, fo
 /** 投稿側が読む。返り値: { attach: boolean, variant, reason, file?, bytes? }。PNG の署名と大きさも確かめる。 */
 function loadCard(date, policy, root = ROOT) {
   const cfg = (policy && policy.imageCard) || {};
-  if (cfg.enabled !== true) return { attach: false, variant: 'none', reason: 'disabled' };
   let info;
-  try { info = JSON.parse(fs.readFileSync(path.join(root, cardInfoRel(date)), 'utf8')); } catch (_) { return { attach: false, variant: 'none', reason: 'no_card_record' }; }
+  try { info = JSON.parse(fs.readFileSync(path.join(root, cardInfoRel(date)), 'utf8')); } catch (_) { return { attach: false, variant: 'none', reason: cfg.enabled === true ? 'no_card_record' : 'disabled' }; }
+  // 料理のイメージ写真（店の写真が無い日・scripts/lib/x_food_card.js）は imageCard とは別のスイッチ（foodImage.enabled）
+  const food = info.source === 'food';
+  if (food ? !((policy && policy.foodImage) || {}).enabled : cfg.enabled !== true) return { attach: false, variant: 'none', reason: food ? 'food_disabled' : 'disabled' };
   if (info.variant !== 'image') return { attach: false, variant: 'none', reason: info.reason || 'none' };
   const file = path.join(root, cardPngRel(date));
   if (!fs.existsSync(file)) return { attach: false, variant: 'none', reason: 'png_missing' };
   const buf = fs.readFileSync(file);
   if (buf.length > MAX_BYTES) return { attach: false, variant: 'none', reason: 'png_too_big' };
   if (buf.length < 24 || buf.readUInt32BE(0) !== 0x89504e47 || buf.readUInt32BE(16) !== W || buf.readUInt32BE(20) !== H) return { attach: false, variant: 'none', reason: 'png_invalid' };
-  return { attach: true, variant: 'image', reason: info.reason || 'image', source: info.source, file, bytes: buf.length };
+  return { attach: true, variant: 'image', reason: info.reason || 'image', source: info.source, file, bytes: buf.length, ...(food && info.food ? { food: info.food } : {}) };
 }
 
 // ── X へ上げる ───────────────────────────────────────────────────────────
@@ -354,4 +356,4 @@ async function uploadImage(file, cred, fetchImpl = fetch, { type = 'image/png', 
   return { ok: false, reason: attempts.join(' | ') };
 }
 
-module.exports = { decideImage, wrapLines, layoutCard, inspectLayout, findWordBreaks, buildCardSvg, CONTENT_BOTTOM, renderPng, makeCard, loadCard, uploadImage, cardPngRel, cardInfoRel, W, H, UPLOAD_V2, UPLOAD_V1 };
+module.exports = { INFO_DIR_REL: INFO_DIR, iconDataUri, decideImage, wrapLines, layoutCard, inspectLayout, findWordBreaks, buildCardSvg, CONTENT_BOTTOM, renderPng, makeCard, loadCard, uploadImage, cardPngRel, cardInfoRel, W, H, UPLOAD_V2, UPLOAD_V1 };

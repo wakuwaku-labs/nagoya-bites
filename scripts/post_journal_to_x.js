@@ -31,6 +31,7 @@ const path = require('path');
 const X = require('./lib/x_post');
 const IC = require('./lib/x_image_card');
 const SP = require('./lib/x_store_photo');
+const FC = require('./lib/x_food_card');
 
 const TWEET_URL = 'https://api.x.com/2/tweets';
 
@@ -323,6 +324,13 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   // 画像カード（自前の PNG）。付ける日かどうかは Mac 側で決めて記録済み（scripts/make_x_image_card.js）。ここでは読むだけ
   const card = IC.loadCard(date, policy, root);
   out.media = { variant: card.attach ? 'image' : 'none', reason: card.reason, ...(card.attach ? { bytes: card.bytes } : {}) };
+  // 料理のイメージ写真（店の写真が無い日・scripts/lib/x_food_card.js）: 画像に「イメージ」が焼き込んである。CC の作者表示の行を本文に足し、280 を超える日は付けない
+  let foodText = null;
+  if (card.attach && card.source === 'food') {
+    foodText = card.food ? FC.withCredit(built.text, card.food, X.weightedLength) : null;
+    if (foodText) out.media = { variant: 'food', reason: card.reason, bytes: card.bytes, credit: foodText.slice(foodText.lastIndexOf('\n') + 1) };
+    else { card.attach = false; out.media = { variant: 'none', reason: 'food_credit_too_long' }; }
+  }
   // 店の実物写真（docs/decisions/0062）。カードを付けない日に、記事に許諾つきの写真（既定はプレスリリース）があれば付ける。
   // クレジットの行を足すと 280 を超える日は付けない（リンクカードで見せる）
   let photo = null;
@@ -348,8 +356,10 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   let media = { variant: 'none', reason: out.media.reason };
   if (card.attach) {
     const up = await IC.uploadImage(card.file, cred, fetchImpl);
-    if (up.ok) media = { variant: 'image', reason: card.reason, id: up.id, via: up.via };
-    else media = { variant: 'none', reason: `upload_failed: ${up.reason}`.slice(0, 300) };
+    if (up.ok) {
+      media = { variant: foodText ? 'food' : 'image', reason: card.reason, id: up.id, via: up.via };
+      if (foodText) { built = { ...built, text: foodText }; out.text = foodText; }
+    } else media = { variant: 'none', reason: `upload_failed: ${up.reason}`.slice(0, 300) };
   } else if (photo && photoText) {
     const dl = await SP.downloadPhoto(photo.src, fetchImpl);
     const up = dl.ok ? await IC.uploadImage(dl.buf, cred, fetchImpl, { type: dl.type, name: dl.type === 'image/jpeg' ? 'photo.jpg' : 'photo.png' }) : dl;
@@ -501,7 +511,7 @@ function summaryMarkdown(r) {
   for (const x of r.rejected || []) lines.push(`  - 使わなかった候補: ${TEXT_MODE_JA[x.mode] || x.mode} … ${x.reason}`);
   if (r.weighted) lines.push(`- 文字数（X の数え方）: ${r.weighted} / 280`);
   if (r.livePage) lines.push(`- 本番の記事: HTTP ${r.livePage.status}（${r.livePage.attempts} 回目）`);
-  if (r.media) lines.push(`- 画像: ${r.media.variant === 'image' ? '画像カードを付ける' : r.media.variant === 'photo' ? `店の写真を付ける（${r.media.credit || ''}）` : '付けない（リンクカードで見せる）'}（${r.media.reason}）`);
+  if (r.media) lines.push(`- 画像: ${r.media.variant === 'image' ? '画像カードを付ける' : r.media.variant === 'food' ? `料理のイメージ写真を付ける（${r.media.credit || ''}）` : r.media.variant === 'photo' ? `店の写真を付ける（${r.media.credit || ''}）` : '付けない（リンクカードで見せる）'}（${r.media.reason}）`);
   if (r.ogImage) lines.push(`- リンクカードの画像: ${r.ogImage.ok ? 'OK' : `出ない見込み（${r.ogImage.reason}）`}`);
   if (r.tweetUrl) lines.push(`- 投稿: ${r.tweetUrl}`);
   if (r.longPost) lines.push(`- 長いポスト: ${r.longPost.ok ? `1つにまとめて送った（続き ${r.longPost.sections} 件）` : `断られたのでスレッドで送り直した（${r.longPost.reason}）`}`);

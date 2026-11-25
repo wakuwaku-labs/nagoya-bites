@@ -177,6 +177,10 @@
     "graceHours": 6
   },
   "watchdogHelp": "ジャーナルの公開（published_at）から graceHours を過ぎても投稿が台帳に無ければ警報。GitHub の定時実行は数時間遅れることがある（journal-watchdog.yml の実測 4〜6 時間）ため短くしない",
+  "foodImage": {
+    "enabled": true,
+    "help": "店の実物写真（storePhoto）が無い日に、note の見出し画像と同じ料理のイメージ写真（Wikimedia Commons の CC0・パブリックドメイン・CC BY・CC BY-SA だけ）を付ける（Ondine #2713・2026-11-26 本人が段階3の判定 D2 で「X にも付ける」を選択）。画像の左上に「イメージ」の帯・下に「写真はイメージです（実際のお店の料理ではありません）」と作者を焼き込み、本文の最後に「写真（イメージ」の行を足す。足すと 280 を超える日は付けない。作るのは Mac 側（scripts/make_x_image_card.js）。enabled=false でやめる"
+  },
   "storePhoto": {
     "enabled": true,
     "sources": [
