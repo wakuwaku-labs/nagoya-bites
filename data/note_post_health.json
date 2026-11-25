@@ -1,12 +1,12 @@
 {
   "_comment": "日次ジャーナルの note 投稿の最後の結果（scripts/post_note.js が書き、run_journal_local.sh が push する）。見張り役は .github/workflows/note-post-watchdog.yml",
   "last_run": {
-    "error_class": "login",
-    "reason": "投稿先のアカウントが違います（今: 未ログイン / 必要: NAGOYA BITES）。Google での入り直しも通りませんでした（blank | accounts.google.com/v3/signin/identifier）。node scripts/note_login.js --google を試し、だめなら node scripts/note_login.js --own で本人が NAGOYA BITES にログイン",
+    "error_class": "other",
+    "reason": "窓を開けない: Failed to launch the browser process:  Code: 0\n\nstderr:\n既存のブラウザ セッションで開いています。\n\nTROUBLESHOOTING: https://pptr.dev/troubleshooting\n",
     "url": null,
-    "date": "2026-11-24",
-    "slug": "2026-11-24-kanayama-bonenkai-izakaya-5",
+    "date": "2026-11-25",
+    "slug": "2026-11-25-osu-world-food-lunch-5",
     "result": "failed",
-    "recorded_at": "2026-11-24T00:33:58.147Z"
+    "recorded_at": "2026-11-25T00:20:36.389Z"
   }
 }
