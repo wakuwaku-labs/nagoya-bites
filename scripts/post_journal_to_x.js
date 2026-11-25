@@ -364,6 +364,22 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   // 写真つきが断られて写真なしで送り直すときは、クレジットの行も外す
   const textWithoutPhoto = baseText;
 
+  // 出し直し（--extra-long）は「先に消してから出す」。その日の既存の投稿を消せたときだけ長いポストを送る。
+  // 消せなければ何も送らず失敗で止める（2026-11-25 消す前に出して長短2つが残った・Ondine #2690）
+  if (args.extraLong) {
+    const DEL = require('./delete_x_post');
+    const targets = (X.readLog(root).posts || []).filter((p) => p.slug === entry.slug && p.date === date && p.status === 'posted' && p.tweet_id && !p.deleted_at);
+    for (const t of targets) {
+      const d = await DEL.run({ id: t.tweet_id, reason: '出し直し（長いポストに置き換え）', yes: true, root, env, fetchImpl, now });
+      if (!d.ok) {
+        const reason = `delete_before_extra_long_failed:${d.code}${d.status ? `_http_${d.status}` : ''}`;
+        const errorClass = d.kind || 'unknown';
+        record(root, { date, entry, result: 'failed', reason, errorClass, text: built.text, textMode: built.mode, status: 'failed', extraLong: true });
+        return { ...out, result: 'failed', reason, errorClass, deleteFailed: { id: t.tweet_id, code: d.code, status: d.status }, exitCode: 1 };
+      }
+    }
+  }
+
   // 長いポスト（X プレミアム・data/x_post_policy.json の longPost）。本文と続きを1つにまとめて先に送る。
   // 断られたら（未契約・API が長文を受け付けない等）下の今までどおりのスレッドで送り直す。重複の拒否は届いている印なので送り直さない
   let longPost = null;

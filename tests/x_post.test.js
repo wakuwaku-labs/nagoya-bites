@@ -389,3 +389,51 @@ test('実験の dry-run（本物の期間設定）: 11-08 は URL なし・11-10
   assert.deepStrictEqual(got['2026-11-10'], ['url', true]);
   assert.ok(!fs.existsSync(path.join(root, 'data/x_post_log.json')));
 });
+
+// ── 出し直し（--extra-long）は「先に消してから出す」（Ondine #2690）──────────────
+function extraLongFixture() {
+  const root = fixture();
+  const sentence = '街仲食堂のおむすびは具が大きく、朝から夜まで続けて開いています。';
+  fs.writeFileSync(path.join(root, `journal/${entry.slug}.html`), `<html><head><meta property="og:image" content="https://img.example/a.jpg"></head><body><h1>${entry.title}</h1><p>${sentence}</p></body></html>`);
+  fs.mkdirSync(path.join(root, 'data/x_post_drafts'));
+  const type = Object.keys((policy.draft || {}).types || {})[0];
+  fs.writeFileSync(path.join(root, `data/x_post_drafts/2026-10-12-long.json`), JSON.stringify({
+    version: 1, date: '2026-10-12', slug: entry.slug, type,
+    body: '街仲食堂のおむすびは具が大きく、朝から夜まで続けて開いています。',
+    evidence: [sentence], replies: ['街仲食堂のおむすびは具が大きく、朝から夜まで続けて開いています。'],
+  }));
+  fs.writeFileSync(path.join(root, 'data/x_post_log.json'), JSON.stringify({ version: 1, posts: [
+    { date: '2026-10-12', slug: entry.slug, status: 'posted', tweet_id: '1111111111', text: '短い投稿' },
+  ] }));
+  return root;
+}
+const readLogOf = (root) => JSON.parse(fs.readFileSync(path.join(root, 'data/x_post_log.json'), 'utf8'));
+
+test('出し直し: 消すのが 402 で失敗したら、新しい投稿を送らず終了コード1・台帳は未削除のまま・原因は payment', async () => {
+  const root = extraLongFixture();
+  const f = fakeFetch({ tweet: { status: 402, body: { title: 'CreditsDepleted', detail: 'credits depleted' } } }); f.root = root;
+  const r = await run({ extraLong: true }, { root, env: ENV, fetchImpl: f, now: NOW });
+  assert.strictEqual(r.result, 'failed', JSON.stringify(r));
+  assert.strictEqual(r.exitCode, 1);
+  assert.strictEqual(r.errorClass, 'payment');
+  const apiCalls = f.calls.filter((c) => c.url.startsWith('https://api.x.com'));
+  assert.ok(apiCalls.length >= 1 && apiCalls.every((c) => c.opts.method === 'DELETE'), '送ったのは削除だけ（POST なし）');
+  assert.ok(!readLogOf(root).posts[0].deleted_at);
+});
+
+test('出し直し: 消せたときだけ長いポストを送り、消した行に deleted_at が付く', async () => {
+  const root = extraLongFixture();
+  const calls = [];
+  const f = async (url, opts = {}) => {
+    calls.push({ url, method: opts.method });
+    if (url.startsWith('https://api.x.com/2/tweets/')) return { status: 200, text: async () => JSON.stringify({ data: { deleted: true } }), headers: new Map() };
+    if (url.startsWith('https://api.x.com/2/tweets')) return { status: 201, text: async () => JSON.stringify({ data: { id: '999' } }), headers: new Map() };
+    if (url.startsWith('https://img.example/')) return { status: 200, headers: { get: () => 'image/jpeg' }, body: null };
+    return { status: 200, text: async () => fs.readFileSync(path.join(root, `journal/${entry.slug}.html`), 'utf8'), headers: { get: () => 'text/html' } };
+  };
+  const r = await run({ extraLong: true }, { root, env: ENV, fetchImpl: f, now: NOW });
+  assert.strictEqual(r.result, 'posted', JSON.stringify(r));
+  const api = calls.filter((c) => c.url.startsWith('https://api.x.com'));
+  assert.deepStrictEqual(api.map((c) => c.method), ['DELETE', 'POST']);
+  assert.ok(readLogOf(root).posts.find((p) => p.tweet_id === '1111111111').deleted_at);
+});

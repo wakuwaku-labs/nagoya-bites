@@ -1134,7 +1134,9 @@
       "experiment": "x-nb-thread-vs-single",
       "plan_cell": "nb_kind=number|first_line=number|length=long",
       "plan_experiment": "plan-exploit-2026-W48",
-      "plan_followed": false
+      "plan_followed": false,
+      "deleted_at": "2026-11-25T06:00:00.000Z",
+      "deleted_reason": "手動で削除（X 上で存在しないことを確認）。出し直しの削除が 402 で失敗したため台帳を直した（Ondine #2690）"
     },
     {
       "date": "2026-11-25",
