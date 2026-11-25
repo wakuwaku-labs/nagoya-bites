@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-24T19:13:59.254Z",
+  "generatedAt": "2026-11-25T00:20:47.223Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 8350,
-    "pageViews": 9939,
-    "sessions": 8788,
+    "activeUsers": 8370,
+    "pageViews": 9957,
+    "sessions": 8815,
     "avgSessionDuration": 55.7,
-    "bounceRate": 0.684,
+    "bounceRate": 0.685,
     "pagesPerSession": 1.13
   },
   "dailyReference": {
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 3112,
-      "direct": 5403,
+      "organic": 3118,
+      "direct": 5421,
       "social": 63,
       "ai_assistant": 240,
       "referral": 62,
@@ -27,7 +27,7 @@
     },
     "pct": {
       "organic": 35,
-      "direct": 60.8,
+      "direct": 60.9,
       "social": 0.7,
       "ai_assistant": 2.7,
       "referral": 0.7,
@@ -39,22 +39,22 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 5376
+      "sessions": 5393
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1453
+      "sessions": 1454
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 969
+      "sessions": 970
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 653
+      "sessions": 657
     },
     {
       "source": "chatgpt.com",
@@ -112,6 +112,11 @@
       "sessions": 6
     },
     {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 5
+    },
+    {
       "source": "openai",
       "medium": "(not set)",
       "sessions": 5
@@ -120,11 +125,6 @@
       "source": "l.instagram.com",
       "medium": "referral",
       "sessions": 5
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 4
     },
     {
       "source": "grid",
@@ -220,8 +220,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 465,
-      "sessions": 438
+      "pageViews": 466,
+      "sessions": 439
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
@@ -235,8 +235,8 @@
     },
     {
       "path": "/features/nagoya-miso-nikomi-udon.html",
-      "pageViews": 126,
-      "sessions": 135
+      "pageViews": 127,
+      "sessions": 136
     },
     {
       "path": "/features/nagoya-unaju.html",
@@ -245,12 +245,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 439,
+    "outboundClicks": 440,
     "ctaClickRate": 5,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 169
+        "clicks": 170
       },
       {
         "domain": "www.google.com",
@@ -303,7 +303,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 300,
+      "organic": 301,
       "direct": 48,
       "social": 16,
       "ai_assistant": 64,
@@ -311,7 +311,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 9.6,
+    "ctaClickRate_organic": 9.7,
     "ctaClickRate_direct": 0.9,
     "ctaClickRate_social": 25.4,
     "byPage": [
@@ -708,6 +708,11 @@
         "clicks": 2
       },
       {
+        "path": "/stores/J004660861.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 2
+      },
+      {
         "path": "/stores/J004723974.html",
         "domain": "www.hotpepper.jp",
         "clicks": 2
@@ -931,11 +936,6 @@
         "path": "/stores/J000994079.html",
         "domain": "www.google.com",
         "clicks": 1
-      },
-      {
-        "path": "/stores/J001127221.html",
-        "domain": "www.google.com",
-        "clicks": 1
       }
     ],
     "reservationClicksByPage": [
@@ -1048,6 +1048,10 @@
         "clicks": 2
       },
       {
+        "path": "/stores/J004660861.html",
+        "clicks": 2
+      },
+      {
         "path": "/stores/J004723974.html",
         "clicks": 2
       },
@@ -1152,20 +1156,20 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 131,
+    "reservationClicks": 133,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
-      "ctaEvents": 46,
-      "reservationOutbound": 47,
-      "naiveSum": 93,
-      "deduped": 50,
-      "overlap": 43,
+      "ctaEvents": 47,
+      "reservationOutbound": 48,
+      "naiveSum": 95,
+      "deduped": 51,
+      "overlap": 44,
       "bySite": [
         {
           "site": "hotpepper.jp",
-          "cta": 44,
-          "outbound": 41,
-          "deduped": 44
+          "cta": 45,
+          "outbound": 42,
+          "deduped": 45
         },
         {
           "site": "tabelog.com",
@@ -1178,7 +1182,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 8350,
+    "value": 8370,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
