@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-26T07:24:48.958Z",
+  "generatedAt": "2026-11-26T19:22:13.648Z",
   "run": {
     "tabelog": {
       "attempted": 5,
@@ -7,8 +7,8 @@
       "stopped": true
     },
     "hotpepper": {
-      "attempted": 55,
-      "fetched": 55,
+      "attempted": 9,
+      "fetched": 9,
       "stopped": false
     }
   },
@@ -21,9 +21,9 @@
     },
     "hotpepper": {
       "links": 4895,
-      "neverChecked": 9,
+      "neverChecked": 0,
       "unfetched": 0,
-      "lastFetchedAt": "2026-11-26T07:24:48.913Z"
+      "lastFetchedAt": "2026-11-26T19:22:13.618Z"
     }
   },
   "closures": {
@@ -1553,6 +1553,16 @@
       "検出タイトル": "炭火ほるもん えにし 縁",
       "エラー": null,
       "検証日": "2026-11-26T07:24:48.913Z"
+    },
+    {
+      "店名": "LOWEL SWEETS　藤が丘店",
+      "エリア": "本山・覚王山・藤が丘",
+      "種別": "hotpepper",
+      "url": "https://www.hotpepper.jp/strJ004745007/",
+      "理由": "name-mismatch",
+      "検出タイトル": "LOWEL SWEETS ローウェルスイーツ 藤が丘店",
+      "エラー": null,
+      "検証日": "2026-11-26T19:21:48.919Z"
     }
   ],
   "unfetched": [
