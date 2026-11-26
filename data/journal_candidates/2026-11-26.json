@@ -1,0 +1,467 @@
+{
+  "date": "2026-11-26",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "久屋大通で忘年会、全席禁煙の居酒屋5選 加熱式たばこの扱いの違いも",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 8日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (予約,雰囲気,看板,名物,使い分け) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 137字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -10 / recency -7 / brand_fit -4",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "久屋大通『炭火焼鳥 しげ 泉店』で忘年会、2階の20名座敷と冬コース6,000円",
+      "verdict": "HOLD",
+      "total": 70,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "焼き鳥",
+          "feature": "features/nagoya-yakitori.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 8日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 2件 (予約,名物) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 134字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「焼鳥」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "名古屋の忘年会、全席禁煙の居酒屋を選ぶ前に見る3つの表記",
+      "verdict": "HOLD",
+      "total": 61,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 21日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (予約) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 127字 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "久屋大通『月あかり はなれ』で忘年会、全席禁煙の掘りごたつ個室28名",
+      "verdict": "HOLD",
+      "total": 59,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 21日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (予約) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 130字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「個室」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "久屋大通『ゆっつら』古民家の掘りごたつ個室で忘年会、串と飲み放題6,500円",
+      "verdict": "HOLD",
+      "total": 57,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 15日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (予約) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 140字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「個室」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": {
+    "topic": "イベント",
+    "week": "2026-W48",
+    "slot": 3,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -10 / recency -7 / brand_fit -4",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "久屋大通で忘年会、全席禁煙の居酒屋5選 加熱式たばこの扱いの違いも",
+      "lead_draft": "忘年会の幹事が見落としやすいのが、たばこです。久屋大通駅から歩いて2〜5分、東区泉1丁目にある全席禁煙の居酒屋を5つ集めました。同じ「全席禁煙」でも、店の外で吸う店、店内に喫煙室がある店、加熱式たばこなら席で吸える店と中身が違います。予約前に見たい点を店ごとにまとめました。",
+      "angle": "久屋大通×忘年会×全席禁煙。席・個室・予約締切・キャンセル・飲み放題の時間と、喫煙の扱いの違いで使い分けを示す（雰囲気・看板・名物も添える）",
+      "main_store": {
+        "name": "月あかり はなれ",
+        "id": "J003850468",
+        "area": "久屋大通・泉",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 月あかり はなれ",
+          "url": "https://www.hotpepper.jp/strJ003850468/",
+          "date": "2026-10-21"
+        },
+        {
+          "label": "ホットペッパー 炭火焼鳥 しげ 泉店 コース",
+          "url": "https://www.hotpepper.jp/strJ000717502/course/",
+          "date": "2026-11-18"
+        },
+        {
+          "label": "東京商工リサーチ 忘・新年会調査",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "厚生労働省 受動喫煙対策",
+          "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000189195.html",
+          "date": "2026-08-18"
+        },
+        {
+          "label": "名古屋市 久屋大通公園の木陰",
+          "url": "https://www.city.nagoya.jp/kankou/kankouinfo/1013766/1013767/1013811/1013812.html",
+          "date": "2025-10-17"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "久屋大通『月あかり はなれ』で忘年会、全席禁煙の掘りごたつ個室28名",
+      "lead_draft": "久屋大通駅から歩いて2分、東区泉の「月あかり はなれ」は全席禁煙で、掘りごたつの完全個室は3〜28名で使えます。150分飲み放題つきは4,400円から。コースのキャンセルは3日前の22時から全額かかるので、人数が固まらない忘年会は日程の決め方に注意が要ります。",
+      "angle": "1店の深掘り。個室・予約・キャンセル・飲み放題の時間から忘年会での使い方を示す",
+      "main_store": {
+        "name": "月あかり はなれ",
+        "id": "J003850468",
+        "area": "久屋大通・泉",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 月あかり はなれ",
+          "url": "https://www.hotpepper.jp/strJ003850468/",
+          "date": "2026-10-21"
+        },
+        {
+          "label": "東京商工リサーチ 忘・新年会調査",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "名古屋市 久屋大通公園の木陰",
+          "url": "https://www.city.nagoya.jp/kankou/kankouinfo/1013766/1013767/1013811/1013812.html",
+          "date": "2025-10-17"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "久屋大通『ゆっつら』古民家の掘りごたつ個室で忘年会、串と飲み放題6,500円",
+      "lead_draft": "久屋大通駅から歩いて5分、築50年の民家を改造した「ゆっつら 久屋大通店」は、掘りごたつの個室で最大30名まで入れます。串のコースは120分飲み放題つき6,500円で、1,000円足すと3時間に延ばせます。全席禁煙ですが店内に喫煙室があり、キャンセルは2日前から料金がかかります。",
+      "angle": "古民家の個室×忘年会。席・予約・キャンセル・飲み放題の延長を示す",
+      "main_store": {
+        "name": "ゆっつら 久屋大通店",
+        "id": "J000761813",
+        "area": "久屋大通・泉",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー ゆっつら 久屋大通店",
+          "url": "https://www.hotpepper.jp/strJ000761813/",
+          "date": "2026-11-11"
+        },
+        {
+          "label": "東京商工リサーチ 忘・新年会調査",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "名古屋市 Hisaya-odori Park のオープン",
+          "url": "https://www.city.nagoya.jp/shisei/keikaku/1009818/1009881/1034203/1009898.html",
+          "date": "2025-10-17"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "名古屋の忘年会、全席禁煙の居酒屋を選ぶ前に見る3つの表記",
+      "lead_draft": "名古屋の居酒屋は、このサイトに載っている店で見ると喫煙の記載がある店の約4割が「禁煙席なし」です。全席禁煙を選んでも、店内に喫煙室がある店、加熱式たばこなら席で吸える店があります。予約サイトのどこを見れば違いが分かるかを、久屋大通の店を例にまとめました。",
+      "angle": "店選びガイド。喫煙の表記の読み方と、予約前に確かめる点を例の店で示す",
+      "main_store": {
+        "name": "鶏と肴 だいえん",
+        "id": "J004558612",
+        "area": "久屋大通・泉",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "厚生労働省 受動喫煙対策",
+          "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000189195.html",
+          "date": "2026-08-18"
+        },
+        {
+          "label": "ホットペッパー 鶏と肴 だいえん",
+          "url": "https://www.hotpepper.jp/strJ004558612/",
+          "date": "2026-05-21"
+        },
+        {
+          "label": "東京商工リサーチ 忘・新年会調査",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "久屋大通『炭火焼鳥 しげ 泉店』で忘年会、2階の20名座敷と冬コース6,000円",
+      "lead_draft": "久屋大通駅から歩いて2分の「炭火焼鳥 しげ 泉店」は、2階に20名まで入れる宴会の座敷があります。11月9日からの冬のコースは飲み放題つき6,000円からで、席は2時間です。予約は2日前の23時まで、年末は12月31日から休みなので、日程を早めに決めたい会に向きます。",
+      "angle": "焼き鳥の店の座敷×忘年会。席・予約締切・年末の休み・名物を示す",
+      "main_store": {
+        "name": "炭火焼鳥 しげ 泉店",
+        "id": "J000717502",
+        "area": "久屋大通・泉",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 炭火焼鳥 しげ 泉店 コース",
+          "url": "https://www.hotpepper.jp/strJ000717502/course/",
+          "date": "2026-11-18"
+        },
+        {
+          "label": "東京商工リサーチ 忘・新年会調査",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "名古屋市 久屋大通公園の木陰",
+          "url": "https://www.city.nagoya.jp/kankou/kankouinfo/1013766/1013767/1013811/1013812.html",
+          "date": "2025-10-17"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}

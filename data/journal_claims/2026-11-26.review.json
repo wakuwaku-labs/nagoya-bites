@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-26",
+  "slug": "2026-11-26-hisaya-odori-bonenkai-nonsmoking-izakaya-5",
+  "recorded_at": "2026-11-26T00:22:47.120Z",
+  "model": null,
+  "model_note": "指定なし（実行環境の既定のモデル）",
+  "prompt_version": "review-2026-11-17",
+  "prompt_sha256": "d61cb78e10ae4ef4",
+  "excerpts": [
+    {
+      "id": "E1",
+      "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+      "lines": 22
+    },
+    {
+      "id": "E2",
+      "url": "https://www.city.nagoya.jp/kankou/kankouinfo/1013766/1013767/1013811/1013812.html",
+      "lines": 11
+    },
+    {
+      "id": "E3",
+      "url": "https://www.city.nagoya.jp/shisei/keikaku/1009818/1009881/1034203/1009898.html",
+      "lines": 6
+    },
+    {
+      "id": "E4",
+      "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000189195.html",
+      "lines": 9
+    },
+    {
+      "id": "E5",
+      "url": "https://www.hotpepper.jp/strJ003850468/",
+      "lines": 17
+    },
+    {
+      "id": "E6",
+      "url": "https://www.hotpepper.jp/strJ000717502/",
+      "lines": 13
+    },
+    {
+      "id": "E7",
+      "url": "https://www.hotpepper.jp/strJ004004187/",
+      "lines": 16
+    },
+    {
+      "id": "E8",
+      "url": "https://www.hotpepper.jp/strJ000761813/",
+      "lines": 8
+    },
+    {
+      "id": "E9",
+      "url": "https://www.hotpepper.jp/strJ004558612/",
+      "lines": 16
+    }
+  ],
+  "ok": true,
+  "elapsed_sec": 21,
+  "findings": [
+    {
+      "sentence": "行く前のひとこと: 串のコースは120分飲み放題つきで1人6,500円。",
+      "kind": "number_mismatch",
+      "quote": "【歓送迎会に!】ゆったり全10品♪選べるもつ鍋コース 6500円 飲み放題2.5時間付き",
+      "reason": "6,500円のコースは飲み放題2.5時間（150分）。120分（2時間）付きのコースは5,900円と書かれている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+{
+  "date": "2026-11-26",
+  "slug": "2026-11-26-hisaya-odori-bonenkai-nonsmoking-izakaya-5",
+  "recorded_at": "2026-11-26T00:23:17.471Z",
+  "mode": "shadow",
+  "enforced": false,
+  "note": "記録だけ。公開は止めていない",
+  "lane_if_enforced": "hold",
+  "published": true,
+  "published_by_lane": "existing_gate",
+  "reasons": [
+    {
+      "type": "review:number_mismatch",
+      "detail": "行く前のひとこと: 串のコースは120分飲み放題つきで1人6,500円。 ／ 6,500円のコースは飲み放題2.5時間（150分）。120分（2時間）付きのコースは5,900円と書かれている"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "行く前のひとこと: 11月9日からの冬のコースは、飲み放題つきで1人6,000円から。"
+    },
+    {
+      "type": "unverifiable",
+      "detail": "行く前のひとこと: 90分飲み放題つきのコースは1人6,000円から。"
+    }
+  ],
+  "checks": {
+    "validator": "pass",
+    "claims": {
+      "ledger_by": "writer",
+      "summary": {
+        "claims": 38,
+        "verified": 34,
+        "unverifiable": 4,
+        "mismatch": 0,
+        "stale": 0,
+        "not_applicable": 0,
+        "paired": 9,
+        "hedge_dropped": 0,
+        "issues": 0,
+        "core_issues": 0
+      },
+      "fetch": {
+        "sources": 9,
+        "ok": 9,
+        "failed": []
+      }
+    },
+    "independent_review": {
+      "ok": true,
+      "reason": null,
+      "model": null,
+      "prompt_version": "review-2026-11-17",
+      "findings": 1,
+      "verified_findings": 1
+    }
+  },
+  "score": "85点 PASS_WITH_NOTE（自動公開ライン 100点）。主な不足: topicality -10（X・note の言及URLなし）/ recency -7（最新の出典は11/18更新のホットペッパー）/ brand_fit -4（一次報道なし。名古屋市・厚生労働省・東京商工リサーチ・ホットペッパー5店で裏取り）。木曜の季節短信（忘年会予約開幕・priority 95）を◯選の形で、最近の忘年会記事と重ならない「全席禁煙」に絞った。data/stores.json の営業中から久屋大通駅最寄り・全面禁煙・飲み放題あり・宴会16名以上の店を選び、11月26日にホットペッパーの店ページとコースページで確認。五福楼は「全席禁煙」と「ディナータイム全席喫煙」の表記が併記で食い違うため外した。ゆっつらの最大人数（30名/25名）は表記が2通りあると本文に書いた。居酒屋の喫煙の割合（1,531店中582店が禁煙席なし）は 11/25 取得の掲載データを集計。ヒーロー（月あかり はなれ）と本文写真2枚（しげ・ごまめ泉）は自動で入ったホットペッパー写真で、目視の確認はしていない",
+  "sources": [
+    {
+      "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+      "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+      "type": "報道",
+      "date": "2026-11-05",
+      "fetched_at": "2026-11-26T00:22:37.235Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 5625,
+        "sha256": "0cbf653dae568f545eb2f4a04ee2e57d71262ac90d9720973130b9ccecf1114a"
+      }
+    },
+    {
+      "url": "https://www.city.nagoya.jp/kankou/kankouinfo/1013766/1013767/1013811/1013812.html",
+      "label": "名古屋市 まちなみデザイン20選「久屋大通公園の木陰」",
+      "type": "公式・その他",
+      "date": "2025-10-17",
+      "fetched_at": "2026-11-26T00:22:37.562Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 4599,
+        "sha256": "37953bc6167a8f6122f61d622f45fcdcf3e5e1942eb13bd4e07fc4cdf714a6bb"
+      }
+    },
+    {
+      "url": "https://www.city.nagoya.jp/shisei/keikaku/1009818/1009881/1034203/1009898.html",
+      "label": "名古屋市「Hisaya-odori Park」のオープン",
+      "type": "公式・その他",
+      "date": "2025-10-17",
+      "fetched_at": "2026-11-26T00:22:37.633Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 3934,
+        "sha256": "c2931bf46544ff27f5be1a2feb177c11a9c90597e6b68946fd0a1053f86106ab"
+      }
+    },
+    {
+      "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000189195.html",
+      "label": "厚生労働省 受動喫煙対策",
+      "type": "公式・その他",
+      "date": "2026-08-18",
+      "fetched_at": "2026-11-26T00:22:37.786Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 6123,
+        "sha256": "063e1dd89f24f33c504aab66f00986c95f63d6989cf9a9ec10232be7143c3176"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ003850468/",
+      "label": "ホットペッパー 月あかり はなれ",
+      "type": "掲載サイト",
+      "date": "2026-10-21",
+      "fetched_at": "2026-11-26T00:22:38.185Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 7951,
+        "sha256": "926f5f093f6162b8f754df776a4a1ded3308874bb86d0a53b909b19c9a83d87b"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ000717502/",
+      "label": "ホットペッパー 炭火焼鳥 しげ 泉店",
+      "type": "掲載サイト",
+      "date": "2026-11-18",
+      "fetched_at": "2026-11-26T00:22:38.705Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 6013,
+        "sha256": "ef8d3e1b63ec02b42e572523e56210bc9c29ae8eb74b33f8e5f9eb0d30e529b5"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ004004187/",
+      "label": "ホットペッパー 炭火焼鳥 ごまめ泉",
+      "type": "掲載サイト",
+      "date": "2026-10-14",
+      "fetched_at": "2026-11-26T00:22:38.923Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 6630,
+        "sha256": "19438fc36ce9f9e9acd5efc9278be104f7760717d11650ca52a875ec4b6215a4"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ000761813/",
+      "label": "ホットペッパー ゆっつら 久屋大通店",
+      "type": "掲載サイト",
+      "date": "2026-11-11",
+      "fetched_at": "2026-11-26T00:22:39.182Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 6919,
+        "sha256": "dc379feda7929c569fa3e6e3a7bde24200f080c75ab4d42ed5ace8a4f738dfae"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ004558612/",
+      "label": "ホットペッパー 鶏と肴 だいえん",
+      "type": "掲載サイト",
+      "date": "2026-05-21",
+      "fetched_at": "2026-11-26T00:22:39.363Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 8669,
+        "sha256": "ae0c0bf87f32527c1ba38f517e127297f934a48c09bb94171897cdb82337c697"
+      }
+    }
+  ],
+  "findings": [
+    {
+      "sentence": "行く前のひとこと: 串のコースは120分飲み放題つきで1人6,500円。",
+      "kind": "number_mismatch",
+      "quote": "【歓送迎会に!】ゆったり全10品♪選べるもつ鍋コース 6500円 飲み放題2.5時間付き",
+      "reason": "6,500円のコースは飲み放題2.5時間（150分）。120分（2時間）付きのコースは5,900円と書かれている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    }
+  ]
+}
