@@ -133,7 +133,8 @@ test('renderStorePage: 実在の店の 1 ページで、畳んだ内訳が「予
   if (!s) return t.skip('crosscheck と reviewTrust を両方持つ店が data/stores.json に無い');
   const html = renderStorePage(s, 'J-test', [], []);
   const iTrust = html.indexOf('<div class="trust-breakdown">');
-  const iLinks = html.indexOf('<div class="links-section">');
+  // 「来店前に確かめたいこと」（0070）も同じ links-section を使い、ホットペッパーの備考がある店では先に出るため、「予約・情報を確認」の欄を名指しで探す
+  const iLinks = html.indexOf('<div class="links-section">\n    <h2>予約・情報を確認</h2>');
   assert.ok(iTrust > 0 && iLinks > iTrust, '口コミ信頼度は「予約・情報を確認」の前（監査の範囲の取り方と同じ並び）');
   assert.equal(count(html, /<details class="trust-details">/g), 1);
   const block = html.slice(iTrust, iLinks);

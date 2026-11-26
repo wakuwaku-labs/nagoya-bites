@@ -12,7 +12,8 @@ const W = require('../scripts/write_x_draft');
 const REAL_ROOT = path.resolve(__dirname, '..');
 const realPolicy = X.loadPolicy(REAL_ROOT);
 const TOPIC = { enabled: true, since: '2026-11-22', until: '', weeklyTarget: 3, anyTopics: ['名古屋ジャーナルの紹介'], skip: ['x-nb-evening-post-time'], maxAgeDays: 8 };
-const policy = { ...realPolicy, draft: { ...realPolicy.draft, generate: true, useInPost: true }, template: { points: true }, topicExperiment: TOPIC, planExperiment: { ...realPolicy.planExperiment, enabled: false } };
+const policy = { ...realPolicy, draft: { ...realPolicy.draft, generate: true, useInPost: true }, template: { points: true }, topicExperiment: TOPIC, planExperiment: { ...realPolicy.planExperiment, enabled: false }, longPost: { ...(realPolicy.longPost || {}), enabled: false } };
+// 長いポストの日（longPost.enabled）は「スレッドなし」の実験を使わない（#2675）。下の試験は長いポストでない日の動きを見るので longPost を切る
 // 2026-11-28 は土曜（月=0 なら 5）。同じ週（2026-W48）の前の日は 11-23〜11-27
 const DATE = '2026-11-28';
 const NOW = new Date('2026-11-28T03:00:00Z');
@@ -218,4 +219,13 @@ test('台帳: 定型に落ちた日・followed:false の日は付かない', asy
   const rb = await postRun({}, { root: b.root, env: ENV, fetchImpl: fakeFetch(b.root, b.entry), now: NOW });
   assert.strictEqual(rb.result, 'posted');
   assert.ok(!('topic_experiment' in readRow(b.root)) && !('experiment' in readRow(b.root)));
+});
+
+test('長いポストの日（longPost.enabled）は thread:false の実験を使わず、スレッドありの実験だけ選ぶ（#2675）', () => {
+  analyzerDir(nextJson());
+  const longPol = { ...policy, longPost: { ...(realPolicy.longPost || {}), enabled: true } };
+  const generic = W.loadTopicExperiment(DATE, longPol, mkEntry(GENERIC), '/nonexistent', NOW);
+  assert.notStrictEqual(generic.exp && generic.exp.experiment_id, 'x-nb-thread-vs-single', JSON.stringify(generic));
+  const bankai = W.loadTopicExperiment(DATE, longPol, mkEntry(BANKAI), '/nonexistent', NOW);
+  assert.strictEqual(bankai.exp && bankai.exp.experiment_id, 'x-nb-question-first-line', JSON.stringify(bankai));
 });

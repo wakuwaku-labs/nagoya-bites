@@ -8,7 +8,7 @@ const path = require('path');
 const X = require('../scripts/lib/x_post');
 const C = require('../scripts/lib/x_image_card');
 const F = require('../scripts/lib/x_food_card');
-const { run: postRun } = require('../scripts/post_journal_to_x');
+const { run: postRun, summaryMarkdown } = require('../scripts/post_journal_to_x');
 const { runFood } = require('../scripts/make_x_image_card');
 
 const REAL = path.resolve(__dirname, '..');
@@ -154,10 +154,13 @@ test('試運転: 料理イメージ写真は「画像あり・イメージの作
 
 test('投稿(live): 料理イメージ写真を上げ、本文の最後に「写真（イメージ）」の行、台帳に media=food', async () => {
   const { root } = fixture();
-  placeFood(root);
+  const food = placeFood(root);
   const f = fakeFetch(root);
   const r = await postRun({ date: entry.date }, { root, env: ENV, fetchImpl: f, now: NOW });
   assert.strictEqual(r.result, 'posted');
+  // 実行の要約欄の作者名が空にならない（11/26 の本番で「料理のイメージ写真を付ける（）」と出た）
+  assert.ok(r.media.credit && r.media.credit.includes(food.author), JSON.stringify(r.media));
+  assert.ok(summaryMarkdown(r).includes(`料理のイメージ写真を付ける（${r.media.credit}）`));
   const body = f.tweetBodies()[0];
   assert.deepStrictEqual(body.media.media_ids, ['m-food']);
   assert.ok(body.text.includes('写真（イメージ）: '), body.text);

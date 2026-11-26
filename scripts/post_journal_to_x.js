@@ -357,14 +357,14 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   if (card.attach) {
     const up = await IC.uploadImage(card.file, cred, fetchImpl);
     if (up.ok) {
-      media = { variant: foodText ? 'food' : 'image', reason: card.reason, id: up.id, via: up.via };
+      media = { variant: foodText ? 'food' : 'image', reason: card.reason, id: up.id, via: up.via, ...(foodText ? { credit: out.media.credit } : {}) };
       if (foodText) { built = { ...built, text: foodText }; out.text = foodText; }
     } else media = { variant: 'none', reason: `upload_failed: ${up.reason}`.slice(0, 300) };
   } else if (photo && photoText) {
     const dl = await SP.downloadPhoto(photo.src, fetchImpl);
     const up = dl.ok ? await IC.uploadImage(dl.buf, cred, fetchImpl, { type: dl.type, name: dl.type === 'image/jpeg' ? 'photo.jpg' : 'photo.png' }) : dl;
     if (up.ok) {
-      media = { variant: 'photo', reason: `store_photo_${photo.source}`, id: up.id, via: up.via };
+      media = { variant: 'photo', reason: `store_photo_${photo.source}`, id: up.id, via: up.via, credit: out.media.credit };
       // 写真を付けるときだけクレジットの行を足した文面で送る（台帳にも送った文面が残る）
       built = { ...built, text: photoText };
       out.text = photoText;
