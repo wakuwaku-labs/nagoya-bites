@@ -576,25 +576,92 @@
    },
    "findings": [],
    "next_due": "2027-02-22"
+  },
+  "journal/2026-06-26-portama-haera-nimousaku.html": {
+   "last_checked": "2026-11-26",
+   "last_checked_at": "2026-11-26T03:31:25.064Z",
+   "outcome": "ok",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 11,
+   "verified": 11,
+   "unverifiable": 0,
+   "mismatch": 0,
+   "sources": {
+    "ok": 5,
+    "total": 6
+   },
+   "findings": [],
+   "next_due": "2027-02-23"
+  },
+  "journal/2026-08-27-sakae-mitsukoshi-kihachi-cafe.html": {
+   "last_checked": "2026-11-26",
+   "last_checked_at": "2026-11-26T03:31:25.064Z",
+   "outcome": "findings",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 30,
+   "verified": 26,
+   "unverifiable": 4,
+   "mismatch": 0,
+   "sources": {
+    "ok": 7,
+    "total": 7
+   },
+   "findings": [
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-09-30）を過ぎた記述: オープン記念として8月28日から9月30日まで、人気メニューを組んだセットが2,970円で数量限定で出る。",
+     "claim": "オープン記念として8月28日から9月30日まで、人気メニューを組んだセットが2,970円で数量限定で出る。",
+     "reported_at": "2026-11-26"
+    }
+   ],
+   "next_due": "2026-12-10"
+  },
+  "journal/2026-10-09-nagoyajo-kinshachi-yokocho-autumn-menu.html": {
+   "last_checked": "2026-11-26",
+   "last_checked_at": "2026-11-26T03:31:25.064Z",
+   "outcome": "findings",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 39,
+   "verified": 39,
+   "unverifiable": 0,
+   "mismatch": 0,
+   "sources": {
+    "ok": 7,
+    "total": 8
+   },
+   "findings": [
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-10-24）を過ぎた記述: 名古屋城は10月18日〜24日に開園が19:30まで延び、夜間ライトアップ「Be GOLD」が17:00〜20:00で点",
+     "claim": "名古屋城は10月18日〜24日に開園が19:30まで延び、夜間ライトアップ「Be GOLD」が17:00〜20:00で点きます。",
+     "reported_at": "2026-11-26"
+    }
+   ],
+   "next_due": "2026-12-10"
   }
  },
  "summary": {
-  "overdue": 187,
+  "overdue": 185,
   "overdue_ledger": 2,
-  "oldest_overdue_ledger_days": 11,
-  "overdue_legacy": 185,
-  "oldest_overdue_legacy_days": 202,
-  "due_total": 190,
+  "oldest_overdue_ledger_days": 12,
+  "overdue_legacy": 183,
+  "oldest_overdue_legacy_days": 203,
+  "due_total": 188,
   "no_base_date": 3,
   "pending_findings": 0
  },
  "last_run": {
-  "date": "2026-11-25",
-  "at": "2026-11-25T04:07:26.374Z",
+  "date": "2026-11-26",
+  "at": "2026-11-26T03:31:25.064Z",
   "mode": "record",
-  "due": 190,
+  "due": 188,
   "processed": 3,
-  "alerts": 3,
+  "alerts": 2,
   "applied": 0
  },
  "_README": "公開後の鮮度の見直し（S5-5）の記録。scripts/recheck_due_articles.js が毎日の夜間の検査で更新する。articles は記事のパスごとの直近の結果（次の見直す日・照合の件数・見つけた変更）。根拠確認率（trust_metrics）はここの facts/verified も読む。"
