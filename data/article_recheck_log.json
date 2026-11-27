@@ -643,25 +643,84 @@
     }
    ],
    "next_due": "2026-12-10"
+  },
+  "journal/2026-08-02-meieki-honoma-namahiyamugi.html": {
+   "last_checked": "2026-11-27",
+   "last_checked_at": "2026-11-27T03:37:04.494Z",
+   "outcome": "ok",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 16,
+   "verified": 16,
+   "unverifiable": 0,
+   "mismatch": 0,
+   "sources": {
+    "ok": 3,
+    "total": 4
+   },
+   "findings": [],
+   "next_due": "2027-02-24"
+  },
+  "journal/2026-08-28-meieki-autumn-sweets-weekday.html": {
+   "last_checked": "2026-11-27",
+   "last_checked_at": "2026-11-27T03:37:04.494Z",
+   "outcome": "findings",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 29,
+   "verified": 27,
+   "unverifiable": 2,
+   "mismatch": 0,
+   "sources": {
+    "ok": 6,
+    "total": 7
+   },
+   "findings": [
+    {
+     "type": "period_ended",
+     "severity": "core",
+     "detail": "期間の終わり（2026-11-12）を過ぎた記述: 2026年9月11日〜11月12日、開業10周年記念の「秋の北海道コース」。",
+     "claim": "2026年9月11日〜11月12日、開業10周年記念の「秋の北海道コース」。",
+     "reported_at": "2026-11-27"
+    }
+   ],
+   "next_due": "2026-12-11"
+  },
+  "journal/2026-08-21-meieki-1bansen-rokurinsha.html": {
+   "last_checked": "2026-11-27",
+   "last_checked_at": "2026-11-27T03:37:04.494Z",
+   "outcome": "ok",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 39,
+   "verified": 36,
+   "unverifiable": 3,
+   "mismatch": 0,
+   "sources": {
+    "ok": 5,
+    "total": 6
+   },
+   "findings": [],
+   "next_due": "2026-12-27"
   }
  },
  "summary": {
-  "overdue": 185,
+  "overdue": 182,
   "overdue_ledger": 2,
-  "oldest_overdue_ledger_days": 12,
-  "overdue_legacy": 183,
-  "oldest_overdue_legacy_days": 203,
-  "due_total": 188,
+  "oldest_overdue_ledger_days": 13,
+  "overdue_legacy": 180,
+  "oldest_overdue_legacy_days": 204,
+  "due_total": 185,
   "no_base_date": 3,
   "pending_findings": 0
  },
  "last_run": {
-  "date": "2026-11-26",
-  "at": "2026-11-26T03:31:25.064Z",
+  "date": "2026-11-27",
+  "at": "2026-11-27T03:37:04.494Z",
   "mode": "record",
-  "due": 188,
+  "due": 185,
   "processed": 3,
-  "alerts": 2,
+  "alerts": 1,
   "applied": 0
  },
  "_README": "公開後の鮮度の見直し（S5-5）の記録。scripts/recheck_due_articles.js が毎日の夜間の検査で更新する。articles は記事のパスごとの直近の結果（次の見直す日・照合の件数・見つけた変更）。根拠確認率（trust_metrics）はここの facts/verified も読む。"
