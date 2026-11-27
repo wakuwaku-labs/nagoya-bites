@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-26T19:12:54.282Z",
+  "generatedAt": "2026-11-27T00:12:20.456Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 8400,
-    "pageViews": 10040,
-    "sessions": 8806,
-    "avgSessionDuration": 54.1,
-    "bounceRate": 0.685,
+    "activeUsers": 8435,
+    "pageViews": 10077,
+    "sessions": 8839,
+    "avgSessionDuration": 53.9,
+    "bounceRate": 0.686,
     "pagesPerSession": 1.14
   },
   "dailyReference": {
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 3169,
-      "direct": 5453,
+      "organic": 3182,
+      "direct": 5477,
       "social": 65,
       "ai_assistant": 231,
       "referral": 61,
@@ -39,12 +39,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 5416
+      "sessions": 5439
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 1485
+      "sessions": 1491
     },
     {
       "source": "bing",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 666
+      "sessions": 673
     },
     {
       "source": "chatgpt.com",
@@ -89,7 +89,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 15
+      "sessions": 16
     },
     {
       "source": "trend_today",
@@ -220,8 +220,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 469,
-      "sessions": 437
+      "pageViews": 473,
+      "sessions": 441
     },
     {
       "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -245,7 +245,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 437,
+    "outboundClicks": 438,
     "ctaClickRate": 5,
     "byDomain": [
       {
@@ -254,7 +254,7 @@
       },
       {
         "domain": "www.google.com",
-        "clicks": 137
+        "clicks": 138
       },
       {
         "domain": "prtimes.jp",
@@ -303,7 +303,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 305,
+      "organic": 306,
       "direct": 43,
       "social": 16,
       "ai_assistant": 62,
@@ -1190,7 +1190,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 8400,
+    "value": 8435,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
