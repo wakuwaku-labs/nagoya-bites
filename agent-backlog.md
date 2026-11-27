@@ -1805,7 +1805,7 @@
 - **detected**: 2026-10-09
 - **due**: 2026-11-20
 - **category**: SEO / コンテンツ
-- **owner**: Editor / DataKeeper
+- **owner**: 片桐 ← Editor / DataKeeper（子課題 SEO-129 が `[approved]` 付与待ち——オーナーの目視承認が必要なためエスカレーション。SEO-130 は done 済み）
 - **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §1-4 ⑤・柱C）。親は [[SEO-116]]
 - **brand-filter**: ✅ 適合 — 業界視点の解釈層（Moat）を店舗ページに出す
 - **背景**: 店舗ページ 2,998 ページに 28 日で 27,907 表示・268 クリック・CTR 0.96%。`editorReason` か `insiderNote` を持つ店は 4,909 店中 152 店（3.1%）。価格帯・Google評価・写真URL のうち 2 つ以上が空で編集コメントも無い店は 24 店で、一括 noindex の根拠は無い
@@ -4036,8 +4036,10 @@
 
 ### [SEO-087] 週閲覧の21.5%が `nagoya-solo-dining` 1本に集中している勝ち筋を分解し、同型のシーン特集へ横展開する
 
-- **priority**: P2 → **status**: in_progress（acceptance②③④実装済み。効果判定は次回GSC前後比を待つため即doneにはしない）
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-07
+- **resolved**: 2026-11-27
+- **resolved_by**: 本コミット（acceptance①〜⑤全達成 — docs/kpi-weekly.md に前後比記録）
 - **category**: SEO / コンテンツ
 - **owner**: Editor
 - **source**: 週次レポート(LINE) 2026-08-30〜2026-09-05 の「🤖 週次トレンド」総括（訪問者293人 前週比 +10% / 閲覧数507 +40% / 訪問回数352 +19% / 成長ステータス「順調に伸びてます」・人気ページ① 特集 nagoya-solo-dining 109回）。総括が現状描写のみでアクションに落ちていないため、週次コマンド Step 2 の規定に従い起票側でアクション仮説を立案
@@ -9147,6 +9149,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-11-27 | Editor(routine) | SEO-087 done化 — meieki-hitori-nomi.html 展開の効果測定（acceptance #5）完了。GSC前後比: 「名古屋 一人飲み」クリック24→50(+108%)/順位6.8→3.7・meieki-hitori-nomi: 34表示/6クリック/CTR 17.6%。docs/kpi-weekly.md に記録。acceptance①〜⑤全達成確認。 | ✅ 本コミット |
+| 2026-11-27 | Orchestrator(routine) | SEO-128 エスカレーション — 子課題SEO-129（editorReason承認・オーナー目視必須）が `ready` のため SEO-128 は実装不可。owner を 片桐 ← Editor/DataKeeper に変更。SEO-116は12-15期日待ち（agent待機）。 | ⚠️ SEO-128 owner変更・SEO-116スキップ |
 | 2026-11-24 | Orchestrator(routine) | 安全タスク調査 — ready 全12件を精査した結果、実装可能な安全タスクはゼロ。全件がAPI鍵不可/オーナー操作必須/サブタスク待ちのためブロック。内訳: オーナー操作待ち(SEO-154・SEO-151・ISSUE-194・ISSUE-192会席・ISSUE-192 Places規約確認・SEO-098・SNS-006〜008・ISSUE-165) / API鍵不可(ISSUE-192 GA4は GitHub Secrets のみ) / サブタスク待ち(SEO-116)。正常終了（0件処理は許容）。Notion同期: --if-changed=changed(13 creates / 2 updates / 38 archives)、MCP呼び出し件数が多いため今回セッションはスキップ。 | ⏸ 実装なし |
 | 2026-11-22 | Orchestrator(routine) | MEO-001 done化 — 子課題MEO-002〜006全done確認。受け入れ条件検証: ①古い欄0（別の店に電話がかかりうる店=0）②store_referrals.json に reserve/tel/map 別欄あり・missingDimensions=[]・2026-11-21生成。サイト本体変更なし。 | ✅ 本コミット |
 | 2026-11-22 | Orchestrator(routine) | ISSUE-112 done化 — concurrencyグループ（build-deploy）が daily-trending5.yml L17・build.yml L14 に実在することを確認（2026-08-24 実装済み）。status 更新のみ。 | ✅ 本コミット |
