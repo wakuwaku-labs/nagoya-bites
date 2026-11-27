@@ -4039,7 +4039,7 @@
 - **priority**: P2 → **status**: done
 - **detected**: 2026-09-07
 - **resolved**: 2026-11-27
-- **resolved_by**: 本コミット（acceptance①〜⑤全達成 — docs/kpi-weekly.md に前後比記録）
+- **resolved_by**: b9353bcc（acceptance①〜⑤全達成 — docs/kpi-weekly.md に前後比記録）
 - **category**: SEO / コンテンツ
 - **owner**: Editor
 - **source**: 週次レポート(LINE) 2026-08-30〜2026-09-05 の「🤖 週次トレンド」総括（訪問者293人 前週比 +10% / 閲覧数507 +40% / 訪問回数352 +19% / 成長ステータス「順調に伸びてます」・人気ページ① 特集 nagoya-solo-dining 109回）。総括が現状描写のみでアクションに落ちていないため、週次コマンド Step 2 の規定に従い起票側でアクション仮説を立案
