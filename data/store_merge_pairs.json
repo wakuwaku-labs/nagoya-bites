@@ -1,7 +1,7 @@
 {
   "_note": "ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない",
-  "mergedCount": 69,
-  "absorbedCount": 72,
+  "mergedCount": 70,
+  "absorbedCount": 73,
   "skippedCount": 19,
   "merged": [
     {
@@ -552,118 +552,6 @@
         "name_exact"
       ],
       "kept": {
-        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J004026741",
-        "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
-        "slug": "J004026741"
-      },
-      "absorbed": [
-        {
-          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J004026739",
-          "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
-          "slug": "J004026739"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
-        "placeid_match"
-      ],
-      "kept": {
-        "店名": "那古野 しば福や 名駅店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J003671888",
-        "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
-        "slug": "J003671888"
-      },
-      "absorbed": [
-        {
-          "店名": "那古野 しば福や 名駅店 (なごの しばふくや めいえきてん)",
-          "エリア": "名古屋市中村区",
-          "ホットペッパーID": "",
-          "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
-          "slug": "store-e982a3e58fa4e987"
-        }
-      ],
-      "filledFields": [
-        "Instagram",
-        "おすすめシーン",
-        "おすすめポイント",
-        "キュレーター",
-        "トレンド情報源",
-        "価格帯目安",
-        "編集部推薦",
-        "話題スコア",
-        "話題フラグ",
-        "追加日",
-        "選定理由",
-        "食べログURL"
-      ]
-    },
-    {
-      "reasons": [
-        "name_exact"
-      ],
-      "kept": {
-        "店名": "トロ壱 名古屋駅前店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J004470757",
-        "placeId": "ChIJYUnf93R3A2ARB9pEQsQW3O8",
-        "slug": "J004470757"
-      },
-      "absorbed": [
-        {
-          "店名": "トロ壱 名古屋駅前店",
-          "エリア": "名古屋市中村区",
-          "ホットペッパーID": "",
-          "placeId": "",
-          "slug": "store-e38388e383ade5a3"
-        }
-      ],
-      "filledFields": [
-        "おすすめシーン",
-        "おすすめポイント",
-        "キュレーター",
-        "トレンド情報源",
-        "価格帯目安",
-        "編集部推薦",
-        "話題スコア",
-        "話題フラグ",
-        "追加日",
-        "選定理由"
-      ]
-    },
-    {
-      "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "居酒屋 権兵衛 名駅店",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J003649512",
-        "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
-        "slug": "J003649512"
-      },
-      "absorbed": [
-        {
-          "店名": "権兵衛 名駅南店",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J004403777",
-          "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
-          "slug": "J004403777"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
-        "name_exact"
-      ],
-      "kept": {
         "店名": "裏の山の木の子 名古屋",
         "エリア": "名古屋市中村区",
         "ホットペッパーID": "",
@@ -706,6 +594,123 @@
     },
     {
       "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004026741",
+        "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
+        "slug": "J004026741"
+      },
+      "absorbed": [
+        {
+          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J004026739",
+          "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
+          "slug": "J004026739"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "トロ壱 名古屋駅前店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004470757",
+        "placeId": "ChIJYUnf93R3A2ARB9pEQsQW3O8",
+        "slug": "J004470757"
+      },
+      "absorbed": [
+        {
+          "店名": "トロ壱 名古屋駅前店",
+          "エリア": "名古屋市中村区",
+          "ホットペッパーID": "",
+          "placeId": "",
+          "slug": "store-e38388e383ade5a3"
+        }
+      ],
+      "filledFields": [
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "今日の話題",
+        "今日の話題媒体数",
+        "今日の話題順位",
+        "今日の話題鮮度",
+        "価格帯目安",
+        "編集部推薦",
+        "話題スコア",
+        "話題ハイライト",
+        "話題フラグ",
+        "追加日",
+        "選定理由"
+      ]
+    },
+    {
+      "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "居酒屋 権兵衛 名駅店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J003649512",
+        "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
+        "slug": "J003649512"
+      },
+      "absorbed": [
+        {
+          "店名": "権兵衛 名駅南店",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J004403777",
+          "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
+          "slug": "J004403777"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "那古野 しば福や 名駅店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J003671888",
+        "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
+        "slug": "J003671888"
+      },
+      "absorbed": [
+        {
+          "店名": "那古野 しば福や 名駅店 (なごの しばふくや めいえきてん)",
+          "エリア": "名古屋市中村区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
+          "slug": "store-e982a3e58fa4e987"
+        }
+      ],
+      "filledFields": [
+        "Instagram",
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "価格帯目安",
+        "編集部推薦",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由",
+        "食べログURL"
+      ]
+    },
+    {
+      "reasons": [
         "owner_confirmed"
       ],
       "kept": {
@@ -735,28 +740,6 @@
         "owner_confirmed"
       ],
       "kept": {
-        "店名": "Cafe & Bar ゆきっち",
-        "エリア": "名古屋（名古屋駅/西区/中村区）",
-        "ホットペッパーID": "J003850472",
-        "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
-        "slug": "J003850472"
-      },
-      "absorbed": [
-        {
-          "店名": "Cafe & Bar ゆきっち はなれ",
-          "エリア": "名古屋（名古屋駅/西区/中村区）",
-          "ホットペッパーID": "J003850482",
-          "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
-          "slug": "J003850482"
-        }
-      ],
-      "filledFields": []
-    },
-    {
-      "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
         "店名": "鳥正",
         "エリア": "名古屋（名古屋駅/西区/中村区）",
         "ホットペッパーID": "J003624313",
@@ -776,6 +759,28 @@
         "お子様連れ",
         "キャッチ"
       ]
+    },
+    {
+      "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "Cafe & Bar ゆきっち",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J003850472",
+        "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
+        "slug": "J003850472"
+      },
+      "absorbed": [
+        {
+          "店名": "Cafe & Bar ゆきっち はなれ",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J003850482",
+          "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
+          "slug": "J003850482"
+        }
+      ],
+      "filledFields": []
     },
     {
       "reasons": [
@@ -1008,6 +1013,28 @@
     },
     {
       "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "カラオケ SCENE SAKAE 栄店",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J004745036",
+        "placeId": "",
+        "slug": "J004745036"
+      },
+      "absorbed": [
+        {
+          "店名": "カラオケ SCENE SAKAE 栄店",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J004745030",
+          "placeId": "",
+          "slug": "J004745030"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
         "owner_confirmed"
       ],
       "kept": {
@@ -1076,30 +1103,6 @@
     },
     {
       "reasons": [
-        "owner_confirmed"
-      ],
-      "kept": {
-        "店名": "レストラン ロワール フレンチ 名古屋東急ホテル 栄",
-        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J003916519",
-        "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
-        "slug": "J003916519"
-      },
-      "absorbed": [
-        {
-          "店名": "レストラン ロワール 鉄板焼",
-          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "ホットペッパーID": "J003916520",
-          "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
-          "slug": "J003916520"
-        }
-      ],
-      "filledFields": [
-        "Instagram"
-      ]
-    },
-    {
-      "reasons": [
         "name_exact"
       ],
       "kept": {
@@ -1138,33 +1141,26 @@
     },
     {
       "reasons": [
-        "placeid_match"
+        "owner_confirmed"
       ],
       "kept": {
-        "店名": "珈琲 ぶりこ",
+        "店名": "レストラン ロワール フレンチ 名古屋東急ホテル 栄",
         "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-        "ホットペッパーID": "J000108015",
-        "placeId": "ChIJ1yK0RMtwA2ARcZ9lMqg4JtQ",
-        "slug": "J000108015"
+        "ホットペッパーID": "J003916519",
+        "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
+        "slug": "J003916519"
       },
       "absorbed": [
         {
-          "店名": "珈琲ぶりこ",
-          "エリア": "大須",
-          "ホットペッパーID": "",
-          "placeId": "ChIJ1yK0RMtwA2ARcZ9lMqg4JtQ",
-          "slug": "store-e78f88e790b2e381"
+          "店名": "レストラン ロワール 鉄板焼",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J003916520",
+          "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
+          "slug": "J003916520"
         }
       ],
       "filledFields": [
-        "mediaFeatures",
-        "おすすめポイント",
-        "キュレーター",
-        "タグ",
-        "トレンド情報源",
-        "話題スコア",
-        "追加日",
-        "食べログURL"
+        "Instagram"
       ]
     },
     {
@@ -1200,6 +1196,37 @@
         "話題スコア",
         "追加日",
         "選定理由",
+        "食べログURL"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "珈琲 ぶりこ",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J000108015",
+        "placeId": "ChIJ1yK0RMtwA2ARcZ9lMqg4JtQ",
+        "slug": "J000108015"
+      },
+      "absorbed": [
+        {
+          "店名": "珈琲ぶりこ",
+          "エリア": "大須",
+          "ホットペッパーID": "",
+          "placeId": "ChIJ1yK0RMtwA2ARcZ9lMqg4JtQ",
+          "slug": "store-e78f88e790b2e381"
+        }
+      ],
+      "filledFields": [
+        "mediaFeatures",
+        "おすすめポイント",
+        "キュレーター",
+        "タグ",
+        "トレンド情報源",
+        "話題スコア",
+        "追加日",
         "食べログURL"
       ]
     },
@@ -1831,24 +1858,31 @@
         "placeid_match"
       ],
       "kept": {
-        "店名": "LA VAGABONDE (ラ・ヴァガボンド)",
-        "エリア": "名古屋市中区",
+        "店名": "LA VAGABONDE",
+        "エリア": "名古屋市中区千代田",
         "ホットペッパーID": "",
         "placeId": "ChIJx9ZMB7lwA2ARumYZugELHJU",
         "slug": "la-vagabonde"
       },
       "absorbed": [
         {
-          "店名": "LA VAGABONDE",
-          "エリア": "名古屋市中区千代田",
+          "店名": "LA VAGABONDE (ラ・ヴァガボンド)",
+          "エリア": "名古屋市中区",
           "ホットペッパーID": "",
           "placeId": "ChIJx9ZMB7lwA2ARumYZugELHJU",
           "slug": "la-vagabonde"
         }
       ],
       "filledFields": [
-        "おすすめシーン",
-        "食べログ評価"
+        "Instagram",
+        "editorReason",
+        "visitStatus",
+        "おすすめポイント",
+        "トレンド情報源",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由"
       ]
     },
     {
@@ -1880,27 +1914,24 @@
         "placeid_match"
       ],
       "kept": {
-        "店名": "レミニセンス（Reminiscence）",
-        "エリア": "名古屋市東区",
+        "店名": "Reminiscence / レミニセンス",
+        "エリア": "名古屋市東区筒井",
         "ホットペッパーID": "",
         "placeId": "ChIJEbARMC13A2ARd_ybO79h7-8",
         "slug": "reminiscence"
       },
       "absorbed": [
         {
-          "店名": "Reminiscence / レミニセンス",
-          "エリア": "名古屋市東区筒井",
+          "店名": "レミニセンス（Reminiscence）",
+          "エリア": "名古屋市東区",
           "ホットペッパーID": "",
           "placeId": "ChIJEbARMC13A2ARd_ybO79h7-8",
           "slug": "reminiscence"
         }
       ],
       "filledFields": [
-        "おすすめシーン",
-        "おすすめポイント",
-        "追加日",
-        "選定理由",
-        "食べログURL"
+        "トレンド情報源",
+        "食べログ評価"
       ]
     },
     {
@@ -1981,6 +2012,18 @@
     },
     {
       "names": [
+        "炭火焼 鰻籠 鳥籠",
+        "炭火焼　鰻籠"
+      ],
+      "hpIds": [
+        "J004493228",
+        "J003603009"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
         "炊き肉屋 しじみ倶楽部 名駅店",
         "炊き肉屋 しじみ倶楽部"
       ],
@@ -1990,18 +2033,6 @@
       ],
       "reason": "placeid_match",
       "blocker": "no_corroboration"
-    },
-    {
-      "names": [
-        "炭火焼 鰻籠 鶏籠",
-        "炭火焼　鰻籠"
-      ],
-      "hpIds": [
-        "J004493228",
-        "J003603009"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
     },
     {
       "names": [

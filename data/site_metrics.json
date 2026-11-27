@@ -1,60 +1,61 @@
 {
-  "generatedAt": "2026-11-27T01:31:27.241Z",
+  "generatedAt": "2026-11-27T06:42:26.780Z",
   "lookbackDays": 30,
+  "excludesForeignDirect": true,
   "totals": {
-    "activeUsers": 8435,
-    "pageViews": 10077,
-    "sessions": 8839,
-    "avgSessionDuration": 53.9,
-    "bounceRate": 0.686,
-    "pagesPerSession": 1.14
+    "activeUsers": 3395,
+    "pageViews": 4954,
+    "sessions": 3803,
+    "avgSessionDuration": 127.1,
+    "bounceRate": 0.266,
+    "pagesPerSession": 1.3
   },
   "dailyReference": {
     "date": "2026-11-25",
-    "sessions": 187,
-    "bounceRate": 0.39,
-    "pageViews": 220
+    "sessions": 135,
+    "bounceRate": 0.17,
+    "pageViews": 168
   },
   "channels": {
     "sessions": {
-      "organic": 3182,
-      "direct": 5477,
+      "organic": 3221,
+      "direct": 283,
       "social": 65,
-      "ai_assistant": 231,
+      "ai_assistant": 232,
       "referral": 61,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 35.3,
-      "direct": 60.7,
-      "social": 0.7,
-      "ai_assistant": 2.6,
-      "referral": 0.7,
+      "organic": 83.4,
+      "direct": 7.3,
+      "social": 1.7,
+      "ai_assistant": 6,
+      "referral": 1.6,
       "paid": 0,
       "other": 0
     }
   },
   "sourceBreakdown": [
     {
-      "source": "(direct)",
-      "medium": "(none)",
-      "sessions": 5439
-    },
-    {
       "source": "google",
       "medium": "organic",
-      "sessions": 1491
+      "sessions": 1509
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 982
+      "sessions": 994
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 673
+      "sessions": 682
+    },
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 255
     },
     {
       "source": "chatgpt.com",
@@ -64,7 +65,7 @@
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 79
+      "sessions": 80
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -87,11 +88,6 @@
       "sessions": 19
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 16
-    },
-    {
       "source": "trend_today",
       "medium": "(not set)",
       "sessions": 10
@@ -105,6 +101,11 @@
       "source": "history",
       "medium": "(not set)",
       "sessions": 8
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 6
     },
     {
       "source": "cn.bing.com",
@@ -220,8 +221,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 473,
-      "sessions": 441
+      "pageViews": 472,
+      "sessions": 440
     },
     {
       "path": "/journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -230,8 +231,8 @@
     },
     {
       "path": "/journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-      "pageViews": 147,
-      "sessions": 136
+      "pageViews": 146,
+      "sessions": 135
     },
     {
       "path": "/features/nagoya-miso-nikomi-udon.html",
@@ -240,21 +241,21 @@
     },
     {
       "path": "/features/nagoya-unaju.html",
-      "pageViews": 118,
+      "pageViews": 119,
       "sessions": 115
     }
   ],
   "cta": {
-    "outboundClicks": 438,
-    "ctaClickRate": 5,
+    "outboundClicks": 442,
+    "ctaClickRate": 11.6,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 176
+        "clicks": 177
       },
       {
         "domain": "www.google.com",
-        "clicks": 138
+        "clicks": 139
       },
       {
         "domain": "prtimes.jp",
@@ -270,7 +271,7 @@
       },
       {
         "domain": "maps.google.com",
-        "clicks": 9
+        "clicks": 11
       },
       {
         "domain": "beniya-ajisai.co.jp",
@@ -303,7 +304,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 306,
+      "organic": 310,
       "direct": 43,
       "social": 16,
       "ai_assistant": 62,
@@ -312,7 +313,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 9.6,
-    "ctaClickRate_direct": 0.8,
+    "ctaClickRate_direct": 15.2,
     "ctaClickRate_social": 24.6,
     "byPage": [
       {
@@ -325,7 +326,7 @@
       },
       {
         "path": "/stores/J004090251.html",
-        "clicks": 22
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -348,12 +349,12 @@
         "clicks": 7
       },
       {
-        "path": "/journal/2026-11-10-higashibetsuin-chashumen-susuru-solo-lunch.html",
-        "clicks": 6
+        "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
+        "clicks": 7
       },
       {
-        "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
-        "clicks": 5
+        "path": "/journal/2026-11-10-higashibetsuin-chashumen-susuru-solo-lunch.html",
+        "clicks": 6
       },
       {
         "path": "/journal/2026-11-03-kakuozan-amelie-french-date-course.html",
@@ -450,7 +451,7 @@
       {
         "path": "/stores/J004090251.html",
         "domain": "www.google.com",
-        "clicks": 22
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -491,6 +492,11 @@
         "path": "/stores/J004612794.html",
         "domain": "www.hotpepper.jp",
         "clicks": 5
+      },
+      {
+        "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
+        "domain": "maps.google.com",
+        "clicks": 4
       },
       {
         "path": "/journal/2026-11-02-meieki-takashimaya-kamakura-beniya-butter-no-itoko.html",
@@ -600,11 +606,6 @@
       {
         "path": "/journal/2026-06-17-shinya-eigyo-jorei-to-genba.html",
         "domain": "huueikyoka.com",
-        "clicks": 2
-      },
-      {
-        "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
-        "domain": "maps.google.com",
         "clicks": 2
       },
       {
@@ -1190,7 +1191,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 8435,
+    "value": 3395,
     "stage": "healthy",
     "thresholds": {
       "phase0": 500,
