@@ -1,0 +1,74 @@
+{
+  "date": "2026-11-27",
+  "slug": "2026-11-27-ozone-bonenkai-izakaya-5",
+  "recorded_at": "2026-11-27T00:23:34.125Z",
+  "model": null,
+  "model_note": "指定なし（実行環境の既定のモデル）",
+  "prompt_version": "review-2026-11-17",
+  "prompt_sha256": "2d87c50c12d8630d",
+  "excerpts": [
+    {
+      "id": "E1",
+      "url": "https://www.hotpepper.jp/strJ001245620/course/",
+      "lines": 12
+    },
+    {
+      "id": "E2",
+      "url": "https://www.hotpepper.jp/strJ001294902/course/",
+      "lines": 7
+    },
+    {
+      "id": "E3",
+      "url": "https://www.hotpepper.jp/strJ001140178/course/",
+      "lines": 8
+    },
+    {
+      "id": "E4",
+      "url": "https://www.hotpepper.jp/strJ001193188/course/",
+      "lines": 8
+    },
+    {
+      "id": "E5",
+      "url": "https://www.hotpepper.jp/strJ001250891/course/",
+      "lines": 14
+    },
+    {
+      "id": "E6",
+      "url": "https://www.hotpepper.jp/strJ001294902/",
+      "lines": 10
+    },
+    {
+      "id": "E7",
+      "url": "https://www.hotpepper.jp/strJ001140178/",
+      "lines": 12
+    },
+    {
+      "id": "E8",
+      "url": "https://www.hotpepper.jp/strJ001193188/",
+      "lines": 14
+    },
+    {
+      "id": "E9",
+      "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+      "lines": 22
+    },
+    {
+      "id": "E10",
+      "url": "https://www.nagoya-info.jp/access/traffic/",
+      "lines": 16
+    }
+  ],
+  "ok": true,
+  "elapsed_sec": 17,
+  "findings": [
+    {
+      "sentence": "個室は3名から使え、 つなげると22名まで 入れます。",
+      "kind": "number_mismatch",
+      "quote": "個室 4名様 2名様からご利用いただける個室席も4席ご用意しております。",
+      "reason": "抜粋では個室は2名から使えるが、記事は3名からとしている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    }
+  ]
+}

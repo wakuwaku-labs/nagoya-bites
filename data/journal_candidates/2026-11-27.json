@@ -1,0 +1,483 @@
+{
+  "date": "2026-11-27",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "大曽根で忘年会、JR・名鉄・地下鉄で帰りやすい居酒屋5選 たばこと個室の違い",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 86,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (時期,看板,使い分け) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 135字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大曽根」+4",
+          "タイトルにシーン語「個室」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "86点（自動公開ライン 100点）。主な不足: topicality -13 / uniqueness -5 / brand_fit -4",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "大曽根『焼き鳥 きんざん 大曽根店』で忘年会、個室つなげて22名と忘新年会コース",
+      "verdict": "HOLD",
+      "total": 71,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        },
+        {
+          "kw": "焼き鳥",
+          "feature": "features/nagoya-yakitori.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 127字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大曽根」+4",
+          "タイトルにシーン語「個室」+4",
+          "タイトルにジャンル語「焼き鳥」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "大曽根の老舗『味鷹 みたか 本店』で忘年会、台湾焼きそばと貸切55名",
+      "verdict": "HOLD",
+      "total": 71,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 112字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大曽根」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "大曽根『あんき家 大曽根駅前店』で忘年会、牛タンしゃぶ鍋と6〜9名の完全個室",
+      "verdict": "HOLD",
+      "total": 69,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 123字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大曽根」+4",
+          "タイトルにシーン語「個室」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "大曽根『かぐら屋 大曽根』で忘年会、日本酒と全席個室風の席、14名までの完全個室",
+      "verdict": "HOLD",
+      "total": 69,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 118字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大曽根」+4",
+          "タイトルにシーン語「個室」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": {
+    "topic": "イベント",
+    "week": "2026-W48",
+    "slot": 4,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "86点（自動公開ライン 100点）。主な不足: topicality -13 / uniqueness -5 / brand_fit -4",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "大曽根で忘年会、JR・名鉄・地下鉄で帰りやすい居酒屋5選 たばこと個室の違い",
+      "lead_draft": "大曽根駅はJR・名鉄・地下鉄が乗り入れ、帰る方向がばらばらな職場の忘年会でも集まりやすい駅です。駅から歩いて2〜5分の居酒屋を5つ集めました。おばんざい、老舗の台湾焼きそば、牛タンのしゃぶ鍋、焼き鳥、日本酒と、料理の違いと一緒に、個室の人数とたばこの扱いをまとめました。",
+      "angle": "大曽根×忘年会×帰りやすさ。料理の看板・個室の人数・たばこの扱い（全席禁煙／加熱式のみ席で可／全席喫煙可）・キャンセル料がかかり始める時期で使い分けを示す",
+      "main_store": {
+        "name": "旬魚とおばんざい 彩り",
+        "id": "J001245620",
+        "area": "大曽根",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 旬魚とおばんざい 彩り コース",
+          "url": "https://www.hotpepper.jp/strJ001245620/course/",
+          "date": "2026-11-13"
+        },
+        {
+          "label": "ホットペッパー 焼き鳥 きんざん 大曽根店 コース",
+          "url": "https://www.hotpepper.jp/strJ001193188/course/",
+          "date": "2026-11-17"
+        },
+        {
+          "label": "ホットペッパー かぐら屋 大曽根 コース",
+          "url": "https://www.hotpepper.jp/strJ001250891/course/",
+          "date": "2026-11-19"
+        },
+        {
+          "label": "東京商工リサーチ 忘・新年会調査",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "名古屋コンシェルジュ（名古屋市観光情報）名古屋市内の主な交通手段",
+          "url": "https://www.nagoya-info.jp/access/traffic/",
+          "date": "2026-11-27"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "大曽根『焼き鳥 きんざん 大曽根店』で忘年会、個室つなげて22名と忘新年会コース",
+      "lead_draft": "大曽根駅から歩いて3分の「焼き鳥 きんざん 大曽根店」は、備長炭の焼き鳥とタッカンマリ鍋が名物です。3名から使える個室をつなげると22名まで入れ、忘新年会のコースは120分飲み放題つきで6,000円から。12月28日からはアラカルトに10%がかかります。",
+      "angle": "1店の深掘り。個室・忘新年会コース・年末の加算で忘年会での使い方を示す",
+      "main_store": {
+        "name": "焼き鳥 きんざん 大曽根店",
+        "id": "J001193188",
+        "area": "大曽根",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 焼き鳥 きんざん 大曽根店 コース",
+          "url": "https://www.hotpepper.jp/strJ001193188/course/",
+          "date": "2026-11-17"
+        },
+        {
+          "label": "東京商工リサーチ 忘・新年会調査",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "名古屋コンシェルジュ（名古屋市観光情報）名古屋市内の主な交通手段",
+          "url": "https://www.nagoya-info.jp/access/traffic/",
+          "date": "2026-11-27"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "大曽根『あんき家 大曽根駅前店』で忘年会、牛タンしゃぶ鍋と6〜9名の完全個室",
+      "lead_draft": "大曽根駅から歩いて2分の「あんき家 大曽根駅前店」は、大とろ牛タンの味しゃぶ鍋が名物の鍋の店です。6〜9名の完全個室があり、選べる鍋の宴会コースは90分飲み放題つきで5,200円。全席喫煙可で20歳未満は入れないので、家族連れの会には向きません。",
+      "angle": "鍋×少人数の忘年会。個室・コース・喫煙の注意を示す",
+      "main_store": {
+        "name": "あんき家 大曽根駅前店",
+        "id": "J001140178",
+        "area": "大曽根",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー あんき家 大曽根駅前店 コース",
+          "url": "https://www.hotpepper.jp/strJ001140178/course/",
+          "date": "2026-11-13"
+        },
+        {
+          "label": "東京商工リサーチ 忘・新年会調査",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "名古屋コンシェルジュ（名古屋市観光情報）名古屋市内の主な交通手段",
+          "url": "https://www.nagoya-info.jp/access/traffic/",
+          "date": "2026-11-27"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "大曽根『かぐら屋 大曽根』で忘年会、日本酒と全席個室風の席、14名までの完全個室",
+      "lead_draft": "大曽根駅・平安通駅から歩いて5分の「かぐら屋 大曽根」は、和牛すじどて煮と日本酒が看板の和の居酒屋です。全席個室・半個室風で、完全個室は14名まで。忘年会のコースは120分飲み放題つき6,000円で、キャンセルは前日から全額かかります。",
+      "angle": "日本酒×個室の忘年会。席・コース・キャンセルを示す",
+      "main_store": {
+        "name": "かぐら屋 大曽根",
+        "id": "J001250891",
+        "area": "大曽根",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー かぐら屋 大曽根 コース",
+          "url": "https://www.hotpepper.jp/strJ001250891/course/",
+          "date": "2026-11-19"
+        },
+        {
+          "label": "東京商工リサーチ 忘・新年会調査",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "名古屋コンシェルジュ（名古屋市観光情報）名古屋市内の主な交通手段",
+          "url": "https://www.nagoya-info.jp/access/traffic/",
+          "date": "2026-11-27"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "大曽根の老舗『味鷹 みたか 本店』で忘年会、台湾焼きそばと貸切55名",
+      "lead_draft": "大曽根駅5番出口から歩いて2分の「味鷹 みたか 本店」は、台湾焼きそばと牛すじが名物の老舗の居酒屋です。個室はありませんが、貸切なら着席で55名まで。飲み放題つきのコースは4,500円からで、たばこは加熱式だけ席で吸えます。",
+      "angle": "老舗×大人数の忘年会。貸切・コース・喫煙を示す",
+      "main_store": {
+        "name": "味鷹 みたか 本店 大曽根",
+        "id": "J001294902",
+        "area": "大曽根",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 味鷹 みたか 本店 大曽根 コース",
+          "url": "https://www.hotpepper.jp/strJ001294902/course/",
+          "date": "2026-10-22"
+        },
+        {
+          "label": "東京商工リサーチ 忘・新年会調査",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+          "date": "2026-11-05"
+        },
+        {
+          "label": "名古屋コンシェルジュ（名古屋市観光情報）名古屋市内の主な交通手段",
+          "url": "https://www.nagoya-info.jp/access/traffic/",
+          "date": "2026-11-27"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "date": "2026-11-27",
+  "slug": "2026-11-27-ozone-bonenkai-izakaya-5",
+  "recorded_at": "2026-11-27T00:23:54.363Z",
+  "mode": "shadow",
+  "enforced": false,
+  "note": "記録だけ。公開は止めていない",
+  "lane_if_enforced": "hold",
+  "published": true,
+  "published_by_lane": "existing_gate",
+  "reasons": [
+    {
+      "type": "review:number_mismatch",
+      "detail": "個室は3名から使え、 つなげると22名まで 入れます。 ／ 抜粋では個室は2名から使えるが、記事は3名からとしている"
+    }
+  ],
+  "checks": {
+    "validator": "pass",
+    "claims": {
+      "ledger_by": "writer",
+      "summary": {
+        "claims": 38,
+        "verified": 35,
+        "unverifiable": 2,
+        "mismatch": 0,
+        "stale": 0,
+        "not_applicable": 1,
+        "paired": 2,
+        "hedge_dropped": 0,
+        "issues": 0,
+        "core_issues": 0
+      },
+      "fetch": {
+        "sources": 10,
+        "ok": 10,
+        "failed": []
+      }
+    },
+    "independent_review": {
+      "ok": true,
+      "reason": null,
+      "model": null,
+      "prompt_version": "review-2026-11-17",
+      "findings": 1,
+      "verified_findings": 1
+    }
+  },
+  "score": "86点 PASS_WITH_NOTE（自動公開ライン 100点）。主な不足: topicality -13（X・note の言及URLなし）/ uniqueness -5 / brand_fit -4（一次報道なし。名古屋コンシェルジュ・東京商工リサーチ・ホットペッパー5店で裏取り）。金曜の季節短信（忘年会予約開幕・priority 95）を◯選の形で、まだ扱っていない大曽根に絞った（栄・名駅・金山・伏見・久屋大通は11月に掲載済み）。data/stores.json の営業中・大曽根駅最寄りの居酒屋から、全国チェーンを避けて看板料理が重ならない5店を選び、11月27日にホットペッパーの店ページとコースページで確認。あんき家のキャンセル料は表記が2通り（当日100%／3日前30%・前日70%）で食い違うため本文に書かなかった。名鉄の路線名（瀬戸線）は出典に無いため「名鉄」とだけ書いた。ヒーロー（彩り）と本文写真2枚（味鷹・あんき家）は自動で入ったホットペッパー写真で、目視の確認はしていない",
+  "sources": [
+    {
+      "url": "https://www.hotpepper.jp/strJ001245620/course/",
+      "label": "ホットペッパー 旬魚とおばんざい 彩り",
+      "type": "掲載サイト",
+      "date": "2026-11-13",
+      "fetched_at": "2026-11-27T00:23:24.194Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 3338,
+        "sha256": "c29b36243db823aa89564474ee2bfec74c1e06b2b2b95837c53da95bdd7bc2ae"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001294902/course/",
+      "label": "ホットペッパー 味鷹 みたか 本店 大曽根",
+      "type": "掲載サイト",
+      "date": "2026-10-22",
+      "fetched_at": "2026-11-27T00:23:24.378Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 4764,
+        "sha256": "d8a40dc48c9b8e863e4b843454c6d4cc75d4cdb0ce108b68afb0293c109e8c82"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001140178/course/",
+      "label": "ホットペッパー あんき家 大曽根駅前店",
+      "type": "掲載サイト",
+      "date": "2026-11-13",
+      "fetched_at": "2026-11-27T00:23:24.538Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 4329,
+        "sha256": "3e0b20b84718fbe88cf048dc2c6d5d02c176ace8282bedee321617db02c0fac6"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001193188/course/",
+      "label": "ホットペッパー 焼き鳥 きんざん 大曽根店",
+      "type": "掲載サイト",
+      "date": "2026-11-17",
+      "fetched_at": "2026-11-27T00:23:24.902Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 5141,
+        "sha256": "7bc0c20f41999718c4f64d96fb08045aaccf43960ad422f8f7263cc01b8ef5f9"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001250891/course/",
+      "label": "ホットペッパー かぐら屋 大曽根",
+      "type": "掲載サイト",
+      "date": "2026-11-19",
+      "fetched_at": "2026-11-27T00:23:25.164Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 3648,
+        "sha256": "a57a39244b83b6668ccf78f91c7c32d61fd74125f01ac1f53b121666606de157"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001294902/",
+      "label": "ホットペッパー 味鷹 みたか 本店 大曽根（店舗情報）",
+      "type": "掲載サイト",
+      "date": "11月27日確認",
+      "fetched_at": "2026-11-27T00:23:25.367Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 8255,
+        "sha256": "9e8cac3302647d00d36f83fbffdc97a1493007ba0974d505d46b6b067d96f969"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001140178/",
+      "label": "ホットペッパー あんき家 大曽根駅前店（店舗情報）",
+      "type": "掲載サイト",
+      "date": "11月27日確認",
+      "fetched_at": "2026-11-27T00:23:25.675Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 8358,
+        "sha256": "6a2ae22dd40c03d52b5db285bf498730da2ac37a98e1a9ac58f1fddd1615fb09"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001193188/",
+      "label": "ホットペッパー 焼き鳥 きんざん 大曽根店（店舗情報）",
+      "type": "掲載サイト",
+      "date": "11月27日確認",
+      "fetched_at": "2026-11-27T00:23:26.086Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 8225,
+        "sha256": "c79a32d5748d77ee39345141ad167e35abeda3f5071ae8bedff9ffc844a9d503"
+      }
+    },
+    {
+      "url": "https://www.tsr-net.co.jp/data/detail/1203400_1527.html",
+      "label": "東京商工リサーチ「忘・新年会」開催は56.5％",
+      "type": "報道",
+      "date": "2026-11-05",
+      "fetched_at": "2026-11-27T00:23:26.327Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 5625,
+        "sha256": "0cbf653dae568f545eb2f4a04ee2e57d71262ac90d9720973130b9ccecf1114a"
+      }
+    },
+    {
+      "url": "https://www.nagoya-info.jp/access/traffic/",
+      "label": "名古屋コンシェルジュ（名古屋市観光情報）名古屋市内の主な交通手段",
+      "type": "公式・その他",
+      "date": "2026-11-27",
+      "fetched_at": "2026-11-27T00:23:26.584Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 9233,
+        "sha256": "5df4e9428ffd50a2f8a32e33194a9377f5134d4795d31e86ec86bee879a70b3d"
+      }
+    }
+  ],
+  "findings": [
+    {
+      "sentence": "個室は3名から使え、 つなげると22名まで 入れます。",
+      "kind": "number_mismatch",
+      "quote": "個室 4名様 2名様からご利用いただける個室席も4席ご用意しております。",
+      "reason": "抜粋では個室は2名から使えるが、記事は3名からとしている",
+      "sentence_in_article": true,
+      "quote_in_source": true,
+      "verified": true
+    }
+  ]
+}
