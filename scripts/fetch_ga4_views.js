@@ -20,6 +20,8 @@
 const fs = require('fs');
 const path = require('path');
 const { isSocialSource, isAiAssistantSource } = require('./lib/traffic_source');
+// 海外からの直接アクセスは、この取得のすべてで除く（ADR 0066・LINE レポートと同じ条件）
+const { excludeForeignDirect } = require('./lib/ga4_foreign_direct');
 
 const KEY_RAW    = process.env.GA4_SERVICE_ACCOUNT_KEY;
 const PROPERTY   = process.env.GA4_PROPERTY_ID;
@@ -56,7 +58,7 @@ async function main() {
   });
   await auth.authorize();
 
-  const analyticsdata = google.analyticsdata({ version: 'v1beta', auth });
+  const analyticsdata = excludeForeignDirect(google.analyticsdata({ version: 'v1beta', auth }));
 
   const res = await analyticsdata.properties.runReport({
     property: `properties/${PROPERTY}`,
@@ -233,7 +235,7 @@ async function fetchSiteMetrics(analyticsdata) {
   //     前日値は 90% 台の未確定値になる（実測: 08-22 レポート91%→確定22.9%）。レポート側も
   //     SETTLED_LAG_DAYS=2 の確定値を出すようにしたため、参照も同じ日でなければ比較できない。
   // 注: GAS 側は hostName=nagoya-bites.com で絞るがここでは絞らない。実測の差は約2pt で、
-  //     判定閾値（15pt）に対して十分小さい。
+  //     判定閾値（15pt）に対して十分小さい。海外の直接アクセスは両方とも除く。
   const SETTLED_LAG_DAYS = 2;  // .gas-deploy/Code.js の同名定数と一致させること
   const jstNow = new Date(Date.now() + 9 * 60 * 60 * 1000);
   const ref = new Date(jstNow.getTime() - SETTLED_LAG_DAYS * 24 * 60 * 60 * 1000);
@@ -512,6 +514,8 @@ async function fetchSiteMetrics(analyticsdata) {
   const metricsOut = {
     generatedAt: new Date().toISOString(),
     lookbackDays: LOOKBACK,
+    // この印がある回から、海外の直接アクセスを除いた数字（印の無い過去の値とは比べられない）
+    excludesForeignDirect: true,
     totals,
     dailyReference,
     channels: { sessions: channels, pct: channelPct },
