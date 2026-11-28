@@ -702,23 +702,82 @@
    },
    "findings": [],
    "next_due": "2026-12-27"
+  },
+  "journal/2026-08-23-meieki-kokokara-yakiniku.html": {
+   "last_checked": "2026-11-28",
+   "last_checked_at": "2026-11-28T03:15:48.156Z",
+   "outcome": "ok",
+   "reason": "limited",
+   "basis": "machine",
+   "facts": 31,
+   "verified": 25,
+   "unverifiable": 6,
+   "mismatch": 0,
+   "sources": {
+    "ok": 2,
+    "total": 6
+   },
+   "findings": [],
+   "next_due": "2027-02-25"
+  },
+  "journal/2026-11-25-osu-world-food-lunch-5.html": {
+   "last_checked": "2026-11-28",
+   "last_checked_at": "2026-11-28T03:15:48.156Z",
+   "outcome": "ok",
+   "reason": "ledger_due",
+   "basis": "ledger",
+   "facts": 34,
+   "verified": 34,
+   "unverifiable": 0,
+   "mismatch": 0,
+   "sources": {
+    "ok": 7,
+    "total": 7
+   },
+   "findings": [],
+   "next_due": "2026-12-28"
+  },
+  "journal/2026-11-19-nagoya-izakaya-bonenkai-year-end-surcharge.html": {
+   "last_checked": "2026-11-28",
+   "last_checked_at": "2026-11-28T03:15:48.156Z",
+   "outcome": "findings",
+   "reason": "ledger_due",
+   "basis": "ledger",
+   "facts": 63,
+   "verified": 53,
+   "unverifiable": 9,
+   "mismatch": 1,
+   "sources": {
+    "ok": 10,
+    "total": 10
+   },
+   "findings": [
+    {
+     "type": "number_mismatch_ambiguous",
+     "severity": "core",
+     "detail": "出典と数字が違うが、直し方が1つに決まらない（台帳の文と数字が違う: 台帳 1・1000・1・500 ／ 記事 —）: 兎二角 とにかく 栄駅店 （栄）：12月25日から1月11日まで、席のみの利用は会計の10%。",
+     "claim": "兎二角 とにかく 栄駅店 （栄）：12月25日から1月11日まで、席のみの利用は会計の10%。",
+     "reported_at": "2026-11-28"
+    }
+   ],
+   "next_due": "2026-12-12"
   }
  },
  "summary": {
-  "overdue": 182,
-  "overdue_ledger": 2,
-  "oldest_overdue_ledger_days": 13,
-  "overdue_legacy": 180,
-  "oldest_overdue_legacy_days": 204,
-  "due_total": 185,
+  "overdue": 179,
+  "overdue_ledger": 0,
+  "oldest_overdue_ledger_days": 0,
+  "overdue_legacy": 179,
+  "oldest_overdue_legacy_days": 205,
+  "due_total": 182,
   "no_base_date": 3,
   "pending_findings": 0
  },
  "last_run": {
-  "date": "2026-11-27",
-  "at": "2026-11-27T03:37:04.494Z",
+  "date": "2026-11-28",
+  "at": "2026-11-28T03:15:48.156Z",
   "mode": "record",
-  "due": 185,
+  "due": 182,
   "processed": 3,
   "alerts": 1,
   "applied": 0
