@@ -1,0 +1,169 @@
+{
+  "date": "2026-11-28",
+  "slug": "2026-11-28-kakuozan-weekend-cafe-sweets-5",
+  "recorded_at": "2026-11-28T00:33:45.108Z",
+  "mode": "shadow",
+  "enforced": false,
+  "note": "記録だけ。公開は止めていない",
+  "lane_if_enforced": "hold",
+  "published": true,
+  "published_by_lane": "existing_gate",
+  "reasons": [
+    {
+      "type": "number_mismatch",
+      "detail": "出典の同じ項目と数字が違う（台帳の文と数字が違う: 台帳 20 ／ 記事 —）: 駅の1番出口から歩いて2分で、定休日はありません。"
+    }
+  ],
+  "checks": {
+    "validator": "pass",
+    "claims": {
+      "ledger_by": "writer",
+      "summary": {
+        "claims": 41,
+        "verified": 38,
+        "unverifiable": 2,
+        "mismatch": 1,
+        "stale": 0,
+        "not_applicable": 0,
+        "paired": 6,
+        "hedge_dropped": 0,
+        "issues": 1,
+        "core_issues": 1
+      },
+      "fetch": {
+        "sources": 9,
+        "ok": 9,
+        "failed": []
+      }
+    },
+    "independent_review": {
+      "ok": true,
+      "reason": null,
+      "model": null,
+      "prompt_version": "review-2026-11-17",
+      "findings": 0,
+      "verified_findings": 0
+    }
+  },
+  "score": "87点 PASS_WITH_NOTE（自動公開ライン 100点）。主な不足: topicality -13（X・note の言及URLなし）/ brand_fit -4（一次報道なし）/ search_intent -4。直近は忘年会の◯選が続いたため、土曜の◯選を週末の覚王山のカフェ・甘味に替えた（覚王山は11月3日に Amélie 1店のみ掲載）。data/stores.json の営業中・覚王山駅最寄りで、駅から5分以内・土日営業・チェーンでない5店を選び、11月28日にホットペッパーの店ページ5件・えいこく屋公式・名古屋コンシェルジュ2件で確認。ZARAME はホットペッパーの更新が2020年のため値段を書かず、店で確かめるよう添えた。えいこく屋の定休日は公式の会社案内で本社欄（土日祝休み）と店舗欄（火曜）が分かれるため、店舗欄とホットペッパーの火曜に合わせた。ヒーロー（Ji.Coo.）と本文写真2枚（ZARAME・ぐらんま）は自動で入ったホットペッパー写真で、目視の確認はしていない",
+  "sources": [
+    {
+      "url": "https://www.hotpepper.jp/strJ000397154/",
+      "label": "ホットペッパー 覚王山カフェ Ji.Coo. ジクー",
+      "type": "掲載サイト",
+      "date": "2026-11-27",
+      "fetched_at": "2026-11-28T00:33:15.243Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 8526,
+        "sha256": "8804d19b560eedc9e843aa3547f6a9a0121ab87e59913eb100604b05b2f17c1d"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ000825629/",
+      "label": "ホットペッパー ZARAME NAGOYA",
+      "type": "掲載サイト",
+      "date": "2020-01-07",
+      "fetched_at": "2026-11-28T00:33:15.393Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 3937,
+        "sha256": "53153fbec6deed7e5c386fad24107faa774d230e0aa1fabf73446f8eb41f5df8"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001284821/",
+      "label": "ホットペッパー 手づくりおはぎ ぐらんま",
+      "type": "掲載サイト",
+      "date": "2026-08-14",
+      "fetched_at": "2026-11-28T00:33:15.533Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 3006,
+        "sha256": "1b1ee497238675b66af3b01ee0465b14a8ee8c14f0d3644dee7f47c23738b4f8"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ001279241/",
+      "label": "ホットペッパー えいこく屋 紅茶専門店",
+      "type": "掲載サイト",
+      "date": "2026-08-14",
+      "fetched_at": "2026-11-28T00:33:15.646Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 2788,
+        "sha256": "bc61c75fc601ae844b012117f6606f03ca5180799d5706deed1a421afc96034a"
+      }
+    },
+    {
+      "url": "https://www.hotpepper.jp/strJ004444371/",
+      "label": "ホットペッパー Kanom Thai Cafe カノムタイカフェ",
+      "type": "掲載サイト",
+      "date": "2026-07-18",
+      "fetched_at": "2026-11-28T00:33:15.791Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 4856,
+        "sha256": "d2932583a79e619adbf069502abde39f029dac578f9cdc0c47b62350d71a050a"
+      }
+    },
+    {
+      "url": "https://www.eikokuya-tea.co.jp/about",
+      "label": "えいこく屋 公式「えいこく屋について」",
+      "type": "公式・その他",
+      "date": "11月28日確認",
+      "fetched_at": "2026-11-28T00:33:16.615Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 1251,
+        "sha256": "c5b325834ff60d89591db55cf9a90913394c70295662543c1e30a018d9e00642"
+      }
+    },
+    {
+      "url": "https://www.eikokuya-tea.co.jp/company",
+      "label": "えいこく屋 公式「会社案内」",
+      "type": "公式・その他",
+      "date": "11月28日確認",
+      "fetched_at": "2026-11-28T00:33:17.466Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 1052,
+        "sha256": "e6b76f28babeef81de6a0a19242b9340734159226e8ac3c688f83ec781d76539"
+      }
+    },
+    {
+      "url": "https://www.nagoya-info.jp/spot/detail/117/",
+      "label": "名古屋コンシェルジュ（名古屋市観光情報）日泰寺(覚王山)",
+      "type": "公式・その他",
+      "date": "11月28日確認",
+      "fetched_at": "2026-11-28T00:33:17.634Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 5389,
+        "sha256": "d14eae0be012bbf6b8f5d765ff6c51bd39ad3a56d32a285381180003ad8302a5"
+      }
+    },
+    {
+      "url": "https://www.nagoya-info.jp/course/detail/9/",
+      "label": "名古屋コンシェルジュ（名古屋市観光情報）異国情緒感じる参道めぐり",
+      "type": "公式・その他",
+      "date": "11月28日確認",
+      "fetched_at": "2026-11-28T00:33:17.688Z",
+      "fetch": {
+        "ok": true,
+        "status": 200,
+        "chars": 4894,
+        "sha256": "b277dda625c0b90d239231a64bd09a9ad4e3747c3fa21b3f3b98d56489203c33"
+      }
+    }
+  ],
+  "findings": []
+}

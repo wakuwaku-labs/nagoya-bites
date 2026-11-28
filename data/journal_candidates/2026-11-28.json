@@ -1,0 +1,457 @@
+{
+  "date": "2026-11-28",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "覚王山で週末のカフェ・甘味おすすめ5選、日泰寺の参道を駅から歩いて5分以内",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 87,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "覚王山",
+          "feature": "features/nagoya-kakuozan.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 8件 (比較,エリア,予約,雰囲気,看板,名物,ランチ,使い分け) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 124字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「覚王山」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      },
+      "gate_note": "87点（自動公開ライン 100点）。主な不足: topicality -13 / brand_fit -4 / search_intent -4",
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c2",
+      "title_draft": "覚王山のランチ、参道で気軽に入れる店おすすめ5選",
+      "verdict": "HOLD",
+      "total": 83,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "覚王山",
+          "feature": "features/nagoya-kakuozan.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 5件 (比較,エリア,価格帯,雰囲気,ランチ) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 81字 +4",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「覚王山」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c5",
+      "title_draft": "覚王山でタイを感じる、日泰寺とタイスイーツのカフェ",
+      "verdict": "HOLD",
+      "total": 72,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "覚王山",
+          "feature": "features/nagoya-kakuozan.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 1件 (エリア) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 59字 +2",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「覚王山」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c4",
+      "title_draft": "覚王山の手土産、おはぎ・ドーナツ・紅茶の店3選",
+      "verdict": "HOLD",
+      "total": 71,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "覚王山",
+          "feature": "features/nagoya-kakuozan.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 2件 (比較,シーン) → 10"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 70字 +2",
+          "title 23字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「覚王山」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "plan_topic_bonus": 0
+    },
+    {
+      "id": "c3",
+      "title_draft": "覚王山カフェ Ji.Coo.（覚王山）テラス席と21年の手作り料理、週末のカフェに",
+      "verdict": "HOLD",
+      "total": 70,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 6,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "覚王山",
+          "feature": "features/nagoya-kakuozan.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 1件 (雰囲気) → 5"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 74字 +2",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「覚王山」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      },
+      "plan_topic_bonus": 0
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "plan_topic": {
+    "topic": "イベント",
+    "week": "2026-W48",
+    "slot": 5,
+    "bonus": 2
+  },
+  "plan_topic_changed_selection": false,
+  "selected_gate_note": "87点（自動公開ライン 100点）。主な不足: topicality -13 / brand_fit -4 / search_intent -4",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "weekly_digest",
+      "title_draft": "覚王山で週末のカフェ・甘味おすすめ5選、日泰寺の参道を駅から歩いて5分以内",
+      "lead_draft": "覚王山駅から日泰寺へまっすぐ伸びる参道には、甘いものとお茶の店が続きます。駅から歩いて5分以内で、週末の土日も開いているカフェ・甘味の店を5つ集めました。手作りおはぎ、紅茶専門店、タイのお菓子、ドーナツ、21年続くカフェと、看板はそれぞれ違います。",
+      "angle": "覚王山エリアの参道で週末に開いている甘味・カフェを、看板の名物と雰囲気、予約の要否、ランチの有無で使い分けられるように比較する",
+      "main_store": {
+        "name": "覚王山カフェ Ji.Coo. ジクー",
+        "id": "J000397154",
+        "area": "覚王山",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 覚王山カフェ Ji.Coo.",
+          "url": "https://www.hotpepper.jp/strJ000397154/",
+          "date": "2026-11-27"
+        },
+        {
+          "label": "名古屋コンシェルジュ 日泰寺(覚王山)",
+          "url": "https://www.nagoya-info.jp/spot/detail/117/",
+          "date": "2026-11-28"
+        },
+        {
+          "label": "えいこく屋 えいこく屋について",
+          "url": "https://www.eikokuya-tea.co.jp/about",
+          "date": "2026-11-28"
+        },
+        {
+          "label": "ホットペッパー Kanom Thai Cafe",
+          "url": "https://www.hotpepper.jp/strJ004444371/",
+          "date": "2026-07-18"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "weekly_digest",
+      "title_draft": "覚王山のランチ、参道で気軽に入れる店おすすめ5選",
+      "lead_draft": "覚王山駅から日泰寺までの参道で、ひとりでも気軽に入れるランチの店を集めました。タイ料理のランチ、煮込みハンバーグ、ハンバーガーなど、予算と雰囲気の違いを並べます。",
+      "angle": "覚王山エリアのランチを価格帯と雰囲気で比較する",
+      "main_store": {
+        "name": "Kanom Thai Cafe カノムタイカフェ",
+        "id": "J004444371",
+        "area": "覚王山",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー Kanom Thai Cafe",
+          "url": "https://www.hotpepper.jp/strJ004444371/",
+          "date": "2026-07-18"
+        },
+        {
+          "label": "名古屋コンシェルジュ 異国情緒感じる参道めぐり",
+          "url": "https://www.nagoya-info.jp/course/detail/9/",
+          "date": "2026-11-28"
+        },
+        {
+          "label": "ホットペッパー 覚王山カフェ Ji.Coo.",
+          "url": "https://www.hotpepper.jp/strJ000397154/",
+          "date": "2026-11-27"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "weekly_digest",
+      "title_draft": "覚王山カフェ Ji.Coo.（覚王山）テラス席と21年の手作り料理、週末のカフェに",
+      "lead_draft": "覚王山駅4番出口のすぐ上にある覚王山カフェ Ji.Coo.は、ほぼ全ての料理を手作りするカフェです。テラス席があり、朝9時半から夜まで開いています。",
+      "angle": "1店の雰囲気と席を紹介する",
+      "main_store": {
+        "name": "覚王山カフェ Ji.Coo. ジクー",
+        "id": "J000397154",
+        "area": "覚王山",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 覚王山カフェ Ji.Coo.",
+          "url": "https://www.hotpepper.jp/strJ000397154/",
+          "date": "2026-11-27"
+        },
+        {
+          "label": "名古屋コンシェルジュ 日泰寺(覚王山)",
+          "url": "https://www.nagoya-info.jp/spot/detail/117/",
+          "date": "2026-11-28"
+        },
+        {
+          "label": "えいこく屋 えいこく屋について",
+          "url": "https://www.eikokuya-tea.co.jp/about",
+          "date": "2026-11-28"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "weekly_digest",
+      "title_draft": "覚王山の手土産、おはぎ・ドーナツ・紅茶の店3選",
+      "lead_draft": "日泰寺の参道で、手土産にしやすい甘いものと紅茶の店を3つ集めました。注文してから作るおはぎ、手作りドーナツ、1978年創業の紅茶専門店です。",
+      "angle": "手土産のシーンで3店を比較する",
+      "main_store": {
+        "name": "手づくりおはぎ ぐらんま",
+        "id": "J001284821",
+        "area": "覚王山",
+        "genre": "カフェ・スイーツ"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー 手づくりおはぎ ぐらんま",
+          "url": "https://www.hotpepper.jp/strJ001284821/",
+          "date": "2026-08-14"
+        },
+        {
+          "label": "ホットペッパー ZARAME NAGOYA",
+          "url": "https://www.hotpepper.jp/strJ000825629/",
+          "date": "2020-01-07"
+        },
+        {
+          "label": "えいこく屋 会社案内",
+          "url": "https://www.eikokuya-tea.co.jp/company",
+          "date": "2026-11-28"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "weekly_digest",
+      "title_draft": "覚王山でタイを感じる、日泰寺とタイスイーツのカフェ",
+      "lead_draft": "日泰寺はタイ国王から贈られた仏舎利を安置するために建てられた寺です。参道にはタイのお菓子を手作りするカフェもあります。",
+      "angle": "エリアの由来とタイのお菓子の店をつなげて紹介する",
+      "main_store": {
+        "name": "Kanom Thai Cafe カノムタイカフェ",
+        "id": "J004444371",
+        "area": "覚王山",
+        "genre": "カフェ・スイーツ"
+      },
+      "sources": [
+        {
+          "label": "名古屋コンシェルジュ 日泰寺(覚王山)",
+          "url": "https://www.nagoya-info.jp/spot/detail/117/",
+          "date": "2026-11-28"
+        },
+        {
+          "label": "ホットペッパー Kanom Thai Cafe",
+          "url": "https://www.hotpepper.jp/strJ004444371/",
+          "date": "2026-07-18"
+        },
+        {
+          "label": "えいこく屋 えいこく屋について",
+          "url": "https://www.eikokuya-tea.co.jp/about",
+          "date": "2026-11-28"
+        }
+      ]
+    }
+  ]
+}

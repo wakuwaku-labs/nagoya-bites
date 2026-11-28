@@ -1,16 +1,16 @@
 {
  "_README": "既存記事の棚卸し台帳（段階5・S5-1・ADR 0069）。scripts/build_article_review_ledger.js が作る。並べ替えの材料で、公開の条件には使わない。gsc は data/gsc_metrics.json の直近28日。確認日は本文に書かれた「◯月◯日確認」の最新（特集の「更新日」は機械の一括更新で進むので使わない）。",
  "generatedFrom": {
-  "gscGeneratedAt": "2026-11-26T19:12:58.229Z",
+  "gscGeneratedAt": "2026-11-27T19:18:05.853Z",
   "gscRange": {
-   "startDate": "2026-10-29",
-   "endDate": "2026-11-25"
+   "startDate": "2026-10-30",
+   "endDate": "2026-11-26"
   }
  },
  "totals": {
-  "articles": 274,
+  "articles": 275,
   "features": 70,
-  "journal": 204,
+  "journal": 205,
   "byProblem": {
    "wording_selection": 64,
    "rating_no_count": 90,
@@ -28,8 +28,8 @@
    "title": "名古屋 一人飲み完全ガイド 2026｜カウンター名店から立ち飲みまで10店｜NAGOYA BITES",
    "date": null,
    "searchClicks28d": 272,
-   "searchImpressions28d": 3173,
-   "searchPosition": 6.1,
+   "searchImpressions28d": 3160,
+   "searchPosition": 6,
    "problems": [
     "wording_selection",
     "rating_no_count"
@@ -38,15 +38,15 @@
    "inboundArticleLinks": 41,
    "inboundHubLinks": 2217,
    "storeLinks": 15,
-   "priority": 3453.2
+   "priority": 3448
   },
   {
    "path": "features/nagoya-tebasaki.html",
    "kind": "feature",
    "title": "名古屋の手羽先、風来坊と山ちゃんの違い｜8店【2026】｜NAGOYA BITES",
    "date": null,
-   "searchClicks28d": 43,
-   "searchImpressions28d": 2062,
+   "searchClicks28d": 42,
+   "searchImpressions28d": 2089,
    "searchPosition": 6.1,
    "problems": [
     "wording_selection",
@@ -57,15 +57,15 @@
    "inboundArticleLinks": 12,
    "inboundHubLinks": 15,
    "storeLinks": 8,
-   "priority": 1618.1
+   "priority": 1621.9
   },
   {
    "path": "features/nagoya-miso-nikomi-udon.html",
    "kind": "feature",
    "title": "名古屋 味噌煮込みうどん完全ガイド｜山本屋本店・総本家の違いと厳選4店【2026年最新】｜NAGOYA BITES",
    "date": null,
-   "searchClicks28d": 47,
-   "searchImpressions28d": 3723,
+   "searchClicks28d": 51,
+   "searchImpressions28d": 3921,
    "searchPosition": 10.1,
    "problems": [
     "wording_selection"
@@ -74,7 +74,7 @@
    "inboundArticleLinks": 8,
    "inboundHubLinks": 6,
    "storeLinks": 4,
-   "priority": 1170.8
+   "priority": 1240.3
   },
   {
    "path": "journal/2026-11-08-sakae-mochiri-atsugama-udon-solo-lunch.html",
@@ -82,7 +82,7 @@
    "title": "栄・白川公園『圧釜うどん もちり』一人ランチに、大盛り無料とぶっかけ1,100円から｜NAGOYA BITES Journal",
    "date": "2026-11-08",
    "searchClicks28d": 80,
-   "searchImpressions28d": 3563,
+   "searchImpressions28d": 3623,
    "searchPosition": 7.6,
    "problems": [
     "no_confirm_date"
@@ -91,16 +91,16 @@
    "inboundArticleLinks": 0,
    "inboundHubLinks": 1,
    "storeLinks": 1,
-   "priority": 518.3
+   "priority": 524.3
   },
   {
    "path": "features/nagoya-yakitori.html",
    "kind": "feature",
    "title": "名古屋の焼き鳥おすすめ10選【2026年版】｜NAGOYA BITES",
    "date": null,
-   "searchClicks28d": 12,
-   "searchImpressions28d": 550,
-   "searchPosition": 10.2,
+   "searchClicks28d": 14,
+   "searchImpressions28d": 645,
+   "searchPosition": 10.1,
    "problems": [
     "wording_selection",
     "rating_no_count",
@@ -110,7 +110,7 @@
    "inboundArticleLinks": 12,
    "inboundHubLinks": 102,
    "storeLinks": 10,
-   "priority": 405
+   "priority": 472.5
   },
   {
    "path": "journal/2026-11-10-higashibetsuin-chashumen-susuru-solo-lunch.html",
@@ -118,7 +118,7 @@
    "title": "東別院のラーメン『チャーシューメン ススル』950円とカウンター12席の一人ランチ｜NAGOYA BITES Journal",
    "date": "2026-11-10",
    "searchClicks28d": 24,
-   "searchImpressions28d": 1046,
+   "searchImpressions28d": 1103,
    "searchPosition": 7.2,
    "problems": [
     "no_confirm_date",
@@ -128,25 +128,7 @@
    "inboundArticleLinks": 3,
    "inboundHubLinks": 0,
    "storeLinks": 0,
-   "priority": 231.9
-  },
-  {
-   "path": "journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
-   "kind": "journal",
-   "title": "丸の内のフレンチ『BISTRO DIA』ほか3店、デート・ランチ・二次会に｜NAGOYA BITES Journal",
-   "date": "2026-10-26",
-   "searchClicks28d": 39,
-   "searchImpressions28d": 596,
-   "searchPosition": 7.5,
-   "problems": [
-    "no_confirm_date",
-    "no_store_links"
-   ],
-   "lastFactCheckedDate": null,
-   "inboundArticleLinks": 1,
-   "inboundHubLinks": 0,
-   "storeLinks": 0,
-   "priority": 209.4
+   "priority": 240.5
   },
   {
    "path": "features/nagoya-autumn-2026.html",
@@ -154,7 +136,7 @@
    "title": "名古屋の秋グルメおすすめ10選【2026年版】｜NAGOYA BITES",
    "date": null,
    "searchClicks28d": 18,
-   "searchImpressions28d": 132,
+   "searchImpressions28d": 131,
    "searchPosition": 5.4,
    "problems": [
     "wording_selection",
@@ -164,7 +146,7 @@
    "inboundArticleLinks": 2,
    "inboundHubLinks": 10,
    "storeLinks": 10,
-   "priority": 204.8
+   "priority": 204.4
   },
   {
    "path": "journal/2026-10-18-kurokawa-sakutako-nagoya-shoyu-takoyaki.html",
@@ -172,8 +154,8 @@
    "title": "黒川『さく蛸』たこ焼きのコスパ、名古屋焼き醤油10個600円と持ち帰り専門の22時営業を読む｜NAGOYA BITES Journal",
    "date": "2026-10-18",
    "searchClicks28d": 14,
-   "searchImpressions28d": 1036,
-   "searchPosition": 9.5,
+   "searchImpressions28d": 1033,
+   "searchPosition": 9.4,
    "problems": [
     "no_confirm_date",
     "no_store_links"
@@ -182,15 +164,33 @@
    "inboundArticleLinks": 1,
    "inboundHubLinks": 0,
    "storeLinks": 0,
-   "priority": 200.4
+   "priority": 200
+  },
+  {
+   "path": "journal/2026-10-26-marunouchi-bistro-dia-salon-de-m-live-the-dia.html",
+   "kind": "journal",
+   "title": "丸の内のフレンチ『BISTRO DIA』ほか3店、デート・ランチ・二次会に｜NAGOYA BITES Journal",
+   "date": "2026-10-26",
+   "searchClicks28d": 36,
+   "searchImpressions28d": 586,
+   "searchPosition": 7.5,
+   "problems": [
+    "no_confirm_date",
+    "no_store_links"
+   ],
+   "lastFactCheckedDate": null,
+   "inboundArticleLinks": 1,
+   "inboundHubLinks": 0,
+   "storeLinks": 0,
+   "priority": 198.9
   },
   {
    "path": "journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
    "kind": "journal",
    "title": "栄・伏見の干物定食「ひものや 官兵衛」、おかわり自由のコスパを読む｜NAGOYA BITES Journal",
    "date": "2026-10-13",
-   "searchClicks28d": 26,
-   "searchImpressions28d": 1184,
+   "searchClicks28d": 23,
+   "searchImpressions28d": 1176,
    "searchPosition": 7.6,
    "problems": [
     "no_confirm_date"
@@ -199,7 +199,7 @@
    "inboundArticleLinks": 1,
    "inboundHubLinks": 1,
    "storeLinks": 1,
-   "priority": 172.4
+   "priority": 165.6
   },
   {
    "path": "journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
@@ -207,7 +207,7 @@
    "title": "札幌らーめん 戸倉（金山）とサッポロラーメン専門 荒畑（神宮前）、熱田区の新店2軒｜NAGOYA BITES Journal",
    "date": "2026-10-05",
    "searchClicks28d": 12,
-   "searchImpressions28d": 1315,
+   "searchImpressions28d": 1273,
    "searchPosition": 9.5,
    "problems": [
     "no_confirm_date"
@@ -216,16 +216,16 @@
    "inboundArticleLinks": 2,
    "inboundHubLinks": 2,
    "storeLinks": 2,
-   "priority": 157.5
+   "priority": 153.3
   },
   {
    "path": "journal/2026-11-02-meieki-takashimaya-kamakura-beniya-butter-no-itoko.html",
    "kind": "journal",
    "title": "名駅『鎌倉紅谷』クルミッ子が常設に、バターのいとこも 手土産は予算で｜NAGOYA BITES Journal",
    "date": "2026-11-02",
-   "searchClicks28d": 9,
-   "searchImpressions28d": 383,
-   "searchPosition": 8.7,
+   "searchClicks28d": 10,
+   "searchImpressions28d": 406,
+   "searchPosition": 8.6,
    "problems": [
     "no_confirm_date",
     "no_store_links",
@@ -235,7 +235,7 @@
    "inboundArticleLinks": 0,
    "inboundHubLinks": 0,
    "storeLinks": 0,
-   "priority": 116.6
+   "priority": 125.2
   },
   {
    "path": "features/hard-to-book.html",
@@ -243,8 +243,8 @@
    "title": "名古屋の予約が取れない店【予約困難な理由と攻略法完全版2026年】｜NAGOYA BITES",
    "date": null,
    "searchClicks28d": 6,
-   "searchImpressions28d": 193,
-   "searchPosition": 8.3,
+   "searchImpressions28d": 204,
+   "searchPosition": 8.1,
    "problems": [
     "wording_selection",
     "no_confirm_date"
@@ -253,15 +253,15 @@
    "inboundArticleLinks": 6,
    "inboundHubLinks": 5,
    "storeLinks": 5,
-   "priority": 116.5
+   "priority": 120.4
   },
   {
    "path": "journal/2026-08-04-sakae-leesar-coffee.html",
    "kind": "journal",
    "title": "リサールコーヒー(Leesar)名古屋・栄のメニューと400円の設計を読む｜NAGOYA BITES Journal",
    "date": "2026-08-04",
-   "searchClicks28d": 3,
-   "searchImpressions28d": 685,
+   "searchClicks28d": 4,
+   "searchImpressions28d": 693,
    "searchPosition": 9.2,
    "problems": [
     "no_confirm_date",
@@ -271,7 +271,7 @@
    "inboundArticleLinks": 0,
    "inboundHubLinks": 0,
    "storeLinks": 1,
-   "priority": 114.8
+   "priority": 119
   },
   {
    "path": "journal/2026-11-05-sakae-teiban-tune-aozakana-izakaya.html",
@@ -279,7 +279,7 @@
    "title": "栄の青魚居酒屋『定番チューン。』一人飲みにアジフライ790円と〆さば1貫500円｜NAGOYA BITES Journal",
    "date": "2026-11-05",
    "searchClicks28d": 16,
-   "searchImpressions28d": 775,
+   "searchImpressions28d": 787,
    "searchPosition": 9.6,
    "problems": [
     "no_confirm_date"
@@ -288,51 +288,16 @@
    "inboundArticleLinks": 0,
    "inboundHubLinks": 1,
    "storeLinks": 1,
-   "priority": 111.5
-  },
-  {
-   "path": "features/girls-party.html",
-   "kind": "feature",
-   "title": "名古屋 女子会おすすめレストラン10選【2026年版】｜NAGOYA BITES",
-   "date": null,
-   "searchClicks28d": 7,
-   "searchImpressions28d": 143,
-   "searchPosition": 11.3,
-   "problems": [
-    "wording_selection",
-    "no_confirm_date"
-   ],
-   "lastFactCheckedDate": null,
-   "inboundArticleLinks": 15,
-   "inboundHubLinks": 468,
-   "storeLinks": 10,
-   "priority": 106.1
-  },
-  {
-   "path": "journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
-   "kind": "journal",
-   "title": "新栄町の「ちひろ菓子店 新栄葵店」名古屋初上陸｜フィナンシェ330円を手土産に買う前に｜NAGOYA BITES Journal",
-   "date": "2026-10-10",
-   "searchClicks28d": 7,
-   "searchImpressions28d": 883,
-   "searchPosition": 9.1,
-   "problems": [
-    "no_confirm_date"
-   ],
-   "lastFactCheckedDate": null,
-   "inboundArticleLinks": 0,
-   "inboundHubLinks": 1,
-   "storeLinks": 1,
-   "priority": 104.3
+   "priority": 112.7
   },
   {
    "path": "journal/2026-11-03-kakuozan-amelie-french-date-course.html",
    "kind": "journal",
    "title": "覚王山フレンチ『Amélie（アメリ）』デートに全10品9,900円、12席の予約制｜NAGOYA BITES Journal",
    "date": "2026-11-03",
-   "searchClicks28d": 28,
-   "searchImpressions28d": 325,
-   "searchPosition": 4.9,
+   "searchClicks28d": 34,
+   "searchImpressions28d": 422,
+   "searchPosition": 4.8,
    "problems": [
     "no_confirm_date"
    ],
@@ -340,16 +305,51 @@
    "inboundArticleLinks": 5,
    "inboundHubLinks": 1,
    "storeLinks": 1,
-   "priority": 90.5
+   "priority": 112.2
+  },
+  {
+   "path": "journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
+   "kind": "journal",
+   "title": "新栄町の「ちひろ菓子店 新栄葵店」名古屋初上陸｜フィナンシェ330円を手土産に買う前に｜NAGOYA BITES Journal",
+   "date": "2026-10-10",
+   "searchClicks28d": 8,
+   "searchImpressions28d": 913,
+   "searchPosition": 9,
+   "problems": [
+    "no_confirm_date"
+   ],
+   "lastFactCheckedDate": null,
+   "inboundArticleLinks": 0,
+   "inboundHubLinks": 1,
+   "storeLinks": 1,
+   "priority": 109.3
+  },
+  {
+   "path": "features/girls-party.html",
+   "kind": "feature",
+   "title": "名古屋 女子会おすすめレストラン10選【2026年版】｜NAGOYA BITES",
+   "date": null,
+   "searchClicks28d": 7,
+   "searchImpressions28d": 147,
+   "searchPosition": 11.2,
+   "problems": [
+    "wording_selection",
+    "no_confirm_date"
+   ],
+   "lastFactCheckedDate": null,
+   "inboundArticleLinks": 15,
+   "inboundHubLinks": 469,
+   "storeLinks": 10,
+   "priority": 107.5
   },
   {
    "path": "features/nagoya-morning.html",
    "kind": "feature",
    "title": "名古屋のモーニング・喫茶おすすめ10選【2026年版】｜NAGOYA BITES",
    "date": null,
-   "searchClicks28d": 4,
-   "searchImpressions28d": 79,
-   "searchPosition": 15,
+   "searchClicks28d": 5,
+   "searchImpressions28d": 90,
+   "searchPosition": 14.6,
    "problems": [
     "wording_selection",
     "rating_no_count",
@@ -359,68 +359,16 @@
    "inboundArticleLinks": 7,
    "inboundHubLinks": 10,
    "storeLinks": 10,
-   "priority": 89.5
-  },
-  {
-   "path": "features/kospa-insider.html",
-   "kind": "feature",
-   "title": "名古屋のコスパ最強グルメ【見極め方】｜NAGOYA BITES",
-   "date": null,
-   "searchClicks28d": 7,
-   "searchImpressions28d": 180,
-   "searchPosition": 7.3,
-   "problems": [
-    "wording_selection"
-   ],
-   "lastFactCheckedDate": "2026-11-23",
-   "inboundArticleLinks": 21,
-   "inboundHubLinks": 5,
-   "storeLinks": 5,
-   "priority": 85
-  },
-  {
-   "path": "features/nagoya-hitsumabushi.html",
-   "kind": "feature",
-   "title": "名古屋ひつまぶし完全ガイド｜名駅・栄・伏見の8店【2026年最新】｜NAGOYA BITES",
-   "date": null,
-   "searchClicks28d": 5,
-   "searchImpressions28d": 216,
-   "searchPosition": 12.3,
-   "problems": [
-    "wording_selection"
-   ],
-   "lastFactCheckedDate": "2026-11-13",
-   "inboundArticleLinks": 8,
-   "inboundHubLinks": 29,
-   "storeLinks": 14,
-   "priority": 84
-  },
-  {
-   "path": "features/nagoya-industry-pick-izakaya.html",
-   "kind": "feature",
-   "title": "名古屋の居酒屋10選【2026年版】｜NAGOYA BITES",
-   "date": null,
-   "searchClicks28d": 4,
-   "searchImpressions28d": 129,
-   "searchPosition": 15.4,
-   "problems": [
-    "wording_selection",
-    "no_confirm_date"
-   ],
-   "lastFactCheckedDate": null,
-   "inboundArticleLinks": 10,
-   "inboundHubLinks": 10,
-   "storeLinks": 10,
-   "priority": 80.1
+   "priority": 105
   },
   {
    "path": "features/nagoya-winter-2026.html",
    "kind": "feature",
    "title": "名古屋の冬グルメ10選【2026-27年版】ふぐ・牡蠣・かに・鍋を食材で選ぶ｜NAGOYA BITES",
    "date": null,
-   "searchClicks28d": 7,
-   "searchImpressions28d": 55,
-   "searchPosition": 5.1,
+   "searchClicks28d": 9,
+   "searchImpressions28d": 64,
+   "searchPosition": 4.7,
    "problems": [
     "wording_selection",
     "no_confirm_date"
@@ -429,7 +377,59 @@
    "inboundArticleLinks": 3,
    "inboundHubLinks": 10,
    "storeLinks": 10,
-   "priority": 75.3
+   "priority": 92.4
+  },
+  {
+   "path": "features/kospa-insider.html",
+   "kind": "feature",
+   "title": "名古屋のコスパ最強グルメ【見極め方】｜NAGOYA BITES",
+   "date": null,
+   "searchClicks28d": 8,
+   "searchImpressions28d": 186,
+   "searchPosition": 7.2,
+   "problems": [
+    "wording_selection"
+   ],
+   "lastFactCheckedDate": "2026-11-23",
+   "inboundArticleLinks": 21,
+   "inboundHubLinks": 5,
+   "storeLinks": 5,
+   "priority": 91.5
+  },
+  {
+   "path": "features/nagoya-hitsumabushi.html",
+   "kind": "feature",
+   "title": "名古屋ひつまぶし完全ガイド｜名駅・栄・伏見の8店【2026年最新】｜NAGOYA BITES",
+   "date": null,
+   "searchClicks28d": 5,
+   "searchImpressions28d": 226,
+   "searchPosition": 12,
+   "problems": [
+    "wording_selection"
+   ],
+   "lastFactCheckedDate": "2026-11-13",
+   "inboundArticleLinks": 8,
+   "inboundHubLinks": 29,
+   "storeLinks": 14,
+   "priority": 86.5
+  },
+  {
+   "path": "features/nagoya-industry-pick-izakaya.html",
+   "kind": "feature",
+   "title": "名古屋の居酒屋10選【2026年版】｜NAGOYA BITES",
+   "date": null,
+   "searchClicks28d": 4,
+   "searchImpressions28d": 133,
+   "searchPosition": 15.1,
+   "problems": [
+    "wording_selection",
+    "no_confirm_date"
+   ],
+   "lastFactCheckedDate": null,
+   "inboundArticleLinks": 10,
+   "inboundHubLinks": 10,
+   "storeLinks": 10,
+   "priority": 81.6
   },
   {
    "path": "journal/2026-11-01-meito-nishiyama-pizzeria-belo-solo-lunch.html",
@@ -437,7 +437,7 @@
    "title": "名東区・西山商店街『ピッツェリア ベーロ』一人ランチと家族に、薪窯マルゲリータ1,080円｜NAGOYA BITES Journal",
    "date": "2026-11-01",
    "searchClicks28d": 3,
-   "searchImpressions28d": 131,
+   "searchImpressions28d": 133,
    "searchPosition": 8.6,
    "problems": [
     "rank_numbering",
@@ -449,33 +449,16 @@
    "inboundArticleLinks": 0,
    "inboundHubLinks": 0,
    "storeLinks": 0,
-   "priority": 73.9
-  },
-  {
-   "path": "journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
-   "kind": "journal",
-   "title": "中川区「なかがわ 街仲食堂」開店、シニアが握るおむすび550円と3時間営業を読む｜NAGOYA BITES Journal",
-   "date": "2026-10-12",
-   "searchClicks28d": 14,
-   "searchImpressions28d": 424,
-   "searchPosition": 7.3,
-   "problems": [
-    "no_confirm_date"
-   ],
-   "lastFactCheckedDate": null,
-   "inboundArticleLinks": 0,
-   "inboundHubLinks": 1,
-   "storeLinks": 1,
-   "priority": 72.4
+   "priority": 74.6
   },
   {
    "path": "journal/2026-11-12-meieki-yashiori-kaiseki-settai-anniversary.html",
    "kind": "journal",
    "title": "名駅『八塩折 yashiori』接待と記念日に、会席12,400円と17,400円・焚き火を囲む22席｜NAGOYA BITES Journal",
    "date": "2026-11-12",
-   "searchClicks28d": 13,
-   "searchImpressions28d": 163,
-   "searchPosition": 3.8,
+   "searchClicks28d": 14,
+   "searchImpressions28d": 195,
+   "searchPosition": 4,
    "problems": [
     "no_confirm_date",
     "no_store_links"
@@ -484,15 +467,32 @@
    "inboundArticleLinks": 6,
    "inboundHubLinks": 0,
    "storeLinks": 0,
-   "priority": 66.4
+   "priority": 74.3
+  },
+  {
+   "path": "journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
+   "kind": "journal",
+   "title": "中川区「なかがわ 街仲食堂」開店、シニアが握るおむすび550円と3時間営業を読む｜NAGOYA BITES Journal",
+   "date": "2026-10-12",
+   "searchClicks28d": 14,
+   "searchImpressions28d": 423,
+   "searchPosition": 7.4,
+   "problems": [
+    "no_confirm_date"
+   ],
+   "lastFactCheckedDate": null,
+   "inboundArticleLinks": 0,
+   "inboundHubLinks": 1,
+   "storeLinks": 1,
+   "priority": 72.3
   },
   {
    "path": "journal/2026-10-19-sakae-sumibi-sakaba-cowcow.html",
    "kind": "journal",
    "title": "栄・矢場町『炭火酒場COWCOW』一人飲みと二軒目に、26席・深夜1時までを読む｜NAGOYA BITES Journal",
    "date": "2026-10-19",
-   "searchClicks28d": 2,
-   "searchImpressions28d": 597,
+   "searchClicks28d": 1,
+   "searchImpressions28d": 640,
    "searchPosition": 9.7,
    "problems": [
     "no_confirm_date"
@@ -501,7 +501,7 @@
    "inboundArticleLinks": 0,
    "inboundHubLinks": 2,
    "storeLinks": 2,
-   "priority": 65.7
+   "priority": 68
   },
   {
    "path": "features/meieki-hitori-nomi.html",
@@ -510,7 +510,7 @@
    "date": null,
    "searchClicks28d": 6,
    "searchImpressions28d": 34,
-   "searchPosition": 8,
+   "searchPosition": 8.1,
    "problems": [
     "wording_selection",
     "no_confirm_date"
@@ -527,8 +527,8 @@
    "title": "名古屋 誕生日サプライズにおすすめの店9選【2026年版】｜NAGOYA BITES",
    "date": null,
    "searchClicks28d": 5,
-   "searchImpressions28d": 48,
-   "searchPosition": 16,
+   "searchImpressions28d": 50,
+   "searchPosition": 15.5,
    "problems": [
     "wording_selection",
     "no_confirm_date"
@@ -537,16 +537,16 @@
    "inboundArticleLinks": 1,
    "inboundHubLinks": 9,
    "storeLinks": 9,
-   "priority": 58.8
+   "priority": 59.5
   },
   {
    "path": "journal/2026-10-24-sakae-conrad-house-of-mon-rooftop-bar.html",
    "kind": "journal",
    "title": "栄・コンラッド名古屋『ハウス・オブ・モン』デートと一人飲みのバー｜NAGOYA BITES Journal",
    "date": "2026-10-24",
-   "searchClicks28d": 12,
-   "searchImpressions28d": 324,
-   "searchPosition": 7.4,
+   "searchClicks28d": 11,
+   "searchImpressions28d": 309,
+   "searchPosition": 7.3,
    "problems": [
     "no_confirm_date"
    ],
@@ -554,25 +554,7 @@
    "inboundArticleLinks": 1,
    "inboundHubLinks": 1,
    "storeLinks": 1,
-   "priority": 58.4
-  },
-  {
-   "path": "features/nagoya-kaoawase-washoku.html",
-   "kind": "feature",
-   "title": "名古屋 顔合わせ・結納 個室 和食ランチ おすすめ6選【2026年版】｜NAGOYA BITES",
-   "date": null,
-   "searchClicks28d": 4,
-   "searchImpressions28d": 55,
-   "searchPosition": 24.2,
-   "problems": [
-    "wording_selection",
-    "no_confirm_date"
-   ],
-   "lastFactCheckedDate": null,
-   "inboundArticleLinks": 1,
-   "inboundHubLinks": 110,
-   "storeLinks": 5,
-   "priority": 54.3
+   "priority": 54.9
   },
   {
    "path": "journal/2026-10-15-ikeshita-qq-quinto-quinte-kakuuchi-pairing.html",
@@ -580,8 +562,8 @@
    "title": "池下のイタリアン「QQ（クイント・クインテ）」でデート、棚のワインと抜栓料20%｜NAGOYA BITES Journal",
    "date": "2026-10-15",
    "searchClicks28d": 6,
-   "searchImpressions28d": 212,
-   "searchPosition": 9,
+   "searchImpressions28d": 215,
+   "searchPosition": 8.9,
    "problems": [
     "no_confirm_date",
     "no_store_links"
@@ -590,33 +572,15 @@
    "inboundArticleLinks": 4,
    "inboundHubLinks": 0,
    "storeLinks": 0,
-   "priority": 52.8
-  },
-  {
-   "path": "journal/2026-10-29-sakae-chitaka-tonkatsu-donabe-solo.html",
-   "kind": "journal",
-   "title": "栄・セントラルパーク『CHITAKA』一人飲みと昼1,280円の御膳、とんかつ知多家の新店｜NAGOYA BITES Journal",
-   "date": "2026-10-29",
-   "searchClicks28d": 6,
-   "searchImpressions28d": 206,
-   "searchPosition": 8.8,
-   "problems": [
-    "no_confirm_date",
-    "no_store_links"
-   ],
-   "lastFactCheckedDate": null,
-   "inboundArticleLinks": 3,
-   "inboundHubLinks": 0,
-   "storeLinks": 0,
-   "priority": 51.9
+   "priority": 53.3
   },
   {
    "path": "journal/2026-06-14-yoroniku-nagoya-haera.html",
    "kind": "journal",
    "title": "専属焼き手が焼く名古屋の夜 ── YORONIKU NAGOYA｜NAGOYA BITES Journal",
    "date": "2026-06-14",
-   "searchClicks28d": 3,
-   "searchImpressions28d": 237,
+   "searchClicks28d": 4,
+   "searchImpressions28d": 253,
    "searchPosition": 9.9,
    "problems": [
     "no_confirm_date",
@@ -626,7 +590,25 @@
    "inboundArticleLinks": 0,
    "inboundHubLinks": 0,
    "storeLinks": 1,
-   "priority": 47.6
+   "priority": 53
+  },
+  {
+   "path": "journal/2026-10-29-sakae-chitaka-tonkatsu-donabe-solo.html",
+   "kind": "journal",
+   "title": "栄・セントラルパーク『CHITAKA』一人飲みと昼1,280円の御膳、とんかつ知多家の新店｜NAGOYA BITES Journal",
+   "date": "2026-10-29",
+   "searchClicks28d": 6,
+   "searchImpressions28d": 210,
+   "searchPosition": 8.8,
+   "problems": [
+    "no_confirm_date",
+    "no_store_links"
+   ],
+   "lastFactCheckedDate": null,
+   "inboundArticleLinks": 3,
+   "inboundHubLinks": 0,
+   "storeLinks": 0,
+   "priority": 52.5
   },
   {
    "path": "features/osu-food-walk.html",
@@ -634,8 +616,8 @@
    "title": "大須 食べ歩きおすすめ8選【2026年版】名古屋グルメ街道｜NAGOYA BITES",
    "date": null,
    "searchClicks28d": 2,
-   "searchImpressions28d": 74,
-   "searchPosition": 10.8,
+   "searchImpressions28d": 83,
+   "searchPosition": 11.7,
    "problems": [
     "wording_selection",
     "no_confirm_date"
@@ -644,16 +626,34 @@
    "inboundArticleLinks": 16,
    "inboundHubLinks": 558,
    "storeLinks": 8,
-   "priority": 46.9
+   "priority": 50.1
+  },
+  {
+   "path": "features/nagoya-kaoawase-washoku.html",
+   "kind": "feature",
+   "title": "名古屋 顔合わせ・結納 個室 和食ランチ おすすめ6選【2026年版】｜NAGOYA BITES",
+   "date": null,
+   "searchClicks28d": 3,
+   "searchImpressions28d": 57,
+   "searchPosition": 23.3,
+   "problems": [
+    "wording_selection",
+    "no_confirm_date"
+   ],
+   "lastFactCheckedDate": null,
+   "inboundArticleLinks": 1,
+   "inboundHubLinks": 110,
+   "storeLinks": 5,
+   "priority": 47.9
   },
   {
    "path": "journal/2026-07-27-owarisanso-kurogi.html",
    "kind": "journal",
    "title": "尾張山荘 くろぎ（名駅）予約困難な日本料理を接待で使う、コース3.8万円〜と個室8部屋｜NAGOYA BITES Journal",
    "date": "2026-07-27",
-   "searchClicks28d": 2,
-   "searchImpressions28d": 341,
-   "searchPosition": 9.8,
+   "searchClicks28d": 3,
+   "searchImpressions28d": 343,
+   "searchPosition": 9.7,
    "problems": [
     "no_confirm_date"
    ],
@@ -661,7 +661,7 @@
    "inboundArticleLinks": 0,
    "inboundHubLinks": 1,
    "storeLinks": 1,
-   "priority": 40.1
+   "priority": 42.3
   },
   {
    "path": "features/nagoya-ramen.html",
@@ -669,8 +669,8 @@
    "title": "名古屋ラーメン おすすめ11選【2026年版】煮干し・豚骨・台湾系まで｜NAGOYA BITES",
    "date": null,
    "searchClicks28d": 4,
-   "searchImpressions28d": 14,
-   "searchPosition": 10.4,
+   "searchImpressions28d": 16,
+   "searchPosition": 10.1,
    "problems": [
     "wording_selection",
     "no_confirm_date"
@@ -679,7 +679,43 @@
    "inboundArticleLinks": 13,
    "inboundHubLinks": 124,
    "storeLinks": 11,
-   "priority": 39.9
+   "priority": 40.6
+  },
+  {
+   "path": "features/nagoya-reservation-difficult.html",
+   "kind": "feature",
+   "title": "名古屋・予約困難店の見極め方ガイド【2026年版】｜NAGOYA BITES",
+   "date": null,
+   "searchClicks28d": 2,
+   "searchImpressions28d": 16,
+   "searchPosition": 4.6,
+   "problems": [
+    "wording_selection",
+    "rating_no_count",
+    "no_confirm_date"
+   ],
+   "lastFactCheckedDate": null,
+   "inboundArticleLinks": 3,
+   "inboundHubLinks": 9,
+   "storeLinks": 9,
+   "priority": 38
+  },
+  {
+   "path": "journal/2026-10-31-yabacho-gotoni-sushi-kushikatsu.html",
+   "kind": "journal",
+   "title": "栄・矢場町『鮨食人 五と二』一人飲みと宴会に、1貫142円からの寿司と串カツ｜NAGOYA BITES Journal",
+   "date": "2026-10-31",
+   "searchClicks28d": 5,
+   "searchImpressions28d": 248,
+   "searchPosition": 8.8,
+   "problems": [
+    "no_confirm_date"
+   ],
+   "lastFactCheckedDate": null,
+   "inboundArticleLinks": 4,
+   "inboundHubLinks": 1,
+   "storeLinks": 1,
+   "priority": 36.8
   },
   {
    "path": "journal/2026-10-30-hisaya-taichung-yeshi-osu-sarikaka.html",
@@ -699,32 +735,13 @@
    "priority": 36.7
   },
   {
-   "path": "features/nagoya-reservation-difficult.html",
-   "kind": "feature",
-   "title": "名古屋・予約困難店の見極め方ガイド【2026年版】｜NAGOYA BITES",
-   "date": null,
-   "searchClicks28d": 2,
-   "searchImpressions28d": 12,
-   "searchPosition": 4.6,
-   "problems": [
-    "wording_selection",
-    "rating_no_count",
-    "no_confirm_date"
-   ],
-   "lastFactCheckedDate": null,
-   "inboundArticleLinks": 3,
-   "inboundHubLinks": 9,
-   "storeLinks": 9,
-   "priority": 36
-  },
-  {
    "path": "journal/2026-05-27-chigame-cochin-insider.html",
    "kind": "journal",
    "title": "栄『千亀』が名古屋コーチンと三河赤鶏を使い分ける理由｜NAGOYA BITES Journal",
    "date": "2026-05-27",
    "searchClicks28d": 2,
    "searchImpressions28d": 20,
-   "searchPosition": 6.1,
+   "searchPosition": 6.6,
    "problems": [
     "rating_no_count",
     "rank_numbering",
@@ -738,29 +755,12 @@
    "priority": 36
   },
   {
-   "path": "journal/2026-10-31-yabacho-gotoni-sushi-kushikatsu.html",
-   "kind": "journal",
-   "title": "栄・矢場町『鮨食人 五と二』一人飲みと宴会に、1貫142円からの寿司と串カツ｜NAGOYA BITES Journal",
-   "date": "2026-10-31",
-   "searchClicks28d": 5,
-   "searchImpressions28d": 238,
-   "searchPosition": 8.7,
-   "problems": [
-    "no_confirm_date"
-   ],
-   "lastFactCheckedDate": null,
-   "inboundArticleLinks": 4,
-   "inboundHubLinks": 1,
-   "storeLinks": 1,
-   "priority": 35.8
-  },
-  {
    "path": "journal/2026-11-07-ozone-daikinboshi-hakata-kushiyaki-solo-bonenkai.html",
    "kind": "journal",
    "title": "大曽根の焼き鳥『大金星』一人飲みと忘年会、串275円と12月の2時間制｜NAGOYA BITES Journal",
    "date": "2026-11-07",
    "searchClicks28d": 4,
-   "searchImpressions28d": 232,
+   "searchImpressions28d": 248,
    "searchPosition": 9.3,
    "problems": [
     "no_confirm_date"
@@ -769,7 +769,7 @@
    "inboundArticleLinks": 4,
    "inboundHubLinks": 1,
    "storeLinks": 1,
-   "priority": 33.2
+   "priority": 34.8
   },
   {
    "path": "journal/2026-10-11-hoshigaoka-afros-bbq-enkai.html",
@@ -790,13 +790,30 @@
    "priority": 26
   },
   {
+   "path": "journal/2026-10-17-sakae-rokurokudou-settai-enkai-wine-cellar.html",
+   "kind": "journal",
+   "title": "栄『お台所 六六堂』接待・宴会に、150席と元金庫室のワインセラーを読む｜NAGOYA BITES Journal",
+   "date": "2026-10-17",
+   "searchClicks28d": 5,
+   "searchImpressions28d": 123,
+   "searchPosition": 9.4,
+   "problems": [
+    "no_confirm_date"
+   ],
+   "lastFactCheckedDate": null,
+   "inboundArticleLinks": 4,
+   "inboundHubLinks": 1,
+   "storeLinks": 1,
+   "priority": 24.3
+  },
+  {
    "path": "journal/2026-08-09-nagoyadome-pekin-honten.html",
    "kind": "journal",
    "title": "北京本店（名古屋・ナゴヤドーム前）北京飯980円はコスパか、安城の行列中華を読む｜NAGOYA BITES Journal",
    "date": "2026-08-09",
    "searchClicks28d": 2,
-   "searchImpressions28d": 62,
-   "searchPosition": 9.1,
+   "searchImpressions28d": 61,
+   "searchPosition": 8.9,
    "problems": [
     "no_confirm_date",
     "no_store_links",
@@ -806,25 +823,7 @@
    "inboundArticleLinks": 0,
    "inboundHubLinks": 0,
    "storeLinks": 0,
-   "priority": 24.4
-  },
-  {
-   "path": "journal/2026-08-31-nagoya-roadside-newstores-price.html",
-   "kind": "journal",
-   "title": "札幌ラーメン みそ吟 中川区高杉店、栄の味噌ラーメンが郊外で1,300円になる理由｜NAGOYA BITES Journal",
-   "date": "2026-08-31",
-   "searchClicks28d": 1,
-   "searchImpressions28d": 53,
-   "searchPosition": 9.8,
-   "problems": [
-    "rating_no_count",
-    "no_confirm_date"
-   ],
-   "lastFactCheckedDate": null,
-   "inboundArticleLinks": 0,
-   "inboundHubLinks": 4,
-   "storeLinks": 4,
-   "priority": 23.3
+   "priority": 24.2
   },
   {
    "path": "features/nagoya-french-guide.html",
@@ -832,8 +831,8 @@
    "title": "名古屋のフレンチおすすめ8選【2026年版】｜NAGOYA BITES",
    "date": null,
    "searchClicks28d": 1,
-   "searchImpressions28d": 5,
-   "searchPosition": 8,
+   "searchImpressions28d": 6,
+   "searchPosition": 8.5,
    "problems": [
     "wording_selection",
     "rating_no_count",
@@ -843,7 +842,7 @@
    "inboundArticleLinks": 4,
    "inboundHubLinks": 287,
    "storeLinks": 8,
-   "priority": 22.5
+   "priority": 23
   },
   {
    "path": "features/nagoya-tonkatsu.html",
@@ -851,8 +850,8 @@
    "title": "名古屋のとんかつ・味噌かつおすすめ10選【2026年版】｜NAGOYA BITES",
    "date": null,
    "searchClicks28d": 1,
-   "searchImpressions28d": 5,
-   "searchPosition": 29,
+   "searchImpressions28d": 6,
+   "searchPosition": 26,
    "problems": [
     "wording_selection",
     "rating_no_count",
@@ -862,7 +861,42 @@
    "inboundArticleLinks": 5,
    "inboundHubLinks": 17,
    "storeLinks": 10,
-   "priority": 22.5
+   "priority": 23
+  },
+  {
+   "path": "features/nagoya-miso-oden-doteni.html",
+   "kind": "feature",
+   "title": "名古屋の味噌おでん・どて煮ガイド｜違いと頼み方、看板にしている店13選【2026-27冬】｜NAGOYA BITES",
+   "date": null,
+   "searchClicks28d": 4,
+   "searchImpressions28d": 128,
+   "searchPosition": 6.4,
+   "problems": [
+    "no_confirm_date"
+   ],
+   "lastFactCheckedDate": null,
+   "inboundArticleLinks": 3,
+   "inboundHubLinks": 13,
+   "storeLinks": 13,
+   "priority": 22.8
+  },
+  {
+   "path": "journal/2026-08-31-nagoya-roadside-newstores-price.html",
+   "kind": "journal",
+   "title": "札幌ラーメン みそ吟 中川区高杉店、栄の味噌ラーメンが郊外で1,300円になる理由｜NAGOYA BITES Journal",
+   "date": "2026-08-31",
+   "searchClicks28d": 1,
+   "searchImpressions28d": 51,
+   "searchPosition": 10,
+   "problems": [
+    "rating_no_count",
+    "no_confirm_date"
+   ],
+   "lastFactCheckedDate": null,
+   "inboundArticleLinks": 0,
+   "inboundHubLinks": 4,
+   "storeLinks": 4,
+   "priority": 22.8
   },
   {
    "path": "journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html",
@@ -870,7 +904,7 @@
    "title": "焼きそばスタンド らふ（鶴里駅1分）850円からの焼きそば、8席のランチ専業店｜NAGOYA BITES Journal",
    "date": "2026-05-23",
    "searchClicks28d": 2,
-   "searchImpressions28d": 165,
+   "searchImpressions28d": 160,
    "searchPosition": 9.4,
    "problems": [
     "no_confirm_date"
@@ -879,41 +913,7 @@
    "inboundArticleLinks": 0,
    "inboundHubLinks": 1,
    "storeLinks": 1,
-   "priority": 22.5
-  },
-  {
-   "path": "journal/2026-10-17-sakae-rokurokudou-settai-enkai-wine-cellar.html",
-   "kind": "journal",
-   "title": "栄『お台所 六六堂』接待・宴会に、150席と元金庫室のワインセラーを読む｜NAGOYA BITES Journal",
-   "date": "2026-10-17",
-   "searchClicks28d": 4,
-   "searchImpressions28d": 120,
-   "searchPosition": 9.5,
-   "problems": [
-    "no_confirm_date"
-   ],
-   "lastFactCheckedDate": null,
-   "inboundArticleLinks": 4,
-   "inboundHubLinks": 1,
-   "storeLinks": 1,
    "priority": 22
-  },
-  {
-   "path": "journal/2026-08-24-sakae-korean-buffet-price-split.html",
-   "kind": "journal",
-   "title": "ヤムヤムビュッフェ（Yum Yum Buffet）栄、韓国料理食べ放題2,500円と5,000円｜NAGOYA BITES Journal",
-   "date": "2026-08-24",
-   "searchClicks28d": 3,
-   "searchImpressions28d": 137,
-   "searchPosition": 9.4,
-   "problems": [
-    "no_confirm_date"
-   ],
-   "lastFactCheckedDate": null,
-   "inboundArticleLinks": 1,
-   "inboundHubLinks": 2,
-   "storeLinks": 2,
-   "priority": 21.7
   },
   {
    "path": "journal/2026-06-17-shinya-eigyo-jorei-to-genba.html",
@@ -935,38 +935,38 @@
    "priority": 20.8
   },
   {
-   "path": "journal/2026-10-25-motoyama-laughs-bistro-counter-solo-date.html",
+   "path": "journal/2026-08-24-sakae-korean-buffet-price-split.html",
    "kind": "journal",
-   "title": "本山・猫洞通『Laughs ラフス』一人飲みとデートに、カウンター8席と600円台の小皿｜NAGOYA BITES Journal",
-   "date": "2026-10-25",
-   "searchClicks28d": 2,
-   "searchImpressions28d": 140,
-   "searchPosition": 9.2,
+   "title": "ヤムヤムビュッフェ（Yum Yum Buffet）栄、韓国料理食べ放題2,500円と5,000円｜NAGOYA BITES Journal",
+   "date": "2026-08-24",
+   "searchClicks28d": 3,
+   "searchImpressions28d": 125,
+   "searchPosition": 9.5,
    "problems": [
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
    "inboundArticleLinks": 1,
-   "inboundHubLinks": 1,
-   "storeLinks": 1,
-   "priority": 20
+   "inboundHubLinks": 2,
+   "storeLinks": 2,
+   "priority": 20.5
   },
   {
-   "path": "features/nagoya-miso-oden-doteni.html",
-   "kind": "feature",
-   "title": "名古屋の味噌おでん・どて煮ガイド｜違いと頼み方、看板にしている店13選【2026-27冬】｜NAGOYA BITES",
-   "date": null,
-   "searchClicks28d": 3,
-   "searchImpressions28d": 116,
-   "searchPosition": 6.6,
+   "path": "journal/2026-11-13-meieki-endoji-paris-festival-kaisen-en-solo.html",
+   "kind": "journal",
+   "title": "名駅・円頓寺「秋のパリ祭」の後に海鮮食堂 enで一人飲み（11/14・15）｜NAGOYA BITES Journal",
+   "date": "2026-11-13",
+   "searchClicks28d": 7,
+   "searchImpressions28d": 31,
+   "searchPosition": 5.4,
    "problems": [
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 3,
-   "inboundHubLinks": 13,
-   "storeLinks": 13,
-   "priority": 19.6
+   "inboundArticleLinks": 1,
+   "inboundHubLinks": 2,
+   "storeLinks": 2,
+   "priority": 19.1
   },
   {
    "path": "journal/2026-05-31-grill-tsubaki-meiekimae.html",
@@ -974,7 +974,7 @@
    "title": "名駅前「グリルつばき」——雪月花が和牛洋食へ転換した理由を読む｜NAGOYA BITES Journal",
    "date": "2026-05-31",
    "searchClicks28d": 5,
-   "searchImpressions28d": 74,
+   "searchImpressions28d": 70,
    "searchPosition": 6.3,
    "problems": [
     "no_confirm_date"
@@ -983,23 +983,6 @@
    "inboundArticleLinks": 0,
    "inboundHubLinks": 1,
    "storeLinks": 1,
-   "priority": 19.4
-  },
-  {
-   "path": "journal/2026-11-13-meieki-endoji-paris-festival-kaisen-en-solo.html",
-   "kind": "journal",
-   "title": "名駅・円頓寺「秋のパリ祭」の後に海鮮食堂 enで一人飲み（11/14・15）｜NAGOYA BITES Journal",
-   "date": "2026-11-13",
-   "searchClicks28d": 7,
-   "searchImpressions28d": 30,
-   "searchPosition": 5.4,
-   "problems": [
-    "no_confirm_date"
-   ],
-   "lastFactCheckedDate": null,
-   "inboundArticleLinks": 1,
-   "inboundHubLinks": 2,
-   "storeLinks": 2,
    "priority": 19
   },
   {
@@ -1008,8 +991,8 @@
    "title": "名駅・焼鳥90円の「鳥ぶら」名駅東口店、一人飲みでいくらになるか｜NAGOYA BITES Journal",
    "date": "2026-08-06",
    "searchClicks28d": 2,
-   "searchImpressions28d": 8,
-   "searchPosition": 5.4,
+   "searchImpressions28d": 9,
+   "searchPosition": 5.6,
    "problems": [
     "rating_no_count",
     "no_confirm_date"
@@ -1018,7 +1001,24 @@
    "inboundArticleLinks": 1,
    "inboundHubLinks": 2,
    "storeLinks": 2,
-   "priority": 17
+   "priority": 17.3
+  },
+  {
+   "path": "journal/2026-10-25-motoyama-laughs-bistro-counter-solo-date.html",
+   "kind": "journal",
+   "title": "本山・猫洞通『Laughs ラフス』一人飲みとデートに、カウンター8席と600円台の小皿｜NAGOYA BITES Journal",
+   "date": "2026-10-25",
+   "searchClicks28d": 1,
+   "searchImpressions28d": 132,
+   "searchPosition": 9.2,
+   "problems": [
+    "no_confirm_date"
+   ],
+   "lastFactCheckedDate": null,
+   "inboundArticleLinks": 1,
+   "inboundHubLinks": 1,
+   "storeLinks": 1,
+   "priority": 17.2
   },
   {
    "path": "journal/2026-11-06-hisaya-dam-sake-festa-manmarumura.html",
@@ -1039,6 +1039,23 @@
    "priority": 17
   },
   {
+   "path": "features/sakae.html",
+   "kind": "feature",
+   "title": "名古屋・栄・錦グルメおすすめ15選【2026年版】｜NAGOYA BITES",
+   "date": null,
+   "searchClicks28d": 1,
+   "searchImpressions28d": 120,
+   "searchPosition": 12.8,
+   "problems": [
+    "no_confirm_date"
+   ],
+   "lastFactCheckedDate": null,
+   "inboundArticleLinks": 76,
+   "inboundHubLinks": 1680,
+   "storeLinks": 15,
+   "priority": 16
+  },
+  {
    "path": "journal/2026-10-16-sakae-nagoya-matsuri-lachic-maruha-yabaton-torikai.html",
    "kind": "journal",
    "title": "栄の名古屋まつりで食べ歩き、まるは食堂・矢場とん・鳥開総本家はブースか向かいのラシックか｜NAGOYA BITES Journal",
@@ -1057,39 +1074,22 @@
    "priority": 16
   },
   {
-   "path": "features/sakae.html",
-   "kind": "feature",
-   "title": "名古屋・栄・錦グルメおすすめ15選【2026年版】｜NAGOYA BITES",
-   "date": null,
-   "searchClicks28d": 1,
-   "searchImpressions28d": 106,
-   "searchPosition": 12.3,
-   "problems": [
-    "no_confirm_date"
-   ],
-   "lastFactCheckedDate": null,
-   "inboundArticleLinks": 76,
-   "inboundHubLinks": 1679,
-   "storeLinks": 15,
-   "priority": 14.6
-  },
-  {
-   "path": "journal/2026-07-18-kiwami-tachigui-sushi.html",
+   "path": "journal/2026-10-09-nagoyajo-kinshachi-yokocho-autumn-menu.html",
    "kind": "journal",
-   "title": "名駅の寿司、座るか立つかで会計が変わる——立ち食い『極』の使い分け設計｜NAGOYA BITES Journal",
-   "date": "2026-07-18",
+   "title": "名古屋城・金シャチ横丁の秋限定21品を食べ歩き、寿司コース8,800円までの値付けを読む｜NAGOYA BITES Journal",
+   "date": "2026-10-09",
    "searchClicks28d": 1,
-   "searchImpressions28d": 11,
-   "searchPosition": 4.6,
+   "searchImpressions28d": 18,
+   "searchPosition": 6.9,
    "problems": [
-    "rank_numbering",
+    "rating_no_count",
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 0,
-   "inboundHubLinks": 1,
-   "storeLinks": 1,
-   "priority": 12.8
+   "inboundArticleLinks": 4,
+   "inboundHubLinks": 3,
+   "storeLinks": 3,
+   "priority": 14.5
   },
   {
    "path": "journal/2026-09-25-sakae-unafuji-autumn-course.html",
@@ -1110,12 +1110,30 @@
    "priority": 12.8
   },
   {
+   "path": "journal/2026-07-18-kiwami-tachigui-sushi.html",
+   "kind": "journal",
+   "title": "名駅の寿司、座るか立つかで会計が変わる——立ち食い『極』の使い分け設計｜NAGOYA BITES Journal",
+   "date": "2026-07-18",
+   "searchClicks28d": 1,
+   "searchImpressions28d": 8,
+   "searchPosition": 4.6,
+   "problems": [
+    "rank_numbering",
+    "no_confirm_date"
+   ],
+   "lastFactCheckedDate": null,
+   "inboundArticleLinks": 0,
+   "inboundHubLinks": 1,
+   "storeLinks": 1,
+   "priority": 12
+  },
+  {
    "path": "journal/2026-05-18-menya-matsuri-fukiage.html",
    "kind": "journal",
    "title": "千種・吹上『麺屋まつり』を読む｜NAGOYA BITES Journal",
    "date": "2026-05-18",
    "searchClicks28d": 1,
-   "searchImpressions28d": 76,
+   "searchImpressions28d": 77,
    "searchPosition": 11.4,
    "problems": [
     "no_confirm_date"
@@ -1124,7 +1142,7 @@
    "inboundArticleLinks": 0,
    "inboundHubLinks": 1,
    "storeLinks": 1,
-   "priority": 11.6
+   "priority": 11.7
   },
   {
    "path": "features/no-fake-reviews.html",
@@ -1132,17 +1150,17 @@
    "title": "なぜ食べログ・Googleの口コミは信用できないのか — 飲食業界の「桜」の実態と、開示義務で抜け道を塞ぐ仕組み｜NAGOYA BITES",
    "date": null,
    "searchClicks28d": 2,
-   "searchImpressions28d": 15,
-   "searchPosition": 10.5,
+   "searchImpressions28d": 17,
+   "searchPosition": 10.2,
    "problems": [
     "no_confirm_date",
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 273,
-   "inboundHubLinks": 5980,
+   "inboundArticleLinks": 274,
+   "inboundHubLinks": 5979,
    "storeLinks": 0,
-   "priority": 11.3
+   "priority": 11.6
   },
   {
    "path": "features/fathers-day-2026.html",
@@ -1170,7 +1188,7 @@
    "title": "焼鳥ごりょう 栄（矢場町）でデートと一人飲み、コース3本の差は〆の土鍋｜NAGOYA BITES Journal",
    "date": "2026-11-14",
    "searchClicks28d": 1,
-   "searchImpressions28d": 65,
+   "searchImpressions28d": 68,
    "searchPosition": 7.9,
    "problems": [
     "no_confirm_date"
@@ -1179,7 +1197,7 @@
    "inboundArticleLinks": 11,
    "inboundHubLinks": 1,
    "storeLinks": 1,
-   "priority": 10.5
+   "priority": 10.8
   },
   {
    "path": "features/nagoya-bar.html",
@@ -1348,7 +1366,7 @@
    ],
    "lastFactCheckedDate": null,
    "inboundArticleLinks": 3,
-   "inboundHubLinks": 80,
+   "inboundHubLinks": 79,
    "storeLinks": 9,
    "priority": 10
   },
@@ -1567,8 +1585,8 @@
    "title": "名古屋・那古野の喫茶ニューポピー、金・土は22時まで。モーニングも夜の一杯も使える純喫茶｜NAGOYA BITES Journal",
    "date": "2026-10-22",
    "searchClicks28d": 2,
-   "searchImpressions28d": 40,
-   "searchPosition": 5.9,
+   "searchImpressions28d": 39,
+   "searchPosition": 5.8,
    "problems": [
     "no_confirm_date"
    ],
@@ -1576,7 +1594,7 @@
    "inboundArticleLinks": 2,
    "inboundHubLinks": 1,
    "storeLinks": 1,
-   "priority": 10
+   "priority": 9.9
   },
   {
    "path": "journal/2026-08-07-risshu-obon-week-nagoya.html",
@@ -1633,7 +1651,7 @@
    ],
    "lastFactCheckedDate": null,
    "inboundArticleLinks": 3,
-   "inboundHubLinks": 5160,
+   "inboundHubLinks": 5159,
    "storeLinks": 0,
    "priority": 8
   },
@@ -1651,7 +1669,7 @@
    ],
    "lastFactCheckedDate": "2026-10-27",
    "inboundArticleLinks": 8,
-   "inboundHubLinks": 615,
+   "inboundHubLinks": 614,
    "storeLinks": 10,
    "priority": 8
   },
@@ -1669,8 +1687,8 @@
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 273,
-   "inboundHubLinks": 6012,
+   "inboundArticleLinks": 274,
+   "inboundHubLinks": 6011,
    "storeLinks": 0,
    "priority": 8
   },
@@ -1688,7 +1706,7 @@
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 5,
+   "inboundArticleLinks": 6,
    "inboundHubLinks": 0,
    "storeLinks": 0,
    "priority": 8
@@ -1762,7 +1780,7 @@
    ],
    "lastFactCheckedDate": null,
    "inboundArticleLinks": 36,
-   "inboundHubLinks": 2232,
+   "inboundHubLinks": 2233,
    "storeLinks": 15,
    "priority": 7
   },
@@ -1834,7 +1852,7 @@
    ],
    "lastFactCheckedDate": null,
    "inboundArticleLinks": 52,
-   "inboundHubLinks": 1103,
+   "inboundHubLinks": 1102,
    "storeLinks": 15,
    "priority": 7
   },
@@ -1851,8 +1869,8 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 9,
-   "inboundHubLinks": 506,
+   "inboundArticleLinks": 10,
+   "inboundHubLinks": 507,
    "storeLinks": 10,
    "priority": 7
   },
@@ -1870,7 +1888,7 @@
    ],
    "lastFactCheckedDate": null,
    "inboundArticleLinks": 5,
-   "inboundHubLinks": 103,
+   "inboundHubLinks": 101,
    "storeLinks": 14,
    "priority": 7
   },
@@ -2081,8 +2099,8 @@
    "title": "上前津『博多豚骨 一閃』はなぜ590円で成立するのか｜NAGOYA BITES Journal",
    "date": "2026-05-30",
    "searchClicks28d": 1,
-   "searchImpressions28d": 23,
-   "searchPosition": 7.7,
+   "searchImpressions28d": 22,
+   "searchPosition": 7.3,
    "problems": [
     "no_confirm_date"
    ],
@@ -2090,7 +2108,7 @@
    "inboundArticleLinks": 0,
    "inboundHubLinks": 1,
    "storeLinks": 1,
-   "priority": 6.3
+   "priority": 6.2
   },
   {
    "path": "features/review-trust.html",
@@ -2106,8 +2124,8 @@
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 273,
-   "inboundHubLinks": 6018,
+   "inboundArticleLinks": 274,
+   "inboundHubLinks": 6017,
    "storeLinks": 0,
    "priority": 6
   },
@@ -2176,7 +2194,7 @@
    "date": "2026-05-19",
    "searchClicks28d": 1,
    "searchImpressions28d": 18,
-   "searchPosition": 10.2,
+   "searchPosition": 10,
    "problems": [
     "no_confirm_date"
    ],
@@ -2936,7 +2954,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 1,
+   "inboundArticleLinks": 2,
    "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 5
@@ -2957,24 +2975,6 @@
    "inboundArticleLinks": 0,
    "inboundHubLinks": 1,
    "storeLinks": 1,
-   "priority": 5
-  },
-  {
-   "path": "journal/2026-10-09-nagoyajo-kinshachi-yokocho-autumn-menu.html",
-   "kind": "journal",
-   "title": "名古屋城・金シャチ横丁の秋限定21品を食べ歩き、寿司コース8,800円までの値付けを読む｜NAGOYA BITES Journal",
-   "date": "2026-10-09",
-   "searchClicks28d": 0,
-   "searchImpressions28d": 0,
-   "searchPosition": null,
-   "problems": [
-    "rating_no_count",
-    "no_confirm_date"
-   ],
-   "lastFactCheckedDate": null,
-   "inboundArticleLinks": 4,
-   "inboundHubLinks": 3,
-   "storeLinks": 3,
    "priority": 5
   },
   {
@@ -3615,8 +3615,8 @@
     "no_store_links"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 273,
-   "inboundHubLinks": 5980,
+   "inboundArticleLinks": 274,
+   "inboundHubLinks": 5979,
    "storeLinks": 0,
    "priority": 3
   },
@@ -3866,7 +3866,7 @@
     "rating_no_count"
    ],
    "lastFactCheckedDate": "2026-10-23",
-   "inboundArticleLinks": 1,
+   "inboundArticleLinks": 2,
    "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 3
@@ -3883,7 +3883,7 @@
     "rating_no_count"
    ],
    "lastFactCheckedDate": "2026-11-23",
-   "inboundArticleLinks": 54,
+   "inboundArticleLinks": 53,
    "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 3
@@ -4750,7 +4750,7 @@
     "no_confirm_date"
    ],
    "lastFactCheckedDate": null,
-   "inboundArticleLinks": 41,
+   "inboundArticleLinks": 37,
    "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 2
@@ -4760,13 +4760,13 @@
    "kind": "feature",
    "title": "名古屋 デートディナーおすすめ10選｜予算・エリア別【2026年版】｜NAGOYA BITES",
    "date": null,
-   "searchClicks28d": 48,
-   "searchImpressions28d": 623,
-   "searchPosition": 10,
+   "searchClicks28d": 47,
+   "searchImpressions28d": 613,
+   "searchPosition": 10.1,
    "problems": [],
    "lastFactCheckedDate": "2026-11-23",
    "inboundArticleLinks": 35,
-   "inboundHubLinks": 703,
+   "inboundHubLinks": 701,
    "storeLinks": 10,
    "priority": 0
   },
@@ -4780,7 +4780,7 @@
    "searchPosition": null,
    "problems": [],
    "lastFactCheckedDate": "2026-11-17",
-   "inboundArticleLinks": 2,
+   "inboundArticleLinks": 1,
    "inboundHubLinks": 1,
    "storeLinks": 1,
    "priority": 0
@@ -4825,7 +4825,7 @@
    "searchPosition": null,
    "problems": [],
    "lastFactCheckedDate": "2026-11-21",
-   "inboundArticleLinks": 33,
+   "inboundArticleLinks": 32,
    "inboundHubLinks": 5,
    "storeLinks": 5,
    "priority": 0
@@ -4851,11 +4851,11 @@
    "title": "今池で一人飲みできる居酒屋おすすめ5選、仕事帰りに駅から歩いて5分以内｜NAGOYA BITES Journal",
    "date": "2026-11-23",
    "searchClicks28d": 1,
-   "searchImpressions28d": 7,
-   "searchPosition": 5.6,
+   "searchImpressions28d": 12,
+   "searchPosition": 5.5,
    "problems": [],
    "lastFactCheckedDate": "2026-11-23",
-   "inboundArticleLinks": 17,
+   "inboundArticleLinks": 16,
    "inboundHubLinks": 5,
    "storeLinks": 5,
    "priority": 0
@@ -4865,9 +4865,9 @@
    "kind": "journal",
    "title": "金山で忘年会、飲み放題つきの居酒屋おすすめ5選 駅から歩いて5分以内｜NAGOYA BITES Journal",
    "date": "2026-11-24",
-   "searchClicks28d": 0,
-   "searchImpressions28d": 0,
-   "searchPosition": null,
+   "searchClicks28d": 1,
+   "searchImpressions28d": 41,
+   "searchPosition": 8.6,
    "problems": [],
    "lastFactCheckedDate": "2026-11-24",
    "inboundArticleLinks": 40,
@@ -4885,7 +4885,7 @@
    "searchPosition": null,
    "problems": [],
    "lastFactCheckedDate": "2026-11-25",
-   "inboundArticleLinks": 56,
+   "inboundArticleLinks": 11,
    "inboundHubLinks": 5,
    "storeLinks": 5,
    "priority": 0
@@ -4900,7 +4900,7 @@
    "searchPosition": null,
    "problems": [],
    "lastFactCheckedDate": "2026-11-26",
-   "inboundArticleLinks": 83,
+   "inboundArticleLinks": 82,
    "inboundHubLinks": 5,
    "storeLinks": 5,
    "priority": 0
@@ -4915,7 +4915,22 @@
    "searchPosition": null,
    "problems": [],
    "lastFactCheckedDate": "2026-11-27",
-   "inboundArticleLinks": 86,
+   "inboundArticleLinks": 87,
+   "inboundHubLinks": 5,
+   "storeLinks": 5,
+   "priority": 0
+  },
+  {
+   "path": "journal/2026-11-28-kakuozan-weekend-cafe-sweets-5.html",
+   "kind": "journal",
+   "title": "覚王山で週末のカフェ・甘味おすすめ5選、日泰寺の参道を駅から歩いて5分以内｜NAGOYA BITES Journal",
+   "date": "2026-11-28",
+   "searchClicks28d": 0,
+   "searchImpressions28d": 0,
+   "searchPosition": null,
+   "problems": [],
+   "lastFactCheckedDate": "2026-11-28",
+   "inboundArticleLinks": 53,
    "inboundHubLinks": 0,
    "storeLinks": 5,
    "priority": 0

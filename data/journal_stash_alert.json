@@ -2,6 +2,16 @@
   "_note": "ジャーナル起動時に他ルーチンの未コミット差分が検出された記録（SEO-104）",
   "entries": [
     {
+      "detected_at": "2026-11-28T09:00:25.544+09:00",
+      "files": [
+        "data/hotpepper_photo_sizes.json",
+        ".agents/skills/source-command-solve-next/",
+        "origin/"
+      ],
+      "action": "skipped_stash",
+      "message": "ジャーナルは退避せず続行。`git stash pop` 等の手動操作は不要。他ルーチンが書いたとみられる差分。"
+    },
+    {
       "detected_at": "2026-11-27T09:00:05.791+09:00",
       "files": [
         "data/hotpepper_photo_sizes.json",
@@ -234,14 +244,6 @@
     },
     {
       "detected_at": "2026-10-28T09:00:07.247+09:00",
-      "files": [
-        ".agents/skills/source-command-solve-next/"
-      ],
-      "action": "skipped_stash",
-      "message": "ジャーナルは退避せず続行。`git stash pop` 等の手動操作は不要。他ルーチンが書いたとみられる差分。"
-    },
-    {
-      "detected_at": "2026-10-27T09:00:08.904+09:00",
       "files": [
         ".agents/skills/source-command-solve-next/"
       ],
