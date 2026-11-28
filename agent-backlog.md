@@ -1497,12 +1497,13 @@
 
 ### [SEO-116] SEO の90日計画（2026-10〜12）を進め、12-15 に北極星指標で次の計画を決める
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: in_progress
 - **detected**: 2026-10-09
 - **due**: 2026-12-15
 - **category**: SEO
 - **owner**: Marketer
 - **source**: オーナー依頼「SEOの分析と、今後より伸ばすための戦略戦術を用いた改善点」（2026-10-09）。分析・戦略・戦術の正本は `docs/seo-strategy-2026-10.md`、判断は `docs/decisions/0007-seo-north-star-metrics.md`
+- **progress（2026-11-28）**: 全サブタスク完了。11-28 時点の北極星指標（gsc_metrics 2026-10-30〜11-26）: 発見型表示 2,518／クリック 226／ハブ 112 本／生成AI 227セッション。12-15 目標との対比は `docs/kpi-weekly.md`（2026-11-28 プレスナップショット）。残り: 12-15 に指標記録＋2027-Q1 計画作成。
 - **brand-filter**: ✅ 適合 — Moat「名古屋×シーン×業界人の目利き」の検索面を実測で濃くする計画。順位操作・広告・PR記事・ストック写真を伴わない
 - **背景（2026-10-08 生成の data/*.json）**:
   - 店舗ページ 5,008 本で GA4 が 2026-05-08 から動いていなかった（[[SEO-115]]）
@@ -9149,6 +9150,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-11-28 | Marketer(routine) | SEO-116 in_progress化・11-28 プレスナップショット — 全サブタスク完了確認。北極星現状: 発見型表示 2518/クリック 226/ハブ 112本/生成AI 227（✅）/Bing 994。12-15 目標達成見通し: クリック△/表示✗/ハブ△/生成AI✅。docs/kpi-weekly.md に記録。12-15 KPI記録＋2027-Q1計画で done 化予定。 | ✅ 本コミット |
 | 2026-11-27 | Editor(routine) | SEO-087 done化 — meieki-hitori-nomi.html 展開の効果測定（acceptance #5）完了。GSC前後比: 「名古屋 一人飲み」クリック24→50(+108%)/順位6.8→3.7・meieki-hitori-nomi: 34表示/6クリック/CTR 17.6%。docs/kpi-weekly.md に記録。acceptance①〜⑤全達成確認。 | ✅ 本コミット |
 | 2026-11-27 | Orchestrator(routine) | SEO-128 エスカレーション — 子課題SEO-129（editorReason承認・オーナー目視必須）が `ready` のため SEO-128 は実装不可。owner を 片桐 ← Editor/DataKeeper に変更。SEO-116は12-15期日待ち（agent待機）。 | ⚠️ SEO-128 owner変更・SEO-116スキップ |
 | 2026-11-24 | Orchestrator(routine) | 安全タスク調査 — ready 全12件を精査した結果、実装可能な安全タスクはゼロ。全件がAPI鍵不可/オーナー操作必須/サブタスク待ちのためブロック。内訳: オーナー操作待ち(SEO-154・SEO-151・ISSUE-194・ISSUE-192会席・ISSUE-192 Places規約確認・SEO-098・SNS-006〜008・ISSUE-165) / API鍵不可(ISSUE-192 GA4は GitHub Secrets のみ) / サブタスク待ち(SEO-116)。正常終了（0件処理は許容）。Notion同期: --if-changed=changed(13 creates / 2 updates / 38 archives)、MCP呼び出し件数が多いため今回セッションはスキップ。 | ⏸ 実装なし |
