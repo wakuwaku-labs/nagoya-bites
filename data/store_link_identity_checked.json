@@ -8673,7 +8673,10 @@
     "title": "BAR JetCity （バー ジェットシティー） - 栄（名古屋）/バー | 食べログ",
     "kind": "tabelog",
     "area": "栄(ミナミ)/矢場町/大須/上前津",
-    "checkedAt": "2026-09-20T13:38:59.062Z"
+    "checkedAt": "2026-09-20T13:38:59.062Z",
+    "lastAttemptAt": "2026-11-28T19:27:04.167Z",
+    "lastAttemptReason": "fetch-error",
+    "lastAttemptError": "HTTP 403"
   },
   "c8231f81e06a06edafc986caa4946632": {
     "ok": true,
@@ -8688,7 +8691,10 @@
     "title": "BOU THE ROOF （ボウザルーフ）のご予約 - 金山/イタリアン | 食べログ",
     "kind": "tabelog",
     "area": "金山・神宮前・熱田区",
-    "checkedAt": "2026-09-20T13:39:01.302Z"
+    "checkedAt": "2026-09-20T13:39:01.302Z",
+    "lastAttemptAt": "2026-11-28T19:27:10.187Z",
+    "lastAttemptReason": "fetch-error",
+    "lastAttemptError": "HTTP 403"
   },
   "223d58623a46d970e29acbf9aa82068c": {
     "ok": false,
@@ -8733,7 +8739,10 @@
     "title": "鮮魚to旬菜 幸 （sachi）のご予約 - 金山/居酒屋 | 食べログ",
     "kind": "tabelog",
     "area": "金山・神宮前・熱田区",
-    "checkedAt": "2026-09-20T13:39:08.206Z"
+    "checkedAt": "2026-09-20T13:39:08.206Z",
+    "lastAttemptAt": "2026-11-28T19:27:16.265Z",
+    "lastAttemptReason": "fetch-error",
+    "lastAttemptError": "HTTP 403"
   },
   "3e8eb6a3851d63af67392ac6ea6c9ac8": {
     "ok": false,
@@ -129958,5 +129967,81 @@
     "kind": "hotpepper",
     "area": "中川区・港区",
     "checkedAt": "2026-11-27T06:56:03.600Z"
+  },
+  "8caba783adf8716160ba8f23c58becb1": {
+    "ok": false,
+    "reason": "fetch-error",
+    "error": "HTTP 403",
+    "url": "https://tabelog.com/aichi/A2301/A230102/23096053/",
+    "storeName": "鳥ぶら 名古屋伏見店",
+    "kind": "tabelog",
+    "area": "名古屋市中区栄2丁目",
+    "checkedAt": "2026-11-28T19:26:55.244Z"
+  },
+  "533f7999ffa16838eb499ee51711c417": {
+    "ok": false,
+    "reason": "fetch-error",
+    "error": "HTTP 403",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23082147/",
+    "storeName": "UPCAMP アップキャンプ 名古屋栄店",
+    "kind": "tabelog",
+    "area": "栄(ミナミ)/矢場町/大須/上前津",
+    "checkedAt": "2026-11-28T19:26:59.578Z"
+  },
+  "8b51db7c95aa45e513ce44f08a8bda9d": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "UPCAMP アップキャンプ 名古屋栄店",
+    "shopState": null,
+    "closed": false,
+    "storeName": "UPCAMP アップキャンプ 名古屋栄店",
+    "title": "UPCAMP アップキャンプ 名古屋栄店(栄/居酒屋)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ003324263/",
+    "kind": "hotpepper",
+    "area": "栄(ミナミ)/矢場町/大須/上前津",
+    "checkedAt": "2026-11-28T19:27:22.469Z"
+  },
+  "c9cb09d207b21461979b6870756485bc": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "Imagination Time イマジネーションタイム",
+    "shopState": null,
+    "closed": false,
+    "storeName": "Imagination Time イマジネーションタイム",
+    "title": "Imagination Time イマジネーションタイム(名古屋駅/イタリアン・フレンチ)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004744311/",
+    "kind": "hotpepper",
+    "area": "名古屋（名古屋駅/西区/中村区）",
+    "checkedAt": "2026-11-28T19:27:28.206Z"
+  },
+  "f11085d4cccc97d33694f5f8d267d5a8": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "SCENE SAKAE シーンサカエ 栄店",
+    "shopState": null,
+    "closed": false,
+    "storeName": "SCENE SAKAE シーンサカエ 栄店",
+    "title": "SCENE SAKAE シーンサカエ 栄店(栄/ダイニングバー・バル)＜ネット予約可＞ | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004745030/",
+    "kind": "hotpepper",
+    "area": "栄(ミナミ)/矢場町/大須/上前津",
+    "checkedAt": "2026-11-28T19:27:32.963Z"
+  },
+  "568c3dcbf8d23ada338aac74306638fa": {
+    "ok": true,
+    "reason": null,
+    "sim": 1,
+    "matchedName": "くずし割烹 五代目 井善 池下店",
+    "shopState": null,
+    "closed": false,
+    "storeName": "くずし割烹 五代目 井善 池下店",
+    "title": "くずし割烹 五代目 井善 池下店(池下/居酒屋) | ホットペッパーグルメ",
+    "url": "https://www.hotpepper.jp/strJ004613006/",
+    "kind": "hotpepper",
+    "area": "大曽根･千種･今池･池下･守山区",
+    "checkedAt": "2026-11-28T19:27:39.444Z"
   }
 }
